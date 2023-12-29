@@ -1,0 +1,173 @@
+<div class="candidate-form">
+    <div class="info d-flex j-center">
+        <p>Add Candidate</p>
+    </div>
+    <div class="candidate-details p-30">
+        <form [formGroup]="candidateForm" (ngSubmit)="submitClick(); $event.preventDefault()" enctype="multipart/form-data">
+            <div class="name d-flex  j-space field-height">
+                <div>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>First Name</mat-label>
+                        <input type="firstName" matInput formControlName="firstName" placeholder="John">
+                        <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+                        <div
+                            *ngIf="candidateForm.get('firstName')?.hasError('required') && candidateForm.get('firstName')?.touched">
+                            <mat-error>First Name Required</mat-error>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Last Name</mat-label>
+                        <input type="lastName" matInput formControlName="lastName" placeholder="Deo">
+                        <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+                        <div
+                            *ngIf="candidateForm.get('lastName')?.hasError('required') && candidateForm.get('lastName')?.touched">
+                            <mat-error>Last Name Required</mat-error>
+                        </div>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="dob-exp d-flex  j-space p-20 field-height">
+                <div>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Date Of Birth</mat-label>
+                        <input type="date" matInput formControlName="dob">
+                        <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+                        <div
+                            *ngIf="candidateForm.get('dob')?.hasError('required') && candidateForm.get('dob')?.touched">
+                            <mat-error>Date Of Birth Required</mat-error>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Experience</mat-label>
+                        <input type="number" matInput formControlName="experience">
+                        <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+                        <!-- <div
+                            *ngIf="candidateForm.get('experience')?.hasError('required') && candidateForm.get('experience')?.touched">
+                            <mat-error>Experience Required</mat-error>
+                        </div> -->
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="organization d-flex  j-space p-20 field-height">
+                <div>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Previous organization </mat-label>
+                        <input type="text" matInput formControlName="previousOrg">
+                        <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+                        <!-- <div
+                            *ngIf="candidateForm.get('previousOrg')?.hasError('required') && candidateForm.get('previousOrg')?.touched">
+                            <mat-error>Previous organization Required</mat-error>
+                        </div> -->
+                    </mat-form-field>
+                </div>
+                <div>
+                    <div>
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Previous Designation</mat-label>
+                            <input type="text" matInput formControlName="previousDesignation">
+                            <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+                            <!-- <div
+                                *ngIf="candidateForm.get('previousDesignation')?.hasError('required') && candidateForm.get('previousDesignation')?.touched">
+                                <mat-error>Previous Designation Required</mat-error>
+                            </div> -->
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="edu-sal d-flex  j-space p-20 field-height">
+               
+                <div>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Current Salary</mat-label>
+                        <input type="number" matInput formControlName="currentSalary">
+                        <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+                        <!-- <div
+                            *ngIf="candidateForm.get('currentSalary')?.hasError('required') && candidateForm.get('currentSalary')?.touched">
+                            <mat-error>Current Salary Required</mat-error>
+                        </div> -->
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Expected Salary</mat-label>
+                        <input type="number" matInput formControlName="expectedSalary">
+                        <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+                        <div
+                            *ngIf="candidateForm.get('expectedSalary')?.hasError('required') && candidateForm.get('expectedSalary')?.touched">
+                            <mat-error>Expected Salary Required</mat-error>
+                        </div>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="expect-addr d-flex  j-space p-20 field-height">
+                
+                <div>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Address</mat-label>
+                        <textarea matInput
+                        cdkTextareaAutosize
+                       
+                        cdkAutosizeMinRows="1"
+                        cdkAutosizeMaxRows="5"  formControlName="address" class="address"></textarea>
+                        <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+                        <div
+                            *ngIf="candidateForm.get('address')?.hasError('required') && candidateForm.get('address')?.touched">
+                            <mat-error>Address Required</mat-error>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Email</mat-label>
+                        <input type="email" matInput formControlName="email">
+                        <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+                        <div
+                            *ngIf="candidateForm.get('email')?.hasError('required') && candidateForm.get('email')?.touched">
+                            <mat-error>Email ID Required</mat-error>
+                        </div>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="email-mob d-flex  j-space p-20 field-height">
+               
+                <div>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Mobile No</mat-label>
+                        <input type="mobileNo" matInput formControlName="mobileNo">
+                        <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+                        <div
+                            *ngIf="candidateForm.get('mobileNo')?.hasError('required') && candidateForm.get('mobileNo')?.touched">
+                            <mat-error>Mobile No Required</mat-error>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div>
+                  
+                        <!-- <label>Resume</label> -->
+                        <button class="upload-resume-btn" (click)="triggerFileInput();$event.preventDefault()">
+                            <div class="d-flex j-center">
+                            <img src="assets/images/upload-file.png" alt="" height="23px" width="28px">
+                        <p class="p-t-4 p-l-4">Upload Resume</p>
+                    </div>
+                        </button>
+                        <input type="file" (change)="onFileSelected($event)"  style="visibility: hidden">
+                        
+                        <!-- <div
+                            *ngIf="candidateForm.get('resume')?.hasError('required') && candidateForm.get('resume')?.touched">
+                            <mat-error>Resume</mat-error>
+                        </div> -->
+                
+                </div>
+               
+            </div>
+            <div class="btn d-flex j-space">
+                <button class="cancel-btn m-20" (click)="cancel()">Cancel</button>
+                <button type="submit" class="submit-btn m-20" matRipple [matRippleCentered]="true">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

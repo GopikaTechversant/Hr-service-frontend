@@ -1,0 +1,64 @@
+.header {
+    height: 70px;
+}
+
+.logo-text {
+    background-color: rgb(0 86 167);
+    color: white;
+    height: 50px;
+    border-radius: 36px rgb(0 86 167) !important;
+}
+
+.logo {
+    border-radius: 36px;
+    width: 60px;
+}
+
+.user-profile-ctn {
+    width: 35px;
+    height: 35px;
+    max-width: 35px;
+    max-height: 35px;
+    min-width: 35px;
+    min-height: 35px;
+    background-color: #476583e8 !important;
+    color: white !important;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: all !important;
+}
+
+.drop-down {
+    position: absolute;
+    height: fit-content;
+    width: fit-content;
+    z-index: 1;
+    right: 10px;
+    background: #fff;
+    top: 60px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 1px 1px, rgba(60, 64, 67, 0.25) 0px 2px 3px 1px;
+    border-radius: 5px;
+}
+
+.drop-down span {
+    position: relative;
+    top: 0;
+    left: 0px;
+    width: 100%;
+    height: fit-content;
+    display: block;
+    padding: 5px 10px 5px 10px;
+    color: #000;
+  }
+  
+  .drop-down-arrow{
+    color: #000;
+  }
+
+  .drop-down span:hover i {
+    cursor: pointer;
+    color: #fff;
+    color: #1d364b;
+  }

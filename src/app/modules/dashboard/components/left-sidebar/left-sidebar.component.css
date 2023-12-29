@@ -1,0 +1,52 @@
+.sidebar {
+    width: 250px;
+    height: 75vh;
+    background-color: white;
+    color: rgb(0 86 167);
+    padding: 20px;
+    box-sizing: border-box;
+    transition: width 0.3s, margin-left 0.3s;
+    overflow: hidden;
+    display: none; 
+    margin-left: 17px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    /* margin-top: 22px; */
+  }
+  
+  .sidebar.active {
+    width: 250px;
+    display: block; 
+  }
+  
+  .sidebar p {
+    margin-top: 20px;
+  }
+  
+  .hamburger-menu {
+    cursor: pointer;
+    display: flex;
+   
+    /* width: 30px; 
+    height: 20px;  */
+  }
+  
+  .bar {
+    width: 100%;
+    height: 3px;
+    background-color: rgb(0 86 167);
+    transition: 0.4s;
+    margin-left: 17px;
+    margin-top: 2px;
+  }
+  
+ .hamburger-img{
+    margin-left: 9px;
+    margin-top: 2px;
+ }
+
+ .hamburger-all{
+    font-size: 16px;
+    margin-top: 5px;
+    font-weight: 400;
+ }
+
