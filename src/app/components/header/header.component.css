@@ -1,5 +1,8 @@
 .header {
     height: 70px;
+
+    box-shadow: 0 3px 8px -6px #0009;
+    border-right: none;
 }
 
 .logo-text {
@@ -33,13 +36,14 @@
 .drop-down {
     position: absolute;
     height: fit-content;
-    width: fit-content;
+    width: 157px;
     z-index: 1;
     right: 10px;
     background: #fff;
     top: 60px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 1px 1px, rgba(60, 64, 67, 0.25) 0px 2px 3px 1px;
     border-radius: 5px;
+    flex-direction: column;
 }
 
 .drop-down span {
@@ -51,14 +55,27 @@
     display: block;
     padding: 5px 10px 5px 10px;
     color: #000;
-  }
-  
-  .drop-down-arrow{
-    color: #000;
-  }
+}
 
-  .drop-down span:hover i {
+.drop-down-arrow {
+    color: #000;
+}
+
+.drop-down span:hover i {
     cursor: pointer;
     color: #fff;
     color: #1d364b;
-  }
+}
+
+.station {
+   height: 29px;
+   padding-left: 13px;
+   padding-top: 4px;
+   font-size: 16px;
+}
+
+
+.logout{
+    padding-left: 8px;
+    padding-top: 4px;
+}

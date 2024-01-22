@@ -6,13 +6,16 @@ import { AppComponent } from './app.component';
 
 import { AuthModule } from './modules/auth/auth.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LeftSidebarComponent } from './left-sidebar/left-sidebar.component';
+import { ToastrModule } from 'ngx-toastr';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LeftSidebarComponent,
+    
+  
+   
 
     
    
@@ -22,6 +25,8 @@ import { LeftSidebarComponent } from './left-sidebar/left-sidebar.component';
     AppRoutingModule,
     AuthModule,
     BrowserAnimationsModule,
+    ToastrModule
+  
     
   ],
   providers: [],

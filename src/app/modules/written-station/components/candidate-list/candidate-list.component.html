@@ -1,0 +1,19 @@
+<div class="d-flex">
+    <app-left-side-bar></app-left-side-bar>
+    <div class="container m-l-26 m-t-20 d-flex j-space p-20">
+
+        <div *ngFor="let candidate of candidates_list" class="d-flex j-center p-20"
+            (click)="navigate('/written/series/',candidate.requestId)">
+            <div class="candidate-details">
+                <!-- <p>Name : {{candidate.candidateFirstName }} {{candidate.candidateLastName }}</p> -->
+                <p>Candidates Count : {{candidate.candidatesCount}}</p>
+                <p>Designation : {{candidate.requestName}}</p>
+                <p>Team : {{candidate.teamName}}</p>
+                <p>Skills : {{candidate.requestSkills}}</p>
+
+                <p></p>
+            </div>
+        </div>
+
+    </div>
+</div>

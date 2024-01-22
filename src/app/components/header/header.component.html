@@ -12,17 +12,30 @@
       <span class="f-w-500 user-name t-dark-blue-color"> {{ currentUser?.role.charAt(0) ? (currentUser?.role.charAt(0) |
         uppercase): '' }}</span>
     </div>
-    <div *ngIf="dropDown" class="drop-down p-12">
-      <div class="add-candidate d-flex align-center">
+    <div *ngIf="dropDown" class="drop-down p-12 d-flex">
+      <!-- <div class="add-candidate d-flex align-center">
         <div class=" c-pointer"><img src="assets/images/hr-servive-add-candidate.png" alt="" height="25px" weight="25px" (click)="openAddCandidateModal()"></div>
         <div class="c-pointer p-l-3" (click)="openAddCandidateModal()">Add Candidate</div>
+      </div> -->
+
+      <div class="station" (click)="navigate('/dashboard',false)">
+        <div class="c-pointer">Screening station</div>
+      </div>
+      <div class="station" (click)="navigate('/written',false)">
+        <div class="c-pointer">Written station</div>
+      </div>
+      <div class="station">
+        <div class="c-pointer">Technical station</div>
+      </div>
+      <div class="station">
+        <div class="c-pointer">HR Manager</div>
       </div>
       <div class="logout d-flex align-center">
-        <div class=" c-pointer"><img src="assets/images/hr-service-logout1.png" alt="" height="21px" weight="21px" (click)="openAddCandidateModal()"></div>
-        <div class="c-pointer" (click)="logout()">Logout</div>
+        <div class=" c-pointer"><img src="assets/images/hr-service-logout1.png" alt="" height="21px" weight="21px"
+            (click)="openAddCandidateModal()"></div>
+        <div class="c-pointer f-s-16" (click)="logout()">Logout</div>
       </div>
-     
     </div>
+
   </div>
 </div>
-

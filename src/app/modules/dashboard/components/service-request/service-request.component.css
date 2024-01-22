@@ -1,0 +1,150 @@
+
+.scroller-box {
+    padding-bottom: 20px;
+    height: calc(100vh - 100px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.box-view{
+    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.input{
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #d2d2d2;
+}
+
+.text-box {
+    height: 30px;
+    border: 1px solid #EEEEEE;
+    border-radius: 5px;
+    padding: 4px 8px;
+    outline: none;
+}
+
+.subscriber-drop-down{
+    border: 1.5px solid #7d8296b5;
+    border-radius: 5px;
+    padding: 4px 8px;
+    align-items: baseline;
+    background: #fff;
+    position: relative;
+    height: 30px;
+    width: 250px;
+    margin-left: 24px;
+}
+
+.row {
+   
+    display: flex;
+    
+    flex-wrap: wrap;
+   
+}
+
+.subscriber-drop-down>.sub {
+    height: 16px;
+}
+
+.subscriber-drop-down>.w-max {
+    width: 150px;
+}
+
+.subscriber-drop-down>.drop-list {
+    position: absolute;
+    top: 32px;
+    right: 0;
+    width: 100%;
+    background-color: white;
+    border: 1.5px solid #7d8296b5;
+    border-radius: 5px;
+    z-index: 10;
+    max-height: 120px;
+    overflow-y: scroll;
+    width: 100%;
+}
+
+.name{
+    margin-left: 41px;
+}
+
+.team{
+    margin-left: 94px;
+}
+
+.experience{
+    margin-left: 59px;
+}
+
+.base{
+    margin-left: 55px;
+}
+
+.skills{
+    margin-left: 95px;
+}
+
+.team-drop-down{
+    border: 1.5px solid #7d8296b5;
+    border-radius: 5px;
+    padding: 4px 8px;
+    align-items: baseline;
+    background: #fff;
+    position: relative;
+    height: 30px;
+    width: 250px;
+    margin-left: 51px;
+}
+
+.team-drop-down>.sub {
+    height: 16px;
+}
+
+.team-drop-down>.w-max {
+    width: 150px;
+}
+
+.team-drop-down>.drop-list {
+    position: absolute;
+    top: 32px;
+    right: 0;
+    width: 100%;
+    background-color: white;
+    border: 1.5px solid #7d8296b5;
+    border-radius: 5px;
+    z-index: 10;
+    max-height: 120px;
+    overflow-y: scroll;
+    width: 100%;
+}
+
+.name-dropdown{
+    margin-left: 41px;
+}
+
+.button {
+    height: 8px;
+    background-color: #f3f2ef;
+    color: #517494;
+    padding: 10px;
+    border: 0.1rem solid #517494;
+    border-radius: 15px;
+}
+
+.mat-ripple{
+    overflow: hidden;
+    position: relative;
+}
+
+.button:hover{
+    background-color:#517494;
+    color: white;
+}
+
+.main{
+    width: 100%;
+}

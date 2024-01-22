@@ -1,4 +1,4 @@
-import { Component ,OnInit} from '@angular/core';
+import { Component ,OnInit,Renderer2, ElementRef, HostListener} from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { AddCandidateModalComponent } from 'src/app/modules/dashboard/components/add-candidate-modal/add-candidate-modal.component';
@@ -12,11 +12,19 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit{
   currentUser: any;
   dropDown: boolean = false;
-  constructor(private apiService: ApiService,private auth: AuthService,private dialog: MatDialog,private router: Router){
+  constructor(private apiService: ApiService,private auth: AuthService,private dialog: MatDialog,private router: Router,private renderer: Renderer2, private el: ElementRef){
 
   }
 ngOnInit(): void {
   this.currentUser = this.auth.getUser();
+}
+
+@HostListener('document:click', ['$event'])
+onBodyClick(event: Event): void {
+  // Check if the click is outside the dropdown element
+  if (!this.el.nativeElement.contains(event.target)) {
+    this.dropDown = false;
+  }
 }
 
 profileClick(){
@@ -37,4 +45,10 @@ openAddCandidateModal(): void{
     
   })
 }
+
+navigate(path:any, queryParam:any): void {
+  if(queryParam) this.router.navigate([path], {queryParams: { type: queryParam}});
+  else this.router.navigate([path]);
+}
+
 }

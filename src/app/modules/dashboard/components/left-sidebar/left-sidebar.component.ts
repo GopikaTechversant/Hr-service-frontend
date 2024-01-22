@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AddCandidateModalComponent } from 'src/app/modules/dashboard/components/add-candidate-modal/add-candidate-modal.component';
 import { MatDialog } from '@angular/material/dialog';
-import { RequirementsFormModalComponent } from '../requirements-form-modal/requirements-form-modal.component';
+
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-left-sidebar',
@@ -9,14 +9,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./left-sidebar.component.css']
 })
 export class LeftSidebarComponent implements OnInit{
-  isSidebarOpen = false;
+  // isSidebarOpen = false;
   constructor(private dialog: MatDialog, private router: Router){}
   ngOnInit(): void {
-    
+  
   }
-  toggleSidebar() {
-    this.isSidebarOpen = !this.isSidebarOpen;
-  }
+  // toggleSidebar() {
+  //   this.isSidebarOpen = !this.isSidebarOpen;
+  // }
 
   openAddCandidateModal(): void{
     const dialogRef = this.dialog.open(AddCandidateModalComponent,{
@@ -28,17 +28,19 @@ export class LeftSidebarComponent implements OnInit{
     })
   }
 
-  openRequirementModal(): void{
-    const dialogRef = this.dialog.open(RequirementsFormModalComponent,{
-      width :'700px'
-    });
-    dialogRef.afterClosed().subscribe(result =>{
-      console.log("after closed");
-      
-    })
+
+  navigate(path:any, queryParam:any): void {
+    if(queryParam) this.router.navigate([path], {queryParams: { type: queryParam}});
+    else this.router.navigate([path]);
   }
 
-  navigateToRequirements(): void {
-    this.router.navigate(['/dashboard/requirements']);
+  // navigateToRequirements(): void {
+  //   this.router.navigate(['/dashboard/requirements']);
+  // }
+  isActive(route: string): boolean {
+    return this.router.isActive(route, false);
   }
+  
+  
+  
 }

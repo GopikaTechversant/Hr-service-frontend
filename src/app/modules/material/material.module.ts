@@ -15,7 +15,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatTableModule} from '@angular/material/table';
 import {MatTreeModule} from '@angular/material/tree';
+import { MatListModule } from '@angular/material/list';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
+import {DragDropModule} from '@angular/cdk/drag-drop'
 @NgModule({
   providers: [
     {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}
@@ -39,7 +41,9 @@ import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/materi
     MatFormFieldModule,
     MatSlideToggleModule,
     MatTableModule,
-    MatTreeModule
+    MatTreeModule,
+    MatListModule,
+    DragDropModule
   ]
 })
 export class MaterialModule { }

@@ -125,3 +125,59 @@ mat-error{
     margin-top: 5px;
 }
 
+/* Add this to your component's CSS file or styles section in the component */
+.search-bar {
+    display: flex;
+    /* align-items: center; */
+    margin-left: 40px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    background-color: palevioletred;
+    /* width: 60px; */
+  }
+  
+  .search-bar span {
+    margin-right: 8px;
+  }
+  
+  .suggestions {
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    max-height: 150px;
+    overflow-y: auto;
+  }
+  
+  .suggestions div {
+    padding: 8px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+  }
+  
+  .suggestions div:hover {
+    background-color: #e0e0e0;
+  }
+
+/* .skill-search-input{
+    border: none!important;
+} */
+
+.add-btn{
+    height: 33px;
+    width: 60px;
+    margin-top: 14px;
+    margin-left: 10px;
+}
+
+.searchbar-field{
+    margin-left: 23px!important;
+}
+
+.input-search{
+    width: 223px;
+    height: 30px;
+    border-radius: 4px;
+}
+
+.searchbar{
+    margin-left: 23px;
+}

@@ -1,25 +1,33 @@
-<div class="hamburger-menu" (click)="toggleSidebar()">
-    
-    <div class="d-flex j-center">
-        <img src="assets/images/hamburger.png" alt="" height="25px" width="50px" class="hamburger-img">
-        <p class="hamburger-all">List</p>
+<div class="sidebar m-t-14">
+
+  <div class="drop-down p-1">
+    <div class="add-candidate d-flex align-center" [class.active]="isActive('/dashboard/add-candidate')">
+      <div class=" c-pointer p-l-2"><img src="assets/images/hr-servive-add-candidate.png" alt="" height="25px"
+          weight="25px" (click)="openAddCandidateModal()"></div>
+      <div class="c-pointer p-l-3" (click)="openAddCandidateModal()">Add Candidate</div>
     </div>
-   
-   
-    
+    <div class="requirements d-flex align-center" [class.active]="isActive('/dashboard/requirement')">
+      <div class="requirement-img p-t-3 p-l-2 c-pointer"><img src="assets/images/requirement-img.png" alt=""
+          height="20px" width="20px"></div>
+      <p class="candidate-requirements m-t-9 m-l-4 c-pointer" (click)="navigate('/dashboard/requirement',false)">
+        Requirements</p>
+    </div>
+    <div class="requirements d-flex align-center" [class.active]="isActive('/dashboard/service-requirement')">
+      <div class="requirement-img p-t-3 p-l-2 c-pointer"><img src="assets/images/requirement-img.png" alt=""
+          height="20px" width="20px"></div>
+      <p class="candidate-requirements m-t-9 m-l-4 c-pointer"
+        (click)="navigate('/dashboard/service-requirement',false)">Service Requirements</p>
+    </div>
+    <div class="candidates d-flex align-center" [class.active]="isActive('/dashboard/candidate-list')">
+      <div class="candidate-img p-t-3 p-l-2 c-pointer"><img src="assets/images/requirement-img.png" alt="" height="20px"
+          width="20px"></div>
+      <p class="candidates-list m-t-9 c-pointer" (click)="navigate('/dashboard/candidate-list',false)">Requirement List
+      </p>
+    </div>
+    <!-- <div class="candidates d-flex align-center" [class.active]="isActive('/dashboard/series')">
+      <div class="candidate-img p-t-3 p-l-2 c-pointer"><img src="assets/images/requirement-img.png" alt="" height="20px"
+          width="20px"></div>
+      <p class="candidates-list m-t-9 c-pointer" (click)="navigate('/dashboard/series',false)">Series</p>
+    </div> -->
   </div>
-  
-  <div class="sidebar" [class.active]="isSidebarOpen">
-    <div class="drop-down p-1">
-        <div class="add-candidate d-flex align-center">
-          <div class=" c-pointer p-l-2"><img src="assets/images/hr-servive-add-candidate.png" alt="" height="25px" weight="25px" (click)="openAddCandidateModal()"></div>
-          <div class="c-pointer p-l-3" (click)="openAddCandidateModal()">Add Candidate</div>
-        </div>
-       <div class="requirements d-flex align-center">
-        <div class="requirement-img p-t-3 p-l-2 c-pointer"><img src="assets/images/requirement-img.png" alt="" height="20px" width="20px" (click)="openRequirementModal()"></div>
-        <p class="candidate-requirements m-t-9 m-l-4 c-pointer" (click)="navigateToRequirements()">Requirements</p>
-       </div>
-       
-      </div>
-  </div>     
-  
+</div>

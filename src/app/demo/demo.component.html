@@ -1,0 +1,47 @@
+<!-- <p>demo works!</p>
+
+          
+
+      
+
+<div class="skill-type-dropdown d-flex">
+    <mat-form-field class="example-full-width">
+      <mat-label>Skill Type</mat-label>
+      <mat-select (selectionChange)="onSkillTypeSelected($event)">
+        <mat-option *ngFor="let type of skillTypes" [value]="type">{{ type }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button class="add-btn" (click)="$event.preventDefault();toggleSearchBar()">Add</button>
+  </div>
+  
+ 
+  
+  <div class="search-bar" (click)="getSkillSuggestions()" *ngIf="showSearchBar">
+   
+    <div *ngIf="showSearchBar">
+    
+        <input type="search" placeholder="Type to search...">
+        
+        
+        
+    </div>
+    <div *ngIf="selectedSkill">{{ selectedSkill.skillName }}</div>
+  </div>
+  
+    <div class="suggestions">
+      <div *ngFor="let suggestion of skillSuggestions" class="suggestion-item" (mousedown)="addSelectedSkill(suggestion)">
+        {{ suggestion.skillName }}
+      </div>
+    </div>
+  
+  
+ 
+  
+            
+            <div class="btn d-flex j-space">
+                <button class="cancel-btn m-20" (click)="cancel()">Cancel</button>
+                <button type="submit" class="submit-btn m-20" matRipple [matRippleCentered]="true">Submit</button>
+            </div>
+        </form>
+    </div>
+</div> -->

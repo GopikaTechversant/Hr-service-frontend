@@ -10,11 +10,28 @@ import { ErrorStateMatcher ,ShowOnDirtyErrorStateMatcher} from '@angular/materia
 import { TextFieldModule} from '@angular/cdk/text-field';
 import { HttpClientModule } from '@angular/common/http';
 import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
-import { RequirementsFormModalComponent } from './components/requirements-form-modal/requirements-form-modal.component';
+
+import { CandidatelistComponent } from './components/candidatelist/candidatelist.component';
+import { FormsModule } from '@angular/forms';
+import { CandidateDetailsComponent } from './components/candidate-details/candidate-details.component';
+import { RequirementFormComponent } from './components/requirement-form/requirement-form.component';
+import { ServiceRequestComponent } from './components/service-request/service-request.component';
+import { RequirementCandidateListComponent } from './components/requirement-candidate-list/requirement-candidate-list.component';
+import { SeriesComponent } from './components/series/series.component';
+
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent},
-  { path: 'requirements', component: RequirementsFormModalComponent}
+  { path: '', component: DashboardComponent,
+  children: [
+    // {path: '', component: LeftSidebarComponent},
+    {path: '', component: CandidatelistComponent},
+    {path: 'requirement', component: RequirementFormComponent},
+    {path: 'service-requirement', component: ServiceRequestComponent},
+    {path: 'candidate-list', component: RequirementCandidateListComponent},
+   
+  ]},
+  {path: 'series', component: SeriesComponent}
+  
 ]
 
 @NgModule({
@@ -23,7 +40,13 @@ const routes: Routes = [
     DashboardComponent,
     AddCandidateModalComponent,
     LeftSidebarComponent,
-    RequirementsFormModalComponent
+   
+    CandidatelistComponent,
+    CandidateDetailsComponent,
+    RequirementFormComponent,
+    ServiceRequestComponent,
+    RequirementCandidateListComponent,
+    SeriesComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +55,8 @@ const routes: Routes = [
     SharedModule,
     MaterialModule,
     TextFieldModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
