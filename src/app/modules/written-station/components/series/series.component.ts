@@ -48,7 +48,7 @@ export class SeriesComponent implements OnInit{
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
       console.log(" this.requestId", this.requestId);
-      console.log(" this.requestId", this.requestId);
+     
 
     });
   }
