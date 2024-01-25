@@ -1,4 +1,3 @@
-
 .scroller-box {
     padding-bottom: 20px;
     height: calc(100vh - 100px);
@@ -9,13 +8,13 @@
     margin-left: 58px;
 }
 
-.box-view{
+.box-view {
     box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
     border-radius: 8px;
     background-color: #fff;
 }
 
-.input{
+.input {
     outline: none;
     border-radius: 5px;
     border: 1px solid #d2d2d2;
@@ -23,7 +22,6 @@
     height: 27px;
     border-right: none;
 }
-
 
 .text-box {
     height: 30px;
@@ -33,7 +31,7 @@
     outline: none;
 }
 
-.subscriber-drop-down{
+.subscriber-drop-down {
     border: 1.5px solid #7d8296b5;
     border-radius: 5px;
     padding: 4px 8px;
@@ -46,11 +44,8 @@
 }
 
 .row {
-   
     display: flex;
-    
     flex-wrap: wrap;
-   
 }
 
 .subscriber-drop-down>.sub {
@@ -75,7 +70,7 @@
     width: 100%;
 }
 
-.requestId-drop-down{
+.requestId-drop-down {
     border: 1.5px solid #7d8296b5;
     border-radius: 5px;
     padding: 4px 8px;
@@ -109,23 +104,22 @@
     width: 100%;
 }
 
-
-.box-view-candidates{
+.box-view-candidates {
     box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
     border-radius: 8px;
     background-color: #fff;
     width: 160px;
 }
 
-.text-center{
+.text-center {
     text-align: center;
 }
 
-.assignee{
+.assignee {
     margin-left: 53px;
 }
 
-.name-dropdown{
+.name-dropdown {
     margin-left: 41px;
 }
 
@@ -138,13 +132,13 @@
     border-radius: 15px;
 }
 
-.mat-ripple{
+.mat-ripple {
     overflow: hidden;
     position: relative;
 }
 
-.button:hover{
-    background-color:#517494;
+.button:hover {
+    background-color: #517494;
     color: white;
 }
 
@@ -154,16 +148,18 @@
 }
 
 .p-absolute {
-    position: absolute!important;
+    position: absolute !important;
 }
+
 .c-pointer {
-    cursor: pointer!important;
+    cursor: pointer !important;
 }
+
 .icon-color {
     color: #517494;
 }
 
-.search-btn{
+.search-btn {
     background-color: #27445f;
     outline: none;
     border: 0;
@@ -171,9 +167,9 @@
     border-bottom-right-radius: 5px;
     height: 30px;
     width: 30px;
-  }
+}
 
-  .calendar-parent{
+.calendar-parent {
     width: fit-content;
     outline: none;
     border-radius: 5px;
@@ -183,7 +179,7 @@
     /* border-right: none; */
 }
 
-.requirement-create{
+.requirement-create {
     margin-left: 57px;
 }
 
@@ -200,15 +196,15 @@
     justify-content: space-evenly;
 }
 
-.date-picker-input{
+.date-picker-input {
     outline: none;
     border: none;
 }
 
-.date-picker{
+.date-picker {
     margin-left: 58px;
 }
 
-.experience{
+.experience {
     margin-left: 45px;
 }

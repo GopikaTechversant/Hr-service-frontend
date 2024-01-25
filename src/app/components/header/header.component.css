@@ -9,7 +9,10 @@
     background-color: rgb(0 86 167);
     color: white;
     height: 50px;
+    width: 60px;
     border-radius: 36px rgb(0 86 167) !important;
+    outline: none !important;
+    border: none !important;
 }
 
 .logo {
@@ -78,4 +81,8 @@
 .logout{
     padding-left: 8px;
     padding-top: 4px;
+}
+
+.station :hover {
+    color: blue;
 }

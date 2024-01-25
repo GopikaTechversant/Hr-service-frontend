@@ -6,6 +6,7 @@ import { LeftSideBarComponent } from './components/left-side-bar/left-side-bar.c
 import { HomeComponent } from './components/home/home.component';
 import { SharedModule } from '../shared/shared.module';
 import { SeriesComponent } from './components/series/series.component';
+import { ResultComponent } from './components/result/result.component';
 const routes: Routes = [
   { path:'',component:HomeComponent,
   children: [
@@ -20,7 +21,8 @@ const routes: Routes = [
     CandidateListComponent,
     LeftSideBarComponent,
     HomeComponent,
-    SeriesComponent
+    SeriesComponent,
+    ResultComponent
   ],
   imports: [
     CommonModule,

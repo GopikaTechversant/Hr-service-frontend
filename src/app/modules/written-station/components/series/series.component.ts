@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environments';
 import { ActivatedRoute } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { MatDialog } from '@angular/material/dialog';
+import { ResultComponent } from '../result/result.component';
 @Component({
   selector: 'app-series',
   templateUrl: './series.component.html',
@@ -41,7 +43,7 @@ export class SeriesComponent implements OnInit{
   requestData : any = [];
   serviceId : any = [];
   payload_series_list : any = [];
-  constructor(private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private http: HttpClient, private route: ActivatedRoute,private dialog: MatDialog) {
 
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -96,6 +98,20 @@ fetchCandidatesWithSeriess(): void {
   })
 }
 
+
+resultClick() : void {
+  console.log("fetchCandidatesWithSeries");
+  const dialogRef = this.dialog.open( ResultComponent ,{
+    data : this.serviceId
+  }
+   
+  );
+// dialogRef.afterClosed().subscribe(result => {
+ 
+//   }
+//   });
+  
+}
 
   seriesBoxClick(series: any) {
     this.series_list.forEach((s: any) => s.active = false);
