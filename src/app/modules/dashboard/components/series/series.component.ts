@@ -39,7 +39,7 @@ export class SeriesComponent implements OnInit {
 
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
-      // console.log(" this.requestId", this.requestId);
+      console.log(" this.requestId", this.requestId);
 
 
     });
@@ -155,6 +155,7 @@ export class SeriesComponent implements OnInit {
     }
     this.http.post(`${environment.api_url}/screening-station/accept`, requestData).subscribe((res: any) => {
       // console.log("approve seriies", res);
+      alert("Approved")
       this.approvalStatusService.updateapprovalStatus(true);
 
     },

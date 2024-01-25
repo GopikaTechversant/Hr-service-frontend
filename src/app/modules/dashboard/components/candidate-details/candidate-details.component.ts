@@ -26,8 +26,9 @@ ngOnInit(): void {
 
 viewResume(resume:any){
   this.resumePath = resume;
-  // console.log("resume path",this.resumePath);
-  // return this.resumePath.
+  console.log("resume path",this.resumePath);
+       window.open(`${environment.api_url}${this.resumePath}`, '_blank');
+ 
   
 }
 

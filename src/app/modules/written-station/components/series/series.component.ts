@@ -51,15 +51,16 @@ export class SeriesComponent implements OnInit{
     });
   }
   ngOnInit(): void {
-    this.fetchcandidates();
-    this.fetchQuestions();
-    // console.log("this.series_list before", this.series_list);
-    this.fetchCandidatesWithSeries();
+    const storedSeries = localStorage.getItem('series_list');
+    this.series_list = storedSeries ? JSON.parse(storedSeries): [];
+    this.candidates_list = JSON.parse(localStorage.getItem('candidates_list') || '[]'); // Use the candidates_list from localStorage
+    this.fetchCandidatesWithSeriess();
   }
   fetchcandidates(): void {
     this.http.get(`${environment.api_url}/screening-station/list-batch/${this.requestId}?station=2`).subscribe((res: any) => {
       // console.log("fetch candidates", res);
       this.candidates_list = res.candidates;
+      
       this.candidates = this.candidates.candidate;
       // console.log("this.candidates_list", this.candidates_list);
       this.candidates_list.forEach((candidate:any) => {
@@ -87,6 +88,14 @@ fetchCandidatesWithSeries():void{
     
   }))
 }
+fetchCandidatesWithSeriess(): void {
+  this.http.get(`${environment.api_url}/written-station/questionBatchList/${this.requestId}`).subscribe((res:any) => {
+    this.series_list = res.data;
+     localStorage.setItem('series_list', JSON.stringify(this.series_list));
+
+  })
+}
+
 
   seriesBoxClick(series: any) {
     this.series_list.forEach((s: any) => s.active = false);
@@ -131,6 +140,7 @@ fetchCandidatesWithSeries():void{
 
     this.activeSeries = newSeries;
     this.activeDropdownSeries = newSeries;
+     localStorage.setItem('series_list', JSON.stringify(this.series_list));
   }
   dragStart(event: any, candidate: any) {
     // console.log("Drag Start");
@@ -150,18 +160,19 @@ fetchCandidatesWithSeries():void{
     const candidate = JSON.parse(candidateData);
 
     // Remove the candidate from its previous series
-    this.series_list.forEach((s: any) => {
-      if (s?.candidates) {
-        s.candidates = s.candidates.filter((c: any) => c?.candidateId !== candidate?.candidateId);
-      }
-    });
+  this.series_list.forEach((s: any) => {
+    if (s?.candidates) {
+      s.candidates = s.candidates.filter((c: any) => c?.candidateId !== candidate?.candidateId);
+    }
+  });
 
-    // Remove the candidate from the candidates_list
-    this.candidates_list = this.candidates_list.filter((c: any) => c?.candidateId !== candidate?.candidateId);
+   // Remove the candidate from the candidates_list
+  this.candidates_list = this.candidates_list.filter((c: any) => c?.candidateId !== candidate?.candidateId);
 
     // Add the dropped candidate to the candidates array of the new series
     series.candidates = series.candidates || [];
     series.candidates.push(candidate);
+    localStorage.setItem('candidates_list', JSON.stringify(this.candidates_list));
  // Create a new array with only serviceId values for each series
  this.payload_series_list = this.series_list.map((s: any) => {
   this.serviceId = s.candidates.map((c: any) => c?.serviceId);
@@ -180,6 +191,9 @@ fetchCandidatesWithSeries():void{
     // console.log("Candidate dropped:", candidate);
     // console.log("Dropped into Series:", series);
     console.log("Series with Candidates:", this.series_list);
+
+localStorage.setItem('candidates_list', JSON.stringify(this.candidates_list));
+
     event.preventDefault();
     event.stopPropagation();
   }

@@ -27,10 +27,10 @@
                 <p>Designation : {{candidate.requestName}}</p>
                 <p>Team : {{candidate.teamName}}</p>
                 <p>Skills : {{candidate.requestSkills}}</p>
-                <div *ngIf="approvalStatus !== undefined" class="status-message">
+               <!--  <div *ngIf="approvalStatus !== undefined" class="status-message">
                     {{approvalStatus ? 'Approved' : 'In Progress'}}
-                </div>
-                
+                </div> -->
+                <p class="status">{{candidate.status}}</p>
             </div>
         </div>
 

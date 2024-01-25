@@ -12,6 +12,7 @@
 
 }
 
+
 .item-box {
     height: auto;
     background: #fff;
@@ -190,4 +191,8 @@
 }
 body{
     width: 100%;
+}
+
+.item-series-box{
+    width: 214px;
 }
