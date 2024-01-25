@@ -4,8 +4,8 @@
         <span class="xl-text f-w-500 p-l-5"> Requirement Create</span>
     </div>
     <div class="scroller-box p-l-5 p-r-10">
-        <div class="box-view p-t-20 p-b-15 p-l-15 p-r-15 m-t-15">
-            <div class="row m-t-20 m-b-10 j-space">
+        <div class="box-view p-t-20 p-b-15 p-l-15 p-r-15 m-t-10">
+            <div class="row p-t-10 p-b-10 j-space">
                 <!-- <div class="d-flex">
                     <div class="col-md-2 p-r-0"><span> Station Name</span>
                     </div>
@@ -14,7 +14,7 @@
                     </div>
                 </div> -->
                 <div class="d-flex">
-                    <div class="col-md-2 p-r-0"><span>Experience</span></div>
+                    <div class="col-md-2 p-r-0 p-t-5"><span>Experience</span></div>
                     <div class="no-close col-md-3 s-list d-flex requestId-drop-down j-space m-text align-center experience"
                         (click)="experienceList_open = !experienceList_open">
                         <div *ngIf="!selectedExperience" class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">
@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row m-t-20 m-b-10 j-space">
+            <div class="row p-t-10 p-b-10 j-space">
                 <!-- <div class="d-flex">
                     <div class="col-md-2 p-r-0"><span> Request Name</span>
                     </div>
@@ -53,7 +53,7 @@
                     </div>
                 </div> -->
                 <div class="d-flex">
-                    <div class="col-md-2 p-r-0"><span> Request Name</span></div>
+                    <div class="col-md-2 p-r-0 p-t-5"><span> Request Name</span></div>
                     <div class="no-close col-md-3 s-list d-flex requestId-drop-down j-space m-text align-center"
                         (click)="requestList_open = !requestList_open">
                         <div *ngIf="!selectedId" class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">
@@ -71,7 +71,7 @@
                     </div>
                 </div>
                 <div class="d-flex">
-                    <div class="col-md-2 p-r-0"><span> Service Name</span></div>
+                    <div class="col-md-2 p-r-0 p-t-5"><span> Service Name</span></div>
                     <div class="no-close col-md-3 s-list d-flex requestId-drop-down j-space m-text align-center"
                         (click)="serviceList_open = !serviceList_open">
                         <div *ngIf="!selectedServiceId" class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">
@@ -89,9 +89,9 @@
                     </div>     
                 </div>
             </div>
-            <div class="row m-t-20 m-b-10 j-space">
+            <div class="row p-t-10 p-b-10 j-space">
                 <div class="d-flex">
-                    <div class="col-md-2 p-r-0"><span> Assignee</span></div>
+                    <div class="col-md-2 p-r-0 p-t-5"><span> Assignee</span></div>
                     <div>
                         <input type="text" class="subscriber-drop-down name input assignee" #serviceAssignee>
                     </div>
@@ -114,27 +114,27 @@
                     </div>
                 </div>
             </div>
-            <div class="row m-t-15">
+            <!-- <div class="row p-t-15">
                 <div *ngFor="let item of selectedCandidateId; let i=index"
                     class="service-item selected-product m-l-10 m-r-10 m-t-10 m-b-10">
                     <div class="d-flex j-center align-center m-b-5">
                         <span class="m-r-10 m-text">{{item.candidateFirstName}}</span>
-                        <!-- <i class="fa fa-times s-text m-l-5 m-r-5 c-pointer" aria-hidden="true"
-                            (click)="removeUpc(i)"></i> -->
+                        <i class="fa fa-times s-text m-l-5 m-r-5 c-pointer" aria-hidden="true"
+                            (click)="removeUpc(i)"></i>
                     </div>
                     <div class="text-center">
                         <p class="m-b-0 edit-caption c-pointer" matRipple [matRippleCentered]="true">
                             {{item.candidateFirstName}}</p>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="d-flex j-end align-center">
                 <div class="mat-ripple m-r-10 button c-pointer d-flex align-center" (click)="sumitClick()">Submit</div>
                 <div class=" mat-ripple button c-pointer d-flex align-center"> Cancel</div>
             </div>
         </div>
         <ng-container>
-            <div class="m-t-25">
+            <div class="p-10 m-t-10">
                 <div class="row j-space">
                     <div class="col-md-4">
                         <span class="xl-text f-w-500">Candidates</span>

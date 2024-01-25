@@ -17,7 +17,7 @@ export class ResultComponent {
     private dialogRef: MatDialogRef<ResultComponent>
   ) {
     if (data) this.examServiceId = data
-    this.dialogRef.updateSize('20vw', '30vh')
+    this.dialogRef.updateSize('30%', '40%')
   }
 
 

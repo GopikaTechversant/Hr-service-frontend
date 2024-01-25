@@ -1,7 +1,10 @@
-<app-header></app-header>
-<div class="d-flex">
+<div class="header">
+    <app-header></app-header>
+</div>
+<div class="d-flex main">
     <app-left-sidebar></app-left-sidebar>
-
-   <!-- <app-candidatelist style="width: 100%;"></app-candidatelist> -->
-<router-outlet></router-outlet>
+    <!-- <app-candidatelist style="width: 100%;"></app-candidatelist> -->
+    <div class="w-75">
+        <router-outlet></router-outlet>
+    </div>
 </div>
