@@ -1,23 +1,21 @@
-<div class="header d-flex j-space m-l-15 m-r-17 align-center">
-  <div class="logo">
-    <button class="logo-text p-t-10 m-t-10 p-l-5">LOGO</button>
+<div class="header w-100 d-flex j-space align-center">
+  <div class="logo m-l-15  ">
+    <button class="logo-text p-t-10 m-t-10 p-l-5 ">LOGO</button>
   </div>
   <div class="profile d-flex">
-    <div class="user-name p-t-10 p-r-6">
+    <div class="user-name p-t-10 p-r-6 m-r-17">
       <span class="f-w-500 user-name t-dark-blue-color"> {{ currentUser?.role.charAt(0) ? (currentUser?.role.charAt(0) |
         uppercase) + currentUser?.role.slice(1) : '' }}</span>
     </div>
-    <div class="user-profile-ctn" (click)="profileClick()">
-
+    <div class="user-profile-ctn c-pointer" (click)="profileClick()">
       <span class="f-w-500 user-name t-dark-blue-color"> {{ currentUser?.role.charAt(0) ? (currentUser?.role.charAt(0) |
         uppercase): '' }}</span>
     </div>
-    <div *ngIf="dropDown" class="drop-down p-12 d-flex">
+    <div *ngIf="dropDown" class="drop-down p-12 d-flex ">
       <!-- <div class="add-candidate d-flex align-center">
         <div class=" c-pointer"><img src="assets/images/hr-servive-add-candidate.png" alt="" height="25px" weight="25px" (click)="openAddCandidateModal()"></div>
         <div class="c-pointer p-l-3" (click)="openAddCandidateModal()">Add Candidate</div>
       </div> -->
-
       <div class="station" (click)="navigate('/dashboard',false)">
         <div class="c-pointer">Screening station</div>
       </div>
@@ -36,6 +34,5 @@
         <div class="c-pointer f-s-16" (click)="logout()">Logout</div>
       </div>
     </div>
-
   </div>
 </div>

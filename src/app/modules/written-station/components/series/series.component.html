@@ -16,8 +16,6 @@
                 <ng-container *ngFor="let series of series_list">
                     <div class="text-center flex-column align-center j-center c-pointer series-box"
                         (click)="seriesBoxClick(series)" [ngClass]="{'active-series' : series?.active}">
-
-
                         <div class="d-flex w-100 align-center j-center">
                             <p class="m-b-0 p-t-10 p-b-5 m-text series-name m-r-10">
                                 {{series.name}}
@@ -53,14 +51,11 @@
 
         </div>
        
-        <div class=" details-area">
-           
+        <div class=" details-area">       
             <div class="m-b-10 candidate-box p-l-15 p-r-15 p-t-10 p-b-10">
-               
                 <div class="w-100 notreceived">
                     <p class="candidates-heading">Candidates</p>
                     <div class="row d-flex">
-
                         <div *ngFor="let candidate of candidates_list let i = index"
                             class="min-150 mx-150 p-r-15 m-t-10 j-center text-center p-l-15 m-l-5 c-pointer"
                             draggable="true" (dragstart)="dragStart($event, candidate)" (dragover)="dragOver($event)"
@@ -70,10 +65,8 @@
                             <p>Service: {{candidate.candidateEmail}}</p>
                             <p>Service Id: {{candidate.serviceId}}</p>
                             <!-- <p>Service Service ID: {{ candidate[0].serviceServiceId }}</p> -->
-
                         </div>
                     </div>
-
                 </div>
             </div>
             <div class="item-box p-20 m-t-10">
@@ -81,8 +74,6 @@
                     <div class="text-center flex-column align-center j-center c-pointer series-box"
                         (click)="seriesBoxClick(series)" [ngClass]="{'active-series' : series?.active}"
                         (dragover)="allowDrop($event)" (drop)="productDrop($event,series)">
-
-
                         <div class=" w-100 align-center j-center">
                             <p class="m-b-0 p-t-10 p-b-5 m-text series-name m-r-10">
                                 {{series.name}}</p>
@@ -95,7 +86,8 @@
                                         class="m-b-5 m-t-2 ">
                                         <p>Team: {{candidate.candidateFirstName}}</p>
                                         <p>Service: {{candidate.candidateEmail}}</p>
-                                       
+                                        <button class="btn btn-primary c-pointer" (click)="resultClick()">Result</button>
+
                                 </div>
                             </div>
                         </div>

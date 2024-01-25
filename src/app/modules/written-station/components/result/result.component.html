@@ -1,0 +1,27 @@
+<div class="modal m-10">
+    <div class="f-s-16 p-10 head">
+        <span class="f-w-500">Result</span>
+    </div>
+    <div class="d-flex m-t-20 content">
+        <div class="col-md-6">
+            <div class="m-b-15">
+                <span class="f-w-500 p-10">Score:</span>
+            </div>
+            <div class="m-b-15">
+                <span class="f-w-500 p-10">Description:</span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="m-b-3">
+                <input type="text" class="form-control" id="score">
+            </div>
+            <div class="m-b-3">
+                <input type="text" class="form-control" id="description">
+            </div>
+        </div>
+    </div>
+    <div class="d-flex btn-parent text-center">
+        <button matRipple="true" class="button-cancel" (click)="cancelClick()">Cancel</button>
+        <button matRipple="true" class="button-active" (click)="submitClick()">Submit</button>
+    </div>
+</div>
