@@ -6,11 +6,11 @@ import { Component, Input, SimpleChanges } from '@angular/core';
   styleUrls: ['./technical-sidebar.component.css']
 })
 export class TechnicalSidebarComponent {
-@Input() selectedItem: any
-showRequest: boolean = false;
-showcandidates: boolean = false;
+  @Input() selectedItem: any
+  showRequest: boolean = false;
+  showcandidates: boolean = false;
 
-ngOnChanges(changes: SimpleChanges): void {
-  
-}
+  ngOnChanges(changes: SimpleChanges): void {
+
+  }
 }

@@ -4,9 +4,11 @@ import { TechnicalHomeComponent } from './components/technical-home/technical-ho
 import { TechnicalSidebarComponent } from './components/technical-sidebar/technical-sidebar.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
+import { TechnicalDetailComponent } from './components/technical-detail/technical-detail.component';
 
 const routes: Routes = [
   { path:'',component:TechnicalHomeComponent},
+  // { path:'/detail',component:TechnicalDetailComponent},
   { path: '**', redirectTo:'', pathMatch: 'full' }
 
 ]
@@ -14,7 +16,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     TechnicalHomeComponent,
-    TechnicalSidebarComponent
+    TechnicalSidebarComponent,
+    TechnicalDetailComponent
   ],
   imports: [
     CommonModule,

@@ -6,7 +6,7 @@
     <div *ngIf="selectedItem" class="p-10 ">
         <div class="p-t-10 p-b-10 detail-head">
             <i class="fa xs-text drop-down-arrow icon-color c-pointer p-r-5 p-b-2" (click)="showRequest = !showRequest"
-            [ngClass]="!showRequest ? 'fa-chevron-right' : 'fa-chevron-down'" aria-hidden="true"></i>
+                [ngClass]="!showRequest ? 'fa-chevron-right' : 'fa-chevron-down'" aria-hidden="true"></i>
             <span class="f-w-500">Requested Details</span>
         </div>
         <div *ngIf="showRequest">
@@ -20,7 +20,8 @@
             </div>
             <div class="details p-10">
                 <span class="f-w-500">Experience</span>
-                <span>{{selectedItem['serviceRequest.requestExperience'] ? selectedItem['serviceRequest.requestExperience'] : 'Nil'}}</span>
+                <span>{{selectedItem['serviceRequest.requestExperience'] ?
+                    selectedItem['serviceRequest.requestExperience'] : 'Nil'}}</span>
             </div>
             <div class="details p-10">
                 <span class="f-w-500">Base Salary</span>
@@ -32,8 +33,9 @@
             </div>
         </div>
         <div class="p-t-10 p-b-10 detail-head">
-            <i class="fa xs-text drop-down-arrow icon-color c-pointer p-r-5 p-b-2" (click)="showcandidates = !showcandidates"
-            [ngClass]="!showcandidates ? 'fa-chevron-right' : 'fa-chevron-down'" aria-hidden="true"></i>
+            <i class="fa xs-text drop-down-arrow icon-color c-pointer p-r-5 p-b-2"
+                (click)="showcandidates = !showcandidates"
+                [ngClass]="!showcandidates ? 'fa-chevron-right' : 'fa-chevron-down'" aria-hidden="true"></i>
             <span class="f-w-500">Candidate Details</span>
         </div>
         <div *ngIf="showcandidates">
@@ -66,9 +68,5 @@
                 <span>{{selectedItem['candidate.candidateAddress']}}</span>
             </div>
         </div>
-      
-
-
-
     </div>
 </div>
