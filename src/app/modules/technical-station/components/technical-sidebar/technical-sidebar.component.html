@@ -1,0 +1,74 @@
+<div class="sidebar">
+    <div class="head">
+        <span *ngIf="selectedItem" class="f-w-500 p-10 p-t-20">{{selectedItem['candidate.candidateFirstName']}}
+            {{selectedItem['candidate.candidateLastName']}}</span>
+    </div>
+    <div *ngIf="selectedItem" class="p-10 ">
+        <div class="p-t-10 p-b-10 detail-head">
+            <i class="fa xs-text drop-down-arrow icon-color c-pointer p-r-5 p-b-2" (click)="showRequest = !showRequest"
+            [ngClass]="!showRequest ? 'fa-chevron-right' : 'fa-chevron-down'" aria-hidden="true"></i>
+            <span class="f-w-500">Requested Details</span>
+        </div>
+        <div *ngIf="showRequest">
+            <div class="details p-10">
+                <span class="f-w-500">Name</span>
+                <span>{{selectedItem['serviceRequest.requestName']}}</span>
+            </div>
+            <div class="details p-10">
+                <span class="f-w-500">Skills</span>
+                <span>{{selectedItem['serviceRequest.requestSkills']}}</span>
+            </div>
+            <div class="details p-10">
+                <span class="f-w-500">Experience</span>
+                <span>{{selectedItem['serviceRequest.requestExperience'] ? selectedItem['serviceRequest.requestExperience'] : 'Nil'}}</span>
+            </div>
+            <div class="details p-10">
+                <span class="f-w-500">Base Salary</span>
+                <span>{{selectedItem['serviceRequest.requestBaseSalary']}}</span>
+            </div>
+            <div class="details p-10">
+                <span class="f-w-500">Maximum Salary</span>
+                <span>{{selectedItem['serviceRequest.requestMaxSalary']}}</span>
+            </div>
+        </div>
+        <div class="p-t-10 p-b-10 detail-head">
+            <i class="fa xs-text drop-down-arrow icon-color c-pointer p-r-5 p-b-2" (click)="showcandidates = !showcandidates"
+            [ngClass]="!showcandidates ? 'fa-chevron-right' : 'fa-chevron-down'" aria-hidden="true"></i>
+            <span class="f-w-500">Candidate Details</span>
+        </div>
+        <div *ngIf="showcandidates">
+            <div class="details p-10">
+                <span class="f-w-500">Date of Birth</span>
+                <span>{{selectedItem['candidate.candidateDoB'] | date:"dd/MM/yyyy"}}</span>
+            </div>
+            <div class="details p-10">
+                <span class="f-w-500">Experience</span>
+                <span>{{selectedItem['candidate.candidateExperience']}}</span>
+            </div>
+            <div class="details p-10">
+                <span class="f-w-500">Previous organization</span>
+                <span>{{selectedItem['candidate.candidatePreviousOrg']}}</span>
+            </div>
+            <div class="details p-10">
+                <span class="f-w-500">Previous designation</span>
+                <span>{{selectedItem['candidate.candidatePreviousDesignation']}}</span>
+            </div>
+            <div class="details p-10">
+                <span class="f-w-500">Education</span>
+                <span>{{selectedItem['candidate.candidateEducation']}}</span>
+            </div>
+            <div class="details p-10">
+                <span class="f-w-500">Expected Salary</span>
+                <span>{{selectedItem['candidate.candidateExpectedSalary']}}</span>
+            </div>
+            <div class="details p-10">
+                <span class="f-w-500">Address</span>
+                <span>{{selectedItem['candidate.candidateAddress']}}</span>
+            </div>
+        </div>
+      
+
+
+
+    </div>
+</div>

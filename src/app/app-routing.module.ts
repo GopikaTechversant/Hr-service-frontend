@@ -14,6 +14,9 @@ const routes: Routes = [
   },
   {path: 'written' , loadChildren: () => import('./modules/written-station/written-station.module').then(m => m.WrittenStationModule)
   
+  },
+  {
+    path: 'technical', loadChildren: () => import('./modules/technical-station/technical-station.module').then(m => m.TechnicalStationModule)
   }
 ];
 

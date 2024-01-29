@@ -1,0 +1,30 @@
+.sidebar{
+    margin-top: 11px;
+    box-shadow: #0000001a 0 4px 6px -1px, #0000000f 0 2px 4px -1px;
+    overflow: hidden;
+    height: calc(100vh - 175px);
+    padding-bottom: 20px;
+    overflow: auto !important;
+
+}
+
+.head{
+    background-color: #9bcfff;
+    min-height: 50px;
+    max-height: 50px;
+    text-align: center;
+    padding-top: 10px;
+    position: sticky;
+}
+
+.details{
+    display: flex;
+    justify-content: space-between;
+}
+
+.detail-head{
+    color: #365169;
+}
+
+
+

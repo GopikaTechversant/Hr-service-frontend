@@ -1,0 +1,120 @@
+.header {
+    min-height: 70px !important;
+    max-height: 70px !important;
+    position: sticky;
+    max-width: 100%;
+}
+
+.main {
+    display: flex;
+    flex: 1;
+}
+
+.w-75{
+    width: 75%;
+}
+
+.w-25{
+    width: 25%;
+}
+
+.search-icon {
+    background-color: #ffff;
+    padding: 5px;
+}
+
+.clear-filter {
+
+    background-color: #ffff;
+    padding: 5px;
+}
+
+.search-head {
+    color: #1e5181;
+    background-color: white;
+}
+
+.subscriber-listing {
+    overflow: hidden;
+    background-color: whitesmoke;
+}
+
+.loader-parent {
+    position: absolute;
+    left: 34%;
+    z-index: 9;
+}
+
+.loader-parent img {
+    width: 100px;
+}
+
+.initial-loader {
+    position: absolute;
+    top: 31%;
+    left: 1%;
+}
+
+.data {
+    position: absolute;
+    left: 34%;
+    top: 34%;
+    z-index: 9;
+}
+
+.table {
+    width: 100%;
+    border: 1px solid #eeee;
+}
+
+.table-container {
+    height: calc(100vh - 162px);
+    overflow: auto;
+    margin-top: 20px;
+}
+
+tr:nth-child(even) {
+    background-color: #f5faff;
+}
+
+td {
+    padding: 10px;
+    text-align: center;
+}
+
+/* tr {
+    border: 1px solid #dfdfdf;
+} */
+
+.table-header {
+    position: sticky;
+    top: 0;
+    background: #9bcfff;
+    Padding: 10px;
+    Text-align: center;
+    Font-weight: 500;
+}
+
+.candidate:hover {
+    background-color: #cee3f4;
+}
+
+.table .selected {
+    background-color: #cee3f4;
+}
+
+.table-view {
+    height: calc(100vh - 200px);
+    overflow: auto;
+}
+
+.table-view select {
+    outline: none;
+    border: none;
+    background-color: white;
+    margin-right: 5px;
+}
+
+.detail-head{
+    color: #365169;
+}
