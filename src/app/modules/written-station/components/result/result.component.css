@@ -53,3 +53,7 @@ button:focus {
     outline: none !important;
     box-shadow: none !important;
 }
+
+#description{
+    height: 70px;
+}

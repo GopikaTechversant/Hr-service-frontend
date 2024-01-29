@@ -162,7 +162,7 @@
     padding: 4px 8px;
     align-items: baseline;
     background: #fff;
-    position: relative;
+    /* position: relative; */
     height: 30px;
     width: 150px;
     margin-left: 0px;
@@ -195,4 +195,17 @@ body{
 
 .item-series-box{
     width: 214px;
+}
+
+.btn-primary{
+    padding: 0px 22px;
+    font-size: 0.92rem;
+    margin-right: 10px;
+    border: 1px solid #1a2952;
+    color: #fff;
+    background-color: rgb(57, 57, 136);
+    outline: none;
+    padding: 5px;
+    border-radius: 5px;
+
 }

@@ -1,7 +1,7 @@
 
 .scroller-box {
     padding-bottom: 20px;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 180px);
     overflow-y: scroll;
     overflow-x: hidden;
 }
@@ -32,7 +32,7 @@
     padding: 4px 8px;
     align-items: baseline;
     background: #fff;
-    position: relative;
+    /* position: relative; */
     height: 30px;
     width: 250px;
     margin-left: 24px;
