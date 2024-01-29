@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject ,Output, EventEmitter } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { environment } from 'src/environments/environments';
 
@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environments';
   styleUrls: ['./result.component.css']
 })
 export class ResultComponent {
+  @Output() scoreSubmitted = new EventEmitter<number>();
   examServiceId;
   scoreValue: string = '';
   descriptionValue: string = '';
@@ -34,8 +35,10 @@ export class ResultComponent {
       examDescription: this.descriptionValue
     }
 
+
     this.http.post(`${environment.api_url}/written-station/result`, payload).subscribe((res: any) => {
       this.dialogRef.close(true);
+      this.scoreSubmitted.emit(parseInt(this.scoreValue, 10));
     });
 
   }

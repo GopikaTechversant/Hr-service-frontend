@@ -14,11 +14,12 @@
                     </div>
                 </div> -->
                 <div class="d-flex">
-                    <div class="col-md-2 p-r-0"><span>Experience</span></div>
+                    <div class="col-md-2 p-r-0"><span>Experience</span>
+                    </div>
                     <div class="no-close col-md-3 s-list d-flex requestId-drop-down j-space m-text align-center experience"
-                        (click)="experienceList_open = !experienceList_open">
-                        <div *ngIf="!selectedExperience" class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">
-                            Experience
+                        (click)="experienceList_open = !experienceList_open;fetchcandidatesWithExperience()">
+                        <div *ngIf="!selectedExperience"
+                            class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">Experience
                         </div>
                         <div *ngIf="selectedExperience && selectedExperience !== '0' ">{{selectedExperience}} ></div>
                         <!-- <div *ngIf="selectedExperience && !isSelectedFresher">{{selectedExperience}} ></div> -->
@@ -27,12 +28,15 @@
                                 class="no-close s-list fa fa-chevron-down s-text"></i>
                         </div>
                         <div class=" m-b-2 drop-list" *ngIf="experienceList_open">
-                            <div (click)="selectExperience(experience.candidateExperience)" *ngFor="let experience of experience_droplist" class="p-t-5 p-b-5 p-l-8 c-pointer">
-                                {{experience.candidateExperience}} ></div>
+                            <div (click)="selectExperience(experience.candidateExperience)"
+                                *ngFor="let experience of experience_droplist" class="p-t-5 p-b-5 p-l-8 c-pointer">
+                                {{experience.candidateExperience}} > </div>
                         </div>
                     </div>
+
                 </div>
             </div>
+
             <div class="row m-t-20 m-b-10 j-space">
                 <!-- <div class="d-flex">
                     <div class="col-md-2 p-r-0"><span> Request Name</span>
@@ -53,45 +57,51 @@
                     </div>
                 </div> -->
                 <div class="d-flex">
-                    <div class="col-md-2 p-r-0"><span> Request Name</span></div>
+                    <div class="col-md-2 p-r-0"><span> Request Name</span>
+                    </div>
                     <div class="no-close col-md-3 s-list d-flex requestId-drop-down j-space m-text align-center"
-                        (click)="requestList_open = !requestList_open">
-                        <div *ngIf="!selectedId" class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">
-                            Names
+                        (click)="requestList_open = !requestList_open;fetchcandidatesWithSkills()">
+                        <div *ngIf="!selectedId"
+                            class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">Names
                         </div>
                         <div *ngIf="selectedId">{{selectedName}}</div>
                         <div class="no-close s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub"><i
-                                class="no-close s-list fa fa-chevron-down s-text"></i></div>
+                                class="no-close s-list fa fa-chevron-down s-text"></i>
+                        </div>
                         <div class=" m-b-2 drop-list" *ngIf="requestList_open">
-                            <div (click)='selectRequestId(name.requestName,name.requestId)' *ngFor="let name of list_requests"
-                                class="p-t-5 p-b-5 p-l-8 c-pointer">
-                                {{name.requestName}}
-                            </div>
+                            <div (click)='selectRequestId(name.requestName,name.requestId)'
+                                *ngFor="let name of list_requests" class="p-t-5 p-b-5 p-l-8 c-pointer">
+                                {{name.requestName}}</div>
                         </div>
                     </div>
                 </div>
                 <div class="d-flex">
-                    <div class="col-md-2 p-r-0"><span> Service Name</span></div>
+                    <div class="col-md-2 p-r-0"><span> Service Name</span>
+                    </div>
                     <div class="no-close col-md-3 s-list d-flex requestId-drop-down j-space m-text align-center"
                         (click)="serviceList_open = !serviceList_open">
-                        <div *ngIf="!selectedServiceId" class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">
-                            Service Names
+                        <div *ngIf="!selectedServiceId"
+                            class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">Service Names
                         </div>
                         <div *ngIf="selectedServiceName">{{selectedServiceName}}</div>
                         <div class="no-close s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub"><i
                                 class="no-close s-list fa fa-chevron-down s-text"></i>
                         </div>
                         <div class=" m-b-2 drop-list" *ngIf="serviceList_open">
-                            <div (click)="selectServiceId(name.sericeId,name.sericeName)" *ngFor="let name of list_services"
-                                class="p-t-5 p-b-5 p-l-8 c-pointer">
+                            <div (click)="selectServiceId(name.sericeId,name.sericeName)"
+                                *ngFor="let name of list_services" class="p-t-5 p-b-5 p-l-8 c-pointer">
                                 {{name.sericeName}}</div>
                         </div>
-                    </div>     
+                    </div>
+
                 </div>
+
             </div>
+
             <div class="row m-t-20 m-b-10 j-space">
                 <div class="d-flex">
-                    <div class="col-md-2 p-r-0"><span> Assignee</span></div>
+                    <div class="col-md-2 p-r-0"><span> Assignee</span>
+                    </div>
                     <div>
                         <input type="text" class="subscriber-drop-down name input assignee" #serviceAssignee>
                     </div>
@@ -114,6 +124,8 @@
                     </div>
                 </div>
             </div>
+
+
             <div class="row m-t-15">
                 <div *ngFor="let item of selectedCandidateId; let i=index"
                     class="service-item selected-product m-l-10 m-r-10 m-t-10 m-b-10">
@@ -139,6 +151,7 @@
                     <div class="col-md-4">
                         <span class="xl-text f-w-500">Candidates</span>
                     </div>
+
                 </div>
                 <hr class="m-t-10 m-b-10">
             </div>
@@ -161,5 +174,7 @@
                 </div>
             </div>
         </ng-container>
+
     </div>
+
 </div>

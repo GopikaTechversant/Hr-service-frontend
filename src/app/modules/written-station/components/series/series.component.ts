@@ -43,6 +43,11 @@ export class SeriesComponent implements OnInit{
   requestData : any = [];
   serviceId : any = [];
   payload_series_list : any = [];
+  score: number = 0;
+  candidates_score: any = [];
+
+  selectedCandidateIds: any[] = [];
+  
   constructor(private http: HttpClient, private route: ActivatedRoute,private dialog: MatDialog) {
 
     this.route.queryParams.subscribe(params => {
@@ -56,6 +61,7 @@ export class SeriesComponent implements OnInit{
     const storedSeries = localStorage.getItem('series_list');
     this.series_list = storedSeries ? JSON.parse(storedSeries): [];
     this.candidates_list = JSON.parse(localStorage.getItem('candidates_list') || '[]'); // Use the candidates_list from localStorage
+   this.fetchcandidates();
     this.fetchCandidatesWithSeriess();
   }
   fetchcandidates(): void {
@@ -99,17 +105,22 @@ fetchCandidatesWithSeriess(): void {
 }
 
 
-resultClick() : void {
+resultClick(candidate:any,id:any) : void {
+  this.selectedCandidate = candidate;
+  this.selectedCandidateIds = id;
   console.log("fetchCandidatesWithSeries");
   const dialogRef = this.dialog.open( ResultComponent ,{
     data : this.serviceId
   }
    
   );
-// dialogRef.afterClosed().subscribe(result => {
- 
-//   }
-//   });
+  dialogRef.componentInstance.scoreSubmitted.subscribe((score: number) => {
+    
+    this.selectedCandidate.examScore = score;
+    this.candidates_score.forEach((candidate:any) =>{
+      candidate.status = candidate.examScore < 10 ? 'rejected' : 'selected';
+    })
+  });
   
 }
 
@@ -221,43 +232,17 @@ localStorage.setItem('candidates_list', JSON.stringify(this.candidates_list));
 
   }
   approve():void{
-   
-  }
-  // approve(): void {
-  //   // const requestData = [];
-  
-  //   // Iterate over each series
-  //   this.series_list.forEach((series: any) => {
-     
-  //       // Iterate over each candidate in the series
-  //       series.candidates.forEach((candidate: any) => {
-  //         // Ensure the candidate has a serviceId
-         
-  //           this.serviceId.push(candidate.serviceId);
-          
-  //       });
-  
-  //       // Add series data only if there are serviceIds
-       
-  //         const seriesData = {
-  //           questionAssignee: null,
-  //           questionId: this.selectedQuestionId,
-  //           serviceIds: this.serviceId,
-  //           // Add any other data you need from the series
-  //         };
-  //         this.requestData.push(seriesData);
-  //       console.log("this.requestData",this.requestData);
-        
-      
-  //   });
-  
-  //   // Make the API call with the gathered data
-   
-  //     this.http.post(`${environment.api_url}/written-station/assign-question`, this.requestData).subscribe((res: any) => {
-  //       console.log("approve series", res);
-  //     });
+  //   const selectedIds = this.selectedCandidateIds;
+
+ 
+  //   const payload = { candidateIds: selectedIds };
+
+  //  this.http.post(`${environment.api_url}/written-station/approve/${this.requestId}`,payload).subscribe((res:any) => {
+  //   console.log("approved",res);
     
-  // }
+  //  })
+  }
+ 
   
   
   toggleTaskDetails() {

@@ -87,7 +87,9 @@
                                         class="m-b-5 m-t-2 ">
                                         <p>Team: {{candidate.candidateFirstName}}</p>
                                         <p>Service: {{candidate.candidateEmail}}</p>
-                                        <button class="btn btn-primary c-pointer" (click)="resultClick()">Result</button>
+                                        <button *ngIf="!score" class="btn btn-primary c-pointer" (click)="resultClick(candidate,candidate.serviceId)">Result</button>
+                                        <p *ngIf="candidate.examScore">Score = {{candidate.examScore}}</p>
+                                        <p *ngIf="candidate.status">Status = {{candidate.status}}</p>
 
                                 </div>
                             </div>
