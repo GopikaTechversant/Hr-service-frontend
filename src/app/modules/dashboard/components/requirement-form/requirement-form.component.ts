@@ -49,9 +49,9 @@ export class RequirementFormComponent implements OnInit{
 
 fetchServiceRequestname():void{
   this.http.get(`${environment.api_url}/service-request/list`).subscribe((res:any) => {
-    // console.log("response fetchServiceRequestname",res);
+    
     this.list_requests = res.data;
-    // console.log("list_requests", this.list_requests);
+
     
     
   })
@@ -59,36 +59,36 @@ fetchServiceRequestname():void{
 
 fetchServiceId():void{
   this.http.get(`${environment.api_url}/service-request/services`).subscribe((res:any) =>{
-    // console.log("fetchServiceId",res);
+   
     this.list_services = res.data;
   })
 }
 
 fetchcandidatesWithExperience():void{
   this.http.get(`${environment.api_url}/service-request/candidates/list?exprience=${this.selectedExperience}`).subscribe((res:any) =>{
-    // console.log("experience",res);
+    
     this.list_experience = res.candidates;
-    // console.log(" this.list_experience ", this.list_experience );
+   
     
 })
 }
  fetchSkills():void{
   this.http.get(`${environment.api_url}/candidate/skills/list`).subscribe((res:any) =>{
-    // console.log("skills",res);
+   
     this.list_skills = res.data;
   })
  }
 
 fetchcandidatesWithSkills():void{
   this.http.get(`${environment.api_url}/service-request/candidates/list?skill=${this.selectedId}`).subscribe((res) =>{
-    // console.log("candidates with skills",res);
+    
     
   })
 }
 
 fetchExperience():void{
   this.http.get(`${environment.api_url}/service-request/exp-year/list`).subscribe((res:any) =>{
-  // console.log("experince dropdown",res);
+ 
   
   this.experience_droplist = res.data;
   })
@@ -96,22 +96,7 @@ fetchExperience():void{
 
 
 
-// selectRequestId(name:any):void{
-//   // console.log("qqqq", name);
-//   let id = name.requestId;
-//   let serviceName = name["team.teamName"];
-//   this.requestList_open = false;
-//   // console.log(this.selectedId , this.selectedName);
-//     if(this.selectedId !== id && this.selectedName !== serviceName){
-   
-    
-//     this.selectedId = id;
-//     this.selectedName = serviceName;
-//     console.log(" this.selectedName", this.selectedId);
-    
-//   }
-//   this.requestList_open = true;
-// }
+
 
 selectRequestId(name:any,id:any):void{
   this.requestList_open = false;
@@ -123,15 +108,15 @@ selectRequestId(name:any,id:any):void{
 }
 
 selectServiceId(id:any,name:any):void{
-  // console.log("qqqq");
+  
   
   this.serviceList_open = false;
   if(this.selectedServiceId !== id && this.selectedServiceName !== name){
     this.selectedServiceId  = id;
+    console.log(" this.selectedServiceId ", this.selectedServiceId );
+    
     this.selectedServiceName = name;
-    // console.log("selectedServiceId ",this.selectedServiceId );
-    // console.log("selectedServiceName ",this.selectedServiceName );
-    // console.log("this.selectedServiceName",typeof(this.selectedServiceName));
+   
     
     
   }
@@ -195,12 +180,12 @@ sumitClick(){
   const requestData = {
     // serviceStation: this.stationInput.nativeElement.value,
     serviceServiceRequst: this.selectedId,
-    serviceServiceId: this.selectedServiceId,
+    // serviceServiceId: this.selectedServiceId,
     serviceCandidates: this.selectedCandidateId,
     serviceAssignee: null,
     serviceDate: this.displayDate
   };
-//  console.log("requestData",requestData);
+ console.log("requestData",requestData);
  
   
   this.http.post(`${environment.api_url}/screening-station/create`,requestData).subscribe((res:any) => {

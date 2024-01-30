@@ -13,3 +13,7 @@
     border: 0.01rem solid #B9B9B9;
     width: 200px;
   }
+
+  .status{
+    color: green;
+  }
