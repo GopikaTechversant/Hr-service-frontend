@@ -28,7 +28,7 @@ export class CandidatelistComponent implements OnInit{
     this.http.get(`${environment.api_url}/candidate/list?search=${searchQuery}`)
       .subscribe((data: any) => {
         this.candidates = data.candidates;
-        // console.log("this.candidates",this.candidates);
+        console.log("this.candidates",this.candidates);
         
       });
   }

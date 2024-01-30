@@ -1,5 +1,8 @@
 
+<div class="d-flex approve j-space">
+<input type="text" placeholder="Average score" id="averageScore">
 <button class="button" (click)="approve()">Approve</button>
+</div>
 <div class="details-body p-t-10 ">
 
     <div class="d-flex">
@@ -28,7 +31,7 @@
                         </div>
                         <div>
                             <!-- <p class="container">Questions</p> -->
-                            <div class="name-dropdown  col-md-3 s-list d-flex subscriber-drop-down j-space m-text align-center"
+                            <div class="name-dropdown p-relative col-md-3 s-list d-flex subscriber-drop-down j-space m-text align-center"
                             (click)="idListOpen = !idListOpen" >
                             <div *ngIf="!selectedQuestions[series.name]"
                                 class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1" 
@@ -37,7 +40,7 @@
                             <div *ngIf="selectedQuestions[series.name]">
                                 {{ selectedQuestions[series.name].name }}
                               </div>
-                            <div class="no-close s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub"><i
+                            <div class="no-close  s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub"><i
                                     class="no-close s-list fa fa-chevron-down s-text"></i>
                             </div>
                             <div class=" m-b-2 drop-list" *ngIf="idListOpen && series.active">
@@ -70,7 +73,7 @@
                     </div>
                 </div>
             </div>
-            <div class="item-box p-20 m-t-10">
+            <div class="item-box p-20 m-t-10" *ngIf="!refreshed">
                 <ng-container *ngFor="let series of series_list">
                     <div class="text-center flex-column align-center j-center c-pointer series-box"
                         (click)="seriesBoxClick(series)" [ngClass]="{'active-series' : series?.active}"
@@ -87,9 +90,37 @@
                                         class="m-b-5 m-t-2 ">
                                         <p>Team: {{candidate.candidateFirstName}}</p>
                                         <p>Service: {{candidate.candidateEmail}}</p>
-                                        <button *ngIf="!score" class="btn btn-primary c-pointer" (click)="resultClick(candidate,candidate.serviceId)">Result</button>
+                                        <button *ngIf="!candidate.examScore" class="btn btn-primary c-pointer" (click)="resultClick(candidate,candidate.serviceId)">Result</button>
                                         <p *ngIf="candidate.examScore">Score = {{candidate.examScore}}</p>
-                                        <p *ngIf="candidate.status">Status = {{candidate.status}}</p>
+                                        <!-- <p>Status: {{ candidate.status }}</p> -->
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </ng-container>
+            </div>
+            <div class="item-box p-20 m-t-10" *ngIf="refreshed">
+                <ng-container *ngFor="let series of series_list">
+                    <div class="text-center flex-column align-center j-center c-pointer series-box"
+                        (click)="seriesBoxClick(series)" [ngClass]="{'active-series' : series?.active}"
+                        (dragover)="allowDrop($event)" (drop)="productDrop($event,series)">
+                        <div class=" w-100 align-center j-center">
+                            <p class="m-b-0 p-t-10 p-b-5 m-text series-name m-r-10">
+                                {{series.name}}</p>
+                            <!-- <p>Candidates:</p> -->
+                            <div *ngIf="series.candidates && series.candidates.length > 0" class="d-flex ">
+                                <div *ngFor="let candidate of series.candidates" draggable="true"
+                                    (dragstart)="dragStart($event, candidate)" (dragover)="dragOver($event)"
+                                    (drop)="productDrop($event, series)" class="p-10">
+                                    <img src="assets/images/candidates.png" width="20px" height="25px"
+                                        class="m-b-5 m-t-2 ">
+                                        <p>Team: {{candidate.candidateFirstName}}</p>
+                                        <p>Service: {{candidate.candidateEmail}}</p>
+                                        <!-- <button *ngIf="!candidate.examScore" class="btn btn-primary c-pointer" (click)="resultClick(candidate,candidate.serviceId)">Result</button> -->
+                                        <p *ngIf="candidate.examScore">Score = {{candidate.examScore}}</p>
+                                        <!-- <p>Status: {{ candidate.status }}</p> -->
 
                                 </div>
                             </div>

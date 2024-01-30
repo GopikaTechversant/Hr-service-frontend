@@ -209,3 +209,8 @@ body{
     border-radius: 5px;
 
 }
+
+.approve{
+    width: 273px;
+    float: right;
+}

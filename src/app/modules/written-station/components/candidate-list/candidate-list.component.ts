@@ -14,7 +14,7 @@ export class CandidateListComponent implements OnInit{
   }
   ngOnInit(): void {
     this.http.get(`${environment.api_url}/written-station/v1/list-all`).subscribe((res:any) => {
-      // console.log("response",res);
+      console.log("res.candidates",res.candidates);
       this.candidates_list = res.candidates;
     })
   }
