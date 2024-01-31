@@ -2,7 +2,7 @@
     <div class="spinner" *ngIf="toggleSpinner">
         <img src="assets/gif/loader.gif" alt="spinner">
     </div>
-   
+
     <div class="login-section">
         <div class="container-fluid center-container" [ngStyle]="{'opacity': toggleSpinner ? '0.2' : null}">
             <div class="row header-section p-10">
@@ -14,10 +14,10 @@
             </div>
             <div class="loginContainer-1">
                 <div class="loginContainer">
-                    <!-- <img src="assets/images/Group 2699.png" width="83px" height="84px" class="m-b-20"> -->
+
                     <form [formGroup]="loginForm" (ngSubmit)="submitClick()">
                         <div class="info f-s-25">
-                           Login
+                            Login
                         </div>
                         <div class="content m-b-20">
                         </div>
@@ -32,65 +32,59 @@
                         <div class="requiredField f-s-14  m-t-10">
                             <span class="error" *ngIf="email?.errors?.['required'] && (email?.touched || submitted)">
                                 userError
-                               
+
                             </span>
                         </div>
                         <div class="p-relative mat-form-field m-t-10">
                             <span class="lockIcon mat-prefix m-t-1 m-l-2">
                                 <mat-icon>lock_open</mat-icon>
                             </span>
-                            <input class="w-100 p-l-30" [type]="hide ? 'password' : 'text'" matInput formControlName="password"
-                                placeholder="Password" />
+                            <input class="w-100 p-l-30" [type]="hide ? 'password' : 'text'" matInput
+                                formControlName="password" placeholder="Password" />
                             <span class="eyeIcon c-black" mat-icon-button matSuffix (click)="hide = !hide"
                                 [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                 <mat-icon class="m-icon">{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
                             </span>
                         </div>
-                        <!-- <a href="">Forgot Password</a> -->
+
                         <div class="clear"></div>
                         <div class="requiredField m-t-10 f-s-14">
                             <span class="error"
                                 *ngIf="password?.errors?.['required'] && (password?.touched || submitted)">
                                 passwordError
-                               
+
                             </span>
                             <span class="error" *ngIf="loginForm?.get('password')?.hasError('minlength')">
-                               minReqFourChar
-                              
+                                minReqFourChar
+
                             </span>
                             <span class="error" *ngIf="
               !loginForm?.get('password')?.hasError('minlength') &&
               !loginForm?.get('password')?.hasError('maxlength') && !password?.errors?.['required']">
                                 credentialError
-                               
+
                             </span>
                             <span class="error" *ngIf="
           
             !loginForm?.get('password')?.hasError('minlength') &&
             !loginForm?.get('password')?.hasError('maxlength') && !password?.errors?.['required']">
-                               
-                               
+
+
                             </span>
                         </div>
                         <div class="redirectField">
                         </div>
-                        <!-- <div class="form-group">
-                        <label><input type="checkbox" name="remember"> Remember me</label>
-                    </div> -->
+
                         <div class="submitField m-t-20 m-b-20">
                             <button type="submit" matRipple [matRippleCentered]="true">
                                 submit
                             </button>
                         </div>
-                        <!-- <div class="forgot-password">
-                        <p (click)="goToForgotPassword()" class="f-s-16">Reset Password</p>
-                    </div> -->
+
                     </form>
                 </div>
             </div>
-            <!-- <div class="sign-up">
-            New here? <a class="sign-up" (click)="goToSignUp()">Sign Up</a>
-        </div> -->
+
         </div>
     </div>
 </section>

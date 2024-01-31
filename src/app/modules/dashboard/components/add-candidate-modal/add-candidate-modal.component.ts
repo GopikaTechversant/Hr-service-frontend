@@ -1,9 +1,9 @@
-import { Component, OnInit ,ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { MatDialogRef } from '@angular/material/dialog';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ElementRef } from '@angular/core';
+
 import { environment } from 'src/environments/environments';
 @Component({
   selector: 'app-add-candidate-modal',
@@ -22,14 +22,14 @@ export class AddCandidateModalComponent implements OnInit {
   skillSuggestions: any[] = [];
   selectedPrimarySkills: any[] = [];
   selectedSecondarySkills: any[] = [];
-  skillName:any;
-  selectedSkill:any;
-  showSearchBar:boolean = false;
-  skillsuggestionbox:boolean = false;
-  primaryskills:any;
-  secondaryskills:any;
-  searchvalue:any;
-  // @ViewChild('skillSearchBar') skillSearchBar!: ElementRef;
+  skillName: any;
+  selectedSkill: any;
+  showSearchBar: boolean = false;
+  skillsuggestionbox: boolean = false;
+  primaryskills: any;
+  secondaryskills: any;
+  searchvalue: any;
+
   constructor(private formBuilder: UntypedFormBuilder, private dialogRef: MatDialogRef<AddCandidateModalComponent>, private http: HttpClient) {
     this.candidateForm = this.formBuilder.group({
       candidateFirstName: [null, Validators.required],
@@ -45,9 +45,6 @@ export class AddCandidateModalComponent implements OnInit {
       candidateCreatedby: [null, Validators.required],
       candidateEmail: [null, Validators.required],
       candidateMobileNo: [null, Validators.required],
-     
-      
-     
     })
   }
   ngOnInit(): void {
@@ -62,8 +59,8 @@ export class AddCandidateModalComponent implements OnInit {
 
   submitClick() {
     let candidateDetails = this.candidateForm.value;
-  this.primaryskills = this.selectedPrimarySkills.map(skill => skill.id);
-  this.secondaryskills = this.selectedSecondarySkills.map(skill => skill.id);
+    this.primaryskills = this.selectedPrimarySkills.map(skill => skill.id);
+    this.secondaryskills = this.selectedSecondarySkills.map(skill => skill.id);
     console.log("candidateDetails", candidateDetails);
     const headers = new HttpHeaders({
       'Content-Type': 'multipart/form-data'
@@ -71,19 +68,19 @@ export class AddCandidateModalComponent implements OnInit {
     });
 
     console.log("this.selectedFile", this.selectedFile);
-    
+
     const formdata = new FormData();
     for (const key in candidateDetails) {
       if (candidateDetails[key]) {
         formdata.append(key, candidateDetails[key]);
-        // console.log("candidateDetails[key]",key);
-        
+
+
       }
     }
     formdata.append('candidateResume', this.selectedFile);
-    formdata.append('candidatePrimarySkills',this.primaryskills);
-    formdata.append('candidateSecondarySkills',this.secondaryskills)
-    // formdata.append('details', JSON.stringify(candidateDetails));
+    formdata.append('candidatePrimarySkills', this.primaryskills);
+    formdata.append('candidateSecondarySkills', this.secondaryskills)
+
     console.log("Formdata final value", formdata)
 
     if (this.candidateForm) {
@@ -105,14 +102,9 @@ export class AddCandidateModalComponent implements OnInit {
 
 
   triggerFileInput() {
-    // console.log("file input");
+
     const fileInput = document.querySelector('input[type="file"]') as HTMLElement;
     fileInput.click();
-    if (fileInput) {
-
-      // console.log("file input click works");
-
-    }
   }
 
   cancel() {
@@ -120,27 +112,25 @@ export class AddCandidateModalComponent implements OnInit {
   }
 
   onSkillTypeSelected(skillType: any) {
-    // console.log("asdfg");
-    this.selectedSkillType = skillType.value;
-    // console.log("this.selectedSkillType", this.selectedSkillType);
-    // this.skillSuggestions = [];
-    
-  }
-  
 
-  getSkillSuggestions(event:any) {
-    // const searchQuery = this.selectedSkillType;
-  this.searchvalue = event?.target.value;
-  // console.log(" this.searchvalue", this.searchvalue);
-  
+    this.selectedSkillType = skillType.value;
+
+
+  }
+
+
+  getSkillSuggestions(event: any) {
+
+    this.searchvalue = event?.target.value;
+
     if (this.selectedSkillType) {
       const apiUrl = `${environment.api_url}/candidate/skills/list?q=${this.selectedSkillType}`;
       this.http.get(apiUrl).subscribe((res: any) => {
         this.skillSuggestions = res.data.filter((suggestion: any) =>
-        suggestion.skillName.toLowerCase().startsWith(this.searchvalue.toLowerCase()) && !this.isSkillSelected(suggestion)
-      );
-        // console.log("this.skillSuggestions",this.skillSuggestions);
-        
+          suggestion.skillName.toLowerCase().startsWith(this.searchvalue.toLowerCase()) && !this.isSkillSelected(suggestion)
+        );
+
+
       });
     }
   }
@@ -151,29 +141,28 @@ export class AddCandidateModalComponent implements OnInit {
   }
 
   selectSkill(suggestion: any) {
-    // console.log("selectSkill(suggestion: any) ");
-    
+
+
     const selectedSkill = { id: suggestion.id, name: suggestion.skillName };
-    // console.log("selectedSkill",selectedSkill);
+
 
     if (this.selectedSkillType === 'Primary Skills') {
       this.selectedPrimarySkills.push(selectedSkill);
-      // console.log(" this.selectedPrimarySkills", this.selectedPrimarySkills);
-      
+
+
     } else if (this.selectedSkillType === 'Secondary Skills') {
       this.selectedSecondarySkills.push(selectedSkill);
-      // console.log(" this.selectedSecondarySkills", this.selectedSecondarySkills);
-      
+
     }
-    // console.log("selectedSkill",selectedSkill);
-    this.showSearchBar = false; 
+
+    this.showSearchBar = false;
     this.skillSuggestions = [];
   }
-  
+
   toggleSearchBar() {
     this.showSearchBar = !this.showSearchBar;
-   
+
   }
-  
-  
+
+
 }

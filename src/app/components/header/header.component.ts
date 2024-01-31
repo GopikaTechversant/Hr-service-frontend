@@ -20,7 +20,6 @@ export class HeaderComponent implements OnInit {
 
   @HostListener('document:click', ['$event'])
   onBodyClick(event: Event): void {
-    // Check if the click is outside the dropdown element
     if (!this.el.nativeElement.contains(event.target)) {
       this.dropDown = false;
     }

@@ -26,19 +26,22 @@
                                 <!-- <img *ngIf="bucket?.TrolleyEntries?.length === 0 && editPermission"
                             src="assets/icons/receiving_icons/Icon feather-trash-2.png" width="12px"
                             height="13px" (click)="deleteBucket(bucket)" title="{{bucket?.biggies ? 'Delete Oversized' : (bucket?.incident ? 'Delete Incident Container' : 'Delete Container')}}"
-                            class="dlt-btn m-t-2 selector" aria-hidden="true">
+                            class="dlt-btn m-t-2 selector" aria-serieshidden="true">
                             <img *ngIf="editPermission && !bucket?.incident" src="assets/icons/receiving_icons/move-icon.png" class="c-pointer m-l-25" width="15px" title="Move products between Carts" (click)="openReceivingDetailsDialog()"> -->
                         </div>
                         <div>
                             <!-- <p class="container">Questions</p> -->
                             <div class="name-dropdown p-relative col-md-3 s-list d-flex subscriber-drop-down j-space m-text align-center"
                             (click)="idListOpen = !idListOpen" >
-                            <div *ngIf="!selectedQuestions[series.name]"
+                            <div *ngIf="!selectedQuestions[series.name] && newSeriesCreated && !series.questionId"
                                 class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1" 
                                 (click)="fetchQuestions()">Select Questions
                             </div>
                             <div *ngIf="selectedQuestions[series.name]">
                                 {{ selectedQuestions[series.name].name }}
+                              </div>
+                              <div *ngIf="refreshed && !selectedQuestions[series.name] && series.questionId">
+                                <div *ngFor="let question of assignedQuestionsName">{{question}}</div>
                               </div>
                             <div class="no-close  s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub"><i
                                     class="no-close s-list fa fa-chevron-down s-text"></i>

@@ -48,6 +48,10 @@ export class SeriesComponent implements OnInit{
   resultadded: any[]=[];
   selectedCandidateId:any;
   refreshed:boolean = false;
+  assignedQuestionIds: any[] = [];
+  assignedQuestionsName: any[]=[];
+  newSeriesCreated: boolean = false;
+  oldseries: boolean = false;
   constructor(private http: HttpClient, private route: ActivatedRoute,private dialog: MatDialog) {
 
     this.route.queryParams.subscribe(params => {
@@ -63,6 +67,8 @@ export class SeriesComponent implements OnInit{
     this.fetchCandidates();
     this.fetchCandidatesWithSeriess();
     this.fetchQuestions();
+    this.refreshed = true;
+    this.newSeriesCreated = false;
   }
   
   fetchCandidates(): void {
@@ -80,12 +86,19 @@ export class SeriesComponent implements OnInit{
 
 
 fetchQuestions(): void {
+  
   this.http.get(`${environment.api_url}/written-station/questions`).subscribe((data: any) => {
-    this.questions_list = data.data;
+
+    // this.questions_list = data.data;
+    console.log("this.assignedQuestionIds",this.assignedQuestionIds);
+    
+    this.questions_list= data.data.filter((question:any) => !this.assignedQuestionIds.includes(question.questionId));
+    console.log("this.questions_list",this.questions_list);
+    
     
   });
 }
-
+//!this.assignedQuestionIds.includes(question.questionId));
 fetchCandidatesWithSeries():void{
   this.http.get(`${environment.api_url}/screening-station/list-batch/${this.requestId}?station=2`).subscribe((res => {
     
@@ -98,8 +111,12 @@ fetchCandidatesWithSeriess(): void {
  
   this.http.get(`${environment.api_url}/written-station/questionBatchList/${this.requestId}`).subscribe((res: any) => {
     this.series_list = res.data;
-    
-   
+    res?.data.forEach((data:any) => {
+      this.assignedQuestionIds.push(data.questionId);
+      this.assignedQuestionsName.push(data.questionName);      
+    })
+  //  this.refreshed = false;
+   this.newSeriesCreated = false;
     // this.fetchQuestions();
   });
 }
@@ -118,7 +135,7 @@ fetchCandidatesWithSeriess(): void {
   onDrop(event: any) {
     
 
-    this.selectedCandidate = event.item.data;
+    this.selectedCandidate = event.itemquestionId.data;
     
 
   }
@@ -136,7 +153,12 @@ fetchCandidatesWithSeriess(): void {
 
   createSeries(): void {
 
-   
+    this.refreshed = true;
+    this.newSeriesCreated = true;
+    console.log("refresh create serues",this.refreshed);
+    
+    console.log("this.newSeriesCreated ",this.newSeriesCreated );
+    
     const newSeriesName = `Series${this.series_list.length + 1}`;
    
 
@@ -148,6 +170,7 @@ fetchCandidatesWithSeriess(): void {
 
     this.activeSeries = newSeries;
     this.activeDropdownSeries = newSeries;
+   
     
   }
   dragStart(event: any, candidate: any) {
@@ -185,6 +208,7 @@ fetchCandidatesWithSeriess(): void {
  this.payload_series_list = this.series_list.map((s: any) => {
   this.serviceId = s.candidates.map((c: any) => c?.serviceId);
   if (s.candidates) {
+    let array = s.questions
     return {
       questions: s.questions,
      
@@ -265,7 +289,7 @@ fetchCandidatesWithSeriess(): void {
       
       this.activeSeries.questions = [name]; 
       this.activeDropdownSeries = null;
-   
+     
       
     }
   }

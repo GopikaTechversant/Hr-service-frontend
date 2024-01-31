@@ -12,10 +12,6 @@
         uppercase): '' }}</span>
     </div>
     <div *ngIf="dropDown" class="drop-down p-12 d-flex p-absolute">
-      <!-- <div class="add-candidate d-flex align-center">
-        <div class=" c-pointer"><img src="assets/images/hr-servive-add-candidate.png" alt="" height="25px" weight="25px" (click)="openAddCandidateModal()"></div>
-        <div class="c-pointer p-l-3" (click)="openAddCandidateModal()">Add Candidate</div>
-      </div> -->
       <div class="station" (click)="navigate('/dashboard',false)">
         <div class="c-pointer">Screening station</div>
       </div>
@@ -25,7 +21,7 @@
       <div class="station" (click)="navigate('/technical',false)">
         <div class="c-pointer">Technical station</div>
       </div>
-      <div class="station">
+      <div class="station" (click)="navigate('/hr',false)">
         <div class="c-pointer">HR Manager</div>
       </div>
       <div class="logout d-flex align-center">

@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   toggleSpinner: boolean = false;
   submitted: boolean = false;
   hide: boolean = true;
-  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private http: HttpClient,public auth: AuthService,) {
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private http: HttpClient, public auth: AuthService,) {
     this.loginForm = this.formBuilder.group({
       email: [null, [Validators.required]],
       password: [null, [Validators.required],
@@ -33,29 +33,15 @@ export class LoginComponent implements OnInit {
 
   loginApi() {
     if (this.loginForm.value.password && this.loginForm.value.email) {
-      // const credentials = {
-      //   email: this.loginForm.value.email,
-      //   password: this.loginForm.value.password
-      // };
-      // this.http.post('/assets/user.json',credentials).subscribe((user) => {
-      //   console.log("user", user);
-
-      // });
-      this.http.get('/assets/user.json').subscribe((data:any) =>{
-        console.log("data",data);
-        data?.forEach((element: any) =>{
-          // const token = item.token;
-          // const user = item.user;
-          // console.log("user",user.userName);
-          if(element?.user?.userEmail === this.loginForm.value.email){
+      this.http.get('/assets/user.json').subscribe((data: any) => {
+        console.log("data", data);
+        data?.forEach((element: any) => {
+          if (element?.user?.userEmail === this.loginForm.value.email) {
             console.log("eucyfucfuc");
             localStorage.setItem('userToken', element?.token);
             this.auth.isAuthenticated();
-            
           }
-          
         })
-        
       })
     }
   }

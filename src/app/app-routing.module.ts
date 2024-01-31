@@ -17,6 +17,9 @@ const routes: Routes = [
   },
   {
     path: 'technical', loadChildren: () => import('./modules/technical-station/technical-station.module').then(m => m.TechnicalStationModule)
+  },
+  {
+    path: 'hr', loadChildren: () => import('./modules/hr-station/hr-station.module').then(m => m.HrStationModule)
   }
 ];
 
