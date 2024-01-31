@@ -17,7 +17,10 @@ export class ResultComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<ResultComponent>
   ) {
-    if (data) this.examServiceId = data
+    if (data){
+      console.log(data);
+      this.examServiceId = data.candidateIds
+    } 
     this.dialogRef.updateSize('30%', '40%')
   }
 
@@ -34,7 +37,6 @@ export class ResultComponent {
       examServiceId: this.examServiceId,
       examDescription: this.descriptionValue
     }
-
 
     this.http.post(`${environment.api_url}/written-station/result`, payload).subscribe((res: any) => {
       this.dialogRef.close(true);

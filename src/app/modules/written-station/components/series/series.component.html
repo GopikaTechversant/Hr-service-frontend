@@ -1,10 +1,8 @@
-
 <div class="d-flex approve j-space">
-<input type="text" placeholder="Average score" id="averageScore">
-<button class="button" (click)="approve()">Approve</button>
+    <input type="text" placeholder="Average score" id="averageScore">
+    <button class="button" (click)="approve()">Approve</button>
 </div>
 <div class="details-body p-t-10 ">
-
     <div class="d-flex">
         <div class="barcodes-ctn p-r-3">
             <div class="item-box p-20">
@@ -32,33 +30,32 @@
                         <div>
                             <!-- <p class="container">Questions</p> -->
                             <div class="name-dropdown p-relative col-md-3 s-list d-flex subscriber-drop-down j-space m-text align-center"
-                            (click)="idListOpen = !idListOpen" >
-                            <div *ngIf="!selectedQuestions[series.name] && newSeriesCreated && !series.questionId"
-                                class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1" 
-                                (click)="fetchQuestions()">Select Questions
+                                (click)="idListOpen = !idListOpen">
+                                <div class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">
+                                    <span *ngIf="!selectedQuestions[series.name] && newSeriesCreated && !series.questionId"   (click)="fetchQuestions()">
+                                        Select Questions</span>
+                                </div>
+                                <div *ngIf="selectedQuestions[series.name]">
+                                    {{ selectedQuestions[series.name].name }}
+                                </div>
+                                <div *ngIf="refreshed && !selectedQuestions[series.name] && series.questionId">{{ series.questionName }}</div>
+
+                                <div class="no-close  s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub"><i
+                                        class="no-close s-list fa fa-chevron-down s-text"></i>
+                                </div>
+                                <div class=" m-b-2 drop-list" *ngIf="idListOpen && series.active">
+                                    <div (click)="selectQuestion(question.questionId,question.questionName);assignQuestion()"
+                                        *ngFor="let question of questions_list" class=" p-t-5 p-b-5 p-l-8 c-pointer">
+                                        {{question.questionName}}</div>
+                                </div>
                             </div>
-                            <div *ngIf="selectedQuestions[series.name]">
-                                {{ selectedQuestions[series.name].name }}
-                              </div>
-                              <div *ngIf="refreshed && !selectedQuestions[series.name] && series.questionId">
-                                <div *ngFor="let question of assignedQuestionsName">{{question}}</div>
-                              </div>
-                            <div class="no-close  s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub"><i
-                                    class="no-close s-list fa fa-chevron-down s-text"></i>
-                            </div>
-                            <div class=" m-b-2 drop-list" *ngIf="idListOpen && series.active">
-                                <div (click)="selectQuestion(question.questionId,question.questionName);assignQuestion()" *ngFor="let question of questions_list"
-                                    class=" p-t-5 p-b-5 p-l-8 c-pointer">{{question.questionName}}</div>
-                            </div>
-                        </div>
                         </div>
                     </div>
                 </ng-container>
             </div>
 
         </div>
-       
-        <div class=" details-area">       
+        <div class=" details-area">
             <div class="m-b-10 candidate-box p-l-15 p-r-15 p-t-10 p-b-10">
                 <div class="w-100 notreceived">
                     <p class="candidates-heading">Candidates</p>
@@ -76,75 +73,47 @@
                     </div>
                 </div>
             </div>
-            <div class="item-box p-20 m-t-10" *ngIf="!refreshed">
+            <div class="item-box p-20 m-t-10">
                 <ng-container *ngFor="let series of series_list">
                     <div class="text-center flex-column align-center j-center c-pointer series-box"
                         (click)="seriesBoxClick(series)" [ngClass]="{'active-series' : series?.active}"
                         (dragover)="allowDrop($event)" (drop)="productDrop($event,series)">
-                        <div class=" w-100 align-center j-center">
-                            <p class="m-b-0 p-t-10 p-b-5 m-text series-name m-r-10">
-                                {{series.name}}</p>
-                            <!-- <p>Candidates:</p> -->
-                            <div *ngIf="series.candidates && series.candidates.length > 0" class="d-flex ">
+                        <div class="w-100 align-center j-center">
+                            <p class="m-b-0 p-t-10 p-b-5 m-text series-name m-r-10">{{series.name}}</p>
+                            <div *ngIf="series.candidates && series.candidates.length > 0" class="d-flex">
                                 <div *ngFor="let candidate of series.candidates" draggable="true"
                                     (dragstart)="dragStart($event, candidate)" (dragover)="dragOver($event)"
                                     (drop)="productDrop($event, series)" class="p-10">
-                                    <img src="assets/images/candidates.png" width="20px" height="25px"
-                                        class="m-b-5 m-t-2 ">
-                                        <p>Team: {{candidate.candidateFirstName}}</p>
-                                        <p>Service: {{candidate.candidateEmail}}</p>
-                                        <button *ngIf="!candidate.examScore" class="btn btn-primary c-pointer" (click)="resultClick(candidate,candidate.serviceId)">Result</button>
-                                        <p *ngIf="candidate.examScore">Score = {{candidate.examScore}}</p>
-                                        <!-- <p>Status: {{ candidate.status }}</p> -->
-
+                                    <div class="candidate-detail">
+                                        <img class="p-l-20" src="assets/images/candidates.png" width="25px"
+                                            height="30px">
+                                        <span class="p-5">Team: {{candidate.candidateFirstName}}</span>
+                                        <span class="p-5">Service: {{candidate.candidateEmail}}</span>
+                                        <button *ngIf="candidate.progressScore === null"
+                                            class="btn btn-primary c-pointer m-l-10"
+                                            (click)="resultClick(candidate, candidate.serviceId)">Add Result</button>
+                                        <span class="p-5" *ngIf="candidate.progressScore !== null">Score:
+                                            {{candidate.progressScore}}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </ng-container>
             </div>
-            <div class="item-box p-20 m-t-10" *ngIf="refreshed">
-                <ng-container *ngFor="let series of series_list">
-                    <div class="text-center flex-column align-center j-center c-pointer series-box"
-                        (click)="seriesBoxClick(series)" [ngClass]="{'active-series' : series?.active}"
-                        (dragover)="allowDrop($event)" (drop)="productDrop($event,series)">
-                        <div class=" w-100 align-center j-center">
-                            <p class="m-b-0 p-t-10 p-b-5 m-text series-name m-r-10">
-                                {{series.name}}</p>
-                            <!-- <p>Candidates:</p> -->
-                            <div *ngIf="series.candidates && series.candidates.length > 0" class="d-flex ">
-                                <div *ngFor="let candidate of series.candidates" draggable="true"
-                                    (dragstart)="dragStart($event, candidate)" (dragover)="dragOver($event)"
-                                    (drop)="productDrop($event, series)" class="p-10">
-                                    <img src="assets/images/candidates.png" width="20px" height="25px"
-                                        class="m-b-5 m-t-2 ">
-                                        <p>Team: {{candidate.candidateFirstName}}</p>
-                                        <p>Service: {{candidate.candidateEmail}}</p>
-                                        <!-- <button *ngIf="!candidate.examScore" class="btn btn-primary c-pointer" (click)="resultClick(candidate,candidate.serviceId)">Result</button> -->
-                                        <p *ngIf="candidate.examScore">Score = {{candidate.examScore}}</p>
-                                        <!-- <p>Status: {{ candidate.status }}</p> -->
 
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </ng-container>
-            </div>
         </div>
         <div class="toggle">
             <div *ngIf="isTaskDetailsOpen" class="slide-arrow-right c-pointer xxl-text fw-500"
-            (click)="toggleTaskDetails()">
-            <img src="assets/images/icons8-chevron-right-24.png" alt="" srcset="">
+                (click)="toggleTaskDetails()">
+                <img src="assets/images/icons8-chevron-right-24.png" alt="" srcset="">
             </div>
             <div *ngIf="!isTaskDetailsOpen" class="slide-arrow-left c-pointer xxl-text fw-500"
-            (click)="toggleTaskDetails()">
-            <img src="assets/images/icons8-chevron-left-24.png" alt="" srcset="">
+                (click)="toggleTaskDetails()">
+                <img src="assets/images/icons8-chevron-left-24.png" alt="" srcset="">
             </div>
-            </div>
-            <div [@toggleAnimation]="isTaskDetailsOpen ? 'visible' : 'hidden'" class="task-details-area">
-
-            </div>
+        </div>
+        <div [@toggleAnimation]="isTaskDetailsOpen ? 'visible' : 'hidden'" class="task-details-area">
+        </div>
     </div>
 </div>
