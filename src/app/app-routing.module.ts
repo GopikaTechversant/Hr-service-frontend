@@ -20,6 +20,9 @@ const routes: Routes = [
   },
   {
     path: 'hr', loadChildren: () => import('./modules/hr-station/hr-station.module').then(m => m.HrStationModule)
+  },
+  {
+    path: 'user', loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule)
   }
 ];
 

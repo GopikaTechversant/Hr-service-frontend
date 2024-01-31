@@ -10,8 +10,8 @@
     flex: 1;
 }
 
-.w-75 {
-    width: 75%;
+.w-97 {
+    width: 97%;
 }
 
 .w-25 {
@@ -117,4 +117,13 @@ td {
 
 .detail-head {
     color: #365169;
+}
+
+.page{
+    float: right;
+}
+
+.page-btn{
+    background-color: rgb(57, 57, 136);
+    color: white;
 }

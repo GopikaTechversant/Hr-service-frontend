@@ -40,9 +40,7 @@ export class TechnicalHomeComponent {
 
   navigateToDetail(id: any): void {
     this.router.navigate(['/detail'], {
-    //   queryParams: {
-    //     id: id,
-    //   }
+   
     });
   }
 }
