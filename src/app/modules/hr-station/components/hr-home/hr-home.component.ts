@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { environment } from 'src/environments/environments';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-hr-home',
   templateUrl: './hr-home.component.html',
@@ -10,8 +11,8 @@ export class HrHomeComponent implements OnInit{
   @Output() itemSelected = new EventEmitter<any>();
   candidateList: any = [];
   loader: boolean = false;
-  selectedItem: any;
-  constructor(private http:HttpClient){
+  selectedItem:any;
+  constructor(private http:HttpClient,private router: Router){
 
   }
   ngOnInit(): void {
@@ -31,5 +32,12 @@ export class HrHomeComponent implements OnInit{
   onSelect(item: any): void {
     this.selectedItem = item;
     this.itemSelected.emit(this.selectedItem);
+  }
+  navigateToDetail(id: any): void {
+    this.router.navigate(['/detail'], {
+    //   queryParams: {
+    //     id: id,
+    //   }
+    });
   }
 }
