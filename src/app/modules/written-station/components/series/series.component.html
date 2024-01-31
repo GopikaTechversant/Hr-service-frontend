@@ -89,7 +89,7 @@
                                             height="30px">
                                         <span class="p-5">Team: {{candidate.candidateFirstName}}</span>
                                         <span class="p-5">Service: {{candidate.candidateEmail}}</span>
-                                        <button *ngIf="candidate.progressScore === null"
+                                        <button *ngIf="candidate.progressScore == null"
                                             class="btn btn-primary c-pointer m-l-10"
                                             (click)="resultClick(candidate, candidate.serviceId)">Add Result</button>
                                         <span class="p-5" *ngIf="candidate.progressScore !== null">Score:

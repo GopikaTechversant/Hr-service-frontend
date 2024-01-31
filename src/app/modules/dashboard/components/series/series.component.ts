@@ -150,10 +150,13 @@ export class SeriesComponent implements OnInit {
 
   }
   approve(): void {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
+    });
     const requestData = {
       serviceIds: this.serviceIds
     }
-    this.http.post(`${environment.api_url}/screening-station/accept`, requestData).subscribe((res: any) => {
+    this.http.post(`${environment.api_url}/screening-station/accept`, requestData,{headers}).subscribe((res: any) => {
       // console.log("approve seriies", res);
       alert("Approved")
       this.approvalStatusService.updateapprovalStatus(true);

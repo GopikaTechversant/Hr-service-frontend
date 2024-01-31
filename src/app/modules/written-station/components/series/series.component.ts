@@ -53,7 +53,7 @@ export class SeriesComponent implements OnInit {
   oldseries: boolean = false;
   candidateMarkDetail: any;
   questionAssigned: boolean = false;
-
+  droppedAllowed:boolean = false;
   constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -74,6 +74,7 @@ export class SeriesComponent implements OnInit {
       this.candidates_list.forEach((candidate: any) => {
         if (candidate.serviceId) {
           this.serviceIds.push(candidate.serviceId);
+         
         }
       });
     });
@@ -103,6 +104,7 @@ export class SeriesComponent implements OnInit {
         });
       })
       this.newSeriesCreated = false;
+      
     });
   }
 
@@ -114,22 +116,7 @@ export class SeriesComponent implements OnInit {
   }
 
   allowDrop(ev: any) {
-    let dropAllowed = true;
-    for (let series of this.series_list) {
-      // If any series has a questionId, set dropAllowed to false
-      if (series.questionId) {
-        dropAllowed = false;
-        break; // Exit the loop as we found a series with a questionId
-      }
-    }
-
-    if (dropAllowed) {
-      ev.preventDefault(); // Allow drop
-    } else {
-      // Optionally, you could provide feedback here, e.g., an alert or visual indication
-      console.log("Drop not allowed: A series with assigned question detected.");
-      // Note: Not calling ev.preventDefault() here as we don't want to allow the drop
-    }
+    ev.preventDefault();
   }
 
 
@@ -157,9 +144,19 @@ export class SeriesComponent implements OnInit {
     this.activeDropdownSeries = newSeries;
   }
 
+  // dragStart(event: any, candidate: any) {
+  //   event.dataTransfer.setData('text/plain', JSON.stringify(candidate));
+    
+  // }
   dragStart(event: any, candidate: any) {
-    event.dataTransfer.setData('text/plain', JSON.stringify(candidate));
+    if (!candidate.progressId) {
+      event.dataTransfer.setData('text/plain', JSON.stringify(candidate));
+    } else {
+      
+      event.preventDefault();
+    }
   }
+  
 
   dragOver(event: DragEvent) {
     event.preventDefault();
@@ -172,7 +169,7 @@ export class SeriesComponent implements OnInit {
       const candidate = JSON.parse(candidateData);
       this.series_list.forEach((s: any) => {
         if (s?.candidates) {
-          console.log("qqqqqqqqqqqqqq", s.candidates);
+         
 
           s.candidates = s.candidates.filter((c: any) => c?.candidateId !== candidate?.candidateId);
         }
@@ -180,11 +177,14 @@ export class SeriesComponent implements OnInit {
       // Remove the candidate from the candidates_list
       this.candidates_list = this.candidates_list.filter((c: any) => c?.candidateId !== candidate?.candidateId);
       // Add the dropped candidate to the candidates array of the new series
-      series.candidates = series.candidates || [];
-      series.candidates.push(candidate);
+      if (!candidate.progressId) {
+        series.candidates = series.candidates || [];
+        series.candidates.push(candidate);
+      }
+     
       // Create a new array with only serviceId values for each series
       this.payload_series_list = this.series_list.map((s: any) => {
-        console.log(this.serviceId, "zxcghjk");
+       
 
         this.serviceId = s.candidates.map((c: any) => c?.serviceId);
         console.log("dses", this.serviceId);
@@ -275,7 +275,7 @@ export class SeriesComponent implements OnInit {
     }
     this.http.post(`${environment.api_url}/written-station/assign-question`, requestData).subscribe((res: any) => {
       console.log("approve seriies", res);
-      this.questionAssigned = true;
+      // this.questionAssigned = true;
       const index = this.questions_list.findIndex((question: any) => question.questionId === this.selectedQuestionId);
       if (index !== -1) {
         this.questions_list.splice(index, 1);
