@@ -1,30 +1,89 @@
-.sidebar{
+.sidebar {
     margin-top: 11px;
     box-shadow: #0000001a 0 4px 6px -1px, #0000000f 0 2px 4px -1px;
     overflow: hidden;
     height: calc(100vh - 175px);
     padding-bottom: 20px;
     overflow: auto !important;
+    border-radius: 5px !important;
 
 }
 
-.head{
+.head {
     background-color: #9bcfff;
     min-height: 50px;
     max-height: 50px;
-    text-align: center;
+    /* text-align: center; */
     padding-top: 10px;
-    position: sticky;
-}
-
-.details{
     display: flex;
     justify-content: space-between;
 }
 
-.detail-head{
+.details {
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: start;
+}
+
+.detail-head {
     color: #365169;
 }
 
+.justify-content-end {
+    justify-content: end;
+}
 
+.head-wrap {
+    width: 190px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
 
+.btn {
+    padding: 0px 22px;
+    font-size: 0.92rem;
+    margin-right: 10px;
+    border: 1px solid #1a2952;
+    color: #fff;
+    background-color: rgb(57, 57, 136);
+    outline: none;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+input[type="text"] {
+    outline: none !important;
+    border: 1px solid rgb(207, 205, 205);
+    border-radius: 5px;
+    height: 25px;
+}
+
+.btn-reject {
+    padding: 0px 22px;
+    font-size: 0.92rem;
+    margin-right: 10px;
+    border: 1px solid #ff0419;
+    color: #fff;
+    background-color: rgb(150, 39, 45);
+    outline: none;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.btn-approve {
+    padding: 0px 22px;
+    font-size: 0.92rem;
+    margin-right: 10px;
+    border: 1px solid #00144d;
+    color: #fff;
+    background-color: rgb(15, 15, 247);
+    outline: none;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.btn-parent {
+    text-align: center;
+}

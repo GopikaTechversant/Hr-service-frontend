@@ -10,11 +10,11 @@
     flex: 1;
 }
 
-.w-75{
+.w-75 {
     width: 75%;
 }
 
-.w-25{
+.w-25 {
     width: 25%;
 }
 
@@ -115,6 +115,6 @@ td {
     margin-right: 5px;
 }
 
-.detail-head{
+.detail-head {
     color: #365169;
 }
