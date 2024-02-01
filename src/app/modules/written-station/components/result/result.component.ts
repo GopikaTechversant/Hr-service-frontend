@@ -41,6 +41,9 @@ export class ResultComponent {
     this.http.post(`${environment.api_url}/written-station/result`, payload).subscribe((res: any) => {
       this.dialogRef.close(true);
       this.scoreSubmitted.emit(parseInt(this.scoreValue, 10));
+    }, err => {
+      if (err?.status === 500) alert("Internal Server Error")
+      else alert(err?.error?.message ? err?.error?.message : "Cannot update Result")
     });
 
   }

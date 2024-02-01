@@ -275,7 +275,8 @@ export class SeriesComponent implements OnInit {
     }
     this.http.post(`${environment.api_url}/written-station/assign-question`, requestData).subscribe((res: any) => {
       console.log("approve seriies", res);
-      // this.questionAssigned = true;
+      this.questionAssigned = true;
+      this.fetchCandidatesWithSeriess();
       const index = this.questions_list.findIndex((question: any) => question.questionId === this.selectedQuestionId);
       if (index !== -1) {
         this.questions_list.splice(index, 1);

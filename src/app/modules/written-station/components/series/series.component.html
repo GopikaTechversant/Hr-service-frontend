@@ -39,11 +39,10 @@
                                     {{ selectedQuestions[series.name].name }}
                                 </div>
                                 <div *ngIf="refreshed && !selectedQuestions[series.name] && series.questionId">{{ series.questionName }}</div>
-
                                 <div class="no-close  s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub"><i
                                         class="no-close s-list fa fa-chevron-down s-text"></i>
                                 </div>
-                                <div class=" m-b-2 drop-list" *ngIf="idListOpen && series.active">
+                                <div class=" m-b-2 drop-list" *ngIf="idListOpen && series.active &&  !(!selectedQuestions[series.name] && series.questionId)">
                                     <div (click)="selectQuestion(question.questionId,question.questionName);assignQuestion()"
                                         *ngFor="let question of questions_list" class=" p-t-5 p-b-5 p-l-8 c-pointer">
                                         {{question.questionName}}</div>

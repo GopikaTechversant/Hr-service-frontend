@@ -18,7 +18,7 @@ export class TechnicalSidebarComponent {
   skillValue: string = '';
   progressAdd: boolean = false;
   progressQuery = {
-    progressAssignee: "1",
+    progressAssignee: "",
     progressSkill: "",
     progressServiceId: 0,
     progressScore: "",
@@ -45,7 +45,7 @@ export class TechnicalSidebarComponent {
       this.progressAdd = false;
       this.serviceId = this.selectedItem.serviceId;
       this.statonId = this.selectedItem.serviceServiceId;
-      this.progressAssignee = this.selectedItem.serviceAssignee;
+      this.progressAssignee = this.selectedItem.serviceAssignee;      
       if (this.selectedItem.serviceStatus === 'pending') this.showbtn = true;
       if (this.selectedItem.serviceStatus !== 'pending') this.showbtn = false;
       this.skillValue = '';
@@ -87,7 +87,7 @@ export class TechnicalSidebarComponent {
     this.descriptionValue = descriptionElement ? descriptionElement.value : '';
 
     this.progressQuery = {
-      progressAssignee: this.progressAssignee || '',
+      progressAssignee: this.progressAssignee ,
       progressSkill: this.skillValue,
       progressServiceId: this.serviceId || 0,
       progressScore: this.scoreValue,
