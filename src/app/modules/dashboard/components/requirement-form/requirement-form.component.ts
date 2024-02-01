@@ -190,7 +190,7 @@ sumitClick(){
   
   this.http.post(`${environment.api_url}/screening-station/create`,requestData).subscribe((res:any) => {
     // console.log("posted successfully",res);
-    
+    alert("Submitted Successfully");
   })
 }
 

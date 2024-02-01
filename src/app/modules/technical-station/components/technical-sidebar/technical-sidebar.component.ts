@@ -52,7 +52,7 @@ export class TechnicalSidebarComponent {
       this.scoreValue = '';
       this.descriptionValue = '';
       this.progressQuery = {
-        progressAssignee: this.progressAssignee,
+        progressAssignee: this.progressAssignee ? this.progressAssignee : '16',
         progressSkill: "",
         progressServiceId: this.serviceId || 0,
         progressScore: "",
@@ -87,7 +87,7 @@ export class TechnicalSidebarComponent {
     this.descriptionValue = descriptionElement ? descriptionElement.value : '';
 
     this.progressQuery = {
-      progressAssignee: this.progressAssignee ,
+      progressAssignee:  this.progressAssignee ? this.progressAssignee : '16' ,
       progressSkill: this.skillValue,
       progressServiceId: this.serviceId || 0,
       progressScore: this.scoreValue,
