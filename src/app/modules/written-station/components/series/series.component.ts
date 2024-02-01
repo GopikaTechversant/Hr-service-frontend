@@ -142,6 +142,7 @@ export class SeriesComponent implements OnInit {
     this.series_list.push(newSeries);
     this.activeSeries = newSeries;
     this.activeDropdownSeries = newSeries;
+    this.fetchCandidatesWithSeries();
   }
 
   // dragStart(event: any, candidate: any) {
@@ -164,13 +165,10 @@ export class SeriesComponent implements OnInit {
 
   productDrop(event: any, series: any) {
     event.preventDefault();
-    if (!this.questionAssigned) {
       const candidateData = event.dataTransfer.getData('text/plain');
       const candidate = JSON.parse(candidateData);
       this.series_list.forEach((s: any) => {
         if (s?.candidates) {
-         
-
           s.candidates = s.candidates.filter((c: any) => c?.candidateId !== candidate?.candidateId);
         }
       });
@@ -201,7 +199,6 @@ export class SeriesComponent implements OnInit {
         return s;
       });
       this.series_list = [...this.series_list];
-    }
     console.log("this.series_list", this.series_list);
     event.preventDefault();
     event.stopPropagation();
