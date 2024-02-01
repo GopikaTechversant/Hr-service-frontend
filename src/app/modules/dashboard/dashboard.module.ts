@@ -18,13 +18,14 @@ import { RequirementFormComponent } from './components/requirement-form/requirem
 import { ServiceRequestComponent } from './components/service-request/service-request.component';
 import { RequirementCandidateListComponent } from './components/requirement-candidate-list/requirement-candidate-list.component';
 import { SeriesComponent } from './components/series/series.component';
+import { LandingComponent } from './components/landing/landing.component';
 
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent,
+  { path: '', component: LandingComponent,
   children: [
     // {path: '', component: LeftSidebarComponent},
-    {path: '', component: CandidatelistComponent},
+    {path: '', component: DashboardComponent},
     {path: 'requirement', component: RequirementFormComponent},
     {path: 'service-requirement', component: ServiceRequestComponent},
     {path: 'candidate-list', component: RequirementCandidateListComponent},
@@ -46,7 +47,8 @@ const routes: Routes = [
     RequirementFormComponent,
     ServiceRequestComponent,
     RequirementCandidateListComponent,
-    SeriesComponent
+    SeriesComponent,
+    LandingComponent
   ],
   imports: [
     CommonModule,
