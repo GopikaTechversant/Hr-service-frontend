@@ -35,6 +35,10 @@ export class SeriesComponent implements OnInit {
   isTaskDetailsOpen: boolean = false;
   serviceIds: any = [];
   approvedServiceId: any;
+  candidateServiceId:any;
+  selectedCandidates : any[]=[];
+  rejectedCandidates : any[]=[];
+  payload:any;
   constructor(private http: HttpClient, private route: ActivatedRoute,private approvalStatusService: ApprovalStatusService) {
 
     this.route.queryParams.subscribe(params => {
@@ -177,5 +181,30 @@ export class SeriesComponent implements OnInit {
     // } else {
     // this.isTaskDetailsOpen = !this.isTaskDetailsOpen;
     // }
+  }
+  onCandidateSelectionChange(candidateId:any,action:string):void{
+    // this.candidates_list.forEach((candidate:any) => {
+    //   this.candidateServiceId = candidate.serviceId;
+    //   console.log("this.candidateDetail ",this.candidateServiceId);
+     
+      
+    // })
+    this.candidateServiceId = candidateId;
+    const payload = {
+      serviceId : this.candidateServiceId,
+      stationId : 1
+    }
+    if(action === 'reject'){
+      // this.selectedCandidates.push(candidateId);
+      this.http.post(`${environment.api_url}/screening-station/reject/candidate`,payload).subscribe((res:any) => {
+        console.log("res");
+        
+      })
+    }
+    // if(action === 'select'){
+    //   this.http.post(`${environment.api_url}`/)
+    // }
+    console.log("this.selectedCandidates",this.selectedCandidates);
+    
   }
 }

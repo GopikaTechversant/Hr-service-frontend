@@ -67,6 +67,10 @@
                             <p>Team: {{candidate.candidateFirstName}}</p>
                             <p>Service: {{candidate.candidateEmail}}</p>
                             <p>Service Id: {{candidate.serviceId}}</p>
+                            <input type="radio" name="candidateSelection" [value]="candidate.serviceId" (change)="onCandidateSelectionChange(candidate.serviceId,'select')">
+                            <label for="select">Select</label>
+                            <input type="radio" name="candidateSelection" [value]="candidate.serviceId" (change)="onCandidateSelectionChange(candidate.serviceId,'reject')">
+                            <label for="reject">Reject</label>
                             <!-- <p>Service Service ID: {{ candidate[0].serviceServiceId }}</p> -->
                         </div>
                     </div>

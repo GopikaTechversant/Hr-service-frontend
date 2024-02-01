@@ -54,6 +54,9 @@ export class SeriesComponent implements OnInit {
   candidateMarkDetail: any;
   questionAssigned: boolean = false;
   droppedAllowed:boolean = false;
+  candidateServiceId:any;
+  rejected:boolean = false;
+  rejectedArray :any[]=[];
   constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -175,6 +178,7 @@ export class SeriesComponent implements OnInit {
       // Remove the candidate from the candidates_list
       this.candidates_list = this.candidates_list.filter((c: any) => c?.candidateId !== candidate?.candidateId);
       // Add the dropped candidate to the candidates array of the new series
+      
       if (!candidate.progressId) {
         series.candidates = series.candidates || [];
         series.candidates.push(candidate);
@@ -283,5 +287,23 @@ export class SeriesComponent implements OnInit {
     )
   }
 
-
+  onCandidateSelectionChange(candidateId:any,action:string):void{
+  
+    this.candidateServiceId = candidateId;
+    const payload = {
+      serviceId : this.candidateServiceId,
+      stationId : 2
+    }
+    if(action === 'reject'){
+     
+      this.http.post(`${environment.api_url}/screening-station/reject/candidate`,payload).subscribe((res:any) => {
+        console.log("res");
+        this.rejectedArray.push(this.candidateServiceId);
+        console.log(" this.rejectedArray", this.rejectedArray);
+        
+      })
+    }
+   
+    
+  }
 }

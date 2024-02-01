@@ -20,18 +20,11 @@
                         <div class="d-flex w-100 align-center j-center">
                             <p class="m-b-0 p-t-10 p-b-5 m-text series-name m-r-10">
                                 {{series.name}}
-                                <!-- (<span class="dark-blue">{{bucket?.TrolleyEntries?.length}}</span>)</p> -->
-                                <!-- <img *ngIf="bucket?.TrolleyEntries?.length === 0 && editPermission"
-                            src="assets/icons/receiving_icons/Icon feather-trash-2.png" width="12px"
-                            height="13px" (click)="deleteBucket(bucket)" title="{{bucket?.biggies ? 'Delete Oversized' : (bucket?.incident ? 'Delete Incident Container' : 'Delete Container')}}"
-                            class="dlt-btn m-t-2 selector" aria-hidden="true">
-                            <img *ngIf="editPermission && !bucket?.incident" src="assets/icons/receiving_icons/move-icon.png" class="c-pointer m-l-25" width="15px" title="Move products between Carts" (click)="openReceivingDetailsDialog()"> -->
+                               
                         </div>
                         <div class="series-parent j-center">
                             <p class="container">Container</p>
-                            <!-- <ngx-barcode [bc-value]="bucket?.barCode" [bc-display-value]="true" [bc-width]="1" [bc-height]="50"
-                            [bc-width]="3" [bc-font-size]="13"></ngx-barcode> -->
-                            <!-- <button>barcode</button> -->
+                           
                         </div>
                     </div>
                 </ng-container>
@@ -55,7 +48,10 @@
                             <p>Team: {{candidate.candidateFirstName}}</p>
                             <p>Service: {{candidate.candidateEmail}}</p>
                             <p>Service Id: {{candidate.serviceId}}</p>
-                            <!-- <p>Service Service ID: {{ candidate[0].serviceServiceId }}</p> -->
+                            <input type="radio" name="candidateSelection" [value]="candidate.serviceId" (change)="onCandidateSelectionChange(candidate.serviceId,'select')">
+                            <label for="select">Select</label>
+                            <input type="radio" name="candidateSelection" [value]="candidate.serviceId" (change)="onCandidateSelectionChange(candidate.serviceId,'reject')">
+                            <label for="reject">Reject</label>
 
                         </div>
                     </div>
