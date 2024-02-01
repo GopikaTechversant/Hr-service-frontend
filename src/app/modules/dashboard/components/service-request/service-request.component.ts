@@ -99,7 +99,7 @@ export class ServiceRequestComponent implements OnInit{
    
     this.http.post(`${environment.api_url}/service-request/create`,requestData).subscribe((res) =>{
       // console.log("requirement post",res);
-      
+      alert("Submitted Successfully")
     })
   }
 }
