@@ -1,0 +1,19 @@
+.header {
+    min-height: 70px !important;
+    max-height: 70px !important;
+    position: sticky;
+    max-width: 100%;
+}
+
+.main {
+    width: 100%;
+    overflow: hidden;
+}
+
+.w-75 {
+    width: 75%;
+}
+
+.w-25 {
+    width: 25%;
+}
