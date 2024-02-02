@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environments';
 })
 export class TechnicalSidebarComponent {
   @Input() selectedItem: any
+  @Input() selectedCandidatesIds: any[] = [];
   showRequest: boolean = false;
   showcandidates: boolean = false;
   showProgress: boolean = true;
@@ -38,6 +39,7 @@ export class TechnicalSidebarComponent {
   };
   statonId: number = 0;
   showWarning: boolean = false;
+  newSelectedCandidatesIds: any;
   constructor(private http: HttpClient) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -45,7 +47,7 @@ export class TechnicalSidebarComponent {
       this.progressAdd = false;
       this.serviceId = this.selectedItem.serviceId;
       this.statonId = this.selectedItem.serviceServiceId;
-      this.progressAssignee = this.selectedItem.serviceAssignee;      
+      this.progressAssignee = this.selectedItem.serviceAssignee;
       if (this.selectedItem.serviceStatus === 'pending') this.showbtn = true;
       if (this.selectedItem.serviceStatus !== 'pending') this.showbtn = false;
       this.skillValue = '';
@@ -73,9 +75,10 @@ export class TechnicalSidebarComponent {
         }
       }
     }
+    if (changes['selectedCandidatesIds']) {
+      this.newSelectedCandidatesIds = changes['selectedCandidatesIds'].currentValue;
+    }
   }
-
-
   addProgress(): void {
     const skillElement = document.getElementById('skill') as HTMLInputElement;
     this.skillValue = skillElement ? skillElement.value : '';
@@ -87,7 +90,7 @@ export class TechnicalSidebarComponent {
     this.descriptionValue = descriptionElement ? descriptionElement.value : '';
 
     this.progressQuery = {
-      progressAssignee:  this.progressAssignee ? this.progressAssignee : '16' ,
+      progressAssignee: this.progressAssignee ? this.progressAssignee : '16',
       progressSkill: this.skillValue,
       progressServiceId: this.serviceId || 0,
       progressScore: this.scoreValue,
@@ -125,7 +128,8 @@ export class TechnicalSidebarComponent {
 
   approveClick(): void {
     this.approveQuery = {
-      serviceSeqId: this.serviceId
+      // serviceSeqId: this.serviceId
+      serviceSeqId: this.selectedCandidatesIds?.length > 0 ? this.selectedCandidatesIds : this.serviceId
     }
     if (this.progressAdd) {
       this.http.post(`${environment.api_url}/technical-station/approve`, this.approveQuery).subscribe({

@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatDialog } from '@angular/material/dialog';
 import { ResultComponent } from '../result/result.component';
+import { FeedbackComponent } from 'src/app/components/feedback/feedback.component';
 @Component({
   selector: 'app-series',
   templateUrl: './series.component.html',
@@ -53,10 +54,11 @@ export class SeriesComponent implements OnInit {
   oldseries: boolean = false;
   candidateMarkDetail: any;
   questionAssigned: boolean = false;
-  droppedAllowed:boolean = false;
-  candidateServiceId:any;
-  rejected:boolean = false;
-  rejectedArray :any[]=[];
+  droppedAllowed: boolean = false;
+  candidateServiceId: any;
+  rejected: boolean = false;
+  rejectedArray: any[] = [];
+  selectedCandidatesIds: any;
   constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -77,7 +79,7 @@ export class SeriesComponent implements OnInit {
       this.candidates_list.forEach((candidate: any) => {
         if (candidate.serviceId) {
           this.serviceIds.push(candidate.serviceId);
-         
+
         }
       });
     });
@@ -107,7 +109,7 @@ export class SeriesComponent implements OnInit {
         });
       })
       this.newSeriesCreated = false;
-      
+
     });
   }
 
@@ -121,22 +123,17 @@ export class SeriesComponent implements OnInit {
   allowDrop(ev: any) {
     ev.preventDefault();
   }
-
-
   onDrop(event: any) {
     this.selectedCandidate = event.itemquestionId.data;
   }
-
   moved(event: any) {
     this.pointerPosition = event.pointerPosition;
     console.log();
 
   }
-
   itemDropped(event: any, series: any) {
 
   }
-
   createSeries(): void {
     this.refreshed = true;
     this.newSeriesCreated = true;
@@ -147,62 +144,46 @@ export class SeriesComponent implements OnInit {
     this.activeDropdownSeries = newSeries;
     this.fetchCandidatesWithSeries();
   }
-
-  // dragStart(event: any, candidate: any) {
-  //   event.dataTransfer.setData('text/plain', JSON.stringify(candidate));
-    
-  // }
   dragStart(event: any, candidate: any) {
     if (!candidate.progressId) {
       event.dataTransfer.setData('text/plain', JSON.stringify(candidate));
     } else {
-      
+
       event.preventDefault();
     }
   }
-  
-
   dragOver(event: DragEvent) {
     event.preventDefault();
   }
 
   productDrop(event: any, series: any) {
     event.preventDefault();
-      const candidateData = event.dataTransfer.getData('text/plain');
-      const candidate = JSON.parse(candidateData);
-      this.series_list.forEach((s: any) => {
-        if (s?.candidates) {
-          s.candidates = s.candidates.filter((c: any) => c?.candidateId !== candidate?.candidateId);
-        }
-      });
-      // Remove the candidate from the candidates_list
-      this.candidates_list = this.candidates_list.filter((c: any) => c?.candidateId !== candidate?.candidateId);
-      // Add the dropped candidate to the candidates array of the new series
-      
-      if (!candidate.progressId) {
-        series.candidates = series.candidates || [];
-        series.candidates.push(candidate);
+    const candidateData = event.dataTransfer.getData('text/plain');
+    const candidate = JSON.parse(candidateData);
+    this.series_list.forEach((s: any) => {
+      if (s?.candidates) {
+        s.candidates = s.candidates.filter((c: any) => c?.candidateId !== candidate?.candidateId);
       }
-     
-      // Create a new array with only serviceId values for each series
-      this.payload_series_list = this.series_list.map((s: any) => {
-       
+    });
 
-        this.serviceId = s.candidates.map((c: any) => c?.serviceId);
-        console.log("dses", this.serviceId);
-
-        if (s.candidates) {
-
-          let array = s.questions
-          console.log("array", array);
-
-          return {
-            questions: s.questions,
-          };
-        }
-        return s;
-      });
-      this.series_list = [...this.series_list];
+    this.candidates_list = this.candidates_list.filter((c: any) => c?.candidateId !== candidate?.candidateId);
+    if (!candidate.progressId) {
+      series.candidates = series.candidates || [];
+      series.candidates.push(candidate);
+    }
+    this.payload_series_list = this.series_list.map((s: any) => {
+      this.serviceId = s.candidates.map((c: any) => c?.serviceId);
+      console.log("dses", this.serviceId);
+      if (s.candidates) {
+        let array = s.questions
+        console.log("array", array);
+        return {
+          questions: s.questions,
+        };
+      }
+      return s;
+    });
+    this.series_list = [...this.series_list];
     console.log("this.series_list", this.series_list);
     event.preventDefault();
     event.stopPropagation();
@@ -218,7 +199,7 @@ export class SeriesComponent implements OnInit {
     const averageScoreInput = document.getElementById('averageScore') as HTMLInputElement;
     const averageScore = averageScoreInput.value;
     const payload = {
-      serviceId: this.requestId,
+      serviceId: this.selectedCandidatesIds?.length > 0 ? this.selectedCandidatesIds : this.requestId,
       averageScore: averageScore
     };
     this.http.post(`${environment.api_url}/written-station/approve`, payload).subscribe((res: any) => {
@@ -287,23 +268,29 @@ export class SeriesComponent implements OnInit {
     )
   }
 
-  onCandidateSelectionChange(candidateId:any,action:string):void{
-  
-    this.candidateServiceId = candidateId;
-    const payload = {
-      serviceId : this.candidateServiceId,
-      stationId : 2
-    }
-    if(action === 'reject'){
-     
-      this.http.post(`${environment.api_url}/screening-station/reject/candidate`,payload).subscribe((res:any) => {
-        console.log("res");
-        this.rejectedArray.push(this.candidateServiceId);
-        console.log(" this.rejectedArray", this.rejectedArray);
-        
-      })
-    }
-   
-    
+  onCandidateSelectionChange(event: any, candidate: any, index: any): void {
+    // candidate.serviceStatus = action;
+    let action = event?.target?.value;
+    this.candidateServiceId = candidate?.serviceId;
+    // console.log(action, candidate);
+
+    const dialogRef = this.dialog.open(FeedbackComponent, {
+      data: { candidateId: candidate?.serviceId, stationId: 2, status: action },
+      width: '400px',
+      height: '200px'
+    })
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        candidate.serviceStatus = action;
+      }
+      console.log(candidate)
+      let element: any = document.getElementById('status' + index);
+      if (element) element.value = candidate.serviceStatus;
+    })
+    dialogRef.componentInstance.selectedCandidatesEmitter.subscribe((selectedCandidatesIds: any[]) => {
+      this.selectedCandidatesIds.push(...selectedCandidatesIds);
+      console.log("this.selectedCandidatesIds", this.selectedCandidatesIds);
+
+    })
   }
 }

@@ -2,7 +2,14 @@
     <div class="head p-10">
         <span *ngIf="selectedItem" class="f-w-500 f-s-16">{{selectedItem['candidate.candidateFirstName']}}
             {{selectedItem['candidate.candidateLastName']}}</span>
-        <!-- <span *ngIf="selectedItem" class="f-w-500 f-s-16">{{selectedItem.serviceStatus}}</span> -->
+
+        <td><select [id]="'status'"
+                (change)="onCandidateSelectionChange($event, selectedItem['serviceStatus'],selectedItem['serviceId'])">
+                <option value="pending"
+                    [selected]="selectedItem['candidate.serviceStatus'] === 'pending' ? true : false">Selected</option>
+                <option value="rejected"
+                    [selected]="selectedItem['candidate.serviceStatus'] === 'rejected' ? true : false">Rejected</option>
+            </select></td>
     </div>
     <div class="p-t-10 p-b-10 detail-head">
         <i class="fa xs-text drop-down-arrow icon-color c-pointer p-r-5 p-b-2"
@@ -41,42 +48,34 @@
         </div>
     </div>
     <div class="p-t-10 p-b-10 detail-head">
-        <i class="fa xs-text drop-down-arrow icon-color c-pointer p-r-5 p-b-2"
-            (click)="showProgress = !showProgress"
+        <i class="fa xs-text drop-down-arrow icon-color c-pointer p-r-5 p-b-2" (click)="showProgress = !showProgress"
             [ngClass]="!showProgress ? 'fa-chevron-right' : 'fa-chevron-down'" aria-hidden="true"></i>
         <span class="f-w-500">Add Offer</span>
     </div>
     <div *ngIf="showProgress">
-        <!-- <div class="details p-10">
-            <span class="f-w-500 head-wrap">Service ID</span>
-            <span class="head-wrap" id="serviceid">{{selectedItem['serviceId']}}</span>
-        </div> -->
+
         <div class="details p-10">
             <span class="f-w-500 head-wrap">Offer Salary</span>
-            <input  type="text" class="head-wrap" id="salary"  (click)="showWarning = false" >
-            <!-- <span *ngIf="showScore" class="head-wrap">{{progressQuery.progressScore}}</span> -->
+            <input type="text" class="head-wrap" id="salary" (click)="showWarning = false">
+
         </div>
         <div class="details p-10">
             <span class="f-w-500 head-wrap">Description</span>
-            <input  type="text" class="head-wrap" id="description"  (click)="showWarning = false">
-            <!-- <span *ngIf="showDescription" class="head-wrap">{{progressQuery.progressDescription}}</span> -->
+            <input type="text" class="head-wrap" id="description" (click)="showWarning = false">
+
         </div>
         <div class="details p-10">
             <span class="f-w-500 head-wrap">Joining Date</span>
-            <!-- <input *ngIf="!showDate" type="text" class="head-wrap" id="date"  (click)="showWarning = false"> -->
-            <input class="head-wrap" matInput [matDatepicker]="picker"
-            (dateChange)="dateChange($event)" (click)="picker?.open()" [value]="displayDate">
+
+            <input class="head-wrap" matInput [matDatepicker]="picker" (dateChange)="dateChange($event)"
+                (click)="picker?.open()" [value]="displayDate">
             <span> <mat-datepicker #picker class=""></mat-datepicker>
                 <i class="fa fa-calendar date-picker c-pointer m-r-20 p-absolute" aria-hidden="true"
                     (click)="picker?.open()"></i></span>
-            <!-- <span *ngIf="showDate" class="head-wrap">{{progressQuery.progressDescription}}</span> -->
         </div>
-        
         <div class="details p-10" *ngIf="showbtn">
             <span class="f-w-500 head-wrap"></span>
             <button class="btn c-pointer" (click)="addOffer()">Submit</button>
         </div>
     </div>
 </div>
-
-

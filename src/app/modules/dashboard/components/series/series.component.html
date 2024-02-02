@@ -20,22 +20,22 @@
                         <div class="d-flex w-100 align-center j-center">
                             <p class="m-b-0 p-t-10 p-b-5 m-text series-name m-r-10">
                                 {{series.name}}
-                               
+
                         </div>
                         <div class="series-parent j-center">
                             <p class="container">Container</p>
-                           
+
                         </div>
                     </div>
                 </ng-container>
             </div>
 
         </div>
-       
+
         <div class=" details-area">
-           
+
             <div class="m-b-10 candidate-box p-l-15 p-r-15 p-t-10 p-b-10">
-               
+
                 <div class="w-100 notreceived">
                     <p class="candidates-heading">Candidates</p>
                     <div class="row d-flex">
@@ -48,10 +48,14 @@
                             <p>Team: {{candidate.candidateFirstName}}</p>
                             <p>Service: {{candidate.candidateEmail}}</p>
                             <p>Service Id: {{candidate.serviceId}}</p>
-                            <input type="radio" name="candidateSelection" [value]="candidate.serviceId" (change)="onCandidateSelectionChange(candidate.serviceId,'select')">
-                            <label for="select">Select</label>
-                            <input type="radio" name="candidateSelection" [value]="candidate.serviceId" (change)="onCandidateSelectionChange(candidate.serviceId,'reject')">
-                            <label for="reject">Reject</label>
+
+                            <select [id]="'status' + i" (change)="onCandidateSelectionChange($event, candidate, i)">
+                                <option value="pending"
+                                    [selected]="candidate?.serviceStatus === 'pending' ? true : false">Selected</option>
+                                <option value="rejected"
+                                    [selected]="candidate?.serviceStatus === 'rejected' ? true : false">Rejected
+                                </option>
+                            </select>
 
                         </div>
                     </div>
@@ -75,9 +79,9 @@
                                     (drop)="productDrop($event, series)" class="p-10">
                                     <img src="assets/images/candidates.png" width="20px" height="25px"
                                         class="m-b-5 m-t-2 ">
-                                        <p>Team: {{candidate.candidateFirstName}}</p>
-                                        <p>Service: {{candidate.candidateEmail}}</p>
-                                       
+                                    <p>Team: {{candidate.candidateFirstName}}</p>
+                                    <p>Service: {{candidate.candidateEmail}}</p>
+
                                 </div>
                             </div>
                         </div>
@@ -88,16 +92,16 @@
         </div>
         <div class="toggle">
             <div *ngIf="isTaskDetailsOpen" class="slide-arrow-right c-pointer xxl-text fw-500"
-            (click)="toggleTaskDetails()">
-            <img src="assets/images/icons8-chevron-right-24.png" alt="" srcset="">
+                (click)="toggleTaskDetails()">
+                <img src="assets/images/icons8-chevron-right-24.png" alt="" srcset="">
             </div>
             <div *ngIf="!isTaskDetailsOpen" class="slide-arrow-left c-pointer xxl-text fw-500"
-            (click)="toggleTaskDetails()">
-            <img src="assets/images/icons8-chevron-left-24.png" alt="" srcset="">
+                (click)="toggleTaskDetails()">
+                <img src="assets/images/icons8-chevron-left-24.png" alt="" srcset="">
             </div>
-            </div>
-            <div [@toggleAnimation]="isTaskDetailsOpen ? 'visible' : 'hidden'" class="task-details-area">
+        </div>
+        <div [@toggleAnimation]="isTaskDetailsOpen ? 'visible' : 'hidden'" class="task-details-area">
 
-            </div>
+        </div>
     </div>
 </div>

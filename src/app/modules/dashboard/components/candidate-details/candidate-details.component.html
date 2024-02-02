@@ -1,12 +1,10 @@
 <img src="assets/images/close-img.jpg" alt="" height="20px" width="20px" class="close-img">
 <div class="main" *ngIf="candidateDetails">
-   
+
     <div class="" *ngFor="let detail of candidateDetails">
         <p class="name m-t-25">{{detail.candidateFirstName}} {{detail.candidateLastName}}</p>
         <div class="details container ">
             <div class="d-flex j-space">
-                <!-- <p class="data ">Email : {{detail.candidateEmail}}</p>
-                <p class="data">Mob No : {{detail.candidateMobileNo}}</p> -->
                 <div class="d-flex align-center ">
                     <p class="label">Email : </p>
                     <p class="data">{{detail.candidateEmail}}</p>
@@ -71,7 +69,7 @@
                         <p>View Resume</p>
                         <img src="assets/images/view-resume.png" alt="" height="25px" width="25px">
                     </button>
-                 
+
                 </div>
             </div>
         </div>

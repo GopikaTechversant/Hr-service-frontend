@@ -14,12 +14,13 @@
                     <td>Email</td>
                     <td>Contact Number</td>
                     <td>Status</td>
+                   
                 </tr>
                 <div *ngIf="loader" class="loader-parent">
                     <img src="assets/gif/loader.gif">
                 </div>
                 <ng-container *ngIf="candidateList?.length > 0">
-                    <ng-container *ngFor="let innerArray of candidateList">
+                    <ng-container *ngFor="let innerArray of candidateList let i = index">
                       <ng-container *ngFor="let item of innerArray">
                         <tr class="candidate c-pointer" [class.selected]="selectedItem === item" 
                         (click)="onSelect(item)">
@@ -28,6 +29,7 @@
                           <td>{{ item['candidate.candidateEmail'] }}</td>
                           <td>{{ item['candidate.candidateMobileNo'] }}</td>
                           <td>{{ item.serviceStatus }}</td>
+                         
                         </tr>
                       </ng-container>
                     </ng-container>

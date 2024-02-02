@@ -84,12 +84,13 @@
             </div>
             <div class="details p-10">
                 <span class="f-w-500 head-wrap">Score</span>
-                <input *ngIf="!showScore" type="text" class="head-wrap" id="score"  (click)="showWarning = false" >
+                <input *ngIf="!showScore" type="text" class="head-wrap" id="score" (click)="showWarning = false">
                 <span *ngIf="showScore" class="head-wrap">{{progressQuery.progressScore}}</span>
             </div>
             <div class="details p-10">
                 <span class="f-w-500 head-wrap">Description</span>
-                <input *ngIf="!showDescription" type="text" class="head-wrap" id="description"  (click)="showWarning = false">
+                <input *ngIf="!showDescription" type="text" class="head-wrap" id="description"
+                    (click)="showWarning = false">
                 <span *ngIf="showDescription" class="head-wrap">{{progressQuery.progressDescription}}</span>
             </div>
             <div class="details p-10" *ngIf="!progressAdd && showbtn">
