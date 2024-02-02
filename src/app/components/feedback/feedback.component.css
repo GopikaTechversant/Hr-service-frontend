@@ -1,0 +1,24 @@
+.comment{
+    margin-left: 33px;
+}
+
+.comment-heading{
+    margin-left: 22px;
+}
+
+.btn{
+    width: 127px;
+    float: right;
+    margin-right: 44px;
+}
+
+.submit-btn{
+    background-color: rgb(57, 57, 136);
+    color: white;
+}
+
+.cancel-btn{
+    background-color: red;
+    color: white;
+    border: white;
+}
