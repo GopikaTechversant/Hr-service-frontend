@@ -19,6 +19,7 @@ import { ServiceRequestComponent } from './components/service-request/service-re
 import { RequirementCandidateListComponent } from './components/requirement-candidate-list/requirement-candidate-list.component';
 import { SeriesComponent } from './components/series/series.component';
 import { LandingComponent } from './components/landing/landing.component';
+import { InterviewDetailsComponent } from './components/interview-details/interview-details.component';
 
 
 const routes: Routes = [
@@ -29,7 +30,8 @@ const routes: Routes = [
     {path: 'requirement', component: RequirementFormComponent},
     {path: 'service-requirement', component: ServiceRequestComponent},
     {path: 'candidate-list', component: RequirementCandidateListComponent},
-    {path: 'add-candidate', component: AddCandidateModalComponent}
+    {path: 'add-candidate', component: AddCandidateModalComponent},
+    {path: 'interview-details', component: InterviewDetailsComponent}
    
   ]},
   {path: 'series', component: SeriesComponent}
@@ -49,7 +51,8 @@ const routes: Routes = [
     ServiceRequestComponent,
     RequirementCandidateListComponent,
     SeriesComponent,
-    LandingComponent
+    LandingComponent,
+    InterviewDetailsComponent
   ],
   imports: [
     CommonModule,
