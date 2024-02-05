@@ -19,6 +19,11 @@ import { ServiceRequestComponent } from './components/service-request/service-re
 import { RequirementCandidateListComponent } from './components/requirement-candidate-list/requirement-candidate-list.component';
 import { SeriesComponent } from './components/series/series.component';
 import { LandingComponent } from './components/landing/landing.component';
+import { CandidateListComponent } from './components/candidate-list/candidate-list.component';
+import { ApplicationListPieComponent } from './components/application-list-pie/application-list-pie.component';
+import { ApplicationListBarComponent } from './components/application-list-bar/application-list-bar.component';
+import { InterviewCountComponent } from './components/interview-count/interview-count.component';
+import { DetailedRecruitmentComponent } from './components/detailed-recruitment/detailed-recruitment.component';
 
 
 const routes: Routes = [
@@ -48,7 +53,12 @@ const routes: Routes = [
     ServiceRequestComponent,
     RequirementCandidateListComponent,
     SeriesComponent,
-    LandingComponent
+    LandingComponent,
+    CandidateListComponent,
+    ApplicationListPieComponent,
+    ApplicationListBarComponent,
+    InterviewCountComponent,
+    DetailedRecruitmentComponent
   ],
   imports: [
     CommonModule,

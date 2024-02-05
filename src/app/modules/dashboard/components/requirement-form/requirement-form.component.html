@@ -15,7 +15,7 @@
             <div class="p-10 p-l-0"><span class="sub-head">Scheduled Date</span></div>
             <input class="p-l-5 date-picker-input " matInput [matDatepicker]="picker" (dateChange)="dateChange($event)"
                 (click)="picker?.open()" [value]="displayDate">
-            <span ><mat-datepicker #picker class="picker"></mat-datepicker>
+            <span class="picker"><mat-datepicker #picker ></mat-datepicker>
                 <i class="fa fa-calendar-o date-picker c-pointer" aria-hidden="true" (click)="picker?.open()"></i>
             </span>
         </div>

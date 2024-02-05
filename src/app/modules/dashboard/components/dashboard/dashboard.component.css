@@ -1,14 +1,55 @@
-/* .candidate-details {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #fff;
-    border-radius: 4px;
-    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 2px 1px;
-    border: 0.01rem solid #B9B9B9;
-  }
+.head{
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 35.55px;
+}
 
-.container{
-    width: 77%;
-} */
+.candidate{
+  height: 174px;
+}
 
+.candidate-card{
+  width: 275px;
+  height: 147px;
+  border-radius: 4px;
+  background-color: #FFFFFF;
+  box-shadow: 0px 4px 7px 0px #0000001F;
+  margin: 5px;
+}
+
+.detail{
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  margin-left: 5px;
+
+}
+
+.count{
+  margin-top: 30px;
+  margin-left: 10px;
+  width: 90px;
+  height: 80px;
+  color: #005EC9;
+  background-color: #EBF0FF;
+  align-items: center;
+ 
+}
+
+.name{
+  font-weight: 500;
+  font-size: 17px;
+  color: #4F4F4F;
+}
+
+.other{
+  font-weight: 400;
+  font-size: 14px;
+  color: #ABABAB;
+}
+
+.countsss{
+  text-align: center;
+  font-weight: 500;
+  font-size: 30px;
+}
