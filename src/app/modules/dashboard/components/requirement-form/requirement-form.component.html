@@ -1,125 +1,77 @@
-<div class="p-l-5 p-r-10 col-md-9" class="main">
-    <div class="d-flex p-t-20 align-center p-b-10 p-l-5 requirement-create"><img src="assets/images/requirement-img.png"
-            width="20px" height="19px" class="p-t-0">
-        <span class="xl-text f-w-500 p-l-5"> Requirement Create</span>
+<div class="" class="main">
+    <div class="p-t-20 p-b-10">
+        <span class="p-l-5 header"> Create Requirement</span>
     </div>
     <div class="scroller-box p-l-5 p-r-10">
-        <div class="box-view p-t-20 p-b-15 p-l-15 p-r-15 m-t-10">
-            <div class="row p-t-10 p-b-10 j-space">
-                <!-- <div class="d-flex">
-                    <div class="col-md-2 p-r-0"><span> Station Name</span>
-                    </div>
-                    <div>
-                        <input type="text" class="subscriber-drop-down name input" #stationInput>
-                    </div>
-                </div> -->
-                <div class="d-flex">
-                    <div class="col-md-2 p-r-0 p-t-5"><span>Experience</span></div>
-                    <div class="no-close p-relative col-md-3 s-list d-flex requestId-drop-down j-space m-text align-center experience"
-                        (click)="experienceList_open = !experienceList_open;fetchcandidatesWithExperience()">
-                        <div *ngIf="!selectedExperience"
-                            class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">Experience
-                        </div>
-                        <div *ngIf="selectedExperience && selectedExperience !== '0' ">{{selectedExperience}} ></div>
-                        <!-- <div *ngIf="selectedExperience && !isSelectedFresher">{{selectedExperience}} ></div> -->
-                        <div *ngIf="selectedExperience == '0'">Fresher</div>
-                        <div class="no-close s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub"><i
-                                class="no-close s-list fa fa-chevron-down s-text"></i>
-                        </div>
-                        <div class=" m-b-2 drop-list" *ngIf="experienceList_open">
-                            <div (click)="selectExperience(experience.candidateExperience)"
-                                *ngFor="let experience of experience_droplist" class="p-t-5 p-b-5 p-l-8 c-pointer">
-                                {{experience.candidateExperience}} > </div>
-                        </div>
-                    </div>
+        <div>
+            <div class="p-10 p-l-0"><span class="sub-head">Experience</span></div>
+            <input type="text" class="input">
+        </div>
+        <div>
+            <div class="d-flex p-10 p-l-0"><span class="sub-head">Assignee</span></div>
+            <input type="text" class="input">
+        </div>
+        <div>
+            <div class="p-10 p-l-0"><span class="sub-head">Scheduled Date</span></div>
+            <input class="p-l-5 date-picker-input " matInput [matDatepicker]="picker" (dateChange)="dateChange($event)"
+                (click)="picker?.open()" [value]="displayDate">
+            <span ><mat-datepicker #picker class="picker"></mat-datepicker>
+                <i class="fa fa-calendar-o date-picker c-pointer" aria-hidden="true" (click)="picker?.open()"></i>
+            </span>
+        </div>
+        <div>
+            <div class="p-10 p-l-0"><span class="sub-head">Request Name</span></div>
+            <input type="text" class="input">
+        </div>
+        <div>
+            <div class="p-10 p-l-0"><span class="sub-head">Servive Name</span></div>
+            <input type="text" class="input">
+        </div>
 
-                </div>
-                <div class="d-flex">
-                    <div class="col-md-2 p-r-0 p-t-5"><span> Request Name</span></div>
-                    <div class="no-close p-relative col-md-3 s-list d-flex requestId-drop-down j-space m-text align-center"
-                        (click)="requestList_open = !requestList_open;fetchcandidatesWithSkills()">
-                        <div *ngIf="!selectedId"
-                            class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">Names
-                        </div>
-                        <div *ngIf="selectedId">{{selectedName}}</div>
-                        <div class="no-close s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub"><i
-                                class="no-close s-list fa fa-chevron-down s-text"></i>
-                        </div>
-                        <div class=" m-b-2 drop-list" *ngIf="requestList_open">
-                            <div (click)='selectRequestId(name.requestName,name.requestId)'
-                                *ngFor="let name of list_requests" class="p-t-5 p-b-5 p-l-8 c-pointer">
-                                {{name.requestName}}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row p-t-10 p-b-10 j-space">
-               
-                <!-- <div class="d-flex">
-                    <div class="col-md-2 p-r-0 p-t-5"><span> Request Name</span></div>
-                    <div class="no-close p-relative col-md-3 s-list d-flex requestId-drop-down j-space m-text align-center"
-                        (click)="requestList_open = !requestList_open;fetchcandidatesWithSkills()">
-                        <div *ngIf="!selectedId"
-                            class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">Names
-                        </div>
-                        <div *ngIf="selectedId">{{selectedName}}</div>
-                        <div class="no-close s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub"><i
-                                class="no-close s-list fa fa-chevron-down s-text"></i>
-                        </div>
-                        <div class=" m-b-2 drop-list" *ngIf="requestList_open">
-                            <div (click)='selectRequestId(name.requestName,name.requestId)'
-                                *ngFor="let name of list_requests" class="p-t-5 p-b-5 p-l-8 c-pointer">
-                                {{name.requestName}}</div>
-                        </div>
-                    </div>
-                </div> -->
-                <!-- <div class="d-flex">
-                    <div class="col-md-2 p-r-0 p-t-5"><span> Service Name</span></div>
-                    <div class="no-close p-relative col-md-3 s-list d-flex requestId-drop-down j-space m-text align-center"
-                        (click)="serviceList_open = !serviceList_open">
-                        <div *ngIf="!selectedServiceId"
-                            class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">Service Names
-                        </div>
-                        <div *ngIf="selectedServiceName">{{selectedServiceName}}</div>
-                        <div class="no-close s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub"><i
-                                class="no-close s-list fa fa-chevron-down s-text"></i>
-                        </div>
-                        <div class=" m-b-2 drop-list" *ngIf="serviceList_open">
-                            <div (click)="selectServiceId(name.sericeId,name.sericeName)"
-                                *ngFor="let name of list_services" class="p-t-5 p-b-5 p-l-8 c-pointer">
-                                {{name.sericeName}}</div>
-                        </div>
-                    </div>
 
-                </div> -->
+        <div class="d-flex p-10 ">
+            <div class="mat-ripple button c-pointer m-10 " (click)="sumitClick()">
+                <button class="btn-submit" >Submit</button></div>
+            <div class=" mat-ripple button c-pointer m-10"> 
+                <button class="btn-cancel">Cancel</button></div>
+        </div>
+    </div>
+    <!-- <div class="no-close p-relative col-md-3 s-list d-flex requestId-drop-down j-space m-text align-center experience"
+                (click)="experienceList_open = !experienceList_open;fetchcandidatesWithExperience()">
+                <div *ngIf="!selectedExperience"
+                    class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">Experience
+                </div>
+                <div *ngIf="selectedExperience && selectedExperience !== '0' ">{{selectedExperience}} ></div>
+                <div *ngIf="selectedExperience == '0'">Fresher</div>
+                <div class="no-close s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub"><i
+                        class="no-close s-list fa fa-chevron-down s-text"></i>
+                </div>
+                <div class=" m-b-2 drop-list" *ngIf="experienceList_open">
+                    <div (click)="selectExperience(experience.candidateExperience)"
+                        *ngFor="let experience of experience_droplist" class="p-t-5 p-b-5 p-l-8 c-pointer">
+                        {{experience.candidateExperience}} > </div>
+                </div>
+            </div> -->
+    <!-- <div class="no-close p-relative col-md-3 s-list d-flex requestId-drop-down j-space m-text align-center"
+                (click)="requestList_open = !requestList_open;fetchcandidatesWithSkills()">
+                <div *ngIf="!selectedId" class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">
+                    Names
+                </div>
+                <div *ngIf="selectedId">{{selectedName}}</div>
+                <div class="no-close s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub"><i
+                        class="no-close s-list fa fa-chevron-down s-text"></i>
+                </div>
+                <div class=" m-b-2 drop-list" *ngIf="requestList_open">
+                    <div (click)='selectRequestId(name.requestName,name.requestId)' *ngFor="let name of list_requests"
+                        class="p-t-5 p-b-5 p-l-8 c-pointer">
+                        {{name.requestName}}</div>
+                </div>
+            </div> -->
+    <!-- </div>
+    <div> -->
+    <!-- <input type="text" class="  name input assignee" #serviceAssignee> -->
 
-            </div>
-            <div class="row p-t-10 p-b-10 j-space">
-                <div class="d-flex">
-                    <div class="col-md-2 p-r-0 p-t-5"><span> Assignee</span></div>
-                    <div>
-                        <input type="text" class="subscriber-drop-down name input assignee" #serviceAssignee>
-                    </div>
-                </div>
-                <div class="d-flex">
-                    <div class="col-md-2 p-r-0">
-                        <span>Sceduled Date</span>
-                    </div>
-                    <div class="col-md-10 p-r-0 p-l-0">
-                        <div class="s-list calendar-parent sub p-relative subscriber-drop-down">
-                            <input class="p-l-5 date-picker-input" matInput [matDatepicker]="picker"
-                                (dateChange)="dateChange($event)" (click)="picker?.open()" [value]="displayDate">
-                            <!-- <div *ngIf="formError?.date" class="s-text c-red">* {{formError?.date}}</div> -->
-                            <span> <mat-datepicker #picker class=""></mat-datepicker>
-                                <i class="fa fa-calendar date-picker c-pointer m-r-20 p-absolute" aria-hidden="true"
-                                    (click)="picker?.open()"></i></span>
-                        </div>
-                        <!-- <div class="d-flex align-center m-r-5">
-                        </div> -->
-                    </div>
-                </div>
-            </div>
-            <!-- <div class="row p-t-15">
+    <!-- <div class="row p-t-15">
                 <div *ngFor="let item of selectedCandidateId; let i=index"
                     class="service-item selected-product m-l-10 m-r-10 m-t-10 m-b-10">
                     <div class="d-flex j-center align-center m-b-5">
@@ -133,12 +85,9 @@
                     </div>
                 </div>
             </div> -->
-            <div class="d-flex j-end align-center">
-                <div class="mat-ripple m-r-10 button c-pointer d-flex align-center" (click)="sumitClick()">Submit</div>
-                <div class=" mat-ripple button c-pointer d-flex align-center"> Cancel</div>
-            </div>
-        </div>
-        <ng-container>
+
+    <!-- </div> -->
+    <!-- <ng-container>
             <div class="p-10 m-t-10">
                 <div class="row j-space">
                     <div class="col-md-4">
@@ -160,14 +109,9 @@
                             (change)="candidateSelectChange($event, candidate)">
                     </div>
                     <div class="text-center">
-                        <!-- <img src="assets/images/Receiving_station/Product.svg"> -->
                         <p class="m-b-2 m-text">{{candidate.candidateFirstName}}</p>
                         <p class="m-b-2 c-green">{{candidate.candidateExperience}}</p>
                     </div>
                 </div>
             </div>
-        </ng-container>
-
-    </div>
-
-</div>
+        </ng-container> -->

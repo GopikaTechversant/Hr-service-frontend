@@ -1,26 +1,36 @@
+.main {
+    background-color: #fff;
+}
+
+.header {
+    color: #000000;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 35.55px;
+}
+
 .scroller-box {
     padding-bottom: 20px;
     height: calc(100vh - 180px);
     overflow-y: scroll;
     overflow-x: hidden;
     width: 100%;
-    /* padding-left: 40px; */
-    margin-left: 58px;
 }
 
-.box-view {
-    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
-    border-radius: 8px;
-    background-color: #fff;
+.sub-head {
+    color: #000000;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21.33px;
 }
 
 .input {
     outline: none;
     border-radius: 5px;
-    border: 1px solid #d2d2d2;
-    width: 236px;
-    height: 27px;
-    border-right: none;
+    border: 1px solid #E9E9E9;
+    background-color: #FAFAFA;
+    width: 521px;
+    height: 54px;
 }
 
 .text-box {
@@ -31,44 +41,13 @@
     outline: none;
 }
 
-.subscriber-drop-down {
-    border: 1.5px solid #7d8296b5;
-    border-radius: 5px;
-    padding: 4px 8px;
-    align-items: baseline;
-    background: #fff;
-    /* position: relative; */
-    height: 30px;
-    width: 250px;
-    margin-left: 24px;
-}
+
 
 .row {
     display: flex;
     flex-wrap: wrap;
 }
 
-.subscriber-drop-down>.sub {
-    height: 16px;
-}
-
-.subscriber-drop-down>.w-max {
-    width: 150px;
-}
-
-.subscriber-drop-down>.drop-list {
-    position: absolute;
-    top: 32px;
-    right: 0;
-    width: 100%;
-    background-color: white;
-    border: 1.5px solid #7d8296b5;
-    border-radius: 5px;
-    z-index: 10;
-    max-height: 120px;
-    overflow-y: scroll;
-    width: 100%;
-}
 
 .requestId-drop-down {
     border: 1.5px solid #7d8296b5;
@@ -123,23 +102,9 @@
     margin-left: 41px;
 }
 
-.button {
-    height: 8px;
-    background-color: #f3f2ef;
-    color: #517494;
-    padding: 10px;
-    border: 0.1rem solid #517494;
-    border-radius: 15px;
-}
-
 .mat-ripple {
     overflow: hidden;
     position: relative;
-}
-
-.button:hover {
-    background-color: #517494;
-    color: white;
 }
 
 .input-search[_ngcontent-lvq-c216] {
@@ -173,15 +138,10 @@
     width: fit-content;
     outline: none;
     border-radius: 5px;
-    border: 1px solid #7d8296b5;
     width: 250px;
     height: 27px;
-    /* border-right: none; */
 }
 
-.requirement-create {
-    margin-left: 57px;
-}
 
 .service-item {
     background-color: aliceblue;
@@ -198,13 +158,43 @@
 
 .date-picker-input {
     outline: none;
-    border: none;
+    border-radius: 5px;
+    border: 1px solid #E9E9E9;
+    background-color: #FAFAFA;
+    width: 521px;
+    height: 54px;
 }
 
 .date-picker {
-    margin-left: 58px;
+    color: gray;
+    Width: 18px;
+    Height: 18px;
+    margin-left: -22px;
 }
 
-.experience {
-    margin-left: 45px;
+
+.btn-cancel{
+    background-color: #575F6E;
+    width: 233px;
+    height: 54px;
+    border-radius: 3px;
+    outline: none;
+    border: none;
+    color: #FFFFFF;
+    font-weight: 400;
+    font-size: 18px;
 }
+
+.btn-submit{
+    background-color: #005EC9;
+    width: 233px;
+    height: 54px;
+    border-radius: 3px;
+    outline: none;
+    border: none;
+    color: #FFFFFF;
+    font-weight: 400;
+    font-size: 18px;
+
+}
+
