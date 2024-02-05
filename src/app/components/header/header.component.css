@@ -6,19 +6,13 @@
 }
 
 .logo-text {
-    background-color: rgb(0 86 167);
-    color: white;
-    height: 50px;
-    width: 60px;
-    border-radius: 36px rgb(0 86 167) !important;
-    outline: none !important;
-    border: none !important;
+    color: black;
 }
 
-.logo {
+/* .logo {
     border-radius: 36px;
     width: 60px;
-}
+} */
 
 .user-profile-ctn {
     width: 35px;

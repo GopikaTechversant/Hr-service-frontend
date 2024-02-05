@@ -29,6 +29,7 @@ const routes: Routes = [
     {path: 'requirement', component: RequirementFormComponent},
     {path: 'service-requirement', component: ServiceRequestComponent},
     {path: 'candidate-list', component: RequirementCandidateListComponent},
+    {path: 'add-candidate', component: AddCandidateModalComponent}
    
   ]},
   {path: 'series', component: SeriesComponent}

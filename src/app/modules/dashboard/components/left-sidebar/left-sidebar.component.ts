@@ -32,6 +32,8 @@ export class LeftSidebarComponent implements OnInit{
   navigate(path:any, queryParam:any): void {
     if(queryParam) this.router.navigate([path], {queryParams: { type: queryParam}});
     else this.router.navigate([path]);
+    console.log("navigate");
+    
   }
 
   // navigateToRequirements(): void {
