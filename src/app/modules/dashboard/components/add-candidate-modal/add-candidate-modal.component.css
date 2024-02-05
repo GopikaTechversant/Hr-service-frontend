@@ -1,65 +1,10 @@
-/* .clear {
-    clear: both;
-}
-
-.p-relative mat-form-field {
-    position: relative;
-}
-
-
-
-.candidate-form {
-    padding: 50px 75px;
-   
-    width: 527px;
-    margin: auto;
-    border-radius: 10px;
-    border: none;
-    opacity: 0.9;
-}
-
-.info {
-    color: rgb(0 86 167);
-    
-   text-align: center!important;
-    font-weight: 540;
-    font-size: 20px;
-    line-height: 19px;
-    margin-bottom: 15px;
-}
-
-.input{
-    margin-left: 2px;
-}
-
-.label{
-    width: 322px;
-}
-
-.submit-btn{
-    height: 34px;
-    width: 66px;
-    border-radius: 4px;
-    background-color: rgb(0 86 167);
-    color: white;
-}
-
-.cancel-btn{
-    height: 34px;
-    width: 66px;
-    border-radius: 4px;
-    background-color: red;
-    color: white;
-} */
-
-
-.info {
+/* .info {
     color: rgb(0 86 167);
     margin-top: 40px;
    text-align: center!important;
     font-weight: 540;
     font-size: 22px;
-    /* line-height: 19px; */
+   
     
 }
 
@@ -116,7 +61,7 @@ mat-error{
 
 .upload-resume-btn{
     padding: 8px 11px;
-    /* background-color: #4caf50;  */
+  
     color: rgb(18, 123, 165); 
     border-color: rgb(18, 123, 165); 
     border-radius: 5px; 
@@ -125,15 +70,15 @@ mat-error{
     margin-top: 5px;
 }
 
-/* Add this to your component's CSS file or styles section in the component */
+
 .search-bar {
     display: flex;
-    /* align-items: center; */
+    
     margin-left: 40px;
     border: 1px solid #ccc;
     cursor: pointer;
     background-color: palevioletred;
-    /* width: 60px; */
+  
   }
   
   .search-bar span {
@@ -157,9 +102,7 @@ mat-error{
     background-color: #e0e0e0;
   }
 
-/* .skill-search-input{
-    border: none!important;
-} */
+
 
 .add-btn{
     height: 33px;
@@ -180,4 +123,53 @@ mat-error{
 
 .searchbar{
     margin-left: 23px;
+} */
+
+.heading {
+    width: 216px;
+    height: 36px;
+    font-family: Rubik;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 36px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+/* .main {
+    width: 100%;
+} */
+
+.input-box {
+    width: 290px;
+    height: 34px;
+    top: 205px;
+    left: 349px;
+    border: 1.5px solid #7d8296b5;
+    border-radius: 5px;
+    background-color: #E9E9E9;
+}
+
+.child {
+    flex-direction: column;
+    /* line-height: 21px; */
+}
+
+.label {
+    font-family: Rubik !important;
+    font-size: 18px;
+    font-weight: 400;
+    /* line-height: 21px; */
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.text-area{
+    width: 290px;
+    height: 34px;
+    top: 205px;
+    left: 349px;
+    border: 1.5px solid #7d8296b5;
+    border-radius: 5px;
+    background-color: #E9E9E9;
 }
