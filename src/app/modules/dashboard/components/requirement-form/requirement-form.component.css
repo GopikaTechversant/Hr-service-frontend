@@ -157,6 +157,7 @@
 }
 
 .date-picker-input {
+    position: relative;
     outline: none;
     border-radius: 5px;
     border: 1px solid #E9E9E9;
@@ -165,15 +166,18 @@
     height: 54px;
 }
 
-.date-picker {
+.calendar-icon {
     color: gray;
     Width: 18px;
     Height: 18px;
     margin-left: -22px;
+    top: 20px;
+    /* right: 190px; */
+
 }
 
 
-.btn-cancel{
+.btn-cancel {
     background-color: #575F6E;
     width: 233px;
     height: 54px;
@@ -185,7 +189,7 @@
     font-size: 18px;
 }
 
-.btn-submit{
+.btn-submit {
     background-color: #005EC9;
     width: 233px;
     height: 54px;

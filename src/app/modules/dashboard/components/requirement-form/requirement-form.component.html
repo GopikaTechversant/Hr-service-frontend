@@ -13,11 +13,14 @@
         </div>
         <div>
             <div class="p-10 p-l-0"><span class="sub-head">Scheduled Date</span></div>
-            <input class="p-l-5 date-picker-input " matInput [matDatepicker]="picker" (dateChange)="dateChange($event)"
-                (click)="picker?.open()" [value]="displayDate">
-            <span class="picker"><mat-datepicker #picker ></mat-datepicker>
-                <i class="fa fa-calendar-o date-picker c-pointer" aria-hidden="true" (click)="picker?.open()"></i>
-            </span>
+            <div class="p-relative ">
+                <input class="p-l-5 date-picker-input " placeholder="MM/DD/YY" matInput [matDatepicker]="picker"
+                    (dateChange)="dateChange($event)" (click)="picker?.open()" [value]="displayDate">
+                <span> <mat-datepicker #picker class=""></mat-datepicker>
+                    <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
+                        (click)="picker?.open()"></i>
+                </span>
+            </div>
         </div>
         <div>
             <div class="p-10 p-l-0"><span class="sub-head">Request Name</span></div>
@@ -31,9 +34,11 @@
 
         <div class="d-flex p-10 ">
             <div class="mat-ripple button c-pointer m-10 " (click)="sumitClick()">
-                <button class="btn-submit" >Submit</button></div>
-            <div class=" mat-ripple button c-pointer m-10"> 
-                <button class="btn-cancel">Cancel</button></div>
+                <button class="btn-submit">Submit</button>
+            </div>
+            <div class=" mat-ripple button c-pointer m-10">
+                <button class="btn-cancel">Cancel</button>
+            </div>
         </div>
     </div>
     <!-- <div class="no-close p-relative col-md-3 s-list d-flex requestId-drop-down j-space m-text align-center experience"
