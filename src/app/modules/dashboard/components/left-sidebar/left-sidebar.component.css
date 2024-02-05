@@ -44,12 +44,8 @@
   padding-left: 6px;
 }
 
-.menu:hover {
+.menu:hover .menu-text{
   background-color: #005EC9;
-  color: white !important;
+  color: red;
 }
 
-.main .menu:hover {
-  background-color: #005EC9;
-  color: white !important;
-}
