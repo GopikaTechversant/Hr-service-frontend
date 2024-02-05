@@ -101,11 +101,11 @@ export class AddCandidateModalComponent implements OnInit {
   // }
 
 
-  // triggerFileInput() {
+  triggerFileInput() {
 
-  //   const fileInput = document.querySelector('input[type="file"]') as HTMLElement;
-  //   fileInput.click();
-  // }
+    const fileInput = document.querySelector('input[type="file"]') as HTMLElement;
+    fileInput.click();
+  }
 
   // cancel() {
   //   this.dialogRef.close();

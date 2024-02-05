@@ -24,6 +24,7 @@ import { ApplicationListPieComponent } from './components/application-list-pie/a
 import { ApplicationListBarComponent } from './components/application-list-bar/application-list-bar.component';
 import { InterviewCountComponent } from './components/interview-count/interview-count.component';
 import { DetailedRecruitmentComponent } from './components/detailed-recruitment/detailed-recruitment.component';
+import { InterviewDetailsComponent } from './components/interview-details/interview-details.component';
 
 
 const routes: Routes = [
@@ -34,7 +35,8 @@ const routes: Routes = [
     {path: 'requirement', component: RequirementFormComponent},
     {path: 'service-requirement', component: ServiceRequestComponent},
     {path: 'candidate-list', component: RequirementCandidateListComponent},
-    {path: 'add-candidate', component: AddCandidateModalComponent}
+    {path: 'add-candidate', component: AddCandidateModalComponent},
+    {path: 'interview-details', component: InterviewDetailsComponent}
    
   ]},
   {path: 'series', component: SeriesComponent}
@@ -59,7 +61,8 @@ const routes: Routes = [
     ApplicationListPieComponent,
     ApplicationListBarComponent,
     InterviewCountComponent,
-    DetailedRecruitmentComponent
+    DetailedRecruitmentComponent,
+    InterviewDetailsComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,33 @@
+.heading{
+    width: 249px;
+    height: 36px;
+    font-family: Rubik;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 36px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.input-box {
+    width: 290px;
+    height: 34px;
+    top: 205px;
+    left: 349px;
+    border: 1.5px solid #7d8296b5;
+    border-radius: 5px;
+    background-color: #E9E9E9;
+}
+
+.child {
+    flex-direction: column;
+}
+
+.label {
+    font-family: Rubik !important;
+    font-size: 18px;
+    font-weight: 400;
+
+    letter-spacing: 0em;
+    text-align: left;
+}
