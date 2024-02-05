@@ -17,7 +17,8 @@ import {MatTableModule} from '@angular/material/table';
 import {MatTreeModule} from '@angular/material/tree';
 import { MatListModule } from '@angular/material/list';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
-import {DragDropModule} from '@angular/cdk/drag-drop'
+import {DragDropModule} from '@angular/cdk/drag-drop';
+
 @NgModule({
   providers: [
     {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}

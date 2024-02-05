@@ -3,14 +3,19 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms
 import { MatDialogRef } from '@angular/material/dialog';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import { DatePipe } from '@angular/common';
 import { environment } from 'src/environments/environments';
 @Component({
   selector: 'app-add-candidate-modal',
   templateUrl: './add-candidate-modal.component.html',
-  styleUrls: ['./add-candidate-modal.component.css']
+  styleUrls: ['./add-candidate-modal.component.css'],
+  providers: [DatePipe],
 })
 export class AddCandidateModalComponent implements OnInit {
+  displayDate: any
+  constructor(private datePipe: DatePipe){
+
+  }
   // matcher: ErrorStateMatcher = new ShowOnDirtyErrorStateMatcher();
   // candidateForm!: UntypedFormGroup;
   // submitted: boolean = false;
@@ -50,7 +55,10 @@ export class AddCandidateModalComponent implements OnInit {
   ngOnInit(): void {
 
   }
-
+  dateChange(event:any): void {
+    let date = new Date(event?.value);
+    this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+  }
   // onFileSelected(event: any) {
   //   this.fileInputClicked = true;
   //   this.selectedFile = event.target.files[0];

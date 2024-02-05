@@ -11,7 +11,14 @@
         </div>
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">DOB</span>
-            <input type="text" class="input-box">
+            <div class="p-relative ">
+                <input class="p-l-5  input-box" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate"
+                    (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate">
+                <span> <mat-datepicker #pickerdate class=""></mat-datepicker>
+                    <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
+                        (click)="pickerdate ?.open()"></i>
+                </span>
+            </div>
         </div>
     </div>
     <div class="d-flex j-space parent">
