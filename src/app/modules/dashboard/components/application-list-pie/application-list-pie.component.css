@@ -34,13 +34,17 @@
 }
 
 .chart-container{
-    padding-top: 15px;
+    margin-top: 5px;
     padding-bottom: 20px;
+}
+
+.MyChart{
+    padding-top: 10px;
 }
 
 .arrow{
     color: #4F4F4F;
     position: absolute;
-    top: 47%;
+    top: 46%;
     right: 39%;
 }
