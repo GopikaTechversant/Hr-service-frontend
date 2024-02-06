@@ -99,7 +99,7 @@
 }
 
 .pagination {
-    position: fixed;
+    position: sticky;
     bottom: 0px;
     background-color: white;
     width: 50%;
