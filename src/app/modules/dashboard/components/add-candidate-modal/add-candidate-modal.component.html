@@ -81,9 +81,24 @@
     <div class="skills p-l-14 p-t-13">
         <p class="text">Skill Sets</p>
         <div class="d-flex j-space skill-drop-down">
-            <div class="skill-type"><span>Skill Type</span> <span><i
-                        class="f-right p-r-10 fa fa-chevron-down s-text"></i></span></div>
-            <button class="add-btn">Add</button>
+            <div class="skill-type" (click)="showDropdown = !showDropdown"><span>{{ selectedSkillType || 'Skill Type'
+                    }}</span> <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
+                <div class="dropdown-list" *ngIf="showDropdown">
+                    <p *ngFor="let type of skillTypes" (click)="selectSkillType(type)">{{type}}</p>
+
+                </div>
+            </div>
+
+            <button class="add-btn" (click)="$event.preventDefault();toggleSearchBar()">Add</button>
+        </div>
+        <div class="searchbar" *ngIf="showSearchBar">
+            <input type="search" class="input-search" placeholder="Type to search skills..."
+                (input)="getSkillSuggestions($event)" *ngIf="showSearchBar">
+
+        </div>
+        <div *ngIf="showSearchBar" class="m-l-23 m-t-8">
+            <div *ngFor="let suggestion of skillSuggestions" (click)="selectSkill(suggestion)">
+                {{suggestion.skillName}}</div>
         </div>
     </div>
     <div class="d-flex f-right j-space submit-btn">

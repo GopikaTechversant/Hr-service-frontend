@@ -13,7 +13,8 @@ import { environment } from 'src/environments/environments';
 })
 export class AddCandidateModalComponent implements OnInit {
   displayDate: any
-  constructor(private datePipe: DatePipe){
+  showDropdown: boolean = false;
+  constructor(private datePipe: DatePipe, private http: HttpClient) {
 
   }
   // matcher: ErrorStateMatcher = new ShowOnDirtyErrorStateMatcher();
@@ -22,18 +23,18 @@ export class AddCandidateModalComponent implements OnInit {
   // fileValue: any;
   // fileInputClicked: boolean = false;
   // selectedFile: any;
-  // skillTypes: string[] = ['Primary Skills', 'Secondary Skills'];
-  // selectedSkillType: any;
-  // skillSuggestions: any[] = [];
-  // selectedPrimarySkills: any[] = [];
-  // selectedSecondarySkills: any[] = [];
+  skillTypes: string[] = ['Primary Skills', 'Secondary Skills'];
+  selectedSkillType: any;
+  skillSuggestions: any[] = [];
+  selectedPrimarySkills: any[] = [];
+  selectedSecondarySkills: any[] = [];
   // skillName: any;
   // selectedSkill: any;
-  // showSearchBar: boolean = false;
+  showSearchBar: boolean = false;
   // skillsuggestionbox: boolean = false;
   // primaryskills: any;
   // secondaryskills: any;
-  // searchvalue: any;
+  searchvalue: any;
 
   // constructor(private formBuilder: UntypedFormBuilder, private dialogRef: MatDialogRef<AddCandidateModalComponent>, private http: HttpClient) {
   //   this.candidateForm = this.formBuilder.group({
@@ -53,11 +54,23 @@ export class AddCandidateModalComponent implements OnInit {
   //   })
   // }
   ngOnInit(): void {
+    // this.http.get(`${environment.api_url}/candidate/skills/list?q=${this.selectedSkillType}`).subscribe((res:any) => {
+    //   console.log("ehguie",res);
 
+    // })
   }
-  dateChange(event:any): void {
+  dateChange(event: any): void {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+  }
+  selectSkillType(type: any): void {
+    this.selectedSkillType = type;
+    console.log("selectedSkillType", this.selectedSkillType);
+
+  }
+  toggleSearchBar() {
+    this.showSearchBar = !this.showSearchBar;
+
   }
   // onFileSelected(event: any) {
   //   this.fileInputClicked = true;
@@ -127,50 +140,33 @@ export class AddCandidateModalComponent implements OnInit {
   // }
 
 
-  // getSkillSuggestions(event: any) {
+  getSkillSuggestions(event: any) {
+    this.searchvalue = event?.target.value;
+    if (this.selectedSkillType) {
+      // const apiUrl = `${environment.api_url}/candidate/skills/list?q=${this.selectedSkillType}`;
+      this.http.get(`${environment.api_url}/candidate/skills/list`).subscribe((res: any) => {
+        console.log("res", res);
 
-  //   this.searchvalue = event?.target.value;
+        this.skillSuggestions = res.data.filter((suggestion: any) =>
+          suggestion.skillName.toLowerCase().startsWith(this.searchvalue.toLowerCase()) && !this.isSkillSelected(suggestion)
+        );
+      });
+    }
+  }
 
-  //   if (this.selectedSkillType) {
-  //     const apiUrl = `${environment.api_url}/candidate/skills/list?q=${this.selectedSkillType}`;
-  //     this.http.get(apiUrl).subscribe((res: any) => {
-  //       this.skillSuggestions = res.data.filter((suggestion: any) =>
-  //         suggestion.skillName.toLowerCase().startsWith(this.searchvalue.toLowerCase()) && !this.isSkillSelected(suggestion)
-  //       );
+  isSkillSelected(suggestion: any): boolean {
+    const allSelectedSkills = [...this.selectedPrimarySkills, ...this.selectedSecondarySkills];
+    return allSelectedSkills.some(selectedSkill => selectedSkill.id === suggestion.id);
+  }
 
-
-  //     });
-  //   }
-  // }
-
-  // isSkillSelected(suggestion: any): boolean {
-  //   const allSelectedSkills = [...this.selectedPrimarySkills, ...this.selectedSecondarySkills];
-  //   return allSelectedSkills.some(selectedSkill => selectedSkill.id === suggestion.id);
-  // }
-
-  // selectSkill(suggestion: any) {
-
-
-  //   const selectedSkill = { id: suggestion.id, name: suggestion.skillName };
-
-
-  //   if (this.selectedSkillType === 'Primary Skills') {
-  //     this.selectedPrimarySkills.push(selectedSkill);
-
-
-  //   } else if (this.selectedSkillType === 'Secondary Skills') {
-  //     this.selectedSecondarySkills.push(selectedSkill);
-
-  //   }
-
-  //   this.showSearchBar = false;
-  //   this.skillSuggestions = [];
-  // }
-
-  // toggleSearchBar() {
-  //   this.showSearchBar = !this.showSearchBar;
-
-  // }
-
-
+  selectSkill(suggestion: any) {
+    const selectedSkill = { id: suggestion.id, name: suggestion.skillName };
+    if (this.selectedSkillType === 'Primary Skills') {
+      this.selectedPrimarySkills.push(selectedSkill);
+    } else if (this.selectedSkillType === 'Secondary Skills') {
+      this.selectedSecondarySkills.push(selectedSkill);
+    }
+    this.showSearchBar = false;
+    this.skillSuggestions = [];
+  }
 }

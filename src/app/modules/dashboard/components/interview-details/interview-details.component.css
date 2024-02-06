@@ -49,7 +49,7 @@
     color: gray;
     Width: 18px;
     Height: 18px;
-    margin-left: -22px;
+    margin-left: -38px;
     top: 13px;
 }
 
@@ -99,4 +99,11 @@
 
 .submit-btn {
     width: 354px;
+}
+
+.clock-icon{
+    color: gray;
+   
+    top: 13px;
+    margin-left: -19px;
 }

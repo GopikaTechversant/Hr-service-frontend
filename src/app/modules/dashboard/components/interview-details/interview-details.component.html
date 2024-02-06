@@ -5,31 +5,24 @@
             <span class="label m-b-4">Recruiter Name</span>
             <input type="text" class="input-box">
         </div>
+
         <div class="child d-flex m-b-10">
-            <span class="label m-b-4">Date</span>
+            <span class="label m-b-4">Interview Date & Time</span>
             <div class="p-relative ">
-                <input class="p-l-5  input-box" placeholder="MM/DD/YY HH:mm" matInput [matDatepicker]="pickerdate"
-                    (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate">
-                <span> <mat-datepicker #pickerdate class=""></mat-datepicker>
-                   
+                <input class="p-l-5 input-box" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerInterview"
+                    (dateChange)="dateChange($event)" (click)="pickerInterview?.open()" [value]="displayDate">
+                <!-- <input [ngxTimepicker]="pickerTime" [format]="12">
+                    <ngx-material-timepicker #pickerTime></ngx-material-timepicker> -->
+                <span> <mat-datepicker #pickerInterview class=""></mat-datepicker>
                     <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
-                        (click)="pickerdate ?.open()"></i>
+                        (click)="pickerInterview?.open()"></i>
+                </span>
+                <span><img class="p-absolute clock-icon" src="assets/images/clock.png" alt="" height="14px" width="14px"
+                        [ngxTimepicker]="pickerTime" [format]="12" (timeSet)="timeChange($event)">
+                    <ngx-material-timepicker #pickerTime (timeSet)="timeChange($event)"></ngx-material-timepicker>
                 </span>
             </div>
         </div>
-        <div class="child d-flex m-b-10">
-            <span class="label m-b-4">Month</span>
-            <div class="p-relative ">
-                <input class="p-l-5 input-box" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerMonth"
-                    (dateChange)="dateChange($event)" (click)="pickerMonth?.open()" [value]="displayDate">
-                <span> <mat-datepicker #pickerMonth class=""></mat-datepicker>
-                    <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
-                        (click)="pickerMonth?.open()"></i>
-                </span>
-            </div>
-        </div>
-    </div>
-    <div class="d-flex j-space parent">
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Position</span>
             <div class="input-box p-t-10 p-l-6" (click)="showDropdown = !showDropdown">
@@ -42,6 +35,9 @@
                 <p>Option1</p>
             </div>
         </div>
+    </div>
+    <div class="d-flex j-space parent">
+
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Candidate Name</span>
             <input type="text" class="input-box">
@@ -50,12 +46,13 @@
             <span class="label m-b-4">Candidate Experience</span>
             <input type="text" class="input-box">
         </div>
-    </div>
-    <div class="d-flex j-space parent">
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Notice Period</span>
             <input type="text" class="input-box">
         </div>
+    </div>
+    <div class="d-flex j-space parent">
+
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Current Company</span>
             <input type="text" class="input-box">
@@ -64,29 +61,18 @@
             <span class="label m-b-4">Location</span>
             <input type="text" class="input-box">
         </div>
-    </div>
-    <div class="d-flex j-space parent">
-        <div class="child d-flex m-b-10">
-            <span class="label m-b-4">Interview Date & Time</span>
-            <div class="p-relative ">
-                <input class="p-l-5 input-box" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerInterview"
-                    (dateChange)="dateChange($event)" (click)="pickerInterview?.open()" [value]="displayDate">
-                <span> <mat-datepicker #pickerInterview class="" ></mat-datepicker>
-                    <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
-                        (click)="pickerInterview?.open()"></i>
-                </span>
-            </div>
-        </div>
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Panel</span>
             <input type="text" class="input-box">
         </div>
+    </div>
+    <div class="d-flex j-space parent">
+
+
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Mode</span>
             <input type="text" class="input-box">
         </div>
-    </div>
-    <div class="d-flex j-space parent">
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Interview Status</span>
             <input type="text" class="input-box">
@@ -95,6 +81,9 @@
             <span class="label m-b-4">Candidate Status</span>
             <input type="text" class="input-box">
         </div>
+    </div>
+    <div class="d-flex j-space parent">
+
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Rescheduled Status</span>
             <input type="text" class="input-box">
