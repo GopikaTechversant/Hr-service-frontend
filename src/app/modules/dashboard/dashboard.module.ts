@@ -26,7 +26,7 @@ import { InterviewCountComponent } from './components/interview-count/interview-
 import { DetailedRecruitmentComponent } from './components/detailed-recruitment/detailed-recruitment.component';
 import { InterviewDetailsComponent } from './components/interview-details/interview-details.component';
 
-
+import { NgxPaginationModule } from 'ngx-pagination';
 const routes: Routes = [
   { path: '', component: LandingComponent,
   children: [
@@ -72,7 +72,8 @@ const routes: Routes = [
     MaterialModule,
     TextFieldModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgxPaginationModule
   ],
   providers: [
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }

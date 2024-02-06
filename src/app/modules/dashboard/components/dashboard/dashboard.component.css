@@ -1,14 +1,18 @@
-.head{
+.main {
+  overflow-y: hidden;
+}
+
+.head {
   font-size: 30px;
   font-weight: 600;
   line-height: 35.55px;
 }
 
-.candidate{
+/* .candidate {
   height: 174px;
-}
+} */
 
-.candidate-card{
+.candidate-card {
   width: 275px;
   height: 147px;
   border-radius: 4px;
@@ -18,7 +22,7 @@
   margin-left: 0;
 }
 
-.detail{
+.detail {
   display: flex;
   flex-direction: column;
   margin-top: 30px;
@@ -26,14 +30,13 @@
 
 }
 
-
-.name{
+.name {
   font-weight: 500;
   font-size: 20px;
   color: #4F4F4F;
 }
 
-.other{
+.other {
   font-weight: 400;
   font-size: 14px;
   color: #ABABAB;
@@ -41,8 +44,8 @@
 
 .count {
   display: flex;
-  justify-content: center; 
-  align-items: center; 
+  justify-content: center;
+  align-items: center;
   margin-top: 30px;
   margin-left: 10px;
   width: 90px;
