@@ -56,3 +56,36 @@
     margin-left: 10px;
     text-align: center;
 }
+
+table {
+    width: 100%;
+    border: 1px solid #eeee;
+}
+
+.table-container {
+    height: calc(100vh - 162px);
+    overflow: auto;
+    margin-top: 20px;
+}
+
+tr:nth-child(even) {
+    background-color: #F0F7FF;
+}
+
+td {
+    padding: 10px;
+    text-align: center;
+}
+
+/* tr {
+    border: 1px solid #dfdfdf;
+} */
+
+.table-header {
+    position: sticky;
+    top: 0;
+    background: #F4F2F2;
+    Padding: 10px;
+    Text-align: center;
+    Font-weight: 500;
+}

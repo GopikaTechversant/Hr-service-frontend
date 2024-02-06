@@ -31,10 +31,10 @@ export class ApplicationListPieComponent implements OnInit {
         aspectRatio: 1.9,
         layout: {
           padding: {
-            top: 40,
-            right: 20,
-            bottom: 20,
-            left: 20
+            top: 30,
+            right: 10,
+            bottom: 10,
+            left: 10
           }
         },
         plugins: {

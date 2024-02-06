@@ -15,7 +15,7 @@
     color: #000000;
     font-weight: 600;
     line-height: 26.07px;
-    font-size: 22px;
+    font-size: 18px;
 }
 
 .filter{
@@ -30,7 +30,7 @@
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
-    width: 173px;
+    width: 144px;
     height: 33px;
 }
 
@@ -41,6 +41,6 @@
 .arrow{
     color: #4F4F4F;
     position: absolute;
-    top: 46%;
+    top: 326px;
     right: 2%;
 }

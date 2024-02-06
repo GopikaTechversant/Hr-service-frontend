@@ -47,9 +47,9 @@ export class ApplicationListBarComponent implements OnInit {
         layout: {
           padding: {
             top: 30,
-            right: 20,
-            bottom: 20,
-            left: 20
+            right: 10,
+            bottom: 10,
+            left: 10
           }
         },
         plugins: {        
