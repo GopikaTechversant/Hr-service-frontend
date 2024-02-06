@@ -1,7 +1,7 @@
 .header {
     min-height: 70px !important;
     max-height: 70px !important;
-    position: sticky;
+    position: sticky !important;
     max-width: 100%;
 }
 
