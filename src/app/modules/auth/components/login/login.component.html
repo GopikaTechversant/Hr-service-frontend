@@ -13,11 +13,11 @@
                 </div>
                 <div class="form-field d-flex j-start m-b-14">
                     <span class="email">Email</span>
-                    <input type="email" class="input" placeholder="admin@hrservice.com">
+                    <input type="email" class="input" placeholder="admin@hrservice.com" formControlName="email">
                 </div>
                 <div class="form-field d-flex j-start m-b-14 p-relative">
                     <span class="email">Password</span>
-                    <input type="password" class="input" placeholder="Password">
+                    <input [type]="hide ? 'password' : 'text'" class="input" placeholder="Password" formControlName="password">
                     <span class="eyeIcon c-black p-absolute" mat-icon-button matSuffix (click)="hide = !hide"
                         [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                         <mat-icon class="m-icon">{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
@@ -28,7 +28,7 @@
                         <input type="checkbox">
                         <span class="email p-l-5">Remember Me?</span>
                     </div>
-                    <button class="login-btn m-t-14">Login</button>
+                    <button class="login-btn m-t-14" type="submit">Login</button>
                 </div>
                 <div class="m-t-12">
                     <span class="forgot-password">Forgot Password</span>

@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
         console.log("data", data);
         data?.forEach((element: any) => {
           if (element?.user?.userEmail === this.loginForm.value.email) {
-            console.log("eucyfucfuc");
+           
             localStorage.setItem('userToken', element?.token);
             this.auth.isAuthenticated();
           }
