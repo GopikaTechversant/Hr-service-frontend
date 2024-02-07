@@ -1,1 +1,58 @@
-<p>detailed-recruitment works!</p>
+<div class="main">
+    <div class="d-flex head j-space">
+        <div>
+            <span class="heading">Detailed Recruitment Report</span><span class="p-l-5 recruiter-name">-Recruiter Amritha</span>
+        </div>
+        <div class="d-flex">
+
+            <span class="c-pointer">
+                <span class="filter p-r-10 p-t-10">File Recruiter</span>
+                <input type="text" class="input p-l-5" placeholder="Choose Department">
+                <i class="fa fa-chevron-down arrow"></i>
+            </span>
+        </div>
+    </div>
+    <div class="table-container m-b-0">
+        <table class="table">
+            <tr class="table-row f-w-500 p-b-10">
+                <td class="table-heading"> Name</td>
+                <td class="table-heading">Position</td>
+                <td class="table-heading">Experience</td>
+                <td class="table-heading">Current Company </td>
+                <td class="table-heading">Location</td>
+                <td class="table-heading">Notice Period</td>
+                <td class="table-heading">Interview Date & Time</td>
+                <td class="table-heading">Panel</td>
+                <td class="table-heading">Mode</td>
+            </tr>
+            <!-- <div class="loader-parent">
+                <img src="assets/gif/loader.gif">
+            </div> -->
+            <ng-container *ngIf="list?.length > 0">
+
+                <ng-container
+                    *ngFor="let candidate of list | paginate:  { itemsPerPage:currentLimit, currentPage: currentpage ,totalItems: list?.length}">
+                    <tr class="candidate c-pointer table-row">
+                        <td>{{ candidate.name}}</td>
+                        <td>{{candidate.position}}</td>
+                        <td>{{ candidate.experience}}</td>
+                        <td>{{ candidate.currentCompany}}</td>
+                        <td>{{candidate.location}}</td>
+                        <td>{{ candidate.noticeperiod}}</td>
+                        <td>{{ candidate.dateTime}}</td>
+                        <td>{{ candidate.panel}}</td>
+                        <td>{{ candidate.mode}}</td>
+                    </tr>
+                </ng-container>
+            </ng-container>
+
+            <!-- <div *ngIf="list?.length === 0 && !loader" class="data">
+                No Data Found
+            </div> -->
+        </table>
+        <div class="pagination d-flex p-10 " *ngIf="list.length > 0 ">
+            <pagination-controls class="pagination-box" *ngIf="list?.length > 0" (pageChange)="pageChange($event)"
+                class="record-pagination" previousLabel="" nextLabel=""></pagination-controls>
+        </div>
+    </div>
+</div>

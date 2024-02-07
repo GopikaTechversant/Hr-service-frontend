@@ -63,7 +63,7 @@
                     No Data Found
                 </div> -->
             </table>
-            <div class="pagination d-flex j-end p-10 " *ngIf="list.length > 0 ">
+            <div class="pagination d-flex p-10 " *ngIf="list.length > 0 ">
                 <pagination-controls class="pagination-box" *ngIf="list?.length > 0" (pageChange)="pageChange($event)"
                     class="record-pagination" previousLabel="" nextLabel=""></pagination-controls>
             </div>

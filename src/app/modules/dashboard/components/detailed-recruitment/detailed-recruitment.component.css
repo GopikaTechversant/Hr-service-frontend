@@ -1,0 +1,75 @@
+.pagination {
+    position: sticky;
+}
+
+.main {
+    width: 100%;
+}
+
+.table {
+    width: 100%;
+}
+
+.table-heading {
+    /* width: 118px; */
+    height: 21px;
+    font-family: Rubik;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #000000;
+}
+
+.table-row {
+    height: 66px;
+    border: 1px solid #E9E9E9;
+    background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
+        linear-gradient(0deg, #F0F7FF, #F0F7FF);
+
+}
+
+.candidate {
+    font-family: Rubik;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 15px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #4F4F4F;
+}
+
+.filter {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18.96px;
+    color: #4F4F4F;
+}
+
+.heading {
+    color: #000000;
+    font-weight: 600;
+    line-height: 26.07px;
+    font-size: 22px;
+}
+
+.recruiter-name {
+    color: #0034C4;
+    font-family: Rubik;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 15px;
+    letter-spacing: 0em;
+    text-align: left;
+
+}
+
+.input {
+    border: 1px solid #E9E9E9;
+    outline: none;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    width: 173px;
+    height: 33px;
+}
