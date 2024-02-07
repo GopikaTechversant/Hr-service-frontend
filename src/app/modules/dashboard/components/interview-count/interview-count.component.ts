@@ -50,13 +50,10 @@ export class InterviewCountComponent implements OnInit {
       update: '1st shortlisted'
     },
   ]
-  collection: any[] = [];
+ 
   constructor(private datePipe: DatePipe) { }
   ngOnInit(): void {
-    this.createBarChart();
-    for (let i = 1; i <= 100; i++) {
-      this.collection.push(`item ${i}`);
-    }
+   this.createBarChart();
   }
   createBarChart() {
     this.chart = new Chart('barChartInterview', {
