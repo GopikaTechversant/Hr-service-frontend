@@ -2,6 +2,46 @@
     <div class="spinner" *ngIf="toggleSpinner">
         <img src="assets/gif/loader.gif" alt="spinner">
     </div>
+    <div class="login-section">
+        <div class="loginContainer">
+            <form [formGroup]="loginForm" (ngSubmit)="submitClick()">
+                <div class="info m-b-5">
+                    Login
+                </div>
+                <div class="content m-b-23">
+                    Access to our dashboard
+                </div>
+                <div class="form-field d-flex j-start m-b-14">
+                    <span class="email">Email</span>
+                    <input type="email" class="input" placeholder="admin@hrservice.com">
+                </div>
+                <div class="form-field d-flex j-start m-b-14 p-relative">
+                    <span class="email">Password</span>
+                    <input type="password" class="input" placeholder="Password">
+                    <span class="eyeIcon c-black p-absolute" mat-icon-button matSuffix (click)="hide = !hide"
+                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon class="m-icon">{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+                    </span>
+                </div>
+                <div class="form-field d-flex j-start m-t-14">
+                    <div class="d-flex">
+                        <input type="checkbox">
+                        <span class="email p-l-5">Remember Me?</span>
+                    </div>
+                    <button class="login-btn m-t-14">Login</button>
+                </div>
+                <div class="m-t-12">
+                    <span class="forgot-password">Forgot Password</span>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- <section>
+    <div class="spinner" *ngIf="toggleSpinner">
+        <img src="assets/gif/loader.gif" alt="spinner">
+    </div>
 
     <div class="login-section">
         <div class="container-fluid center-container" [ngStyle]="{'opacity': toggleSpinner ? '0.2' : null}">
@@ -87,4 +127,4 @@
 
         </div>
     </div>
-</section>
+</section> -->
