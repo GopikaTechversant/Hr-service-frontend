@@ -196,4 +196,9 @@
 
 .main {
     background-color: #E9E9E9;
+    margin-right: 21px;
+}
+
+.required{
+    color: red;
 }

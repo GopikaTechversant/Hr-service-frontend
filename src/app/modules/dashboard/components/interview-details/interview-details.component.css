@@ -54,6 +54,7 @@
 }
 
 .main {
+    margin-right: 20px;
     background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
         linear-gradient(0deg, #FAFAFA, #FAFAFA);
 }
