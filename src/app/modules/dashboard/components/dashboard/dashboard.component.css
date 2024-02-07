@@ -9,10 +9,6 @@
   line-height: 35.55px;
 }
 
-/* .candidate {
-  height: 174px;
-} */
-
 .candidate-card {
   width: 275px;
   height: 147px;
@@ -58,4 +54,16 @@
 .countsss {
   font-weight: 600;
   font-size: 33px;
+}
+
+.scrollable::-webkit-scrollbar, .main::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollable, .main {
+  scrollbar-width: none; /* For Firefox */
+}
+
+.scrollable, .main {
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
 }

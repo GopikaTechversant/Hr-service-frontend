@@ -1,3 +1,19 @@
 body {
     font-family: 'Rubik' !important;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
 }
+
+.scrollable::-webkit-scrollbar, body::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scrollable, body {
+    scrollbar-width: none; /* For Firefox */
+  }
+  
+  .scrollable, body {
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+  }
+  

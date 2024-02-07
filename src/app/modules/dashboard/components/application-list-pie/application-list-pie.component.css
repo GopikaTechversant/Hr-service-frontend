@@ -36,6 +36,9 @@
 .chart-container{
     margin-top: 5px;
     padding-bottom: 20px;
+    height: calc(100vh - 422px);
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .MyChart{

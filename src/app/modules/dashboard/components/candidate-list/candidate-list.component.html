@@ -27,18 +27,21 @@
                 <td>Skills</td>
                 <td>Actions</td>
             </tr>
-            <ng-container *ngFor="let item of [1,2,3,4,5,6,7,8,9,10]">
-                <tr>
-                    <td>Alfiya</td>
-                    <td>alf @123</td>
-                    <td>4548548</td>
-                    <td>Chhgfhg</td>
-                    <td>Prhbgfhnbgn</td>
-                    <td>6 year</td>
-                    <td>2000000</td>
-                    <td>Education</td>
-                    <td>Skills</td>
-                    <td>Actions</td>
+            <ng-container *ngFor="let item of list">
+                <tr class="c-pointer">
+                    <td>{{item.Name}}</td>
+                    <td>{{item.Email}}</td>
+                    <td>{{item.Mobile}}</td>
+                    <td>{{item.Current}}</td>
+                    <td>{{item.Previous}}</td>
+                    <td>{{item.Experience}}</td>
+                    <td>{{item.current}}</td>
+                    <td>{{item.Education}}</td>
+                    <td>{{item.Skills}}</td>
+                    <td>
+                        <i class="fa fa-pencil-square-o p-r-5 icon-color" aria-hidden="true"></i>
+                        <i class="fa fa-trash-o p-l-5 icon-color" aria-hidden="true"></i>
+                    </td>
                 </tr>
             </ng-container>
         </table>

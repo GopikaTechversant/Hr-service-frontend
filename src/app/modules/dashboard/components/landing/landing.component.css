@@ -17,3 +17,8 @@
 .w-25 {
     width: 25%;
 }
+
+/* This will hide the scrollbar for an element with the class .scrollable in Webkit browsers */
+.scrollable::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+}
