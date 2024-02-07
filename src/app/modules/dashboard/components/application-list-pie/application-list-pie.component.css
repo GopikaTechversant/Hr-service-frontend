@@ -36,9 +36,6 @@
 .chart-container{
     margin-top: 5px;
     padding-bottom: 20px;
-    height: calc(100vh - 422px);
-    overflow-y: scroll;
-    overflow-x: hidden;
 }
 
 .MyChart{
@@ -48,6 +45,6 @@
 .arrow{
     color: #4F4F4F;
     position: absolute;
-    top: 326px;
-    right: 39%;
+    top: 318px;
+    right: 640px;
 }
