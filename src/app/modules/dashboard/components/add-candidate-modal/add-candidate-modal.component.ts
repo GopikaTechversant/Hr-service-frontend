@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environments';
   providers: [DatePipe],
 })
 export class AddCandidateModalComponent implements OnInit {
+
   displayDate: any
   showDropdown: boolean = false;
  
@@ -32,8 +33,8 @@ export class AddCandidateModalComponent implements OnInit {
   primaryskills: any;
   secondaryskills: any;
   searchvalue: any;
-
-  constructor(private formBuilder: UntypedFormBuilder, private http: HttpClient,private datePipe: DatePipe) {
+  
+  constructor(private formBuilder: UntypedFormBuilder, private http: HttpClient,private datePipe: DatePipe,private el: ElementRef) {
     this.candidateForm = this.formBuilder.group({
       candidateFirstName: [null, Validators.required],
       candidateLastName: [null, Validators.required],
@@ -52,6 +53,12 @@ export class AddCandidateModalComponent implements OnInit {
   }
   ngOnInit(): void {
    
+  }
+  @HostListener('document:click', ['$event'])
+  onBodyClick(event: Event): void {
+    if (!this.el.nativeElement.contains(event.target)) {
+      this.showDropdown = false;
+    }
   }
   dateChange(event: any): void {
     let date = new Date(event?.value);
