@@ -37,8 +37,8 @@
 
 .search {
     background-color: #005EC9;
-    position: absolute;
-    padding: 10px;
+    /* position: relative; */
+    padding: 14px;
     top: 724px;
     right: 258px;
     width: 25px;
@@ -73,7 +73,7 @@ table {
 }
 
 .table-container {
-    height: calc(100vh - 200px);
+    min-height: calc(100vh - 250px);
     overflow-y: scroll;
     overflow-x: hidden;
 }
@@ -119,4 +119,9 @@ tr {
 
 .scrollable, .table-container {
     -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.j-end {
+    display: flex;
+    justify-content: end;
 }

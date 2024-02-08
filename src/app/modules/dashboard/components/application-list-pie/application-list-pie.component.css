@@ -44,7 +44,7 @@
 
 .arrow{
     color: #4F4F4F;
-    position: absolute;
-    top: 318px;
-    right: 640px;
+    position: relative;
+    top: 7px;
+    left: 119px;
 }

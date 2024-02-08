@@ -9,19 +9,27 @@ import { environment } from 'src/environments/environments';
   styleUrls: ['./candidate-list.component.css']
 })
 export class CandidateListComponent {
-  candidateList : any = [];
-  searchQuery: string = '';
+  candidateList: any = [];
+  searchQuery: any = {
+    searchWord: '',
+    page: 1,
+    limit: 7,
+  };
+  currentpage: number = 1;
+  currentLimit: number = 7;
 
   constructor(private http: HttpClient, private router: Router) { }
   ngOnInit(): void {
     this.fetchCandidates('');
   }
 
-  fetchCandidates(searchQuery: string): void {
-
-    this.http.get(`${environment.api_url}/candidate/list?search=${searchQuery}`)
+  fetchCandidates(searchKey: string): void {
+    this.searchQuery.searchWord = searchKey;
+    this.http.get(`${environment.api_url}/candidate/list?search=${this.searchQuery.searchWord}&page=${this.searchQuery.page}&limit=${this.searchQuery.limit}`)
       .subscribe((data: any) => {
         this.candidateList = data.candidates;
+        console.log(this.candidateList.length);
+        
       });
   }
   navigate(path: any, queryParam: any): void {
@@ -31,6 +39,11 @@ export class CandidateListComponent {
 
   isActive(route: string): boolean {
     return this.router.isActive(route, false);
+  }
+
+  pageChange(event: any): void {
+    let skip = parseInt(event, 10);
+    this.currentpage = skip;
   }
 
 }
