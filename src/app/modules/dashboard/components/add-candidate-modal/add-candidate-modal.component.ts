@@ -14,7 +14,7 @@ export class AddCandidateModalComponent implements OnInit {
 
   displayDate: any
   showDropdown: boolean = false;
- 
+  showSource: boolean = false;
   matcher: ErrorStateMatcher = new ShowOnDirtyErrorStateMatcher();
   candidateForm!: UntypedFormGroup;
   submitted: boolean = false;
@@ -26,6 +26,9 @@ export class AddCandidateModalComponent implements OnInit {
   skillSuggestions: any[] = [];
   selectedPrimarySkills: any[] = [];
   selectedSecondarySkills: any[] = [];
+  sourceList: any[] = [];
+  sourceId: any;
+  sourceName: any;
   // skillName: any;
   // selectedSkill: any;
   showSearchBar: boolean = false;
@@ -33,8 +36,8 @@ export class AddCandidateModalComponent implements OnInit {
   primaryskills: any;
   secondaryskills: any;
   searchvalue: any;
-  
-  constructor(private formBuilder: UntypedFormBuilder, private http: HttpClient,private datePipe: DatePipe,private el: ElementRef) {
+
+  constructor(private formBuilder: UntypedFormBuilder, private http: HttpClient, private datePipe: DatePipe, private el: ElementRef) {
     this.candidateForm = this.formBuilder.group({
       candidateFirstName: [null, Validators.required],
       candidateLastName: [null, Validators.required],
@@ -49,16 +52,28 @@ export class AddCandidateModalComponent implements OnInit {
       candidateCreatedby: [null, Validators.required],
       candidateEmail: [null, Validators.required],
       candidateMobileNo: [null, Validators.required],
+      resumeSourceId:[null, Validators.required]
     })
   }
   ngOnInit(): void {
-   
+    this.fetchSource();
   }
   @HostListener('document:click', ['$event'])
   onBodyClick(event: Event): void {
     if (!this.el.nativeElement.contains(event.target)) {
       this.showDropdown = false;
     }
+  }
+  fetchSource(): void {
+    this.http.get(`${environment.api_url}/candidate/resume-source/list`).subscribe((res: any) => {
+      console.log("source", res);
+      this.sourceList = res.data;
+    })
+  }
+  selectsource(sourceid: any, sourceName: any): void {
+    this.showSource = false;
+    this.sourceId = sourceid;
+    this.sourceName = sourceName;
   }
   dateChange(event: any): void {
     let date = new Date(event?.value);
@@ -101,8 +116,8 @@ export class AddCandidateModalComponent implements OnInit {
     }
     formdata.append('candidateResume', this.selectedFile);
     formdata.append('candidatePrimarySkills', this.primaryskills);
-    formdata.append('candidateSecondarySkills', this.secondaryskills)
-
+    formdata.append('candidateSecondarySkills', this.secondaryskills);
+    formdata.append('resumeSourceId',this.sourceId);
     console.log("Formdata final value", formdata)
 
     if (this.candidateForm) {
@@ -114,10 +129,10 @@ export class AddCandidateModalComponent implements OnInit {
           console.error('Error uploading file:', error);
         }
       );
-      
+
     } else {
       this.submitted = true;
-    
+
     }
 
   }
@@ -130,23 +145,17 @@ export class AddCandidateModalComponent implements OnInit {
   }
 
   cancel() {
-    
+
   }
 
-  // onSkillTypeSelected(skillType: any) {
-
-  //   this.selectedSkillType = skillType.value;
-
-
-  // }
 
 
   getSkillSuggestions(event: any) {
     this.searchvalue = event?.target.value;
-    console.log(" this.searchvalue ", this.searchvalue );
-    
+    console.log(" this.searchvalue ", this.searchvalue);
+
     if (this.selectedSkillType) {
-     
+
       this.http.get(`${environment.api_url}/candidate/skills/list?search=${this.searchvalue}`).subscribe((res: any) => {
         console.log("res", res);
 
@@ -166,12 +175,12 @@ export class AddCandidateModalComponent implements OnInit {
     const selectedSkill = { id: suggestion.id, name: suggestion.skillName };
     if (this.selectedSkillType === 'Primary Skills') {
       this.selectedPrimarySkills.push(selectedSkill);
-      console.log("primary",this.selectedPrimarySkills);
-      
+      console.log("primary", this.selectedPrimarySkills);
+
     } else if (this.selectedSkillType === 'Secondary Skills') {
       this.selectedSecondarySkills.push(selectedSkill);
-      console.log("this.selectedSecondarySkills",this.selectedSecondarySkills);
-      
+      console.log("this.selectedSecondarySkills", this.selectedSecondarySkills);
+
     }
     this.showSearchBar = false;
     this.skillSuggestions = [];

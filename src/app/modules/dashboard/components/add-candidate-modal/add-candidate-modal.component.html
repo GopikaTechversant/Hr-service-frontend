@@ -6,17 +6,17 @@
                 <span class="label m-b-4"><span class="required">*</span>First Name</span>
                 <input type="text" class="input-box" formControlName="candidateFirstName" placeholder="John">
                 <div
-                *ngIf="candidateForm.get('candidateFirstName')?.hasError('required') && candidateForm.get('candidateFirstName')?.touched">
-                <mat-error>First Name Required</mat-error>
-            </div>
+                    *ngIf="candidateForm.get('candidateFirstName')?.hasError('required') && candidateForm.get('candidateFirstName')?.touched">
+                    <mat-error>First Name Required</mat-error>
+                </div>
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4"><span class="required">*</span>Last Name</span>
                 <input type="text" class="input-box" formControlName="candidateLastName" placeholder="Deo">
                 <div
-                *ngIf="candidateForm.get('candidateLastName')?.hasError('required') && candidateForm.get('candidateLastName')?.touched">
-                <mat-error>Last Name Required</mat-error>
-            </div>
+                    *ngIf="candidateForm.get('candidateLastName')?.hasError('required') && candidateForm.get('candidateLastName')?.touched">
+                    <mat-error>Last Name Required</mat-error>
+                </div>
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4"><span class="required">*</span>DOB</span>
@@ -29,9 +29,9 @@
                             (click)="pickerdate ?.open()"></i>
                     </span>
                     <div
-                            *ngIf="candidateForm.get('candidateDoB')?.hasError('required') && candidateForm.get('candidateDoB')?.touched">
-                            <mat-error>Date Of Birth Required</mat-error>
-                        </div>
+                        *ngIf="candidateForm.get('candidateDoB')?.hasError('required') && candidateForm.get('candidateDoB')?.touched">
+                        <mat-error>Date Of Birth Required</mat-error>
+                    </div>
                 </div>
             </div>
         </div>
@@ -58,9 +58,9 @@
                 <span class="label m-b-4"><span class="required">*</span>Education</span>
                 <input type="text" class="input-box" formControlName="candidateEducation">
                 <div
-                *ngIf="candidateForm.get('candidateEducation')?.hasError('required') && candidateForm.get('candidateEducation')?.touched">
-                <mat-error>Education Salary Required</mat-error>
-            </div>
+                    *ngIf="candidateForm.get('candidateEducation')?.hasError('required') && candidateForm.get('candidateEducation')?.touched">
+                    <mat-error>Education Salary Required</mat-error>
+                </div>
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Current Salary</span>
@@ -72,17 +72,17 @@
                 <span class="label m-b-4"><span class="required">*</span>Expected Salary</span>
                 <input type="text" class="input-box" formControlName="candidateExpectedSalary">
                 <div
-                *ngIf="candidateForm.get('candidateExpectedSalary')?.hasError('required') && candidateForm.get('candidateExpectedSalary')?.touched">
-                <mat-error>Expected Salary Required</mat-error>
-            </div>
+                    *ngIf="candidateForm.get('candidateExpectedSalary')?.hasError('required') && candidateForm.get('candidateExpectedSalary')?.touched">
+                    <mat-error>Expected Salary Required</mat-error>
+                </div>
             </div>
             <div class="child d-flex m-b-10 m-l-10">
                 <span class="label m-b-4"><span class="required">*</span>Address</span>
                 <input type="text" class="text-area" formControlName="candidateAddress">
                 <div
-                *ngIf="candidateForm.get('candidateAddress')?.hasError('required') && candidateForm.get('candidateAddress')?.touched">
-                <mat-error>Address Required</mat-error>
-            </div>
+                    *ngIf="candidateForm.get('candidateAddress')?.hasError('required') && candidateForm.get('candidateAddress')?.touched">
+                    <mat-error>Address Required</mat-error>
+                </div>
             </div>
         </div>
         <div class="d-flex j-space parent">
@@ -90,17 +90,60 @@
                 <span class="label m-b-4"><span class="required">*</span>Email</span>
                 <input type="text" class="input-box" formControlName="candidateEmail">
                 <div
-                *ngIf="candidateForm.get('candidateEmail')?.hasError('required') && candidateForm.get('candidateEmail')?.touched">
-                <mat-error>Email ID Required</mat-error>
-            </div>
+                    *ngIf="candidateForm.get('candidateEmail')?.hasError('required') && candidateForm.get('candidateEmail')?.touched">
+                    <mat-error>Email ID Required</mat-error>
+                </div>
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4"><span class="required">*</span>Mobile</span>
                 <input type="text" class="input-box-mobile" formControlName="candidateMobileNo">
                 <div
-                *ngIf="candidateForm.get('candidateMobileNo')?.hasError('required') && candidateForm.get('candidateMobileNo')?.touched">
-                <mat-error>Mobile No Required</mat-error>
+                    *ngIf="candidateForm.get('candidateMobileNo')?.hasError('required') && candidateForm.get('candidateMobileNo')?.touched">
+                    <mat-error>Mobile No Required</mat-error>
+                </div>
             </div>
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">Position</span>
+                <div class="input-box p-t-10 p-l-6" (click)="showSource = !showSource;fetchSource()" >
+                    <span *ngIf="!sourceName">Select source</span>
+                    <span *ngIf="sourceName">{{sourceName}}</span>
+                    <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
+                </div>
+                <div class="no-close dropdown m-t-6 p-t-10 p-l-6" *ngIf="showSource">
+                    <div *ngFor="let source of sourceList" (click)="selectsource(sourceId,source.sourceName)">
+                        {{source.sourceName}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex j-space parent">
+            <div class="skills p-l-14 p-t-13">
+                <p class="text"><span class="required">*</span>Skill Sets</p>
+                <div class="d-flex j-space skill-drop-down">
+                    <div class="skill-type" (click)="showDropdown = !showDropdown"><span>{{ selectedSkillType || 'Skill
+                            Type'
+                            }}</span> <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
+                        <div class="dropdown-list" *ngIf="showDropdown">
+                            <p *ngFor="let type of skillTypes" (click)="selectSkillType(type)">{{type}}</p>
+
+                        </div>
+                    </div>
+
+                    <button class="add-btn" (click)="$event.preventDefault();toggleSearchBar()">Add</button>
+                </div>
+                <div class="searchbar" *ngIf="showSearchBar">
+                    <input type="search" class="input-search" placeholder="Type to search skills..."
+                        (input)="getSkillSuggestions($event)" *ngIf="showSearchBar">
+
+                </div>
+                <div *ngIf="showSearchBar" class="m-l-23 m-t-8">
+                    <div *ngFor="let suggestion of skillSuggestions" (click)="selectSkill(suggestion)">
+                        <span class="p-t-7"><img src="assets/images/akar-icons_check.png" alt="" class="m-t-0 p-r-4"
+                                width="13px" height="10px"></span>
+                        <span>{{suggestion.skillName}}</span>
+                    </div>
+                </div>
+                
             </div>
             <div class="child d-flex m-b-10 p-relative">
                 <span class="label m-b-4"><span class="required">*</span>Upload Resume</span>
@@ -110,32 +153,6 @@
                     </div>
                 </button>
                 <input type="file" style="visibility: hidden" (change)="onFileSelected($event)">
-            </div>
-        </div>
-        <div class="skills p-l-14 p-t-13">
-            <p class="text"><span class="required">*</span>Skill Sets</p>
-            <div class="d-flex j-space skill-drop-down">
-                <div class="skill-type" (click)="showDropdown = !showDropdown"><span>{{ selectedSkillType || 'Skill
-                        Type'
-                        }}</span> <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
-                    <div class="dropdown-list" *ngIf="showDropdown">
-                        <p *ngFor="let type of skillTypes" (click)="selectSkillType(type)">{{type}}</p>
-
-                    </div>
-                </div>
-
-                <button class="add-btn" (click)="$event.preventDefault();toggleSearchBar()">Add</button>
-            </div>
-            <div class="searchbar" *ngIf="showSearchBar">
-                <input type="search" class="input-search" placeholder="Type to search skills..."
-                    (input)="getSkillSuggestions($event)" *ngIf="showSearchBar">
-
-            </div>
-            <div *ngIf="showSearchBar" class="m-l-23 m-t-8">
-                <div *ngFor="let suggestion of skillSuggestions" (click)="selectSkill(suggestion)">
-                    <span class="p-t-7"><img src="assets/images/akar-icons_check.png" alt="" class="m-t-0 p-r-4" width="13px" height="10px"></span>
-                    <span>{{suggestion.skillName}}</span>
-                </div>
             </div>
         </div>
         <div class="d-flex f-right j-space submit-btn">
@@ -148,215 +165,15 @@
 
 
 
-<!-- <div class="candidate-form">
-    <div class="info d-flex j-center">
-        <p>Add Candidate</p>
+<!-- <div class="child d-flex m-b-10">
+    <span class="label m-b-4">Position</span>
+    <div class="input-box p-t-10 p-l-6" (click)="showDropdown = !showDropdown">
+        <span>Select Position</span>
+        <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
     </div>
-    <div class="candidate-details p-30">
-        <form [formGroup]="candidateForm" (ngSubmit)="submitClick(); $event.preventDefault()"
-            enctype="multipart/form-data">
-            <div class="name d-flex  j-space field-height">
-                <div>
-                    <mat-form-field class="example-full-width">
-                        <mat-label>First Name</mat-label>
-                        <input type="text" matInput formControlName="candidateFirstName" placeholder="John">
-
-                        <div
-                            *ngIf="candidateForm.get('candidateFirstName')?.hasError('required') && candidateForm.get('candidateFirstName')?.touched">
-                            <mat-error>First Name Required</mat-error>
-                        </div>
-                    </mat-form-field>
-                </div>
-                <div>
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Last Name</mat-label>
-                        <input type="text" matInput formControlName="candidateLastName" placeholder="Deo">
-
-                        <div
-                            *ngIf="candidateForm.get('candidateLastName')?.hasError('required') && candidateForm.get('candidateLastName')?.touched">
-                            <mat-error>Last Name Required</mat-error>
-                        </div>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="dob-exp d-flex  j-space p-20 field-height">
-                <div>
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Date Of Birth</mat-label>
-                        <input type="text" matInput formControlName="candidateDoB">
-
-                        <div
-                            *ngIf="candidateForm.get('candidateDoB')?.hasError('required') && candidateForm.get('candidateDoB')?.touched">
-                            <mat-error>Date Of Birth Required</mat-error>
-                        </div>
-                    </mat-form-field>
-                </div>
-                <div>
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Experience</mat-label>
-                        <input type="text" matInput formControlName="candidateExperience">
-
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="organization d-flex  j-space p-20 field-height">
-                <div>
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Previous organization </mat-label>
-                        <input type="text" matInput formControlName="candidatePreviousOrg">
-
-                    </mat-form-field>
-                </div>
-                <div>
-                    <div>
-                        <mat-form-field class="example-full-width">
-                            <mat-label>Previous Designation</mat-label>
-                            <input type="text" matInput formControlName="candidatePreviousDesignation">
-
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div>
-            <div class="organization d-flex  j-space p-20 field-height">
-                <div>
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Created by </mat-label>
-                        <input type="text" matInput formControlName="candidateCreatedby">
-
-                    </mat-form-field>
-                </div>
-                <div>
-                    <div>
-                        <mat-form-field class="example-full-width">
-                            <mat-label>Education</mat-label>
-                            <input type="text" matInput formControlName="candidateEducation">
-
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div>
-            <div class="edu-sal d-flex  j-space p-20 field-height">
-
-                <div>
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Current Salary</mat-label>
-                        <input type="text" matInput formControlName="candidateCurrentSalary">
-
-                    </mat-form-field>
-                </div>
-                <div>
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Expected Salary</mat-label>
-                        <input type="text" matInput formControlName="candidateExpectedSalary">
-
-                        <div
-                            *ngIf="candidateForm.get('candidateExpectedSalary')?.hasError('required') && candidateForm.get('candidateExpectedSalary')?.touched">
-                            <mat-error>Expected Salary Required</mat-error>
-                        </div>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="expect-addr d-flex  j-space p-20 field-height">
-
-                <div>
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Address</mat-label>
-                        <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"
-                            formControlName="candidateAddress" class="address"></textarea>
-
-                        <div
-                            *ngIf="candidateForm.get('candidateAddress')?.hasError('required') && candidateForm.get('candidateAddress')?.touched">
-                            <mat-error>Address Required</mat-error>
-                        </div>
-                    </mat-form-field>
-                </div>
-                <div>
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Email</mat-label>
-                        <input type="text" matInput formControlName="candidateEmail">
-
-                        <div
-                            *ngIf="candidateForm.get('candidateEmail')?.hasError('required') && candidateForm.get('candidateEmail')?.touched">
-                            <mat-error>Email ID Required</mat-error>
-                        </div>
-                    </mat-form-field>
-                </div>
-            </div>
-
-
-
-            <div class="email-mob d-flex  j-space p-20 field-height">
-
-                <div>
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Mobile No</mat-label>
-                        <input type="text" matInput formControlName="candidateMobileNo">
-
-                        <div
-                            *ngIf="candidateForm.get('candidateMobileNo')?.hasError('required') && candidateForm.get('candidateMobileNo')?.touched">
-                            <mat-error>Mobile No Required</mat-error>
-                        </div>
-                    </mat-form-field>
-                </div>
-                <div>
-
-
-                    <button class="upload-resume-btn" (click)="triggerFileInput();$event.preventDefault()">
-                        <div class="d-flex j-center">
-                            <img src="assets/images/upload-file.png" alt="" height="23px" width="28px">
-                            <p class="p-t-4 p-l-4">Upload Resume</p>
-                        </div>
-                    </button>
-                    <input type="file" (change)="onFileSelected($event)" style="visibility: hidden">
-
-
-                </div>
-
-            </div>
-
-
-
-
-            <div class="skill-type-dropdown d-flex">
-                <mat-form-field class="searchbar-field">
-                    <mat-label>Skill Type</mat-label>
-                    <mat-select (selectionChange)="onSkillTypeSelected($event)">
-                        <mat-option *ngFor="let type of skillTypes" [value]="type">{{ type }}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <button class="add-btn" (click)="$event.preventDefault();toggleSearchBar()">Add</button>
-            </div>
-
-
-            <div class="searchbar" *ngIf="showSearchBar">
-                <input type="search" class="input-search" placeholder="Type to search skills..."
-                    (input)="getSkillSuggestions($event)" *ngIf="showSearchBar">
-
-            </div>
-            <div *ngIf="showSearchBar" class="m-l-23 m-t-8">
-                <div *ngFor="let suggestion of skillSuggestions" (click)="selectSkill(suggestion)">
-                    {{suggestion.skillName}}</div>
-            </div>
-            <div *ngIf="selectedPrimarySkills" class="d-flex">
-
-                <div *ngFor="let skill of selectedPrimarySkills" class="m-l-23">
-                    {{ skill.name }},
-                </div>
-            </div>
-
-            <div *ngIf="selectedSecondarySkills" class="d-flex">
-
-                <div *ngFor="let skill of selectedSecondarySkills" class="m-l-23">
-                    {{ skill.name }}
-                </div>
-            </div>
-
-
-
-            <div class="btn d-flex j-space">
-                <button class="cancel-btn m-20" (click)="cancel()">Cancel</button>
-                <button type="submit" class="submit-btn m-20" matRipple [matRippleCentered]="true">Submit</button>
-            </div>
-        </form>
+    <div class="no-close dropdown m-t-6 p-t-10 p-l-6" *ngIf="showDropdown">
+        <p (click)="option()">Option1</p>
+        <p>Option1</p>
+        <p>Option1</p>
     </div>
 </div> -->

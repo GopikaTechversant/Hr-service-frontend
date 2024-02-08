@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
-  
+
   userList: any = [];
   selectedItem: any;
   loader: boolean = false;
@@ -36,11 +36,9 @@ export class UserListComponent implements OnInit {
     });
 
     this.http.get(`${environment.api_url}/user/lists?limit=${this.pageSize}&page=${this.currentPage}`, { headers }).subscribe((data: any) => {
-
       this.userList = data.users;
       this.userCount = data.userCount;
       console.log("response ", this.userList);
-
     })
   }
 

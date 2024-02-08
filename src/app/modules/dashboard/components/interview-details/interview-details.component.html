@@ -3,7 +3,17 @@
     <div class="d-flex j-space parent">
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Recruiter Name</span>
-            <input type="text" class="input-box">
+            <div class="input-box p-t-10 p-l-6" (click)="showRecruiters = !showRecruiters;fetchUsers();">
+                <span *ngIf="!recruiterName">Select Name</span>
+                <span *ngIf="recruiterName">{{recruiterName}}</span>
+                <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
+            </div>
+            <div class="no-close dropdown m-t-6 p-t-10 p-l-6" *ngIf="showRecruiters">
+                <div *ngFor="let recruiter of users_list"
+                    (click)="selectRecruiter(recruiter.userId,recruiter.userfirstName,recruiter.userlastName)">
+                    {{recruiter.userfirstName}} {{recruiter.userlastName}}
+                </div>
+            </div>
         </div>
 
         <div class="child d-flex m-b-10">
@@ -25,14 +35,16 @@
         </div>
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Position</span>
-            <div class="input-box p-t-10 p-l-6" (click)="showDropdown = !showDropdown">
-                <span>Select Position</span>
+            <div class="input-box p-t-10 p-l-6" (click)="showDropdown = !showDropdown;fetchPosition()">
+                <span *ngIf="!positionName">Select Position</span>
+                <span *ngIf="positionName">{{positionName}}</span>
                 <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
             </div>
             <div class="no-close dropdown m-t-6 p-t-10 p-l-6" *ngIf="showDropdown">
-                <p (click)="option()">Option1</p>
-                <p>Option1</p>
-                <p>Option1</p>
+                <div *ngFor="let position of positionList"
+                    (click)="selectPosition(position.sericeId,position.sericeName)">
+                    {{position.sericeName}}
+                </div>
             </div>
         </div>
     </div>
@@ -40,62 +52,81 @@
 
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Candidate Name</span>
-            <input type="text" class="input-box">
+            <div class="input-box p-t-10 p-l-6" (click)="showcandidate = !showcandidate;fetchPosition()">
+                <span *ngIf="!candidateName">Select Name</span>
+                <span *ngIf="candidateName">{{candidateName}}</span>
+                <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
+            </div>
+            <div class="no-close dropdown m-t-6 p-t-10 p-l-6" *ngIf="showcandidate">
+                <div *ngFor="let candidate of candidate_list"
+                    (click)="selectCandidate(candidate.candidateId,candidate.candidateFirstName,candidate.candidateLastName,candidate)">
+                    {{candidate.candidateFirstName}} {{candidate.candidateLastName}}
+                </div>
+            </div>
         </div>
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Candidate Experience</span>
-            <input type="text" class="input-box">
+            <input type="text" class="input-box" [value]="candidateExperience">
         </div>
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Notice Period</span>
-            <input type="text" class="input-box">
+            <input type="text" class="input-box" [value]="noticePeriod">
         </div>
     </div>
     <div class="d-flex j-space parent">
 
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Current Company</span>
-            <input type="text" class="input-box">
+            <input type="text" class="input-box" [value]="currentCompany ">
         </div>
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Location</span>
-            <input type="text" class="input-box">
+            <input type="text" class="input-box" id="location">
         </div>
+
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Panel</span>
-            <input type="text" class="input-box">
+            <div class="input-box p-t-10 p-l-6" (click)="showPanel = !showPanel; fetchPanel();">
+                <span *ngIf="!panelName">Select Name</span>
+                <span *ngIf="panelName">{{panelName}}</span>
+                <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
+            </div>
+            <div class="no-close dropdown m-t-6 p-t-10 p-l-6" *ngIf="showPanel">
+                <div *ngFor="let panel of panel_list "
+                    (click)="selectPanel(panel.userId,panel.userfirstName,panel.userlastName)">
+                    {{panel.userfirstName}} {{panel.userlastName}}
+                </div>
+            </div>
         </div>
     </div>
     <div class="d-flex j-space parent">
-
-
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Mode</span>
-            <input type="text" class="input-box">
+            <input type="text" class="input-box" id="mode">
         </div>
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Interview Status</span>
-            <input type="text" class="input-box">
+            <input type="text" class="input-box" id="interviewStatus">
         </div>
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Candidate Status</span>
-            <input type="text" class="input-box">
+            <input type="text" class="input-box" id="candidateStatus">
         </div>
     </div>
     <div class="d-flex j-space parent">
 
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Rescheduled Status</span>
-            <input type="text" class="input-box">
+            <input type="text" class="input-box" id="rescheduledStatus">
         </div>
 
     </div>
     <div class="child d-flex m-b-10">
         <span class="label m-b-4">Comments</span>
-        <textarea class="comments"></textarea>
+        <textarea class="comments" id="comments"></textarea>
     </div>
     <div class="d-flex f-right j-space submit-btn">
         <button class="cancel-btn">Cancel</button>
-        <button class="save">Save</button>
+        <button class="save" (click)="submit()">Save</button>
     </div>
 </div>
