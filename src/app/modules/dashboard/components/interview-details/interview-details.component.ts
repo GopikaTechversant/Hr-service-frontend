@@ -29,6 +29,8 @@ export class InterviewDetailsComponent implements OnInit {
   timeChange(event: any): void {
     console.log("event", event);
     this.displayTime = event;
+    console.log("this.displayTime",this.displayTime);
+    
     this.displaydateTime = `${this.displayDate} ${this.displayTime}`;
     // this.cdr.detectChanges();
     console.log("this.displaydateTime", this.displaydateTime);

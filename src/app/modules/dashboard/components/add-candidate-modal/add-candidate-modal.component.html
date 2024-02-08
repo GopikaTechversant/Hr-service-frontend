@@ -3,7 +3,7 @@
         <p class="heading  m-t-12">Add Candidates</p>
         <div class="d-flex j-space parent">
             <div class="child d-flex m-b-10">
-                <span class="label m-b-4">First Name<span class="required">*</span></span>
+                <span class="label m-b-4"><span class="required">*</span>First Name</span>
                 <input type="text" class="input-box" formControlName="candidateFirstName" placeholder="John">
                 <div
                 *ngIf="candidateForm.get('candidateFirstName')?.hasError('required') && candidateForm.get('candidateFirstName')?.touched">
@@ -11,11 +11,15 @@
             </div>
             </div>
             <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Last Name</span>
+                <span class="label m-b-4"><span class="required">*</span>Last Name</span>
                 <input type="text" class="input-box" formControlName="candidateLastName" placeholder="Deo">
+                <div
+                *ngIf="candidateForm.get('candidateLastName')?.hasError('required') && candidateForm.get('candidateLastName')?.touched">
+                <mat-error>Last Name Required</mat-error>
+            </div>
             </div>
             <div class="child d-flex m-b-10">
-                <span class="label m-b-4">DOB</span>
+                <span class="label m-b-4"><span class="required">*</span>DOB</span>
                 <div class="p-relative ">
                     <input class="p-l-5  input-box" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate"
                         (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate"
@@ -24,6 +28,10 @@
                         <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
                             (click)="pickerdate ?.open()"></i>
                     </span>
+                    <div
+                            *ngIf="candidateForm.get('candidateDoB')?.hasError('required') && candidateForm.get('candidateDoB')?.touched">
+                            <mat-error>Date Of Birth Required</mat-error>
+                        </div>
                 </div>
             </div>
         </div>
@@ -47,8 +55,12 @@
                 <input type="text" class="input-box" formControlName="candidatePreviousDesignation">
             </div>
             <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Education</span>
+                <span class="label m-b-4"><span class="required">*</span>Education</span>
                 <input type="text" class="input-box" formControlName="candidateEducation">
+                <div
+                *ngIf="candidateForm.get('candidateEducation')?.hasError('required') && candidateForm.get('candidateEducation')?.touched">
+                <mat-error>Education Salary Required</mat-error>
+            </div>
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Current Salary</span>
@@ -57,25 +69,41 @@
         </div>
         <div class="d-flex j-space parent-address">
             <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Expected Salary</span>
+                <span class="label m-b-4"><span class="required">*</span>Expected Salary</span>
                 <input type="text" class="input-box" formControlName="candidateExpectedSalary">
+                <div
+                *ngIf="candidateForm.get('candidateExpectedSalary')?.hasError('required') && candidateForm.get('candidateExpectedSalary')?.touched">
+                <mat-error>Expected Salary Required</mat-error>
             </div>
-            <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Address</span>
+            </div>
+            <div class="child d-flex m-b-10 m-l-10">
+                <span class="label m-b-4"><span class="required">*</span>Address</span>
                 <input type="text" class="text-area" formControlName="candidateAddress">
+                <div
+                *ngIf="candidateForm.get('candidateAddress')?.hasError('required') && candidateForm.get('candidateAddress')?.touched">
+                <mat-error>Address Required</mat-error>
+            </div>
             </div>
         </div>
         <div class="d-flex j-space parent">
             <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Email</span>
+                <span class="label m-b-4"><span class="required">*</span>Email</span>
                 <input type="text" class="input-box" formControlName="candidateEmail">
+                <div
+                *ngIf="candidateForm.get('candidateEmail')?.hasError('required') && candidateForm.get('candidateEmail')?.touched">
+                <mat-error>Email ID Required</mat-error>
+            </div>
             </div>
             <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Mobile</span>
+                <span class="label m-b-4"><span class="required">*</span>Mobile</span>
                 <input type="text" class="input-box-mobile" formControlName="candidateMobileNo">
+                <div
+                *ngIf="candidateForm.get('candidateMobileNo')?.hasError('required') && candidateForm.get('candidateMobileNo')?.touched">
+                <mat-error>Mobile No Required</mat-error>
+            </div>
             </div>
             <div class="child d-flex m-b-10 p-relative">
-                <span class="label m-b-4">Upload Resume</span>
+                <span class="label m-b-4"><span class="required">*</span>Upload Resume</span>
                 <button class="upload-resume-btn" (click)="triggerFileInput();$event.preventDefault()">
                     <div class="d-flex j-center">
                         <p class="p-t-4 p-l-4">Upload</p>
@@ -85,7 +113,7 @@
             </div>
         </div>
         <div class="skills p-l-14 p-t-13">
-            <p class="text">Skill Sets</p>
+            <p class="text"><span class="required">*</span>Skill Sets</p>
             <div class="d-flex j-space skill-drop-down">
                 <div class="skill-type" (click)="showDropdown = !showDropdown"><span>{{ selectedSkillType || 'Skill
                         Type'
