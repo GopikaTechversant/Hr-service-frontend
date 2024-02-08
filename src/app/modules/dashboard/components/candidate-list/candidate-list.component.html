@@ -29,7 +29,9 @@
                 <td>Skills</td>
                 <td>Actions</td>
             </tr>
-            <ng-container *ngFor="let item of candidateList | paginate:  { itemsPerPage:currentLimit, currentPage: currentpage ,totalItems: candidateList?.length}">
+            <ng-container *ngIf="candidateList?.length > 0" >
+                <ng-container
+                *ngFor="let item of candidateList | paginate:  { itemsPerPage:currentLimit, currentPage: currentPage ,totalItems: data?.candidateCount}">
                 <tr class="c-pointer">
                     <td>{{item.candidateFirstName}} {{item.candidateLastName}}</td>
                     <td>{{item.candidateEmail}}</td>
@@ -46,6 +48,8 @@
                     </td>
                 </tr>
             </ng-container>
+            </ng-container>
+            
         </table>
     </div>
     <div class="pagination d-flex j-end p-10 " *ngIf="candidateList?.length > 0">

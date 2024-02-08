@@ -74,3 +74,10 @@
     width: 173px;
     height: 33px;
 }
+
+.arrow {
+    color: #4F4F4F;
+    position: relative;
+    top: 5%;
+    right: 11%;
+}

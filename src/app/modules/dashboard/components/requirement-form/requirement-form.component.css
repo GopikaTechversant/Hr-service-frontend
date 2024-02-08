@@ -1,5 +1,5 @@
 .main {
-    background-color: #fff;
+    background-color: #F7F7F7;
 }
 
 .header {
@@ -15,12 +15,15 @@
     overflow-y: scroll;
     overflow-x: hidden;
     width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 1;
 }
 
 .sub-head {
     color: #000000;
     font-weight: 400;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 21.33px;
 }
 
@@ -29,25 +32,9 @@
     border-radius: 5px;
     border: 1px solid #E9E9E9;
     background-color: #FAFAFA;
-    width: 521px;
-    height: 54px;
+    width: 430px;
+    height: 40px;
 }
-
-.text-box {
-    height: 30px;
-    border: 1px solid #EEEEEE;
-    border-radius: 5px;
-    padding: 4px 8px;
-    outline: none;
-}
-
-
-
-.row {
-    display: flex;
-    flex-wrap: wrap;
-}
-
 
 .requestId-drop-down {
     border: 1.5px solid #7d8296b5;
@@ -83,16 +70,6 @@
     width: 100%;
 }
 
-.box-view-candidates {
-    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
-    border-radius: 8px;
-    background-color: #fff;
-    width: 160px;
-}
-
-.text-center {
-    text-align: center;
-}
 
 .assignee {
     margin-left: 53px;
@@ -105,19 +82,6 @@
 .mat-ripple {
     overflow: hidden;
     position: relative;
-}
-
-.input-search[_ngcontent-lvq-c216] {
-    right: 25px;
-    top: 7px;
-}
-
-.p-absolute {
-    position: absolute !important;
-}
-
-.c-pointer {
-    cursor: pointer !important;
 }
 
 .icon-color {
@@ -162,8 +126,8 @@
     border-radius: 5px;
     border: 1px solid #E9E9E9;
     background-color: #FAFAFA;
-    width: 521px;
-    height: 54px;
+    width: 430px;
+    height: 40px;
 }
 
 .calendar-icon {
@@ -172,15 +136,13 @@
     Height: 18px;
     margin-left: -22px;
     top: 20px;
-    /* right: 190px; */
-
 }
 
 
 .btn-cancel {
     background-color: #575F6E;
-    width: 233px;
-    height: 54px;
+    width: 150px;
+    height: 48px;
     border-radius: 3px;
     outline: none;
     border: none;
@@ -191,8 +153,8 @@
 
 .btn-submit {
     background-color: #005EC9;
-    width: 233px;
-    height: 54px;
+    width: 150px;
+    height: 48px;
     border-radius: 3px;
     outline: none;
     border: none;
@@ -202,3 +164,137 @@
 
 }
 
+.head {
+    padding: 10px;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.heading {
+    color: #000000;
+    font-weight: 600;
+    line-height: 26.07px;
+    font-size: 22px;
+}
+
+
+.search-input {
+    border: 1px solid #E9E9E9;
+    outline: none;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    width: 250px;
+    height: 40px;
+}
+
+.search {
+    background-color: #005EC9;
+    padding: 10px;
+    top: 724px;
+    right: 258px;
+    width: 25px;
+    height: 22px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.fa-search {
+    color: #FFFFFF;
+    padding-left: 3px;
+    font-size: 20px;
+}
+
+.candidate-list {
+    flex-grow: 1;
+    padding: 10px;
+}
+
+.candidate {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.candidate-card {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    width: 326px;
+    height: auto;
+    border-radius: 4px;
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 7px #0000001F;
+    padding: 10px;
+    position: relative;
+    padding: 10px;
+}
+
+.count {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #A8A8A8;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.info-pair {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.key,
+.value {
+    flex: 1;
+    margin: 5px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0em;
+}
+
+.key {
+    color: #000000;
+    width: auto;
+}
+
+.value {
+    color: #575F6E;
+    text-align: left;
+}
+
+.fa-check {
+    color: #FFFFFF;
+}
+
+.count :hover {
+    border: 1px solid #005EC9;
+    border-radius: 50%;
+}
+
+
+.scrollable::-webkit-scrollbar,
+.scroller-box::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollable,
+.scroller-box {
+    scrollbar-width: none;
+}
+
+.scrollable,
+.scroller-box {
+    -ms-overflow-style: none;
+}

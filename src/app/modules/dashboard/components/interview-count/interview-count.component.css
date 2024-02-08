@@ -41,9 +41,9 @@
 
 .arrow {
     color: #4F4F4F;
-    position: absolute;
-    top: 47%;
-    right: 2%;
+    position: relative;
+    top: 5%;
+    right: 11%;
 }
 
 .barchart {
@@ -114,4 +114,11 @@
     letter-spacing: 0em;
     text-align: left;
     color: #0034C4;
+}
+
+.pagination {
+    position: sticky;
+    bottom: 0px;
+    background-color: white;
+    width: 100%;
 }

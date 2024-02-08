@@ -13,10 +13,12 @@ export class CandidateListComponent {
   searchQuery: any = {
     searchWord: '',
     page: 1,
-    limit: 7,
+    limit: 25,
   };
-  currentpage: number = 1;
+  currentPage: number = 1;
   currentLimit: number = 7;
+  totalCount: any;
+  data: any;
 
   constructor(private http: HttpClient, private router: Router) { }
   ngOnInit(): void {
@@ -27,8 +29,10 @@ export class CandidateListComponent {
     this.searchQuery.searchWord = searchKey;
     this.http.get(`${environment.api_url}/candidate/list?search=${this.searchQuery.searchWord}&page=${this.searchQuery.page}&limit=${this.searchQuery.limit}`)
       .subscribe((data: any) => {
+        this.data = data;
         this.candidateList = data.candidates;
-        console.log(this.candidateList.length);
+        this.totalCount = data.candidateCount;
+        console.log(this.totalCount);
         
       });
   }
@@ -43,7 +47,7 @@ export class CandidateListComponent {
 
   pageChange(event: any): void {
     let skip = parseInt(event, 10);
-    this.currentpage = skip;
+    this.currentPage = skip;
   }
 
 }

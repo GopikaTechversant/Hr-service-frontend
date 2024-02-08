@@ -1,19 +1,57 @@
 body {
-    font-family: 'Rubik' !important;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
+  font-family: 'Rubik' !important;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 
-.scrollable::-webkit-scrollbar, body::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .scrollable, body {
-    scrollbar-width: none; /* For Firefox */
-  }
-  
-  .scrollable, body {
-    -ms-overflow-style: none; /* For Internet Explorer and Edge */
-  }
-  
+.scrollable::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollable,
+body {
+  scrollbar-width: none;
+}
+
+.scrollable,
+body {
+  -ms-overflow-style: none;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.j-end {
+  display: flex;
+  justify-content: end;
+}
+
+.p-absolute {
+  position: absolute !important;
+}
+
+.c-pointer {
+  cursor: pointer !important;
+}
+
+.record-pagination ul.ngx-pagination {
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+
+.record-pagination .ngx-pagination a:hover {
+  background: #419ae8 !important;
+  color: #fff;
+}
+
+.record-pagination .ngx-pagination a {
+  text-decoration: none;
+}
+
+.ngx-pagination .current {
+  padding: 2px 7px !important;
+  background: #005EC9 !important;
+}
