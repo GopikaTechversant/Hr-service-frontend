@@ -37,12 +37,16 @@
     background: white;
     box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
     font-family: Rubik;
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 400;
-    line-height: 21px;
+    line-height: 27px;
     letter-spacing: 0em;
     text-align: left;
-    
+    position: fixed;
+    z-index: 1;
+    width: 290px;
+    height: 100px;
+    overflow-y: auto;
 }
 
 .calendar-icon {
@@ -102,13 +106,13 @@
     width: 354px;
 }
 
-.clock-icon{
+.clock-icon {
     color: gray;
-   
+
     top: 13px;
     margin-left: -19px;
 }
 
-.w-50{
+.w-50 {
     width: 100%;
 }

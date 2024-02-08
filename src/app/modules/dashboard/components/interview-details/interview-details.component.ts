@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environments';
@@ -9,6 +9,10 @@ import { environment } from 'src/environments/environments';
   providers: [DatePipe],
 })
 export class InterviewDetailsComponent implements OnInit {
+  @ViewChild('recruiterNameDiv') recruiterNameDiv!: ElementRef;
+  @ViewChild('positionDiv') positionDiv!: ElementRef;
+  @ViewChild('candidatenameDiv') candidatenameDiv!: ElementRef;
+  @ViewChild('panelDiv') panelDiv!: ElementRef;
   showDropdown: boolean = false;
   showRecruiters: boolean = false;
   showcandidate: boolean = false;
@@ -38,12 +42,29 @@ export class InterviewDetailsComponent implements OnInit {
   rescheduledStatusValue: any;
   commentValue: any;
   selectedCandidate: any[] = [];
-  constructor(private datePipe: DatePipe, private cdr: ChangeDetectorRef, private http: HttpClient) {
+
+  constructor(private datePipe: DatePipe, private cdr: ChangeDetectorRef, private http: HttpClient, private el: ElementRef) {
 
   }
   ngOnInit(): void {
-    this.fetchCandidates();
+    
+}
 
+  @HostListener('document:click', ['$event'])
+  onBodyClick(event: Event): void {
+    const clickedElement = event.target as HTMLElement;
+    if (!this.recruiterNameDiv.nativeElement.contains(clickedElement)) {
+      this.showRecruiters = false;
+    }
+    if (!this.positionDiv.nativeElement.contains(clickedElement)) {
+      this.showDropdown = false;
+    }
+    if (!this.candidatenameDiv.nativeElement.contains(clickedElement)) {
+      this.showcandidate = false;
+    }
+    if (!this.panelDiv.nativeElement.contains(clickedElement)) {
+      this.showPanel = false;
+    }
   }
   fetchCandidates() {
     this.http.get(`${environment.api_url}/service-request/candidates/list`).subscribe((res: any) => {
