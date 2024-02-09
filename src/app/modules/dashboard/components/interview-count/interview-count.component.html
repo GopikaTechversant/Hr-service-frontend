@@ -1,5 +1,5 @@
 <div class="main d-flex">
-    <div class="barchart ">
+    <div class="barchart">
         <div class="d-flex head ">
             <div>
                 <span class="heading">Interview Counts</span><span class="p-l-5">Last 6 Months</span>
@@ -37,28 +37,26 @@
         </div>
         <div class="table-container m-b-0">
             <table class="table">
-                <tr class="table-row f-w-500 p-b-10">
-                    <td class="table-heading">Recruiter Name</td>
-                    <td class="table-heading">Interview Schedule Count</td>
-                    <td class="table-heading">Interviews Conducted</td>
-                    <td class="table-heading">Interview Update</td>
+                <tr class="table-header f-w-500 p-b-10">
+                    <td>Recruiter Name</td>
+                    <td>Interview Schedule Count</td>
+                    <td>Interviews Conducted</td>
+                    <td>Interview Update</td>
                 </tr>
                 <!-- <div class="loader-parent">
                     <img src="assets/gif/loader.gif">
                 </div> -->
                 <ng-container *ngIf="list?.length > 0">
-
                     <ng-container
                         *ngFor="let recruiter of list | paginate:  { itemsPerPage:currentLimit, currentPage: currentpage ,totalItems: list?.length}">
-                        <tr class="recruiter c-pointer table-row">
-                            <td>{{ recruiter.name}}</td>
+                        <tr class="c-pointer">
+                            <td>{{recruiter.name}}</td>
                             <td>{{recruiter.count}}</td>
-                            <td>{{ recruiter.conducted}}</td>
-                            <td>{{ recruiter.update}}</td>
+                            <td>{{recruiter.conducted}}</td>
+                            <td>{{recruiter.update}}</td>
                         </tr>
                     </ng-container>
                 </ng-container>
-
                 <!-- <div *ngIf="list?.length === 0 && !loader" class="data">
                     No Data Found
                 </div> -->

@@ -10,16 +10,22 @@
 }
 
 
+.main {
+    background-color: #F7F7F7;
+    padding-right: 10px;
+}
+
 .input-box {
     width: 290px;
     height: 34px;
     border-radius: 5px;
     border: none;
     background-color: white;
+    outline: none;
 }
 
 .input-box-mobile {
-    width: 332px;
+    width: 290px;
     height: 34px;
     top: 205px;
     left: 349px;
@@ -37,18 +43,18 @@
     font-family: Rubik !important;
     font-size: 18px;
     font-weight: 400;
-
     letter-spacing: 0em;
     text-align: left;
+    padding: 5px;
 }
 
 .text-area {
-    width: 647px;
+    width: 740px;
     height: 34px;
-
-    border: none;
+    border: 1px solid #E9E9E9;
     border-radius: 5px;
-    background-color: #E9E9E9;
+    background-color: #FAFAFA;
+    outline: none;
 }
 
 .upload-resume-btn {
@@ -71,12 +77,10 @@
 }
 
 .skills {
-
     height: 154px;
     border-radius: 3px;
     border: 1px;
-    background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
-        linear-gradient(0deg, #FAFAFA, #FAFAFA);
+    padding: 5px;
 }
 
 .text {
@@ -129,7 +133,7 @@
 
 .cancel-btn {
     width: 171px;
-    height: 54px;
+    height: 40px;
     border-radius: 3px;
     font-family: Rubik;
     font-size: 18px;
@@ -145,7 +149,7 @@
 
 .add-candidate {
     width: 171px;
-    height: 54px;
+    height: 40px;
     border-radius: 3px;
     font-family: Rubik;
     font-size: 18px;
@@ -160,7 +164,8 @@
 }
 
 .submit-btn {
-    width: 354px;
+    width: 345px;
+    height: 40px;
 }
 
 .calendar-icon {
@@ -189,9 +194,24 @@
 
 }
 
-.main {
-    background-color: #E9E9E9;
-    margin-right: 21px;
+.gender{
+font-size: 18px;
+font-weight: 400;
+line-height: 21px;
+letter-spacing: 0em;
+width: 290px;
+text-align: left;
+
+}
+
+.input-search{
+    outline: none;
+    height: 30px;
+    width: 200px;
+    border-radius: 5px;
+    background-color: white;
+    outline: none;
+    border: 1px solid #E9E9E9
 }
 
 .required {

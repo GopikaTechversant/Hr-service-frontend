@@ -1,10 +1,9 @@
 <div class="main">
-    <div class="d-flex head j-space">
+    <div class="d-flex head j-space p-b-10">
         <div>
             <span class="heading">Detailed Recruitment Report</span><span class="p-l-5 recruiter-name">-Recruiter Amritha</span>
         </div>
         <div class="d-flex">
-
             <span class="c-pointer">
                 <span class="filter p-r-10 p-t-10">File Recruiter</span>
                 <input type="text" class="input p-l-5" placeholder="Choose Department">
@@ -14,27 +13,26 @@
     </div>
     <div class="table-container m-b-0">
         <table class="table">
-            <tr class="table-row f-w-500 p-b-10">
-                <td class="table-heading"> Name</td>
-                <td class="table-heading">Position</td>
-                <td class="table-heading">Experience</td>
-                <td class="table-heading">Current Company </td>
-                <td class="table-heading">Location</td>
-                <td class="table-heading">Notice Period</td>
-                <td class="table-heading">Interview Date & Time</td>
-                <td class="table-heading">Panel</td>
-                <td class="table-heading">Mode</td>
+            <tr class="table-header f-w-500 p-b-10">
+                <td> Name</td>
+                <td>Position</td>
+                <td>Experience</td>
+                <td>Current Company </td>
+                <td>Location</td>
+                <td>Notice Period</td>
+                <td>Interview Date & Time</td>
+                <td>Panel</td>
+                <td>Mode</td>
             </tr>
             <!-- <div class="loader-parent">
                 <img src="assets/gif/loader.gif">
             </div> -->
             <ng-container *ngIf="list?.length > 0">
-
                 <ng-container
                     *ngFor="let candidate of list 
                     | paginate:  { itemsPerPage:currentLimit, currentPage: currentpage ,totalItems: list?.length}"
                     >
-                    <tr class="candidate c-pointer table-row">
+                    <tr class="c-pointer">
                         <td>{{ candidate.name}}</td>
                         <td>{{candidate.position}}</td>
                         <td>{{ candidate.experience}}</td>
@@ -47,7 +45,6 @@
                     </tr>
                 </ng-container>
             </ng-container>
-
             <!-- <div *ngIf="list?.length === 0 && !loader" class="data">
                 No Data Found
             </div> -->

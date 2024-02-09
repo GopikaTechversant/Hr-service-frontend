@@ -1,9 +1,9 @@
 <div class="main p-l-20">
     <form [formGroup]="candidateForm" (ngSubmit)="submitClick(); $event.preventDefault()" enctype="multipart/form-data">
-        <p class="heading  m-t-12">Add Candidates</p>
+        <span class="heading  m-t-12">Add Candidates</span>
         <div class="d-flex j-space parent">
             <div class="child d-flex m-b-10">
-                <span class="label m-b-4"><span class="required">*</span>First Name</span>
+                <span class="label m-b-4">First Name<span class="required">*</span></span>
                 <input type="text" class="input-box" formControlName="candidateFirstName" placeholder="John">
                 <div
                     *ngIf="candidateForm.get('candidateFirstName')?.hasError('required') && candidateForm.get('candidateFirstName')?.touched">
@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="child d-flex m-b-10">
-                <span class="label m-b-4"><span class="required">*</span>Last Name</span>
+                <span class="label m-b-4">Last Name<span class="required">*</span></span>
                 <input type="text" class="input-box" formControlName="candidateLastName" placeholder="Deo">
                 <div
                     *ngIf="candidateForm.get('candidateLastName')?.hasError('required') && candidateForm.get('candidateLastName')?.touched">
@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="child d-flex m-b-10">
-                <span class="label m-b-4"><span class="required">*</span>DOB</span>
+                <span class="label m-b-4">DOB</span>
                 <div class="p-relative ">
                     <input class="p-l-5  input-box" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate"
                         (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate"
@@ -28,14 +28,22 @@
                         <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
                             (click)="pickerdate ?.open()"></i>
                     </span>
-                    <div
-                        *ngIf="candidateForm.get('candidateDoB')?.hasError('required') && candidateForm.get('candidateDoB')?.touched">
-                        <mat-error>Date Of Birth Required</mat-error>
-                    </div>
                 </div>
             </div>
         </div>
         <div class="d-flex j-space parent">
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">Gender<span class="required">*</span></span>
+                <span class="d-flex gender c-pointer">
+                    <span><input type="radio" class="" formControlName="gender"> Male </span>
+                    <span><input type="radio" class="" formControlName="gender"> Female </span>
+                    <span><input type="radio" class="" formControlName="gender"> Others </span>
+                </span>
+
+                <div *ngIf="candidateForm.get('gender')?.hasError('required') && candidateForm.get('gender')?.touched">
+                    <mat-error>Gender Required</mat-error>
+                </div>
+            </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Experience</span>
                 <input type="text" class="input-box" formControlName="candidateExperience">
@@ -44,67 +52,57 @@
                 <span class="label m-b-4">Previous Organization</span>
                 <input type="text" class="input-box" formControlName="candidatePreviousOrg">
             </div>
+        </div>
+        <div class="d-flex j-space parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Created By</span>
                 <input type="text" class="input-box" formControlName="candidateCreatedby">
             </div>
-        </div>
-        <div class="d-flex j-space parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Previous Designation</span>
                 <input type="text" class="input-box" formControlName="candidatePreviousDesignation">
             </div>
             <div class="child d-flex m-b-10">
-                <span class="label m-b-4"><span class="required">*</span>Education</span>
+                <span class="label m-b-4">Education</span>
                 <input type="text" class="input-box" formControlName="candidateEducation">
-                <div
-                    *ngIf="candidateForm.get('candidateEducation')?.hasError('required') && candidateForm.get('candidateEducation')?.touched">
-                    <mat-error>Education Salary Required</mat-error>
-                </div>
-            </div>
+            </div>  
+        </div>
+        <div class="d-flex j-space parent-address">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Current Salary</span>
                 <input type="text" class="input-box" formControlName="candidateCurrentSalary">
             </div>
-        </div>
-        <div class="d-flex j-space parent-address">
             <div class="child d-flex m-b-10">
-                <span class="label m-b-4"><span class="required">*</span>Expected Salary</span>
+                <span class="label m-b-4">Expected Salary</span>
                 <input type="text" class="input-box" formControlName="candidateExpectedSalary">
-                <div
-                    *ngIf="candidateForm.get('candidateExpectedSalary')?.hasError('required') && candidateForm.get('candidateExpectedSalary')?.touched">
-                    <mat-error>Expected Salary Required</mat-error>
-                </div>
             </div>
-            <div class="child d-flex m-b-10 m-l-10">
-                <span class="label m-b-4"><span class="required">*</span>Address</span>
-                <input type="text" class="text-area" formControlName="candidateAddress">
-                <div
-                    *ngIf="candidateForm.get('candidateAddress')?.hasError('required') && candidateForm.get('candidateAddress')?.touched">
-                    <mat-error>Address Required</mat-error>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex j-space parent">
             <div class="child d-flex m-b-10">
-                <span class="label m-b-4"><span class="required">*</span>Email</span>
+                <span class="label m-b-4">Email<span class="required">*</span></span>
                 <input type="text" class="input-box" formControlName="candidateEmail">
                 <div
                     *ngIf="candidateForm.get('candidateEmail')?.hasError('required') && candidateForm.get('candidateEmail')?.touched">
                     <mat-error>Email ID Required</mat-error>
                 </div>
-            </div>
+            </div>        
+        </div>
+        <div class="d-flex j-space parent">     
             <div class="child d-flex m-b-10">
-                <span class="label m-b-4"><span class="required">*</span>Mobile</span>
+                <span class="label m-b-4">Mobile<span class="required">*</span></span>
                 <input type="text" class="input-box-mobile" formControlName="candidateMobileNo">
                 <div
                     *ngIf="candidateForm.get('candidateMobileNo')?.hasError('required') && candidateForm.get('candidateMobileNo')?.touched">
                     <mat-error>Mobile No Required</mat-error>
-                </div>
-            </div>
+                </div>        
+            </div>  
+            <div class="child d-flex m-b-10 m-l-10">
+                <span class="label m-b-4">Address</span>
+                <input type="text" class="text-area" formControlName="candidateAddress">
+            </div> 
+        </div>
+        <div class="d-flex j-space parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Position</span>
-                <div class="input-box p-t-10 p-l-6" (click)="showSource = !showSource;fetchSource()" >
+                <div class="input-box p-t-10 p-l-6" (click)="showSource = !showSource;fetchSource()">
                     <span *ngIf="!sourceName">Select source</span>
                     <span *ngIf="sourceName">{{sourceName}}</span>
                     <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
@@ -115,41 +113,35 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="d-flex j-space parent">
             <div class="skills p-l-14 p-t-13">
-                <p class="text"><span class="required">*</span>Skill Sets</p>
+                <span class="text">Skill Sets</span>
                 <div class="d-flex j-space skill-drop-down">
-                    <div class="skill-type" (click)="showDropdown = !showDropdown"><span>{{ selectedSkillType || 'Skill
-                            Type'
-                            }}</span> <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
-                        <div class="dropdown-list" *ngIf="showDropdown">
+                    <div class="skill-type" (click)="showDropdown = !showDropdown"><span>{{selectedSkillType || 'Skill Type'}}</span> 
+                        <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
+                        <div class="dropdown-list c-pointer" *ngIf="showDropdown" >
                             <p *ngFor="let type of skillTypes" (click)="selectSkillType(type)">{{type}}</p>
 
                         </div>
                     </div>
-
                     <button class="add-btn" (click)="$event.preventDefault();toggleSearchBar()">Add</button>
                 </div>
                 <div class="searchbar" *ngIf="showSearchBar">
                     <input type="search" class="input-search" placeholder="Type to search skills..."
                         (input)="getSkillSuggestions($event)" *ngIf="showSearchBar">
-
                 </div>
                 <div *ngIf="showSearchBar" class="m-l-23 m-t-8">
                     <div *ngFor="let suggestion of skillSuggestions" (click)="selectSkill(suggestion)">
                         <span class="p-t-7"><img src="assets/images/akar-icons_check.png" alt="" class="m-t-0 p-r-4"
                                 width="13px" height="10px"></span>
-                        <span>{{suggestion.skillName}}</span>
+                        <span class="c-pointer">{{suggestion.skillName}}</span>
                     </div>
                 </div>
-                
             </div>
             <div class="child d-flex m-b-10 p-relative">
-                <span class="label m-b-4"><span class="required">*</span>Upload Resume</span>
+                <span class="label m-b-4">Upload Resume <span class="required">*</span></span>
                 <button class="upload-resume-btn" (click)="triggerFileInput();$event.preventDefault()">
                     <div class="d-flex j-center">
-                        <p class="p-t-4 p-l-4">Upload</p>
+                        <span class="p-t-4 p-l-4">Upload</span>
                     </div>
                 </button>
                 <input type="file" style="visibility: hidden" (change)="onFileSelected($event)">
@@ -162,9 +154,6 @@
     </form>
 </div>
 
-
-
-
 <!-- <div class="child d-flex m-b-10">
     <span class="label m-b-4">Position</span>
     <div class="input-box p-t-10 p-l-6" (click)="showDropdown = !showDropdown">
@@ -172,8 +161,8 @@
         <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
     </div>
     <div class="no-close dropdown m-t-6 p-t-10 p-l-6" *ngIf="showDropdown">
-        <p (click)="option()">Option1</p>
-        <p>Option1</p>
-        <p>Option1</p>
+        <span (click)="option()">Option1</span>
+        <span>Option1</span>
+        <span>Option1</span>
     </div>
 </div> -->

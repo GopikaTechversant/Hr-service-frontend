@@ -5,40 +5,41 @@
 .main {
     width: 100%;
     margin-right: 21px;
+    margin-top: 22px;
+    background-color: #FFFFFF;
+
 }
 
-.table {
-    width: 100%;
+tr:nth-child(odd) {
+    background-color: #F0F7FF;
 }
 
-.table-heading {
-    /* width: 118px; */
-    height: 21px;
+td {
+    padding: 10px;
+    text-align: left;
+}
+
+tr {
+    text-align: left;
+}
+
+.table-header {
+    position: sticky;
+    top: 0;
+    background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
+        linear-gradient(0deg, #F0F7FF, #F0F7FF);
+    Padding: 10px;
     font-family: Rubik;
     font-size: 15px;
     font-weight: 400;
     line-height: 18px;
     letter-spacing: 0em;
     text-align: left;
-    color: #000000;
 }
 
-.table-row {
-    height: 66px;
-    border: 1px solid #E9E9E9;
-    background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
-        linear-gradient(0deg, #F0F7FF, #F0F7FF);
-
-}
-
-.candidate {
-    font-family: Rubik;
-    font-size: 13px;
-    font-weight: 400;
-    line-height: 15px;
-    letter-spacing: 0em;
-    text-align: left;
-    color: #4F4F4F;
+table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
 .filter {
