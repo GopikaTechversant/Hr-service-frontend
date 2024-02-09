@@ -39,7 +39,7 @@ export class RequirementFormComponent implements OnInit {
   ngOnInit(): void {
     this.fetchServiceRequestname();
     this.fetchServiceId();
-    // this.fetchCandidates();
+   
     this.fetchSkills();
 
     this.fetchcandidatesWithSkills();
@@ -48,13 +48,9 @@ export class RequirementFormComponent implements OnInit {
 
   fetchServiceRequestname(): void {
     this.http.get(`${environment.api_url}/service-request/list`).subscribe((res: any) => {
-
-      this.list_requests = res.data;
+this.list_requests = res.data;
       console.log(" this.list_requests", this.list_requests);
-
-
-
-    })
+     })
   }
 
   fetchServiceId(): void {
@@ -78,8 +74,8 @@ export class RequirementFormComponent implements OnInit {
     this.http.get(`${environment.api_url}/candidate/skills/list`).subscribe((res: any) => {
 
       this.list_skills = res.data;
-      console.log("this.list_skills",this.list_skills);
-      
+      console.log("this.list_skills", this.list_skills);
+
     })
   }
 
@@ -99,7 +95,7 @@ export class RequirementFormComponent implements OnInit {
     })
   }
 
-selectRequestId(name: any, id: any): void {
+  selectRequestId(name: any, id: any): void {
     this.requestList_open = false;
     if (this.selectedName !== name && this.selectedId !== id) {
       this.selectedName = name;
@@ -132,21 +128,15 @@ selectRequestId(name: any, id: any): void {
       // console.log(" this.selectedExperience", this.selectedExperience);
 
     }
-    // this.experienceList_open = true;
+   
   }
 
-  fetchCandidates(): void {
-    this.http.get(`${environment.api_url}/service-request/candidates/list`).subscribe((res: any) => {
-      // console.log("res req",res);
-
-      // this.candidates_experience = res?.candidates;
-      this.candidates = res?.candidates;
-
-      console.log("this.candidates", this.candidates);
-
-
-    })
-  }
+  // fetchCandidates(): void {
+  //   this.http.get(`${environment.api_url}/service-request/candidates/list`).subscribe((res: any) => {
+  //     this.candidates = res?.candidates;
+  //     console.log("this.candidates", this.candidates);
+  //   })
+  // }
   selectAllChange(event: any): void {
     this.selectedCandidateId = [];
     this.candidates.forEach((element: any) => {
