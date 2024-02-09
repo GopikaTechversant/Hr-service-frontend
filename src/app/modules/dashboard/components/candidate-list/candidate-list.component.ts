@@ -9,17 +9,84 @@ import { environment } from 'src/environments/environments';
   styleUrls: ['./candidate-list.component.css']
 })
 export class CandidateListComponent {
-  candidateList: any = [];
+  candidateList: any;
   searchQuery: any = {
     searchWord: '',
     page: 1,
     limit: 25,
   };
-  currentPage: number = 1;
+  currentPag: number = 1;
   currentLimit: number = 7;
   totalCount: any;
   data: any;
-
+  list: any = [
+    {
+      name: 'Amritha',
+      position: 'TL-.NET',
+      experience: 6,
+      currentCompany: 'abcd',
+      location: 'tvm',
+      noticeperiod: 60,
+      dateTime: '12,12,2000 3.00 PM',
+      panel: 'Arun Antony',
+      mode: 'Gmeet'
+    },
+    {
+      name: 'Amritha',
+      position: 'TL-.NET',
+      experience: 6,
+      currentCompany: 'abcd',
+      location: 'tvm',
+      noticeperiod: 60,
+      dateTime: '12,12,2000 3.00 PM',
+      panel: 'Arun Antony',
+      mode: 'Gmeet'
+    },
+    {
+      name: 'Amritha',
+      position: 'TL-.NET',
+      experience: 6,
+      currentCompany: 'abcd',
+      location: 'tvm',
+      noticeperiod: 60,
+      dateTime: '12,12,2000 3.00 PM',
+      panel: 'Arun Antony',
+      mode: 'Gmeet'
+    },
+    {
+      name: 'Amritha',
+      position: 'TL-.NET',
+      experience: 6,
+      currentCompany: 'abcd',
+      location: 'tvm',
+      noticeperiod: 60,
+      dateTime: '12,12,2000 3.00 PM',
+      panel: 'Arun Antony',
+      mode: 'Gmeet'
+    },
+    {
+      name: 'Amritha',
+      position: 'TL-.NET',
+      experience: 6,
+      currentCompany: 'abcd',
+      location: 'tvm',
+      noticeperiod: 60,
+      dateTime: '12,12,2000 3.00 PM',
+      panel: 'Arun Antony',
+      mode: 'Gmeet'
+    },
+    {
+      name: 'Amritha',
+      position: 'TL-.NET',
+      experience: 6,
+      currentCompany: 'abcd',
+      location: 'tvm',
+      noticeperiod: 60,
+      dateTime: '12,12,2000 3.00 PM',
+      panel: 'Arun Antony',
+      mode: 'Gmeet'
+    },
+  ]
   constructor(private http: HttpClient, private router: Router) { }
   ngOnInit(): void {
     this.fetchCandidates('');
@@ -30,9 +97,10 @@ export class CandidateListComponent {
     this.http.get(`${environment.api_url}/candidate/list?search=${this.searchQuery.searchWord}&page=${this.searchQuery.page}&limit=${this.searchQuery.limit}`)
       .subscribe((data: any) => {
         this.data = data;
-        this.candidateList = data.candidates;
-        this.totalCount = data.candidateCount;
-        console.log(this.totalCount);
+        this.candidateList = [];
+        this.candidateList = data?.candidates;
+        this.totalCount = data?.candidateCount;
+        console.log(this.data);
         
       });
   }
@@ -47,7 +115,7 @@ export class CandidateListComponent {
 
   pageChange(event: any): void {
     let skip = parseInt(event, 10);
-    this.currentPage = skip;
+    this.currentPag = skip;
   }
 
 }

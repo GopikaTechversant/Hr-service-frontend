@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
@@ -8,10 +8,14 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
   templateUrl: './application-list-pie.component.html',
   styleUrls: ['./application-list-pie.component.css']
 })
-export class ApplicationListPieComponent implements OnInit {
+export class ApplicationListPieComponent implements OnInit, AfterViewInit {
   chart: any;
 
   ngOnInit(): void {
+    
+  }
+
+  ngAfterViewInit(): void {
     Chart.register(ChartDataLabels);
     this.createChart();
   }

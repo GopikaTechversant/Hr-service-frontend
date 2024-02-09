@@ -4,11 +4,11 @@
   </div>
   <div class="profile d-flex p-r-17">
     <div class="user-name p-t-10 p-r-6">
-      <span class="f-w-500 user-name t-dark-blue-color"> {{ currentUser?.role.charAt(0) ? (currentUser?.role.charAt(0) |
-        uppercase) + currentUser?.role.slice(1) : '' }}</span>
+      <span class="f-w-500 user-name t-dark-blue-color"> {{ currentUser?.charAt(0) ? (currentUser?.charAt(0) |
+        uppercase) + currentUser?.slice(1) : '' }}</span>
     </div>
-    <div class="user-profile-ctn c-pointer" (click)="profileClick()">
-      <span class="f-w-500 user-name t-dark-blue-color"> {{ currentUser?.role.charAt(0) ? (currentUser?.role.charAt(0) |
+    <div class="user-profile-ctn c-pointer" (click)="dropDown = !dropDown">
+      <span class="f-w-500 user-name t-dark-blue-color"> {{ currentUser?.charAt(0) ? (currentUser?.charAt(0) |
         uppercase): '' }}</span>
     </div>
     <div *ngIf="dropDown" class="drop-down p-12 d-flex p-absolute">

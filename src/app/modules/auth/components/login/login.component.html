@@ -12,26 +12,44 @@
                     Access to our dashboard
                 </div>
                 <div class="form-field d-flex j-start m-b-14">
-                    <span class="email p-b-10">Email</span>
-                    <input type="email" class="input" placeholder="admin@hrservice.com" formControlName="email">
+                    <span class="email">Email</span>
+                    <input type="email" class="input" placeholder="Enter a valid email" formControlName="userName">
+                </div>
+                <div class="clear"></div>
+                <div class="requiredField f-s-14  m-t-10">
+                    <span class="error" *ngIf="userName?.errors?.['required'] && (userName?.touched || submitted)">
+                        Inavlid User Name
+                    </span>
                 </div>
                 <div class="form-field d-flex j-start m-b-14 p-relative">
-                    <span class="email p-b-10">Password</span>
+                    <span class="email">Password</span>
                     <input [type]="hide ? 'password' : 'text'" class="input" placeholder="Password"
-                        formControlName="password">
+                        formControlName="userPassword">
                     <span class="eyeIcon c-black p-absolute" mat-icon-button matSuffix (click)="hide = !hide"
                         [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                         <mat-icon class="m-icon">{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
                     </span>
                 </div>
+                <div class="clear"></div>
+                <div class="requiredField m-t-10 f-s-14">
+                    <span class="error"
+                        *ngIf="userPassword?.errors?.['required'] && (userPassword?.touched || submitted)">
+                        Inavalid Password
+                    </span>
+                </div>
+                <div *ngIf="loginForm.errors?.['invalidCredentials']" class="error">
+                    Incorrect username or password.
+                </div>
+                
                 <div class="form-field d-flex j-start m-t-14">
                     <div class="d-flex">
                         <input type="checkbox">
                         <span class="email p-l-5">Remember Me?</span>
                     </div>
-                    <button class="login-btn m-t-14 c-pointer" type="submit">Login</button>
+                    <button class="login-btn m-t-14" type="submit">Login</button>
                 </div>
-                <div class="m-t-12 c-pointer">
+                
+                <div class="m-t-12">
                     <span class="forgot-password">Forgot Password</span>
                 </div>
             </form>

@@ -12,17 +12,18 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit {
   currentUser: any;
   dropDown: boolean = false;
+  showDropDown: boolean = false;
   constructor(private apiService: ApiService, private auth: AuthService, private dialog: MatDialog, private router: Router, private renderer: Renderer2, private el: ElementRef) { }
-
-  ngOnInit(): void {
-    this.currentUser = this.auth.getUser();
-  }
 
   @HostListener('document:click', ['$event'])
   onBodyClick(event: Event): void {
     if (!this.el.nativeElement.contains(event.target)) {
       this.dropDown = false;
     }
+  }
+
+  ngOnInit(): void {
+    this.currentUser = localStorage.getItem('userRole');
   }
 
   profileClick() {
@@ -32,6 +33,7 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     localStorage.removeItem('userToken');
+    localStorage.removeItem('userRole');
     this.router.navigate(['']);
   }
 

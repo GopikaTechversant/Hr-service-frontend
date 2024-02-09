@@ -31,7 +31,9 @@
             <ng-container *ngIf="list?.length > 0">
 
                 <ng-container
-                    *ngFor="let candidate of list | paginate:  { itemsPerPage:currentLimit, currentPage: currentpage ,totalItems: list?.length}">
+                    *ngFor="let candidate of list 
+                    | paginate:  { itemsPerPage:currentLimit, currentPage: currentpage ,totalItems: list?.length}"
+                    >
                     <tr class="candidate c-pointer table-row">
                         <td>{{ candidate.name}}</td>
                         <td>{{candidate.position}}</td>

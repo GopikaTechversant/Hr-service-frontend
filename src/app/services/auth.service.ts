@@ -11,7 +11,6 @@ export class AuthService {
     if (token === null) return false;
     else {
       let decodedToken: any = jwtDecode(token);
-      console.log("decodedToken", decodedToken);
       return true;
     }
 

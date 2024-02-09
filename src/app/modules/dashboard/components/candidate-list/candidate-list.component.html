@@ -15,45 +15,46 @@
             </div>
         </div>
     </div>
-    <div class="table-container m-b-0">
-        <table class="table">
-            <tr class="table-header f-w-500 p-b-10">
-                <td>Name</td>
-                <td>Email</td>
-                <td>Mobile</td>
-                <td>Current Organization</td>
-                <td>Previous Organization</td>
-                <td>Experience</td>
-                <td>current Salary</td>
-                <td>Education</td>
-                <td>Skills</td>
-                <td>Actions</td>
-            </tr>
-            <ng-container *ngIf="candidateList?.length > 0" >
-                <ng-container
-                *ngFor="let item of candidateList | paginate:  { itemsPerPage:currentLimit, currentPage: currentPage ,totalItems: data?.candidateCount}">
-                <tr class="c-pointer">
-                    <td>{{item.candidateFirstName}} {{item.candidateLastName}}</td>
-                    <td>{{item.candidateEmail}}</td>
-                    <td>{{item.candidateMobileNo}}</td>
-                    <td>{{item.candidatePreviousOrg}}</td>
-                    <td>{{item.candidatePreviousDesignation}}</td>
-                    <td>{{item.candidateExperience}} years</td>
-                    <td>{{item.candidateCurrentSalary}}</td>
-                    <td>{{item.candidateEducation}}</td>
-                    <td>{{item.candidateSkill.length > 0 ? item.candidateSkill[0].skills.skillName : 'N/A'}}</td>
-                    <td>
-                        <i class="fa fa-pencil-square-o p-r-5 icon-color" aria-hidden="true"></i>
-                        <i class="fa fa-trash-o p-l-5 icon-color" aria-hidden="true"></i>
-                    </td>
+    <ng-container *ngIf="candidateList?.length > 0">
+        <div class="table-container m-b-0">
+            <table class="table">
+                <tr class="table-header f-w-500 p-b-10">
+                    <td>Name</td>
+                    <td>Email</td>
+                    <td>Mobile</td>
+                    <td>Current Organization</td>
+                    <td>Previous Organization</td>
+                    <td>Experience</td>
+                    <td>current Salary</td>
+                    <td>Education</td>
+                    <td>Skills</td>
+                    <td>Actions</td>
                 </tr>
-            </ng-container>
-            </ng-container>
-            
-        </table>
-    </div>
-    <div class="pagination d-flex j-end p-10 " *ngIf="candidateList?.length > 0">
-        <pagination-controls class="pagination-box" *ngIf="candidateList?.length > 0" (pageChange)="pageChange($event)"
-            class="record-pagination" previousLabel="" nextLabel=""></pagination-controls>
-    </div>
+                <ng-container
+                    >
+                    <tr class="c-pointer" *ngFor="let item of candidateList | paginate:  { itemsPerPage:currentLimit, currentPage: currentPag ,totalItems: candidateList?.length}">
+                        <td>{{item?.candidateFirstName}} {{item?.candidateLastName}}</td>
+                    <td>{{item?.candidateEmail}}</td>
+                    <td>{{item?.candidateMobileNo}}</td>
+                    <td>{{item?.candidatePreviousOrg}}</td>
+                    <td>{{item?.candidatePreviousDesignation}}</td>
+                    <td>{{item?.candidateExperience}} years</td>
+                    <td>{{item?.candidateCurrentSalary}}</td>
+                    <td>{{item?.candidateEducation}}</td>
+                         <td>{{item?.candidateSkill.length > 0 ? item?.candidateSkill[0]?.skills?.skillName : 'N/A'}}</td>
+                        <td>
+                            <i class="fa fa-pencil-square-o p-r-5 icon-color" aria-hidden="true"></i>
+                            <i class="fa fa-trash-o p-l-5 icon-color" aria-hidden="true"></i>
+                        </td>
+                    </tr>
+                </ng-container>
+
+            </table>
+        </div>
+        <div class="pagination d-flex j-end p-10 " *ngIf="candidateList?.length > 0">
+            <pagination-controls class="pagination-box" *ngIf="candidateList?.length > 0"
+                (pageChange)="pageChange($event)" class="record-pagination" previousLabel=""
+                nextLabel=""></pagination-controls>
+        </div>
+    </ng-container>
 </div>

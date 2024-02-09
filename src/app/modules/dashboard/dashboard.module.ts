@@ -48,8 +48,7 @@ const routes: Routes = [
   declarations: [
     DashboardComponent,
     AddCandidateModalComponent,
-    LeftSidebarComponent,
-   
+    LeftSidebarComponent,  
     CandidatelistComponent,
     CandidateDetailsComponent,
     RequirementFormComponent,

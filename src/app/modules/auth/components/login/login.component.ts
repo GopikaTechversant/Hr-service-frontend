@@ -3,6 +3,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
+import { environment } from 'src/environments/environments';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,45 +14,55 @@ export class LoginComponent implements OnInit {
   toggleSpinner: boolean = false;
   submitted: boolean = false;
   hide: boolean = true;
+
   constructor(private formBuilder: UntypedFormBuilder, private router: Router, private http: HttpClient, public auth: AuthService,) {
     this.loginForm = this.formBuilder.group({
-      email: [null, [Validators.required]],
-      password: [null, [Validators.required],
-      ],
+      userName: [null, [Validators.required]],
+      userPassword: [null, [Validators.required]],
     });
   }
+
   ngOnInit(): void {
 
   }
-  get email() {
-    return this.loginForm.get("email");
+
+  get userName() {
+    return this.loginForm.get("userName");
   }
 
-  get password() {
-    return this.loginForm.get("password");
+  get userPassword() {
+    return this.loginForm.get("userPassword");
   }
 
   loginApi() {
-    if (this.loginForm.value.password && this.loginForm.value.email) {
-      this.http.get('/assets/user.json').subscribe((data: any) => {
-        console.log("data", data);
-        data?.forEach((element: any) => {
-          if (element?.user?.userEmail === this.loginForm.value.email) {
-           
-            localStorage.setItem('userToken', element?.token);
-            this.auth.isAuthenticated();
+    if (this.loginForm.value.userPassword && this.loginForm.value.userName) {
+      this.http.post(`${environment.api_url}/user/login`, this.loginForm.value).subscribe(
+        (response: any) => {
+          if (response?.token) {
+            console.log('login successfully:', response);
+            localStorage.setItem('userToken', response?.token);
+            localStorage.setItem('userRole', response?.user?.userRole);
+            this.router.navigate(['/dashboard']);
           }
-        })
-      })
+        },
+        (error) => {
+          console.error('Error during login:', error);
+          this.toggleSpinner = false;
+          this.submitted = false;
+          if (error.status === 401) {
+            this.loginForm.setErrors({ invalidCredentials: true });
+          }
+        }
+      );
+    } else {
+      this.toggleSpinner = false;
     }
   }
 
   submitClick() {
     this.toggleSpinner = true;
     this.submitted = true;
-    console.log("submit click");
     this.loginApi();
-    this.router.navigate(['/dashboard']);
-    this.toggleSpinner = false;
   }
+
 }

@@ -23,7 +23,7 @@
   padding-left: 10px;
   border-radius: 3px;
   border: 1px solid #E9E9E9;
-    background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
+  background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
     linear-gradient(0deg, #FAFAFA, #FAFAFA);
   outline: none;
 }
@@ -79,7 +79,6 @@
   font-weight: 400;
   line-height: 21px;
   letter-spacing: 0em;
-  /* text-align: left; */
   color: #ABABAB;
 
 }
@@ -98,7 +97,6 @@
 * {
   margin: 0;
   padding: 0;
-  /* box-sizing: border-box; */
 }
 
 .forgot-password {
@@ -110,6 +108,24 @@
   text-align: center;
   color: #0034C4;
 }
+
+.clear {
+  clear: both;
+}
+
+.error {
+  color: red;
+}
+
+.spinner {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  z-index: 5;
+  top: 40%;
+  left: 48%;
+}
+
 
 /* * {
     margin: 0;
@@ -350,11 +366,7 @@
     justify-content: center;
     align-items: center;
   }
-  
-  .clear {
-    clear: both;
-  }
-  
+ 
   .content mat-icon.m-icon {
     font-size: 18px;
     line-height: 24px;
