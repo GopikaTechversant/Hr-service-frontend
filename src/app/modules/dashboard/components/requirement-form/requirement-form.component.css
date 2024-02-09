@@ -298,3 +298,7 @@
 .scroller-box {
     -ms-overflow-style: none;
 }
+
+.active{
+    background-color: skyblue;
+}

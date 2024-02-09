@@ -6,7 +6,19 @@
         <div class="p-l-20">
             <div>
                 <div class="p-10 p-l-0"><span class="sub-head">Experience</span></div>
-                <input type="text" class="input">
+                <!-- <input type="text" class="input" id="experienceid"> -->
+                <div class="input p-t-7 p-l-6" (click)="experienceList_open = !experienceList_open;fetchExperience();">
+                    <span *ngIf="!selectedExperience">Select Experience</span>
+                    <span *ngIf="selectedExperience && selectedExperience !== '0' ">{{selectedExperience}}</span>
+                    <span *ngIf="selectedExperience == '0'">Fresher</span>
+                    <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
+                </div>
+                <div class="no-close dropdown m-t-6 p-t-10 p-l-6" *ngIf="experienceList_open">
+                    <div *ngFor="let experience of experience_droplist"
+                        (click)="selectExperience(experience.candidateExperience)">
+                        {{experience.candidateExperience}}
+                    </div>
+                </div>
             </div>
             <div>
                 <div class="d-flex p-10 p-l-0"><span class="sub-head">Assignee</span></div>
@@ -25,7 +37,18 @@
             </div>
             <div>
                 <div class="p-10 p-l-0"><span class="sub-head">Request Name</span></div>
-                <input type="text" class="input">
+                <!-- <input type="text" class="input"> -->
+                <div class="input p-t-7 p-l-6"  (click)="requestList_open = !requestList_open;fetchcandidatesWithSkills()">
+                    <span *ngIf="!selectedId">Select Request Name</span>
+                    <span *ngIf="selectedId">{{selectedName}}</span>
+                    <!-- <span *ngIf="selectedExperience == '0'">Fresher</span> -->
+                    <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
+                </div>
+                <div class="no-close dropdown m-t-6 p-t-10 p-l-6" *ngIf="requestList_open">
+                    <div (click)='selectRequestId(name.requestName,name.requestId)' *ngFor="let name of list_requests">
+                        {{name.requestName}}
+                    </div>
+                </div>
             </div>
             <div>
                 <div class="p-10 p-l-0"><span class="sub-head">Service Name</span></div>
@@ -51,24 +74,26 @@
                 </div>
             </div>
             <div class="candidate w-100 d-flex">
-                <div *ngFor="let item of [1,2,3,4,5,6,7]" class="candidate-card">
+                <div *ngFor="let candidate of list_experience" class="candidate-card">
                     <div class="count c-pointer">
-                        <i class="fa fa-check" aria-hidden="true"></i>
+                        <i class="fa fa-check" aria-hidden="true" [class.active]="candidate?.checked"
+                            (click)="candidateSelectChange($event, candidate);"></i>
                     </div>
                     <div class="info-container">
                         <div class="info-pair">
                             <div class="key">Name</div>
-                            <div class="value">: Joe</div>
+                            <div class="value">: {{candidate.candidateFirstName}} {{candidate.candidateLastName}}</div>
                         </div>
                         <div class="info-pair">
                             <div class="key">Email</div>
-                            <div class="value">: joe@gmail.com</div>
+                            <div class="value">: {{candidate.candidateEmail}}</div>
                         </div>
                         <div class="info-pair">
                             <div class="key">Experience</div>
-                            <div class="value">: 2 years</div>
+                            <div class="value">: {{candidate.candidateExperience}}</div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

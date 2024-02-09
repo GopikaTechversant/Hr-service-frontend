@@ -31,7 +31,7 @@
             </tr>
             <ng-container *ngIf="candidateList?.length > 0" >
                 <ng-container
-                *ngFor="let item of candidateList | paginate:  { itemsPerPage:currentLimit, currentPage: currentPage ,totalItems: data?.candidateCount}">
+                *ngFor="let item of candidateList">
                 <tr class="c-pointer">
                     <td>{{item.candidateFirstName}} {{item.candidateLastName}}</td>
                     <td>{{item.candidateEmail}}</td>
