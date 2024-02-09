@@ -36,7 +36,8 @@ const routes: Routes = [
     {path: 'service-requirement', component: ServiceRequestComponent},
     {path: 'candidate-list', component: RequirementCandidateListComponent},
     {path: 'add-candidate', component: AddCandidateModalComponent},
-    {path: 'interview-details', component: InterviewDetailsComponent}
+    {path: 'interview-details', component: InterviewDetailsComponent},
+    {path: 'requirement-candidate-list', component: RequirementCandidateListComponent}
    
   ]},
   {path: 'series', component: SeriesComponent}
