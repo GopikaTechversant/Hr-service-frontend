@@ -18,20 +18,19 @@
     <ng-container *ngIf="candidateList?.length > 0">
         <div class="table-container m-b-0">
             <table class="table">
-                <tr class="table-header f-w-500 p-b-10">
+                <tr class="table-header p-b-10">
                     <td>Name</td>
                     <td>Email</td>
                     <td>Mobile</td>
                     <td>Current Organization</td>
                     <td>Previous Organization</td>
                     <td>Experience</td>
-                    <td>current Salary</td>
+                    <td>Current Salary</td>
                     <td>Education</td>
                     <td>Skills</td>
                     <td>Actions</td>
                 </tr>
-                <ng-container
-                    >
+                <ng-container>
                     <tr class="c-pointer" *ngFor="let item of candidateList">
                     <td>{{item?.candidateFirstName}} {{item?.candidateLastName}}</td>
                     <td>{{item?.candidateEmail}}</td>
@@ -48,7 +47,6 @@
                         </td>
                     </tr>
                 </ng-container>
-
             </table>
         </div>
         <div class="pagination d-flex j-end p-10 " *ngIf="candidateList?.length > 0">

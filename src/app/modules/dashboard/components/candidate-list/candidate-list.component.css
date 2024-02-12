@@ -14,7 +14,7 @@
 
 .heading {
     color: #000000;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 26.07px;
     font-size: 22px;
 }
@@ -55,7 +55,7 @@
 
 .add {
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
     height: 40px;
     width: 220px;
@@ -107,16 +107,21 @@ tr {
     color: #575F6E;
 }
 
-.scrollable::-webkit-scrollbar, .table-container::-webkit-scrollbar {
+.scrollable::-webkit-scrollbar,
+.table-container::-webkit-scrollbar {
     display: none;
 }
 
-.scrollable, .table-container {
-    scrollbar-width: none; /* For Firefox */
+.scrollable,
+.table-container {
+    scrollbar-width: none;
+    /* For Firefox */
 }
 
-.scrollable, .table-container {
-    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+.scrollable,
+.table-container {
+    -ms-overflow-style: none;
+    /* For Internet Explorer and Edge */
 }
 
 .j-end {

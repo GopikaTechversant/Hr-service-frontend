@@ -28,7 +28,7 @@
 }
 
 .label {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
     letter-spacing: 0em;
     text-align: left;
@@ -165,10 +165,8 @@
     box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
     max-height: 120px;
     overflow-y: scroll;    
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 400;
-    line-height: 21px;
-    letter-spacing: 0em;
     margin-top: 15px;
     width: 202px;
     margin-left: -4px;
@@ -179,11 +177,30 @@
 }
 
 .dropdown-list :hover{
-    font-weight: 500;
+    color: blue;
 }
 
+.dropdown-application {
+    background: white;
+    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+    max-height: 120px;
+    overflow-y: scroll;
+    font-size: 14px;
+    font-weight: 400;
+    margin-top: 72px;
+    width: 292px;
+    margin-left: 9px;
+    padding-left: 10px;
+    padding-top: 5px;
+    margin-bottom: 2px;
+    position: absolute;
+}
+
+.dropdown-application :hover{
+    color: blue;
+}
 .gender {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 21px;
     letter-spacing: 0em;

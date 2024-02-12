@@ -103,21 +103,21 @@
         </div>
         <div class="d-flex j-space parent">
             <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Position</span>
-                <div class="input-box  p-relative p-t-10 p-l-6" (click)="showSource = !showSource;fetchSource()">
+                <span class="label m-b-4">Application Source</span>
+                <div class="input-box c-pointer p-relative p-t-10 p-l-6" (click)="showSource = !showSource;fetchSource()">
                     <span *ngIf="!sourceName">Select source</span>
                     <span *ngIf="sourceName">{{sourceName}}</span>
                     <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
                 </div>
-                <div class="no-close dropdown-list c-pointer m-t-6 p-t-10 p-l-6" *ngIf="showSource">
+                <div class="no-close dropdown-application c-pointer" *ngIf="showSource">
                     <p *ngFor="let source of sourceList" (click)="selectsource(sourceId,source.sourceName)">
                         {{source.sourceName}}</p>
                 </div>
             </div>
             <div class="skills p-t-13">
                 <span class="text m-b-4">Skill Sets</span>
-                <div class="d-flex skill-drop-down">
-                    <div class="skill-type" (click)="showDropdown = !showDropdown">
+                <div class="d-flex skill-drop-down m-t-5">
+                    <div class="skill-type c-pointer" (click)="showDropdown = !showDropdown">
                     <span>{{selectedSkillType || 'Skill Type'}}</span>
                         <span><i class="f-right p-r-10 fa fa-chevron-down"></i></span>
                         <div class="dropdown-list c-pointer" *ngIf="showDropdown">

@@ -10,7 +10,7 @@
 }
 
 .candidate-card {
-  width: 295px;
+  width: 3055px;
   height: 147px;
   border-radius: 4px;
   background-color: #FFFFFF;
@@ -28,8 +28,8 @@
 }
 
 .name {
-  font-weight: 500;
-  font-size: 19px;
+  font-weight: 400;
+  font-size: 18px;
   color: #4F4F4F;
 }
 
@@ -52,7 +52,7 @@
 }
 
 .countsss {
-  font-weight: 600;
+  font-weight: 500;
   font-size: 33px;
 }
 

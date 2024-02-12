@@ -138,9 +138,6 @@ export class AddCandidateModalComponent implements OnInit {
     }
   }
 
-
-
-
   triggerFileInput(): void {
     const fileInput = document.querySelector('input[type="file"]') as HTMLElement;
     fileInput.click();

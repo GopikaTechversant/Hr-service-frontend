@@ -10,12 +10,12 @@ import { environment } from 'src/environments/environments';
 })
 export class CandidateListComponent {
   length: any = 20;
-  pageSize = 4;
+  pageSize = 10;
   pageIndex = 1;
-  pageSizeOptions = [5,10,15,20];
+  pageSizeOptions = [10, 25, 30];
   showFirstLastButtons = true;
   candidateList: any;
-  searchWord:string= '';
+  searchWord: string = '';
   searchQuery: any = {
     searchWord: '',
     page: 1,
@@ -25,7 +25,7 @@ export class CandidateListComponent {
   currentLimit: number = 7;
   totalCount: any;
   data: any;
-  
+
   constructor(private http: HttpClient, private router: Router) { }
   ngOnInit(): void {
     this.fetchCandidates('');
@@ -40,7 +40,7 @@ export class CandidateListComponent {
         this.candidateList = data?.candidates;
         this.totalCount = data?.candidateCount;
         console.log(this.data);
-        
+
       });
   }
   navigate(path: any, queryParam: any): void {
@@ -57,8 +57,8 @@ export class CandidateListComponent {
     this.currentPag = skip;
   }
   handlePageEvent(event: any) {
-    console.log("event",event);
-    
+    console.log("event", event);
+
     this.length = event.length;
     this.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
