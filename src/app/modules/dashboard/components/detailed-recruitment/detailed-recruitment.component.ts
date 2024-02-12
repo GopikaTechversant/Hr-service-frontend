@@ -14,30 +14,17 @@ export class DetailedRecruitmentComponent implements OnInit {
   length: any = 20;
   pageSize = 4;
   pageIndex = 1;
-  pageSizeOptions = [5,10,15,20];
+  pageSizeOptions = [5, 10, 15, 20];
   showFirstLastButtons = true;
   candidateList: any[] = [];
-
-
-  constructor(private http:HttpClient) {
-
+  constructor(private http: HttpClient) {
   }
   ngOnInit(): void {
     this.fetchRecruiterList();
   }
-  
-  fetchRecruiterList():void{
-    // this.recruitersList = 
-    this.http.get(`${environment.api_url}/user/requirement-report?&page=${this.pageIndex}&limit=${this.pageSize}`).subscribe((res:any) => {
-      console.log("res",res);
+  fetchRecruiterList(): void {
+    this.http.get(`${environment.api_url}/user/requirement-report?&page=${this.pageIndex}&limit=${this.pageSize}`).subscribe((res: any) => {
       this.candidateList = res.userRequirementReport;
-      console.log("this.candidateList",this.candidateList);
-      for (let user of  this.candidateList){
-        console.log(user['candidate.candidateExperience'] , "user");
-        
-      }
-
-      
     })
   }
   pageChange(event: any): void {
