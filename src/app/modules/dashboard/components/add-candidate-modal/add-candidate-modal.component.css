@@ -1,48 +1,33 @@
 .heading {
-    width: 216px;
-    height: 36px;
-    font-family: Rubik;
-    font-size: 30px;
-    font-weight: 600;
-    line-height: 36px;
-    letter-spacing: 0em;
+    font-size: 25px;
+    font-weight: 500;
     text-align: left;
+    padding-bottom: 10px;
 }
-
 
 .main {
     background-color: #F7F7F7;
     padding-right: 10px;
+    padding-top: 15px;
 }
 
 .input-box {
-    width: 290px;
+    width: 360px;
     height: 34px;
     border-radius: 5px;
     border: none;
     outline: none;
     background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
-    linear-gradient(0deg, #FAFAFA, #FAFAFA);    
+        linear-gradient(0deg, #FAFAFA, #FAFAFA);
+        padding-left: 5px;
 }
 
-.input-box-mobile {
-    width: 290px;
-    height: 34px;
-    top: 205px;
-    left: 349px;
-    /* border: 1.5px solid #7d8296b5; */
-    border: none;
-    border-radius: 5px;
-    background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
-    linear-gradient(0deg, #FAFAFA, #FAFAFA);    
-}
 
 .child {
     flex-direction: column;
 }
 
 .label {
-    font-family: Rubik !important;
     font-size: 18px;
     font-weight: 400;
     letter-spacing: 0em;
@@ -51,12 +36,13 @@
 }
 
 .text-area {
-    width: 740px;
+    width: 766px;
     height: 34px;
     border: 1px solid #E9E9E9;
     border-radius: 5px;
-    background-color: #FAFAFA;
     outline: none;
+    background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
+        linear-gradient(0deg, #FAFAFA, #FAFAFA);
 }
 
 .upload-resume-btn {
@@ -69,7 +55,6 @@
     background: linear-gradient(0deg, #575F6E, #575F6E),
         linear-gradient(0deg, #E9E9E9, #E9E9E9);
     color: white;
-    font-family: Rubik !important;
     font-size: 16px;
     font-weight: 400;
     line-height: 19px;
@@ -86,7 +71,6 @@
 }
 
 .text {
-    font-family: Rubik;
     font-size: 18px;
     font-weight: 400;
     line-height: 21px;
@@ -100,18 +84,19 @@
     height: 28px;
     border-radius: 3px;
     border: 1px solid #E9E9E9;
-    background-color: white;
     border: 1px solid #E9E9E9;
-    font-family: Rubik;
     font-size: 16px;
     font-weight: 300;
     line-height: 19px;
     letter-spacing: 0em;
     padding-top: 10px;
-    padding-left: 5px
+    padding-left: 5px;
+    background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
+        linear-gradient(0deg, #FAFAFA, #FAFAFA);
 }
 
 .add-btn {
+    margin-left: 10px;
     width: 91px;
     height: 38px;
     border-radius: 3px;
@@ -119,7 +104,6 @@
     background: linear-gradient(0deg, #005EC9, #005EC9),
         linear-gradient(0deg, #E9E9E9, #E9E9E9);
     color: white;
-    font-family: Rubik;
     font-size: 16px;
     font-weight: 400;
     line-height: 19px;
@@ -130,14 +114,13 @@
 }
 
 .skill-drop-down {
-    width: 317px;
+    width: 475px;
 }
 
 .cancel-btn {
     width: 171px;
     height: 40px;
     border-radius: 3px;
-    font-family: Rubik;
     font-size: 18px;
     font-weight: 400;
     line-height: 21px;
@@ -153,7 +136,6 @@
     width: 171px;
     height: 40px;
     border-radius: 3px;
-    font-family: Rubik;
     font-size: 18px;
     font-weight: 400;
     line-height: 21px;
@@ -181,38 +163,43 @@
 .dropdown-list {
     background: white;
     box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
-    font-family: Rubik;
+    max-height: 120px;
+    overflow-y: scroll;    
     font-size: 18px;
     font-weight: 400;
     line-height: 21px;
     letter-spacing: 0em;
-    /* text-align: left; */
     margin-top: 15px;
     width: 202px;
     margin-left: -4px;
     padding-left: 10px;
     padding-top: 7px;
     margin-bottom: 2px;
+    position: absolute;
+}
+
+.dropdown-list :hover{
+    font-weight: 500;
+}
+
+.gender {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 21px;
+    letter-spacing: 0em;
+    width: 360px;
+    text-align: left;
 
 }
 
-.gender{
-font-size: 18px;
-font-weight: 400;
-line-height: 21px;
-letter-spacing: 0em;
-width: 290px;
-text-align: left;
-
-}
-
-.input-search{
+.input-search {
     outline: none;
     height: 30px;
     width: 200px;
     border-radius: 5px;
     background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
-    linear-gradient(0deg, #FAFAFA, #FAFAFA);        outline: none;
+        linear-gradient(0deg, #FAFAFA, #FAFAFA);
+    outline: none;
     border: 1px solid #E9E9E9
 }
 

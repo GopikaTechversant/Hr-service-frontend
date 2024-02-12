@@ -1,8 +1,220 @@
 body {
-  font-family: 'Rubik' !important;
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
+}
+/* You can add global styles to this file, and also import other style files */
+.mat-typography{
+  letter-spacing: 0.2px !important;
+}
+
+.mat-tab-header{
+  border-bottom: 1px solid #639ab5;
+  padding-bottom: 0px !important;
+  margin-bottom: 0px !important;
+}
+
+.mat-tab-label{
+  opacity: unset !important;
+  padding: 10px !important;
+  padding-left:0px !important ;
+  margin-right: 20px !important;
+  min-width: 0px !important;
+  padding-right: 0px !important;
+  color: #24495b !important;
+  height: 45px !important;
+}
+
+.mat-tab-label-active{
+  position: relative;
+  z-index: 5;
+  top: 1px;
+  border-bottom: 3px solid #24495b;
+}
+
+.mat-input-element {
+  background: #fff !important;
+}
+
+.mat-tab-label-active .mat-tab-label-content{
+  font-weight: 500 !important;
+  color: #24495b !important;
+}
+
+.mat-tab-label-active .tab-name{
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #24495b !important;
+}
+
+.mat-tab-label .tab-name:hover{
+  color: #24495b !important;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: #eee;
+}
+
+.mat-dialog-container {
+  padding: 15px !important;
+  border-radius: 2px!important;
+}
+
+.mat-tab-body-wrapper{
+  height: 100%;
+}
+
+.mat-tab-body{
+  height: 100%;
+}
+
+.record-pagination ul.ngx-pagination {
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+
+.record-pagination .ngx-pagination a:hover{
+  background: #419ae8 !important;
+  color: #fff;
+}
+
+.record-pagination .ngx-pagination a{
+  text-decoration: none;
+}
+
+a{
+  color: unset;
+}
+
+a:hover{
+  text-decoration: none !important;
+}
+
+.ngx-pagination .current{
+  padding: 2px 7px !important;
+  background: #4f708e !important;
+}
+
+/* .d-block{
+  display: block;
+} */
+
+.highlighted-text{
+  color: #fff;
+  background-color: #427194;
+  padding: 2px 0px;
+}
+
+.mentioned-user{
+  background: #1a1dcb;
+  color: #fff;
+  padding: 3px;
+  border-radius: 10px;
+  margin-right: 5px;
+}
+
+.inserted-anchor{
+  color: #007bff !important;
+}
+
+.inserted-anchor-span{
+  cursor: pointer;
+  padding: 3px;
+  margin-right: 5px;
+  margin-left: 5px;
+  background-color: var(--ds-surface-raised, white);
+  box-shadow: var(--ds-shadow-raised, 0 1px 1px rgba(9, 30, 66, 0.25), 0 0 1px 1px rgba(9, 30, 66, 0.13));
+}
+
+
+.srn-dialog-container .mat-dialog-container {
+  padding: 0px !important;
+}
+
+.image-dialog-container .mat-dialog-container {
+  overflow: hidden!important;
+}
+
+.mat-tab-label-active .mat-tab-label-content{
+
+  font-weight: 600!important;
+}
+
+
+/* .mat-row {
+  border: 1px solid #e7e7e7;
+  font-weight: bold;
+  height: 15px !important;
+}
+.mat-header-cell {
+  border: 1px solid #e7e7e7;
+  font-weight: bold;
+  height: 25px !important;
+} */
+
+/* FONT STYLES SIZES STARTS*/
+/* f-s-8 xxs-text f-s-10 s-text f-s-12 m-text f-s-14 f-s-15 f-s-16 f-s-17 f-s-18 f-s-19 f-s-20 f-s-22 */
+.xxs-text{
+  /* f-s-8 xxs-text f-s-10 s-text*/
+  font-size: 9px!important; 
+}
+
+.xs-text{
+  /*  xxs-text f-s-10  s-text*/
+  font-size: 10px!important;
+}
+
+.s-text{
+  /* s-text f-s-12 m-text */
+  font-size: 12px!important;
+}
+
+.m-text{
+  /* m-text f-s-14 f-s-15 */
+  font-size: 14px!important;
+
+}
+
+.l-text{
+  /* f-s-15 f-s-16 f-s-17 f-s-18 */
+  font-size: 15px!important;
+}
+
+.xl-text{
+  /* f-s-17 f-s-18 f-s-19 f-s-20  */
+  font-size: 16px!important;
+}
+
+.f-s-17-text{
+  font-size: 17px!important;
+}
+
+.xxl-text{
+  /* f-s-20 f-s-22 */
+  font-size: 18px!important;
+}
+
+.xxxl-text{
+  /* f-s-22 f-s-23 f-s-24 */
+  font-size: 20px!important
+}
+
+.very-large-text{
+  font-size: 22px!important;
+}
+
+.huge-text{
+  font-size: 35px!important;
 }
 
 .scrollable::-webkit-scrollbar,
