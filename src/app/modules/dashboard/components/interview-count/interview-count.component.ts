@@ -12,6 +12,11 @@ export class InterviewCountComponent implements OnInit {
   displayDate: any;
   currentLimit: any = 4;
   currentpage: number = 1;
+  length = 100;
+  pageSize = 10;
+  pageIndex = 0;
+  pageSizeOptions = [5, 10, 25];
+  showFirstLastButtons = true;
   list: any = [
     {
       name: 'Amritha',
@@ -107,5 +112,9 @@ export class InterviewCountComponent implements OnInit {
     let skip = parseInt(event, 10);
     this.currentpage = skip;
   }
- 
+  handlePageEvent(event: any) {
+    this.length = event.length;
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+  }
 }

@@ -32,8 +32,8 @@
                 </tr>
                 <ng-container
                     >
-                    <tr class="c-pointer" *ngFor="let item of candidateList | paginate:  { itemsPerPage:currentLimit, currentPage: currentPag ,totalItems: candidateList?.length}">
-                        <td>{{item?.candidateFirstName}} {{item?.candidateLastName}}</td>
+                    <tr class="c-pointer" *ngFor="let item of candidateList">
+                    <td>{{item?.candidateFirstName}} {{item?.candidateLastName}}</td>
                     <td>{{item?.candidateEmail}}</td>
                     <td>{{item?.candidateMobileNo}}</td>
                     <td>{{item?.candidatePreviousOrg}}</td>
@@ -52,9 +52,15 @@
             </table>
         </div>
         <div class="pagination d-flex j-end p-10 " *ngIf="candidateList?.length > 0">
-            <pagination-controls class="pagination-box" *ngIf="candidateList?.length > 0"
-                (pageChange)="pageChange($event)" class="record-pagination" previousLabel=""
-                nextLabel=""></pagination-controls>
+            <mat-paginator
+            (page)="handlePageEvent($event)"
+            [length]="length"
+            [pageSize]="pageSize"
+            [showFirstLastButtons]="showFirstLastButtons"
+            [pageSizeOptions]="pageSizeOptions"
+            [pageIndex]="pageIndex"
+            aria-label="Select page">
+        </mat-paginator>
         </div>
     </ng-container>
 </div>

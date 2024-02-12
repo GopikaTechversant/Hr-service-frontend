@@ -48,7 +48,7 @@
                 </div> -->
                 <ng-container *ngIf="list?.length > 0">
                     <ng-container
-                        *ngFor="let recruiter of list | paginate:  { itemsPerPage:currentLimit, currentPage: currentpage ,totalItems: list?.length}">
+                        *ngFor="let recruiter of list">
                         <tr class="c-pointer">
                             <td>{{recruiter.name}}</td>
                             <td>{{recruiter.count}}</td>
@@ -63,8 +63,15 @@
             </table>
         </div>
         <div class="pagination d-flex j-end p-10 " *ngIf="list?.length > 0">
-            <pagination-controls class="pagination-box" *ngIf="list?.length > 0" (pageChange)="pageChange($event)"
-                class="record-pagination" previousLabel="" nextLabel=""></pagination-controls>
+            <mat-paginator
+            (page)="handlePageEvent($event)"
+            [length]="length"
+            [pageSize]="pageSize"
+            [showFirstLastButtons]="showFirstLastButtons"
+            [pageSizeOptions]="pageSizeOptions"
+            [pageIndex]="pageIndex"
+            aria-label="Select page">
+        </mat-paginator>
         </div>
     </div>
 
