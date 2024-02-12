@@ -1,89 +1,83 @@
-.candidate-details {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #fff;
-    border-radius: 4px;
-    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 2px 1px;
-    border: 0.01rem solid #B9B9B9;
-    width: 200px;
-  }
-
-.container{
-  width: 97%;
-  flex-wrap: wrap;
+.search {
+  background-color: #005EC9;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  width: 25px;
+  height: 22px;
+  padding: 11px;
 }
 
-.icon-color {
-  color: #517494;
+.fa-search {
+  color: #FFFFFF;
+  padding-left: 3px;
+  font-size: 18px;
 }
 
-.search-input{
-  border-radius: 5px 0 0 5px;
-  border: 2px solid #517494;
+.input {
+  border: 1px solid #E9E9E9;
+  outline: none;
+  background-color: #FFFFFF;
+  border-radius: 3px;
+  width: 374px;
+  height: 33px;
+  padding-right: 10px;
+  color: #000000;
 }
 
-.search-candidate{
-  border-right: solid transparent;
-  /* border-radius: 4px; */
-  /* border: 0.035rem solid rgb(199,197,197); */
-  margin-right: 5px;
-  background-color: #fff;
-  width: 200px;
-  border-radius: 4px;
-  float: right;
-  height: 30px;
-  margin-top: 21px;
-  position: sticky;
-  margin-left: 65px;
+.create-btn {
+  background-color: #575F6E;
+  border: none;
+  border-radius: 3px;
+  width: 140px;
+  font-family: Rubik;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: 0em;
+  padding: 8px;
+  height: 20px;
+  padding-left: 15px;
+  color: #FFFFFF;
 }
 
-.main{
-  width: 95%;
+.title-right {
+  width: 60%;
+}
+
+.title-left {
+  font-family: Rubik;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 36px;
+  letter-spacing: 0em;
+  text-align: left;
+  Width: 255px;
+  Height: 36px;
+  color: #000000;
+
+}
+
+.card {
+  width: 295px;
+  height: 190px;
+  top: 171px;
+  left: 372px;
+  border-radius: 3px;
+  border: 0px, 0px, 0px, 2px;
+  margin-bottom: 30px;
+  flex-direction: column;
  
 }
 
-.search-btn{
-  background-color: #27445f;
-  outline: none;
-  border: 0;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  height: 30px;
-  width: 30px;
+.card-items{
+  width: 285px;
+  border-left: 2px solid #005EC9;
 }
 
-.candidate-details{
-  /* background-color: #517494; */
+.content{
+  flex-wrap: wrap;
 }
 
-.heading{
-  font-size: 20px;
-  color: #27445f;
-}
-
-.list{
-  padding-top: 20px;
-  margin-left: 66px;
-}
-
-.create-requirement{
-    outline: none;
-    border: 0;
-    /* border-top-right-radius: 5px; */
-    /* border-bottom-right-radius: 5px; */
-    height: 42px;
-    width: 143px;
-    background-color:#517494;
-    border-radius: 4px;
-    margin-top: 21px;
-    color: white;
-}
-
-.status-message{
-  color: green;
-}
-
-.status{
-  color: green;
+.f-column{
+  flex-direction: column;
 }
