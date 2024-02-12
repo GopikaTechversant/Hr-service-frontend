@@ -31,7 +31,8 @@
     outline: none;
     border-radius: 5px;
     border: 1px solid #E9E9E9;
-    background-color: #FAFAFA;
+    background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
+    linear-gradient(0deg, #FAFAFA, #FAFAFA);    
     width: 430px;
     height: 40px;
 }
@@ -120,12 +121,18 @@
     justify-content: space-evenly;
 }
 
+.fa-chevron-down {
+    color: #575F6E;
+}
+
+
 .date-picker-input {
     position: relative;
     outline: none;
     border-radius: 5px;
     border: 1px solid #E9E9E9;
-    background-color: #FAFAFA;
+    background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
+    linear-gradient(0deg, #FAFAFA, #FAFAFA);    
     width: 430px;
     height: 40px;
 }
@@ -181,7 +188,8 @@
 .search-input {
     border: 1px solid #E9E9E9;
     outline: none;
-    background-color: #FFFFFF;
+    background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
+    linear-gradient(0deg, #FAFAFA, #FAFAFA);    
     border-radius: 3px;
     width: 250px;
     height: 40px;

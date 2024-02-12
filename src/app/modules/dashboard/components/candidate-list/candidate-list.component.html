@@ -30,18 +30,19 @@
                     <td>Skills</td>
                     <td>Actions</td>
                 </tr>
-                <ng-container
-                    >
-                    <tr class="c-pointer" *ngFor="let item of candidateList | paginate:  { itemsPerPage:currentLimit, currentPage: currentPag ,totalItems: candidateList?.length}">
+                <ng-container>
+                    <tr class="c-pointer"
+                        *ngFor="let item of candidateList | paginate:  { itemsPerPage:currentLimit, currentPage: currentPag ,totalItems: candidateList?.length}">
                         <td>{{item?.candidateFirstName}} {{item?.candidateLastName}}</td>
-                    <td>{{item?.candidateEmail}}</td>
-                    <td>{{item?.candidateMobileNo}}</td>
-                    <td>{{item?.candidatePreviousOrg}}</td>
-                    <td>{{item?.candidatePreviousDesignation}}</td>
-                    <td>{{item?.candidateExperience}} years</td>
-                    <td>{{item?.candidateCurrentSalary}}</td>
-                    <td>{{item?.candidateEducation}}</td>
-                         <td>{{item?.candidateSkill.length > 0 ? item?.candidateSkill[0]?.skills?.skillName : 'N/A'}}</td>
+                        <td>{{item?.candidateEmail}}</td>
+                        <td>{{item?.candidateMobileNo}}</td>
+                        <td>{{item?.candidatePreviousOrg}}</td>
+                        <td>{{item?.candidatePreviousDesignation}}</td>
+                        <td>{{item?.candidateExperience}} years</td>
+                        <td>{{item?.candidateCurrentSalary}}</td>
+                        <td>{{item?.candidateEducation}}</td>
+                        <td>{{item?.candidateSkill.length > 0 ? item?.candidateSkill[0]?.skills?.skillName : 'N/A'}}
+                        </td>
                         <td>
                             <i class="fa fa-pencil-square-o p-r-5 icon-color" aria-hidden="true"></i>
                             <i class="fa fa-trash-o p-l-5 icon-color" aria-hidden="true"></i>
