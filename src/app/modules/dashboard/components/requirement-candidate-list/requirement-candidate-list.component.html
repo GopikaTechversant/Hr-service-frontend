@@ -14,19 +14,29 @@
         </div>
     </div>
     <div class="content p-t-10 d-flex j-space m-t-10">
-        <div class="p-t-10 p-l-10 card d-flex j-space" *ngFor="let candidate of candidates_list">
-            <div class="p-7  card-items f-column d-flex">
-                <div class="dflex j-space">
-                    <span>Candidates</span>
-                    <span>{{candidate.candidatesCount}}</span>
-                </div>
-                <span>Designation {{candidate.requestName}}</span>
-                <span>Team {{candidate.teamName}}</span>
-                <span>Skills {{candidate.requestSkills}}</span>
-                <span>{{candidate.status}}</span>
 
+        <div *ngFor="let candidate of candidates_list" class="candidate-card c-pointer"  (click)="navigate('/dashboard/series/',candidate.requestId)">
+            <div class="d-flex j-space m-b-4">
+                <span class="p-l-6 candidates">Candidates</span>
+                <span class="count">{{candidate.candidatesCount}}</span>
             </div>
-
+            <div class="info-container">
+                <div class="info-pair">
+                    <div class="key">Designation</div>
+                    <div class="value">: {{candidate.requestName}}</div>
+                </div>
+                <div class="info-pair">
+                    <div class="key">Team</div>
+                    <div class="value">: {{candidate.teamName}}</div>
+                </div>
+                <div class="info-pair">
+                    <div class="key">Skills</div>
+                    <div class="value">: {{candidate.requestSkills}}</div>
+                </div>
+                <div class="info-pair">
+                    <div>{{candidate.status}}</div>
+                </div>
+            </div>
 
         </div>
     </div>

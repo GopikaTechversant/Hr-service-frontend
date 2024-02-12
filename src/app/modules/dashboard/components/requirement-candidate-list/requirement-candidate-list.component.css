@@ -28,8 +28,8 @@
   background-color: #575F6E;
   border: none;
   border-radius: 3px;
-  width: 140px;
-  font-family: Rubik;
+  width: 145px;
+  /* font-family: Rubik; */
   font-size: 16px;
   font-weight: 400;
   line-height: 21px;
@@ -80,4 +80,64 @@
 
 .f-column{
   flex-direction: column;
+}
+
+
+
+.candidate-card {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  width: 250px;
+  height: auto;
+  margin-bottom: 29px;
+  background-color: #FFFFFF;
+  border-left: 2px solid #005EC9;
+  padding: 10px;
+  position: relative;
+  padding: 10px;
+}
+
+.info-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.info-pair {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.key,
+.value {
+    flex: 1;
+    margin: 5px;
+    text-align: left;
+    /* font-size: 16px; */
+    font-weight: 400;
+    letter-spacing: 0em;
+}
+
+.key {
+    color: #000000;
+    width: auto;
+}
+
+.value {
+    color: #575F6E;
+    text-align: left;
+}
+
+.candidates{
+  font-weight: 500;
+  font-size: 17px;
+}
+
+.count{
+  color: #005EC9;
+  font-size: 21px;
+  font-weight: 500;
 }
