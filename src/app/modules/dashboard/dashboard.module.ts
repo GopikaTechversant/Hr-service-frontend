@@ -27,6 +27,7 @@ import { DetailedRecruitmentComponent } from './components/detailed-recruitment/
 import { InterviewDetailsComponent } from './components/interview-details/interview-details.component';
 
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ReportDetailsComponent } from './components/report-details/report-details.component';
 const routes: Routes = [
   { path: '', component: LandingComponent,
   children: [
@@ -37,7 +38,8 @@ const routes: Routes = [
     {path: 'candidate-list', component: RequirementCandidateListComponent},
     {path: 'add-candidate', component: AddCandidateModalComponent},
     {path: 'interview-details', component: InterviewDetailsComponent},
-    {path: 'requirement-candidate-list', component: RequirementCandidateListComponent}
+    {path: 'requirement-candidate-list', component: RequirementCandidateListComponent},
+    {path: 'report-details', component: ReportDetailsComponent}
    
   ]},
   {path: 'series', component: SeriesComponent}
@@ -62,7 +64,8 @@ const routes: Routes = [
     ApplicationListBarComponent,
     InterviewCountComponent,
     DetailedRecruitmentComponent,
-    InterviewDetailsComponent
+    InterviewDetailsComponent,
+    ReportDetailsComponent
   ],
   imports: [
     CommonModule,

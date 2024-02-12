@@ -24,6 +24,8 @@ export class RequirementCandidateListComponent implements OnInit {
     this.http.get(`${environment.api_url}/screening-station/v1/list-all`).subscribe((res: any) => {
       console.log("fetch candidates", res);
       this.candidates_list = res.candidates;
+      console.log("this.candidates_list",this.candidates_list);
+      
     })
   }
 
@@ -34,12 +36,7 @@ export class RequirementCandidateListComponent implements OnInit {
     // Use Router to navigate to the /requirement route
     this.router.navigate(['dashboard/requirement']);
   }
-  // navigate(path:any, queryParam:any): void {
-  //   console.log("clicked");
-
-  //   if(queryParam) this.router.navigate([path], {queryParams: { type: queryParam}});
-  //   else this.router.navigate([path]);
-  // }
+ 
   navigate(path: any, requestId?: any): void {
     console.log("clicked");
     const queryParams = requestId ? { requestId: requestId } : undefined;

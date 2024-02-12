@@ -1,32 +1,74 @@
-<div class="main">
+<div class="main m-r-11">
+    <div class="heading d-flex j-space">
+        <div class="title-left"><span>Requirement List</span></div>
+        <div class="d-flex j-space title-right">
+            <span class="">
+                <input type="text" class="input p-l-5" placeholder="Search Candidates">
+                <span class="search">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </span>
+            </span>
+            <div class="create-btn c-pointer" (click)="navigate('/dashboard/requirement',false)">
+                <span class="">Create Requirement</span>
+            </div>
+        </div>
+    </div>
+    <div class="content p-t-10 d-flex j-space m-t-10">
+
+        <div *ngFor="let candidate of candidates_list" class="candidate-card c-pointer"  (click)="navigate('/dashboard/series/',candidate.requestId)">
+            <div class="d-flex j-space m-b-4">
+                <span class="p-l-6 candidates">Candidates</span>
+                <span class="count">{{candidate.candidatesCount}}</span>
+            </div>
+            <div class="info-container">
+                <div class="info-pair">
+                    <div class="key">Designation</div>
+                    <div class="value">: {{candidate.requestName}}</div>
+                </div>
+                <div class="info-pair">
+                    <div class="key">Team</div>
+                    <div class="value">: {{candidate.teamName}}</div>
+                </div>
+                <div class="info-pair">
+                    <div class="key">Skills</div>
+                    <div class="value">: {{candidate.requestSkills}}</div>
+                </div>
+                <div class="info-pair">
+                    <div>{{candidate.status}}</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- <div class="main">
     <div class="list">
         <p class="heading">Candidates List</p>
     </div>
     <div class="d-flex j-space">
-        <!-- <div class="list">
-            <p class="heading">Candidates List</p>
-        </div> -->
         <div class="search-candidate d-flex">
             <input type="text" class="search-input" autocomplete="off" placeholder="Search Candidates...">
-            <button class="search-btn" (click)="candidateSearch()"> <img width="14px" src="assets/images/s_icon.png" alt=""></button>
+            <button class="search-btn" (click)="candidateSearch()"> <img width="14px" src="assets/images/s_icon.png"
+                    alt=""></button>
         </div>
         <div class="">
             <button (click)="navigateToRequirementForm()" class="create-requirement">Create Requirement</button>
         </div>
     </div>
-    <div class="container m-l-26 m-t-20 d-flex j-space p-20" >
-        <div *ngFor="let candidate of candidates_list" class="d-flex j-center p-20" (click)="navigate('/dashboard/series/',candidate.requestId)">
+    <div class="container m-l-26 m-t-20 d-flex j-space p-20">
+        <div *ngFor="let candidate of candidates_list" class="d-flex j-center p-20"
+            (click)="navigate('/dashboard/series/',candidate.requestId)">
             <div class="candidate-details">
-                <!-- <p>Name : {{candidate.candidateFirstName }} {{candidate.candidateLastName }}</p> -->
                 <p>Candidates Count : {{candidate.candidatesCount}}</p>
                 <p>Designation : {{candidate.requestName}}</p>
                 <p>Team : {{candidate.teamName}}</p>
                 <p>Skills : {{candidate.requestSkills}}</p>
-               <!--  <div *ngIf="approvalStatus !== undefined" class="status-message">
-                    {{approvalStatus ? 'Approved' : 'In Progress'}}
-                </div> -->
                 <p class="status">{{candidate.status}}</p>
             </div>
         </div>
     </div>
-</div>
+</div> -->
