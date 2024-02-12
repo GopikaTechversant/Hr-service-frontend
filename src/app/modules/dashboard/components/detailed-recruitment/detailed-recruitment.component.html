@@ -1,7 +1,8 @@
 <div class="main">
     <div class="d-flex head j-space p-b-10">
         <div>
-            <span class="heading">Detailed Recruitment Report</span><span class="p-l-5 recruiter-name">-Recruiter Amritha</span>
+            <span class="heading">Detailed Recruitment Report</span><span class="p-l-5 recruiter-name">-Recruiter
+                Amritha</span>
         </div>
         <div class="d-flex">
             <span class="c-pointer">
@@ -27,31 +28,26 @@
             <!-- <div class="loader-parent">
                 <img src="assets/gif/loader.gif">
             </div> -->
-            <ng-container *ngIf="list?.length > 0">
-                <ng-container
-                    *ngFor="let candidate of list 
-                    | paginate:  { itemsPerPage:currentLimit, currentPage: currentpage ,totalItems: list?.length}"
-                    >
+            <ng-container>
+                <ng-container *ngFor="let item of  candidateList">
+                    <!-- <ng-container *ngFor="let item of innerArray "> -->
                     <tr class="c-pointer">
-                        <td>{{ candidate.name}}</td>
-                        <td>{{candidate.position}}</td>
-                        <td>{{ candidate.experience}}</td>
-                        <td>{{ candidate.currentCompany}}</td>
-                        <td>{{candidate.location}}</td>
-                        <td>{{ candidate.noticeperiod}}</td>
-                        <td>{{ candidate.dateTime}}</td>
-                        <td>{{ candidate.panel}}</td>
-                        <td>{{ candidate.mode}}</td>
+                        <td>{{ item['candidate.candidateFirstName']}}</td>
+                       
                     </tr>
+                    <!-- </ng-container> -->
+
                 </ng-container>
             </ng-container>
             <!-- <div *ngIf="list?.length === 0 && !loader" class="data">
                 No Data Found
             </div> -->
         </table>
-        <div class="pagination d-flex p-10 j-end" *ngIf="list.length > 0 ">
-            <pagination-controls class="pagination-box" *ngIf="list?.length > 0" (pageChange)="pageChange($event)"
-                class="record-pagination" previousLabel="" nextLabel=""></pagination-controls>
+        <div class="pagination d-flex p-10 j-end" *ngIf="candidateList.length > 0 ">
+            <mat-paginator (page)="handlePageEvent($event)" [length]="length" [pageSize]="pageSize"
+                [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="pageSizeOptions"
+                [pageIndex]="pageIndex" aria-label="Select page">
+            </mat-paginator>
         </div>
     </div>
 </div>

@@ -19,6 +19,8 @@ import { MatListModule } from '@angular/material/list';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import {MatPaginatorModule} from '@angular/material/paginator';
+
 @NgModule({
   providers: [
     {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}
@@ -45,7 +47,8 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
     MatTreeModule,
     MatListModule,
     DragDropModule,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule,
+    MatPaginatorModule
   ]
 })
 export class MaterialModule { }

@@ -9,7 +9,13 @@ import { environment } from 'src/environments/environments';
   styleUrls: ['./candidate-list.component.css']
 })
 export class CandidateListComponent {
+  length: any = 20;
+  pageSize = 4;
+  pageIndex = 1;
+  pageSizeOptions = [5,10,15,20];
+  showFirstLastButtons = true;
   candidateList: any;
+  searchWord:string= '';
   searchQuery: any = {
     searchWord: '',
     page: 1,
@@ -19,74 +25,7 @@ export class CandidateListComponent {
   currentLimit: number = 7;
   totalCount: any;
   data: any;
-  list: any = [
-    {
-      name: 'Amritha',
-      position: 'TL-.NET',
-      experience: 6,
-      currentCompany: 'abcd',
-      location: 'tvm',
-      noticeperiod: 60,
-      dateTime: '12,12,2000 3.00 PM',
-      panel: 'Arun Antony',
-      mode: 'Gmeet'
-    },
-    {
-      name: 'Amritha',
-      position: 'TL-.NET',
-      experience: 6,
-      currentCompany: 'abcd',
-      location: 'tvm',
-      noticeperiod: 60,
-      dateTime: '12,12,2000 3.00 PM',
-      panel: 'Arun Antony',
-      mode: 'Gmeet'
-    },
-    {
-      name: 'Amritha',
-      position: 'TL-.NET',
-      experience: 6,
-      currentCompany: 'abcd',
-      location: 'tvm',
-      noticeperiod: 60,
-      dateTime: '12,12,2000 3.00 PM',
-      panel: 'Arun Antony',
-      mode: 'Gmeet'
-    },
-    {
-      name: 'Amritha',
-      position: 'TL-.NET',
-      experience: 6,
-      currentCompany: 'abcd',
-      location: 'tvm',
-      noticeperiod: 60,
-      dateTime: '12,12,2000 3.00 PM',
-      panel: 'Arun Antony',
-      mode: 'Gmeet'
-    },
-    {
-      name: 'Amritha',
-      position: 'TL-.NET',
-      experience: 6,
-      currentCompany: 'abcd',
-      location: 'tvm',
-      noticeperiod: 60,
-      dateTime: '12,12,2000 3.00 PM',
-      panel: 'Arun Antony',
-      mode: 'Gmeet'
-    },
-    {
-      name: 'Amritha',
-      position: 'TL-.NET',
-      experience: 6,
-      currentCompany: 'abcd',
-      location: 'tvm',
-      noticeperiod: 60,
-      dateTime: '12,12,2000 3.00 PM',
-      panel: 'Arun Antony',
-      mode: 'Gmeet'
-    },
-  ]
+  
   constructor(private http: HttpClient, private router: Router) { }
   ngOnInit(): void {
     this.fetchCandidates('');
@@ -94,7 +33,7 @@ export class CandidateListComponent {
 
   fetchCandidates(searchKey: string): void {
     this.searchQuery.searchWord = searchKey;
-    this.http.get(`${environment.api_url}/candidate/list?search=${this.searchQuery.searchWord}&page=${this.searchQuery.page}&limit=${this.searchQuery.limit}`)
+    this.http.get(`${environment.api_url}/candidate/list?search=${this.searchQuery.searchWord}&page=${this.pageIndex}&limit=${this.pageSize}`)
       .subscribe((data: any) => {
         this.data = data;
         this.candidateList = [];
@@ -116,6 +55,14 @@ export class CandidateListComponent {
   pageChange(event: any): void {
     let skip = parseInt(event, 10);
     this.currentPag = skip;
+  }
+  handlePageEvent(event: any) {
+    console.log("event",event);
+    
+    this.length = event.length;
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.fetchCandidates('');
   }
 
 }
