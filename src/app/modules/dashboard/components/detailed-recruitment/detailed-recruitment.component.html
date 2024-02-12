@@ -30,18 +30,22 @@
             </div> -->
             <ng-container>
                 <ng-container *ngFor="let item of  candidateList">
-                    <!-- <ng-container *ngFor="let item of innerArray "> -->
                     <tr class="c-pointer">
                         <td>{{ item['candidate.candidateFirstName']}}</td>
-                       
+                        <td>{{item['reqService.sericeNam']}}</td>
+                        <td>{{item['candidate.candidateExperience']}}</td>
+                        <td>Abcde</td>
+                        <td>{{item['reqinterviewDetail.interviewLocation']}}</td>
+                        <td>{{item['candidate.candidateNoticePeriodByDays']}}</td>
+                        <td>{{item?.interviewTime | date: 'yyyy-MM-dd HH:mm'}}</td>
+                        <td>{{item['reqUser.userfirstName']}}</td>
+                        <td>{{item['reqinterviewDetail.interviewMode']}}</td>
                     </tr>
-                    <!-- </ng-container> -->
-
                 </ng-container>
             </ng-container>
-            <!-- <div *ngIf="list?.length === 0 && !loader" class="data">
+            <div *ngIf="candidateList?.length === 0">
                 No Data Found
-            </div> -->
+            </div>
         </table>
         <div class="pagination d-flex p-10 j-end" *ngIf="candidateList.length > 0 ">
             <mat-paginator (page)="handlePageEvent($event)" [length]="length" [pageSize]="pageSize"
