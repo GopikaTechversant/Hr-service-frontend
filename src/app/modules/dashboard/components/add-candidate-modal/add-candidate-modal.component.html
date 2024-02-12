@@ -1,7 +1,7 @@
-<div class="main p-l-20">
+<div class="main p-l-20 p-r-20">
     <form [formGroup]="candidateForm" (ngSubmit)="submitClick(); $event.preventDefault()" enctype="multipart/form-data">
         <span class="heading  m-t-12">Add Candidates</span>
-        <div class="d-flex j-space parent">
+        <div class="d-flex j-space parent p-t-10">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">First Name<span class="required">*</span></span>
                 <input type="text" class="input-box" formControlName="candidateFirstName" placeholder="John">
@@ -35,15 +35,17 @@
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Gender<span class="required">*</span></span>
                 <span class="d-flex gender c-pointer">
-                    <span><input type="radio" class="" formControlName="gender"> Male </span>
-                    <span><input type="radio" class="" formControlName="gender"> Female </span>
-                    <span><input type="radio" class="" formControlName="gender"> Others </span>
+                    <input type="radio" id="Male" name="candidateGender" value="Male" formControlName="candidateGender">
+                    <label for="Male">Male</label>
+                    <input type="radio" id="Female" name="candidateGender" value="Female" formControlName="candidateGender">
+                    <label for="Female">Female</label>
+                    <input type="radio" id="Others" name="candidateGender" value="Others" formControlName="candidateGender">
+                    <label for="Others">Others</label>
                 </span>
-
-                <div *ngIf="candidateForm.get('gender')?.hasError('required') && candidateForm.get('gender')?.touched">
+                <div *ngIf="candidateForm.get('candidateGender')?.hasError('required') && candidateForm.get('candidateGender')?.touched">
                     <mat-error>Gender Required</mat-error>
                 </div>
-            </div>
+            </div>            
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Experience</span>
                 <input type="text" class="input-box" formControlName="candidateExperience">
@@ -65,7 +67,7 @@
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Education</span>
                 <input type="text" class="input-box" formControlName="candidateEducation">
-            </div>  
+            </div>
         </div>
         <div class="d-flex j-space parent-address">
             <div class="child d-flex m-b-10">
@@ -83,49 +85,48 @@
                     *ngIf="candidateForm.get('candidateEmail')?.hasError('required') && candidateForm.get('candidateEmail')?.touched">
                     <mat-error>Email ID Required</mat-error>
                 </div>
-            </div>        
+            </div>
         </div>
-        <div class="d-flex j-space parent">     
+        <div class="d-flex j-space parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Mobile<span class="required">*</span></span>
-                <input type="text" class="input-box-mobile" formControlName="candidateMobileNo">
+                <input type="text" class="input-box" formControlName="candidateMobileNo">
                 <div
                     *ngIf="candidateForm.get('candidateMobileNo')?.hasError('required') && candidateForm.get('candidateMobileNo')?.touched">
                     <mat-error>Mobile No Required</mat-error>
-                </div>        
-            </div>  
+                </div>
+            </div>
             <div class="child d-flex m-b-10 m-l-10">
                 <span class="label m-b-4">Address</span>
                 <input type="text" class="text-area" formControlName="candidateAddress">
-            </div> 
+            </div>
         </div>
         <div class="d-flex j-space parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Position</span>
-                <div class="input-box p-t-10 p-l-6" (click)="showSource = !showSource;fetchSource()">
+                <div class="input-box  p-relative p-t-10 p-l-6" (click)="showSource = !showSource;fetchSource()">
                     <span *ngIf="!sourceName">Select source</span>
                     <span *ngIf="sourceName">{{sourceName}}</span>
                     <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
                 </div>
-                <div class="no-close dropdown m-t-6 p-t-10 p-l-6" *ngIf="showSource">
-                    <div *ngFor="let source of sourceList" (click)="selectsource(sourceId,source.sourceName)">
-                        {{source.sourceName}}
-                    </div>
+                <div class="no-close dropdown-list c-pointer m-t-6 p-t-10 p-l-6" *ngIf="showSource">
+                    <p *ngFor="let source of sourceList" (click)="selectsource(sourceId,source.sourceName)">
+                        {{source.sourceName}}</p>
                 </div>
             </div>
-            <div class="skills p-l-14 p-t-13">
-                <span class="text">Skill Sets</span>
-                <div class="d-flex j-space skill-drop-down">
-                    <div class="skill-type" (click)="showDropdown = !showDropdown"><span>{{selectedSkillType || 'Skill Type'}}</span> 
-                        <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
-                        <div class="dropdown-list c-pointer" *ngIf="showDropdown" >
+            <div class="skills p-t-13">
+                <span class="text m-b-4">Skill Sets</span>
+                <div class="d-flex skill-drop-down">
+                    <div class="skill-type" (click)="showDropdown = !showDropdown">
+                    <span>{{selectedSkillType || 'Skill Type'}}</span>
+                        <span><i class="f-right p-r-10 fa fa-chevron-down"></i></span>
+                        <div class="dropdown-list c-pointer" *ngIf="showDropdown">
                             <p *ngFor="let type of skillTypes" (click)="selectSkillType(type)">{{type}}</p>
-
                         </div>
                     </div>
                     <button class="add-btn" (click)="$event.preventDefault();toggleSearchBar()">Add</button>
                 </div>
-                <div class="searchbar" *ngIf="showSearchBar">
+                <div class="searchbar m-t-10" *ngIf="showSearchBar">
                     <input type="search" class="input-search" placeholder="Type to search skills..."
                         (input)="getSkillSuggestions($event)" *ngIf="showSearchBar">
                 </div>
@@ -153,4 +154,3 @@
         </div>
     </form>
 </div>
-

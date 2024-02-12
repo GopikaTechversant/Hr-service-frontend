@@ -33,7 +33,6 @@
 }
 
 .email {
-  font-family: Rubik;
   font-size: 18px;
   font-weight: 400;
   line-height: 21px;
@@ -64,17 +63,14 @@
   background: #005EC9;
   border-radius: 3px;
   border: none;
-  font-family: Rubik;
   font-size: 20px;
   font-weight: 400;
   line-height: 24px;
   letter-spacing: 0em;
   color: #FFFFFF;
-
 }
 
-.content {
-  font-family: Rubik;
+.content {  
   font-size: 18px;
   font-weight: 400;
   line-height: 21px;
@@ -84,14 +80,11 @@
 }
 
 .info {
-  font-family: Rubik;
   font-size: 32px;
   font-weight: 500;
   line-height: 38px;
   letter-spacing: 0em;
-
   color: #000000;
-
 }
 
 * {
@@ -99,8 +92,7 @@
   padding: 0;
 }
 
-.forgot-password {
-  font-family: Rubik;
+.forgot-password {  
   font-size: 18px;
   font-weight: 400;
   line-height: 21px;

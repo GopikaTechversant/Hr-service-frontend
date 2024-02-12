@@ -29,7 +29,6 @@ tr {
     background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
         linear-gradient(0deg, #F0F7FF, #F0F7FF);
     Padding: 10px;
-    font-family: Rubik;
     font-size: 15px;
     font-weight: 400;
     line-height: 18px;
@@ -58,7 +57,6 @@ table {
 
 .recruiter-name {
     color: #0034C4;
-    font-family: Rubik;
     font-size: 14px;
     font-weight: 500;
     line-height: 15px;
