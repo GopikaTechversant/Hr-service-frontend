@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environments';
-import { ApprovalStatusService } from 'src/app/services/approval-status.service';
 @Component({
   selector: 'app-requirement-candidate-list',
   templateUrl: './requirement-candidate-list.component.html',
@@ -10,33 +9,26 @@ import { ApprovalStatusService } from 'src/app/services/approval-status.service'
 })
 export class RequirementCandidateListComponent implements OnInit {
   candidates_list: any = [];
-  approvalStatus: boolean | undefined;
-  constructor(private http: HttpClient, private router: Router, private approvalStatusService: ApprovalStatusService) { }
-
+  searchQuery: string = '';
+  length: any = 20;
+  pageSize = 6;
+  pageIndex = 1;
+  pageSizeOptions = [5, 10, 15, 20];
+  showFirstLastButtons = true;
+  constructor(private http: HttpClient, private router: Router) { }
   ngOnInit(): void {
-    this.fetchcandidates();
-    this.approvalStatusService.approvalStatus.subscribe((status) => {
-      this.approvalStatus = status;
-    })
+    this.fetchcandidates('');
   }
-
-  fetchcandidates(): void {
-    this.http.get(`${environment.api_url}/screening-station/v1/list-all`).subscribe((res: any) => {
+  fetchcandidates(searchQuery: string): void {
+    this.http.get(`${environment.api_url}/screening-station/v1/list-all?page=${this.pageIndex}&limit=${this.pageSize}&search=${searchQuery}`).subscribe((res: any) => {
       console.log("fetch candidates", res);
       this.candidates_list = res.candidates;
-      console.log("this.candidates_list",this.candidates_list);
-      
+      console.log("this.candidates_list", this.candidates_list);
     })
   }
-
   candidateSearch(): void {
+    this.fetchcandidates(this.searchQuery);
   }
-
-  navigateToRequirementForm(): void {
-    // Use Router to navigate to the /requirement route
-    this.router.navigate(['dashboard/requirement']);
-  }
- 
   navigate(path: any, requestId?: any): void {
     console.log("clicked");
     const queryParams = requestId ? { requestId: requestId } : undefined;
@@ -46,5 +38,11 @@ export class RequirementCandidateListComponent implements OnInit {
       this.router.navigate([path]);
     }
   }
-
+  handlePageEvent(event: any) {
+    console.log("event", event);
+    this.length = event.length;
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.fetchcandidates('');
+  }
 }

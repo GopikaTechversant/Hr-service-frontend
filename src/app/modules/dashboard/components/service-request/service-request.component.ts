@@ -30,8 +30,6 @@ export class ServiceRequestComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.fetchServiceId();
-    this.fetchServiceTeam();
   }
   fetchServiceId(): void {
     this.http.get(`${environment.api_url}/service-request/services`).subscribe(((res: any) => {

@@ -10,8 +10,6 @@ import { DatePipe } from '@angular/common';
 export class InterviewCountComponent implements OnInit {
   chart: any;
   displayDate: any;
-  currentLimit: any = 4;
-  currentpage: number = 1;
   length = 100;
   pageSize = 10;
   pageIndex = 0;
@@ -55,10 +53,10 @@ export class InterviewCountComponent implements OnInit {
       update: '1st shortlisted'
     },
   ]
- 
+
   constructor(private datePipe: DatePipe) { }
   ngOnInit(): void {
-   this.createBarChart();
+    this.createBarChart();
   }
   createBarChart() {
     this.chart = new Chart('barChartInterview', {
@@ -107,10 +105,6 @@ export class InterviewCountComponent implements OnInit {
   dateChange(event: any): void {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
-  }
-  pageChange(event: any): void {
-    let skip = parseInt(event, 10);
-    this.currentpage = skip;
   }
   handlePageEvent(event: any) {
     this.length = event.length;
