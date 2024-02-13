@@ -7,7 +7,7 @@
             <div class="m-t-20 m-b-10">
                 <span class="sub-head">Service Name</span>
                 <div class="p-relative col-md-3 s-list d-flex subscriber-drop-down j-space m-text align-center"
-                    (click)="idListOpen = !idListOpen">
+                    (click)="idListOpen = !idListOpen;fetchServiceId();">
                     <div *ngIf="!selectedId"
                         class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">Service Names
                     </div>
@@ -32,7 +32,7 @@
             <div class="m-t-20 m-b-10">
                 <span class="sub-head">Team Name</span>
                 <div class="no-close col-md-3 s-list d-flex team-drop-down j-space m-text align-center"
-                    (click)="teamListOpen = !teamListOpen">
+                    (click)="teamListOpen = !teamListOpen;fetchServiceTeam();">
                     <div *ngIf="!selectedTeam"
                         class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">Team
                     </div>

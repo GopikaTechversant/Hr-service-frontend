@@ -9,8 +9,6 @@ import { environment } from 'src/environments/environments';
 export class DetailedRecruitmentComponent implements OnInit {
   chart: any;
   displayDate: any;
-  currentLimit: any = 4;
-  currentpage: number = 1;
   length: any = 20;
   pageSize = 4;
   pageIndex = 1;
@@ -26,10 +24,6 @@ export class DetailedRecruitmentComponent implements OnInit {
     this.http.get(`${environment.api_url}/user/requirement-report?&page=${this.pageIndex}&limit=${this.pageSize}`).subscribe((res: any) => {
       this.candidateList = res.userRequirementReport;
     })
-  }
-  pageChange(event: any): void {
-    let skip = parseInt(event, 10);
-    this.currentpage = skip;
   }
   handlePageEvent(event: any) {
     console.log("event", event);

@@ -37,39 +37,8 @@
     padding-top: 10px;
 }
 
-.requestId-drop-down {
-    border: 1.5px solid #7d8296b5;
-    border-radius: 5px;
-    padding: 4px 8px;
-    align-items: baseline;
-    background: #fff;
-    /* position: relative; */
-    height: 30px;
-    width: 250px;
-    margin-left: 20px;
-}
 
-.requestId-drop-down>.sub {
-    height: 16px;
-}
 
-.requestId-drop-down>.w-max {
-    width: 150px;
-}
-
-.requestId-drop-down>.drop-list {
-    position: absolute;
-    top: 46px;
-    right: 0;
-    width: 100%;
-    background-color: white;
-    border: 1.5px solid #7d8296b5;
-    border-radius: 5px;
-    z-index: 10;
-    max-height: 120px;
-    overflow-y: scroll;
-    width: 100%;
-}
 
 
 .assignee {
@@ -325,4 +294,17 @@
 
 .active{
     background-color: skyblue;
+}
+
+.requirement-dropdown-list {
+    background: white;
+    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+    max-height: 100px;
+    overflow-y: scroll;    
+    font-size: 14px;
+    margin-left: 3px;
+    width: 423px;
+    padding-left: 10px;
+    padding-top: 7px;
+    position: absolute;
 }
