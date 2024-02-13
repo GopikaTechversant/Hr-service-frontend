@@ -2,7 +2,7 @@
     width: 249px;
     height: 36px;
     font-size: 30px;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 36px;
     letter-spacing: 0em;
     text-align: left;
@@ -16,7 +16,7 @@
     border: 1px solid #E9E9E9;
     border-radius: 5px;
     background: white;
-
+    outline: none;
 }
 
 .child {
@@ -24,7 +24,7 @@
 }
 
 .label {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
     letter-spacing: 0em;
     text-align: left;
@@ -64,11 +64,12 @@
     margin-bottom: 12px;
     border-radius: 3px;
     border: 1px;
+    outline: none;
 }
 
 .cancel-btn {
-    width: 171px;
-    height: 54px;
+    width: 100px;
+    height: 45px;
     border-radius: 3px;
     font-size: 18px;
     font-weight: 400;
@@ -82,8 +83,8 @@
 }
 
 .save {
-    width: 171px;
-    height: 54px;
+    width: 100px;
+    height: 45px;
     border-radius: 3px;
     font-size: 18px;
     font-weight: 400;

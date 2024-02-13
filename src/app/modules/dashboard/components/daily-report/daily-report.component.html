@@ -1,0 +1,79 @@
+<div class="main">
+    <div class="d-flex j-space m-10">
+        <div><span class="heading">Daily Report</span>
+        </div>
+        <div class="d-flex c-pointer">
+            <span class="filter-head">Filter Recruiter</span>
+            <input type="text" class="input"><i class="fa fa-chevron-down arrow filter-icon"></i>
+        </div>
+        <div class="d-flex c-pointer">
+            <span class="filter-head">From Date</span>
+            <div class="p-relative">
+                <input class="p-l-5 input" placeholder="29/02/11" matInput [matDatepicker]="pickerFromDate"
+                        [value]="startDate | date:'yyyy-MM-dd'" id="startDate" (dateChange)="dateChange($event, 'startDate')"
+                        [ngModel]="startDate" (click)="pickerFromDate.open()">
+                <span>
+                    <mat-datepicker #pickerFromDate></mat-datepicker>
+                    <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true" (click)="pickerFromDate.open()"></i>
+                </span>
+            </div>
+        </div>
+        <div class="d-flex c-pointer">
+            <span class="filter-head">To Date</span>
+            <div class="p-relative">
+                <input class="p-l-5 input" placeholder="29/02/11" matInput [matDatepicker]="pickerToDate"
+                        (dateChange)="dateChange($event, 'endDate')" [ngModel]="endDate" (click)="pickerToDate.open()"
+                        [value]="endDate | date:'yyyy-MM-dd'" id="endDate">
+                <span>
+                    <mat-datepicker #pickerToDate></mat-datepicker>
+                    <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true" (click)="pickerToDate.open()"></i>
+                </span>
+            </div>
+        </div>        
+        <div class="search c-pointer">
+            <span class="">Search</span>
+        </div>
+    </div>
+    <!-- <ng-container *ngIf="data?.length > 0"> -->
+    <div class="table-container m-b-0">
+        <table class="table">
+            <tr class="table-header p-b-10">
+                <td>Date</td>
+                <td>Recruiter</td>
+                <td>Position</td>
+                <td>Position HC</td>
+                <td>Naukri</td>
+                <td>LinkedIn</td>
+                <!-- <td>Referral Resumes</td> -->
+                <td>Sourced & Screened</td>
+                <td>Contacted by Recruiter</td>
+                <td>Interested candidates</td>
+                <td>Interviews scheduled</td>
+                <td>Offers Released</td>
+            </tr>
+            <ng-container>
+                <tr class="c-pointer" *ngFor="let item of userRequirement">
+                    <td>{{item?.date | date:'yyyy-MM-dd'}}</td>
+                    <td>{{item?.recruiterName?.userfirstName}} {{item?.recruiterName?.userlastName}}</td>
+                    <td>{{item?.positionName}}</td>
+                    <td>{{item?.positionHc}}</td>
+                    <td>{{item?.naukriResume}}</td>
+                    <td>{{item?.linkedinResume}}</td>
+                    <!-- <td>{{item?.candidateExperience}}</td> -->
+                    <td>{{item?.sourcedScreened}}</td>
+                    <td>{{item?.candidateContacted}}</td>
+                    <td>{{item?.candidatesIntrested}}</td>
+                    <td>{{item?.interviewScheduled}}</td>
+                    <td>{{item?.offerReleased}}</td>
+                </tr>
+            </ng-container>
+        </table>
+    </div>
+    <div class="pagination d-flex j-end p-10 " *ngIf="userRequirement?.length > 0">
+        <mat-paginator (page)="handlePageEvent($event)" [length]="length" [pageSize]="pageSize"
+            [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="pageSizeOptions" [pageIndex]="pageIndex"
+            aria-label="Select page">
+        </mat-paginator>
+    </div>
+    <!-- </ng-container> -->
+</div>

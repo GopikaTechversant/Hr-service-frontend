@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environments';
 
@@ -9,6 +9,8 @@ import { environment } from 'src/environments/environments';
   styleUrls: ['./candidate-list.component.css']
 })
 export class CandidateListComponent {
+  @Input() appCustomLength: number = 0;
+
   length: any = 20;
   pageSize = 10;
   pageIndex = 1;

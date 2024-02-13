@@ -28,6 +28,7 @@ import { InterviewDetailsComponent } from './components/interview-details/interv
 
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ReportDetailsComponent } from './components/report-details/report-details.component';
+import { DailyReportComponent } from './components/daily-report/daily-report.component';
 const routes: Routes = [
   { path: '', component: LandingComponent,
   children: [
@@ -65,7 +66,8 @@ const routes: Routes = [
     InterviewCountComponent,
     DetailedRecruitmentComponent,
     InterviewDetailsComponent,
-    ReportDetailsComponent
+    ReportDetailsComponent,
+    DailyReportComponent
   ],
   imports: [
     CommonModule,

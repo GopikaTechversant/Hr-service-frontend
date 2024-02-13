@@ -1,0 +1,133 @@
+.main {
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 8px 0px #0000001A;
+    width: 99%;
+    height: 592px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+
+.head {
+    padding: 10px;
+    justify-content: space-between;
+}
+
+.heading {
+    color: #000000;
+    font-weight: 500;
+    line-height: 26.07px;
+    font-size: 22px;
+}
+
+.filter {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18.96px;
+    color: #4F4F4F;
+}
+
+.input {
+    border: 1px solid #E9E9E9;
+    outline: none;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    width: 205px;
+    height: 30px;
+    margin-right: -10px;
+
+}
+
+.search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 100px;
+    border-radius: 3px;
+    background-color: #005EC9;
+    color: white;
+    margin-left: 10px;
+    font-size: 17px;
+    margin-top: 2px;
+    margin-left: 10px;
+}
+
+.filter-head {
+    color: #575F6E;
+    padding: 0px 10px;
+    margin-top: 6px;
+
+}
+
+.filter-icon{
+    color: #575F6E;
+    margin-left: -10px;
+    margin-top: 6px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-container {
+    max-height: calc(100vh - 250px);
+    overflow: scroll;
+}
+
+tr:nth-child(odd) {
+    background-color: #F0F7FF;
+}
+
+td {
+    padding: 10px;
+    text-align: left;
+}
+
+tr {
+    text-align: left;
+}
+
+.table-header {
+    position: sticky;
+    top: 0;
+    background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
+        linear-gradient(0deg, #F0F7FF, #F0F7FF);
+    Padding: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.icon-color {
+    color: #575F6E;
+}
+
+.scrollable::-webkit-scrollbar,
+.table-container::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollable,
+.table-container {
+    scrollbar-width: none;
+}
+
+.scrollable,
+.table-container {
+    -ms-overflow-style: none;
+}
+
+.j-end {
+    display: flex;
+    justify-content: end;
+}
+
+.pagination {
+    position: sticky;
+    bottom: 0px;
+    background-color: white;
+    width: 100%;
+}

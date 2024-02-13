@@ -1,1 +1,113 @@
-<p>report-details works!</p>
+<div class="main m-5">
+    <div>
+        <span class="head">Report</span>
+    </div>
+    <div class="source w-100">
+        <div class="source-heading">
+            <span>Sourcing Overview -  December 2024</span>
+        </div>
+        <div *ngFor="let item of list" class="source-card d-flex">
+            <div class="d-flex-column line">
+                <span class="name">{{item.name1}}</span>
+                <div class="d-flex"><i class="fa fa-file-text-o card-icon" aria-hidden="true"></i>
+                    <span class="count">{{item.count1}}</span>
+                </div>
+            </div>
+            <div class="d-flex-column line">
+                <span class="name">{{item.name2}}</span>
+                <div class="d-flex"><i class="fa fa-user card-icon" aria-hidden="true"></i>
+                    <span class="count">{{item.count2}}</span>
+                </div>
+
+            </div>
+            <div class="d-flex-column line">
+                <span class="name">{{item.name3}}</span>
+                <div class="d-flex"><i class="fa fa-user card-icon" aria-hidden="true"></i>
+                    <span class="count">{{item.count3}}</span>
+                </div>
+            </div>
+            <div class="d-flex-column line">
+                <span class="name">{{item.name4}}</span>
+                <div class="d-flex"><i class="fa fa-calendar-o card-icon" aria-hidden="true"></i>
+                    <span class="count">{{item.count4}}</span>
+                </div>
+            </div>
+            <div class="d-flex-column">
+                <span class="name">{{item.name5}}</span>
+                <div class="d-flex"><i class="fa fa-tags card-icon" aria-hidden="true"></i>
+                    <span class="count">{{item.count5}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex w-100">
+        <div class="w-50 hiring-main">
+            <div class="d-flex j-space">
+                <div class="d-flex">
+                    <span class="filter p-r-10 p-t-10">Filter Month</span>
+                    <span class="c-pointer input-filter">
+                        <i class="fa fa-chevron-down arrow"></i>
+                    </span>
+                </div>
+                <div class="d-flex">
+                    <span class="filter p-r-10 p-t-10">Filter Recruiter</span>
+                    <span class="c-pointer input-filter">
+                        <i class="fa fa-chevron-down arrow"></i>
+                    </span>
+                </div>
+            </div>
+            <div>
+                <span class="">Experienced Hiring ( Recruiter wise)</span>
+            </div>
+            <div class="chart-container">
+                <canvas id="MyChart"></canvas>
+            </div>
+        </div>
+        <div class="w-50">
+            <div class="count-table m-r-15">
+                <div class="d-flex interview-head">
+                    <span class="">Overall Interview & Reschedule Status ( Experienced) </span>
+                </div>
+                <div class="table-container m-b-0">
+                    <table class="table">
+                        <tr class="table-header f-w-500 p-b-10">
+                            <td>Technology</td>
+                            <td>Interview Status ( All status)</td>
+                            <td>Nil</td>
+                        </tr>
+                        <!-- <div class="loader-parent">
+                            <img src="assets/gif/loader.gif">
+                        </div> -->
+                        <!-- <ng-container *ngIf="list?.length > 0"> -->
+                        <ng-container *ngFor="let recruiter of list">
+                            <tr class="c-pointer">
+                                <!-- <td>{{recruiter.name}}</td>
+                                <td>{{recruiter.count}}</td> -->
+                                <!-- <td>{{recruiter.conducted}}</td>
+                                    <td>{{recruiter.update}}</td> -->
+                            </tr>
+                        </ng-container>
+                        <!-- </ng-container> -->
+                        <!-- <div *ngIf="list?.length === 0 && !loader" class="data">
+                            No Data Found
+                        </div> -->
+                    </table>
+                </div>
+                <!-- <div class="pagination d-flex j-end p-10 " *ngIf="list?.length > 0">
+                    <mat-paginator
+                    (page)="handlePageEvent($event)"
+                    [length]="length"
+                    [pageSize]="pageSize"
+                    [showFirstLastButtons]="showFirstLastButtons"
+                    [pageSizeOptions]="pageSizeOptions"
+                    [pageIndex]="pageIndex"
+                    aria-label="Select page">
+                </mat-paginator>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <div>
+        <app-daily-report></app-daily-report>
+    </div>
+</div>
