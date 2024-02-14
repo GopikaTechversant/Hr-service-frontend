@@ -18,12 +18,6 @@ export class DailyReportComponent implements OnInit {
   pageSizeOptions = [10, 25, 30];
   showFirstLastButtons = true;
   userRequirement: any;
-  searchWord: string = '';
-  searchQuery: any = {
-    searchWord: '',
-    page: 1,
-    limit: 25,
-  };
   currentPag: number = 1;
   currentLimit: number = 7;
   totalCount: any;
@@ -31,18 +25,21 @@ export class DailyReportComponent implements OnInit {
   displayDate: any;
   startDate?: Date;
   endDate?: Date;
-
+  reportUserId: any = '13';
+  reportFromDate: any = '';
+  reportToDate: any = '';
+  reportPageNo: any = '';
+  reportPageLimit: any = '';
   constructor(private http: HttpClient, private router: Router, private datePipe: DatePipe) {
     this.startDate = new Date(); 
     this.endDate = new Date(); 
    }
   ngOnInit(): void {
-    this.fetchCandidates('');
+    this.fetchDetails();
   }
 
-  fetchCandidates(searchKey: string): void {
-    this.searchQuery.searchWord = searchKey;
-    this.http.get(`${environment.api_url}/report/report-list?reportUserId=13&reportFromDate=&reportToDate&reportPageNo&reportPageLimit`)
+  fetchDetails(): void {
+    this.http.get(`${environment.api_url}/report/report-list?reportUserId=${this.reportUserId}&reportFromDate=${this.reportFromDate}&reportToDate=${this.reportToDate}&reportPageNo=${this.reportPageNo}&reportPageLimit=${this.reportPageLimit}`)
       .subscribe((res: any) => {
         this.userRequirement = [];
         this.userRequirement = res?.data;
@@ -55,18 +52,16 @@ export class DailyReportComponent implements OnInit {
     if (range == 'endDate') this.endDate = date;
   }
   
-
   pageChange(event: any): void {
     let skip = parseInt(event, 10);
     this.currentPag = skip;
   }
-  handlePageEvent(event: any) {
-    console.log("event", event);
 
+  handlePageEvent(event: any) {
     this.length = event.length;
     this.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
-    this.fetchCandidates('');
+    this.fetchDetails();
   }
 
 }

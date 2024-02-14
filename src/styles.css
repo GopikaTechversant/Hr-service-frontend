@@ -236,10 +236,15 @@ body {
   text-align: center;
 }
 
-.j-end {
-  display: flex;
-  justify-content: end;
+
+.j-start {
+  justify-content: flex-start; /* Align items to the start */
 }
+
+.j-end {
+  justify-content: flex-end; /* Align items to the end */
+}
+
 
 .p-absolute {
   position: absolute !important;

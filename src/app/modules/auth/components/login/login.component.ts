@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
             console.log('login successfully:', response);
             localStorage.setItem('userToken', response?.token);
             localStorage.setItem('userRole', response?.user?.userRole);
+            localStorage.setItem('userId', response?.user?.userId);
             this.router.navigate(['/dashboard']);
           }
         },
