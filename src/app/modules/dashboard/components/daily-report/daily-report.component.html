@@ -52,7 +52,7 @@
             </tr>
             <ng-container *ngIf="userRequirement?.length > 0 ">
                 <tr class="c-pointer details" *ngFor="let item of userRequirement">
-                    <td>{{item?.date | date:'yyyy-MM-dd'}}</td>
+                    <td>{{item?.date | date:'dd/MM/yyyy'}}</td>
                     <td>{{item?.recruiterName?.userfirstName}} {{item?.recruiterName?.userlastName}}</td>
                     <td>{{item?.positionName}}</td>
                     <td>{{item?.positionHc}}</td>

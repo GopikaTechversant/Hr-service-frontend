@@ -52,10 +52,8 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
     this.chart = new Chart("MyChart", {
       type: 'doughnut',
       data: {
-        // labels: [this.sourceLabels[0],this.sourceLabels[1],this.sourceLabels[2],this.sourceLabels[3],this.sourceLabels[4]],
         labels: this.sourceLabels,
         datasets: [{
-          // data: [ this.sourceCount[0],this.sourceCount[1],this.sourceCount[2],this.sourceCount[3],this.sourceCount[4]],
           data: this.sourceCount,
           backgroundColor: ['#628afc', '#005ec9', '#047892', '#224462', '#0094d4'],
           fill: false
@@ -67,7 +65,7 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
           padding: {
             top: 30,
             right: 10,
-            bottom: 10,
+            bottom: 30,
             left: 10
           }
         },

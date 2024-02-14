@@ -35,7 +35,7 @@
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
-    width: 205px;
+    width: 115px;
     height: 30px;
     margin-right: -10px;
 }
@@ -69,13 +69,13 @@
 }
 
 table {
-    width: 100%;
+    width: auto;
     border-collapse: collapse;
 }
 
 .table-container {
     flex-grow: 1;
-    overflow-y: auto; 
+    overflow: auto; 
     margin-bottom: 10px; 
     max-height: calc(100% - 60px);
     max-height:  calc(100% - 60px);
@@ -99,8 +99,8 @@ tr {
     background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
         linear-gradient(0deg, #F0F7FF, #F0F7FF);
     Padding: 10px;
-    font-size: 15px;
-    font-weight: 400;
+    font-size: 14px;
+    font-weight: 500;
     line-height: 18px;
     letter-spacing: 0em;
     text-align: left;
@@ -128,6 +128,10 @@ tr {
 .j-end {
     display: flex;
     justify-content: end;
+}
+
+.details{
+    font-size: 12px;
 }
 
 .pagination {

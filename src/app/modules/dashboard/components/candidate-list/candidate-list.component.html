@@ -15,7 +15,6 @@
             </div>
         </div>
     </div>
-    <ng-container *ngIf="candidateList?.length > 0">
         <div class="table-container m-b-0">
             <table class="table">
                 <tr class="table-header p-b-10">
@@ -30,8 +29,8 @@
                     <td>Skills</td>
                     <td>Actions</td>
                 </tr>
-                <ng-container>
-                    <tr class="c-pointer" *ngFor="let item of candidateList">
+                <ng-container *ngIf="candidateList?.length > 0">
+                    <tr class="c-pointer details" *ngFor="let item of candidateList">
                     <td>{{item?.candidateFirstName}} {{item?.candidateLastName}}</td>
                     <td>{{item?.candidateEmail}}</td>
                     <td>{{item?.candidateMobileNo}}</td>
@@ -49,16 +48,15 @@
                 </ng-container>
             </table>
         </div>
-        <div class="pagination d-flex j-end p-10 " *ngIf="candidateList?.length > 0">
-            <mat-paginator
-            (page)="handlePageEvent($event)"
-            [length]="length"
-            [pageSize]="pageSize"
-            [showFirstLastButtons]="showFirstLastButtons"
-            [pageSizeOptions]="pageSizeOptions"
-            [pageIndex]="pageIndex"
-            aria-label="Select page">
-        </mat-paginator>
-        </div>
-    </ng-container>
+    <div class="pagination d-flex j-end" *ngIf="candidateList?.length > 0">
+        <mat-paginator
+        (page)="handlePageEvent($event)"
+        [length]="length"
+        [pageSize]="pageSize"
+        [showFirstLastButtons]="showFirstLastButtons"
+        [pageSizeOptions]="pageSizeOptions"
+        [pageIndex]="pageIndex"
+        aria-label="Select page">
+    </mat-paginator>
+    </div>
 </div>

@@ -1,11 +1,15 @@
 .main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     background-color: #FFFFFF;
     box-shadow: 0px 4px 8px 0px #0000001A;
     width: 99%;
     height: 592px;
     padding-top: 10px;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
 }
+
 
 .head {
     padding: 10px;
@@ -31,14 +35,15 @@
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
-    width: 454px;
-    height: 40px;
+    width: 330px;
+    height: 30px;
+    margin-right: -21px;
 }
 
 .search {
     background-color: #005EC9;
     /* position: relative; */
-    padding: 14px;
+    padding: 9px;
     top: 724px;
     right: 258px;
     width: 25px;
@@ -57,14 +62,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 40px;
-    width: 220px;
+    height: 32px;
+    width: 150px;
     border-radius: 3px;
     background-color: #005EC9;
     color: white;
     margin-left: 10px;
-    font-size: 20px;
-    margin-top: 2px;
+    font-size: 16px;
+    margin-top: 0px;
+    font-weight: 500;
 }
 
 table {
@@ -73,8 +79,11 @@ table {
 }
 
 .table-container {
-    max-height: calc(100vh - 250px);
+    flex-grow: 1;
     overflow: auto;
+    margin-bottom: 10px;
+    max-height: calc(100% - 60px);
+    max-height: calc(100% - 60px);
 }
 
 tr:nth-child(odd) {
@@ -96,11 +105,15 @@ tr {
     background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
         linear-gradient(0deg, #F0F7FF, #F0F7FF);
     Padding: 10px;
-    font-size: 15px;
-    font-weight: 400;
+    font-size: 14px;
+    font-weight: 500;
     line-height: 18px;
     letter-spacing: 0em;
     text-align: left;
+}
+
+.details {
+    font-size: 12px;
 }
 
 .icon-color {
@@ -134,4 +147,5 @@ tr {
     bottom: 0px;
     background-color: white;
     width: 100%;
+    padding: 10px 0;
 }

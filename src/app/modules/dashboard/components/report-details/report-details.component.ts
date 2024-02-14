@@ -17,21 +17,49 @@ export class ReportDetailsComponent implements OnInit {
   requirementDetail: any;
   totalReport: any;
   requirementDetailData: any;
+  selectedMonth: string = 'Select Month';
+  showMonth: boolean = false;
+  monthData: any[] = [
+    { month: 'January', number: '01' },
+    { month: 'February', number: '02' },
+    { month: 'March', number: '03' },
+    { month: 'April', number: '04' },
+    { month: 'May', number: '05' },
+    { month: 'June', number: '06' },
+    { month: 'July', number: '07' },
+    { month: 'August', number: '08' },
+    { month: 'September', number: '09' },
+    { month: 'October', number: '10' },
+    { month: 'November', number: '11' },
+    { month: 'December', number: '12' }
+  ];
+  recruiters: any;
+  showRecruiters: boolean = false;
+  recruiterName: string = 'Select Recruiters';
 
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.reportUserId = localStorage.getItem('userId');
-    this.currentYear = new Date().getFullYear();;
+    this.currentYear = new Date().getFullYear();
+    this.reportMonth = new Date().getMonth() + 1
     this.fetchDetails();
+    this.fetchRecruiters();
   }
 
   ngAfterViewInit(): void {
     Chart.register(ChartDataLabels);
   }
 
+  fetchRecruiters(): void {
+    this.http.get(`${environment.api_url}/dashboard/recruiter-list`)
+      .subscribe((res: any) => {
+        this.recruiters = res?.data;
+      });
+  }
+
   fetchDetails(): void {
-    this.http.get(`${environment.api_url}/report/month-report-data?month=${this.currentYear}-02&userId=13`)
+    this.http.get(`${environment.api_url}/report/month-report-data?month=${this.currentYear}-${this.reportMonth}&userId=13`)
       .subscribe((res: any) => {
         this.userRequirement = [];
         this.userRequirement = res?.data;
@@ -51,9 +79,24 @@ export class ReportDetailsComponent implements OnInit {
             this.requirementDetailData = ['0', '0', '0', '0', '0'];
           }
         }
-        this.createChart(); 
+        this.createChart();
       });
   }
+
+  selectMonth(monthNumber: string, month: string): void {
+    this.reportMonth = monthNumber;
+    this.selectedMonth = month;
+    this.showMonth = false;
+    this.fetchDetails();
+  }
+
+  selectRecruiter(recruiter: string , recruiterId : string): void {
+    this.recruiterName = recruiter;
+    this.reportUserId = recruiterId;
+    this.showRecruiters = false;
+    this.fetchDetails();
+  }
+
   createChart() {
     this.chart = new Chart("Chart", {
       type: 'doughnut',
