@@ -54,7 +54,7 @@
     outline: none;
     border-radius: 5px;
     border: 1px solid #E9E9E9;
-    width: 422px;
+    width: 356px;
     height: 40px;
     padding-left: 5px;
     padding-right: 8px;
@@ -153,5 +153,21 @@
     color: #FFFFFF;
     font-weight: 400;
     font-size: 18px;
+}
 
+.add-btn{
+    margin-left: 10px;
+    width: 91px;
+    height: 38px;
+    border-radius: 3px;
+    border: 1px;
+    background: linear-gradient(0deg, #005EC9, #005EC9),
+        linear-gradient(0deg, #E9E9E9, #E9E9E9);
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+    letter-spacing: 0em;
+    text-align: left;
+    text-align: center;
 }
