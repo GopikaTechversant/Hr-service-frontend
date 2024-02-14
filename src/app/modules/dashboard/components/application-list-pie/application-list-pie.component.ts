@@ -1,33 +1,63 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environments';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-application-list-pie',
   templateUrl: './application-list-pie.component.html',
-  styleUrls: ['./application-list-pie.component.css']
+  styleUrls: ['./application-list-pie.component.css'],
+  providers: [DatePipe],
 })
 export class ApplicationListPieComponent implements OnInit, AfterViewInit {
   chart: any;
+  displayDate: any;
+  sourceList: any[] = [];
+  sourceLabels: any[] = [];
+  sourceCount: any[] = [];
+  constructor(private http: HttpClient, private datePipe: DatePipe) {
 
+  }
   ngOnInit(): void {
-    
+    this.displayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+    this.fetchResumeSource()
   }
 
   ngAfterViewInit(): void {
     Chart.register(ChartDataLabels);
-    this.createChart();
+    // this.createChart();
   }
-
+  fetchResumeSource(): void {
+    this.http.get(`${environment.api_url}/dashboard/resume-source?date=${this.displayDate}`).subscribe((res: any) => {
+      console.log("res source", res);
+      this.sourceList = res.data;
+      this.sourceCount = this.sourceList.map((item: any) => Number(item.sourcecount));
+      this.sourceLabels = this.sourceList.map((item: any) => item.sourceName)
+      console.log(" this.sourceCount ", this.sourceCount);
+      console.log(" this.sourceLabels ", this.sourceLabels[0]);
+      this.createChart();
+    })
+  }
+  dateChange(event: any): void {
+    let date = new Date(event?.value);
+    this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    console.log("this.displayDate", this.displayDate);
+    this.fetchResumeSource();
+  }
   createChart() {
+    if (this.chart) {
+      this.chart.destroy();
+    }
     this.chart = new Chart("MyChart", {
       type: 'doughnut',
       data: {
-        labels: ['Naukiri', 'Indeed', 'LinkedIn'],
+        // labels: [this.sourceLabels[0],this.sourceLabels[1],this.sourceLabels[2],this.sourceLabels[3],this.sourceLabels[4]],
+        labels: this.sourceLabels,
         datasets: [{
-          data: [274, 17, 31],
-          backgroundColor: ['#628afc', '#005ec9', '#047892'],
+          // data: [ this.sourceCount[0],this.sourceCount[1],this.sourceCount[2],this.sourceCount[3],this.sourceCount[4]],
+          data: this.sourceCount,
+          backgroundColor: ['#628afc', '#005ec9', '#047892', '#224462', '#0094d4'],
           fill: false
         }],
       },
@@ -59,7 +89,7 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
             padding: 4,
             anchor: 'end',
             align: 'end',
-            offset: 10, 
+            offset: 10,
             font: {
               size: 14,
               weight: 'bold',
@@ -77,5 +107,6 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
       plugins: [ChartDataLabels],
     });
   }
+
 
 }

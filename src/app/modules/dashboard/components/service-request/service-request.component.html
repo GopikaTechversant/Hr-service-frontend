@@ -5,21 +5,26 @@
     <div class="scroller-box p-l-5 p-r-10">
         <div class="d-flex">
             <div class="m-t-20 m-b-10">
-                <span class="sub-head">Service Name</span>
-                <div class="p-relative col-md-3 s-list d-flex subscriber-drop-down j-space m-text align-center"
-                    (click)="idListOpen = !idListOpen;fetchServiceId();">
-                    <div *ngIf="!selectedId"
-                        class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">Service Names
-                    </div>
-                    <div *ngIf="selectedName">{{selectedName}}</div>
-                    <div class="no-close s-list c-pointer m-b-2 flex-1 d-flex sub"><i
-                            class="no-close s-list fa fa-chevron-down s-text"></i>
-                    </div>
-                    <div class=" m-b-2 drop-list" *ngIf="idListOpen">
-                        <div (click)="selectId(id.sericeId,id.sericeName)" *ngFor="let id of list_id"
-                            class=" p-t-5 p-b-5 p-l-8 c-pointer">{{id.sericeName}}</div>
+                <span class="sub-head">Station Flow</span>
+                <div class="d-flex">
+                    <div class="p-relative col-md-3 s-list d-flex subscriber-drop-down j-space m-text align-center"
+                        (click)="idListOpen = !idListOpen;fetchStations();">
+                        <div *ngIf="!stationName"
+                            class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">
+                            Screening,Hiring Manager
+                        </div>
+                        <div *ngIf="stationName">Screening,Hiring Manager,{{stationName}}</div>
+                        <div class="no-close s-list c-pointer m-b-2 flex-1 d-flex sub"><i
+                                class="no-close s-list fa fa-chevron-down s-text"></i>
+                        </div>
+                        <div class=" m-b-2 drop-list" *ngIf="idListOpen">
+                            <div (click)="selectStation(station.stationId,station.stationName)"
+                                *ngFor="let station of stationsList" class=" p-t-5 p-b-5 p-l-8 c-pointer">
+                                {{station.stationName}}</div>
+                        </div>
                     </div>
                 </div>
+                <button class="add-btn">Add</button>
             </div>
             <div class="m-t-20 m-b-10 p-l-10 m-l-10 m-l-10">
                 <span class="sub-head">Request Name</span>

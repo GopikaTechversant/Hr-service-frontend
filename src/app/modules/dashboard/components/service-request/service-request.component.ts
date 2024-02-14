@@ -26,10 +26,14 @@ export class ServiceRequestComponent implements OnInit {
   teamListOpen: boolean = false;
   skillsArray: any = [];
   requestVacancy: any;
+  stationsList: any[] = [];
+  stationId: any;
+  stationName: any;
   constructor(private http: HttpClient) {
 
   }
   ngOnInit(): void {
+    this.fetchStations();
   }
   fetchServiceId(): void {
     this.http.get(`${environment.api_url}/service-request/services`).subscribe(((res: any) => {
@@ -56,6 +60,17 @@ export class ServiceRequestComponent implements OnInit {
       this.selectedTeamName = teamId;
     }
     this.teamListOpen = true;
+  }
+  fetchStations(): void {
+    this.http.get(`${environment.api_url}/user/stations`).subscribe((res: any) => {
+      this.stationsList = res.data;
+      console.log("res stations", res);
+
+    })
+  }
+  selectStation(stationid: any, stationName: any): void {
+    this.stationId = stationid;
+    this.stationName = stationName;
   }
   sumitClick(): void {
     this.skillsArray = this.skills.nativeElement.value.split(',').map(skill => skill.trim());
