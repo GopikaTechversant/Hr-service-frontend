@@ -4,82 +4,84 @@
     </div>
     <div class="source w-100">
         <div class="source-heading">
-            <span>Sourcing Overview -  December 2024</span>
+            <span>Sourcing Overview - December 2024</span>
         </div>
-        <div *ngFor="let item of list" class="source-card d-flex">
+        <div class="source-card d-flex">
             <div class="d-flex-column line">
-                <span class="name">{{item.name1}}</span>
-                <div class="d-flex"><i class="fa fa-file-text-o card-icon" aria-hidden="true"></i>
-                    <span class="count">{{item.count1}}</span>
+                <span class="name">Total Resumes sourced & screened</span>
+                <div class="d-flex p-l-10"><i class="fa fa-file-text-o card-icon" aria-hidden="true"></i>
+                    <span class="count">{{totalReport?.sourcedScreened ? totalReport?.sourcedScreened : '0'}}</span>
                 </div>
             </div>
             <div class="d-flex-column line">
-                <span class="name">{{item.name2}}</span>
-                <div class="d-flex"><i class="fa fa-user card-icon" aria-hidden="true"></i>
-                    <span class="count">{{item.count2}}</span>
+                <span class="name">Candidates contacted by recruiter</span>
+                <div class="d-flex p-l-10"><i class="fa fa-user card-icon" aria-hidden="true"></i>
+                    <span class="count">{{totalReport?.candidateContacted ? totalReport?.candidateContacted : '0'}}</span>
                 </div>
 
             </div>
             <div class="d-flex-column line">
-                <span class="name">{{item.name3}}</span>
-                <div class="d-flex"><i class="fa fa-user card-icon" aria-hidden="true"></i>
-                    <span class="count">{{item.count3}}</span>
+                <span class="name">Interested candidates</span>
+                <div class="d-flex p-l-10"><i class="fa fa-user card-icon" aria-hidden="true"></i>
+                    <span class="count">{{totalReport?.candidatesIntrested ? totalReport?.candidatesIntrested : '0'}}</span>
                 </div>
             </div>
             <div class="d-flex-column line">
-                <span class="name">{{item.name4}}</span>
-                <div class="d-flex"><i class="fa fa-calendar-o card-icon" aria-hidden="true"></i>
-                    <span class="count">{{item.count4}}</span>
+                <span class="name">Interviews scheduled</span>
+                <div class="d-flex p-l-10"><i class="fa fa-calendar-o card-icon" aria-hidden="true"></i>
+                    <span class="count">{{totalReport?.interviewScheduled ? totalReport?.interviewScheduled : '0'}}</span>
                 </div>
             </div>
             <div class="d-flex-column">
-                <span class="name">{{item.name5}}</span>
-                <div class="d-flex"><i class="fa fa-tags card-icon" aria-hidden="true"></i>
-                    <span class="count">{{item.count5}}</span>
+                <span class="name">Offer Released</span>
+                <div class="d-flex p-l-10"><i class="fa fa-tags card-icon" aria-hidden="true"></i>
+                    <span class="count">{{totalReport?.offerReleased ? totalReport?.offerReleased : '0'}}</span>
                 </div>
             </div>
         </div>
     </div>
     <div class="d-flex w-100">
-        <div class="w-50 hiring-main">
-            <div class="d-flex j-space">
+        <div class="w-50 hiring-main m-10">
+            <div class="d-flex j-space p-10 p-r-20">
                 <div class="d-flex">
                     <span class="filter p-r-10 p-t-10">Filter Month</span>
                     <span class="c-pointer input-filter">
-                        <i class="fa fa-chevron-down arrow"></i>
+                        <input type="text" class="input">
+                        <i class="fa fa-chevron-down filter-icon "></i>
                     </span>
                 </div>
                 <div class="d-flex">
                     <span class="filter p-r-10 p-t-10">Filter Recruiter</span>
                     <span class="c-pointer input-filter">
-                        <i class="fa fa-chevron-down arrow"></i>
+                        <input type="text" class="input">
+                        <i class="fa fa-chevron-down filter-icon"></i>
                     </span>
                 </div>
             </div>
             <div>
-                <span class="">Experienced Hiring ( Recruiter wise)</span>
+                <span class="f-w-500 p-20">Experienced Hiring ( Recruiter wise)</span>
             </div>
             <div class="chart-container">
-                <canvas id="MyChart"></canvas>
+                <canvas id="Chart"></canvas>
             </div>
         </div>
         <div class="w-50">
-            <div class="count-table m-r-15">
-                <div class="d-flex interview-head">
-                    <span class="">Overall Interview & Reschedule Status ( Experienced) </span>
+            <div class="count-table m-r-15 m-10">
+                <div class="p-10">
+                    <span class="f-w-500">Overall Interview & Reschedule Status ( Experienced) </span>
                 </div>
                 <div class="table-container m-b-0">
                     <table class="table">
                         <tr class="table-header f-w-500 p-b-10">
                             <td>Technology</td>
                             <td>Interview Status ( All status)</td>
-                            <td>Nil</td>
+                            <td>Total Reschedule Status</td>
                         </tr>
                         <!-- <div class="loader-parent">
                             <img src="assets/gif/loader.gif">
                         </div> -->
                         <!-- <ng-container *ngIf="list?.length > 0"> -->
-                        <ng-container *ngFor="let recruiter of list">
+                        <ng-container *ngFor="let recruiter of userRequirement">
                             <tr class="c-pointer">
                                 <!-- <td>{{recruiter.name}}</td>
                                 <td>{{recruiter.count}}</td> -->

@@ -34,7 +34,6 @@
             <span class="">Search</span>
         </div>
     </div>
-    <!-- <ng-container *ngIf="data?.length > 0"> -->
     <div class="table-container m-b-0">
         <table class="table">
             <tr class="table-header p-b-10">
@@ -51,8 +50,8 @@
                 <td>Interviews scheduled</td>
                 <td>Offers Released</td>
             </tr>
-            <ng-container>
-                <tr class="c-pointer" *ngFor="let item of userRequirement">
+            <ng-container *ngIf="userRequirement?.length > 0 ">
+                <tr class="c-pointer details" *ngFor="let item of userRequirement">
                     <td>{{item?.date | date:'yyyy-MM-dd'}}</td>
                     <td>{{item?.recruiterName?.userfirstName}} {{item?.recruiterName?.userlastName}}</td>
                     <td>{{item?.positionName}}</td>
@@ -69,11 +68,10 @@
             </ng-container>
         </table>
     </div>
-    <div class="pagination d-flex j-end p-10 " *ngIf="userRequirement?.length > 0">
+    <div class="pagination d-flex j-end" *ngIf="userRequirement?.length > 0">
         <mat-paginator (page)="handlePageEvent($event)" [length]="length" [pageSize]="pageSize"
             [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="pageSizeOptions" [pageIndex]="pageIndex"
             aria-label="Select page">
         </mat-paginator>
     </div>
-    <!-- </ng-container> -->
 </div>
