@@ -29,6 +29,7 @@ export class ServiceRequestComponent implements OnInit {
   stationsList: any[] = [];
   stationId: any;
   stationName: any;
+  selectedstations:any[]=[];
   constructor(private http: HttpClient) {
 
   }
@@ -69,8 +70,11 @@ export class ServiceRequestComponent implements OnInit {
     })
   }
   selectStation(stationid: any, stationName: any): void {
+    this.idListOpen = false;
     this.stationId = stationid;
     this.stationName = stationName;
+    
+    
   }
   sumitClick(): void {
     this.skillsArray = this.skills.nativeElement.value.split(',').map(skill => skill.trim());

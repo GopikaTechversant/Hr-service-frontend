@@ -54,7 +54,7 @@
     outline: none;
     border-radius: 5px;
     border: 1px solid #E9E9E9;
-    width: 356px;
+    width: 366px;
     height: 40px;
     padding-left: 5px;
     padding-right: 8px;
@@ -76,7 +76,7 @@
 }
 
 .subscriber-drop-down>.drop-list {
-    position: absolute;
+    position: fixed;
     top: 32px;
     right: 0;
     width: 100%;
@@ -87,6 +87,7 @@
     max-height: 120px;
     overflow-y: scroll;
     width: 100%;
+    z-index: 1;
 }
 
 .team-drop-down {
@@ -155,19 +156,36 @@
     font-size: 18px;
 }
 
-.add-btn{
-    margin-left: 10px;
-    width: 91px;
-    height: 38px;
-    border-radius: 3px;
-    border: 1px;
+.fa-plus {
+
+    color: white;
+}
+
+.add-station-icon {
     background: linear-gradient(0deg, #005EC9, #005EC9),
         linear-gradient(0deg, #E9E9E9, #E9E9E9);
+}
+
+.add-btn {
+    margin-left: 3px;
+    width: 53px;
+    background: linear-gradient(0deg, #005EC9, #005EC9),
+        linear-gradient(0deg, #E9E9E9, #E9E9E9);
+    border-radius: 3px;
+    border: none;
     color: white;
     font-size: 16px;
     font-weight: 400;
-    line-height: 19px;
-    letter-spacing: 0em;
-    text-align: left;
-    text-align: center;
+}
+
+.drop-list{
+    position: absolute;
+    background-color: white;
+    z-index: 1;
+    width: 381px;
+    border: 1.5px solid #7d8296b5;
+    border-radius: 5px;
+    z-index: 10;
+    max-height: 120px;
+    overflow-y: scroll;
 }
