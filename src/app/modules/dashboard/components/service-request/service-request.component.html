@@ -11,12 +11,12 @@
                         class="no-close s-list m-t-8 m-l-5 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">
                         Screening,Hr Manager
                     </div>
-                    <div *ngIf="stationName" class="m-t-8 m-l-5">Screening,Hr Manager,{{stationName}}</div>
+                    <div *ngIf="stationName" class="m-t-8 m-l-5">{{"Screening,Hr Manager," + stationName}}</div>
                     <button class="add-btn" (click)="idListOpen = !idListOpen;fetchStations();">Add</button>
                 </div>
                 <div class=" m-b-2 drop-list" *ngIf="idListOpen">
                     <div (click)="selectStation(station.stationId,station.stationName)"
-                        *ngFor="let station  of stationsList" class=" p-t-5 p-b-5 p-l-8 c-pointer">
+                        *ngFor="let station  of stationsList.slice(1, -1)" class=" p-t-5 p-b-5 p-l-8 c-pointer">
                         {{station.stationName}}</div>
                 </div>
             </div>

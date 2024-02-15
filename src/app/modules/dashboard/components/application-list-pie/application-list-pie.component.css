@@ -56,3 +56,11 @@
     margin-left: -22px;
     top: 13px;
 }
+
+.no-data{
+    text-align: center;
+    margin-top: 27px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #005ec9;
+}
