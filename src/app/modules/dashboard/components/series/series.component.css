@@ -54,7 +54,7 @@
 }
 
 .candidate-box {
-    height: 150px;
+    height: 216px;
     background: #fff;
     border: 2px solid #685b5b4f;
     border-radius: 7px;
@@ -66,7 +66,7 @@
     margin-left: 20px;
     transition: max-width 0.3s ease;
     overflow: hidden;
-    width: 84%;
+    width: 100%;
 }
 
 .series-name {
