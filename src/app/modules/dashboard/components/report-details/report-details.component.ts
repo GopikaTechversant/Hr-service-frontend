@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
 import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { ToastrServices } from 'src/app/services/toastr.service';
 import { environment } from 'src/environments/environments';
 @Component({
   selector: 'app-report-details',
@@ -36,8 +37,19 @@ export class ReportDetailsComponent implements OnInit {
   recruiters: any;
   showRecruiters: boolean = false;
   recruiterName: string = 'Select Recruiters';
+  error: boolean = false;
 
-  constructor(private http: HttpClient) { }
+  constructor(private tostr: ToastrServices, private http: HttpClient, private renderer: Renderer2, private el: ElementRef) { }
+  onBodyClick(event: Event): void {
+    console.log(event);
+      const targetElement = event.target as HTMLElement;
+  
+    if (!targetElement.closest('.no-close')) {
+      this.showRecruiters = false;
+      this.showMonth = false;
+    }
+  }
+  
 
   ngOnInit(): void {
     this.reportUserId = localStorage.getItem('userId');
@@ -59,29 +71,39 @@ export class ReportDetailsComponent implements OnInit {
   }
 
   fetchDetails(): void {
-    this.http.get(`${environment.api_url}/report/month-report-data?month=${this.currentYear}-${this.reportMonth}&userId=13`)
-      .subscribe((res: any) => {
-        this.userRequirement = [];
-        this.userRequirement = res?.data;
-        this.totalReport = res?.totalReportMonth[0]
-        for (let requirement of this.userRequirement) {
-          this.requirementDetail = requirement;
-          if (this.userRequirement.length > 0) {
-            const requirementDetail = this.userRequirement[this.userRequirement.length - 1];
-            this.requirementDetailData = [
-              requirementDetail.sourcedScreened ?? '0',
-              requirementDetail.candidateContacted ?? '0',
-              requirementDetail.candidatesIntrested ?? '0',
-              requirementDetail.interviewScheduled ?? '0',
-              requirementDetail.offerReleased ?? '0'
-            ];
-          } else {
-            this.requirementDetailData = ['0', '0', '0', '0', '0'];
+    this.http.get(`${environment.api_url}/report/month-report-data?month=${this.currentYear}-${this.reportMonth}&userId=${this.reportUserId}`)
+      .subscribe(
+        (res: any) => {
+          this.userRequirement = [];
+          this.userRequirement = res?.data;
+          this.totalReport = res?.totalReportMonth[0];
+          for (let requirement of this.userRequirement) {
+            this.requirementDetail = requirement;
+            if (this.userRequirement.length > 0) {
+              const requirementDetail = this.userRequirement[this.userRequirement.length - 1];
+              this.requirementDetailData = [
+                requirementDetail.sourcedScreened ?? '0',
+                requirementDetail.candidateContacted ?? '0',
+                requirementDetail.candidatesInterested ?? '0',
+                requirementDetail.interviewScheduled ?? '0',
+                requirementDetail.offerReleased ?? '0'
+              ];
+            } else {
+              this.requirementDetailData = ['0', '0', '0', '0', '0'];
+            }
+          }
+          this.createChart();
+        },
+        (error) => { 
+          if (error?.status === 500) this.tostr.error("Internal Server Error");
+          else {
+            this.tostr.error(error?.error?.message ? error?.error?.message : "Unable to fetch details");
+            this.error = true;
           }
         }
-        this.createChart();
-      });
+      );
   }
+  
 
   selectMonth(monthNumber: string, month: string): void {
     this.reportMonth = monthNumber;
@@ -90,7 +112,7 @@ export class ReportDetailsComponent implements OnInit {
     this.fetchDetails();
   }
 
-  selectRecruiter(recruiter: string , recruiterId : string): void {
+  selectRecruiter(recruiter: string, recruiterId: string): void {
     this.recruiterName = recruiter;
     this.reportUserId = recruiterId;
     this.showRecruiters = false;

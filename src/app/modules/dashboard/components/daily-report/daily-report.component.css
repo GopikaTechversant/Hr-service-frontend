@@ -94,7 +94,7 @@ tr {
 }
 
 .table-header {
-    position: sticky;
+    /* position: sticky; */
     top: 0;
     background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
         linear-gradient(0deg, #F0F7FF, #F0F7FF);
@@ -140,4 +140,26 @@ tr {
     background-color: white;
     width: 100%;
     padding: 10px 0;
+}
+
+.month-dropdown {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 4px;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.month-column {
+    flex: 1 1 20%;
+    padding: 5px 10px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.month-column:hover {
+    background-color: #f0f0f0;
 }

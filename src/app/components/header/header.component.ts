@@ -28,7 +28,6 @@ export class HeaderComponent implements OnInit {
 
   profileClick() {
     this.dropDown = !this.dropDown;
-    console.log("hfjiafhifh");
   }
 
   logout() {

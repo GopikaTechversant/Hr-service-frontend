@@ -5,13 +5,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
 import { HttpClientModule } from '@angular/common/http';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent},
+  {path: 'forgot-password', component: ForgotPasswordComponent},
 ]
 @NgModule({
   declarations: [
     LoginComponent,
+    ForgotPasswordComponent,
    
   ],
   imports: [

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environments';
+import { ToastrServices } from 'src/app/services/toastr.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -15,15 +16,29 @@ export class LoginComponent implements OnInit {
   submitted: boolean = false;
   hide: boolean = true;
 
-  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private http: HttpClient, public auth: AuthService,) {
+  constructor(private tostr: ToastrServices, private formBuilder: UntypedFormBuilder, private router: Router, private http: HttpClient, public auth: AuthService,) {
     this.loginForm = this.formBuilder.group({
       userName: [null, [Validators.required]],
       userPassword: [null, [Validators.required]],
+      rememberMe: [false]
     });
   }
 
   ngOnInit(): void {
+    this.checkRememberMe();
+  }
 
+  checkRememberMe() {
+    const remembered = JSON.parse(localStorage.getItem('rememberMe') || 'false');
+    if (remembered) {
+      const userName = localStorage.getItem('userName');
+      const userPassword = localStorage.getItem('userPassword');
+      this.loginForm.patchValue({
+        userName: userName,
+        userPassword: userPassword,
+        rememberMe: true
+      });
+    }
   }
 
   get userName() {
@@ -39,15 +54,18 @@ export class LoginComponent implements OnInit {
       this.http.post(`${environment.api_url}/user/login`, this.loginForm.value).subscribe(
         (response: any) => {
           if (response?.token) {
-            console.log('login successfully:', response);
             localStorage.setItem('userToken', response?.token);
             localStorage.setItem('userRole', response?.user?.userRole);
             localStorage.setItem('userId', response?.user?.userId);
             this.router.navigate(['/dashboard']);
+            this.tostr.success('Login Successfully');
           }
         },
         (error) => {
-          console.error('Error during login:', error);
+          if (error?.status === 500) this.tostr.error("Internal Server Error")
+          else {
+            this.tostr.error(error?.error?.error_message ? error?.error?.error_message : "Unable to Login");
+          }
           this.toggleSpinner = false;
           this.submitted = false;
           if (error.status === 401) {
@@ -64,6 +82,10 @@ export class LoginComponent implements OnInit {
     this.toggleSpinner = true;
     this.submitted = true;
     this.loginApi();
+  }
+
+  forgotPassword(): void {
+    this.router.navigate(['/forgot-password']);
   }
 
 }

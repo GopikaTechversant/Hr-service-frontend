@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environments';
 
@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environments';
 
 })
 export class DailyReportComponent implements OnInit {
+  @Input() requitersList: any;
   length: any = 20;
   pageSize = 10;
   pageIndex = 1;
@@ -25,17 +26,28 @@ export class DailyReportComponent implements OnInit {
   displayDate: any;
   startDate?: Date;
   endDate?: Date;
-  reportUserId: any = '13';
+  reportUserId: any = '';
   reportFromDate: any = '';
   reportToDate: any = '';
   reportPageNo: any = '';
   reportPageLimit: any = '';
+  showRecruiters: boolean = false;
+  recruiterName: string = 'Select';
+
   constructor(private http: HttpClient, private router: Router, private datePipe: DatePipe) {
-    this.startDate = new Date(); 
-    this.endDate = new Date(); 
-   }
+    this.startDate = new Date();
+    this.endDate = new Date();
+  }
+
   ngOnInit(): void {
+    this.reportUserId = localStorage.getItem('userId');
     this.fetchDetails();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['requitersList'] && this.requitersList) {
+      console.log(this.requitersList, "List is now available");
+    }
   }
 
   fetchDetails(): void {
@@ -45,13 +57,20 @@ export class DailyReportComponent implements OnInit {
         this.userRequirement = res?.data;
       });
   }
-  
+
+  selectRecruiter(recruiter: string, recruiterId: string): void {
+    this.recruiterName = recruiter;
+    this.reportUserId = recruiterId;
+    this.showRecruiters = false;
+    this.fetchDetails();
+  }
+
   dateChange(event: any, range: string): void {
     let date = new Date(event?.value);
     if (range == 'startDate') this.startDate = date;
     if (range == 'endDate') this.endDate = date;
   }
-  
+
   pageChange(event: any): void {
     let skip = parseInt(event, 10);
     this.currentPag = skip;
