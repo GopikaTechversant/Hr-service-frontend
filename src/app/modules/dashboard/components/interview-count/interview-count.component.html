@@ -46,14 +46,15 @@
                 <!-- <div class="loader-parent">
                     <img src="assets/gif/loader.gif">
                 </div> -->
-                <ng-container *ngIf="list?.length > 0">
+                <ng-container  *ngIf="countArray.length === 0" class="no-data">No Data Found</ng-container >
+                <ng-container *ngIf="countArray.length > 0">
                     <ng-container
-                        *ngFor="let recruiter of list">
+                        *ngFor="let item of countArray">
                         <tr class="c-pointer">
-                            <td>{{recruiter.name}}</td>
-                            <td>{{recruiter.count}}</td>
-                            <td>{{recruiter.conducted}}</td>
-                            <td>{{recruiter.update}}</td>
+                            <td>{{item.userFullName}}</td>
+                            <td>{{item.interviewScheduled}}</td>
+                            <td>{{item.interviewConducted}}</td>
+                            <td>1 st round scheduled</td>
                         </tr>
                     </ng-container>
                 </ng-container>
@@ -62,7 +63,7 @@
                 </div> -->
             </table>
         </div>
-        <div class="pagination d-flex j-end p-10 " *ngIf="list?.length > 0">
+        <div class="pagination d-flex j-end p-10 " *ngIf="countArray.length > 0">
             <mat-paginator
             (page)="handlePageEvent($event)"
             [length]="length"

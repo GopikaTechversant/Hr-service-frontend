@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { DatePipe } from '@angular/common';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environments';
 @Component({
   selector: 'app-interview-count',
   templateUrl: './interview-count.component.html',
@@ -15,6 +17,7 @@ export class InterviewCountComponent implements OnInit {
   pageIndex = 0;
   pageSizeOptions = [5, 10, 25];
   showFirstLastButtons = true;
+  countArray:any[]=[];
   list: any = [
     {
       name: 'Amritha',
@@ -54,9 +57,16 @@ export class InterviewCountComponent implements OnInit {
     },
   ]
 
-  constructor(private datePipe: DatePipe) { }
+  constructor(private datePipe: DatePipe, private http: HttpClient) { }
   ngOnInit(): void {
     this.createBarChart();
+    this. fetchInterviewCounts();
+  }
+  fetchInterviewCounts():void{
+    this.http.get(`${environment.api_url}/dashboard/interview-count`).subscribe((count:any) => {
+      console.log("count",count);
+      this.countArray = count.data;
+    })
   }
   createBarChart() {
     this.chart = new Chart('barChartInterview', {
