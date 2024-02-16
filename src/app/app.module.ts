@@ -5,12 +5,14 @@ import { AppComponent } from './app.component';
 import { AuthModule } from './modules/auth/auth.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { FeedbackComponent } from './components/feedback/feedback.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    FeedbackComponent,
   ],
   imports: [
     BrowserModule,

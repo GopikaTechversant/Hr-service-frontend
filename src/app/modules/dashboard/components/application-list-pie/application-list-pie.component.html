@@ -16,7 +16,9 @@
             </div>
         </div>
     </div>
+    <div *ngIf="sourceList.length === 0" class="no-data">No Data Found</div>
     <div class="chart-container">
         <canvas id="MyChart"></canvas>
     </div>
+  
 </div>

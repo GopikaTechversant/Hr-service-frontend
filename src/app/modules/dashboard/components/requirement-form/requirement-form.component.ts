@@ -34,33 +34,27 @@ export class RequirementFormComponent implements OnInit {
   isSelectedFresher: any = 0;
   isChecked: boolean = false;
   searchQuery: string = '';
+  candidatesList: any[] = [];
   constructor(private http: HttpClient, private datePipe: DatePipe) { }
   ngOnInit(): void {
-    
+
   }
-  fetchServiceRequestname(): void {
+  fetchRequirements(): void {
     this.http.get(`${environment.api_url}/service-request/list`).subscribe((res: any) => {
       this.list_requests = res.data;
       console.log(" this.list_requests", this.list_requests);
     })
   }
-  fetchServiceId(): void {
-    this.http.get(`${environment.api_url}/service-request/services`).subscribe((res: any) => {
-      this.list_services = res.data;
-      console.log(" this.list_services", this.list_services);
-
+  fetchCandidates(): void {
+    this.http.get(`${environment.api_url}/service-request/candidates/list?serviceRequestId=${this.selectedId}`).subscribe((candidate: any) => {
+      console.log("candidate", candidate);
+      this.candidatesList = candidate.candidates;
     })
   }
-
-  fetchcandidatesWithExperience(): void {
-    this.http.get(`${environment.api_url}/service-request/candidates/list?exprience=${this.selectedExperience}`).subscribe((res: any) => {
-      this.list_experience = res.candidates;
-    })
-  }
-
-  fetchExperience(): void {
-    this.http.get(`${environment.api_url}/service-request/exp-year/list`).subscribe((res: any) => {
-      this.experience_droplist = res.data;
+  fetchcandidatesWithExperience(searchQuery: string): void {
+    this.http.get(`${environment.api_url}/service-request/candidates/list?exprience=${this.searchQuery}`).subscribe((res: any) => {
+      this.candidatesList = res.candidates;
+      console.log("this.candidatesList", this.candidatesList );
     })
   }
   selectRequestId(name: any, id: any): void {
@@ -68,22 +62,7 @@ export class RequirementFormComponent implements OnInit {
     if (this.selectedId !== id) {
       this.selectedName = name;
       this.selectedId = id;
-    }
-  }
-  selectServiceId(id: any, name: any): void {
-    this.serviceList_open = false;
-    if (this.selectedServiceId !== id && this.selectedServiceName !== name) {
-      this.selectedServiceId = id;
-      this.selectedServiceName = name;
-    }
-    this.serviceList_open = true;
-  }
-
-  selectExperience(experience: any): void {
-    this.experienceList_open = false;
-    if (this.selectedExperience !== experience) {
-      this.selectedExperience = experience;
-      this.fetchcandidatesWithExperience();
+      this.fetchCandidates();
     }
   }
   selectAllChange(event: any): void {
@@ -102,7 +81,7 @@ export class RequirementFormComponent implements OnInit {
     this.selectedCandidateId.push(item.candidateId)
   }
   searchExperience(): void {
-
+    this.fetchcandidatesWithExperience(this.searchQuery);
   }
   onClick(): void {
     this.isChecked = !this.isChecked;

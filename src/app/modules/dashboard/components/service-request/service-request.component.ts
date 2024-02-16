@@ -29,12 +29,13 @@ export class ServiceRequestComponent implements OnInit {
   stationsList: any[] = [];
   stationId: any;
   stationName: any;
-  selectedstations:any[]=[];
+  selectedstations: any[] = [];
+  selectedStationsId: any[] = [];
   constructor(private http: HttpClient) {
 
   }
   ngOnInit(): void {
-    this.fetchStations();
+    
   }
   fetchServiceId(): void {
     this.http.get(`${environment.api_url}/service-request/services`).subscribe(((res: any) => {
@@ -65,16 +66,19 @@ export class ServiceRequestComponent implements OnInit {
   fetchStations(): void {
     this.http.get(`${environment.api_url}/user/stations`).subscribe((res: any) => {
       this.stationsList = res.data;
-      console.log("res stations", res);
-
     })
   }
   selectStation(stationid: any, stationName: any): void {
     this.idListOpen = false;
     this.stationId = stationid;
-    this.stationName = stationName;
-    
-    
+    if (!this.selectedStationsId.includes(stationid)) this.selectedStationsId.push(stationid);
+    if (!this.selectedstations.includes(stationName)) this.selectedstations.push(stationName);
+    this.stationName = this.selectedstations.join(',');
+    const screeningStation = this.stationsList.find((station: any) => station.stationName == 'Screening');
+    const hrStation = this.stationsList.find((station: any) => station.stationName == 'Hiring Manager');
+    if (screeningStation && !this.selectedStationsId.includes(screeningStation.stationId)) this.selectedStationsId.push(screeningStation.stationId);
+    if (hrStation && !this.selectedStationsId.includes(hrStation.stationId)) this.selectedStationsId.push(hrStation.stationId);
+    console.log("this.selectedStationsId", this.selectedStationsId);
   }
   sumitClick(): void {
     this.skillsArray = this.skills.nativeElement.value.split(',').map(skill => skill.trim());
@@ -86,7 +90,8 @@ export class ServiceRequestComponent implements OnInit {
       requestBaseSalary: this.baseSalaryInput.nativeElement.value,
       requestMaxSalary: this.maxSalaryInput.nativeElement.value,
       requestSkills: this.skillsArray,
-      requestVacancy: this.vacancy.nativeElement.value
+      requestVacancy: this.vacancy.nativeElement.value,
+      requestFlowStations: this.selectedStationsId
     };
     this.http.post(`${environment.api_url}/service-request/create`, requestData).subscribe((res) => {
       alert("Submitted Successfully")
