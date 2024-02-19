@@ -76,7 +76,6 @@ export class InterviewDetailsComponent implements OnInit {
       'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
     });
     this.http.get(`${environment.api_url}/user/lists`, { headers }).subscribe((res: any) => {
-      console.log("users", res);
       this.users_list = res.users;
     })
   }
@@ -90,7 +89,6 @@ export class InterviewDetailsComponent implements OnInit {
       'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
     });
     this.http.get(`${environment.api_url}/user/lists`, { headers }).subscribe((res: any) => {
-      console.log("users", res);
       this.panel_list = res.users;
     })
   }

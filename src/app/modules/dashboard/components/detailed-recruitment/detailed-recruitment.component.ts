@@ -17,14 +17,17 @@ export class DetailedRecruitmentComponent implements OnInit {
   candidateList: any[] = [];
   constructor(private http: HttpClient) {
   }
+  
   ngOnInit(): void {
     this.fetchRecruiterList();
   }
+
   fetchRecruiterList(): void {
     this.http.get(`${environment.api_url}/user/requirement-report?&page=${this.pageIndex}&limit=${this.pageSize}`).subscribe((res: any) => {
       this.candidateList = res.userRequirementReport;
     })
   }
+
   handlePageEvent(event: any) {
     console.log("event", event);
     this.length = event.length;

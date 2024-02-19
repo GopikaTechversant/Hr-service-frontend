@@ -3,6 +3,8 @@ import Chart from 'chart.js/auto';
 import { DatePipe } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environments';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+
 @Component({
   selector: 'app-interview-count',
   templateUrl: './interview-count.component.html',
@@ -17,81 +19,68 @@ export class InterviewCountComponent implements OnInit {
   pageIndex = 0;
   pageSizeOptions = [5, 10, 25];
   showFirstLastButtons = true;
-  countArray:any[]=[];
-  list: any = [
-    {
-      name: 'Amritha',
-      count: 4,
-      conducted: 6,
-      update: '1st shortlisted'
-    },
-    {
-      name: 'Devika',
-      count: 4,
-      conducted: 6,
-      update: '1st shortlisted'
-    },
-    {
-      name: 'Anna',
-      count: 4,
-      conducted: 6,
-      update: '1st shortlisted'
-    },
-    {
-      name: 'Dev',
-      count: 4,
-      conducted: 6,
-      update: '1st shortlisted'
-    },
-    {
-      name: 'Amritha',
-      count: 4,
-      conducted: 6,
-      update: '1st shortlisted'
-    },
-    {
-      name: 'Amritha',
-      count: 4,
-      conducted: 6,
-      update: '1st shortlisted'
-    },
-  ]
+  countArray: any[] = [];
+  sixMonthCount: any;
+  labels: any;
+  dataSet: any;
+  teamDetails: any;
+  showDepartment :boolean = false;
+  teamId: any = 3;
+  teamName : string = 'Choose Department';
 
   constructor(private datePipe: DatePipe, private http: HttpClient) { }
   ngOnInit(): void {
-    this.createBarChart();
-    this. fetchInterviewCounts();
+    Chart.register(ChartDataLabels);
+    this.fetchInterviewCounts();
+    this.fetchBarchartDetails();
+    this.fetchDepartment();
   }
-  fetchInterviewCounts():void{
-    this.http.get(`${environment.api_url}/dashboard/interview-count`).subscribe((count:any) => {
-      console.log("count",count);
-      this.countArray = count.data;
+
+  fetchInterviewCounts(): void {
+    this.http.get(`${environment.api_url}/dashboard/interview-count`).subscribe((count: any) => {
+      this.countArray = count?.data;
     })
   }
+
+  fetchBarchartDetails(): void {
+    this.http.get(`${environment.api_url}/dashboard/six-month-count?team=${this.teamId}`).subscribe((res: any) => {
+      if (res?.data) {
+        this.sixMonthCount = res?.data;
+        this.labels = Object.keys(this.sixMonthCount[0]);
+        this.dataSet = Object.values(this.sixMonthCount[0]);
+        this.createBarChart();
+      }
+    })
+  }
+
+  fetchDepartment():void{
+    this.http.get(`${environment.api_url}/service-request/team`).subscribe((res: any) => {
+      if(res?.data){
+        this.teamDetails = res?.data
+      }
+    })
+  }
+
+  selectDepartment(team: string, teamId: string): void {
+    this.teamName = team;
+    this.teamId = teamId;
+    this.showDepartment = false;
+    this.fetchBarchartDetails();
+  }
+
   createBarChart() {
+    if (this.chart) {
+      this.chart.destroy();
+    }
     this.chart = new Chart('barChartInterview', {
       type: 'bar',
       data: {
-        labels: ['Aug 2023', 'Sept 2023', 'Oct 2023', 'Nov 2023', 'Dec 2023'],
+        labels: this.labels,
         datasets: [{
           label: 'Counts',
-          data: [5, 10, 15, 20, 30],
-          backgroundColor: [
-            'rgba(98, 138, 252)',
-            'rgba(98, 138, 252)',
-            'rgba(98, 138, 252)',
-            'rgba(98, 138, 252)',
-            'rgba(98, 138, 252)',
-            'rgba(98, 138, 252)',
-          ],
-          borderColor: [
-            'rgba(98, 138, 252)',
-            'rgba(98, 138, 252)',
-            'rgba(98, 138, 252)',
-            'rgba(98, 138, 252)',
-            'rgba(98, 138, 252)',
-            'rgba(98, 138, 252)',
-          ],
+          data: this.dataSet,
+          backgroundColor: 'rgba(98, 138, 252)',
+          borderColor: 'rgba(98, 138, 252)',
           borderWidth: 1
         }]
       },
@@ -108,14 +97,36 @@ export class InterviewCountComponent implements OnInit {
               display: false,
             }
           }
-        }
-      }
+        },
+        layout: {
+          padding: {
+            top: 60,
+            right: 10,
+            bottom: 10,
+            left: 10,
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            enabled: false
+          },
+          datalabels: {
+            display: false
+          },
+        },
+      },
+      plugins: [ChartDataLabels],
     });
   }
+
   dateChange(event: any): void {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
   }
+
   handlePageEvent(event: any) {
     this.length = event.length;
     this.pageSize = event.pageSize;

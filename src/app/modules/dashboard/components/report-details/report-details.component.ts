@@ -97,7 +97,7 @@ export class ReportDetailsComponent implements OnInit {
         (error) => { 
           if (error?.status === 500) this.tostr.error("Internal Server Error");
           else {
-            this.tostr.error(error?.error?.message ? error?.error?.message : "Unable to fetch details");
+            this.tostr.warning(error?.error?.message ? error?.error?.message : "Unable to fetch details");
             this.error = true;
           }
         }
@@ -120,6 +120,9 @@ export class ReportDetailsComponent implements OnInit {
   }
 
   createChart() {
+    if (this.chart) {
+      this.chart.destroy();
+    }
     this.chart = new Chart("Chart", {
       type: 'doughnut',
       data: {

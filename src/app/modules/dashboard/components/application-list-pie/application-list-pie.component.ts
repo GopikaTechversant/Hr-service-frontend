@@ -26,25 +26,23 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     Chart.register(ChartDataLabels);
-    // this.createChart();
   }
+
   fetchResumeSource(): void {
     this.http.get(`${environment.api_url}/dashboard/resume-source?date=${this.displayDate}`).subscribe((res: any) => {
-      console.log("res source", res);
       this.sourceList = res.data;
       this.sourceCount = this.sourceList.map((item: any) => Number(item.sourcecount));
       this.sourceLabels = this.sourceList.map((item: any) => item.sourceName)
-      console.log(" this.sourceCount ", this.sourceCount);
-      console.log(" this.sourceLabels ", this.sourceLabels[0]);
       this.createChart();
     })
   }
+
   dateChange(event: any): void {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
-    console.log("this.displayDate", this.displayDate);
     this.fetchResumeSource();
   }
+
   createChart() {
     if (this.chart) {
       this.chart.destroy();

@@ -43,3 +43,15 @@
     top: 9px;
     left: 122px;
 }
+
+.calendar-icon {
+    color: gray;
+    Width: 18px;
+    Height: 18px;
+    margin-left: -22px;
+    top: 13px;
+}
+
+#barChart{
+    height: 350px !important;
+}

@@ -4,6 +4,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { AddCandidateModalComponent } from 'src/app/modules/dashboard/components/add-candidate-modal/add-candidate-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environments';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -13,7 +15,7 @@ export class HeaderComponent implements OnInit {
   currentUser: any;
   dropDown: boolean = false;
   showDropDown: boolean = false;
-  constructor(private apiService: ApiService, private auth: AuthService, private dialog: MatDialog, private router: Router, private renderer: Renderer2, private el: ElementRef) { }
+  constructor(private http: HttpClient,private apiService: ApiService, private auth: AuthService, private dialog: MatDialog, private router: Router, private renderer: Renderer2, private el: ElementRef) { }
 
   @HostListener('document:click', ['$event'])
   onBodyClick(event: Event): void {
@@ -24,6 +26,11 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = localStorage.getItem('userRole');
+  }
+
+  searchCandidate():void {
+    this.http.get(`${environment.api_url}/candidate/list/13@gmail.com`).subscribe((res: any) => {
+    })
   }
 
   profileClick() {

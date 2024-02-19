@@ -41,8 +41,6 @@ export class CandidateListComponent {
         this.candidateList = [];
         this.candidateList = data?.candidates;
         this.totalCount = data?.candidateCount;
-        console.log(this.data);
-
       });
   }
   navigate(path: any, queryParam: any): void {
@@ -59,8 +57,6 @@ export class CandidateListComponent {
     this.currentPag = skip;
   }
   handlePageEvent(event: any) {
-    console.log("event", event);
-
     this.length = event.length;
     this.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;

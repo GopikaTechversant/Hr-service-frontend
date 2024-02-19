@@ -1,33 +1,65 @@
+import { DatePipe } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { environment } from 'src/environments/environments';
 
 @Component({
   selector: 'app-application-list-bar',
   templateUrl: './application-list-bar.component.html',
-  styleUrls: ['./application-list-bar.component.css']
+  styleUrls: ['./application-list-bar.component.css'],
+  providers: [DatePipe],
+
 })
 export class ApplicationListBarComponent implements OnInit {
   chart: any;
+  applicationList: any;
+  labels: any;
+  dataSet:any;
+  displayDate : any;
 
-  constructor() { }
+  constructor(private http: HttpClient, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
+    this.displayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+    this.fetchApplicationList();
     Chart.register(ChartDataLabels);
-    this.createBarChart();
   }
 
+  fetchApplicationList(): void {
+    this.http.get(`${environment.api_url}/dashboard/department-daily-application?${this.displayDate}`).subscribe((res: any) => {
+      if (res?.data) {
+        this.applicationList = res?.data;
+        this.labels = this.applicationList.map((app: any) => app.requestName);
+        this.dataSet = this.applicationList.map((app: any) => app.applicationCount);
+        this.createBarChart();
+      }
+    });
+  }
+  
+  dateChange(event: any): void {
+    let date = new Date(event?.value);
+    this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    this.fetchApplicationList();
+  }
+
+
   createBarChart() {
+    if (this.chart) {
+      this.chart.destroy();
+    }
     this.chart = new Chart('barChart', {
       type: 'bar',
       data: {
-        labels: [ 'SE/SSE- Java', 'SE/SSE - Node JS', 'TL - .NET ', 'SE/SSE- PHP', 'SE/SSE- DBA', 'TL - Automation'],
+        labels: this.labels,
         datasets: [{
           label: ' ',
-          data: [44,21, 50, 15, 25, 30],
+          data: this.dataSet,
           backgroundColor: 'rgba(98, 138, 252)',
-          borderColor: 'rgba(98, 138, 252)', 
-          borderWidth: 1
+          borderColor: 'rgba(98, 138, 252)',
+          borderWidth: 1,
+          barThickness: 40, 
         }]
       },
       options: {
@@ -52,9 +84,9 @@ export class ApplicationListBarComponent implements OnInit {
             left: 10
           }
         },
-        plugins: {        
+        plugins: {
           legend: {
-            display: false 
+            display: false
           },
           tooltip: {
             enabled: false
