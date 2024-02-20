@@ -87,8 +87,8 @@
 
 .filter-icon {
     color: #575F6E;
-    margin-left: -10px;
-    margin-top: 6px;
+    margin-left: 10px;
+    margin-top: 4px;
 }
 
 .month-dropdown {
@@ -96,7 +96,7 @@
     flex-direction: column;
     background-color: #fff;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 10px;
+    padding: 5px;
     border-radius: 4px;
     max-height: 150px;
     overflow-y: auto;
@@ -124,13 +124,10 @@ table {
     border-collapse: collapse;
 }
 
-.table-container {
-    width: 100%;
-    flex-grow: 1;
+.table-container{
+    height: calc(100vh - 400px);
     overflow-y: auto;
-    margin-bottom: 10px;
-    max-height: calc(100% - 60px);
-    max-height: calc(100% - 60px);
+    overflow-x: hidden;
 }
 
 tr:nth-child(odd) {
@@ -165,3 +162,5 @@ tr {
     color: gray;
     padding-bottom: 150px;
 }
+
+

@@ -29,7 +29,10 @@ export class HeaderComponent implements OnInit {
   }
 
   searchCandidate():void {
-    this.http.get(`${environment.api_url}/candidate/list/13@gmail.com`).subscribe((res: any) => {
+    console.log('>>>>>>>>');
+    
+    this.http.get(`${environment.api_url}/candidate/list/jerom3@gmail.com`).subscribe((res: any) => {
+      this.router.navigateByUrl('/dashboard/candidate-details');
     })
   }
 

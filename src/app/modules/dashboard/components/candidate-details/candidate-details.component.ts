@@ -11,25 +11,16 @@ export class CandidateDetailsComponent implements OnInit{
   candidateId:any;
   candidateDetails:any;
   resumePath:any;
-constructor(@Inject(MAT_DIALOG_DATA) public data: any,private http: HttpClient){
-  // console.log('Received candidateId:', data.candidateId);
-}
+constructor(private http: HttpClient){}
 ngOnInit(): void {
-  this.candidateId = this.data.candidateId;
-  this.http.get(`${environment.api_url}/candidate/list/${this.candidateId}`).subscribe((res) =>{
-   
-    this.candidateDetails = res;
-    // console.log("candidate id res",   this.candidateDetails);
-    
+  this.http.get(`${environment.api_url}/candidate/list/jerom3@gmail.com`).subscribe((res: any) => {
+    this.candidateDetails = res;    
   })
 }
 
 viewResume(resume:any){
   this.resumePath = resume;
-  console.log("resume path",this.resumePath);
-       window.open(`${environment.api_url}${this.resumePath}`, '_blank');
- 
-  
+  window.open(`${environment.api_url}${this.resumePath}`, '_blank'); 
 }
 
 }

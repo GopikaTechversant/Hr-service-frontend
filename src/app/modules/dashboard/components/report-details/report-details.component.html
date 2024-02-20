@@ -16,20 +16,23 @@
             <div class="d-flex-column line">
                 <span class="name">Candidates contacted by recruiter</span>
                 <div class="d-flex p-l-10"><i class="fa fa-user card-icon" aria-hidden="true"></i>
-                    <span class="count">{{totalReport?.candidateContacted ? totalReport?.candidateContacted : '0'}}</span>
+                    <span class="count">{{totalReport?.candidateContacted ? totalReport?.candidateContacted :
+                        '0'}}</span>
                 </div>
 
             </div>
             <div class="d-flex-column line">
                 <span class="name">Interested candidates</span>
                 <div class="d-flex p-l-10"><i class="fa fa-user card-icon" aria-hidden="true"></i>
-                    <span class="count">{{totalReport?.candidatesIntrested ? totalReport?.candidatesIntrested : '0'}}</span>
+                    <span class="count">{{totalReport?.candidatesIntrested ? totalReport?.candidatesIntrested :
+                        '0'}}</span>
                 </div>
             </div>
             <div class="d-flex-column line">
                 <span class="name">Interviews scheduled</span>
                 <div class="d-flex p-l-10"><i class="fa fa-calendar-o card-icon" aria-hidden="true"></i>
-                    <span class="count">{{totalReport?.interviewScheduled ? totalReport?.interviewScheduled : '0'}}</span>
+                    <span class="count">{{totalReport?.interviewScheduled ? totalReport?.interviewScheduled :
+                        '0'}}</span>
                 </div>
             </div>
             <div class="d-flex-column">
@@ -45,27 +48,34 @@
             <div class="d-flex j-space p-10 p-r-20">
                 <div class="d-flex">
                     <span class="filter p-r-10 p-t-10">Filter Month</span>
-                    <span class="c-pointer input-filter p-relative" (click)="showMonth = !showMonth">
-                        <input type="text" class="input" [value]="selectedMonth">
-                        <i class="fa fa-chevron-down filter-icon"></i>
-                        <div *ngIf="showMonth" class="p-absolute month-dropdown no-close">
-                          <div class="month-column" *ngFor="let item of monthData" (click)="selectMonth(item.number, item.month)">
-                            {{item.month}}
-                          </div>
+                    <span class="c-pointer input-filter p-relative no-close" (click)="showMonth = !showMonth">
+                        <div class="input d-flex j-space p-5 p-b-0 no-close">
+                            {{selectedMonth}}
+                            <i class="fa fa-chevron-down filter-icon"></i>
+                            <div *ngIf="showMonth" class="p-absolute month-dropdown no-close">
+                                <div class="month-column" *ngFor="let item of monthData"
+                                    (click)="selectMonth(item.number, item.month);showMonth = !showMonth">
+                                    {{item.month}}
+                                </div>
+                            </div>
                         </div>
-                      </span>     
+                    </span>
                 </div>
                 <div class="d-flex">
                     <span class="filter p-r-10 p-t-10">Filter Recruiter</span>
-                    <span class="c-pointer input-filter p-relative" (click)="showRecruiters = !showRecruiters">
-                        <input type="text" class="input" [value]="recruiterName">
-                        <i class="fa fa-chevron-down filter-icon"></i>
-                        <div *ngIf="showRecruiters" class="p-absolute month-dropdown no-close">
-                          <div class="month-column" *ngFor="let item of recruiters" (click)="selectRecruiter(item.userFullName , item.userId)">
-                            {{item.userFullName}}
-                          </div>
+                    <span class="c-pointer input-filter p-relative no-close c-pointer"
+                        (click)="showRecruiters = !showRecruiters">
+                        <div class="input d-flex j-space p-5 p-b-0 no-close">
+                            {{recruiterName}}
+                            <i class="fa fa-chevron-down filter-icon"></i>
+                            <div *ngIf="showRecruiters" class="p-absolute month-dropdown no-close">
+                                <div class="month-column" *ngFor="let item of recruiters"
+                                    (click)="selectRecruiter(item.userFullName , item.userId);showRecruiters = !showRecruiters">
+                                    {{item.userFullName}}
+                                </div>
+                            </div>
                         </div>
-                      </span> 
+                    </span>
                 </div>
             </div>
             <div>
@@ -93,22 +103,21 @@
                         <!-- <div class="loader-parent">
                             <img src="assets/gif/loader.gif">
                         </div> -->
-                        <!-- <ng-container *ngIf="list?.length > 0"> -->
-                        <ng-container *ngFor="let recruiter of userRequirement">
-                            <tr class="c-pointer">
-                                <!-- <td>{{recruiter.name}}</td>
-                                <td>{{recruiter.count}}</td> -->
-                                <!-- <td>{{recruiter.conducted}}</td>
-                                    <td>{{recruiter.update}}</td> -->
-                            </tr>
+                        <ng-container *ngIf="interviewDetails?.length > 0">
+                            <ng-container *ngFor="let item of interviewDetails">
+                                <tr class="c-pointer">
+                                    <td>{{item?.technology}}</td>
+                                    <td>{{item?.interviewStatusCount}}</td>
+                                    <td>{{item?.rescheduleStatusCount}}</td>
+                                </tr>
+                            </ng-container>
                         </ng-container>
-                        <!-- </ng-container> -->
-                        <!-- <div *ngIf="list?.length === 0 && !loader" class="data">
+                        <div *ngIf="interviewDetails?.length === 0 " class="data">
                             No Data Found
-                        </div> -->
+                        </div>
                     </table>
                 </div>
-                <!-- <div class="pagination d-flex j-end p-10 " *ngIf="list?.length > 0">
+                <!-- <div class="pagination d-flex j-end p-10 " *ngIf="interviewDetails?.length > 0">
                     <mat-paginator
                     (page)="handlePageEvent($event)"
                     [length]="length"
@@ -123,6 +132,6 @@
         </div>
     </div>
     <div>
-        <app-daily-report [requitersList] = "recruiters"></app-daily-report>
+        <app-daily-report [requitersList]="recruiters"></app-daily-report>
     </div>
 </div>

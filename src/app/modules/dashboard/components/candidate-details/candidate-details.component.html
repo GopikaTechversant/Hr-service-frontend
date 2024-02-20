@@ -1,79 +1,87 @@
-<img src="assets/images/close-img.jpg" alt="" height="20px" width="20px" class="close-img">
-<div class="main" *ngIf="candidateDetails">
-   
-    <div class="" *ngFor="let detail of candidateDetails">
-        <p class="name m-t-25">{{detail.candidateFirstName}} {{detail.candidateLastName}}</p>
-        <div class="details container ">
-            <div class="d-flex j-space">
-                <!-- <p class="data ">Email : {{detail.candidateEmail}}</p>
-                <p class="data">Mob No : {{detail.candidateMobileNo}}</p> -->
-                <div class="d-flex align-center ">
-                    <p class="label">Email : </p>
-                    <p class="data">{{detail.candidateEmail}}</p>
+<div class="header">
+    <app-header></app-header>
+</div>
+<div class="main d-flex" >
+    <div class="w-20">
+        <app-left-sidebar></app-left-sidebar>
+    </div>
+    <div class="w-80 m-10"> 
+        candidate detail page
+        <div class="" *ngFor="let detail of candidateDetails">
+            <p class="name m-t-25">{{detail.candidateFirstName}} {{detail.candidateLastName}}</p>
+            <div class="details container ">
+                <div class="d-flex j-space">
+                    <!-- <p class="data ">Email : {{detail.candidateEmail}}</p>
+                    <p class="data">Mob No : {{detail.candidateMobileNo}}</p> -->
+                    <div class="d-flex align-center ">
+                        <p class="label">Email : </p>
+                        <p class="data">{{detail.candidateEmail}}</p>
+                    </div>
+                    <div class="d-flex align-center ">
+                        <p class="label">Mob No : </p>
+                        <p class="data">{{detail.candidateMobileNo}}</p>
+                    </div>
                 </div>
-                <div class="d-flex align-center ">
-                    <p class="label">Mob No : </p>
-                    <p class="data">{{detail.candidateMobileNo}}</p>
+                <div class="d-flex j-space">
+                    <div class="d-flex align-center ">
+                        <p class="label">Date Of Birth : </p>
+                        <p class="data">{{detail.candidateDoB | date:'yyyy-MM-dd'}}</p>
+                    </div>
+                    <div class="d-flex align-center ">
+                        <p class="label">Education : </p>
+                        <p class="data">{{detail.candidateEducation}}</p>
+                    </div>
+    
                 </div>
-            </div>
-            <div class="d-flex j-space">
-                <div class="d-flex align-center ">
-                    <p class="label">Date Of Birth : </p>
-                    <p class="data">{{detail.candidateDoB | date:'yyyy-MM-dd'}}</p>
+                <div class="d-flex j-space">
+                    <div class="d-flex align-center ">
+                        <p class="label">Previous Organization : </p>
+                        <p class="data">{{detail.candidatePreviousOrg}}</p>
+                    </div>
+                    <div class="d-flex align-center ">
+                        <p class="label">Previous Designation : </p>
+                        <p class="data">{{detail.candidatePreviousDesignation}}</p>
+                    </div>
+    
                 </div>
-                <div class="d-flex align-center ">
-                    <p class="label">Education : </p>
-                    <p class="data">{{detail.candidateEducation}}</p>
+                <div class="d-flex j-space">
+                    <div class="d-flex align-center ">
+                        <p class="label">Experience : </p>
+                        <p class="data">{{detail.candidateExperience}}</p>
+                    </div>
+                    <div class="d-flex align-center ">
+                        <p class="label">Station : </p>
+                        <p class="data">{{detail.candidateStation}}</p>
+                    </div>
+    
                 </div>
-
-            </div>
-            <div class="d-flex j-space">
-                <div class="d-flex align-center ">
-                    <p class="label">Previous Organization : </p>
-                    <p class="data">{{detail.candidatePreviousOrg}}</p>
+                <div class="d-flex j-space">
+                    <div class="d-flex align-center ">
+                        <p class="label">CurrentSalary : </p>
+                        <p class="data">{{detail.candidateCurrentSalary}}</p>
+                    </div>
+                    <div class="d-flex align-center ">
+                        <p class="label">ExpectedSalary : </p>
+                        <p class="data">{{detail.candidateExpectedSalary}}</p>
+                    </div>
+    
                 </div>
-                <div class="d-flex align-center ">
-                    <p class="label">Previous Designation : </p>
-                    <p class="data">{{detail.candidatePreviousDesignation}}</p>
-                </div>
-
-            </div>
-            <div class="d-flex j-space">
-                <div class="d-flex align-center ">
-                    <p class="label">Experience : </p>
-                    <p class="data">{{detail.candidateExperience}}</p>
-                </div>
-                <div class="d-flex align-center ">
-                    <p class="label">Station : </p>
-                    <p class="data">{{detail.candidateStation}}</p>
-                </div>
-
-            </div>
-            <div class="d-flex j-space">
-                <div class="d-flex align-center ">
-                    <p class="label">CurrentSalary : </p>
-                    <p class="data">{{detail.candidateCurrentSalary}}</p>
-                </div>
-                <div class="d-flex align-center ">
-                    <p class="label">ExpectedSalary : </p>
-                    <p class="data">{{detail.candidateExpectedSalary}}</p>
-                </div>
-
-            </div>
-            <div class="d-flex j-space">
-                <div class="d-flex align-center ">
-                    <p class="label">Address : </p>
-                    <p class="address">{{detail.candidateAddress}}</p>
-                </div>
-                <div class="d-flex align-center ">
-                    <!-- <p class="label">Resume : </p> -->
-                    <button class="resume-btn resume" (click)="viewResume(detail.candidateResume)">
-                        <p>View Resume</p>
-                        <img src="assets/images/view-resume.png" alt="" height="25px" width="25px">
-                    </button>
-                 
+                <div class="d-flex j-space">
+                    <div class="d-flex align-center ">
+                        <p class="label">Address : </p>
+                        <p class="address">{{detail.candidateAddress}}</p>
+                    </div>
+                    <div class="d-flex align-center ">
+                        <!-- <p class="label">Resume : </p> -->
+                        <button class="resume-btn resume" (click)="viewResume(detail.candidateResume)">
+                            <p>View Resume</p>
+                            <img src="assets/images/view-resume.png" alt="" height="25px" width="25px">
+                        </button>
+                     
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+  
 </div>

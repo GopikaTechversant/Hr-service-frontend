@@ -9,7 +9,9 @@ import { environment } from 'src/environments/environments';
   templateUrl: './daily-report.component.html',
   styleUrls: ['./daily-report.component.css'],
   providers: [DatePipe],
-
+  host: {
+    '(document:click)': 'onBodyClick($event)'
+  }
 })
 export class DailyReportComponent implements OnInit {
   @Input() requitersList: any;
@@ -39,16 +41,23 @@ export class DailyReportComponent implements OnInit {
     this.endDate = new Date();
   }
 
+  onBodyClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement; 
+      if (!target.closest('.no-close')) {
+      this.showRecruiters = false;
+    }
+  }
+
   ngOnInit(): void {
     this.reportUserId = localStorage.getItem('userId');
     this.fetchDetails();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['requitersList'] && this.requitersList) {
-      console.log(this.requitersList, "List is now available");
-    }
-  }
+  // ngOnChanges(changes: SimpleChanges): void {
+  //   if (changes['requitersList'] && this.requitersList) {
+  //     console.log(this.requitersList, "List is now available");
+  //   }
+  // }
 
   fetchDetails(): void {
     this.http.get(`${environment.api_url}/report/report-list?reportUserId=${this.reportUserId}&reportFromDate=${this.reportFromDate}&reportToDate=${this.reportToDate}&reportPageNo=${this.reportPageNo}&reportPageLimit=${this.reportPageLimit}`)

@@ -7,7 +7,10 @@ import { environment } from 'src/environments/environments';
 @Component({
   selector: 'app-report-details',
   templateUrl: './report-details.component.html',
-  styleUrls: ['./report-details.component.css']
+  styleUrls: ['./report-details.component.css'],
+  host: {
+    '(document:click)': 'onBodyClick($event)'
+  }
 })
 export class ReportDetailsComponent implements OnInit {
   chart: any;
@@ -38,18 +41,21 @@ export class ReportDetailsComponent implements OnInit {
   showRecruiters: boolean = false;
   recruiterName: string = 'Select Recruiters';
   error: boolean = false;
+  interviewDetails: any;
+  length = 100;
+  pageSize = 10;
+  pageIndex = 0;
+  pageSizeOptions = [5, 10, 25];
+  showFirstLastButtons = true;
 
   constructor(private tostr: ToastrServices, private http: HttpClient, private renderer: Renderer2, private el: ElementRef) { }
-  onBodyClick(event: Event): void {
-    console.log(event);
-      const targetElement = event.target as HTMLElement;
-  
-    if (!targetElement.closest('.no-close')) {
+  onBodyClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.no-close')) {
       this.showRecruiters = false;
       this.showMonth = false;
     }
   }
-  
 
   ngOnInit(): void {
     this.reportUserId = localStorage.getItem('userId');
@@ -57,6 +63,7 @@ export class ReportDetailsComponent implements OnInit {
     this.reportMonth = new Date().getMonth() + 1
     this.fetchDetails();
     this.fetchRecruiters();
+    this.fetchInterviewStatus();
   }
 
   ngAfterViewInit(): void {
@@ -70,6 +77,14 @@ export class ReportDetailsComponent implements OnInit {
       });
   }
 
+  fetchInterviewStatus(): void {
+    this.http.get(`${environment.api_url}/report/over-all-interview-status`).subscribe((res: any) => {
+      if (res?.data) {
+        this.interviewDetails = res?.data;
+      }
+    })
+  }
+
   fetchDetails(): void {
     this.http.get(`${environment.api_url}/report/month-report-data?month=${this.currentYear}-${this.reportMonth}&userId=${this.reportUserId}`)
       .subscribe(
@@ -80,6 +95,7 @@ export class ReportDetailsComponent implements OnInit {
           for (let requirement of this.userRequirement) {
             this.requirementDetail = requirement;
             if (this.userRequirement.length > 0) {
+              this.error = false;
               const requirementDetail = this.userRequirement[this.userRequirement.length - 1];
               this.requirementDetailData = [
                 requirementDetail.sourcedScreened ?? '0',
@@ -88,22 +104,26 @@ export class ReportDetailsComponent implements OnInit {
                 requirementDetail.interviewScheduled ?? '0',
                 requirementDetail.offerReleased ?? '0'
               ];
+              this.createChart();
             } else {
               this.requirementDetailData = ['0', '0', '0', '0', '0'];
             }
           }
-          this.createChart();
+
         },
-        (error) => { 
+        (error) => {
           if (error?.status === 500) this.tostr.error("Internal Server Error");
           else {
             this.tostr.warning(error?.error?.message ? error?.error?.message : "Unable to fetch details");
             this.error = true;
           }
+          if (this.chart) {
+            this.chart.destroy();
+          }
         }
       );
   }
-  
+
 
   selectMonth(monthNumber: string, month: string): void {
     this.reportMonth = monthNumber;
@@ -117,6 +137,13 @@ export class ReportDetailsComponent implements OnInit {
     this.reportUserId = recruiterId;
     this.showRecruiters = false;
     this.fetchDetails();
+  }
+
+  handlePageEvent(event: any) {
+    this.length = event.length;
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.fetchInterviewStatus();
   }
 
   createChart() {

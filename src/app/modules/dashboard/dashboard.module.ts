@@ -10,7 +10,6 @@ import { ErrorStateMatcher ,ShowOnDirtyErrorStateMatcher} from '@angular/materia
 import { TextFieldModule} from '@angular/cdk/text-field';
 import { HttpClientModule } from '@angular/common/http';
 import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
-
 import { CandidatelistComponent } from './components/candidatelist/candidatelist.component';
 import { FormsModule } from '@angular/forms';
 import { CandidateDetailsComponent } from './components/candidate-details/candidate-details.component';
@@ -25,10 +24,10 @@ import { ApplicationListBarComponent } from './components/application-list-bar/a
 import { InterviewCountComponent } from './components/interview-count/interview-count.component';
 import { DetailedRecruitmentComponent } from './components/detailed-recruitment/detailed-recruitment.component';
 import { InterviewDetailsComponent } from './components/interview-details/interview-details.component';
-
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ReportDetailsComponent } from './components/report-details/report-details.component';
 import { DailyReportComponent } from './components/daily-report/daily-report.component';
+
 const routes: Routes = [
   { path: '', component: LandingComponent,
   children: [
@@ -40,11 +39,10 @@ const routes: Routes = [
     {path: 'add-candidate', component: AddCandidateModalComponent},
     {path: 'interview-details', component: InterviewDetailsComponent},
     {path: 'requirement-candidate-list', component: RequirementCandidateListComponent},
-    {path: 'report-details', component: ReportDetailsComponent}
-   
+    {path: 'report-details', component: ReportDetailsComponent},
   ]},
-  {path: 'series', component: SeriesComponent}
-  
+  {path: 'series', component: SeriesComponent},  
+  {path: 'candidate-details', component: CandidateDetailsComponent},  
 ]
 
 @NgModule({
@@ -80,6 +78,8 @@ const routes: Routes = [
     FormsModule,
     NgxPaginationModule
   ],
+  exports: [RouterModule],
+
   providers: [
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
   ],

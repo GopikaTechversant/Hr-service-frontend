@@ -6,7 +6,7 @@
         <div class="d-flex">
             <span class="filter p-r-10 p-t-10">Datewise</span>
             <div class="p-relative ">
-                <input class="p-l-5  input" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate"
+                <input class="p-l-5  input c-pointer" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate"
                     (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate"
                    >
                 <span> <mat-datepicker #pickerdate class=""></mat-datepicker>

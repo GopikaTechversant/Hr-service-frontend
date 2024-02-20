@@ -4,20 +4,23 @@
         </div>
         <div class="d-flex c-pointer">
             <span class="filter-head">Filter Recruiter</span>
-            <span class="c-pointer input-filter p-relative" (click)="showRecruiters = !showRecruiters">
-                <input type="text" class="input" [value]="recruiterName">
-                <i class="fa fa-chevron-down filter-icon"></i>
-                <div *ngIf="showRecruiters" class="p-absolute month-dropdown">
-                  <div class="month-column" *ngFor="let item of requitersList" (click)="selectRecruiter(item.userFullName , item.userId)">
-                    {{item.userFullName}}
-                  </div>
+            <span class="c-pointer input-filter p-relative no-close" (click)="showRecruiters = !showRecruiters">
+                <div class="input d-flex j-space p-5 p-b-0">
+                    {{recruiterName}}
+                    <i class="fa fa-chevron-down filter-icon no-close"></i>
+                    <div *ngIf="showRecruiters" class="p-absolute month-dropdown no-close">
+                        <div class="month-column" *ngFor="let item of requitersList"
+                            (click)="selectRecruiter(item.userFullName , item.userId) ; showRecruiters = !showRecruiters">
+                            {{item.userFullName}}
+                        </div>
+                    </div>
                 </div>
-              </span> 
+            </span>
         </div>
         <div class="d-flex c-pointer">
             <span class="filter-head">From Date</span>
             <div class="p-relative">
-                <input class="p-l-5 input" placeholder="29/02/11" matInput [matDatepicker]="pickerFromDate"
+                <input class="p-l-5 input c-pointer" placeholder="29/02/11" matInput [matDatepicker]="pickerFromDate"
                         [value]="startDate | date:'yyyy-MM-dd'" id="startDate" (dateChange)="dateChange($event, 'startDate')"
                         [ngModel]="startDate" (click)="pickerFromDate.open()">
                 <span>
@@ -29,7 +32,7 @@
         <div class="d-flex c-pointer">
             <span class="filter-head">To Date</span>
             <div class="p-relative">
-                <input class="p-l-5 input" placeholder="29/02/11" matInput [matDatepicker]="pickerToDate"
+                <input class="p-l-5 input c-pointer" placeholder="29/02/11" matInput [matDatepicker]="pickerToDate"
                         (dateChange)="dateChange($event, 'endDate')" [ngModel]="endDate" (click)="pickerToDate.open()"
                         [value]="endDate | date:'yyyy-MM-dd'" id="endDate">
                 <span>
@@ -62,7 +65,7 @@
                 <tr class="c-pointer details" *ngFor="let item of userRequirement">
                     <td>{{item?.date | date:'dd/MM/yyyy'}}</td>
                     <td>{{item?.recruiterName?.userfirstName}} {{item?.recruiterName?.userlastName}}</td>
-                    <td>{{item?.positionName}}</td>
+                    <td>{{item?.positionName?.requestName}}</td>
                     <td>{{item?.positionHc}}</td>
                     <td>{{item?.naukriResume}}</td>
                     <td>{{item?.linkedinResume}}</td>
