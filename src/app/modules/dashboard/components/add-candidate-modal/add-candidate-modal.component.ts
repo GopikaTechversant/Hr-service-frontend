@@ -132,7 +132,7 @@ export class AddCandidateModalComponent implements OnInit {
         (error) => {
           if (error?.status === 500) this.tostr.error("Internal Server Error")
           else {
-            this.tostr.error(error?.error?.error_message ? error?.error?.error_message : "Unable to create candidate");
+            this.tostr.warning(error?.error?.error_message ? error?.error?.error_message : "Unable to create candidate");
           }
         }
       );

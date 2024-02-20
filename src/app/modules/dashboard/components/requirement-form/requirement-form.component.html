@@ -51,17 +51,9 @@
                         {{name.requestName}}
                     </div>
                 </div>
-            </div>
-           
-            <div class="d-flex p-10 ">
-                <div class="mat-ripple button c-pointer m-10 " (click)="sumitClick()">
-                    <button class="btn-submit">Submit</button>
-                </div>
-                <div class=" mat-ripple button c-pointer m-10">
-                    <button class="btn-cancel">Cancel</button>
-                </div>
-            </div>
+            </div>   
         </div>
+        
         <div class="candidate-list">
             <div class="d-flex head">
                 <span class="heading">Candidate Lists</span>
@@ -75,9 +67,8 @@
             </div>
             <div class="candidate w-100 d-flex">
                 <div *ngFor="let candidate of candidatesList" class="candidate-card">
-                    <div class="count c-pointer">
-                        <i class="fa fa-check" aria-hidden="true" [class.active]="candidate?.checked"
-                            (click)="candidateSelectChange($event, candidate);"></i>
+                    <div class="count c-pointer" (click)="candidateSelectChange($event, candidate);">
+                        <span *ngIf="candidateSelect"> <i class="fa fa-check" aria-hidden="true"></i></span>            
                     </div>
                     <div class="info-container">
                         <div class="info-pair">
@@ -95,5 +86,13 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="d-flex p-10">
+        <div class="mat-ripple button c-pointer m-10 " (click)="sumitClick()">
+            <button class="btn-submit">Submit</button>
+        </div>
+        <div class=" mat-ripple button c-pointer m-10">
+            <button class="btn-cancel">Cancel</button>
         </div>
     </div>

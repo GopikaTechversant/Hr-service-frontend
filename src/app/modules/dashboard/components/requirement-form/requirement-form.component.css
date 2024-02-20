@@ -10,7 +10,7 @@
 
 .scroller-box {
     padding-bottom: 20px;
-    height: calc(100vh - 180px);
+    height: calc(100vh - 300px);
     overflow-y: scroll;
     overflow-x: hidden;
     width: 100%;
@@ -36,10 +36,6 @@
     text-align: left;
     padding-top: 10px;
 }
-
-
-
-
 
 .assignee {
     margin-left: 53px;
@@ -269,12 +265,15 @@
 
 .fa-check {
     color: #FFFFFF;
-}
-
-.count :hover {
+    background-color: #005EC9;
     border: 1px solid #005EC9;
     border-radius: 50%;
 }
+
+/* .count :hover {
+    border: 1px solid #005EC9;
+    border-radius: 50%;
+} */
 
 
 .scrollable::-webkit-scrollbar,
@@ -293,7 +292,7 @@
 }
 
 .active{
-    background-color: skyblue;
+    background-color: rgb(2, 20, 54);
 }
 
 .requirement-dropdown-list {
@@ -305,6 +304,10 @@
     margin-left: 3px;
     width: 423px;
     padding-left: 10px;
-    padding-top: 7px;
+    padding-top: 10px;
     position: absolute;
+}
+
+.requirement-dropdown-list :hover{
+    background-color: rgb(240, 235, 235);
 }

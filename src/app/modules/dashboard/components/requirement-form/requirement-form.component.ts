@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ViewChild, ElementRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { environment } from 'src/environments/environments';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-requirement-form',
@@ -35,28 +36,37 @@ export class RequirementFormComponent implements OnInit {
   isChecked: boolean = false;
   searchQuery: string = '';
   candidatesList: any[] = [];
-  constructor(private http: HttpClient, private datePipe: DatePipe) { }
+  candidateSelect: boolean =false;
+
+  constructor(private http: HttpClient, private datePipe: DatePipe ,private tostr: ToastrService) { }
   ngOnInit(): void {
 
   }
+
   fetchRequirements(): void {
     this.http.get(`${environment.api_url}/service-request/list`).subscribe((res: any) => {
-      this.list_requests = res.data;
-      console.log(" this.list_requests", this.list_requests);
+      if(res?.data){
+        this.list_requests = res?.data;
+      }
     })
   }
+
   fetchCandidates(): void {
     this.http.get(`${environment.api_url}/service-request/candidates/list?serviceRequestId=${this.selectedId}`).subscribe((candidate: any) => {
-      console.log("candidate", candidate);
-      this.candidatesList = candidate.candidates;
+      if(candidate?.candidates){
+        this.candidatesList = candidate?.candidates;
+      }
     })
   }
+
   fetchcandidatesWithExperience(searchQuery: string): void {
     this.http.get(`${environment.api_url}/service-request/candidates/list?exprience=${this.searchQuery}`).subscribe((res: any) => {
-      this.candidatesList = res.candidates;
-      console.log("this.candidatesList", this.candidatesList );
+      if(res?.candidates){
+        this.candidatesList = res?.candidates;
+      }
     })
   }
+
   selectRequestId(name: any, id: any): void {
     this.requestList_open = false;
     if (this.selectedId !== id) {
@@ -65,27 +75,41 @@ export class RequirementFormComponent implements OnInit {
       this.fetchCandidates();
     }
   }
+
   selectAllChange(event: any): void {
     this.selectedCandidateId = [];
     this.candidates.forEach((element: any) => {
       if (event?.target?.checked) {
         element.checked = true;
-        this.selectedCandidateId.push(element.candidateId);
+        this.selectedCandidateId.push(element?.candidateId);
       } else {
         element.checked = false;
       }
     });
   }
+
   candidateSelectChange(event: any, item: any): void {
-    console.log("select ", item);
-    this.selectedCandidateId.push(item.candidateId)
+    this.candidateSelect = !this.candidateSelect;
+    if (this.candidateSelect) {
+      if (this.selectedCandidateId.indexOf(item?.candidateId) === -1) {
+        this.selectedCandidateId.push(item?.candidateId);
+      }
+    } else {
+      const index = this.selectedCandidateId.indexOf(item?.candidateId);
+      if (index > -1) {
+        this.selectedCandidateId.splice(index, 1);
+      }
+    }
   }
+
   searchExperience(): void {
     this.fetchcandidatesWithExperience(this.searchQuery);
   }
+
   onClick(): void {
     this.isChecked = !this.isChecked;
   }
+
   sumitClick() {
     const requestData = {
       serviceServiceRequst: this.selectedId,
@@ -93,13 +117,21 @@ export class RequirementFormComponent implements OnInit {
       serviceAssignee: null,
       serviceDate: this.displayDate
     };
-    console.log("requestData", requestData);
+
     this.http.post(`${environment.api_url}/screening-station/create`, requestData).subscribe((res: any) => {
-      alert("Submitted Successfully");
-    })
+        this.tostr.success('Requirement Created Successfully')
+      },
+      (error) => {
+        if (error?.status === 500) this.tostr.error("Internal Server Error")
+        else {
+          this.tostr.warning("Unable to update");
+        }
+      })
   }
+
   dateChange(event: any): void {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
   }
+
 }
