@@ -40,9 +40,10 @@ const routes: Routes = [
     {path: 'interview-details', component: InterviewDetailsComponent},
     {path: 'requirement-candidate-list', component: RequirementCandidateListComponent},
     {path: 'report-details', component: ReportDetailsComponent},
+    {path: 'candidate-details', component: CandidateDetailsComponent}
   ]},
   {path: 'series', component: SeriesComponent},  
-  {path: 'candidate-details', component: CandidateDetailsComponent},  
+  
 ]
 
 @NgModule({
