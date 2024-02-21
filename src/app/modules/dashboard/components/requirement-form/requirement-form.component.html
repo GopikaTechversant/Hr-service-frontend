@@ -42,7 +42,7 @@
                 <div class="input p-t-10 p-l-6 c-pointer"
                     (click)="requestList_open = !requestList_open;fetchRequirements();">
                     <span *ngIf="!selectedId">Select Request Name</span>
-                    <span *ngIf="selectedId">{{selectedName}}</span>
+                    <span *ngIf="selectedName">{{selectedName}}</span>
 
                     <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
                 </div>
@@ -93,6 +93,6 @@
             <button class="btn-submit">Submit</button>
         </div>
         <div class=" mat-ripple button c-pointer m-10">
-            <button class="btn-cancel">Cancel</button>
+            <button class="btn-cancel" (click)="cancel()">Cancel</button>
         </div>
     </div>

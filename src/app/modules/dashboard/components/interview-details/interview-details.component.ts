@@ -42,13 +42,13 @@ export class InterviewDetailsComponent implements OnInit {
   rescheduledStatusValue: any;
   commentValue: any;
   selectedCandidate: any[] = [];
-
+  location: any;
   constructor(private datePipe: DatePipe, private cdr: ChangeDetectorRef, private http: HttpClient, private el: ElementRef) {
 
   }
   ngOnInit(): void {
-    
-}
+
+  }
 
   @HostListener('document:click', ['$event'])
   onBodyClick(event: Event): void {
@@ -146,7 +146,7 @@ export class InterviewDetailsComponent implements OnInit {
       recruiterId: this.recruiterId,
       candidateId: this.candidateId,
       noticePeriod: this.noticePeriod,
-      currentCompany: this.currentCompany,
+      position: this.positionId,
       location: this.locationValue,
       interviewTime: this.displaydateTime,
       interViewPanel: this.panelId,
@@ -156,14 +156,46 @@ export class InterviewDetailsComponent implements OnInit {
       rescheduleStatus: this.rescheduledStatusValue,
       comments: this.commentValue
     }
+    
     console.log("payload", payload);
     this.http.post(`${environment.api_url}/screening-station/interview-details`, payload).subscribe({
       next: (res: any) => {
         alert('Interview Details Submitted');
+        this.resetFormAndState();
       },
       error: (error) => {
         console.error('Error adding details', error);
       }
     })
+  }
+  clearInputvalue(id: string) {
+    const inputElement = document.getElementById(id) as HTMLInputElement;
+    if (inputElement) {
+      inputElement.value = '';
+    }
+  }
+  resetFormAndState(): void {
+    this.panelName = null;
+    this.recruiterName = null;
+    this.positionName = null;
+    this.displayDate = null;
+    this.panelName = null;
+    this.candidateExperience = null;
+    this.noticePeriod = null;
+    this.currentCompany = null;
+    this.showRecruiters = false;
+    this.showDropdown = false;
+    this.showPanel = false;
+    this.candidateName = null;
+    this.clearInputvalue('location');
+    this.clearInputvalue('mode');
+    this.clearInputvalue('interviewStatus');
+    this.clearInputvalue('candidateStatus');
+    this.clearInputvalue('rescheduledStatus');
+    this.clearInputvalue('comments');
+    this.candidate_list = [];
+  }
+  cancel(): void {
+    this.resetFormAndState();
   }
 }

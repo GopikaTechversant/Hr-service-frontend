@@ -36,16 +36,16 @@ export class RequirementFormComponent implements OnInit {
   isChecked: boolean = false;
   searchQuery: string = '';
   candidatesList: any[] = [];
-  candidateSelect: boolean =false;
+  candidateSelect: boolean = false;
 
-  constructor(private http: HttpClient, private datePipe: DatePipe ,private tostr: ToastrService) { }
+  constructor(private http: HttpClient, private datePipe: DatePipe, private tostr: ToastrService) { }
   ngOnInit(): void {
 
   }
 
   fetchRequirements(): void {
     this.http.get(`${environment.api_url}/service-request/list`).subscribe((res: any) => {
-      if(res?.data){
+      if (res?.data) {
         this.list_requests = res?.data;
       }
     })
@@ -53,7 +53,7 @@ export class RequirementFormComponent implements OnInit {
 
   fetchCandidates(): void {
     this.http.get(`${environment.api_url}/service-request/candidates/list?serviceRequestId=${this.selectedId}`).subscribe((candidate: any) => {
-      if(candidate?.candidates){
+      if (candidate?.candidates) {
         this.candidatesList = candidate?.candidates;
       }
     })
@@ -61,7 +61,7 @@ export class RequirementFormComponent implements OnInit {
 
   fetchcandidatesWithExperience(searchQuery: string): void {
     this.http.get(`${environment.api_url}/service-request/candidates/list?exprience=${this.searchQuery}`).subscribe((res: any) => {
-      if(res?.candidates){
+      if (res?.candidates) {
         this.candidatesList = res?.candidates;
       }
     })
@@ -119,8 +119,8 @@ export class RequirementFormComponent implements OnInit {
     };
 
     this.http.post(`${environment.api_url}/screening-station/create`, requestData).subscribe((res: any) => {
-        this.tostr.success('Requirement Created Successfully')
-      },
+      this.tostr.success('Requirement Created Successfully')
+    },
       (error) => {
         if (error?.status === 500) this.tostr.error("Internal Server Error")
         else {
@@ -133,5 +133,12 @@ export class RequirementFormComponent implements OnInit {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
   }
-
+  resetFormAndState(): void {
+    this.displayDate = null;
+  }
+  cancel(): void {
+    this.resetFormAndState();
+    this.selectedName = null;
+    this.candidatesList = [];
+  }
 }
