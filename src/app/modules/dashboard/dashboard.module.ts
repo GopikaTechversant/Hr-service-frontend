@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MaterialModule } from '../material/material.module';
 import { AddCandidateModalComponent } from './components/add-candidate-modal/add-candidate-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ErrorStateMatcher ,ShowOnDirtyErrorStateMatcher} from '@angular/material/core';
-import { TextFieldModule} from '@angular/cdk/text-field';
+import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
+import { TextFieldModule } from '@angular/cdk/text-field';
 import { HttpClientModule } from '@angular/common/http';
 import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
 import { CandidatelistComponent } from './components/candidatelist/candidatelist.component';
@@ -29,29 +29,30 @@ import { ReportDetailsComponent } from './components/report-details/report-detai
 import { DailyReportComponent } from './components/daily-report/daily-report.component';
 
 const routes: Routes = [
-  { path: '', component: LandingComponent,
-  children: [
-    // {path: '', component: LeftSidebarComponent},
-    {path: '', component: DashboardComponent},
-    {path: 'requirement', component: RequirementFormComponent},
-    {path: 'service-requirement', component: ServiceRequestComponent},
-    {path: 'candidate-list', component: RequirementCandidateListComponent},
-    {path: 'add-candidate', component: AddCandidateModalComponent},
-    {path: 'interview-details', component: InterviewDetailsComponent},
-    {path: 'requirement-candidate-list', component: RequirementCandidateListComponent},
-    {path: 'report-details', component: ReportDetailsComponent},
-    {path: 'candidate-details', component: CandidateDetailsComponent}
-  ]},
-  {path: 'series', component: SeriesComponent},  
-  
+  {
+    path: '', component: LandingComponent,
+    children: [
+      // {path: '', component: LeftSidebarComponent},
+      { path: '', component: DashboardComponent },
+      { path: 'requirement', component: RequirementFormComponent },
+      { path: 'service-requirement', component: ServiceRequestComponent },
+      { path: 'candidate-list', component: RequirementCandidateListComponent },
+      { path: 'add-candidate', component: AddCandidateModalComponent },
+      { path: 'interview-details', component: InterviewDetailsComponent },
+      { path: 'requirement-candidate-list', component: RequirementCandidateListComponent },
+      { path: 'report-details', component: ReportDetailsComponent },
+      { path: 'candidate-details', component: CandidateDetailsComponent }
+    ]
+  },
+  { path: 'series', component: SeriesComponent },
+
 ]
 
 @NgModule({
-
   declarations: [
     DashboardComponent,
     AddCandidateModalComponent,
-    LeftSidebarComponent,  
+    LeftSidebarComponent,
     CandidatelistComponent,
     CandidateDetailsComponent,
     RequirementFormComponent,
@@ -70,19 +71,20 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
+    SharedModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
-    SharedModule,
     MaterialModule,
     TextFieldModule,
     HttpClientModule,
     FormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
   ],
   exports: [RouterModule],
-
   providers: [
+    DatePipe,
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
   ],
 })
+
 export class DashboardModule { }
