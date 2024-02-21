@@ -95,11 +95,31 @@ export class ServiceRequestComponent implements OnInit {
     };
     this.http.post(`${environment.api_url}/service-request/create`, requestData).subscribe((res) => {
       this.toastr.success("Requirement created Successfully");
+      this.resetFormAndState();
     }, (err) => {
       if (err?.status === 500) this.toastr.error("Internal Server Error")
       else {
         this.toastr.warning(err?.message ? err?.message : "Unable to create requirement");
       }
     })
+  }
+  clearInputvalue(inputElement: ElementRef<HTMLInputElement>) {
+    inputElement.nativeElement.value = '';
+  }
+  resetFormAndState(): void {
+    this.stationsList = [];
+    this.stationName = null;
+    this.selectedTeam = null;
+    this.clearInputvalue(this.experienceInput);
+    this.clearInputvalue(this.serviceInput);
+    this.clearInputvalue(this.baseSalaryInput);
+    this.clearInputvalue(this.maxSalaryInput);
+    this.clearInputvalue(this.skills);
+    this.clearInputvalue(this.vacancy);
+    this.idListOpen = false;
+    this.teamListOpen = false;
+  }
+  cancel(): void {
+    this.resetFormAndState();
   }
 }
