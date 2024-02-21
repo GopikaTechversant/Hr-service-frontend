@@ -19,7 +19,7 @@
     outline: none;
     background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
         linear-gradient(0deg, #FAFAFA, #FAFAFA);
-        padding-left: 5px;
+    padding-left: 5px;
 }
 
 
@@ -36,8 +36,8 @@
 }
 
 .text-area {
-    width: 685px;
-    height: 34px;
+    width: 327px;
+    height: 80px;
     border: 1px solid #E9E9E9;
     border-radius: 5px;
     outline: none;
@@ -46,7 +46,7 @@
 }
 
 .upload-resume-btn {
-    width: 91px;
+    width: 65px;
     height: 38px;
     top: 648px;
     left: 1340px;
@@ -64,13 +64,10 @@
 }
 
 .skills {
-    height: 154px;
     border-radius: 3px;
     border: 1px;
     padding: 5px;
-    margin-left: 27px;
 }
-
 
 .text {
     font-size: 18px;
@@ -99,8 +96,8 @@
 
 .add-btn {
     margin-left: 10px;
-    width: 91px;
-    height: 38px;
+    width: 50px;
+    height: 39px;
     border-radius: 3px;
     border: 1px;
     background: linear-gradient(0deg, #005EC9, #005EC9),
@@ -120,7 +117,7 @@
 }
 
 .cancel-btn {
-    width: 171px;
+    width: 150px;
     height: 40px;
     border-radius: 3px;
     font-size: 18px;
@@ -135,7 +132,7 @@
 }
 
 .add-candidate {
-    width: 171px;
+    width: 150px;
     height: 40px;
     border-radius: 3px;
     font-size: 18px;
@@ -166,7 +163,7 @@
     background: white;
     box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
     max-height: 120px;
-    overflow-y: scroll;    
+    overflow-y: scroll;
     font-size: 14px;
     font-weight: 400;
     margin-top: 15px;
@@ -178,7 +175,7 @@
     position: absolute;
 }
 
-.dropdown-list :hover{
+.dropdown-list :hover {
     color: blue;
 }
 
@@ -199,9 +196,10 @@
     z-index: 1;
 }
 
-.dropdown-application :hover{
+.dropdown-application :hover {
     color: blue;
 }
+
 .gender {
     font-size: 16px;
     font-weight: 400;
@@ -227,6 +225,13 @@
     color: red;
 }
 
-.parent-last{
-    height: 100px;
+.upload-success-message{
+    color: green;
+}
+
+.remove{
+    color: blue;
+    padding: 5px;
+    border: 1px solid #005EC9;
+    border-radius: 5px;
 }

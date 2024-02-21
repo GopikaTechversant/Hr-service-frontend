@@ -50,36 +50,12 @@
                 </div>
             </div>
             <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Experience</span>
-                <input type="text" class="input-box" formControlName="candidateExperience">
-            </div>
-            <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Previous Organization</span>
-                <input type="text" class="input-box" formControlName="candidatePreviousOrg">
-            </div>
-        </div>
-        <div class="d-flex j-space parent">
-            <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Created By</span>
-                <input type="text" class="input-box" formControlName="candidateCreatedby">
-            </div>
-            <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Previous Designation</span>
-                <input type="text" class="input-box" formControlName="candidatePreviousDesignation">
-            </div>
-            <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Education</span>
-                <input type="text" class="input-box" formControlName="candidateEducation">
-            </div>
-        </div>
-        <div class="d-flex j-space parent-address">
-            <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Current Salary</span>
-                <input type="text" class="input-box" formControlName="candidateCurrentSalary">
-            </div>
-            <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Expected Salary</span>
-                <input type="text" class="input-box" formControlName="candidateExpectedSalary">
+                <span class="label m-b-4">Mobile<span class="required">*</span></span>
+                <input type="text" class="input-box" formControlName="candidateMobileNo">
+                <div
+                    *ngIf="candidateForm.get('candidateMobileNo')?.hasError('required') && candidateForm.get('candidateMobileNo')?.touched">
+                    <mat-error>Mobile No Required</mat-error>
+                </div>
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Email<span class="required">*</span></span>
@@ -92,19 +68,38 @@
         </div>
         <div class="d-flex j-space parent">
             <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Mobile<span class="required">*</span></span>
-                <input type="text" class="input-box" formControlName="candidateMobileNo">
-                <div
-                    *ngIf="candidateForm.get('candidateMobileNo')?.hasError('required') && candidateForm.get('candidateMobileNo')?.touched">
-                    <mat-error>Mobile No Required</mat-error>
-                </div>
+                <span class="label m-b-4">Experience</span>
+                <input type="text" class="input-box" formControlName="candidateExperience">
             </div>
-            <div class="child d-flex m-b-10 m-l-10">
-                <span class="label m-b-4">Address</span>
-                <input type="text" class="text-area" formControlName="candidateAddress">
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">Previous Organization</span>
+                <input type="text" class="input-box" formControlName="candidatePreviousOrg">
+            </div>
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">Previous Designation</span>
+                <input type="text" class="input-box" formControlName="candidatePreviousDesignation">
             </div>
         </div>
-        <div class="d-flex j-space parent-last">
+        <div class="d-flex j-space parent">
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">Education</span>
+                <input type="text" class="input-box" formControlName="candidateEducation">
+            </div>
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">Current Salary</span>
+                <input type="text" class="input-box" formControlName="candidateCurrentSalary">
+            </div>
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">Expected Salary</span>
+                <input type="text" class="input-box" formControlName="candidateExpectedSalary">
+            </div>
+
+        </div>
+        <div class="d-flex j-space parent">
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">Address</span>
+                <textarea type="text" class="text-area" formControlName="candidateAddress"></textarea>
+            </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Application Source</span>
                 <div class="input-box c-pointer p-relative p-t-10 p-l-6"
@@ -118,6 +113,22 @@
                         {{source.sourceName}}</p>
                 </div>
             </div>
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">Requirement</span>
+                <div class="input-box c-pointer p-relative p-t-10 p-l-6"
+                    (click)="requirementListOpen = !requirementListOpen;fetchRequerements()">
+                    <span *ngIf="!selectedRequirementName">Select Requirement</span>
+                    <span *ngIf="selectedRequirementName">{{selectedRequirementName}}</span>
+                    <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
+                </div>
+                <div class="no-close dropdown-application c-pointer" *ngIf="requirementListOpen">
+                    <p *ngFor="let requirement of requirementList"
+                        (click)="selectRequirement(requirement.requestId,requirement.requestName)">
+                        {{requirement.requestName}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex  parent">
             <div class="skills p-t-13">
                 <span class="text m-b-4">Skill Sets</span>
                 <div class="d-flex skill-drop-down m-t-5">
@@ -138,40 +149,43 @@
                     <div *ngFor="let suggestion of skillSuggestions" (click)="selectSkill(suggestion)">
                         <span class="p-t-7"><img src="assets/images/akar-icons_check.png" alt="" class="m-t-0 p-r-4"
                                 width="13px" height="10px"></span>
-                        <span class="c-pointer">{{suggestion.skillName}}</span>
+                        <span class="c-pointer">{{suggestion?.skillName}}</span>
                     </div>
                 </div>
-            </div>
-            <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Requirement</span>
-                <div class="input-box c-pointer p-relative p-t-10 p-l-6"
-                    (click)="requirementListOpen = !requirementListOpen;fetchRequerements()">
-                    <span *ngIf="!selectedRequirementName">Select Requirement</span>
-                    <span *ngIf="selectedRequirementName">{{selectedRequirementName}}</span>
-                    <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
+                <div *ngIf="selectedPrimarySkills.length > 0">
+                    <span>Selected Primary Skills</span>
+                    <ul>
+                        <li *ngFor="let skill of selectedPrimarySkills" class="p-6">
+                            {{ skill.name }}
+                            <span (click)="removeSkill(skill, 'primary')" class="remove">Remove</span>
+                        </li>
+                    </ul>
                 </div>
-                <div class="no-close dropdown-application c-pointer" *ngIf="requirementListOpen">
-                    <p *ngFor="let requirement of requirementList"
-                        (click)="selectRequirement(requirement.requestId,requirement.requestName)">
-                        {{requirement.requestName}}</p>
+                <div *ngIf="selectedSecondarySkills.length > 0">
+                    <span>Selected Secondary Skills</span>
+                    <ul>
+                        <li *ngFor="let skill of selectedSecondarySkills" class="p-6">
+                            {{ skill.name }}
+                            <span (click)="removeSkill(skill, 'secondary')" class="remove">Remove</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="child d-flex m-b-10 p-relative p-l-20">
+                <span class="label m-b-4">Upload Resume <span class="required">*</span></span>
+                <button class="upload-resume-btn" (click)="triggerFileInput();$event.preventDefault()">
+                    Upload
+                </button>
+                <input type="file" style="visibility: hidden" (change)="onFileSelected($event)">
+                <div *ngIf="resumeUploadSuccess" class="upload-success-message">
+                    Resume uploaded successfully!
                 </div>
             </div>
 
         </div>
-        <div class="d-flex j-space parent">
-            <div class="child d-flex m-b-10 p-relative">
-                <span class="label m-b-4">Upload Resume <span class="required">*</span></span>
-                <button class="upload-resume-btn" (click)="triggerFileInput();$event.preventDefault()">
-                    <div class="d-flex j-center">
-                        <span class="p-t-4 p-l-4">Upload</span>
-                    </div>
-                </button>
-                <input type="file" style="visibility: hidden" (change)="onFileSelected($event)">
-            </div>
-        </div>
         <div class="d-flex f-right j-space submit-btn">
-            <button class="cancel-btn">Cancel</button>
-            <button class="add-candidate" (click)="cancel()">Add Candidate</button>
+            <button class="cancel-btn" (click)="cancel()">Cancel</button>
+            <button class="add-candidate">Add Candidate</button>
         </div>
     </form>
 </div>

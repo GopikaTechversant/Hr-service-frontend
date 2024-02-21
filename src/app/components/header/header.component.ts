@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   currentUser: any;
   dropDown: boolean = false;
   showDropDown: boolean = false;
+  searchKey: string = 'search';
   constructor(private http: HttpClient,private apiService: ApiService, private auth: AuthService, private dialog: MatDialog, private router: Router, private renderer: Renderer2, private el: ElementRef) { }
 
   @HostListener('document:click', ['$event'])
@@ -28,10 +29,8 @@ export class HeaderComponent implements OnInit {
     this.currentUser = localStorage.getItem('userRole');
   }
 
-  searchCandidate():void {
-    console.log('>>>>>>>>');
-    
-    this.http.get(`${environment.api_url}/candidate/list/jerom3@gmail.com`).subscribe((res: any) => {
+  searchCandidate():void {    
+    this.http.get(`${environment.api_url}/candidate/search/list?search=`).subscribe((res: any) => {
       this.router.navigateByUrl('/dashboard/candidate-details');
     })
   }

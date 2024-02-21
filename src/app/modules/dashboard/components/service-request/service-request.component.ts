@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr';
 import { ViewChild, ElementRef } from '@angular/core';
 import { environment } from 'src/environments/environments';
+import { ToastrServices } from 'src/app/services/toastr.service';
 
 @Component({
   selector: 'app-service-request',
@@ -31,11 +31,11 @@ export class ServiceRequestComponent implements OnInit {
   stationName: any;
   selectedstations: any[] = [];
   selectedStationsId: any[] = [];
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private toastr: ToastrServices) {
 
   }
   ngOnInit(): void {
-    
+
   }
   fetchServiceId(): void {
     this.http.get(`${environment.api_url}/service-request/services`).subscribe(((res: any) => {
@@ -94,7 +94,12 @@ export class ServiceRequestComponent implements OnInit {
       requestFlowStations: this.selectedStationsId
     };
     this.http.post(`${environment.api_url}/service-request/create`, requestData).subscribe((res) => {
-      alert("Submitted Successfully")
+      this.toastr.success("Requirement created Successfully");
+    }, (err) => {
+      if (err?.status === 500) this.toastr.error("Internal Server Error")
+      else {
+        this.toastr.warning(err?.message ? err?.message : "Unable to create requirement");
+      }
     })
   }
 }
