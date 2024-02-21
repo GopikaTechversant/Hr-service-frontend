@@ -21,11 +21,13 @@
             <span class="filter-head">From Date</span>
             <div class="p-relative">
                 <input class="p-l-5 input c-pointer" placeholder="29/02/11" matInput [matDatepicker]="pickerFromDate"
-                        [value]="startDate | date:'yyyy-MM-dd'" id="startDate" (dateChange)="dateChange($event, 'startDate')"
-                        [ngModel]="startDate" (click)="pickerFromDate.open()">
+                    [value]="startDate | date:'yyyy-MM-dd'" id="startDate"
+                    (dateChange)="dateChange($event, 'startDate')" [ngModel]="startDate"
+                    (click)="pickerFromDate.open()">
                 <span>
                     <mat-datepicker #pickerFromDate></mat-datepicker>
-                    <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true" (click)="pickerFromDate.open()"></i>
+                    <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"
+                        (click)="pickerFromDate.open()"></i>
                 </span>
             </div>
         </div>
@@ -33,48 +35,32 @@
             <span class="filter-head">To Date</span>
             <div class="p-relative">
                 <input class="p-l-5 input c-pointer" placeholder="29/02/11" matInput [matDatepicker]="pickerToDate"
-                        (dateChange)="dateChange($event, 'endDate')" [ngModel]="endDate" (click)="pickerToDate.open()"
-                        [value]="endDate | date:'yyyy-MM-dd'" id="endDate">
+                    (dateChange)="dateChange($event, 'endDate')" [ngModel]="endDate" (click)="pickerToDate.open()"
+                    [value]="endDate | date:'yyyy-MM-dd'" id="endDate">
                 <span>
                     <mat-datepicker #pickerToDate></mat-datepicker>
-                    <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true" (click)="pickerToDate.open()"></i>
+                    <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"
+                        (click)="pickerToDate.open()"></i>
                 </span>
             </div>
-        </div>        
-        <div class="search c-pointer">
+        </div>
+        <div class="search c-pointer" (click)="dateSearch()" (keydown.enter)="dateSearch()" autocomplete="off">
             <span class="">Search</span>
         </div>
     </div>
     <div class="table-container m-b-0">
         <table class="table">
             <tr class="table-header p-b-10">
-                <td>Date</td>
-                <td>Recruiter</td>
-                <td>Position</td>
-                <td>Position HC</td>
-                <td>Naukri</td>
-                <td>LinkedIn</td>
-                <!-- <td>Referral Resumes</td> -->
-                <td>Sourced & Screened</td>
-                <td>Contacted by Recruiter</td>
-                <td>Interested candidates</td>
-                <td>Interviews scheduled</td>
-                <td>Offers Released</td>
+                <ng-container *ngFor="let key of  recruiterKeys">
+                    <td>{{key}}</td>
+                </ng-container>
             </tr>
             <ng-container *ngIf="userRequirement?.length > 0 ">
                 <tr class="c-pointer details" *ngFor="let item of userRequirement">
-                    <td>{{item?.date | date:'dd/MM/yyyy'}}</td>
-                    <td>{{item?.recruiterName?.userfirstName}} {{item?.recruiterName?.userlastName}}</td>
-                    <td>{{item?.positionName?.requestName}}</td>
-                    <td>{{item?.positionHc}}</td>
-                    <td>{{item?.naukriResume}}</td>
-                    <td>{{item?.linkedinResume}}</td>
-                    <!-- <td>{{item?.candidateExperience}}</td> -->
-                    <td>{{item?.sourcedScreened}}</td>
-                    <td>{{item?.candidateContacted}}</td>
-                    <td>{{item?.candidatesIntrested}}</td>
-                    <td>{{item?.interviewScheduled}}</td>
-                    <td>{{item?.offerReleased}}</td>
+                    <ng-container *ngFor="let key of  recruiterKeys">
+                        <td> {{ key === 'Date' ? (item[key] | date:'dd/MM/yyyy') : item[key] }}</td>
+
+                    </ng-container>
                 </tr>
             </ng-container>
         </table>

@@ -35,6 +35,7 @@ export class DailyReportComponent implements OnInit {
   reportPageLimit: any = '';
   showRecruiters: boolean = false;
   recruiterName: string = 'Select';
+  recruiterKeys: any[] = [];
 
   constructor(private http: HttpClient, private router: Router, private datePipe: DatePipe) {
     this.startDate = new Date();
@@ -42,8 +43,8 @@ export class DailyReportComponent implements OnInit {
   }
 
   onBodyClick(event: MouseEvent): void {
-    const target = event.target as HTMLElement; 
-      if (!target.closest('.no-close')) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.no-close')) {
       this.showRecruiters = false;
     }
   }
@@ -64,6 +65,11 @@ export class DailyReportComponent implements OnInit {
       .subscribe((res: any) => {
         this.userRequirement = [];
         this.userRequirement = res?.data;
+        console.log(" this.userRequirement", this.userRequirement);
+        this.userRequirement.forEach((objectItem: any) => {
+          this.recruiterKeys = Object.keys(objectItem);
+          console.log("Keys of an object:", this.recruiterKeys);
+        })
       });
   }
 
@@ -91,5 +97,9 @@ export class DailyReportComponent implements OnInit {
     this.pageIndex = event.pageIndex;
     this.fetchDetails();
   }
-
+  dateSearch(): void {
+    this.reportFromDate = this.startDate;
+    this.reportToDate = this.endDate;
+    this.fetchDetails()
+  }
 }
