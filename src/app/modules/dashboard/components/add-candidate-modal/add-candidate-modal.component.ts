@@ -10,6 +10,9 @@ import { ToastrServices } from 'src/app/services/toastr.service';
   templateUrl: './add-candidate-modal.component.html',
   styleUrls: ['./add-candidate-modal.component.css'],
   providers: [DatePipe],
+  host: {
+    '(document:click)': 'onBodyClick($event)'
+  }
 })
 export class AddCandidateModalComponent implements OnInit {
   displayDate: any
@@ -63,12 +66,15 @@ export class AddCandidateModalComponent implements OnInit {
     this.candidateCreatedby = localStorage.getItem('userId')    
   }
 
-  @HostListener('document:click', ['$event'])
-  onBodyClick(event: Event): void {
-    if (!this.el.nativeElement.contains(event.target)) {
-      this.showDropdown = false;
+  onBodyClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.no-close')) {
+      // this.showDropdown = false;
+      this.showSource =false;
+      this.requirementListOpen = false;
     }
   }
+
 
   fetchSource(): void {
     this.http.get(`${environment.api_url}/candidate/resume-source/list`).subscribe((res: any) => {

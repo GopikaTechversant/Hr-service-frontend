@@ -6,6 +6,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { FeedbackComponent } from './components/feedback/feedback.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -18,6 +19,7 @@ import { FeedbackComponent } from './components/feedback/feedback.component';
     BrowserModule,
     AppRoutingModule,
     AuthModule,
+    FormsModule,
     BrowserAnimationsModule, 
     ToastrModule.forRoot({
       timeOut: 3000,

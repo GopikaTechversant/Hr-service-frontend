@@ -1,7 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environments';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-candidate-details',
   templateUrl: './candidate-details.component.html',
@@ -11,11 +11,23 @@ export class CandidateDetailsComponent implements OnInit {
   candidateId: any;
   candidateDetails: any;
   resumePath: any;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute) {
+    this.route.params.subscribe(params => {
+      this.candidateId = params['id'];
+      this.fetchCandidateDetails();
+    });
+  }
 
   ngOnInit(): void {
-    this.http.get(`${environment.api_url}/candidate/list/jerom3@gmail.com`).subscribe((res: any) => {
-      this.candidateDetails = res[0];
+
+  }
+
+  fetchCandidateDetails(): void {
+    this.http.get(`${environment.api_url}/candidate/list/${this.candidateId}`).subscribe((res: any) => {
+      if (res?.data) {
+        this.candidateDetails = res?.data[0];
+        console.log(this.candidateDetails);
+      }
     })
   }
 

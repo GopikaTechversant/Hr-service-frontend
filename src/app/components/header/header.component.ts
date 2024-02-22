@@ -9,19 +9,25 @@ import { environment } from 'src/environments/environments';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
+  host: {
+    '(document:click)': 'onBodyClick($event)'
+  }
 })
 export class HeaderComponent implements OnInit {
   currentUser: any;
   dropDown: boolean = false;
   showDropDown: boolean = false;
-  searchKey: string = 'search';
-  constructor(private http: HttpClient,private apiService: ApiService, private auth: AuthService, private dialog: MatDialog, private router: Router, private renderer: Renderer2, private el: ElementRef) { }
+  searchKeyword: string = '';
+  candidateList: any;
+  showCandidates: boolean = false;
+  constructor(private http: HttpClient, private apiService: ApiService, private auth: AuthService, private dialog: MatDialog, private router: Router, private renderer: Renderer2, private el: ElementRef) { }
 
   @HostListener('document:click', ['$event'])
   onBodyClick(event: Event): void {
     if (!this.el.nativeElement.contains(event.target)) {
       this.dropDown = false;
+      this.showCandidates = false;
     }
   }
 
@@ -29,10 +35,23 @@ export class HeaderComponent implements OnInit {
     this.currentUser = localStorage.getItem('userRole');
   }
 
-  searchCandidate():void {    
-    this.http.get(`${environment.api_url}/candidate/search/list?search=`).subscribe((res: any) => {
-      this.router.navigateByUrl('/dashboard/candidate-details');
+  searchCandidate(searchKeyword: string): void {
+    console.log(searchKeyword);
+
+    this.searchKeyword = searchKeyword;
+    this.http.get(`${environment.api_url}/candidate/search/list?search=${this.searchKeyword}`).subscribe((res: any) => {
+      if (res?.data) {
+        this.candidateList = res?.data
+        if (this.candidateList?.length > 0) this.showCandidates = true;
+        console.log(this.candidateList);
+
+      }
     })
+  }
+
+  selectCandidate(id: any): void {
+    this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
+    // this.showCandidates = false;
   }
 
   profileClick() {

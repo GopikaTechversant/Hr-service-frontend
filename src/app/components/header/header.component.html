@@ -3,10 +3,17 @@
     <span class="logo-text p-t-10 m-t-10 p-l-5 f-w-500 f-s-20 ">LOGO</span>
   </div>
   <div>
-    <input type="text" class="input p-l-5" placeholder="Search Candidates">
-    <span class="search" (click)="searchCandidate()">
+    <input type="text" class="input p-l-5" placeholder="Search Candidates" [(ngModel)]="searchKeyword"
+      (keydown.enter)="searchCandidate(searchKeyword)">
+    <span class="search" (click)="searchCandidate(searchKeyword)">
       <i class="fa fa-search" aria-hidden="true"></i>
     </span>
+    <div *ngIf="showCandidates" class="p-absolute candidate-dropdown no-close">
+      <div class="candidate-column" *ngFor="let item of candidateList"
+        (click)="selectCandidate(item.candidateId);showCandidates = !showCandidates">
+        {{item?.candidateEmail}}
+      </div>
+    </div>
   </div>
   <div class="profile d-flex p-r-17">
     <div class="user-name p-t-10 p-r-6">
