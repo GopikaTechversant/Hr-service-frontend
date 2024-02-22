@@ -15,11 +15,11 @@
         </div> -->
         <div>
             <span class="c-pointer d-flex">
-                <span class="filter p-r-10 p-t-10">File Recruiter</span>
+                <span class="filter p-r-10 p-t-10 p-b-5">File Recruiter</span>
                 <div class="no-close text col-md-3 p-l-8 d-flex recruiter-drop-down j-space m-text align-center"
                     (click)="recruitersListOpen = !recruitersListOpen;fetchRecruitersList();">
                     <span *ngIf="!selectedRecruitername"
-                        class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">Choose Recruiter
+                        class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1 p-t-8">Choose Recruiter
                     </span>
                     <div *ngIf="selectedRecruitername">{{selectedRecruitername}}</div>
                     <div class="no-close s-list c-pointer m-b-2 flex-1 d-flex j-end sub"><i
