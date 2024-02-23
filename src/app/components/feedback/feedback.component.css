@@ -1,5 +1,8 @@
 .comment{
     margin-left: 33px;
+    border-radius: 3px;
+    outline: none;
+   background-color: linear-gradient(0deg, #E9E9E9, #E9E9E9), linear-gradient(0deg, #FAFAFA, #FAFAFA);
 }
 
 .comment-heading{

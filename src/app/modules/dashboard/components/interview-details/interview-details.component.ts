@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChi
 import { DatePipe } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environments';
+import { ToastrServices } from 'src/app/services/toastr.service';
 @Component({
   selector: 'app-interview-details',
   templateUrl: './interview-details.component.html',
@@ -43,8 +44,16 @@ export class InterviewDetailsComponent implements OnInit {
   commentValue: any;
   selectedCandidate: any[] = [];
   location: any;
-  constructor(private datePipe: DatePipe, private cdr: ChangeDetectorRef, private http: HttpClient, private el: ElementRef) {
-
+  interviewStatus: string = '';
+  candidateDetails: any[] = [];
+  candidateStatus: any[] = [];
+  noticeperiodvalue: any;
+  serviceId: any;
+  interviewMode: any;
+  Interviewlocation: any;
+  scheduledDate: any;
+  constructor(private datePipe: DatePipe, private cdr: ChangeDetectorRef, private http: HttpClient, private el: ElementRef,
+    private tostr: ToastrServices) {
   }
   ngOnInit(): void {
 
@@ -67,8 +76,10 @@ export class InterviewDetailsComponent implements OnInit {
     }
   }
   fetchCandidates() {
-    this.http.get(`${environment.api_url}/service-request/candidates/list`).subscribe((res: any) => {
+    this.http.get(`${environment.api_url}/screening-station/interview-details/candidates-list?serviceRequestId=${this.positionId}&search=`).subscribe((res: any) => {
       this.candidate_list = res.candidates;
+      console.log("res", this.candidate_list);
+
     })
   }
   fetchUsers(): void {
@@ -80,8 +91,10 @@ export class InterviewDetailsComponent implements OnInit {
     })
   }
   fetchPosition(): void {
-    this.http.get(`${environment.api_url}/service-request/services`).subscribe((res: any) => {
+    this.http.get(`${environment.api_url}/service-request/list`).subscribe((res: any) => {
       this.positionList = res.data;
+      console.log("this.positionList", this.positionList);
+
     })
   }
   fetchPanel(): void {
@@ -90,6 +103,30 @@ export class InterviewDetailsComponent implements OnInit {
     });
     this.http.get(`${environment.api_url}/user/lists`, { headers }).subscribe((res: any) => {
       this.panel_list = res.users;
+    })
+  }
+  fetchCandidatesDetails(): void {
+    this.http.get(`${environment.api_url}/screening-station/interview-details/candidate-detail?candidateId=${this.candidateId}`).subscribe((res: any) => {
+      console.log("candidate details", res);
+      this.candidateDetails = res.candidate;
+      this.candidateStatus = res.candidateStatus;
+      this.candidateDetails.forEach((candidate: any) => {
+        this.candidateExperience = candidate.candidateExperience;
+        this.currentCompany = candidate.candidatePreviousOrg;
+      })
+      this.candidateStatus.forEach((status: any) => {
+        this.serviceId = status.serviceId;
+        this.interviewMode = status.interviewMode;
+        const mode = document.getElementById('mode') as HTMLInputElement;
+        this.modeValue = this.interviewMode ? this.interviewMode : mode.value;
+        this.interviewStatus = status.interviewStatus;
+        const noticeperiod = document.getElementById('noticePeriod') as HTMLInputElement;
+        this.noticeperiodvalue = noticeperiod ? noticeperiod.value : '';
+        this.Interviewlocation = status.interviewLocation;
+        const location = document.getElementById('location') as HTMLInputElement;
+        this.locationValue = this.Interviewlocation ? this.Interviewlocation : location.value;
+        this.scheduledDate = status.serviceDate;
+      })
     })
   }
   selectRecruiter(recruiterid: any, firstname: any, secondName: any): void {
@@ -109,9 +146,8 @@ export class InterviewDetailsComponent implements OnInit {
     this.selectedCandidate = candidate;
     console.log("selectCandidate", this.selectedCandidate);
     if (this.selectedCandidate) {
-      this.candidateExperience = candidate.candidateExperience;
-      this.noticePeriod = '30';
-      this.currentCompany = candidate.candidatePreviousDesignation;
+
+      this.fetchCandidatesDetails();
     }
   }
   selectPanel(panelid: any, firstname: any, secondName: any): void {
@@ -123,48 +159,56 @@ export class InterviewDetailsComponent implements OnInit {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
     console.log("this.displayDate", this.displayDate);
+    if (this.interviewStatus === 'scheduled') this.interviewStatus = 'Rescheduled';
+
+    this.changeInterviewStatus();
+  }
+  changeInterviewStatus(): void {
+    if (this.displayDate && this.displayTime) {
+      if (!this.interviewStatus) this.interviewStatus = 'Scheduled';
+    }
   }
   timeChange(event: any): void {
     console.log("event", event);
     this.displayTime = event;
+    if (this.interviewStatus === 'scheduled') this.interviewStatus = 'Rescheduled'
+    this.changeInterviewStatus();
   }
   submit(): void {
-    const location = document.getElementById('location') as HTMLInputElement;
-    this.locationValue = location ? location.value : '';
-    const mode = document.getElementById('mode') as HTMLInputElement;
-    this.modeValue = mode ? mode.value : '';
-    const interviewStatus = document.getElementById('interviewStatus') as HTMLInputElement;
-    this.interviewStatusValue = interviewStatus ? interviewStatus.value : '';
+
     const candidateStatus = document.getElementById('candidateStatus') as HTMLInputElement;
     this.candidateStatusValue = candidateStatus ? candidateStatus.value : '';
-    const rescheduledStatus = document.getElementById('rescheduledStatus') as HTMLInputElement;
-    this.rescheduledStatusValue = rescheduledStatus ? rescheduledStatus.value : '';
     const comments = document.getElementById('comments') as HTMLInputElement;
     this.commentValue = comments ? comments.value : '';
     if (this.displayDate && this.displayDate) this.displaydateTime = `${this.displayDate} ${this.displayTime}`;
+    if (this.scheduledDate) this.displaydateTime = this.scheduledDate;
     const payload = {
       recruiterId: this.recruiterId,
       candidateId: this.candidateId,
-      noticePeriod: this.noticePeriod,
+      noticePeriod: this.noticeperiodvalue,
       position: this.positionId,
       location: this.locationValue,
       interviewTime: this.displaydateTime,
       interViewPanel: this.panelId,
       interviewMode: this.modeValue,
-      interviewStatus: this.interviewStatusValue,
+      serviceId: this.serviceId ? this.serviceId : '',
+      interviewStatus: this.interviewStatus,
       candidateStatus: this.candidateStatusValue,
       rescheduleStatus: this.rescheduledStatusValue,
       comments: this.commentValue
     }
-    
+
     console.log("payload", payload);
     this.http.post(`${environment.api_url}/screening-station/interview-details`, payload).subscribe({
       next: (res: any) => {
-        alert('Interview Details Submitted');
+        this.tostr.success('Interview Scheduled Successfully');
         this.resetFormAndState();
       },
       error: (error) => {
-        console.error('Error adding details', error);
+        if (error?.status === 500) this.tostr.error("Internal Server Error");
+        else {
+          this.tostr.warning("Unable to update");
+        }
       }
     })
   }
@@ -187,6 +231,7 @@ export class InterviewDetailsComponent implements OnInit {
     this.showDropdown = false;
     this.showPanel = false;
     this.candidateName = null;
+    this.scheduledDate = null;
     this.clearInputvalue('location');
     this.clearInputvalue('mode');
     this.clearInputvalue('interviewStatus');
