@@ -36,6 +36,12 @@ tr {
     text-align: left;
 }
 
+.table-container{
+    height: calc(100vh - 400px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -82,15 +88,20 @@ table {
 }
 
 .drop-list{
+    background: white;
+    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+    max-height: 150px;
+    overflow-y: auto;
+    font-size: 14px;
+    font-weight: 400;
+    width: 292px;
+    padding: 5px;
+    border-radius: 4px;
     position: absolute;
-    background-color: white;
-    z-index: 1;
-    width: 238px;
-    border: 1.5px solid #7d8296b5;
-    border-radius: 5px;
-    z-index: 10;
-    max-height: 120px;
-    overflow-y: scroll;
+    z-index: 999;
+    margin-top: 5px;
+    top: 100%; 
+    left: 0;
 }
 
 .text-box {
@@ -105,10 +116,15 @@ table {
     width: 238px;
 }
 
-.no-data{
+.no-data {
     text-align: center;
-    margin-top: 27px;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 500;
-    color: #005ec9;
+    color: #525455;
+    width: 100%;
+    padding: 50% 300%;
+}
+
+.fa-chevron-down{
+    color: #525455; 
 }

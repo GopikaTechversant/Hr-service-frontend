@@ -1,77 +1,97 @@
 <div class="main">
-    <div class="w-80 m-10">
-        <!-- <div *ngIf="candidateDetails?.length > 0"> -->
-            <div class="" >
-                <p class="name m-t-25">{{candidateDetails?.candidateFirstName}} {{candidateDetails?.candidateLastName}}</p>
-                <div class="details container ">
-                    <div class="d-flex j-space">
-                        <div class="d-flex align-center ">
-                            <span class="label">Email </span>
-                            <span class="data">: {{candidateDetails?.candidateEmail}}</span>
-                        </div>
-                        <div class="d-flex align-center ">
-                            <span class="label">Contact number </span>
-                            <span class="data">: {{candidateDetails?.candidateMobileNo}}</span>
-                        </div>
+    <div class="d-flex p-10">
+        <div class="p-r-20">
+            <div class="p-10">
+                <span class="f-w-500 f-s-16">{{candidateDetails?.candidateFirstName}} {{candidateDetails?.candidateLastName}}</span>
+            </div>
+            <div class="text-color p-5">
+                <i class="fa fa-envelope p-r-10" aria-hidden="true"></i>
+                <span>{{candidateDetails?.candidateEmail}}</span>
+            </div>
+            <div class="text-color p-5">
+                <i class="fa fa-mobile p-r-10 f-s-20" aria-hidden="true"></i>
+                <span>{{candidateDetails?.candidateMobileNo}}</span>
+            </div>
+        </div>
+        <div>
+            <span>Position</span>
+            <!-- <span>{{candidateDetails?.}}</span> -->
+        </div>
+    </div>
+    <div>
+        <div class="basic-head">
+            <span class="f-w-500 f-s-16">Basic Info & Professional Info </span>
+            <span>Click to view resume :
+                <i class="fa fa-file-text-o" aria-hidden="true" (click)="viewResume(candidateDetails?.candidateResume)"></i>
+            </span>
+        </div>
+        <div id="candidateDetailsContainer"></div>
+    </div>
+    <!-- <div class="">
+            <p class="name m-t-25"></p>
+            <div class="details container ">
+                <div class="d-flex j-space">
+                    <div class="d-flex align-center ">
+                        <span class="label">Email </span>
+                        <span class="data">: </span>
                     </div>
-                    <div class="d-flex j-space">
-                        <div class="d-flex align-center ">
-                            <span class="label">Date Of Birth </span>
-                            <span class="data">: {{candidateDetails?.candidateDoB | date:'yyyy-MM-dd'}}</span>
-                        </div>
-                        <div class="d-flex align-center ">
-                            <span class="label">Education </span>
-                            <span class="data">: {{candidateDetails?.candidateEducation}}</span>
-                        </div>
-    
+                    <div class="d-flex align-center ">
+                        <span class="label">Contact number </span>
+                        <span class="data">: </span>
                     </div>
-                    <div class="d-flex j-space">
-                        <div class="d-flex align-center ">
-                            <span class="label">Previous Organization </span>
-                            <span class="data">: {{candidateDetails?.candidatePreviousOrg}}</span>
-                        </div>
-                        <div class="d-flex align-center ">
-                            <span class="label">Previous Designation </span>
-                            <span class="data">: {{candidateDetails?.candidatePreviousDesignation}}</span>
-                        </div>
+                </div>
+                <div class="d-flex j-space">
+                    <div class="d-flex align-center ">
+                        <span class="label">Date Of Birth </span>
+                        <span class="data">: {{candidateDetails?.candidateDoB | date:'yyyy-MM-dd'}}</span>
                     </div>
-                    <div class="d-flex j-space">
-                        <div class="d-flex align-center ">
-                            <span class="label">Experience </span>
-                            <span class="data">: {{candidateDetails?.candidateExperience}}</span>
-                        </div>
-                        <div class="d-flex align-center ">
-                            <span class="label">Station </span>
-                            <span class="data">: {{candidateDetails?.candidateStation}}</span>
-                        </div>
+                    <div class="d-flex align-center ">
+                        <span class="label">Education </span>
+                        <span class="data">: {{candidateDetails?.candidateEducation}}</span>
                     </div>
-                    <div class="d-flex j-space">
-                        <div class="d-flex align-center ">
-                            <span class="label">CurrentSalary </span>
-                            <span class="data">: {{candidateDetails?.candidateCurrentSalary}}</span>
-                        </div>
-                        <div class="d-flex align-center ">
-                            <span class="label">ExpectedSalary </span>
-                            <span class="data">: {{candidateDetails?.candidateExpectedSalary}}</span>
-                        </div>
+
+                </div>
+                <div class="d-flex j-space">
+                    <div class="d-flex align-center ">
+                        <span class="label">Previous Organization </span>
+                        <span class="data">: {{candidateDetails?.candidatePreviousOrg}}</span>
                     </div>
-                    <div class="d-flex j-space">
-                        <div class="d-flex align-center ">
-                            <span class="label">Address </span>
-                            <span class="data">: {{candidateDetails?.candidateAddress}}</span>
-                        </div>
-                        <div class="d-flex align-center ">
-                            <span class="label">Click to View Resume</span>
-                            <span class="data c-pointer resume" (click)="viewResume(candidateDetails?.candidateResume)">: <img class=""
-                                    src="assets/images/view-resume.png" alt="" height="25px" width="25px"></span>
-                        </div>
+                    <div class="d-flex align-center ">
+                        <span class="label">Previous Designation </span>
+                        <span class="data">: {{candidateDetails?.candidatePreviousDesignation}}</span>
+                    </div>
+                </div>
+                <div class="d-flex j-space">
+                    <div class="d-flex align-center ">
+                        <span class="label">Experience </span>
+                        <span class="data">: {{candidateDetails?.candidateExperience}}</span>
+                    </div>
+                    <div class="d-flex align-center ">
+                        <span class="label">Station </span>
+                        <span class="data">: {{candidateDetails?.candidateStation}}</span>
+                    </div>
+                </div>
+                <div class="d-flex j-space">
+                    <div class="d-flex align-center ">
+                        <span class="label">CurrentSalary </span>
+                        <span class="data">: {{candidateDetails?.candidateCurrentSalary}}</span>
+                    </div>
+                    <div class="d-flex align-center ">
+                        <span class="label">ExpectedSalary </span>
+                        <span class="data">: {{candidateDetails?.candidateExpectedSalary}}</span>
+                    </div>
+                </div>
+                <div class="d-flex j-space">
+                    <div class="d-flex align-center ">
+                        <span class="label">Address </span>
+                        <span class="data">: {{candidateDetails?.candidateAddress}}</span>
+                    </div>
+                    <div class="d-flex align-center ">
+                        <span class="label">Click to View Resume</span>
+                        <span class="data c-pointer resume" >:
+                            <img class="" src="assets/images/view-resume.png" alt="" height="25px" width="25px"></span>
                     </div>
                 </div>
             </div>
-        <!-- </div>    -->
-        <div *ngIf="candidateDetails?.length === 0">No Data found</div> 
-    </div>  
-    <div>
-        <span class="label">Feedback </span>
-    </div> 
+        </div> -->
 </div>

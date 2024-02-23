@@ -1,7 +1,7 @@
 <div class="main p-l-20 p-r-20">
     <span class="heading  m-t-12">Add Candidates</span>
     <form [formGroup]="candidateForm" (ngSubmit)="submitClick(); $event.preventDefault()" enctype="multipart/form-data">
-        <div class="d-flex j-space parent p-t-10">
+        <div class="d-flex parent p-t-10">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">First Name<span class="required">*</span></span>
                 <input type="text" class="input-box" formControlName="candidateFirstName" placeholder="John">
@@ -31,7 +31,7 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex j-space parent">
+        <div class="d-flex  parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Gender<span class="required">*</span></span>
                 <span class="d-flex gender c-pointer">
@@ -66,19 +66,17 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex j-space parent">
+        <div class="d-flex parent" >
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Education</span>
                 <input type="text" class="input-box" formControlName="candidateEducation">
             </div>
-
-            <div class="child d-flex m-b-10">
+            <div class="child-text d-flex m-b-10" >
                 <span class="label m-b-4">Address</span>
-                <textarea type="text" class="text-area" formControlName="candidateAddress"></textarea>
+                <textarea type="text" class="text-area m-l-5" formControlName="candidateAddress" style="height: 100%;"></textarea>
             </div>
-
-        </div>
-        <div class="d-flex j-space parent">
+        </div>   
+        <div class="d-flex   parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Experience</span>
                 <input type="text" class="input-box" formControlName="candidateExperience">
@@ -92,7 +90,7 @@
                 <input type="text" class="input-box" formControlName="candidatePreviousDesignation">
             </div>
         </div>
-        <div class="d-flex j-space parent">
+        <div class="d-flex   parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Current Salary</span>
                 <input type="text" class="input-box" formControlName="candidateCurrentSalary">
@@ -108,14 +106,14 @@
                     <span *ngIf="!sourceName">Select source</span>
                     <span *ngIf="sourceName">{{sourceName}}</span>
                     <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
-                </div>
-                <div class="no-close dropdown-application c-pointer" *ngIf="showSource">
-                    <p *ngFor="let source of sourceList" (click)="selectsource(source.sourceId,source.sourceName)">
-                        {{source.sourceName}}</p>
-                </div>
+                    <div class="no-close dropdown c-pointer" *ngIf="showSource">
+                        <p *ngFor="let source of sourceList" (click)="selectsource(source.sourceId,source.sourceName)">
+                            {{source.sourceName}}</p>
+                    </div>
+                </div>          
             </div>
         </div>
-        <div class="d-flex j-space  parent">
+        <div class="d-flex parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Requirement</span>
                 <div class="input-box c-pointer p-relative p-t-10 p-l-6 no-close"
@@ -123,14 +121,14 @@
                     <span *ngIf="!selectedRequirementName" class="no-close">Select Requirement</span>
                     <span *ngIf="selectedRequirementName" class="no-close">{{selectedRequirementName}}</span>
                     <span><i class="f-right p-r-10 fa fa-chevron-down s-text no-close"></i></span>
-                </div>
-                <div class="no-close dropdown-application c-pointer no-close" *ngIf="requirementListOpen">
-                    <p *ngFor="let requirement of requirementList"
-                        (click)="selectRequirement(requirement.requestId,requirement.requestName)">
-                        {{requirement.requestName}}</p>
-                </div>
+                    <div class="no-close dropdown c-pointer no-close" *ngIf="requirementListOpen">
+                        <p *ngFor="let requirement of requirementList"
+                            (click)="selectRequirement(requirement.requestId,requirement.requestName)">
+                            {{requirement.requestName}}</p>
+                    </div>
+                </div>        
             </div>
-            <div class="child d-flex m-b-10 p-relative p-l-20">
+            <div class="child-text d-flex m-b-10 p-relative">
                 <span class="label m-b-4">Upload Resume <span class="required">*</span></span>
                 <div class="text-area">
                     <button class="upload-resume-btn"
@@ -151,7 +149,7 @@
                 <div class="input-box c-pointer p-t-10 no-close p-relative" (click)="showDropdown = !showDropdown">
                     <span class="no-close'">{{selectedSkillType || 'Skill Type'}}</span>
                     <span><i class="f-right p-r-10 fa fa-chevron-down no-close'"></i></span>
-                    <div class="dropdown-list c-pointer no-close'" *ngIf="showDropdown">
+                    <div class="dropdown c-pointer no-close'" *ngIf="showDropdown">
                         <p *ngFor="let type of skillTypes" (click)="selectSkillType(type)">{{type}}</p>
                     </div>
                 </div>

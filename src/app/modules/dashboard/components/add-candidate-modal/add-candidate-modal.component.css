@@ -10,18 +10,24 @@
 }
 
 .input-box {
-    width: 327px;
+    width: 290px;
     height: 34px;
     border-radius: 5px;
-    border: none;
     outline: none;
     background: #FAFAFA;
     padding-left: 5px;
-    border: 1px solid #E9E9E9
+    border: 1px solid #E9E9E9;
 }
 
 
 .child {
+    flex-direction: column;
+    flex: 1;
+}
+
+.child-text {
+    flex: 2;
+    display: flex;
     flex-direction: column;
 }
 
@@ -34,14 +40,13 @@
 }
 
 .text-area {
-    width: 753px;
+    width: 680px;
     height: 34px;
     border-radius: 5px;
-    border: none;
     outline: none;
     background: #FAFAFA;
     padding-left: 5px;
-    border: 1px solid #E9E9E9
+    border: 1px solid #E9E9E9;
 }
 
 .fa-chevron-down {
@@ -49,21 +54,18 @@
 }
 
 .upload-resume-btn {
-    width: 65px;
-    height: 38px;
+    margin-left: -5px;
+    width: 80px;
+    height: 34px;
     top: 648px;
     left: 1340px;
     border-radius: 3px;
     border: 1px;
-    background: linear-gradient(0deg, #575F6E, #575F6E),
-        linear-gradient(0deg, #E9E9E9, #E9E9E9);
+    background: linear-gradient(0deg, #575F6E, #575F6E), linear-gradient(0deg, #E9E9E9, #E9E9E9);
     color: white;
     font-size: 16px;
     font-weight: 400;
     line-height: 19px;
-    letter-spacing: 0em;
-    text-align: left;
-
 }
 
 .text {
@@ -75,36 +77,18 @@
     color: #000000;
 }
 
-.skill-type {
-    width: 216px;
-    height: 28px;
-    border-radius: 3px;
-    border: 1px solid #E9E9E9;
-    border: 1px solid #E9E9E9;
-    font-size: 16px;
-    font-weight: 300;
-    line-height: 19px;
-    letter-spacing: 0em;
-    padding-top: 10px;
-    padding-left: 5px;
-    background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
-        linear-gradient(0deg, #FAFAFA, #FAFAFA);
-}
-
 .add-btn {
-    margin-left: 10px;
-    width: 90px;
-    height: 36px;
+    margin: 5px;
+    width: 85px;
+    height: 35px;
     border-radius: 3px;
     border: 1px;
-    background: linear-gradient(0deg, #005EC9, #005EC9),
-        linear-gradient(0deg, #E9E9E9, #E9E9E9);
+    background: linear-gradient(0deg, #005EC9, #005EC9), linear-gradient(0deg, #E9E9E9, #E9E9E9);
     color: white;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 400;
     text-align: center;
-    padding: 10px;
-    padding-bottom: 20px;
+    padding: 8px;
 }
 
 .skills {
@@ -113,6 +97,7 @@
     border-radius: 3px;
     background: #EFEFEF;
     border: 1px solid #E9E9E9;
+    width: 92%;
 }
 
 .skill-drop-down {
@@ -160,68 +145,31 @@
     top: 13px;
 }
 
-.dropdown-list {
+.dropdown {
     background: white;
     box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
-    max-height: 120px;
-    overflow-y: scroll;
+    max-height: 150px;
+    overflow-y: auto;
     font-size: 14px;
     font-weight: 400;
-    margin-top: 15px;
-    width: 202px;
-    margin-left: -4px;
-    padding-left: 10px;
-    padding-top: 7px;
-    margin-bottom: 2px;
-    position: absolute;
-    z-index: 999;
     width: 292px;
     padding: 5px;
     border-radius: 4px;
-    max-height: 150px;
-    overflow-y: auto;
-    bottom: 0;
-}
-
-.dropdown-list :hover {
-    color: blue;
-}
-
-.dropdown-application {
-    background: white;
-    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
-    max-height: 120px;
-    overflow-y: scroll;
-    font-size: 14px;
-    font-weight: 400;
-    margin-top: 72px;
-    width: 292px;
-    margin-left: 9px;
-    padding-left: 10px;
-    padding-top: 5px;
-    margin-bottom: 2px;
     position: absolute;
     z-index: 999;
-    width: 292px;
-    padding: 5px;
-    border-radius: 4px;
-    max-height: 150px;
-    overflow-y: auto;
-    bottom: 0;
-    /* top: calc(100% - 100px); */
+    margin-top: 5px;
+    top: 100%;
+    left: 0;
 }
 
-
-.dropdown-application :hover {
+.dropdown :hover {
     color: blue;
 }
 
 .gender {
     font-size: 16px;
     font-weight: 400;
-    line-height: 21px;
-    letter-spacing: 0em;
-    width: 343px;
+    width: 290px;
     text-align: left;
 
 }
@@ -253,4 +201,10 @@
     font-size: 12px;
     font-weight: 500;
     margin-left: 10px;
+}
+
+@media (max-width: 1200px) {
+    .text-area {
+        width: 600px;
+    }
 }

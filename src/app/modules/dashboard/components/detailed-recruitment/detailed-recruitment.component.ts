@@ -4,7 +4,10 @@ import { environment } from 'src/environments/environments';
 @Component({
   selector: 'app-detailed-recruitment',
   templateUrl: './detailed-recruitment.component.html',
-  styleUrls: ['./detailed-recruitment.component.css']
+  styleUrls: ['./detailed-recruitment.component.css'],
+  host: {
+    '(document:click)': 'onBodyClick($event)'
+  }
 })
 export class DetailedRecruitmentComponent implements OnInit {
   chart: any;
@@ -17,10 +20,18 @@ export class DetailedRecruitmentComponent implements OnInit {
   candidateList: any[] = [];
   recruitersList: any[] = [];
   recruitersListOpen: boolean = false;
-  selectedRecruitername: string = '';
+  selectedRecruitername: string = 'Choose Recruiter';
   selectedRecruiterId: any;
   constructor(private http: HttpClient) {
   }
+
+  onBodyClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.no-close')) {
+      this.recruitersListOpen = false;
+    }
+  }
+
 
   ngOnInit(): void {
     this.fetchCandidateList('');

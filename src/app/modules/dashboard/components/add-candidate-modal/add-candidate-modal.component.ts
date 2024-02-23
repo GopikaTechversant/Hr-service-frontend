@@ -69,7 +69,7 @@ export class AddCandidateModalComponent implements OnInit {
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
-      // this.showDropdown = false;
+      this.showDropdown = false;
       this.showSource =false;
       this.requirementListOpen = false;
     }

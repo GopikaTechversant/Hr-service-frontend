@@ -57,10 +57,12 @@
     top: 13px;
 }
 
-.no-data{
+.no-data {
     text-align: center;
-    margin-top: 27px;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 500;
-    color: #005ec9;
+    color: #525455;
+    width: 100%;
+    justify-content: center;
+    margin-top: 30px;
 }

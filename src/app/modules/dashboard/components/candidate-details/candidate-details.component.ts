@@ -25,10 +25,28 @@ export class CandidateDetailsComponent implements OnInit {
   fetchCandidateDetails(): void {
     this.http.get(`${environment.api_url}/candidate/list/${this.candidateId}`).subscribe((res: any) => {
       if (res?.data) {
-        this.candidateDetails = res?.data[0];
+        this.candidateDetails = res.data[0];
         console.log(this.candidateDetails);
+        const container = document.getElementById('candidateDetailsContainer');
+
+        if (container) { 
+          for (const key in this.candidateDetails) {
+            const value = this.candidateDetails[key];
+
+            const displayValue = Array.isArray(value) ?
+              value.map(item => JSON.stringify(item, null, 2)).join(', ') :
+              value;
+
+            const element = document.createElement('div');
+            element.innerHTML = `
+              <span class="title">${key}</span>
+              <span class="value">${displayValue}</span>
+            `;
+            container.appendChild(element);
+          }
+        }
       }
-    })
+    }); 
   }
 
   viewResume(resume: any) {
