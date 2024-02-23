@@ -1,4 +1,4 @@
-<app-header></app-header>
+<!-- <app-header></app-header>
 <button class="button" (click)="approve()">Approve</button>
 <div class="details-body p-t-10 ">
     <div class="d-flex">
@@ -24,6 +24,39 @@
                             </select>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+<div class="main m-4">
+    <div class="d-flex j-space">
+        <span class="title">Candidates</span>
+        <button class="approve-btn" (click)="approve();">Approve</button>
+    </div>
+    <div class="cards d-flex j-space m-t-10">
+        <div class="contents dflex m-l-4 " *ngFor="let candidate of candidates_list let i = index">
+            <div class="d-flex j-space heading p-7">
+                <span class="name p-t-4">{{candidate.candidateFirstName}} {{candidate.candidateLastName}}</span>
+                <select [id]="'status' + i" (change)="onCandidateSelectionChange($event, candidate, i)" class="select">
+                    <option value="pending" [selected]="candidate?.serviceStatus === 'pending' ? true : false">Selected
+                    </option>
+                    <option value="rejected" [selected]="candidate?.serviceStatus === 'rejected' ? true : false">
+                        Rejected
+                    </option>
+                </select>
+            </div>
+            <div class="info-container">
+                <div class="info-pair d-flex j-space">
+                    <div class="key">Email</div>
+                    <div class="value">: {{candidate.candidateEmail}}</div>
+                </div>
+                <div class="info-pair d-flex">
+                    <div class="key">Experience</div>
+                    <div class="value">: {{candidate.candidateExperience === '0' ? 'Fresher' :
+                        candidate.candidateExperience }}</div>
                 </div>
             </div>
         </div>

@@ -37,10 +37,10 @@ export class RequirementFormComponent implements OnInit {
   searchQuery: string = '';
   candidatesList: any[] = [];
   candidateSelect: boolean = false;
-
+ today:any;
   constructor(private http: HttpClient, private datePipe: DatePipe, private tostr: ToastrService) { }
   ngOnInit(): void {
-
+    this.today = new Date();
   }
 
   fetchRequirements(): void {

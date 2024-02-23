@@ -36,7 +36,7 @@
             <div class="p-relative">
                 <input class="p-l-5 input c-pointer" placeholder="29/02/11" matInput [matDatepicker]="pickerToDate"
                     (dateChange)="dateChange($event, 'endDate')" [ngModel]="endDate" (click)="pickerToDate.open()"
-                    [value]="endDate | date:'yyyy-MM-dd'" id="endDate">
+                    [value]="endDate | date:'yyyy-MM-dd'" id="endDate" [min]="fromDate">
                 <span>
                     <mat-datepicker #pickerToDate></mat-datepicker>
                     <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"

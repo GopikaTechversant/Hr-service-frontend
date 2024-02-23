@@ -52,11 +52,12 @@ export class InterviewDetailsComponent implements OnInit {
   interviewMode: any;
   Interviewlocation: any;
   scheduledDate: any;
+  today:any;
   constructor(private datePipe: DatePipe, private cdr: ChangeDetectorRef, private http: HttpClient, private el: ElementRef,
     private tostr: ToastrServices) {
   }
   ngOnInit(): void {
-
+    this.today = new Date();
   }
 
   @HostListener('document:click', ['$event'])

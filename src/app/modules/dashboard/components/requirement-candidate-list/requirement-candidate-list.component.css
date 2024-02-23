@@ -67,7 +67,7 @@
   display: flex;
   flex-direction: column;
   margin: 10px;
-  width: 311px;
+  width: 328px;
   height: auto;
   margin-bottom: 29px;
   background-color: #FFFFFF;
@@ -87,7 +87,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 300px;
+  width: 323px;
 }
 
 .key,
