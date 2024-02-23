@@ -13,8 +13,8 @@
                             (drop)="productDrop($event, activeSeries)">
                             <img src="assets/images/candidates.png" width="20px" height="25px" class="m-b-5 m-t-2 ">
                             <p>Name: {{candidate.candidateFirstName}}</p>
-                            <p>Service: {{candidate.candidateEmail}}</p>
-                            <p>Service Id: {{candidate.serviceId}}</p>
+                            <p>Email: {{candidate.candidateEmail}}</p>
+                            <p>Experience: {{candidate.candidateExperience}}</p>
                             <select [id]="'status' + i" (change)="onCandidateSelectionChange($event, candidate, i)">
                                 <option value="pending"
                                     [selected]="candidate?.serviceStatus === 'pending' ? true : false">Selected</option>
