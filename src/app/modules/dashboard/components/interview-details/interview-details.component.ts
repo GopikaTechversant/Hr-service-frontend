@@ -77,11 +77,15 @@ export class InterviewDetailsComponent implements OnInit {
     }
   }
   fetchCandidates() {
-    this.http.get(`${environment.api_url}/screening-station/interview-details/candidates-list?serviceRequestId=${this.positionId}&search=`).subscribe((res: any) => {
-      this.candidate_list = res.candidates;
-      console.log("res", this.candidate_list);
-
-    })
+    if(this.positionId){
+      this.http.get(`${environment.api_url}/screening-station/interview-details/candidates-list?serviceRequestId=${this.positionId}&search=`).subscribe((res: any) => {
+        this.candidate_list = res.candidates;
+        console.log("res", this.candidate_list);
+  })
+    }else{
+      this.tostr.warning("Make sure to select the position dropdown first");
+    }
+   
   }
   fetchUsers(): void {
     const headers = new HttpHeaders({
@@ -126,6 +130,8 @@ export class InterviewDetailsComponent implements OnInit {
         this.Interviewlocation = status.interviewLocation;
         const location = document.getElementById('location') as HTMLInputElement;
         this.locationValue = this.Interviewlocation ? this.Interviewlocation : location.value;
+        console.log(" this.locationValue", this.locationValue);
+        
         this.scheduledDate = status.serviceDate;
       })
     })
@@ -141,6 +147,7 @@ export class InterviewDetailsComponent implements OnInit {
     this.positionName = name;
   }
   selectCandidate(candidateId: any, candidateFirstName: any, candidateLastName: any, candidate: any): void {
+   
     this.showcandidate = false;
     this.candidateId = candidateId;
     this.candidateName = `${candidateFirstName} ${candidateLastName}`;

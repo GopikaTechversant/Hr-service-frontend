@@ -89,13 +89,13 @@ export class AddCandidateModalComponent implements OnInit {
   }
 
   selectsource(sourceid: any, sourceName: any): void {
-    this.showSource = false;
+    // this.showSource = false;
     this.sourceId = sourceid;
     this.sourceName = sourceName;
   }
 
   selectRequirement(id: any, name: any): void {
-    this.requirementListOpen = false;
+    // this.requirementListOpen = false;
     if (this.selectedRequirementName !== name && this.selectedRequirementId !== id) {
       this.selectedRequirementName = name;
       this.selectedRequirementId = id;
