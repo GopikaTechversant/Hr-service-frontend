@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environments';
 import { ActivatedRoute } from '@angular/router';
@@ -9,11 +9,12 @@ import { ToastrServices } from 'src/app/services/toastr.service';
   selector: 'app-series',
   templateUrl: './series.component.html',
   styleUrls: ['./series.component.css'],
- 
+
 })
 export class SeriesComponent implements OnInit {
   @Input() rejectedCandidates: string[] = [];
   @Input() selectedCandidatesIds: string[] = [];
+  @ViewChild('scrollTop') private scrollTop: ElementRef | undefined;
 
   candidates_list: any;
   selectedCandidate: any;
@@ -24,25 +25,61 @@ export class SeriesComponent implements OnInit {
   approvedServiceId: any;
   candidateServiceId: any;
   error: boolean = false;
-  constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices) {
+  moreApiCalled: boolean = false;
+  limit: number = 9;
+  page:number = 1;
+  constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private renderer: Renderer2) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
     });
   }
   ngOnInit(): void {
     this.fetchcandidates();
+  
   }
-  fetchcandidates(): void {
-    this.http.get(`${environment.api_url}/screening-station/list-batch/${this.requestId}`).subscribe((res: any) => {
-      this.candidates_list = res.candidates;
-      this.candidates = this.candidates.candidate;
-      this.candidates_list.forEach((candidate: any) => {
-        if (candidate.serviceId) {
-          this.serviceIds.push(candidate.serviceId);
-        }
+  ngAfterViewInit() {
+    console.log("cyuhgdy");
+
+    if (this.scrollTop) {
+      this.renderer.listen(this.scrollTop.nativeElement, 'scroll', (event) => {
+        console.log("scrollTop");
+        let element = event.target;
+        const requiredHeight = element.scrollTop + element.clientHeight;
+        let calculatedHeight = element.scrollHeight / 4;
+        calculatedHeight = calculatedHeight * 3;
+        console.log("calculatedHeight ",calculatedHeight );
+        console.log("requiredHeight",requiredHeight);
+        
+        if (requiredHeight > calculatedHeight && !this.moreApiCalled) this.loadMore();
       });
+    }
+
+  }
+
+
+  fetchcandidates():void{
+    this.http.get(`${environment.api_url}/screening-station/list-batch/${this.requestId}?limit=${this.limit}&page=1`).subscribe((res:any) => {
+      this.moreApiCalled = false;
+      if(res?.candidates){
+        this.candidates_list = res?.candidates
+        this.candidates_list =[...this.candidates_list, ...res.candidates];
+        this.candidates_list.forEach((candidate: any) => {
+          if(candidate.serviceId) {
+            this.serviceIds.push(candidate.serviceId);
+          }
+        });
+      }
     })
   }
+  
+  loadMore(): void {
+    if (!this.moreApiCalled) {
+      this.moreApiCalled = true;
+      this.limit = this.limit + 3
+      this.fetchcandidates();
+    }
+  }
+  
   approve(): void {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
@@ -50,17 +87,17 @@ export class SeriesComponent implements OnInit {
     const requestData = {
       serviceIds: this.selectedCandidatesIds.length > 0 ? this.selectedCandidatesIds : this.serviceIds
     }
-    this.http.post(`${environment.api_url}/screening-station/accept`, requestData, { headers }).subscribe( {
+    this.http.post(`${environment.api_url}/screening-station/accept`, requestData, { headers }).subscribe({
       next: (res: any) => {
         this.tostr.success('Approved');
-        
+
       },
       error: (error) => {
         if (error?.status === 500) this.tostr.error("Internal Server Error");
-          else {
-            this.tostr.warning(error?.error?.message ? error?.error?.message : "Unable to fetch details");
-            this.error = true;
-          }
+        else {
+          this.tostr.warning(error?.error?.message ? error?.error?.message : "Unable to fetch details");
+          this.error = true;
+        }
       }
     }
     )

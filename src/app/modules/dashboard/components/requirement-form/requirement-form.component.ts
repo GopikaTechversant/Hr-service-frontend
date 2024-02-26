@@ -52,7 +52,7 @@ export class RequirementFormComponent implements OnInit {
   }
 
   fetchCandidates(): void {
-    this.http.get(`${environment.api_url}/service-request/candidates/list?serviceRequestId=${this.selectedId}`).subscribe((candidate: any) => {
+    this.http.get(`${environment.api_url}/screening-station/interview-details/candidates-list?serviceRequestId=${this.selectedId}`).subscribe((candidate: any) => {
       if (candidate?.candidates) {
         this.candidatesList = candidate?.candidates;
       }
@@ -60,7 +60,7 @@ export class RequirementFormComponent implements OnInit {
   }
 
   fetchcandidatesWithExperience(searchQuery: string): void {
-    this.http.get(`${environment.api_url}/service-request/candidates/list?exprience=${this.searchQuery}`).subscribe((res: any) => {
+    this.http.get(`${environment.api_url}/screening-station/interview-details/candidates-list?exprience=${this.searchQuery}`).subscribe((res: any) => {
       if (res?.candidates) {
         this.candidatesList = res?.candidates;
       }

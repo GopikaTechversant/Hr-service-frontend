@@ -53,9 +53,10 @@
             <div class="input-box p-t-10 p-l-6" (click)="showcandidate = !showcandidate;fetchCandidates()">
                 <span *ngIf="!candidateName">Select Name</span>
                 <span *ngIf="candidateName" class="p-l-9">{{candidateName}}</span>
+               
                 <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
             </div>
-            <div class="no-close dropdown m-t-6 p-t-10 p-l-6" *ngIf="showcandidate">
+            <div class="no-close dropdown m-t-6 p-t-10 p-l-6" *ngIf="showcandidate && positionId">
                 <div *ngFor="let candidate of candidate_list"
                     (click)="selectCandidate(candidate.candidateId,candidate.candidateFirstName,candidate.candidateLastName,candidate)">
                     {{candidate.candidateFirstName}} {{candidate.candidateLastName}}

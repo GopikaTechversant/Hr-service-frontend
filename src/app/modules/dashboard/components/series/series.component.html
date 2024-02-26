@@ -1,42 +1,9 @@
-<!-- <app-header></app-header>
-<button class="button" (click)="approve()">Approve</button>
-<div class="details-body p-t-10 ">
-    <div class="d-flex">
-        <div class=" details-area">
-            <div class="m-b-10 candidate-box p-l-15 p-r-15 p-t-10 p-b-10">
-                <div class="w-100 notreceived">
-                    <p class="candidates-heading">Candidates</p>
-                    <div class="row d-flex">
-                        <div *ngFor="let candidate of candidates_list let i = index"
-                            class="min-150 mx-150 p-r-15 m-t-10 j-center text-center p-l-15 m-l-5 c-pointer"
-                            draggable="true" (dragstart)="dragStart($event, candidate)" (dragover)="dragOver($event)"
-                            (drop)="productDrop($event, activeSeries)">
-                            <img src="assets/images/candidates.png" width="20px" height="25px" class="m-b-5 m-t-2 ">
-                            <p>Name: {{candidate.candidateFirstName}}</p>
-                            <p>Email: {{candidate.candidateEmail}}</p>
-                            <p>Experience: {{candidate.candidateExperience}}</p>
-                            <select [id]="'status' + i" (change)="onCandidateSelectionChange($event, candidate, i)">
-                                <option value="pending"
-                                    [selected]="candidate?.serviceStatus === 'pending' ? true : false">Selected</option>
-                                <option value="rejected"
-                                    [selected]="candidate?.serviceStatus === 'rejected' ? true : false">Rejected
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
-
-
-<div class="main m-4">
+<div class="main m-4" >
     <div class="d-flex j-space">
         <span class="title">Candidates</span>
         <button class="approve-btn" (click)="approve();">Approve</button>
     </div>
-    <div class="cards d-flex j-space m-t-10">
+    <div class="cards d-flex j-space m-t-10" #scrollTop>
         <div class="contents dflex m-l-4 " *ngFor="let candidate of candidates_list let i = index">
             <div class="d-flex j-space heading p-7">
                 <span class="name p-t-4">{{candidate.candidateFirstName}} {{candidate.candidateLastName}}</span>
