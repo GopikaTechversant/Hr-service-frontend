@@ -20,7 +20,7 @@
             <span class="label m-b-4">Interview Date & Time</span>
             <div class="p-relative ">
                 <input class="p-l-9 input-box" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerInterview"
-                    (dateChange)="dateChange($event)" (click)="pickerInterview?.open()" [value]="scheduledDate">
+                    (dateChange)="dateChange($event)" (click)="pickerInterview?.open()" [value]="scheduledDate" [min]="today">
                 <span> <mat-datepicker #pickerInterview class=""></mat-datepicker>
                     <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
                         (click)="pickerInterview?.open()"></i>
@@ -67,7 +67,7 @@
             <input type="text" class="input-box p-l-9" [value]="candidateExperience || ''">
         </div>
         <div class="child d-flex m-b-10">
-            <span class="label m-b-4">Notice Period</span>
+            <span class="label m-b-4 ">Notice Period</span>
             <input type="text" class="input-box p-l-9" [value]="noticePeriod || ''" id="noticePeriod">
         </div>
     </div>

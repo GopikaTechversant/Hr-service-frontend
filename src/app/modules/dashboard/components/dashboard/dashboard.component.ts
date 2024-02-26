@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environments';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -7,6 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class DashboardComponent implements OnInit {
   candidates: any;
+ lists:any[]=[];
   list = [
     {
       count: 250,
@@ -28,14 +30,18 @@ export class DashboardComponent implements OnInit {
     }, {
       count: 100,
       name: 'Rejected Candidates',
-      position: 'Senior Software Engineer',
-      department: 'Javascript',
+  
     }
   ];
   constructor(private http: HttpClient) { }
   ngOnInit(): void {
-
+    this.fetchcount();
   }
-
+fetchcount():void{
+  this.http.get(`${environment.api_url}/dashboard/card-data`).subscribe((res:any) => {
+    console.log("res",res);
+    this.lists = res.data;
+  })
+}
 
 }

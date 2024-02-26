@@ -36,7 +36,7 @@ export class DailyReportComponent implements OnInit {
   showRecruiters: boolean = false;
   recruiterName: string = 'Select';
   recruiterKeys: any[] = [];
-
+  fromDate:any;
   constructor(private http: HttpClient, private router: Router, private datePipe: DatePipe) {
     this.startDate = new Date();
     this.endDate = new Date();
@@ -84,6 +84,7 @@ export class DailyReportComponent implements OnInit {
     let date = new Date(event?.value);
     if (range == 'startDate') this.startDate = date;
     if (range == 'endDate') this.endDate = date;
+    this.fromDate = this.startDate;
   }
 
   pageChange(event: any): void {
