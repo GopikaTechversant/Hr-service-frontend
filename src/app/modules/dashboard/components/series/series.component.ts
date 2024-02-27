@@ -27,7 +27,7 @@ export class SeriesComponent implements OnInit {
   error: boolean = false;
   moreApiCalled: boolean = false;
   limit: number = 9;
-  page:number = 1;
+  page: number = 1;
   constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private renderer: Renderer2) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -35,7 +35,7 @@ export class SeriesComponent implements OnInit {
   }
   ngOnInit(): void {
     this.fetchcandidates();
-  
+
   }
   ngAfterViewInit() {
     console.log("cyuhgdy");
@@ -47,9 +47,9 @@ export class SeriesComponent implements OnInit {
         const requiredHeight = element.scrollTop + element.clientHeight;
         let calculatedHeight = element.scrollHeight / 4;
         calculatedHeight = calculatedHeight * 3;
-        console.log("calculatedHeight ",calculatedHeight );
-        console.log("requiredHeight",requiredHeight);
-        
+        console.log("calculatedHeight ", calculatedHeight);
+        console.log("requiredHeight", requiredHeight);
+
         if (requiredHeight > calculatedHeight && !this.moreApiCalled) this.loadMore();
       });
     }
@@ -57,21 +57,21 @@ export class SeriesComponent implements OnInit {
   }
 
 
-  fetchcandidates():void{
-    this.http.get(`${environment.api_url}/screening-station/list-batch/${this.requestId}?limit=${this.limit}&page=1`).subscribe((res:any) => {
+  fetchcandidates(): void {
+    this.http.get(`${environment.api_url}/screening-station/list-batch/${this.requestId}?limit=${this.limit}&page=1`).subscribe((res: any) => {
       this.moreApiCalled = false;
-      if(res?.candidates){
+      if (res?.candidates) {
         this.candidates_list = res?.candidates
-        this.candidates_list =[...this.candidates_list, ...res.candidates];
+        this.candidates_list = [...this.candidates_list, ...res.candidates];
         this.candidates_list.forEach((candidate: any) => {
-          if(candidate.serviceId) {
+          if (candidate.serviceId) {
             this.serviceIds.push(candidate.serviceId);
           }
         });
       }
     })
   }
-  
+
   loadMore(): void {
     if (!this.moreApiCalled) {
       this.moreApiCalled = true;
@@ -79,13 +79,14 @@ export class SeriesComponent implements OnInit {
       this.fetchcandidates();
     }
   }
-  
+
   approve(): void {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
     });
     const requestData = {
-      serviceIds: this.selectedCandidatesIds.length > 0 ? this.selectedCandidatesIds : this.serviceIds
+      serviceIds: this.selectedCandidatesIds.length > 0 ? this.selectedCandidatesIds : this.serviceIds,
+      requestId: this.requestId
     }
     this.http.post(`${environment.api_url}/screening-station/accept`, requestData, { headers }).subscribe({
       next: (res: any) => {

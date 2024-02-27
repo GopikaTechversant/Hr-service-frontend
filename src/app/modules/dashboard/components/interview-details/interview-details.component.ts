@@ -33,26 +33,27 @@ export class InterviewDetailsComponent implements OnInit {
   candidateExperience: any;
   noticePeriod: any;
   currentCompany: any;
-  locationValue: any;
+  locationValue: string = '';
   panelId: any;
   panelName: any;
   panel_list: any;
   modeValue: any;
   interviewStatusValue: any;
-  candidateStatusValue: any;
   rescheduledStatusValue: any;
-  commentValue: any;
+  commentValue: any = '';
   selectedCandidate: any[] = [];
   location: any;
   interviewStatus: string = '';
   candidateDetails: any[] = [];
   candidateStatus: any[] = [];
-  noticeperiodvalue: any;
+  noticeperiodvalue: any = '';
   serviceId: any;
-  interviewMode: any;
-  Interviewlocation: any;
+  interviewMode: string = '';
+  Interviewlocation: string = '';
+  comment: string = '';
   scheduledDate: any;
-  today:any;
+  today: any;
+  id: any;
   constructor(private datePipe: DatePipe, private cdr: ChangeDetectorRef, private http: HttpClient, private el: ElementRef,
     private tostr: ToastrServices) {
   }
@@ -77,15 +78,15 @@ export class InterviewDetailsComponent implements OnInit {
     }
   }
   fetchCandidates() {
-    if(this.positionId){
+    if (this.positionId) {
       this.http.get(`${environment.api_url}/screening-station/interview-details/candidates-list?serviceRequestId=${this.positionId}&search=`).subscribe((res: any) => {
         this.candidate_list = res.candidates;
         console.log("res", this.candidate_list);
-  })
-    }else{
+      })
+    } else {
       this.tostr.warning("Make sure to select the position dropdown first");
     }
-   
+
   }
   fetchUsers(): void {
     const headers = new HttpHeaders({
@@ -118,24 +119,23 @@ export class InterviewDetailsComponent implements OnInit {
       this.candidateDetails.forEach((candidate: any) => {
         this.candidateExperience = candidate.candidateExperience;
         this.currentCompany = candidate.candidatePreviousOrg;
+        this.id = candidate.candidateId;
+        if (candidate.candidateNoticePeriodByDays) this.noticePeriod = candidate.candidateNoticePeriodByDays;
       })
       this.candidateStatus.forEach((status: any) => {
         this.serviceId = status.serviceId;
-        this.interviewMode = status.interviewMode;
-        const mode = document.getElementById('mode') as HTMLInputElement;
-        this.modeValue = this.interviewMode ? this.interviewMode : mode.value;
-        this.interviewStatus = status.interviewStatus;
-        const noticeperiod = document.getElementById('noticePeriod') as HTMLInputElement;
-        this.noticeperiodvalue = noticeperiod ? noticeperiod.value : '';
-        this.Interviewlocation = status.interviewLocation;
-        const location = document.getElementById('location') as HTMLInputElement;
-        this.locationValue = this.Interviewlocation ? this.Interviewlocation : location.value;
-        console.log(" this.locationValue", this.locationValue);
-        
+        if (status.interviewMode) this.interviewMode = status.interviewMode;
+        console.log("this.interviewMode", this.interviewMode);
+        if (status.comment) this.comment = status.comment;
+        console.log("this.comment", this.comment);
+        if (status.interviewStatus) this.interviewStatus = status.interviewStatus;
+        if (status.interviewLocation) this.Interviewlocation = status.interviewLocation;
+        console.log("this.Interviewlocation", this.Interviewlocation);
         this.scheduledDate = status.serviceDate;
       })
     })
   }
+
   selectRecruiter(recruiterid: any, firstname: any, secondName: any): void {
     this.showRecruiters = false;
     this.recruiterId = recruiterid;
@@ -147,14 +147,12 @@ export class InterviewDetailsComponent implements OnInit {
     this.positionName = name;
   }
   selectCandidate(candidateId: any, candidateFirstName: any, candidateLastName: any, candidate: any): void {
-   
     this.showcandidate = false;
     this.candidateId = candidateId;
     this.candidateName = `${candidateFirstName} ${candidateLastName}`;
     this.selectedCandidate = candidate;
     console.log("selectCandidate", this.selectedCandidate);
     if (this.selectedCandidate) {
-
       this.fetchCandidatesDetails();
     }
   }
@@ -168,7 +166,6 @@ export class InterviewDetailsComponent implements OnInit {
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
     console.log("this.displayDate", this.displayDate);
     if (this.interviewStatus === 'scheduled') this.interviewStatus = 'Rescheduled';
-
     this.changeInterviewStatus();
   }
   changeInterviewStatus(): void {
@@ -183,11 +180,17 @@ export class InterviewDetailsComponent implements OnInit {
     this.changeInterviewStatus();
   }
   submit(): void {
-
-    const candidateStatus = document.getElementById('candidateStatus') as HTMLInputElement;
-    this.candidateStatusValue = candidateStatus ? candidateStatus.value : '';
+    const noticeperiod = document.getElementById('noticePeriod') as HTMLInputElement;
+    this.noticeperiodvalue = noticeperiod.value;
+    console.log("this.noticeperiodvalue ", this.noticeperiodvalue);
     const comments = document.getElementById('comments') as HTMLInputElement;
-    this.commentValue = comments ? comments.value : '';
+    this.commentValue = comments.value ? comments.value : this.comment;
+    console.log("this.commentValue", this.commentValue);
+    const mode = document.getElementById('mode') as HTMLInputElement;
+    this.modeValue = mode.value ? mode.value : this.interviewMode;
+    const location = document.getElementById('location') as HTMLInputElement;
+    this.locationValue = location.value ? location.value : this.Interviewlocation;
+    console.log(" this.locationValue", this.locationValue);
     if (this.displayDate && this.displayDate) this.displaydateTime = `${this.displayDate} ${this.displayTime}`;
     if (this.scheduledDate) this.displaydateTime = this.scheduledDate;
     const payload = {
@@ -201,7 +204,6 @@ export class InterviewDetailsComponent implements OnInit {
       interviewMode: this.modeValue,
       serviceId: this.serviceId ? this.serviceId : '',
       interviewStatus: this.interviewStatus,
-      candidateStatus: this.candidateStatusValue,
       rescheduleStatus: this.rescheduledStatusValue,
       comments: this.commentValue
     }
@@ -240,6 +242,12 @@ export class InterviewDetailsComponent implements OnInit {
     this.showPanel = false;
     this.candidateName = null;
     this.scheduledDate = null;
+    this.noticeperiodvalue = null;
+    this.modeValue = null;
+    this.locationValue = '';
+    this.noticeperiodvalue = '';
+    this.commentValue = null;
+    this.comment = '';
     this.clearInputvalue('location');
     this.clearInputvalue('mode');
     this.clearInputvalue('interviewStatus');

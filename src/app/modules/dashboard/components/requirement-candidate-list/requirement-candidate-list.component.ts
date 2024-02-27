@@ -18,6 +18,7 @@ export class RequirementCandidateListComponent implements OnInit {
   constructor(private http: HttpClient, private router: Router) { }
   ngOnInit(): void {
     this.fetchcandidates('');
+   
   }
   fetchcandidates(searchQuery: string): void {
     this.http.get(`${environment.api_url}/screening-station/v1/list-all?page=${this.pageIndex}&limit=${this.pageSize}&search=${searchQuery}`).subscribe((res: any) => {
@@ -26,6 +27,7 @@ export class RequirementCandidateListComponent implements OnInit {
       console.log("this.candidates_list", this.candidates_list);
     })
   }
+ 
   candidateSearch(): void {
     this.fetchcandidates(this.searchQuery);
   }
