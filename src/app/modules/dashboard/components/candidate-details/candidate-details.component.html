@@ -1,97 +1,220 @@
 <div class="main">
-    <div class="d-flex p-10">
-        <div class="p-r-20">
-            <div class="p-10">
-                <span class="f-w-500 f-s-16">{{candidateDetails?.candidateFirstName}} {{candidateDetails?.candidateLastName}}</span>
+    <div *ngIf="CandidateData?.length > 0">
+        <ng-container *ngIf="candidateDetails">
+            <div class="d-flex p-10">
+                <div class="p-r-20 bor">
+                    <div class="p-10">
+                        <span class="f-w-500 f-s-16">{{candidateDetails?.candidateFirstName}}
+                            {{candidateDetails?.candidateLastName}}</span>
+                    </div>
+                    <div class="text-color p-5">
+                        <i class="fa fa-envelope p-r-10" aria-hidden="true"></i>
+                        <span>{{candidateDetails?.candidateEmail}}</span>
+                    </div>
+                    <div class="text-color p-5">
+                        <img src="assets/images/candidate-detail/mob.svg" alt="">
+                        <span class="p-l-10 p-b-10">{{candidateDetails?.candidateMobileNo}}</span>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <span class="f-w-500">Position</span>
+                    <span>{{candidateDetails?.position}}</span>
+                </div>
             </div>
-            <div class="text-color p-5">
-                <i class="fa fa-envelope p-r-10" aria-hidden="true"></i>
-                <span>{{candidateDetails?.candidateEmail}}</span>
+            <div class=" w-80 m-b-20">
+                <div class="basic-head">
+                    <span class="f-w-500 f-s-16">Basic Info & Professional Info </span>
+                    <span>Click to view resume :
+                        <i class="fa fa-file-text-o" aria-hidden="true"
+                            (click)="viewResume(candidateDetails?.candidateResume)"></i>
+                    </span>
+                </div>
+                <div class="candidateDetailsContainer">
+                    <div class="col-1 bor">
+                        <div class="details">
+                            <div class="details">
+                                <span class="f-w-500">
+                                    <img src="assets/images/candidate-detail/calendar.svg" class="p-r-10" alt=""> DOB
+                                </span>
+                            </div>
+                            <div class="details">
+                                <span>: {{candidateDetails?.candidateDoB | date: 'dd-MM-yyyy'}}</span>
+                            </div>
+                        </div>
+                        <div class="details">
+                            <div class="details">
+                                <span class="f-w-500">
+                                    <img src="assets/images/candidate-detail/building.svg" class="p-r-10"
+                                        alt="">Previous Organization
+                                </span>
+                            </div>
+                            <div class="details">
+                                <span>: {{candidateDetails?.candidatePreviousOrg ?
+                                    candidateDetails?.candidatePreviousOrg : 'Nil'}}</span>
+                            </div>
+                        </div>
+                        <div class="details">
+                            <div class="details">
+                                <span class="f-w-500"><img class="p-r-10" src="assets/images/candidate-detail/org.svg"
+                                        alt="">
+                                    Experience</span>
+                            </div>
+                            <div class="details">
+                                <span>: {{candidateDetails?.candidateExperience ? candidateDetails?.candidateExperience
+                                    : 'Nil'}}</span>
+                            </div>
+                        </div>
+                        <div class="details">
+                            <div class="details">
+                                <span class="f-w-500">
+                                    <img class="p-r-10" src="assets/images/candidate-detail/money.svg" alt="">Current
+                                    Salary
+                                </span>
+                            </div>
+                            <div class="details">
+                                <span>: {{candidateDetails?.candidateCurrentSalary ?
+                                    candidateDetails?.candidateCurrentSalary : 'Nil'}}</span>
+                            </div>
+                        </div>
+                        <div class="details">
+                            <div class="details">
+                                <span class="f-w-500">
+                                    <img class="p-r-10" src="assets/images/candidate-detail/money.svg" alt="">Expected
+                                    Salary
+                                </span>
+                            </div>
+                            <div class="details">
+                                <span>: {{candidateDetails?.candidateExpectedSalary ?
+                                    candidateDetails?.candidateExpectedSalary : 'Nil'}}</span>
+                            </div>
+                        </div>
+                        <div class="details">
+                            <div class="details">
+                                <span class="f-w-500">
+                                    <img src="assets/images/candidate-detail/user.svg" class="p-r-10" alt="">Current
+                                    Station
+                                </span>
+                            </div>
+                            <div class="details">
+                                <span>: {{candidateDetails?.candidateStatus[0]?.interviewStationName
+                                    ? candidateDetails?.candidateStatus[0]?.interviewStationName : 'Nil'}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="details">
+                            <div class="details">
+                                <span class="f-w-500">
+                                    <img src="assets/images/candidate-detail/education.svg" class="p-r-10"
+                                        alt="">Education
+                                </span>
+                            </div>
+                            <div class="details">
+                                <span>: {{candidateDetails?.candidateEducation ? candidateDetails?.candidateEducation :
+                                    'Nil'}}</span>
+                            </div>
+                        </div>
+                        <div class="details">
+                            <div class="details">
+                                <span class="f-w-500">
+                                    <img src="assets/images/candidate-detail/org.svg" class="p-r-10" alt="">Previous
+                                    Designation
+                                </span>
+                            </div>
+                            <div class="details">
+                                <span>: {{candidateDetails?.candidatePreviousDesignation ?
+                                    candidateDetails?.candidatePreviousDesignation : 'Nil'}}</span>
+                            </div>
+                        </div>
+                        <div class="details">
+                            <div class="details">
+                                <span class="f-w-500"><i class="fa fa-home p-r-10" aria-hidden="true"></i>Address</span>
+                            </div>
+                            <div class="details">
+                                <span>: {{candidateDetails?.candidateAddress ? candidateDetails?.candidateAddress :
+                                    'Nil'}}</span>
+                            </div>
+                        </div>
+                        <div class="details">
+                            <div class="details">
+                                <span class="f-w-500">
+                                    <img src="assets/images/candidate-detail/user.svg" class="p-r-10" alt="">Interview
+                                    Status
+                                </span>
+                            </div>
+                            <div class="details">
+                                <span>: {{candidateDetails?.candidateStatus[0]?.interViewStatus ?
+                                    candidateDetails?.candidateStatus[0]?.interViewStatus : 'Nil'}}</span>
+                            </div>
+                        </div>
+                        <div class="details">
+                            <div class="details">
+                                <span class="f-w-500">
+                                    <img src="assets/images/candidate-detail/user.svg" class="p-r-10" alt="">Primary
+                                    Skills
+                                </span>
+                            </div>
+                            <div class="details">
+                                <span>:
+                                    <ng-container
+                                        *ngFor="let item of candidateDetails?.candidatePrimarySkills; let last = last">
+                                        <span> {{ item?.skillType }}<span *ngIf="!last">,</span> </span>
+                                    </ng-container>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="details">
+                            <div class="details">
+                                <span class="f-w-500">
+                                    <img src="assets/images/candidate-detail/user.svg" class="p-r-10" alt="">Secondary
+                                    Skills
+                                </span>
+                            </div>
+                            <div class="details">
+                                <span>:
+                                    <ng-container
+                                        *ngFor="let item of candidateDetails?.candidateSecondarySkills; let last = last">
+                                        <span> {{ item?.skillType }}<span *ngIf="!last">,</span> </span>
+                                    </ng-container>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="Feedback">
+                    <div class="feedback-head">
+                        <span class="f-w-500 f-s-16">Feedback Section </span>
+                    </div>
+                    <div *ngIf="candidateFeedback?.length > 0">
+                        <ng-container *ngFor="let item of candidateFeedback; let last = last">
+                            <div class="d-flex">
+                                <div class="col-1">
+                                    <div class="p-10">
+                                        <span class="text-color p-r-10 f-w-500">Name</span>
+                                        <span class="p-r-10">Station - </span>
+                                        <span class="p-r-10 date-color"> 22/01/2024</span>
+                                    </div>
+                                    <div class="p-10">
+                                        <span>{{item?.commentComment}}</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex j-end">
+                                    <img src="assets/images/candidate-detail/edit.svg" class="icon" alt="">
+                                    <img src="assets/images/candidate-detail/delete.svg" class="icon" alt="">
+                                </div>
+                            </div>
+                            <div *ngIf="!last" class="bor-2"></div>
+                        </ng-container>
+                    </div>
+                    <div *ngIf="candidateFeedback?.length === 0">No Feedback Available</div>
+                    <div class="m-b-20">
+                        <textarea class="text-area" id="" cols="30" rows="10" placeholder="Add New Feedback"></textarea>
+                        <button class="btn-cancel">Cancel</button>
+                        <button class="btn-submit">Submit</button>
+                    </div>
+                </div>
             </div>
-            <div class="text-color p-5">
-                <i class="fa fa-mobile p-r-10 f-s-20" aria-hidden="true"></i>
-                <span>{{candidateDetails?.candidateMobileNo}}</span>
-            </div>
-        </div>
-        <div>
-            <span>Position</span>
-            <!-- <span>{{candidateDetails?.}}</span> -->
-        </div>
+        </ng-container>
     </div>
-    <div>
-        <div class="basic-head">
-            <span class="f-w-500 f-s-16">Basic Info & Professional Info </span>
-            <span>Click to view resume :
-                <i class="fa fa-file-text-o" aria-hidden="true" (click)="viewResume(candidateDetails?.candidateResume)"></i>
-            </span>
-        </div>
-        <div id="candidateDetailsContainer"></div>
-    </div>
-    <!-- <div class="">
-            <p class="name m-t-25"></p>
-            <div class="details container ">
-                <div class="d-flex j-space">
-                    <div class="d-flex align-center ">
-                        <span class="label">Email </span>
-                        <span class="data">: </span>
-                    </div>
-                    <div class="d-flex align-center ">
-                        <span class="label">Contact number </span>
-                        <span class="data">: </span>
-                    </div>
-                </div>
-                <div class="d-flex j-space">
-                    <div class="d-flex align-center ">
-                        <span class="label">Date Of Birth </span>
-                        <span class="data">: {{candidateDetails?.candidateDoB | date:'yyyy-MM-dd'}}</span>
-                    </div>
-                    <div class="d-flex align-center ">
-                        <span class="label">Education </span>
-                        <span class="data">: {{candidateDetails?.candidateEducation}}</span>
-                    </div>
-
-                </div>
-                <div class="d-flex j-space">
-                    <div class="d-flex align-center ">
-                        <span class="label">Previous Organization </span>
-                        <span class="data">: {{candidateDetails?.candidatePreviousOrg}}</span>
-                    </div>
-                    <div class="d-flex align-center ">
-                        <span class="label">Previous Designation </span>
-                        <span class="data">: {{candidateDetails?.candidatePreviousDesignation}}</span>
-                    </div>
-                </div>
-                <div class="d-flex j-space">
-                    <div class="d-flex align-center ">
-                        <span class="label">Experience </span>
-                        <span class="data">: {{candidateDetails?.candidateExperience}}</span>
-                    </div>
-                    <div class="d-flex align-center ">
-                        <span class="label">Station </span>
-                        <span class="data">: {{candidateDetails?.candidateStation}}</span>
-                    </div>
-                </div>
-                <div class="d-flex j-space">
-                    <div class="d-flex align-center ">
-                        <span class="label">CurrentSalary </span>
-                        <span class="data">: {{candidateDetails?.candidateCurrentSalary}}</span>
-                    </div>
-                    <div class="d-flex align-center ">
-                        <span class="label">ExpectedSalary </span>
-                        <span class="data">: {{candidateDetails?.candidateExpectedSalary}}</span>
-                    </div>
-                </div>
-                <div class="d-flex j-space">
-                    <div class="d-flex align-center ">
-                        <span class="label">Address </span>
-                        <span class="data">: {{candidateDetails?.candidateAddress}}</span>
-                    </div>
-                    <div class="d-flex align-center ">
-                        <span class="label">Click to View Resume</span>
-                        <span class="data c-pointer resume" >:
-                            <img class="" src="assets/images/view-resume.png" alt="" height="25px" width="25px"></span>
-                    </div>
-                </div>
-            </div>
-        </div> -->
+    <div *ngIf="CandidateData?.length === 0">No Data Available</div>
 </div>

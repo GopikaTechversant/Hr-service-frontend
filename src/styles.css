@@ -1,8 +1,13 @@
 body {
   margin: 0;
   padding: 0;
+  font-family: default;
 }
-/* You can add global styles to this file, and also import other style files */
+
+textarea {
+  font-family: inherit; 
+}
+
 .mat-typography{
   letter-spacing: 0.2px !important;
 }
@@ -78,19 +83,6 @@ body {
   height: 100%;
 }
 
-.record-pagination ul.ngx-pagination {
-  margin-top: 0px !important;
-  margin-bottom: 0px !important;
-}
-
-.record-pagination .ngx-pagination a:hover{
-  background: #419ae8 !important;
-  color: #fff;
-}
-
-.record-pagination .ngx-pagination a{
-  text-decoration: none;
-}
 
 a{
   color: unset;
@@ -99,15 +91,6 @@ a{
 a:hover{
   text-decoration: none !important;
 }
-
-.ngx-pagination .current{
-  padding: 2px 7px !important;
-  background: #4f708e !important;
-}
-
-/* .d-block{
-  display: block;
-} */
 
 .highlighted-text{
   color: #fff;
@@ -137,7 +120,7 @@ a:hover{
 }
 
 
-.srn-dialog-container .mat-dialog-container {
+.mat-dialog-container {
   padding: 0px !important;
 }
 
@@ -149,18 +132,6 @@ a:hover{
 
   font-weight: 600!important;
 }
-
-
-/* .mat-row {
-  border: 1px solid #e7e7e7;
-  font-weight: bold;
-  height: 15px !important;
-}
-.mat-header-cell {
-  border: 1px solid #e7e7e7;
-  font-weight: bold;
-  height: 25px !important;
-} */
 
 /* FONT STYLES SIZES STARTS*/
 /* f-s-8 xxs-text f-s-10 s-text f-s-12 m-text f-s-14 f-s-15 f-s-16 f-s-17 f-s-18 f-s-19 f-s-20 f-s-22 */
@@ -259,22 +230,3 @@ body {
   flex-direction: column; 
 }
 
-
-.record-pagination ul.ngx-pagination {
-  margin-top: 0px !important;
-  margin-bottom: 0px !important;
-}
-
-.record-pagination .ngx-pagination a:hover {
-  background: #419ae8 !important;
-  color: #fff;
-}
-
-.record-pagination .ngx-pagination a {
-  text-decoration: none;
-}
-
-.ngx-pagination .current {
-  padding: 2px 7px !important;
-  background: #005EC9 !important;
-}
