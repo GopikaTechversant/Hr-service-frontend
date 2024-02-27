@@ -37,7 +37,7 @@ tr {
 }
 
 .table-container{
-    height: calc(100vh - 400px);
+    height: calc(100vh - 355px);
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -113,7 +113,8 @@ table {
 }
 
 .recruiter-drop-down {
-    width: 238px;
+    width: 200px;
+    margin-right: 10px;
 }
 
 .no-data {

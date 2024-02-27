@@ -4,19 +4,17 @@
 
 .header {
     color: #000000;
-    font-size: 25px;
+    font-size: 23px;
     font-weight: 500;
 }
 
 .scroller-box {
     padding-bottom: 20px;
-    height: calc(100vh - 300px);
-    overflow-y: scroll;
+    height: calc(100vh - 360px);
+    overflow-y: hidden;
     overflow-x: hidden;
     width: 100%;
-    /* display: flex; */
-    justify-content: space-between;
-    flex-grow: 1;
+    background: #FFFFFF;
 }
 
 .sub-head {
@@ -29,8 +27,7 @@
     outline: none;
     border-radius: 5px;
     border: 1px solid #E9E9E9;
-    background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
-    linear-gradient(0deg, #FAFAFA, #FAFAFA);    
+    background: #FFFFFF;
     width: 430px;
     height: 30px;
     text-align: left;
@@ -96,8 +93,7 @@
     outline: none;
     border-radius: 5px;
     border: 1px solid #E9E9E9;
-    background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
-    linear-gradient(0deg, #FAFAFA, #FAFAFA);    
+    background: #FFFFFF;
     width: 430px;
     height: 40px;
 }
@@ -110,11 +106,10 @@
     top: 20px;
 }
 
-
-.btn-cancel {
-    background-color: #575F6E;
-    width: 150px;
-    height: 48px;
+.btn-cancel,
+.btn-submit {
+    width: 88px;
+    height: 38px;
     border-radius: 3px;
     outline: none;
     border: none;
@@ -123,17 +118,13 @@
     font-size: 18px;
 }
 
+
+.btn-cancel {
+    background-color: #575F6E;
+}
+
 .btn-submit {
     background-color: #005EC9;
-    width: 150px;
-    height: 48px;
-    border-radius: 3px;
-    outline: none;
-    border: none;
-    color: #FFFFFF;
-    font-weight: 400;
-    font-size: 18px;
-
 }
 
 .head {
@@ -153,7 +144,7 @@
     background: white;
     box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
     max-height: 100px;
-    overflow-y: scroll;    
+    overflow-y: scroll;
     font-size: 14px;
     margin-top: 15px;
     width: 402px;
@@ -162,15 +153,14 @@
     position: absolute;
 }
 
-.dropdown-list :hover{
-   color: blue;
+.dropdown-list :hover {
+    color: blue;
 }
 
 .search-input {
     border: 1px solid #E9E9E9;
     outline: none;
-    background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
-    linear-gradient(0deg, #FAFAFA, #FAFAFA);    
+    background: #FFFFFF;
     border-radius: 3px;
     width: 250px;
     height: 40px;
@@ -240,8 +230,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 98%;
 }
-
 
 .key,
 .value {
@@ -291,7 +281,7 @@
     -ms-overflow-style: none;
 }
 
-.active{
+.active {
     background-color: rgb(2, 20, 54);
 }
 
@@ -299,7 +289,7 @@
     background: white;
     box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
     max-height: 100px;
-    overflow-y: scroll;    
+    overflow-y: scroll;
     font-size: 14px;
     margin-left: 3px;
     width: 423px;
@@ -308,6 +298,6 @@
     position: absolute;
 }
 
-.requirement-dropdown-list :hover{
+.requirement-dropdown-list :hover {
     background-color: rgb(240, 235, 235);
 }
