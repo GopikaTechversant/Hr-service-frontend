@@ -36,13 +36,13 @@
                 <span class="label m-b-4">Gender<span class="required">*</span></span>
                 <span class="d-flex gender c-pointer">
                     <input type="radio" id="Male" name="candidateGender" value="Male" formControlName="candidateGender">
-                    <label for="Male">Male</label>
+                    <label for="Male" class="p-t-5">Male</label>
                     <input type="radio" id="Female" name="candidateGender" value="Female"
                         formControlName="candidateGender">
-                    <label for="Female">Female</label>
+                    <label for="Female" class="p-t-5">Female</label>
                     <input type="radio" id="Others" name="candidateGender" value="Others"
                         formControlName="candidateGender">
-                    <label for="Others">Others</label>
+                    <label for="Others" class="p-t-5">Others</label>
                 </span>
                 <div
                     *ngIf="candidateForm.get('candidateGender')?.hasError('required') && candidateForm.get('candidateGender')?.touched">
@@ -73,8 +73,7 @@
             </div>
             <div class="child-text d-flex m-b-10">
                 <span class="label m-b-4">Address</span>
-                <textarea type="text" class="text-area m-l-5" formControlName="candidateAddress"
-                    style="height: 100%;"></textarea>
+                <textarea type="text" class="text-area m-l-5" formControlName="candidateAddress"></textarea>
             </div>
         </div>
         <div class="d-flex   parent">
@@ -193,7 +192,7 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex f-right m-20">
+        <div class="d-flex f-right btns">
             <span class="cancel-btn c-pointer" (click)="cancel()">Cancel</span>
             <button class="add-candidate">Add Candidate</button>
         </div>

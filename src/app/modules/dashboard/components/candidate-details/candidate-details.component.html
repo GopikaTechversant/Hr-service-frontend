@@ -192,7 +192,8 @@
                                     <div class="p-10">
                                         <span class="text-color p-r-10 f-w-500">{{item?.['reqUser.userName']}}</span>
                                         <span class="p-r-10">Station - </span>
-                                        <span class="p-r-10 date-color"> {{item?.commentDate | date: 'dd/MM/yyyy'}}</span>
+                                        <span class="p-r-10 date-color"> {{item?.commentDate | date:
+                                            'dd/MM/yyyy'}}</span>
                                     </div>
                                     <div class="p-10">
                                         <span>{{item?.commentComment}}</span>
@@ -216,5 +217,7 @@
             </div>
         </ng-container>
     </div>
-    <div *ngIf="CandidateData?.length === 0">No Data Available</div>
+    <div *ngIf="!CandidateData || CandidateData?.length === 0" class="no-data">
+        No data available for the searched candidate
+    </div>
 </div>

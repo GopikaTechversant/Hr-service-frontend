@@ -46,6 +46,7 @@
                         </td>
                     </tr>
                 </ng-container>
+                <div *ngIf="candidateList?.length === 0 || !candidateList" class="no-data"> No Data Found</div>
             </table>
         </div>
     <div class="pagination d-flex j-end" *ngIf="candidateList?.length > 0">

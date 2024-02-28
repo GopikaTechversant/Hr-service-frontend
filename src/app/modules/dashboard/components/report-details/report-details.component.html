@@ -82,10 +82,10 @@
                 <span class="f-w-500 p-20">Experienced Hiring ( Recruiter wise)</span>
             </div>
             <div class="chart-container">
+                <div *ngIf="requirementDetail.length === 0 || !requirementDetail" class="error">
+                    No Data Found
+                </div>
                 <canvas id="Chart"></canvas>
-            </div>
-            <div *ngIf="error" class="error">
-                No Data Found
             </div>
         </div>
         <div class="w-50">
@@ -112,7 +112,7 @@
                                 </tr>
                             </ng-container>
                         </ng-container>
-                        <div *ngIf="interviewDetails?.length === 0 " class="data">
+                        <div *ngIf="interviewDetails.length === 0 || !interviewDetails" class="data">
                             No Data Found
                         </div>
                     </table>

@@ -10,6 +10,11 @@
     justify-content: space-between;
 }
 
+.text{
+    display: flex;
+    flex: 2;
+}
+
 .heading {
     color: #000000;
     font-weight: 500;
@@ -150,14 +155,6 @@ table {
     width: 100%;
 }
 
-.no-data{
-    text-align: center;
-    margin-top: 27px;
-    font-size: 20px;
-    font-weight: 500;
-    color: #005ec9;
-}
-
 .team-dropdown {
     display: flex;
     flex-direction: column;
@@ -178,4 +175,14 @@ table {
 
 .team-column:hover {
     background-color: #f0f0f0;
+}
+
+.no-data {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    color: #525455;
+    width: 100%;
+    justify-content: center;
+    margin-top: 30px;
 }

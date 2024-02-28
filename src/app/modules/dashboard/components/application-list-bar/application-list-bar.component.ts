@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import Chart from 'chart.js/auto';
+import { Chart } from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { environment } from 'src/environments/environments';
 
@@ -14,10 +14,10 @@ import { environment } from 'src/environments/environments';
 })
 export class ApplicationListBarComponent implements OnInit {
   chart: any;
-  applicationList: any;
+  applicationList: any[] = [];
   labels: any;
-  dataSet:any;
-  displayDate : any;
+  dataSet: any;
+  displayDate: any;
 
   constructor(private http: HttpClient, private datePipe: DatePipe) { }
 
@@ -25,6 +25,8 @@ export class ApplicationListBarComponent implements OnInit {
     this.displayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     this.fetchApplicationList();
     Chart.register(ChartDataLabels);
+    this.createBarChart();
+
   }
 
   fetchApplicationList(): void {
@@ -37,7 +39,7 @@ export class ApplicationListBarComponent implements OnInit {
       }
     });
   }
-  
+
   dateChange(event: any): void {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
@@ -53,13 +55,22 @@ export class ApplicationListBarComponent implements OnInit {
       type: 'bar',
       data: {
         labels: this.labels,
+        // labels: ['ASE javascript 2024 february 29', 'ASE javascript 2024 february 29', 'ASE javascript 2024 february 29',
+        //   'ASE javascript 2024 february 29', 'ASE javascript 2024 february 29', 'ASE javascript 2024 february 29',
+        //   'ASE javascript 2024 february 29', 'ASE javascript 2024 february 29', 'ASE javascript 2024 february 29',
+        //   'ASE javascript 2024 february 29', 'ASE javascript 2024 february 29', 'ASE javascript 2024 february 29'
+        // ],
         datasets: [{
           label: ' ',
           data: this.dataSet,
+          // data: ['43', '78', '98',
+          //   '43', '78', '98',
+          //   '43', '78', '98',
+          //   '43', '78', '98'],
           backgroundColor: 'rgba(98, 138, 252)',
           borderColor: 'rgba(98, 138, 252)',
           borderWidth: 1,
-          barThickness: 40, 
+          barThickness: 40,
         }]
       },
       options: {
@@ -73,6 +84,19 @@ export class ApplicationListBarComponent implements OnInit {
           x: {
             grid: {
               display: false,
+            },
+            ticks: {
+              autoSkip: false,
+              maxRotation: 0,
+              minRotation: 0,
+              callback: function (value, index, values) {
+                const stringValue = value.toString();
+                const maxLabelLength = 10;
+                if (stringValue.length > maxLabelLength) {
+                  return stringValue.match(new RegExp('.{1,' + maxLabelLength + '}', 'g'));
+                }
+                return stringValue;
+              }
             }
           }
         },
@@ -89,7 +113,19 @@ export class ApplicationListBarComponent implements OnInit {
             display: false
           },
           tooltip: {
-            enabled: false
+            enabled: true,
+            // callbacks: {
+            //   title: function (tooltipItems: TooltipItem<keyof ChartTypeRegistry>[]) {
+            //     if (tooltipItems.length) {
+            //       const index = tooltipItems[0].dataIndex;
+            //       const labels = this.chart.data.labels as string[];
+            //       if (labels && index < labels.length) {
+            //         return labels[index];
+            //       }
+            //     }
+            //     return '';
+            //   }
+            // }
           },
           datalabels: {
             color: '#0034C4',
@@ -105,8 +141,8 @@ export class ApplicationListBarComponent implements OnInit {
               size: 11,
               weight: 400,
             },
-            formatter: (value, context) => {
-              if (context.chart.data.labels !== undefined) {
+            formatter: (value: any, context: any) => {
+              if (context.chart && context.chart.data.labels && context.dataIndex < context.chart.data.labels.length) {
                 return value + ' Applicants';
               }
               return 'Unknown: ' + value;
