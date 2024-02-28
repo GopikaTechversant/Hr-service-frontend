@@ -60,7 +60,9 @@ export class SeriesComponent implements OnInit {
       this.moreApiCalled = false;
       if (res?.candidates) {
         this.candidates_list = res?.candidates
+        this.candidates_list = [];
         this.candidates_list = [...this.candidates_list, ...res.candidates];
+        console.log(" this.candidates_list", this.candidates_list);
         this.candidates_list.forEach((candidate: any) => {
           if (candidate.serviceId) {
             this.serviceIds.push(candidate.serviceId);
@@ -68,6 +70,8 @@ export class SeriesComponent implements OnInit {
         });
       }
     })
+   
+    
   }
 
   loadMore(): void {
@@ -109,8 +113,8 @@ export class SeriesComponent implements OnInit {
     this.candidateServiceId = candidate?.serviceId;
     const dialogRef = this.dialog.open(FeedbackComponent, {
       data: { candidateId: candidate?.serviceId, stationId: 1, status: action },
-      width: '400px',
-      height: '200px'
+      width: '600px',
+      height: '300px'
     })
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {

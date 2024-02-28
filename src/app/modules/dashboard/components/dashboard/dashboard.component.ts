@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environments';
 export class DashboardComponent implements OnInit {
   candidates: any;
  lists:any[]=[];
- 
+  
   constructor(private http: HttpClient) { }
   ngOnInit(): void {
     this.fetchcount();

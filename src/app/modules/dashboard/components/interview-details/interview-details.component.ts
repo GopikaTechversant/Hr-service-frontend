@@ -248,6 +248,7 @@ export class InterviewDetailsComponent implements OnInit {
     this.noticeperiodvalue = '';
     this.commentValue = null;
     this.comment = '';
+    
     this.clearInputvalue('location');
     this.clearInputvalue('mode');
     this.clearInputvalue('interviewStatus');

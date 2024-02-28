@@ -9,9 +9,9 @@
                 <div class="d-flex j-space input">
                     <div *ngIf="!stationName"
                         class="no-close s-list m-t-8 m-l-5 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">
-                        Screening,Hr Manager
+                        Screening->Hr Manager
                     </div>
-                    <div *ngIf="stationName" class="m-t-8 m-l-5">  {{ "Screening -> " + stationName + " -> Hr Manager" }}</div>
+                    <div *ngIf="stationName" class="m-t-8 m-l-5">  {{ "Screening -> " + stationName.replace(',','->') + " -> Hr Manager" }}</div>
 
                     <button class="add-btn" (click)="idListOpen = !idListOpen;fetchStations();">Add</button>
                 </div>

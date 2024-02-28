@@ -55,6 +55,7 @@
     color: #575F6E;
     width: auto;
     font-weight: 500;
+    padding-left: 4px;
 }
 
 .value {
@@ -78,4 +79,13 @@
     overflow-y: hidden;
     overflow-x: hidden;
     /* max-height: calc(100vh - 160px); */
+}
+
+.done{
+    background-color: white;
+    color: #575F6E;
+    width: 50px;
+    border: 1px solid #E6E6E6;
+    border-radius: 3px; 
+    padding-left: 13px;
 }

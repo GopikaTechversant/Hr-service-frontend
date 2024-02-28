@@ -1,27 +1,52 @@
-.comment{
-    margin-left: 33px;
-    border-radius: 3px;
-    outline: none;
-   background-color: linear-gradient(0deg, #E9E9E9, #E9E9E9), linear-gradient(0deg, #FAFAFA, #FAFAFA);
+.comment {
+    width: 554px;
+    height: 164px;
+    top: 47px;
+    left: 9px;
+    border-radius: 2px;
+    outline: 1px solid #E6E6E6
 }
 
-.comment-heading{
-    margin-left: 22px;
+.comment-heading {
+
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 21px;
+    letter-spacing: 0em;
+    text-align: left;
+
 }
 
-.btn{
-    width: 127px;
+.btn {
+    width: 187px;
     float: right;
-    margin-right: 44px;
+    margin-right: 10px;
 }
 
-.submit-btn{
-    background-color: rgb(57, 57, 136);
-    color: white;
+.submit-btn {
+    width: 87px;
+    height: 30px;
+    color: #FFFFFF;
+    border-radius: 5px;
+    background: #005EC9;
+    border: none;
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0em;
+
 }
 
-.cancel-btn{
-    background-color: red;
-    color: white;
-    border: white;
+.cancel-btn {
+    width: 87px;
+    height: 30px;
+    background: #575F6E;
+    border-radius: 5px;
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0em;
+    border: none;
 }

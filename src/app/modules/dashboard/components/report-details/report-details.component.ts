@@ -23,6 +23,8 @@ export class ReportDetailsComponent implements OnInit {
   requirementDetailData: any;
   selectedMonth: string = 'Select Month';
   showMonth: boolean = false;
+  currentMonth: any;
+  monthValue: any;
   monthData: any[] = [
     { month: 'January', number: '01' },
     { month: 'February', number: '02' },
@@ -60,10 +62,11 @@ export class ReportDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.reportUserId = localStorage.getItem('userId');
     this.currentYear = new Date().getFullYear();
-    this.reportMonth = new Date().getMonth() + 1
+    this.reportMonth = new Date().getMonth() + 1;
     this.fetchDetails();
     this.fetchRecruiters();
     this.fetchInterviewStatus();
+    this.getCurrentMonth();
   }
 
   ngAfterViewInit(): void {
@@ -145,7 +148,10 @@ export class ReportDetailsComponent implements OnInit {
     this.pageIndex = event.pageIndex;
     this.fetchInterviewStatus();
   }
-
+  getCurrentMonth(): void {
+    this.currentMonth = this.monthData.find(item => item.number == this.reportMonth);
+    if (this.currentMonth) this.monthValue = this.currentMonth.month;
+  }
   createChart() {
     if (this.chart) {
       this.chart.destroy();
