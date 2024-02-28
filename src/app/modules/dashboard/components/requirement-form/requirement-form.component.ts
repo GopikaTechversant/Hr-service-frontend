@@ -10,6 +10,9 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './requirement-form.component.html',
   styleUrls: ['./requirement-form.component.css'],
   providers: [DatePipe],
+  host: {
+    '(document:click)': 'onBodyClick($event)'
+  }
 })
 export class RequirementFormComponent implements OnInit {
   @ViewChild('stationInput') stationInput!: ElementRef<HTMLInputElement>;
@@ -37,10 +40,20 @@ export class RequirementFormComponent implements OnInit {
   searchQuery: string = '';
   candidatesList: any[] = [];
   candidateSelect: boolean = false;
- today:any;
+  today: any;
+  selected: boolean = false;
+  candidate: any;
   constructor(private http: HttpClient, private datePipe: DatePipe, private tostr: ToastrService) { }
+
   ngOnInit(): void {
     this.today = new Date();
+  }
+
+  onBodyClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.no-close')) {
+      this.requestList_open = false;
+    }
   }
 
   fetchRequirements(): void {
@@ -88,16 +101,20 @@ export class RequirementFormComponent implements OnInit {
     });
   }
 
-  candidateSelectChange(event: any, item: any): void {
-    this.candidateSelect = !this.candidateSelect;
-    if (this.candidateSelect) {
-      if (this.selectedCandidateId.indexOf(item?.candidateId) === -1) {
-        this.selectedCandidateId.push(item?.candidateId);
-      }
-    } else {
-      const index = this.selectedCandidateId.indexOf(item?.candidateId);
-      if (index > -1) {
-        this.selectedCandidateId.splice(index, 1);
+  candidateSelectChange(item: any): void {
+    this.candidate = item;
+    this.candidate.selected = !this.candidate.selected;
+
+    if (this.candidate !== null) {
+      if (this.candidate.selected) {
+        if (this.selectedCandidateId.indexOf(item?.candidateId) === -1) {
+          this.selectedCandidateId.push(item?.candidateId);
+        }
+      } else {
+        const index = this.selectedCandidateId.indexOf(item?.candidateId);
+        if (index > -1) {
+          this.selectedCandidateId.splice(index, 1);
+        }
       }
     }
   }
@@ -133,9 +150,11 @@ export class RequirementFormComponent implements OnInit {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
   }
+
   resetFormAndState(): void {
     this.displayDate = null;
   }
+  
   cancel(): void {
     this.resetFormAndState();
     this.selectedName = null;

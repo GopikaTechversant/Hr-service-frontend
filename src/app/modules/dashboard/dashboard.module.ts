@@ -24,7 +24,6 @@ import { ApplicationListBarComponent } from './components/application-list-bar/a
 import { InterviewCountComponent } from './components/interview-count/interview-count.component';
 import { DetailedRecruitmentComponent } from './components/detailed-recruitment/detailed-recruitment.component';
 import { InterviewDetailsComponent } from './components/interview-details/interview-details.component';
-import { NgxPaginationModule } from 'ngx-pagination';
 import { ReportDetailsComponent } from './components/report-details/report-details.component';
 import { DailyReportComponent } from './components/daily-report/daily-report.component';
 
@@ -79,7 +78,6 @@ const routes: Routes = [
     TextFieldModule,
     HttpClientModule,
     FormsModule,
-    NgxPaginationModule,
   ],
   exports: [RouterModule],
   providers: [

@@ -25,6 +25,11 @@
     flex: 1;
 }
 
+.child-skill{
+    flex-direction: row;
+    flex: 1;   
+}
+
 .child-text {
     flex: 2;
     display: flex;
@@ -32,9 +37,8 @@
 }
 
 .label {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 400;
-    letter-spacing: 0em;
     text-align: left;
     padding: 5px;
 }
@@ -69,7 +73,7 @@
 }
 
 .text {
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 400;
     line-height: 21px;
     letter-spacing: 0em;
@@ -166,7 +170,7 @@
 }
 
 .gender {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 400;
     width: 290px;
     text-align: left;

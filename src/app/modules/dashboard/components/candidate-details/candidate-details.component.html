@@ -18,10 +18,10 @@
                 </div>
                 <div class="col-1">
                     <span class="f-w-500">Position</span>
-                    <span>{{candidateDetails?.position}}</span>
+                    <span class="text-color p-5 p-l-0">{{candidateDetails?.position}}</span>
                 </div>
             </div>
-            <div class=" w-80 m-b-20">
+            <div class=" w-90 m-b-20">
                 <div class="basic-head">
                     <span class="f-w-500 f-s-16">Basic Info & Professional Info </span>
                     <span>Click to view resume :
@@ -190,9 +190,9 @@
                             <div class="d-flex">
                                 <div class="col-1">
                                     <div class="p-10">
-                                        <span class="text-color p-r-10 f-w-500">Name</span>
+                                        <span class="text-color p-r-10 f-w-500">{{item?.['reqUser.userName']}}</span>
                                         <span class="p-r-10">Station - </span>
-                                        <span class="p-r-10 date-color"> 22/01/2024</span>
+                                        <span class="p-r-10 date-color"> {{item?.commentDate | date: 'dd/MM/yyyy'}}</span>
                                     </div>
                                     <div class="p-10">
                                         <span>{{item?.commentComment}}</span>
@@ -206,7 +206,7 @@
                             <div *ngIf="!last" class="bor-2"></div>
                         </ng-container>
                     </div>
-                    <div *ngIf="candidateFeedback?.length === 0">No Feedback Available</div>
+                    <div class="p-10" *ngIf="candidateFeedback?.length === 0">No other Feedback Available</div>
                     <div class="m-b-20">
                         <textarea class="text-area" id="" cols="30" rows="10" placeholder="Add New Feedback"></textarea>
                         <button class="btn-cancel">Cancel</button>

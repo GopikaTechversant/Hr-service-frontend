@@ -75,7 +75,6 @@ export class AddCandidateModalComponent implements OnInit {
     }
   }
 
-
   fetchSource(): void {
     this.http.get(`${environment.api_url}/candidate/resume-source/list`).subscribe((res: any) => {
       this.sourceList = res.data;
@@ -117,8 +116,8 @@ export class AddCandidateModalComponent implements OnInit {
 
   onFileSelected(event: any) {
     this.fileInputClicked = true;
-    this.selectedFile = event.target.files[0];
-    this.resumeUploadSuccess = true;
+    this.selectedFile = event.target.files[0];    
+    if(event.target.files.length > 0) this.resumeUploadSuccess = true;
   }
 
   submitClick(): void {
@@ -141,8 +140,6 @@ export class AddCandidateModalComponent implements OnInit {
     formdata.append('resumeSourceId', this.sourceId);
     formdata.append('candidatesAddingAgainst', this.selectedRequirementId);
     formdata.append('candidatesAddingAgainst', this.selectedRequirementId);
-    console.log(this.candidateForm.value.candidateFirstName && this.candidateForm.value.candidateLastName && this.candidateForm.value.candidateGender
-      && this.candidateForm.value.candidateEmail && this.candidateForm.value.candidateMobileNo);
     
     if (this.candidateForm.value.candidateFirstName && this.candidateForm.value.candidateLastName && this.candidateForm.value.candidateGender
       && this.candidateForm.value.candidateEmail && this.candidateForm.value.candidateMobileNo) {
@@ -156,7 +153,7 @@ export class AddCandidateModalComponent implements OnInit {
         (error) => {
           if (error?.status === 500) this.tostr.error("Internal Server Error")
           else {
-            this.tostr.warning(error?.error?.error_message ? error?.error?.error_message : "Unable to create candidate");
+            this.tostr.warning(error?.error?.message ? error?.error?.message : "Unable to create candidate");
           }
         }
       );

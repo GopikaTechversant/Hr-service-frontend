@@ -10,6 +10,9 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
   templateUrl: './interview-count.component.html',
   styleUrls: ['./interview-count.component.css'],
   providers: [DatePipe],
+  host: {
+    '(document:click)': 'onBodyClick($event)'
+  }
 })
 export class InterviewCountComponent implements OnInit {
   chart: any;
@@ -34,6 +37,13 @@ export class InterviewCountComponent implements OnInit {
     this.fetchInterviewCounts();
     this.fetchBarchartDetails();
     this.fetchDepartment();
+  }
+
+  onBodyClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.no-close')) {
+      this.showDepartment = false;
+    }
   }
 
   fetchInterviewCounts(): void {
