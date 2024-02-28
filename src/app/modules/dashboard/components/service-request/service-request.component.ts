@@ -66,6 +66,10 @@ export class ServiceRequestComponent implements OnInit {
   fetchStations(): void {
     this.http.get(`${environment.api_url}/user/stations`).subscribe((res: any) => {
       this.stationsList = res.data;
+      console.log("stationsList.slice(1, -1)",this.stationsList.slice(1, -1));
+      const array = this.stationsList.slice(1, -1);
+      console.log("array",array);
+      
     })
   }
   selectStation(stationid: any, stationName: any): void {

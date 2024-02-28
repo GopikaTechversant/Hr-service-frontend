@@ -6,14 +6,16 @@
     <div class="cards d-flex j-space m-t-10" #scrollTop>
         <div class="contents dflex m-l-4 " *ngFor="let candidate of candidates_list let i = index">
             <div class="d-flex j-space heading p-7">
-                <span class="name p-t-4">{{candidate.candidateFirstName}} {{candidate.candidateLastName}}</span>
-                <select [id]="'status' + i" (change)="onCandidateSelectionChange($event, candidate, i)" class="select" (click)="onCandidateSelectionChange($event, candidate, i)">
-                    <option value="pending" [selected]="candidate?.serviceStatus === 'pending' ? true : false">Selected
+                <span class="name p-t-4 p-l-3">{{candidate.candidateFirstName}} {{candidate.candidateLastName}}</span>
+                <select *ngIf="candidate?.serviceStatus !== 'done'" [id]="'status' + i" (change)="onCandidateSelectionChange($event, candidate, i)" class="select">
+                    <option  value="pending" [selected]="candidate?.serviceStatus === 'pending' ? true : false" >Selected
                     </option>
-                    <option value="rejected" [selected]="candidate?.serviceStatus === 'rejected' ? true : false">
+                    <option  value="rejected" [selected]="candidate?.serviceStatus === 'rejected' ? true : false">
                         Rejected
                     </option>
+                    
                 </select>
+                <span *ngIf="candidate?.serviceStatus === 'done'" value="done" selected class="name done p-t-4">Done</span>
             </div>
             <div class="info-container">
                 <div class="info-pair d-flex j-space">

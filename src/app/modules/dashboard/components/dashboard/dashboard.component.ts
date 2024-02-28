@@ -9,30 +9,7 @@ import { environment } from 'src/environments/environments';
 export class DashboardComponent implements OnInit {
   candidates: any;
  lists:any[]=[];
-  list = [
-    {
-      count: 250,
-      name: 'Total Applicants',
-      position: 'Senior Software Engineer',
-      department: 'Javascript',
-    },
-    {
-      count: 50,
-      name: 'Shortlisted Candidates',
-      position: 'Senior Software Engineer',
-      department: 'Javascript',
-    },
-    {
-      count: 20,
-      name: 'Hired Candidates',
-      position: 'Senior Software Engineer',
-      department: 'Javascript',
-    }, {
-      count: 100,
-      name: 'Rejected Candidates',
   
-    }
-  ];
   constructor(private http: HttpClient) { }
   ngOnInit(): void {
     this.fetchcount();
