@@ -54,4 +54,6 @@
 
 #barChart{
     height: 350px !important;
+    width: auto;
+    overflow-x: auto;
 }

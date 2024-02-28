@@ -7,24 +7,24 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   templateUrl: './feedback.component.html',
   styleUrls: ['./feedback.component.css']
 })
-export class FeedbackComponent implements OnInit{
+export class FeedbackComponent implements OnInit {
   @Output() rejectedCandidatesEmitter: EventEmitter<any[]> = new EventEmitter<any[]>();
   @Output() selectedCandidatesEmitter: EventEmitter<any[]> = new EventEmitter<any[]>();
   feedback: any;
   stationId: any;
-  rejectedcandidates:any[]=[];
+  rejectedcandidates: any[] = [];
   candidateServiceId: any;
-  constructor(public dialogRef: MatDialogRef<FeedbackComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient){
+  constructor(public dialogRef: MatDialogRef<FeedbackComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient) {
 
   }
   ngOnInit(): void {
-    
+
   }
   onSubmitClick(): void {
     const feedback = document.getElementById('feedback') as HTMLInputElement;
     if (feedback) this.feedback = feedback.value;
     this.candidateServiceId = this.data.candidateId;
-    this.rejectedCandidatesEmitter.emit([ this.candidateServiceId ]);    
+    this.rejectedCandidatesEmitter.emit([this.candidateServiceId]);
     this.stationId = this.data.stationId;
     const payload = {
       serviceId: this.candidateServiceId,
@@ -32,15 +32,16 @@ export class FeedbackComponent implements OnInit{
       status: this.data.status == 'pending' ? 'selected' : 'rejected',
       feedBack: this.feedback
     }
-    
+
     this.http.post(`${environment.api_url}/screening-station/reject/candidate`, payload).subscribe((res: any) => {
-      this.dialogRef.close(true);
+      // this.dialogRef.close(true);
       if (this.data.status === 'pending') {
         console.log(this.candidateServiceId);
-      
         this.selectedCandidatesEmitter.emit([this.candidateServiceId]);
       }
+      this.dialogRef.close(true);
     })
+    
   }
   onCancelClick(): void {
     this.dialogRef.close(false);

@@ -55,8 +55,6 @@ export class SeriesComponent implements OnInit {
     }
 
   }
-
-
   fetchcandidates(): void {
     this.http.get(`${environment.api_url}/screening-station/list-batch/${this.requestId}?limit=${this.limit}&page=1`).subscribe((res: any) => {
       this.moreApiCalled = false;
