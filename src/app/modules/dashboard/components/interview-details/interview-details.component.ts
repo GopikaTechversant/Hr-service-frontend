@@ -176,6 +176,8 @@ export class InterviewDetailsComponent implements OnInit {
   timeChange(event: any): void {
     console.log("event", event);
     this.displayTime = event;
+    console.log(this.displayTime);
+    
     if (this.interviewStatus === 'scheduled') this.interviewStatus = 'Rescheduled'
     this.changeInterviewStatus();
   }

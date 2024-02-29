@@ -17,7 +17,7 @@ export class ReportDetailsComponent implements OnInit {
   reportUserId: any = '';
   currentYear: any = '';
   reportMonth: any = '';
-  userRequirement: any;
+  userRequirement: any = [];
   requirementDetail: any;
   totalReport: any;
   requirementDetailData: any;
@@ -92,27 +92,28 @@ export class ReportDetailsComponent implements OnInit {
     this.http.get(`${environment.api_url}/report/month-report-data?month=${this.currentYear}-${this.reportMonth}&userId=${this.reportUserId}`)
       .subscribe(
         (res: any) => {
-          this.userRequirement = [];
-          this.userRequirement = res?.data;
-          this.totalReport = res?.totalReportMonth[0];
-          for (let requirement of this.userRequirement) {
-            this.requirementDetail = requirement;
-            if (this.userRequirement.length > 0) {
-              this.error = false;
-              const requirementDetail = this.userRequirement[this.userRequirement.length - 1];
-              this.requirementDetailData = [
-                requirementDetail.sourcedScreened ?? '0',
-                requirementDetail.candidateContacted ?? '0',
-                requirementDetail.candidatesInterested ?? '0',
-                requirementDetail.interviewScheduled ?? '0',
-                requirementDetail.offerReleased ?? '0'
-              ];
-              this.createChart();
-            } else {
-              this.requirementDetailData = ['0', '0', '0', '0', '0'];
+          if(res){
+            this.userRequirement = [];
+            this.userRequirement = res?.data;
+            this.totalReport = res?.totalReportMonth[0];
+            for (let requirement of this.userRequirement) {
+              this.requirementDetail = requirement;
+              if (this.userRequirement.length > 0) {
+                this.error = false;
+                const requirementDetail = this.userRequirement[this.userRequirement.length - 1];
+                this.requirementDetailData = [
+                  requirementDetail.sourcedScreened ?? '0',
+                  requirementDetail.candidateContacted ?? '0',
+                  requirementDetail.candidatesInterested ?? '0',
+                  requirementDetail.interviewScheduled ?? '0',
+                  requirementDetail.offerReleased ?? '0'
+                ];
+                this.createChart();
+              } else {
+                this.requirementDetailData = ['0', '0', '0', '0', '0'];
+              }
             }
           }
-
         },
         (error) => {
           if (error?.status === 500) this.tostr.error("Internal Server Error");

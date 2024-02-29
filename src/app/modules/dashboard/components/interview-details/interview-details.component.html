@@ -8,7 +8,7 @@
                 <span *ngIf="recruiterName">{{recruiterName}}</span>
                 <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
             </div>
-            <div class="no-close dropdown m-t-6 p-t-10 p-l-6" *ngIf="showRecruiters">
+            <div class="no-close dropdown m-t-6 p-t-10 p-l-6 c-pointer" *ngIf="showRecruiters">
                 <div *ngFor="let recruiter of users_list"
                     (click)="selectRecruiter(recruiter.userId,recruiter.userfirstName,recruiter.userlastName)">
                     {{recruiter.userfirstName}} {{recruiter.userlastName}}
@@ -38,7 +38,7 @@
                 <span *ngIf="positionName" class="p-l-9">{{positionName}}</span>
                 <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
             </div>
-            <div class="no-close dropdown m-t-6 p-t-10 p-l-6" *ngIf="showDropdown">
+            <div class="no-close dropdown m-t-6 p-t-10 p-l-6 c-pointer" *ngIf="showDropdown">
                 <div *ngFor="let position of positionList"
                     (click)="selectPosition(position.requestId,position.requestName)">
                     {{position.requestName}}
@@ -90,7 +90,7 @@
                 <span *ngIf="panelName" class="p-l-9">{{panelName}}</span>
                 <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
             </div>
-            <div class="no-close dropdown  p-b-7 p-l-6" *ngIf="showPanel">
+            <div class="no-close dropdown  p-b-7 p-l-6 c-pointer" *ngIf="showPanel">
                 <div *ngFor="let panel of panel_list "
                     (click)="selectPanel(panel.userId,panel.userfirstName,panel.userlastName)">
                     {{panel.userfirstName}} {{panel.userlastName}}
