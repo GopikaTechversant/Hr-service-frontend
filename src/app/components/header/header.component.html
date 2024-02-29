@@ -24,19 +24,8 @@
       <span class="f-w-500 user-name t-dark-blue-color"> {{ currentUser?.charAt(0) ? (currentUser?.charAt(0) |
         uppercase): '' }}</span>
     </div>
-    <div *ngIf="dropDown" class="drop-down p-12 d-flex p-absolute">
-      <div class="station" (click)="navigate('/dashboard',false)">
-        <div class="c-pointer">Screening station</div>
-      </div>
-      <div class="station" (click)="navigate('/written',false)">
-        <div class="c-pointer">Written station</div>
-      </div>
-      <div class="station" (click)="navigate('/technical',false)">
-        <div class="c-pointer">Technical station</div>
-      </div>
-      <div class="station" (click)="navigate('/hr',false)">
-        <div class="c-pointer">HR Manager</div>
-      </div>
+    <!-- <div *ngIf="dropDown" class="drop-down p-12 d-flex p-absolute">
+     
       <div class="station" (click)="navigate('/user',false)">
         <div class="c-pointer">User</div>
       </div>
@@ -45,6 +34,12 @@
             (click)="openAddCandidateModal()"></div>
         <div class="c-pointer f-s-16" (click)="logout()">Logout</div>
       </div>
+    </div> -->
+    <div *ngIf="dropDown" class="drop-down p-12 d-flex p-absolute">
+      <div class="station" *ngFor="let station of stationsList">
+        <div class="c-pointer" (click)="navigate(station)">{{station.stationName}}</div>
+      </div>
+      <div class="c-pointer f-s-16 m-l-15" (click)="logout()">Logout</div>
     </div>
   </div>
 </div>
