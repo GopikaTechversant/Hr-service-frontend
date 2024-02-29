@@ -52,11 +52,11 @@
             <span class="label m-b-4">Candidate Name</span>
             <div class="input-box p-t-10 p-l-6" (click)="showcandidate = !showcandidate;fetchCandidates()">
                 <span *ngIf="!candidateName">Select Name</span>
-                <span *ngIf="candidateName" class="p-l-9">{{candidateName}}</span>
+                <span *ngIf="candidateName" class="p-l-9 c-pointer">{{candidateName}}</span>
                
                 <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
             </div>
-            <div class="no-close dropdown m-t-6 p-t-10 p-l-6" *ngIf="showcandidate && positionId">
+            <div class="no-close dropdown m-t-6 p-t-10 p-l-6 c-pointer" *ngIf="showcandidate && positionId">
                 <div *ngFor="let candidate of candidate_list"
                     (click)="selectCandidate(candidate.candidateId,candidate.candidateFirstName,candidate.candidateLastName,candidate)">
                     {{candidate.candidateFirstName}} {{candidate.candidateLastName}}
@@ -105,7 +105,7 @@
         </div>
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Interview Status</span>
-            <input type="text" class="input-box p-l-9" id="interviewStatus" [value]="interviewStatus || interviewStatus">
+            <input type="text" class="input-box p-l-9" id="interviewStatus" [value]="interviewStatus">
         </div>
        
     </div>
