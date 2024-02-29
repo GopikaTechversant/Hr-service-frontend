@@ -146,10 +146,12 @@
 
 .calendar-icon {
     color: gray;
-    Width: 18px;
-    Height: 18px;
-    margin-left: -22px;
-    top: 13px;
+    width: 18px; 
+    height: 18px; 
+    position: absolute;
+    top: 8px; 
+    right: 5px; 
+    cursor: pointer; 
 }
 
 .dropdown {

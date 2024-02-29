@@ -20,7 +20,7 @@ export class DailyReportComponent implements OnInit {
   pageIndex = 1;
   pageSizeOptions = [10, 25, 30];
   showFirstLastButtons = true;
-  userRequirement: any;
+  userRequirement: any = [];
   currentPag: number = 1;
   currentLimit: number = 7;
   totalCount: any;
@@ -52,6 +52,8 @@ export class DailyReportComponent implements OnInit {
   ngOnInit(): void {
     this.reportUserId = localStorage.getItem('userId');
     this.fetchDetails();
+    console.log(this.recruiterName);
+    
   }
 
   // ngOnChanges(changes: SimpleChanges): void {
@@ -63,13 +65,15 @@ export class DailyReportComponent implements OnInit {
   fetchDetails(): void {
     this.http.get(`${environment.api_url}/report/report-list?reportUserId=${this.reportUserId}&reportFromDate=${this.reportFromDate}&reportToDate=${this.reportToDate}&reportPageNo=${this.reportPageNo}&reportPageLimit=${this.reportPageLimit}`)
       .subscribe((res: any) => {
-        this.userRequirement = [];
-        this.userRequirement = res?.data;
-        console.log(" this.userRequirement", this.userRequirement);
-        this.userRequirement.forEach((objectItem: any) => {
-          this.recruiterKeys = Object.keys(objectItem);
-          console.log("Keys of an object:", this.recruiterKeys);
-        })
+        if(res?.data){
+          this.userRequirement = [];
+          this.userRequirement = res?.data;
+          console.log(" this.userRequirement", this.userRequirement);
+          this.userRequirement.forEach((objectItem: any) => {
+            this.recruiterKeys = Object.keys(objectItem);
+            console.log("Keys of an object:", this.recruiterKeys);
+          })
+        }  
       });
   }
 

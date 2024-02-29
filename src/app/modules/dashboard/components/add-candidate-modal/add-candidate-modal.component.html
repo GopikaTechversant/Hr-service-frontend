@@ -20,7 +20,7 @@
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">DOB</span>
-                <div class="p-relative ">
+                <div class="p-relative w-100">
                     <input class="p-l-5  input-box" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate"
                         (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate"
                         formControlName="candidateDoB">
