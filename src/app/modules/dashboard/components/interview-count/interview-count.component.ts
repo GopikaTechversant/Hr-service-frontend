@@ -28,7 +28,7 @@ export class InterviewCountComponent implements OnInit {
   dataSet: any;
   teamDetails: any;
   showDepartment :boolean = false;
-  teamId: any = 3;
+  teamId: any = '';
   teamName : string = 'Choose Department';
 
   constructor(private datePipe: DatePipe, private http: HttpClient) { }
@@ -121,7 +121,7 @@ export class InterviewCountComponent implements OnInit {
             display: false
           },
           tooltip: {
-            enabled: false
+            enabled: true,
           },
           datalabels: {
             display: false

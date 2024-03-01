@@ -8,17 +8,30 @@ import { environment } from 'src/environments/environments';
 })
 export class DashboardComponent implements OnInit {
   candidates: any;
- lists:any[]=[];
-  
+  lists: any[] = [];
+  requestList: any;
+  requestList_open :boolean = false;
+
   constructor(private http: HttpClient) { }
+
   ngOnInit(): void {
     this.fetchcount();
+    this.fetchRequirements();
   }
-fetchcount():void{
-  this.http.get(`${environment.api_url}/dashboard/card-data`).subscribe((res:any) => {
-    console.log("res",res);
-    this.lists = res.data;
-  })
-}
+
+  fetchcount(): void {
+    this.http.get(`${environment.api_url}/dashboard/card-data`).subscribe((res: any) => {
+      console.log("res", res);
+      this.lists = res.data;
+    })
+  }
+
+  fetchRequirements(): void {
+    this.http.get(`${environment.api_url}/service-request/list`).subscribe((res: any) => {
+      if (res?.data) {
+        this.requestList = res?.data;
+      }
+    })
+  }
 
 }
