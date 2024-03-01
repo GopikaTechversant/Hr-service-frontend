@@ -8,21 +8,25 @@ import { ToastrModule } from 'ngx-toastr';
 import { FeedbackComponent } from './components/feedback/feedback.component';
 import { FormsModule } from '@angular/forms';
 import { DeleteComponent } from './components/delete/delete.component';
-
-
+import { EditComponent } from './components/edit/edit.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from './modules/material/material.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     FeedbackComponent,
     DeleteComponent,
+    EditComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AuthModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule, 
+    MaterialModule,
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-top-right',

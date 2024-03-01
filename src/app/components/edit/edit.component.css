@@ -1,0 +1,217 @@
+.heading {
+    font-size: 25px;
+    font-weight: 500;
+    text-align: left;
+    padding-bottom: 10px;
+}
+
+.main {
+    background-color: #F7F7F7;
+}
+
+.input-box {
+    width: 100%;
+    height: 34px;
+    border-radius: 5px;
+    outline: none;
+    background: #FAFAFA;
+    padding-left: 5px;
+    border: 1px solid #E9E9E9;
+}
+
+
+.child {
+    flex-direction: column;
+    flex: 1;
+}
+
+.child-skill{
+    flex-direction: row;
+    flex: 1;   
+}
+
+.child-text {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    font-size: 14px;
+    font-weight: 400;
+    text-align: left;
+    padding: 5px;
+}
+
+.parent{
+    column-gap: 18px;
+}
+
+.text-area {
+    width: 100%;
+    height: 34px;
+    border-radius: 5px;
+    outline: none;
+    background: #FAFAFA;
+    padding-left: 5px;
+    border: 1px solid #E9E9E9;
+}
+
+.fa-chevron-down {
+    color: gray;
+}
+
+.upload-resume-btn {
+    margin-left: -5px;
+    width: 80px;
+    height: 34px;
+    top: 648px;
+    left: 1340px;
+    border-radius: 3px;
+    border: 1px;
+    background: linear-gradient(0deg, #575F6E, #575F6E), linear-gradient(0deg, #E9E9E9, #E9E9E9);
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+}
+
+.text {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #000000;
+}
+
+.add-btn {
+    margin: 5px;
+    width: 85px;
+    height: 35px;
+    border-radius: 3px;
+    border: 1px;
+    background: linear-gradient(0deg, #005EC9, #005EC9), linear-gradient(0deg, #E9E9E9, #E9E9E9);
+    color: white;
+    font-size: 18px;
+    font-weight: 400;
+    text-align: center;
+    padding: 8px;
+}
+
+.skills {
+    height: 200px;
+    border-radius: 3px;
+    background: #EFEFEF;
+    border: 1px solid #E9E9E9;
+    width: 99%;
+}
+
+.skill-drop-down {
+    width: 327px;
+}
+
+.cancel-btn {
+    width: 150px;
+    height: 40px;
+    border-radius: 3px;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 21px;
+    letter-spacing: 0em;
+    background: #575F6E;
+    border: none;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+.add-candidate {
+    width: 150px;
+    height: 40px;
+    border-radius: 3px;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 21px;
+    letter-spacing: 0em;
+    text-align: left;
+    background: #005EC9;
+    color: white;
+    text-align: center;
+    border: none;
+    margin: 10px;
+}
+
+.calendar-icon {
+    color: gray;
+    width: 18px; 
+    height: 18px; 
+    position: absolute;
+    top: 8px; 
+    right: 5px; 
+    cursor: pointer; 
+}
+
+.dropdown {
+    background: white;
+    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+    max-height: 150px;
+    overflow-y: auto;
+    font-size: 14px;
+    font-weight: 400;
+    width: 292px;
+    padding: 5px;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 999;
+    margin-top: 5px;
+    top: 100%;
+    left: 0;
+}
+
+.dropdown :hover {
+    color: blue;
+}
+
+.gender {
+    font-size: 14px;
+    font-weight: 400;
+    width: 100%;
+    text-align: left;
+
+}
+
+.input-search {
+    outline: none;
+    height: 34px;
+    width: 200px;
+    border-radius: 5px;
+    background: #FAFAFA;
+    outline: none;
+    border: 1px solid #E9E9E9
+}
+
+.required {
+    color: red;
+}
+
+.upload-success-message {
+    color: #575F6E;
+}
+
+.remove {
+    color: #005EC9;
+    padding: 3px;
+    border: 1px solid #005EC9;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-left: 10px;
+}
+
+.btns{
+    margin-right: -22px !important;
+    margin-top: 20px;
+}

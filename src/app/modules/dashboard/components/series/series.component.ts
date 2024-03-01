@@ -70,8 +70,8 @@ export class SeriesComponent implements OnInit {
         });
       }
     })
-   
-    
+
+
   }
 
   loadMore(): void {

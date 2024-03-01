@@ -41,8 +41,8 @@
                     <td>{{item?.candidateEducation}}</td>
                          <td>{{item?.candidateSkill.length > 0 ? item?.candidateSkill[0]?.skills?.skillName : 'N/A'}}</td>
                         <td>
-                            <i class="fa fa-pencil-square-o p-r-5 icon-color" aria-hidden="true"></i>
-                            <i class="fa fa-trash-o p-l-5 icon-color" aria-hidden="true" (click)="delete()"></i>
+                            <i class="fa fa-pencil-square-o p-r-5 icon-color" aria-hidden="true" (click)="edit(item?.candidateId)"></i>
+                            <i class="fa fa-trash-o p-l-5 icon-color" aria-hidden="true" (click)="delete(item?.candidateId)"></i>
                         </td>
                     </tr>
                 </ng-container>
