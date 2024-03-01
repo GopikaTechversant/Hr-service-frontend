@@ -2,7 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environments';
-
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteComponent } from 'src/app/components/delete/delete.component';
+import { EditComponent } from 'src/app/components/edit/edit.component';
 @Component({
   selector: 'app-candidate-list',
   templateUrl: './candidate-list.component.html',
@@ -27,8 +29,8 @@ export class CandidateListComponent {
   currentLimit: number = 7;
   totalCount: any;
   data: any;
-
-  constructor(private http: HttpClient, private router: Router) { }
+  candidateId: any;
+  constructor(private http: HttpClient, private router: Router, private dialog: MatDialog) { }
   ngOnInit(): void {
     this.fetchCandidates('');
   }
@@ -41,6 +43,9 @@ export class CandidateListComponent {
         this.candidateList = [];
         this.candidateList = data?.candidates;
         this.totalCount = data?.candidateCount;
+
+        console.log("candidate id", this.data);
+
       });
   }
   navigate(path: any, queryParam: any): void {
@@ -62,7 +67,22 @@ export class CandidateListComponent {
     this.pageIndex = event.pageIndex;
     this.fetchCandidates('');
   }
-  delete():void{
-    
+  delete(id: any): void {
+    const dialogRef = this.dialog.open(DeleteComponent, {
+      data: id,
+      width: '350px',
+      height: '150px'
+    })
+    dialogRef.componentInstance.onDeleteSuccess.subscribe(() => {
+      this.fetchCandidates('');
+    })
   }
+  edit(id: any): void {
+    const dialogRef = this.dialog.open(EditComponent, {
+      data: id,
+      width: '900px',
+      height: '600px'
+    })
+  }
+
 }
