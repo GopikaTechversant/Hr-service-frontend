@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { FeedbackComponent } from './components/feedback/feedback.component';
 import { FormsModule } from '@angular/forms';
+import { DeleteComponent } from './components/delete/delete.component';
 
 
 
@@ -14,6 +15,7 @@ import { FormsModule } from '@angular/forms';
   declarations: [
     AppComponent,
     FeedbackComponent,
+    DeleteComponent,
   ],
   imports: [
     BrowserModule,
