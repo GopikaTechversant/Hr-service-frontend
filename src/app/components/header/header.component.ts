@@ -36,46 +36,35 @@ export class HeaderComponent implements OnInit {
     this.currentUser = localStorage.getItem('userRole');
     this.fetchStations();
   }
+
   fetchStations(): void {
     this.http.get(`${environment.api_url}/user/stations`).subscribe((res: any) => {
       this.stationsList = res.data;
-      console.log("stationsList.slice", this.stationsList);
     })
   }
+
   navigate(station: any): void {
-    console.log("station", station);
-    if (station?.stationName === 'Technical 1') {
-      this.router.navigate([`/technical/${station?.stationId}`]);
-      console.log("Technical 1", station?.stationName);
-    } else if (station?.stationName === 'Technical 2') {
-      this.router.navigate([`/technical/${station?.stationId}`]);
-    } else if (station?.stationName === 'Hr Manager') {
-      this.router.navigate(['/hr']);
-    } else if (station?.stationName === 'Screening') {
-      this.router.navigate(['/dashboard']);
-    } else if (station?.stationName === 'Written') {
-      this.router.navigate(['/written']);
-    }
+    if (station?.stationName === 'Technical 1') this.router.navigate([`/technical/${station?.stationId}`]);
+    else if (station?.stationName === 'Technical 2') this.router.navigate([`/technical/${station?.stationId}`]);
+    else if (station?.stationName === 'Hr Manager') this.router.navigate(['/hr']);
+    else if (station?.stationName === 'Screening') this.router.navigate(['/dashboard']);
+    else if (station?.stationName === 'Written') this.router.navigate(['/written']);
+
     this.dropDown = false;
-
   }
-  searchCandidate(searchKeyword: string): void {
-    console.log(searchKeyword);
 
+  searchCandidate(searchKeyword: string): void {
     this.searchKeyword = searchKeyword;
     this.http.get(`${environment.api_url}/candidate/search/list?search=${this.searchKeyword}`).subscribe((res: any) => {
       if (res?.data) {
         this.candidateList = res?.data
         if (this.candidateList?.length > 0) this.showCandidates = true;
-        console.log(this.candidateList);
-
       }
     })
   }
 
   selectCandidate(id: any): void {
     this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
-    // this.showCandidates = false;
   }
 
   profileClick() {
@@ -94,13 +83,7 @@ export class HeaderComponent implements OnInit {
       width: '700px'
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log("after closed");
     })
   }
-
-  // navigate(path: any, queryParam: any): void {
-  //   if (queryParam) this.router.navigate([path], { queryParams: { type: queryParam } });
-  //   else this.router.navigate([path]);
-  // }
 
 }

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -11,14 +11,14 @@ import { DatePipe } from '@angular/common';
   providers: [DatePipe],
 })
 export class ApplicationListPieComponent implements OnInit, AfterViewInit {
+  @Input() positionId : string = ' ';
   chart: any;
   displayDate: any;
   sourceList: any[] = [];
   sourceLabels: any[] = [];
   sourceCount: any[] = [];
-  constructor(private http: HttpClient, private datePipe: DatePipe) {
+  constructor(private http: HttpClient, private datePipe: DatePipe) { }
 
-  }
   ngOnInit(): void {
     this.displayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     this.fetchResumeSource()
@@ -28,18 +28,25 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
     Chart.register(ChartDataLabels);
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if(this.positionId) this.fetchResumeSource();    
+  }
+
   fetchResumeSource(): void {
-    this.http.get(`${environment.api_url}/dashboard/resume-source?date=${this.displayDate}`).subscribe((res: any) => {
-      this.sourceList = res.data;
-      this.sourceCount = this.sourceList.map((item: any) => Number(item.sourcecount));
-      this.sourceLabels = this.sourceList.map((item: any) => item.sourceName)
-      this.createChart();
+    this.http.get(`${environment.api_url}/dashboard/resume-source?date=${this.displayDate}&requestId=${this.positionId}`).subscribe((res: any) => {
+      if(res?.data){
+        this.sourceList = res.data;
+        this.sourceCount = this.sourceList.map((item: any) => Number(item.sourcecount));
+        this.sourceLabels = this.sourceList.map((item: any) => item.sourceName)
+        this.createChart();
+      }
     })
   }
 
   dateChange(event: any): void {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    this.positionId = '';
     this.fetchResumeSource();
   }
 

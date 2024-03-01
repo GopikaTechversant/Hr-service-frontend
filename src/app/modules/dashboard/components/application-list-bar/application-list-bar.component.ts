@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { environment } from 'src/environments/environments';
@@ -13,6 +13,8 @@ import { environment } from 'src/environments/environments';
 
 })
 export class ApplicationListBarComponent implements OnInit {
+  @Input() positionId : string = ' ';
+
   chart: any;
   applicationList: any[] = [];
   labels: any;
@@ -26,11 +28,14 @@ export class ApplicationListBarComponent implements OnInit {
     this.fetchApplicationList();
     Chart.register(ChartDataLabels);
     this.createBarChart();
+  }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if(this.positionId) this.fetchApplicationList();    
   }
 
   fetchApplicationList(): void {
-    this.http.get(`${environment.api_url}/dashboard/department-daily-application?${this.displayDate}`).subscribe((res: any) => {
+    this.http.get(`${environment.api_url}/dashboard/department-daily-application?${this.displayDate}&requestId=${this.positionId}`).subscribe((res: any) => {
       if (res?.data) {
         this.applicationList = res?.data;
         this.labels = this.applicationList.map((app: any) => app.requestName);
@@ -43,6 +48,7 @@ export class ApplicationListBarComponent implements OnInit {
   dateChange(event: any): void {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    this.positionId = '';
     this.fetchApplicationList();
   }
 

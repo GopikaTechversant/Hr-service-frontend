@@ -15,7 +15,7 @@
     left: 349px;
     border: 1px solid #E9E9E9;
     border-radius: 5px;
-    background: white;
+    background: #FAFAFA;
     outline: none;
 }
 
@@ -30,21 +30,6 @@
     text-align: left;
 }
 
-.dropdown {
-    background: white;
-    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
-    font-size: 17px;
-    font-weight: 400;
-    line-height: 27px;
-    letter-spacing: 0em;
-    text-align: left;
-    position: fixed;
-    z-index: 1;
-    width: 290px;
-    height: 100px;
-    overflow-y: auto;
-}
-
 .calendar-icon {
     color: gray;
     Width: 18px;
@@ -55,8 +40,6 @@
 
 .main {
     margin-right: 20px;
-    /* background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
-        linear-gradient(0deg, #FAFAFA, #FAFAFA); */
 }
 
 .comments {
@@ -114,5 +97,30 @@
 
 .parent{
     margin-right: 22px;
+}
+
+.date-input{
+    outline: none !important;
+    border: none !important;
+    padding: 10px;
+    width: 40%;
+}
+
+.dropdown {
+    background: white;
+    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+    max-height: 100px;
+    overflow-y: scroll;
+    font-size: 14px;
+    margin-left: 3px;
+    width: 280px;
+    padding-left: 10px;
+    padding-top: 10px;
+    position: absolute;
+}
+
+.dropdown :hover {
+    background-color: rgb(240, 235, 235);
+
 }
 

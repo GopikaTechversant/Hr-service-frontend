@@ -5,21 +5,20 @@
 .head {
   font-size: 30px;
   font-weight: 500;
-  line-height: 35.55px;
 }
 
-.input{
+.input {
   border: 1px solid #E9E9E9;
   outline: none;
   background-color: #FFFFFF;
   border-radius: 3px;
-  width: 144px;
-  height: 33px;
+  width: 300px;
+  height: 28px;
 }
 
 .candidate-card {
-  width: 3055px;
-  height: 147px;
+  width: 294px;
+  height: 139px;
   border-radius: 4px;
   background-color: #FFFFFF;
   box-shadow: 0px 4px 7px 0px #0000001F;
@@ -36,9 +35,10 @@
 }
 
 .name {
-  font-weight: 400;
+  font-weight: 500;
   font-size: 18px;
   color: #4F4F4F;
+  padding-bottom: 5px;
 }
 
 .other {
@@ -53,8 +53,8 @@
   align-items: center;
   margin-top: 30px;
   margin-left: 10px;
-  width: 90px;
-  height: 80px;
+  width: 70px;
+  height: 68px;
   color: #005EC9;
   background-color: #EBF0FF;
 }
@@ -64,22 +64,48 @@
   font-size: 33px;
 }
 
-.scrollable::-webkit-scrollbar, .main::-webkit-scrollbar {
+.scrollable::-webkit-scrollbar,
+.main::-webkit-scrollbar {
   display: none;
 }
 
-.scrollable, .main {
-  scrollbar-width: none; /* For Firefox */
+.scrollable,
+.main {
+  scrollbar-width: none;
+  /* For Firefox */
 }
 
-.scrollable, .main {
-  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+.scrollable,
+.main {
+  -ms-overflow-style: none;
+  /* For Internet Explorer and Edge */
 }
 
-.w-45{
+.w-45 {
   width: 45%;
 }
 
-.w-55{
+.w-55 {
   width: 55%;
+}
+
+.dropdown {
+  background: white;
+  box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+  max-height: 150px;
+  overflow-y: auto;
+  font-size: 14px;
+  font-weight: 400;
+  width: 292px;
+  padding: 5px;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 999;
+  margin-top: 5px;
+  top: 100%;
+  left: 0;
+}
+
+.dropdown :hover {
+  background-color: #eceaea;
 }

@@ -1,9 +1,10 @@
 .main {
     background-color: #F7F7F7;
+    margin-right: 20px;
 }
 
 .scroller-box {
-    width: 894px;
+    width: 100%;
 }
 
 .header {
@@ -13,13 +14,26 @@
     line-height: 35.55px;
 }
 
+.parent {
+    column-gap: 18px;
+    display: flex;
+    flex-direction: row;
+}
+
+.child {
+    flex-direction: column;
+    flex: 1;
+}
+
 .input {
-    outline: none;
+    width: 100%;
+    height: 34px;
     border-radius: 5px;
-    border: 1px solid #E9E9E9;
-    width: 430px;
-    height: 40px;
+    outline: none;
     background: #FAFAFA;
+    padding-left: 5px;
+    border: 1px solid #E9E9E9;
+    margin-top: 10px;
 }
 
 .sub-head {
@@ -30,104 +44,14 @@
     padding-bottom: 10px;
 }
 
-
-.text-box {
-    height: 30px;
-    border: 1px solid #EEEEEE;
-    border-radius: 5px;
-    padding: 4px 8px;
-    outline: none;
-}
-
-.input-skill {
-    outline: none;
-    border-radius: 5px;
-    border: 1px solid #E9E9E9;
-    width: 894px;
-    height: 40px;
-    background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
-        linear-gradient(0deg, #FAFAFA, #FAFAFA);
-}
-
-.subscriber-drop-down {
-    outline: none;
-    border-radius: 5px;
-    border: 1px solid #E9E9E9;
-    width: 366px;
-    height: 40px;
-    padding-left: 5px;
-    padding-right: 8px;
-    background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
-        linear-gradient(0deg, #FAFAFA, #FAFAFA);
-
-}
-
 .fa-chevron-down {
     color: #575F6E;
-}
-
-.subscriber-drop-down>.sub {
-    height: 16px;
-}
-
-.subscriber-drop-down>.w-max {
-    width: 150px;
-}
-
-.subscriber-drop-down>.drop-list {
-    position: fixed;
-    top: 32px;
-    right: 0;
-    width: 100%;
-    background-color: white;
-    border: 1.5px solid #7d8296b5;
-    border-radius: 5px;
-    z-index: 10;
-    max-height: 120px;
-    overflow-y: scroll;
-    width: 100%;
-    z-index: 1;
-}
-
-.team-drop-down {
-    outline: none;
-    border-radius: 5px;
-    border: 1px solid #E9E9E9;
-    width: 422px;
-    height: 40px;
-    position: relative;
-    padding-left: 5px;
-    padding-right: 8px;
-    background: #FAFAFA;
-}
-
-.team-drop-down>.sub {
-    height: 16px;
-}
-
-.team-drop-down>.w-max {
-    width: 150px;
-}
-
-.team-drop-down>.drop-list {
-    position: absolute;
-    top: 32px;
-    right: 0;
-    width: 100%;
-    background-color: white;
-    border: 1.5px solid #7d8296b5;
-    border-radius: 5px;
-    z-index: 10;
-    max-height: 120px;
-    overflow-y: scroll;
-    width: 100%;
 }
 
 .mat-ripple {
     overflow: hidden;
     position: relative;
 }
-
 
 .btn-cancel {
     background-color: #575F6E;
@@ -153,16 +77,6 @@
     font-size: 18px;
 }
 
-.fa-plus {
-
-    color: white;
-}
-
-.add-station-icon {
-    background: linear-gradient(0deg, #005EC9, #005EC9),
-        linear-gradient(0deg, #E9E9E9, #E9E9E9);
-}
-
 .add-btn {
     margin-left: 3px;
     width: 53px;
@@ -175,14 +89,20 @@
     font-weight: 400;
 }
 
-.drop-list{
-    position: absolute;
-    background-color: white;
-    z-index: 1;
-    width: 381px;
-    border: 1.5px solid #7d8296b5;
-    border-radius: 5px;
-    z-index: 10;
-    max-height: 120px;
+.drop-list {
+    background: white;
+    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+    max-height: 100px;
     overflow-y: scroll;
+    font-size: 14px;
+    margin-left: 3px;
+    width: 423px;
+    padding-left: 10px;
+    padding-top: 10px;
+    position: absolute;
+}
+
+.drop-list :hover {
+    background-color: rgb(240, 235, 235);
+
 }
