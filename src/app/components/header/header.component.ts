@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit {
   searchKeyword: string = '';
   candidateList: any;
   showCandidates: boolean = false;
+  stationsList: any[] = [];
   constructor(private http: HttpClient, private apiService: ApiService, private auth: AuthService, private dialog: MatDialog, private router: Router, private renderer: Renderer2, private el: ElementRef) { }
 
   @HostListener('document:click', ['$event'])
@@ -33,8 +34,31 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = localStorage.getItem('userRole');
+    this.fetchStations();
   }
+  fetchStations(): void {
+    this.http.get(`${environment.api_url}/user/stations`).subscribe((res: any) => {
+      this.stationsList = res.data;
+      console.log("stationsList.slice", this.stationsList);
+    })
+  }
+  navigate(station: any): void {
+    console.log("station", station);
+    if (station?.stationName === 'Technical 1') {
+      this.router.navigate([`/technical/${station?.stationId}`]);
+      console.log("Technical 1", station?.stationName);
+    } else if (station?.stationName === 'Technical 2') {
+      this.router.navigate([`/technical/${station?.stationId}`]);
+    } else if (station?.stationName === 'Hr Manager') {
+      this.router.navigate(['/hr']);
+    } else if (station?.stationName === 'Screening') {
+      this.router.navigate(['/dashboard']);
+    } else if (station?.stationName === 'Written') {
+      this.router.navigate(['/written']);
+    }
+    this.dropDown = false;
 
+  }
   searchCandidate(searchKeyword: string): void {
     console.log(searchKeyword);
 
@@ -74,9 +98,9 @@ export class HeaderComponent implements OnInit {
     })
   }
 
-  navigate(path: any, queryParam: any): void {
-    if (queryParam) this.router.navigate([path], { queryParams: { type: queryParam } });
-    else this.router.navigate([path]);
-  }
+  // navigate(path: any, queryParam: any): void {
+  //   if (queryParam) this.router.navigate([path], { queryParams: { type: queryParam } });
+  //   else this.router.navigate([path]);
+  // }
 
 }
