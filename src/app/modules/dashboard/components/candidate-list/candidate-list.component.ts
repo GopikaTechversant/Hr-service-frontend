@@ -62,5 +62,7 @@ export class CandidateListComponent {
     this.pageIndex = event.pageIndex;
     this.fetchCandidates('');
   }
-
+  delete():void{
+    
+  }
 }
