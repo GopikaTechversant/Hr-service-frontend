@@ -10,7 +10,9 @@ export class DashboardComponent implements OnInit {
   candidates: any;
   lists: any[] = [];
   requestList: any;
-  requestList_open :boolean = false;
+  requestList_open: boolean = false;
+  displayPosition: string = 'Select Position';
+  positionId: string = '';
 
   constructor(private http: HttpClient) { }
 
@@ -20,9 +22,10 @@ export class DashboardComponent implements OnInit {
   }
 
   fetchcount(): void {
-    this.http.get(`${environment.api_url}/dashboard/card-data`).subscribe((res: any) => {
-      console.log("res", res);
-      this.lists = res.data;
+    this.http.get(`${environment.api_url}/dashboard/card-data?requestId=${this.positionId}`).subscribe((res: any) => {
+      if(res?.data){
+        this.lists = res?.data;
+      }
     })
   }
 
@@ -32,6 +35,12 @@ export class DashboardComponent implements OnInit {
         this.requestList = res?.data;
       }
     })
+  }
+
+  selectPosition(name: string, id: string): void {
+    this.displayPosition = name;
+    this.positionId = id;
+    this.fetchcount();
   }
 
 }

@@ -2,14 +2,14 @@
     <div>
         <span class="head">Dashboard</span>
     </div>
-    <div class=".">
-        <div class="input p-t-10 p-l-6 c-pointer no-close" (click)="requestList_open = !requestList_open;">
-
+    <div class="d-flex j-end m-r-10">
+        <div class="input p-t-10 p-l-6 c-pointer no-close p-relative" (click)="requestList_open = !requestList_open;">
             <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
-        </div>
-        <div class="no-close dropdown-list c-pointer" *ngIf="requestList_open">
-            <div *ngFor="let name of requestList">
-                {{name.requestName}}
+            {{displayPosition}}
+            <div class="no-close dropdown c-pointer" *ngIf="requestList_open">
+                <div  (click)='selectPosition(name?.requestName,name?.requestId);'*ngFor="let name of requestList" class="p-5">
+                    {{name?.requestName}}
+                </div>
             </div>
         </div>
     </div>
@@ -20,17 +20,17 @@
                 <div class="detail">
                     <div><span class="d-flex name">{{item.name}}</span></div>
                     <div><span class="other">{{item.position}}</span></div>
-                    <div><span class="other">Position: {{item.team}}</span></div>
+                    <div><span class="other">Department: {{item.team}}</span></div>
                 </div>
             </div>
         </div>
     </div>
     <div class="d-flex w-100 m-t-10 m-b-10">
         <div class="w-45 p-t-10 m-r-10">
-            <app-application-list-pie></app-application-list-pie>
+            <app-application-list-pie [positionId] = "positionId"></app-application-list-pie>
         </div>
         <div class="w-55 p-t-10 m-r-10">
-            <app-application-list-bar></app-application-list-bar>
+            <app-application-list-bar [positionId] = "positionId"></app-application-list-bar>
         </div>
     </div>
     <div class="w-100  m-t-10 m-b-10">

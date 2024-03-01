@@ -77,7 +77,7 @@ export class ServiceRequestComponent implements OnInit {
     this.stationId = stationid;
     if (!this.selectedStationsId.includes(stationid)) this.selectedStationsId.push(stationid);
     if (!this.selectedstations.includes(stationName)) this.selectedstations.push(stationName);
-    this.stationName = this.selectedstations.join(',');
+    this.stationName = this.selectedstations.join(' -> ');
     const screeningStation = this.stationsList.find((station: any) => station.stationName == 'Screening');
     const hrStation = this.stationsList.find((station: any) => station.stationName == 'Hiring Manager');
     if (screeningStation && !this.selectedStationsId.includes(screeningStation.stationId)) this.selectedStationsId.push(screeningStation.stationId);

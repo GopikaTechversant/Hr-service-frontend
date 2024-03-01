@@ -30,7 +30,7 @@
                     <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
                 </div>
                 <div class="no-close  requirement-dropdown-list c-pointer" *ngIf="requestList_open">
-                    <div (click)='selectRequestId(name.requestName,name.requestId);' *ngFor="let name of list_requests">
+                    <div class="p-5" (click)='selectRequestId(name.requestName,name.requestId);' *ngFor="let name of list_requests">
                         {{name.requestName}}
                     </div>
                 </div>

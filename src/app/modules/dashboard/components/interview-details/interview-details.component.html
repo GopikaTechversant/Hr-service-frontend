@@ -3,65 +3,68 @@
     <div class="d-flex j-space parent">
         <div class="child d-flex m-b-10" #recruiterNameDiv>
             <span class="label m-b-4">Recruiter Name</span>
-            <div class="input-box p-t-10 p-l-9" (click)="showRecruiters = !showRecruiters;fetchUsers();">
+            <div class="input-box p-t-10 p-l-9 c-pointer" (click)="showRecruiters = !showRecruiters;fetchUsers();">
                 <span *ngIf="!recruiterName">Select Name</span>
                 <span *ngIf="recruiterName">{{recruiterName}}</span>
                 <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
-            </div>
-            <div class="no-close dropdown m-t-6 p-t-10 p-l-6 c-pointer" *ngIf="showRecruiters">
-                <div *ngFor="let recruiter of users_list"
-                    (click)="selectRecruiter(recruiter.userId,recruiter.userfirstName,recruiter.userlastName)">
-                    {{recruiter.userfirstName}} {{recruiter.userlastName}}
+                <div class="no-close dropdown m-t-6 p-t-10 p-l-6 c-pointer" *ngIf="showRecruiters">
+                    <div class="p-5" *ngFor="let recruiter of users_list"
+                        (click)="selectRecruiter(recruiter.userId,recruiter.userfirstName,recruiter.userlastName)">
+                        {{recruiter.userfirstName}} {{recruiter.userlastName}}
+                    </div>
                 </div>
             </div>
         </div>
-
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Interview Date & Time</span>
-            <div class="p-relative ">
-                <input class="p-l-9 input-box" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerInterview"
-                    (dateChange)="dateChange($event)" (click)="pickerInterview?.open()" [value]="scheduledDate" [min]="today">
-                <span> <mat-datepicker #pickerInterview class=""></mat-datepicker>
-                    <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
-                        (click)="pickerInterview?.open()"></i>
-                </span>
-                <span><img class="p-absolute clock-icon" src="assets/images/clock.png" alt="" height="14px" width="14px"
-                        [ngxTimepicker]="pickerTime" [format]="12" (timeSet)="timeChange($event)">
-                    <ngx-material-timepicker #pickerTime (timeSet)="timeChange($event)"></ngx-material-timepicker>
-                </span>
+            <div class="p-relative">
+                <div class="input-box c-pointer">
+                    <input class="p-l-9 date-input" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerInterview"
+                        (dateChange)="dateChange($event)" (click)="pickerInterview?.open()" [value]="scheduledDate"
+                        [min]="today">
+                        {{displayTime}}
+                        <div class="p-l-10 d-flex j-end p-r-10">
+                            <span  class="p-l-20 d-flex j-end c-pointer"><mat-datepicker #pickerInterview class=""></mat-datepicker>
+                                <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
+                                    (click)="pickerInterview?.open()"></i>
+                            </span>
+                            <span  class="p-l-20 d-flex j-end"><img class="p-absolute clock-icon" src="assets/images/clock.png" alt="" height="14px"
+                                    width="14px" [ngxTimepicker]="pickerTime" [format]="12" (timeSet)="timeChange($event)">
+                                <ngx-material-timepicker #pickerTime (timeSet)="timeChange($event)"></ngx-material-timepicker>
+                            </span>
+                        </div>  
+                </div>
             </div>
         </div>
         <div class="child d-flex m-b-10" #positionDiv>
             <span class="label m-b-4">Position</span>
-            <div class="input-box p-t-10 p-l-6" (click)="showDropdown = !showDropdown;fetchPosition()">
+            <div class="input-box p-t-10 p-l-6 c-pointer" (click)="showDropdown = !showDropdown;fetchPosition()">
                 <span *ngIf="!positionName">Select Position</span>
-                <span *ngIf="positionName" class="p-l-9">{{positionName}}</span>
+                <span *ngIf="positionName" class="p-l-9 p-5">{{positionName}}</span>
                 <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
-            </div>
-            <div class="no-close dropdown m-t-6 p-t-10 p-l-6 c-pointer" *ngIf="showDropdown">
-                <div *ngFor="let position of positionList"
-                    (click)="selectPosition(position.requestId,position.requestName)">
-                    {{position.requestName}}
+                <div class="no-close dropdown m-t-6 p-t-10 p-l-6 c-pointer" *ngIf="showDropdown">
+                    <div class="p-5" *ngFor="let position of positionList"
+                        (click)="selectPosition(position.requestId,position.requestName)">
+                        {{position.requestName}}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="d-flex j-space parent">
-
         <div class="child d-flex m-b-10" #candidatenameDiv>
             <span class="label m-b-4">Candidate Name</span>
-            <div class="input-box p-t-10 p-l-6" (click)="showcandidate = !showcandidate;fetchCandidates()">
+            <div class="input-box p-t-10 p-l-6 c-pointer" (click)="showcandidate = !showcandidate;fetchCandidates()">
                 <span *ngIf="!candidateName">Select Name</span>
-                <span *ngIf="candidateName" class="p-l-9 c-pointer">{{candidateName}}</span>
-               
+                <span *ngIf="candidateName" class="p-l-9 c-pointer p-5">{{candidateName}}</span>
                 <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
-            </div>
-            <div class="no-close dropdown m-t-6 p-t-10 p-l-6 c-pointer" *ngIf="showcandidate && positionId">
-                <div *ngFor="let candidate of candidate_list"
-                    (click)="selectCandidate(candidate.candidateId,candidate.candidateFirstName,candidate.candidateLastName,candidate)">
-                    {{candidate.candidateFirstName}} {{candidate.candidateLastName}}
+                <div class="no-close dropdown m-t-6 p-t-10 p-l-6 c-pointer" *ngIf="showcandidate && positionId">
+                    <div class="p-5" *ngFor="let candidate of candidate_list"
+                        (click)="selectCandidate(candidate.candidateId,candidate.candidateFirstName,candidate.candidateLastName,candidate)">
+                        {{candidate.candidateFirstName}} {{candidate.candidateLastName}}
+                    </div>
                 </div>
-            </div>
+            </div>   
         </div>
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Candidate Experience</span>
@@ -69,7 +72,7 @@
         </div>
         <div class="child d-flex m-b-10">
             <span class="label m-b-4 ">Notice Period</span>
-            <input type="text" class="input-box p-l-9"  [value]="noticePeriod || noticeperiodvalue" id="noticePeriod">
+            <input type="text" class="input-box p-l-9" [value]="noticePeriod || noticeperiodvalue" id="noticePeriod">
         </div>
     </div>
     <div class="d-flex j-space parent">
@@ -84,18 +87,18 @@
         </div>
 
         <div class="child d-flex m-b-10" #panelDiv>
-            <span class="label m-b-4">Panel</span>
-            <div class="input-box p-t-10 p-l-6" (click)="showPanel = !showPanel; fetchPanel();">
+            <span class="label m-b-4">Interview Panel</span>
+            <div class="input-box p-t-10 p-l-6 c-pointer" (click)="showPanel = !showPanel; fetchPanel();">
                 <span *ngIf="!panelName">Select Name</span>
                 <span *ngIf="panelName" class="p-l-9">{{panelName}}</span>
                 <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
-            </div>
-            <div class="no-close dropdown  p-b-7 p-l-6 c-pointer" *ngIf="showPanel">
-                <div *ngFor="let panel of panel_list "
-                    (click)="selectPanel(panel.userId,panel.userfirstName,panel.userlastName)">
-                    {{panel.userfirstName}} {{panel.userlastName}}
+                <div class="no-close dropdown  p-b-7 p-l-6 c-pointer" *ngIf="showPanel">
+                    <div class="p-5" *ngFor="let panel of panel_list "
+                        (click)="selectPanel(panel.userId,panel.userfirstName,panel.userlastName)">
+                        {{panel.userfirstName}} {{panel.userlastName}}
+                    </div>
                 </div>
-            </div>
+            </div>    
         </div>
     </div>
     <div class="d-flex j-space parent">
@@ -107,7 +110,7 @@
             <span class="label m-b-4">Interview Status</span>
             <input type="text" class="input-box p-l-9" id="interviewStatus" [value]="interviewStatus">
         </div>
-       
+
     </div>
 
     <div class="child d-flex m-b-10">
