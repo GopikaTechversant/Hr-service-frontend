@@ -1,16 +1,27 @@
 .main {
     background-color: #F7F7F7;
+    padding-right: 20px;
 }
 
 .header {
     color: #000000;
-    font-size: 23px;
+    font-size: 18px;
     font-weight: 500;
+}
+
+.parent {
+    column-gap: 18px;
+    display: flex;
+    flex-direction: row;
+}
+
+.child {
+    flex-direction: column;
+    flex: 1;
 }
 
 .scroller-box {
     padding-bottom: 20px;
-    height: calc(100vh - 360px);
     overflow-y: hidden;
     overflow-x: hidden;
     width: 100%;
@@ -24,14 +35,14 @@
 }
 
 .input {
-    outline: none;
+    width: 100%;
+    height: 34px;
     border-radius: 5px;
+    outline: none;
+    background: #FAFAFA;
+    padding-left: 5px;
     border: 1px solid #E9E9E9;
-    background: #FFFFFF;
-    width: 430px;
-    height: 30px;
-    text-align: left;
-    padding-top: 10px;
+    margin-top: 10px;
 }
 
 .assignee {

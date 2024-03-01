@@ -48,6 +48,7 @@ export class ApplicationListBarComponent implements OnInit {
   dateChange(event: any): void {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    this.positionId = '';
     this.fetchApplicationList();
   }
 
