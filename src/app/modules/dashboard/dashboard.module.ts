@@ -33,7 +33,7 @@ const routes: Routes = [
     children: [
       // {path: '', component: LeftSidebarComponent},
       { path: '', component: DashboardComponent },
-      { path: 'requirement', component: RequirementFormComponent },
+      // { path: 'requirement', component: RequirementFormComponent },
       { path: 'service-requirement', component: ServiceRequestComponent },
       { path: 'candidate-list', component: RequirementCandidateListComponent },
       { path: 'add-candidate', component: AddCandidateModalComponent },

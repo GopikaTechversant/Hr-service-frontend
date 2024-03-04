@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environments';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FeedbackComponent } from 'src/app/components/feedback/feedback.component';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ToastrServices } from 'src/app/services/toastr.service';
@@ -28,7 +28,7 @@ export class SeriesComponent implements OnInit {
   moreApiCalled: boolean = false;
   limit: number = 9;
   page: number = 1;
-  constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private renderer: Renderer2) {
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private renderer: Renderer2) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
     });
@@ -105,9 +105,11 @@ export class SeriesComponent implements OnInit {
     }
     )
   }
+
   toggleTaskDetails() {
     this.isTaskDetailsOpen = !this.isTaskDetailsOpen;
   }
+
   onCandidateSelectionChange(event: any, candidate: any, index: any): void {
     let action = event?.target?.value;
     this.candidateServiceId = candidate?.serviceId;
@@ -122,7 +124,14 @@ export class SeriesComponent implements OnInit {
       }
       console.log(candidate)
       let element: any = document.getElementById('status' + index);
-      if (element) element.value = candidate.serviceStatus;
+      if (element) element.value = candidate?.serviceStatus;
+      console.log(candidate?.serviceStatus);
+      
+      if(candidate?.serviceStatus === 'selected'){
+        this.router.navigate(['dashboard/interview-details'], {
+          state: { candidates: candidate } 
+        });
+      }      
     })
     dialogRef.componentInstance.selectedCandidatesEmitter.subscribe((selectedCandidatesIds: any[]) => {
       this.selectedCandidatesIds.push(...selectedCandidatesIds);

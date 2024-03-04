@@ -1,9 +1,11 @@
 <div class="main p-l-20">
-    <p class="heading  m-t-12">Interview Details</p>
+    <div class="heading">
+        <span>Interview Details</span>
+    </div>
     <div class="d-flex j-space parent">
         <div class="child d-flex m-b-10" #recruiterNameDiv>
             <span class="label m-b-4">Recruiter Name</span>
-            <div class="input-box p-t-10 p-l-9 c-pointer" (click)="showRecruiters = !showRecruiters;fetchUsers();">
+            <div class="input-box p-t-10 p-l-9 c-pointer" (click)="showRecruiters = !showRecruiters">
                 <span *ngIf="!recruiterName">Select Name</span>
                 <span *ngIf="recruiterName">{{recruiterName}}</span>
                 <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
@@ -22,30 +24,33 @@
                     <input class="p-l-9 date-input" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerInterview"
                         (dateChange)="dateChange($event)" (click)="pickerInterview?.open()" [value]="scheduledDate"
                         [min]="today">
-                        {{displayTime}}
-                        <div class="p-l-10 d-flex j-end p-r-10">
-                            <span  class="p-l-20 d-flex j-end c-pointer"><mat-datepicker #pickerInterview class=""></mat-datepicker>
-                                <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
-                                    (click)="pickerInterview?.open()"></i>
-                            </span>
-                            <span  class="p-l-20 d-flex j-end"><img class="p-absolute clock-icon" src="assets/images/clock.png" alt="" height="14px"
-                                    width="14px" [ngxTimepicker]="pickerTime" [format]="12" (timeSet)="timeChange($event)">
-                                <ngx-material-timepicker #pickerTime (timeSet)="timeChange($event)"></ngx-material-timepicker>
-                            </span>
-                        </div>  
+                    {{displayTime}}
+                    <div class="p-l-10 d-flex j-end p-r-10">
+                        <span class="p-l-20 d-flex j-end c-pointer"><mat-datepicker #pickerInterview
+                                class=""></mat-datepicker>
+                            <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
+                                (click)="pickerInterview?.open()"></i>
+                        </span>
+                        <span class="p-l-20 d-flex j-end"><img class="p-absolute clock-icon"
+                                src="assets/images/clock.png" alt="" height="14px" width="14px"
+                                [ngxTimepicker]="pickerTime" [format]="12" (timeSet)="timeChange($event)">
+                            <ngx-material-timepicker #pickerTime
+                                (timeSet)="timeChange($event)"></ngx-material-timepicker>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="child d-flex m-b-10" #positionDiv>
-            <span class="label m-b-4">Position</span>
-            <div class="input-box p-t-10 p-l-6 c-pointer" (click)="showDropdown = !showDropdown;fetchPosition()">
-                <span *ngIf="!positionName">Select Position</span>
+            <span class="label m-b-4">Requirement</span>
+            <div class="input-box p-t-10 p-l-6 c-pointer" (click)="showDropdown = !showDropdown">
+                <span *ngIf="!positionName">Select Requirement</span>
                 <span *ngIf="positionName" class="p-l-9 p-5">{{positionName}}</span>
                 <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
                 <div class="no-close dropdown m-t-6 p-t-10 p-l-6 c-pointer" *ngIf="showDropdown">
                     <div class="p-5" *ngFor="let position of positionList"
                         (click)="selectPosition(position.requestId,position.requestName)">
-                        {{position.requestName}}
+                        {{position?.requestName}}
                     </div>
                 </div>
             </div>
@@ -54,7 +59,7 @@
     <div class="d-flex j-space parent">
         <div class="child d-flex m-b-10" #candidatenameDiv>
             <span class="label m-b-4">Candidate Name</span>
-            <div class="input-box p-t-10 p-l-6 c-pointer" (click)="showcandidate = !showcandidate;fetchCandidates()">
+            <div class="input-box p-t-10 p-l-6 c-pointer" (click)="showcandidate = !showcandidate">
                 <span *ngIf="!candidateName">Select Name</span>
                 <span *ngIf="candidateName" class="p-l-9 c-pointer p-5">{{candidateName}}</span>
                 <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
@@ -64,7 +69,7 @@
                         {{candidate.candidateFirstName}} {{candidate.candidateLastName}}
                     </div>
                 </div>
-            </div>   
+            </div>
         </div>
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Candidate Experience</span>
@@ -76,7 +81,6 @@
         </div>
     </div>
     <div class="d-flex j-space parent">
-
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Current Company</span>
             <input type="text" class="input-box" [value]="currentCompany || ''">
@@ -98,7 +102,7 @@
                         {{panel.userfirstName}} {{panel.userlastName}}
                     </div>
                 </div>
-            </div>    
+            </div>
         </div>
     </div>
     <div class="d-flex j-space parent">
@@ -110,16 +114,53 @@
             <span class="label m-b-4">Interview Status</span>
             <input type="text" class="input-box p-l-9" id="interviewStatus" [value]="interviewStatus">
         </div>
-
     </div>
-
     <div class="child d-flex m-b-10">
         <span class="label m-b-4">Comments</span>
         <textarea class="comments p-l-9 p-t-6" id="comments" [value]="comment|| commentValue"></textarea>
     </div>
-    <div class="d-flex f-right submit-btn j-end">
-        <button class="cancel-btn m-r-10 c-pointer" (click)="cancel()">Cancel</button>
-        <button class="save m-l-10 c-pointer" (click)="submit()">Save</button>
+    <div class="d-flex j-end parent p-b-20">
+        <div class="d-flex f-right submit-btn j-end">
+            <button class="cancel-btn m-r-10 c-pointer" (click)="cancel()">Cancel</button>
+            <button class="save m-l-10 c-pointer" (click)="submit()">Submit</button>
+        </div>
+    </div>
+
+</div>
+<!-- <app-requirement-form></app-requirement-form> -->
+
+<div class="main">
+    <div class="candidate-list">
+        <div class="d-flex head">
+            <span class="heading">Candidate Lists</span>
+            <div class="d-flex">
+                <input type="text" class="search-input p-l-5" placeholder="Search Experience"
+                    (keydown.enter)="searchExperience(seachKeyword)" autocomplete="off" [(ngModel)]="seachKeyword">
+                <span class="search" (click)="searchExperience(seachKeyword)">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </span>
+            </div>
+        </div>
+        <div class="candidate w-100 d-flex">
+            <div *ngFor="let candidate of candidatesList" class="candidate-card">
+                <div class="count c-pointer" (click)="candidateSelectChange(candidate);">
+                    <span *ngIf="candidate.selected"> <i class="fa fa-check" aria-hidden="true"></i></span>
+                </div>
+                <div class="info-container">
+                    <div class="info-pair">
+                        <div class="key">Name</div>
+                        <div class="value">: {{candidate.candidateFirstName}} {{candidate.candidateLastName}}</div>
+                    </div>
+                    <div class="info-pair">
+                        <div class="key">Email</div>
+                        <div class="value">: {{candidate.candidateEmail}}</div>
+                    </div>
+                    <div class="info-pair">
+                        <div class="key">Experience</div>
+                        <div class="value">: {{candidate.candidateExperience}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<app-requirement-form></app-requirement-form>

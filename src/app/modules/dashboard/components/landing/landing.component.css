@@ -21,7 +21,6 @@
 
 .w-80 {
     width: 80%;
-    padding-top: 10px;
     padding-bottom: 10px;
     overflow-y: auto !important;
     height: calc(100vh - 125px) !important;

@@ -33,7 +33,7 @@ export class FeedbackComponent implements OnInit {
     
     const feedback = document.getElementById('feedback') as HTMLInputElement;
     if (feedback) this.feedback = feedback.value;
-    this.candidateServiceId = this.data.candidateId;
+    this.candidateServiceId = this.data?.candidateId;
     this.rejectedCandidatesEmitter.emit([this.candidateServiceId]);
     this.stationId = this.data.stationId;
     const payload = {
