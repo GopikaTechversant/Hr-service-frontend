@@ -1,17 +1,30 @@
-<div class="main p-l-20 p-r-20">
-    <span class="heading  m-t-12">Update Candidate</span>
-    <form [formGroup]="candidateForm" (ngSubmit)="submitClick(); $event.preventDefault()" enctype="multipart/form-data">
+<div class="main p-20 m-t-23 m-l-14">
+    <span class="heading  m-t-12">Edit Candidate Details</span>
+    <form [formGroup]="candidateForm" (ngSubmit)="submitClick(); $event.preventDefault()" enctype="multipart/form-data"
+        class="p-t-6">
         <div class="d-flex parent p-t-10">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">First Name</span>
                 <input type="text" class="input-box" formControlName="candidateFirstName" placeholder="John">
-               
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Last Name</span>
                 <input type="text" class="input-box" formControlName="candidateLastName" placeholder="Deo">
-               
             </div>
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">Gender</span>
+                <div class="input-box c-pointer p-relative p-t-10 p-l-6 no-close" (click)="showGender = !showGender;">
+                    <span *ngIf="!genderName">{{candidateDetails?.candidateGender}}</span>
+                    <span *ngIf="genderName">{{genderName }}</span>
+                    <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
+                    <div class="no-close dropdown c-pointer" *ngIf="showGender">
+                        <p *ngFor="let item of gender" (click)="selectGender(item)">
+                            {{item}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex  parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">DOB</span>
                 <div class="p-relative w-100">
@@ -24,31 +37,15 @@
                     </span>
                 </div>
             </div>
-        </div>
-        <div class="d-flex  parent">
-            <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Gender</span>
-                <span class="d-flex gender c-pointer">
-                    <input type="radio" id="Male" name="candidateGender" value="Male" formControlName="candidateGender">
-                    <label for="Male" class="p-t-5">Male</label>
-                    <input type="radio" id="Female" name="candidateGender" value="Female"
-                        formControlName="candidateGender">
-                    <label for="Female" class="p-t-5">Female</label>
-                    <input type="radio" id="Others" name="candidateGender" value="Others"
-                        formControlName="candidateGender">
-                    <label for="Others" class="p-t-5">Others</label>
-                </span>
-                
-            </div>
-            <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Mobile</span>
-                <input type="text" class="input-box" formControlName="candidateMobileNo" maxlength="10">
-               
-            </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Email</span>
-                <input type="text" class="input-box" formControlName="candidateEmail">
-                
+                <input type="text" class="input-box" formControlName="candidateemail">
+
+            </div>
+            <div class="child d-flex m-b-10">
+
+                <span class="label m-b-4">Mobile</span>
+                <input type="text" class="input-box" formControlName="candidateMobileNo" maxlength="10">
             </div>
         </div>
         <div class="d-flex parent">
@@ -56,12 +53,7 @@
                 <span class="label m-b-4">Education</span>
                 <input type="text" class="input-box" formControlName="candidateEducation">
             </div>
-            <div class="child-text d-flex m-b-10">
-                <span class="label m-b-4">Address</span>
-                <textarea type="text" class="text-area m-l-5" formControlName="candidateAddress"></textarea>
-            </div>
-        </div>
-        <div class="d-flex   parent">
+
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Experience</span>
                 <input type="text" class="input-box" formControlName="candidateExperience">
@@ -70,12 +62,12 @@
                 <span class="label m-b-4">Previous Organization</span>
                 <input type="text" class="input-box" formControlName="candidatePreviousOrg">
             </div>
+        </div>
+        <div class="d-flex   parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Previous Designation</span>
                 <input type="text" class="input-box" formControlName="candidatePreviousDesignation">
             </div>
-        </div>
-        <div class="d-flex   parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Current Salary</span>
                 <input type="text" class="input-box" formControlName="candidateCurrentSalary">
@@ -84,18 +76,19 @@
                 <span class="label m-b-4">Expected Salary</span>
                 <input type="text" class="input-box" formControlName="candidateExpectedSalary">
             </div>
+        </div>
+        <div class="d-flex   parent">
             <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Application Source</span>
-                <div class="input-box c-pointer p-relative p-t-10 p-l-6 no-close"
-                    (click)="showSource = !showSource;fetchSource()">
-                    <span *ngIf="!sourceName">Select source</span>
-                    <span *ngIf="sourceName">{{sourceName}}</span>
-                    <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
-                    <div class="no-close dropdown c-pointer" *ngIf="showSource">
-                        <p *ngFor="let source of sourceList" (click)="selectsource(source.sourceId,source.sourceName)">
-                            {{source.sourceName}}</p>
-                    </div>
-                </div>
+                <span class="label m-b-4">City</span>
+                <input type="text" class="input-box" formControlName="candidateCurrentSalary">
+            </div>
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">District</span>
+                <input type="text" class="input-box" formControlName="candidateExpectedSalary">
+            </div>
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">State</span>
+                <input type="text" class="input-box" formControlName="candidateExpectedSalary">
             </div>
         </div>
         <div class="d-flex parent">
@@ -103,7 +96,7 @@
                 <span class="label m-b-4">Requirement</span>
                 <div class="input-box c-pointer p-relative p-t-10 p-l-6 no-close"
                     (click)="requirementListOpen = !requirementListOpen;fetchRequerements()">
-                    <span *ngIf="!selectedRequirementName" class="no-close">Select Requirement</span>
+                    <span *ngIf="!selectedRequirementName" class="no-close">{{candidateDetails?.position}}</span>
                     <span *ngIf="selectedRequirementName" class="no-close">{{selectedRequirementName}}</span>
                     <span><i class="f-right p-r-10 fa fa-chevron-down s-text no-close"></i></span>
                     <div class="no-close dropdown c-pointer no-close" *ngIf="requirementListOpen">
@@ -113,13 +106,28 @@
                     </div>
                 </div>
             </div>
-            <div class="child-text d-flex m-b-10 p-relative">
-                <span class="label m-b-4">Upload Resume</span>
-                <div class="text-area">
-                    <button class="upload-resume-btn"
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">Application Source</span>
+                <div class="input-box c-pointer p-relative p-t-10 p-l-6 no-close"
+                    (click)="showSource = !showSource;fetchSource()">
+                    <span *ngIf="!sourceName">{{candidateDetails?.resumeSourecd}}</span>
+                    <span *ngIf="sourceName">{{sourceName}}</span>
+                    <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
+                    <div class="no-close dropdown c-pointer" *ngIf="showSource">
+                        <p *ngFor="let source of sourceList" (click)="selectsource(source.sourceId,source.sourceName)">
+                            {{source.sourceName}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="child d-flex m-b-10 p-relative">
+                <span class="label m-b-4">Uploaded Resume</span>
+                <div class="d-flex">
+
+                    <img src="assets/images/resume-uploaded.png" alt="" height="48px"
                         (click)="triggerFileInput();$event.stopPropagation();$event.preventDefault();">
-                        Upload
-                    </button>
+                    <span *ngIf="!resumeUploadSuccess" class="upload-success-message">
+                        Click to edit resume
+                    </span>
                     <input type="file" #fileInput class="input-box" style="display:none"
                         (change)="onFileSelected($event)">
                     <span *ngIf="resumeUploadSuccess" class="upload-success-message">
@@ -131,7 +139,7 @@
         <div class="skills p-10">
             <div class="d-flex parent">
                 <div class="child d-flex m-b-10">
-                    <span class="text m-b-4 no-close">Skill Sets</span>
+                    <span class="text m-b-4 no-close">Edit Skill Sets</span>
                     <div class="d-flex skill-drop-down m-t-5 no-close w-100">
                         <div class="input-box c-pointer p-t-10 no-close p-relative"
                             (click)="showDropdown = !showDropdown">
@@ -179,7 +187,7 @@
         </div>
         <div class="d-flex f-right btns">
             <span class="cancel-btn c-pointer" (click)="cancel()">Cancel</span>
-            <button class="add-candidate">Update</button>
+            <button class="add-candidate" type="submit">Update</button>
         </div>
     </form>
 </div>

@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environments';
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit {
+  public onEditSuccess: EventEmitter<void> = new EventEmitter<void>();
   displayDate: any
   showDropdown: boolean = false;
   showSource: boolean = false;
@@ -37,11 +38,14 @@ export class EditComponent implements OnInit {
   selectedRequirementId: any;
   validationSuccess: boolean = false;
   requirementListOpen: boolean = false;
-  candidateCreatedby: any;
+  // candidateCreatedby: any;
   resumeUploadSuccess: boolean = false;
   candidateId: any;
-  CandidateData:any;
-  candidateDetails :any;
+  CandidateData: any;
+  candidateDetails: any;
+  showGender: boolean = false;
+  gender: any[] = ['Male', 'Female', 'Others'];
+  genderName: any;
   constructor(public dialogRef: MatDialogRef<EditComponent>, private tostr: ToastrServices, private formBuilder: UntypedFormBuilder, private http: HttpClient,
     private datePipe: DatePipe, private el: ElementRef, @Inject(MAT_DIALOG_DATA) public data: any) {
     this.candidateForm = this.formBuilder.group({
@@ -56,13 +60,15 @@ export class EditComponent implements OnInit {
       candidateCurrentSalary: [null],
       candidateExpectedSalary: [null],
       candidateAddress: [null],
-      candidateEmail: [null],
+      candidateemail: [null],
       candidateMobileNo: [null],
-      resumeSourceId: [null]
+      resumeSourceId: [null],
+      candidateId: [null]
     })
   }
   ngOnInit(): void {
-this.fetchCandidateDetails()
+    this.fetchCandidateDetails();
+
   }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -89,25 +95,27 @@ this.fetchCandidateDetails()
       if (res?.data) {
         this.CandidateData = res?.data
         this.candidateDetails = res?.data[0];
-        console.log("res?.data",res?.data);
+        console.log("res?.data", res?.data);
+        console.log(" this.candidateDetails", this.candidateDetails);
         this.candidateForm.patchValue({
           candidateFirstName: this.candidateDetails?.candidateFirstName,
           candidateLastName: this.candidateDetails?.candidateLastName,
           candidateDoB: this.candidateDetails?.candidateDoB,
-          candidateGender:[null],
+          candidateGender: this.candidateDetails.candidateGender,
           candidateExperience: this.candidateDetails?.candidateExperience,
-          candidatePreviousOrg:this.candidateDetails?.candidatePreviousOrg,
+          candidatePreviousOrg: this.candidateDetails?.candidatePreviousOrg,
           candidatePreviousDesignation: this.candidateDetails?.candidatePreviousDesignation,
           candidateEducation: this.candidateDetails?.candidateEducation,
-          candidateCurrentSalary:this.candidateDetails?.candidateCurrentSalary,
-          candidateExpectedSalary:this.candidateDetails?.candidateExpectedSalary,
+          candidateCurrentSalary: this.candidateDetails?.candidateCurrentSalary,
+          candidateExpectedSalary: this.candidateDetails?.candidateExpectedSalary,
           candidateAddress: this.candidateDetails?.candidateAddress,
-          candidateEmail: this.candidateDetails?.candidateEmail,
+          candidateemail: this.candidateDetails?.candidateEmail,
           candidateMobileNo: this.candidateDetails?.candidateMobileNo,
-          resumeSourceId: this.candidateDetails?.candidateFirstName
+          resumeSourceId: this.candidateDetails?.resumeSourecd,
+          candidateId: this.candidateDetails?.candidateId
         })
       }
-    }); 
+    });
   }
   selectsource(sourceid: any, sourceName: any): void {
     // this.showSource = false;
@@ -122,7 +130,11 @@ this.fetchCandidateDetails()
       this.selectedRequirementId = id;
     }
   }
-
+  selectGender(item: any) {
+    console.log("item", item);
+    this.genderName = item;
+    console.log(" this.genderName", this.genderName);
+  }
   dateChange(event: any): void {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
@@ -150,23 +162,48 @@ this.fetchCandidateDetails()
       'Content-Type': 'multipart/form-data'
     });
     const formdata = new FormData();
-    for (const key in candidateDetails) {
-      if (candidateDetails[key]) {
-        formdata.append(key, candidateDetails[key]);
-      }
+
+    formdata.append('candidateId', this.candidateDetails?.candidateId);
+    if (candidateDetails.candidateFirstName !== this.candidateDetails?.candidateFirstName) formdata.append('candidateFirstName', candidateDetails.candidateFirstName);
+    if (candidateDetails.candidateLastName !== this.candidateDetails?.candidateLastName) formdata.append('candidateLastName', candidateDetails.candidateLastName);
+    if (candidateDetails.candidateDoB !== this.candidateDetails?.candidateDoB) formdata.append('candidateDoB', candidateDetails.candidateDoB);
+    if (candidateDetails.candidateGender !== this.candidateDetails?.candidateGender) formdata.append('candidateGender', candidateDetails.candidateGender);
+    if (candidateDetails.candidateExperience !== this.candidateDetails?.candidateExperience) formdata.append('candidateExperience', candidateDetails.candidateExperience);
+    if (candidateDetails.candidatePreviousOrg !== this.candidateDetails?.candidatePreviousOrg) formdata.append('candidatePreviousOrg', candidateDetails.candidatePreviousOrg);
+    if (candidateDetails.candidatePreviousDesignation !== this.candidateDetails?.candidatePreviousDesignation) formdata.append('candidatePreviousDesignation', candidateDetails.candidatePreviousDesignation);
+    if (candidateDetails.candidateEducation !== this.candidateDetails?.candidateEducation) formdata.append('candidateEducation', candidateDetails.candidateEducation);
+    if (candidateDetails.candidateCurrentSalary !== this.candidateDetails?.candidateCurrentSalary) formdata.append('candidateCurrentSalary', candidateDetails.candidateCurrentSalary);
+    if (candidateDetails.candidateExpectedSalary !== this.candidateDetails?.candidateExpectedSalary) formdata.append('candidateExpectedSalary', candidateDetails.candidateExpectedSalary);
+    if (candidateDetails.candidateAddress !== this.candidateDetails?.candidateAddress) formdata.append('candidateEducation', candidateDetails.candidateAddress);
+    if (candidateDetails.candidateemail !== this.candidateDetails?.candidateEmail) formdata.append('candidateemail', candidateDetails.candidateemail);
+    if (candidateDetails.candidateMobileNo !== this.candidateDetails?.candidateMobileNo) formdata.append('candidateMobileNo', candidateDetails.candidateMobileNo);
+    if (this.sourceId) {
+      formdata.append('resumeSourceId', this.sourceId);
     }
-    formdata.append('candidateCreatedby', this.candidateCreatedby);
-    formdata.append('candidateResume', this.selectedFile);
-    formdata.append('candidatePrimarySkills', this.primaryskills);
-    formdata.append('candidateSecondarySkills', this.secondaryskills);
-    formdata.append('resumeSourceId', this.sourceId);
-    formdata.append('candidatesAddingAgainst', this.selectedRequirementId);
-    formdata.append('candidatesAddingAgainst', this.selectedRequirementId);
+    if (this.selectedFile) {
+      formdata.append('candidateResume', this.selectedFile);
+    }
+    if (this.primaryskills.length > 0) {
+      formdata.append('candidatePrimarySkills', this.primaryskills);
+    }
+
+    if (this.secondaryskills.length > 0) {
+      formdata.append('candidateSecondarySkills', this.secondaryskills);
+    }
+
+    if (this.selectedRequirementId) formdata.append('candidatesAddingAgainst', this.selectedRequirementId);
+
+    if (this.genderName) formdata.append('candidateGender', this.genderName);
+    if (this.candidateForm.value.candidateFirstName && this.candidateForm.value.candidateLastName && this.candidateForm.value.candidateGender
+      && this.candidateForm.value.candidateemail && this.candidateForm.value.candidateMobileNo) {
+      this.validationSuccess = true;
+    } else this.tostr.warning('Please fill all mandatory fields');
     if (this.validationSuccess) {
       this.http.post(`${environment.api_url}/candidate/edit`, formdata).subscribe((response) => {
         this.tostr.success('Candidate updated successfully');
         console.log("updated");
-        
+        this.onEditSuccess.emit();
+        this.dialogRef.close();
       },
         (error) => {
           if (error?.status === 500) this.tostr.error("Internal Server Error")

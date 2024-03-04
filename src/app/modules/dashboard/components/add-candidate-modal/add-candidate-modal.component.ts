@@ -139,7 +139,7 @@ export class AddCandidateModalComponent implements OnInit {
     formdata.append('candidateSecondarySkills', this.secondaryskills);
     formdata.append('resumeSourceId', this.sourceId);
     formdata.append('candidatesAddingAgainst', this.selectedRequirementId);
-    formdata.append('candidatesAddingAgainst', this.selectedRequirementId);
+    // formdata.append('candidatesAddingAgainst', this.selectedRequirementId);
     
     if (this.candidateForm.value.candidateFirstName && this.candidateForm.value.candidateLastName && this.candidateForm.value.candidateGender
       && this.candidateForm.value.candidateEmail && this.candidateForm.value.candidateMobileNo) {

@@ -66,7 +66,21 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex parent">
+        <div class="d-flex   parent">
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">City</span>
+                <input type="text" class="input-box" formControlName="candidateExperience">
+            </div>
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">District</span>
+                <input type="text" class="input-box" formControlName="candidatePreviousOrg">
+            </div>
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">State</span>
+                <input type="text" class="input-box" formControlName="candidatePreviousDesignation">
+            </div>
+        </div>
+        <!-- <div class="d-flex parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Education</span>
                 <input type="text" class="input-box" formControlName="candidateEducation">
@@ -75,8 +89,12 @@
                 <span class="label m-b-4">Address</span>
                 <textarea type="text" class="text-area m-l-5" formControlName="candidateAddress"></textarea>
             </div>
-        </div>
+        </div> -->
         <div class="d-flex   parent">
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">Education</span>
+                <input type="text" class="input-box" formControlName="candidateEducation">
+            </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Experience</span>
                 <input type="text" class="input-box" formControlName="candidateExperience">
@@ -85,12 +103,14 @@
                 <span class="label m-b-4">Previous Organization</span>
                 <input type="text" class="input-box" formControlName="candidatePreviousOrg">
             </div>
+           
+        </div>
+
+        <div class="d-flex   parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Previous Designation</span>
                 <input type="text" class="input-box" formControlName="candidatePreviousDesignation">
             </div>
-        </div>
-        <div class="d-flex   parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Current Salary</span>
                 <input type="text" class="input-box" formControlName="candidateCurrentSalary">
@@ -99,6 +119,21 @@
                 <span class="label m-b-4">Expected Salary</span>
                 <input type="text" class="input-box" formControlName="candidateExpectedSalary">
             </div>
+            <!-- <div class="child d-flex m-b-10">
+                <span class="label m-b-4">Application Source</span>
+                <div class="input-box c-pointer p-relative p-t-10 p-l-6 no-close"
+                    (click)="showSource = !showSource;fetchSource()">
+                    <span *ngIf="!sourceName">Select source</span>
+                    <span *ngIf="sourceName">{{sourceName}}</span>
+                    <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
+                    <div class="no-close dropdown c-pointer" *ngIf="showSource">
+                        <p *ngFor="let source of sourceList" (click)="selectsource(source.sourceId,source.sourceName)">
+                            {{source.sourceName}}</p>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <div class="d-flex parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Application Source</span>
                 <div class="input-box c-pointer p-relative p-t-10 p-l-6 no-close"
@@ -112,8 +147,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="d-flex parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Requirement</span>
                 <div class="input-box c-pointer p-relative p-t-10 p-l-6 no-close"
@@ -128,7 +161,7 @@
                     </div>
                 </div>
             </div>
-            <div class="child-text d-flex m-b-10 p-relative">
+            <div class="child d-flex m-b-10 p-relative">
                 <span class="label m-b-4">Upload Resume <span class="required">*</span></span>
                 <div class="text-area">
                     <button class="upload-resume-btn"
