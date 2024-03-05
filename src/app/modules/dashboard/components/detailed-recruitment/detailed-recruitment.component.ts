@@ -15,7 +15,6 @@ export class DetailedRecruitmentComponent implements OnInit {
   length: any = 20;
   pageSize = 4;
   pageIndex = 1;
-  pageSizeOptions = [5, 10, 15, 20];
   showFirstLastButtons = true;
   candidateList: any[] = [];
   recruitersList: any[] = [];

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { environment } from 'src/environments/environments';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-feedback',
@@ -16,10 +16,10 @@ export class FeedbackComponent implements OnInit {
   rejectedcandidates: any[] = [];
   candidateServiceId: any;
   constructor(public dialogRef: MatDialogRef<FeedbackComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient,
-  private router: Router, private route: ActivatedRoute, ) {
+    private router: Router, private route: ActivatedRoute,) {
 
   }
-  
+
   ngOnInit(): void {
 
   }
@@ -29,7 +29,7 @@ export class FeedbackComponent implements OnInit {
     this.apiCall();
   }
 
-  apiCall():void {
+  apiCall(): void {
     const feedback = document.getElementById('feedback') as HTMLInputElement;
     if (feedback) this.feedback = feedback.value;
     this.candidateServiceId = this.data?.candidateId;
@@ -41,13 +41,20 @@ export class FeedbackComponent implements OnInit {
       status: this.data?.status,
       feedBack: this.feedback
     }
+    if (this.data?.status === 'selected') {
+      this.router.navigate(['dashboard/interview-details'], {
+        state: { candidate: this.data?.candidateDetails }
+      });
+    }
+    
     this.http.post(`${environment.api_url}/screening-station/reject/candidate`, payload).subscribe((res: any) => {
-      if(res?.message === 'Candidate Selected' || res?.message === 'Candidate Already selected'){
-        this.router.navigate(['dashboard/interview-details'], {
-          state: { candidate : this.data?.candidateDetails}     
-        });
-      } 
-      if (this.data?.status === 'pending') this.selectedCandidatesEmitter.emit([this.candidateServiceId]);  
+      // if(res?.message === 'Candidate Selected' || res?.message === 'Candidate Already selected'){
+      //   this.router.navigate(['dashboard/interview-details'], {
+      //     state: { candidate : this.data?.candidateDetails}     
+      //   });
+      // } 
+     
+      if (this.data?.status === 'pending') this.selectedCandidatesEmitter.emit([this.candidateServiceId]);
     })
   }
 

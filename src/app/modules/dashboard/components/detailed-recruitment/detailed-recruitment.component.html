@@ -70,7 +70,7 @@
     </div>
     <div class="pagination d-flex p-10 j-end" *ngIf="candidateList.length > 0 ">
         <mat-paginator (page)="handlePageEvent($event)" [length]="length" [pageSize]="pageSize"
-            [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="pageSizeOptions" [pageIndex]="pageIndex"
+            [showFirstLastButtons]="showFirstLastButtons"  [pageSizeOptions]="[5, 10, 25, 100]" [pageIndex]="pageIndex"
             aria-label="Select page">
         </mat-paginator>
     </div>

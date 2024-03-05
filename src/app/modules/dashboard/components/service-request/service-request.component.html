@@ -1,8 +1,8 @@
-<div class="p-l-5 p-r-10 main">
+<div class="main">
     <div class="d-flex p-t-20 align-center p-b-10 p-l-5">
         <span class="header">Create Requirement</span>
     </div>
-    <div class="scroller-box p-l-5 p-r-10">
+    <div class="scroller-box">
         <div class="d-flex parent">
             <div class="m-t-20 m-b-10 child">
                 <span class="sub-head">Interview Rounds</span>
@@ -11,7 +11,7 @@
                         class="no-close s-list m-t-8 m-l-5 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">
                         Screening -> Hr Manager
                     </div>
-                    <div *ngIf="stationName" class="m-t-8 m-l-5"> 
+                    <div *ngIf="stationName" class="m-t-8 m-l-5">
                         {{ "Screening" + " -> " + stationName + " -> " + "Hr Manager" }}
                     </div>
                     <button class="add-btn" (click)="idListOpen = !idListOpen;fetchStations();">Add</button>
@@ -34,7 +34,8 @@
                 <span class="sub-head">Department Name</span>
                 <div class="no-close col-md-3 s-list d-flex input j-space m-text align-center p-relative"
                     (click)="teamListOpen = !teamListOpen;fetchServiceTeam();">
-                    <div *ngIf="!selectedTeam" class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">
+                    <div *ngIf="!selectedTeam"
+                        class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">
                         Select Department
                     </div>
                     <div *ngIf="selectedTeam">{{selectedTeam}}</div>
@@ -82,7 +83,7 @@
                 </div>
             </div>
         </div>
-        <div class="m-t-20 m-b-10">
+        <div class="p-20">
             <div class="d-flex j-end p-t-10 m-t-10">
                 <div class="mat-ripple m-r-10 button c-pointer d-flex align-center"><button class="btn-submit"
                         (click)="sumitClick()">Submit</button></div>

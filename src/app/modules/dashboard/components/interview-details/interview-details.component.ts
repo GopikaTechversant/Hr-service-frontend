@@ -60,14 +60,17 @@ export class InterviewDetailsComponent implements OnInit {
   candidatesList: any;
   candidate: any;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private datePipe: DatePipe, private cdr: ChangeDetectorRef, private http: HttpClient, private el: ElementRef, private tostr: ToastrServices) { }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private datePipe: DatePipe, private cdr: ChangeDetectorRef,
+    private http: HttpClient, private el: ElementRef, private tostr: ToastrServices) {
+
+  }
 
   ngOnInit(): void {
-    const currentNavigation = this.router.getCurrentNavigation();
-    if (currentNavigation?.extras.state) {
-      this.candidate = currentNavigation.extras.state['candidate'];
-    }
+    this.today = new Date();
+    this.fetchPosition();
+    if (history.state.candidate) this.candidate = history.state.candidate;
   }
+
 
   @HostListener('document:click', ['$event'])
   onBodyClick(event: Event): void {
@@ -76,6 +79,12 @@ export class InterviewDetailsComponent implements OnInit {
     if (!this.positionDiv.nativeElement.contains(clickedElement)) this.showDropdown = false;
     if (!this.candidatenameDiv.nativeElement.contains(clickedElement)) this.showcandidate = false;
     if (!this.panelDiv.nativeElement.contains(clickedElement)) this.showPanel = false;
+  }
+
+  fetchPosition(): void {
+    this.http.get(`${environment.api_url}/service-request/list`).subscribe((res: any) => {
+      if (res?.data) this.positionList = res?.data;
+    })
   }
 
   fetchCandidates() {
@@ -100,11 +109,7 @@ export class InterviewDetailsComponent implements OnInit {
     })
   }
 
-  fetchPosition(): void {
-    this.http.get(`${environment.api_url}/service-request/list`).subscribe((res: any) => {
-      if (res?.data) this.positionList = res?.data;
-    })
-  }
+
 
   fetchPanel(): void {
     const headers = new HttpHeaders({
@@ -217,7 +222,6 @@ export class InterviewDetailsComponent implements OnInit {
     if (this.interviewStatus === 'scheduled') this.interviewStatus = 'Rescheduled'
     this.changeInterviewStatus();
   }
-
 
   submit(): void {
     const noticeperiod = document.getElementById('noticePeriod') as HTMLInputElement;

@@ -60,9 +60,11 @@
         <div class="child d-flex m-b-10" #candidatenameDiv>
             <span class="label m-b-4">Candidate Name</span>
             <div class="input-box p-t-10 p-l-6 c-pointer" (click)="showcandidate = !showcandidate">
-                <span *ngIf="!candidateName">Select Name</span>
+                <span *ngIf="!candidateName && !candidate?.candidateFirstName">Select Name</span>
+                <span *ngIf="candidate?.candidateFirstName"> {{candidate?.candidateFirstName}}</span>
                 <span *ngIf="candidateName" class="p-l-9 c-pointer p-5">{{candidateName}}</span>
-                <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
+                <span *ngIf="!candidateName && !candidate?.candidateFirstName"><i
+                        class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
                 <div class="no-close dropdown m-t-6 p-t-10 p-l-6 c-pointer" *ngIf="showcandidate && positionId">
                     <div class="p-5" *ngFor="let candidate of candidate_list"
                         (click)="selectCandidate(candidate.candidateId,candidate.candidateFirstName,candidate.candidateLastName,candidate)">
@@ -73,7 +75,11 @@
         </div>
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Candidate Experience</span>
-            <input type="text" class="input-box p-l-9" [value]="candidateExperience || ''">
+            <div class="input-box p-l-9">
+                <span *ngIf="candidate?.candidateExperience"> {{candidate?.candidateExperience}}</span>
+                <span>{{candidateExperience || ''}}</span>
+                <!-- <input type="text"  [value]="candidateExperience || ''"> -->
+            </div>
         </div>
         <div class="child d-flex m-b-10">
             <span class="label m-b-4 ">Notice Period</span>
@@ -127,8 +133,6 @@
     </div>
 
 </div>
-<!-- <app-requirement-form></app-requirement-form> -->
-
 <div class="main">
     <div class="candidate-list">
         <div class="d-flex head">

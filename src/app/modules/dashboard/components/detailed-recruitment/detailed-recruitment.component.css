@@ -36,8 +36,8 @@ tr {
     text-align: left;
 }
 
-.table-container{
-    height: calc(100vh - 355px);
+.table-container {
+    height: calc(100vh - 450px);
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -52,6 +52,10 @@ table {
     font-size: 16px;
     line-height: 18.96px;
     color: #4F4F4F;
+}
+
+.head {
+    padding: 10px;
 }
 
 .heading {
@@ -87,7 +91,7 @@ table {
     right: 11%;
 }
 
-.drop-list{
+.drop-list {
     background: white;
     box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
     max-height: 150px;
@@ -100,7 +104,7 @@ table {
     position: absolute;
     z-index: 999;
     margin-top: 5px;
-    top: 100%; 
+    top: 100%;
     left: 0;
 }
 
@@ -126,6 +130,6 @@ table {
     padding: 50% 300%;
 }
 
-.fa-chevron-down{
-    color: #525455; 
+.fa-chevron-down {
+    color: #525455;
 }
