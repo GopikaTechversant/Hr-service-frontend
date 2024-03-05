@@ -31,7 +31,6 @@ export class CandidateDetailsComponent implements OnInit {
         this.CandidateData = res?.data
         this.candidateDetails = res?.data[0];
         this.candidateFeedback = res?.comments
-        console.log(this.candidateFeedback);
       }
     }); 
   }

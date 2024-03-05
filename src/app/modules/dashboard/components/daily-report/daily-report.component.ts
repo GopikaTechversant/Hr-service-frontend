@@ -36,7 +36,7 @@ export class DailyReportComponent implements OnInit {
   showRecruiters: boolean = false;
   recruiterName: string = 'Select';
   recruiterKeys: any[] = [];
-  fromDate:any;
+  fromDate: any;
   constructor(private http: HttpClient, private router: Router, private datePipe: DatePipe) {
     this.startDate = new Date();
     this.endDate = new Date();
@@ -52,28 +52,18 @@ export class DailyReportComponent implements OnInit {
   ngOnInit(): void {
     this.reportUserId = localStorage.getItem('userId');
     this.fetchDetails();
-    console.log(this.recruiterName);
-    
   }
-
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   if (changes['requitersList'] && this.requitersList) {
-  //     console.log(this.requitersList, "List is now available");
-  //   }
-  // }
 
   fetchDetails(): void {
     this.http.get(`${environment.api_url}/report/report-list?reportUserId=${this.reportUserId}&reportFromDate=${this.reportFromDate}&reportToDate=${this.reportToDate}&reportPageNo=${this.reportPageNo}&reportPageLimit=${this.reportPageLimit}`)
       .subscribe((res: any) => {
-        if(res?.data){
+        if (res?.data) {
           this.userRequirement = [];
           this.userRequirement = res?.data;
-          console.log(" this.userRequirement", this.userRequirement);
           this.userRequirement.forEach((objectItem: any) => {
             this.recruiterKeys = Object.keys(objectItem);
-            console.log("Keys of an object:", this.recruiterKeys);
           })
-        }  
+        }
       });
   }
 
@@ -102,9 +92,11 @@ export class DailyReportComponent implements OnInit {
     this.pageIndex = event.pageIndex;
     this.fetchDetails();
   }
+
   dateSearch(): void {
     this.reportFromDate = this.startDate;
     this.reportToDate = this.endDate;
     this.fetchDetails()
   }
+
 }

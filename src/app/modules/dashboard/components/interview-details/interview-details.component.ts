@@ -60,16 +60,12 @@ export class InterviewDetailsComponent implements OnInit {
   candidatesList: any;
   candidate: any;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute,private datePipe: DatePipe, private cdr: ChangeDetectorRef, private http: HttpClient, private el: ElementRef, private tostr: ToastrServices) { }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private datePipe: DatePipe, private cdr: ChangeDetectorRef, private http: HttpClient, private el: ElementRef, private tostr: ToastrServices) { }
 
   ngOnInit(): void {
-    this.today = new Date();
-    this.fetchPosition();
     const currentNavigation = this.router.getCurrentNavigation();
     if (currentNavigation?.extras.state) {
-      this.candidate = currentNavigation.extras.state['candidates'];
-      console.log(this.candidate);
-      
+      this.candidate = currentNavigation.extras.state['candidate'];
     }
   }
 
@@ -100,13 +96,13 @@ export class InterviewDetailsComponent implements OnInit {
       'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
     });
     this.http.get(`${environment.api_url}/user/lists`, { headers }).subscribe((res: any) => {
-      if(res?.users) this.users_list = res?.users;
+      if (res?.users) this.users_list = res?.users;
     })
   }
 
   fetchPosition(): void {
     this.http.get(`${environment.api_url}/service-request/list`).subscribe((res: any) => {
-      if(res?.data) this.positionList = res?.data;
+      if (res?.data) this.positionList = res?.data;
     })
   }
 

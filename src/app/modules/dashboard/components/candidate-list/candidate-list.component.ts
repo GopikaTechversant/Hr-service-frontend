@@ -30,6 +30,7 @@ export class CandidateListComponent {
   data: any;
   candidateId: any;
   constructor(private http: HttpClient, private router: Router, private dialog: MatDialog) { }
+
   ngOnInit(): void {
     this.fetchCandidates('');
   }
@@ -42,11 +43,9 @@ export class CandidateListComponent {
         this.candidateList = [];
         this.candidateList = data?.candidates;
         this.totalCount = data?.candidateCount;
-
-        console.log("candidate id", this.data);
-
       });
   }
+
   navigate(path: any, queryParam: any): void {
     if (queryParam) this.router.navigate([path], { queryParams: { type: queryParam } });
     else this.router.navigate([path]);
@@ -60,12 +59,14 @@ export class CandidateListComponent {
     let skip = parseInt(event, 10);
     this.currentPag = skip;
   }
+
   handlePageEvent(event: any) {
     this.length = event.length;
     this.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
     this.fetchCandidates('');
   }
+
   delete(id: any): void {
     const dialogRef = this.dialog.open(DeleteComponent, {
       data: id,
@@ -76,6 +77,7 @@ export class CandidateListComponent {
       this.fetchCandidates('');
     })
   }
+  
   edit(id: any): void {
     const dialogRef = this.dialog.open(EditComponent, {
       data: id,

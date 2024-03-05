@@ -16,35 +16,32 @@ export class RequirementCandidateListComponent implements OnInit {
   pageSizeOptions = [5, 10, 15, 20];
   showFirstLastButtons = true;
   constructor(private http: HttpClient, private router: Router) { }
+
   ngOnInit(): void {
     this.fetchcandidates('');
-   
   }
+
   fetchcandidates(searchQuery: string): void {
     this.http.get(`${environment.api_url}/screening-station/v1/list-all?page=${this.pageIndex}&limit=${this.pageSize}&search=${searchQuery}`).subscribe((res: any) => {
-      console.log("fetch candidates", res);
       this.candidates_list = res.candidates;
-      console.log("this.candidates_list", this.candidates_list);
     })
   }
- 
+
   candidateSearch(): void {
     this.fetchcandidates(this.searchQuery);
   }
+
   navigate(path: any, requestId?: any): void {
-    console.log("clicked");
     const queryParams = requestId ? { requestId: requestId } : undefined;
-    if (queryParams) {
-      this.router.navigate([path], { queryParams: queryParams });
-    } else {
-      this.router.navigate([path]);
-    }
+    if (queryParams) this.router.navigate([path], { queryParams: queryParams });
+    else this.router.navigate([path]);
   }
+
   handlePageEvent(event: any) {
-    console.log("event", event);
     this.length = event.length;
     this.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
     this.fetchcandidates('');
   }
+
 }

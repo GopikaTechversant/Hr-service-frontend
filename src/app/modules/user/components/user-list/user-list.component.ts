@@ -20,14 +20,15 @@ export class UserListComponent implements OnInit {
   constructor(private http: HttpClient, private router: Router) {
 
   }
+
   ngOnInit(): void {
     this.fetchUserList();
   }
+
   fetchUserList(): void {
     const totalPages = Math.ceil(this.userCount / this.pageSize);
     this.lastPage = totalPages;
     if (this.currentPage > totalPages) {
-
       this.currentPage = totalPages;
     }
 
@@ -38,19 +39,18 @@ export class UserListComponent implements OnInit {
     this.http.get(`${environment.api_url}/user/lists?limit=${this.pageSize}&page=${this.currentPage}`, { headers }).subscribe((data: any) => {
       this.userList = data.users;
       this.userCount = data.userCount;
-      console.log("response ", this.userList);
     })
   }
 
   navigateToDetail(id: any): void {
     this.router.navigate(['/detail'], {
-
     });
   }
+
   onSelect(item: any): void {
     this.selectedItem = item;
-
   }
+
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);
     this.fetchUserList();

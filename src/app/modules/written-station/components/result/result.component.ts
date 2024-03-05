@@ -15,10 +15,7 @@ export class ResultComponent {
   descriptionValue: string = '';
   constructor(private http: HttpClient,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<ResultComponent>
-  ) {
-    if (data){
-      console.log(data);
+    private dialogRef: MatDialogRef<ResultComponent>) {if (data){
       this.examServiceId = data.candidateIds
     } 
     this.dialogRef.updateSize('30%', '40%')

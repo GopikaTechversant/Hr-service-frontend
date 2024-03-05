@@ -32,22 +32,22 @@ export class DetailedRecruitmentComponent implements OnInit {
     }
   }
 
-
   ngOnInit(): void {
     this.fetchCandidateList('');
     this.fetchRecruitersList();
   }
 
   fetchCandidateList(recruiter:string): void {
-   
     this.http.get(`${environment.api_url}/dashboard/requirement-report?recuriter=${recruiter}&page=${this.pageIndex}&limit=${this.pageSize}`).subscribe((res: any) => {
       this.candidateList = res.userRequirementReport;
     })
   }
+
   fetchRecruitersList(): void {
     this.http.get(`${environment.api_url}/dashboard/recruiter-list`).subscribe((res: any) => {
-      this.recruitersList = res?.data;
-      console.log("  this.recruitersList", this.recruitersList);
+      if(res?.data){
+        this.recruitersList = res?.data;
+      }
     })
   }
 
@@ -56,13 +56,13 @@ export class DetailedRecruitmentComponent implements OnInit {
     this.selectedRecruiterId = id;
     this.recruitersListOpen = false;
     this.fetchCandidateList(this.selectedRecruiterId)
-    console.log();
   }
+
   handlePageEvent(event: any) {
-    console.log("event", event);
     this.length = event.length;
     this.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
     this.fetchCandidateList('');
   }
+  
 }

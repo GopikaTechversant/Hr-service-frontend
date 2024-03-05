@@ -37,11 +37,13 @@ export class ServiceRequestComponent implements OnInit {
   ngOnInit(): void {
 
   }
+
   fetchServiceId(): void {
     this.http.get(`${environment.api_url}/service-request/services`).subscribe(((res: any) => {
       this.list_id = res.data;
     }))
   }
+
   selectId(id: any, name: any): void {
     this.idListOpen = false;
     if (this.selectedId !== id) {
@@ -50,11 +52,13 @@ export class ServiceRequestComponent implements OnInit {
     }
     this.idListOpen = true;
   }
+
   fetchServiceTeam(): void {
     this.http.get(`${environment.api_url}/service-request/team`).subscribe((res: any) => {
       this.list_team = res.data;
     })
   }
+
   selectTeam(teamId: any, teamName: any): void {
     this.teamListOpen = false;
     if (this.selectedTeam !== teamName) {
@@ -63,15 +67,14 @@ export class ServiceRequestComponent implements OnInit {
     }
     this.teamListOpen = true;
   }
+
   fetchStations(): void {
     this.http.get(`${environment.api_url}/user/stations`).subscribe((res: any) => {
       this.stationsList = res.data;
-      console.log("stationsList.slice(1, -1)",this.stationsList.slice(1, -1));
       const array = this.stationsList.slice(1, -1);
-      console.log("array",array);
-      
     })
   }
+
   selectStation(stationid: any, stationName: any): void {
     this.idListOpen = false;
     this.stationId = stationid;
@@ -82,8 +85,8 @@ export class ServiceRequestComponent implements OnInit {
     const hrStation = this.stationsList.find((station: any) => station.stationName == 'Hiring Manager');
     if (screeningStation && !this.selectedStationsId.includes(screeningStation.stationId)) this.selectedStationsId.push(screeningStation.stationId);
     if (hrStation && !this.selectedStationsId.includes(hrStation.stationId)) this.selectedStationsId.push(hrStation.stationId);
-    console.log("this.selectedStationsId", this.selectedStationsId);
   }
+
   sumitClick(): void {
     this.skillsArray = this.skills.nativeElement.value.split(',').map(skill => skill.trim());
     const requestData = {
@@ -107,9 +110,11 @@ export class ServiceRequestComponent implements OnInit {
       }
     })
   }
+
   clearInputvalue(inputElement: ElementRef<HTMLInputElement>) {
     inputElement.nativeElement.value = '';
   }
+
   resetFormAndState(): void {
     this.stationsList = [];
     this.stationName = null;
@@ -123,7 +128,9 @@ export class ServiceRequestComponent implements OnInit {
     this.idListOpen = false;
     this.teamListOpen = false;
   }
+
   cancel(): void {
     this.resetFormAndState();
   }
+  
 }

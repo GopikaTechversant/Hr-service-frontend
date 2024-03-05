@@ -33,28 +33,23 @@ export class SeriesComponent implements OnInit {
       this.requestId = params['requestId'];
     });
   }
+
   ngOnInit(): void {
     this.fetchcandidates();
-
   }
-  ngAfterViewInit() {
-    console.log("cyuhgdy");
 
+  ngAfterViewInit() {
     if (this.scrollTop) {
       this.renderer.listen(this.scrollTop.nativeElement, 'scroll', (event) => {
-        console.log("scrollTop");
         let element = event.target;
         const requiredHeight = element.scrollTop + element.clientHeight;
         let calculatedHeight = element.scrollHeight / 4;
         calculatedHeight = calculatedHeight * 3;
-        console.log("calculatedHeight ", calculatedHeight);
-        console.log("requiredHeight", requiredHeight);
-
         if (requiredHeight > calculatedHeight && !this.moreApiCalled) this.loadMore();
       });
     }
-
   }
+
   fetchcandidates(): void {
     this.http.get(`${environment.api_url}/screening-station/list-batch/${this.requestId}?limit=${this.limit}&page=1`).subscribe((res: any) => {
       this.moreApiCalled = false;
@@ -62,16 +57,11 @@ export class SeriesComponent implements OnInit {
         this.candidates_list = res?.candidates
         this.candidates_list = [];
         this.candidates_list = [...this.candidates_list, ...res.candidates];
-        console.log(" this.candidates_list", this.candidates_list);
         this.candidates_list.forEach((candidate: any) => {
-          if (candidate.serviceId) {
-            this.serviceIds.push(candidate.serviceId);
-          }
+          if (candidate.serviceId) this.serviceIds.push(candidate.serviceId);
         });
       }
     })
-
-
   }
 
   loadMore(): void {
@@ -102,8 +92,7 @@ export class SeriesComponent implements OnInit {
           this.error = true;
         }
       }
-    }
-    )
+    })
   }
 
   toggleTaskDetails() {
@@ -114,7 +103,7 @@ export class SeriesComponent implements OnInit {
     let action = event?.target?.value;
     this.candidateServiceId = candidate?.serviceId;
     const dialogRef = this.dialog.open(FeedbackComponent, {
-      data: { candidateId: candidate?.serviceId, stationId: 1, status: action },
+      data: { candidateId: candidate?.serviceId, stationId: 1, status: action , candidateDetails: candidate},
       width: '600px',
       height: '300px'
     })
@@ -122,19 +111,18 @@ export class SeriesComponent implements OnInit {
       if (confirmed) {
         candidate.serviceStatus = action;
       }
-      console.log(candidate)
       let element: any = document.getElementById('status' + index);
       if (element) element.value = candidate?.serviceStatus;
-      console.log(candidate?.serviceStatus);
-      
-      if(candidate?.serviceStatus === 'selected'){
-        this.router.navigate(['dashboard/interview-details'], {
-          state: { candidates: candidate } 
-        });
-      }      
+      // if (candidate?.serviceStatus === 'selected') {
+      //   this.router.navigate(['dashboard/interview-details'], {
+      //     state: { candidate }
+      //   });
+      // }
+
     })
     dialogRef.componentInstance.selectedCandidatesEmitter.subscribe((selectedCandidatesIds: any[]) => {
       this.selectedCandidatesIds.push(...selectedCandidatesIds);
     })
   }
+
 }

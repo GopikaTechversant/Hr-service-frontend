@@ -52,7 +52,6 @@ export class ApplicationListBarComponent implements OnInit {
     this.fetchApplicationList();
   }
 
-
   createBarChart() {
     if (this.chart) {
       this.chart.destroy();
@@ -61,18 +60,9 @@ export class ApplicationListBarComponent implements OnInit {
       type: 'bar',
       data: {
         labels: this.labels,
-        // labels: ['ASE javascript 2024 february 29', 'ASE javascript 2024 february 29', 'ASE javascript 2024 february 29',
-        //   'ASE javascript 2024 february 29', 'ASE javascript 2024 february 29', 'ASE javascript 2024 february 29',
-        //   'ASE javascript 2024 february 29', 'ASE javascript 2024 february 29', 'ASE javascript 2024 february 29',
-        //   'ASE javascript 2024 february 29', 'ASE javascript 2024 february 29', 'ASE javascript 2024 february 29'
-        // ],
         datasets: [{
           label: ' ',
           data: this.dataSet,
-          // data: ['43', '78', '98',
-          //   '43', '78', '98',
-          //   '43', '78', '98',
-          //   '43', '78', '98'],
           backgroundColor: 'rgba(98, 138, 252)',
           borderColor: 'rgba(98, 138, 252)',
           borderWidth: 1,
@@ -91,19 +81,19 @@ export class ApplicationListBarComponent implements OnInit {
             grid: {
               display: false,
             },
-            ticks: {
-              autoSkip: false,
-              maxRotation: 0,
-              minRotation: 0,
-              callback: function (value, index, values) {
-                const stringValue = value.toString();
-                const maxLabelLength = 10;
-                if (stringValue.length > maxLabelLength) {
-                  return stringValue.match(new RegExp('.{1,' + maxLabelLength + '}', 'g'));
-                }
-                return stringValue;
-              }
-            }
+          //   ticks: {
+          //     autoSkip: false,
+          //     maxRotation: 0,
+          //     minRotation: 0,
+          //     callback: function (value, index, values) {
+          //       const stringValue = value.toString();
+          //       const maxLabelLength = 10;
+          //       if (stringValue.length > maxLabelLength) {
+          //         return stringValue.match(new RegExp('.{1,' + maxLabelLength + '}', 'g'));
+          //       }
+          //       return stringValue;
+          //     }
+          //   }
           }
         },
         layout: {
