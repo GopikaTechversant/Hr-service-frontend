@@ -11,7 +11,17 @@
 
 }
 
+.selected-skills{
+    width: 100%;
+}
 
+.primary-skills{
+    width: 50%;
+}
+
+.secondary-skills{
+    width: 50%;
+}
 
 .input-box {
     width: 91%;
@@ -223,4 +233,25 @@
 
 .selected-primary {
     flex-direction: column;
+}
+
+.skill-drop-list{
+    position: absolute;
+    background-color: #EFEFEF;
+    overflow-y: scroll;
+    height: 84px;
+    width: 194px;
+    margin-left: 2px;
+    padding-left: 3px;
+    padding-top: 8px;
+}
+
+ul{
+    height: 100px;
+    overflow-y: scroll;
+}
+
+.delete-color{
+    color: #C10A0A;
+    margin-left: 19px;
 }

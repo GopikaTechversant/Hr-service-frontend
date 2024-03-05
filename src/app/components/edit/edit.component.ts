@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, ElementRef, OnInit, EventEmitter, Inject } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ToastrServices } from 'src/app/services/toastr.service';
 import { environment } from 'src/environments/environments';
@@ -16,7 +16,6 @@ export class EditComponent implements OnInit {
   displayDate: any
   showDropdown: boolean = false;
   showSource: boolean = false;
-
   candidateForm!: UntypedFormGroup;
   submitted: boolean = false;
   fileInputClicked: boolean = false;
@@ -38,8 +37,9 @@ export class EditComponent implements OnInit {
   selectedRequirementId: any;
   validationSuccess: boolean = false;
   requirementListOpen: boolean = false;
-  // candidateCreatedby: any;
   resumeUploadSuccess: boolean = false;
+  showPrimary: boolean = false;
+  showSecondary: boolean = false;
   candidateId: any;
   CandidateData: any;
   candidateDetails: any;
@@ -49,21 +49,21 @@ export class EditComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<EditComponent>, private tostr: ToastrServices, private formBuilder: UntypedFormBuilder, private http: HttpClient,
     private datePipe: DatePipe, private el: ElementRef, @Inject(MAT_DIALOG_DATA) public data: any) {
     this.candidateForm = this.formBuilder.group({
-      candidateFirstName: [null],
-      candidateLastName: [null],
-      candidateDoB: [null],
-      candidateGender: [null],
-      candidateExperience: [null],
-      candidatePreviousOrg: [null],
-      candidatePreviousDesignation: [null],
-      candidateEducation: [null],
-      candidateCurrentSalary: [null],
-      candidateExpectedSalary: [null],
-      candidateAddress: [null],
-      candidateemail: [null],
-      candidateMobileNo: [null],
-      resumeSourceId: [null],
-      candidateId: [null]
+      candidateFirstName: [null, Validators.required],
+      candidateLastName: [null, Validators.required],
+      candidateDoB: [null, Validators.required],
+      candidateGender: [null, Validators.required],
+      candidateExperience: [null, Validators.required],
+      candidatePreviousOrg: [null, Validators.required],
+      candidatePreviousDesignation: [null, Validators.required],
+      candidateEducation: [null, Validators.required],
+      candidateCurrentSalary: [null, Validators.required],
+      candidateExpectedSalary: [null, Validators.required],
+      candidateAddress: [null, Validators.required],
+      candidateemail: [null, Validators.required],
+      candidateMobileNo: [null, Validators.required],
+      resumeSourceId: [null, Validators.required],
+      candidateId: [null, Validators.required]
     })
   }
   ngOnInit(): void {
@@ -95,8 +95,18 @@ export class EditComponent implements OnInit {
       if (res?.data) {
         this.CandidateData = res?.data
         this.candidateDetails = res?.data[0];
-        console.log("res?.data", res?.data);
-        console.log(" this.candidateDetails", this.candidateDetails);
+        if (this.candidateDetails?.candidatePrimarySkills) {
+          this.selectedPrimarySkills = this.candidateDetails.candidatePrimarySkills.map((skill: any) => ({
+            id: skill.skillType,
+            name: skill.skillType
+          }));
+        }
+        if (this.candidateDetails?.candidateSecondarySkills) {
+          this.selectedSecondarySkills = this.candidateDetails.candidateSecondarySkills.map((skill: any) => ({
+            id: skill.skillType,
+            name: skill.skillType
+          }));
+        }
         this.candidateForm.patchValue({
           candidateFirstName: this.candidateDetails?.candidateFirstName,
           candidateLastName: this.candidateDetails?.candidateLastName,
@@ -118,42 +128,36 @@ export class EditComponent implements OnInit {
     });
   }
   selectsource(sourceid: any, sourceName: any): void {
-    // this.showSource = false;
     this.sourceId = sourceid;
     this.sourceName = sourceName;
   }
-
   selectRequirement(id: any, name: any): void {
-    // this.requirementListOpen = false;
     if (this.selectedRequirementName !== name && this.selectedRequirementId !== id) {
       this.selectedRequirementName = name;
       this.selectedRequirementId = id;
     }
   }
   selectGender(item: any) {
-    console.log("item", item);
     this.genderName = item;
-    console.log(" this.genderName", this.genderName);
   }
   dateChange(event: any): void {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
   }
-
   selectSkillType(type: any): void {
     this.selectedSkillType = type;
   }
-
-  toggleSearchBar(): void {
-    this.showSearchBar = !this.showSearchBar;
+  toggleSearchBarPrimary(): void {
+    this.showPrimary = !this.showPrimary;
   }
-
+  toggleSearchBarSecondary(): void {
+    this.showSecondary = !this.showSecondary;
+  }
   onFileSelected(event: any) {
     this.fileInputClicked = true;
     this.selectedFile = event.target.files[0];
     if (event.target.files.length > 0) this.resumeUploadSuccess = true;
   }
-
   submitClick(): void {
     let candidateDetails = this.candidateForm.value;
     this.primaryskills = this.selectedPrimarySkills.map(skill => skill.id);
@@ -162,7 +166,6 @@ export class EditComponent implements OnInit {
       'Content-Type': 'multipart/form-data'
     });
     const formdata = new FormData();
-
     formdata.append('candidateId', this.candidateDetails?.candidateId);
     if (candidateDetails.candidateFirstName !== this.candidateDetails?.candidateFirstName) formdata.append('candidateFirstName', candidateDetails.candidateFirstName);
     if (candidateDetails.candidateLastName !== this.candidateDetails?.candidateLastName) formdata.append('candidateLastName', candidateDetails.candidateLastName);
@@ -186,13 +189,10 @@ export class EditComponent implements OnInit {
     if (this.primaryskills.length > 0) {
       formdata.append('candidatePrimarySkills', this.primaryskills);
     }
-
     if (this.secondaryskills.length > 0) {
       formdata.append('candidateSecondarySkills', this.secondaryskills);
     }
-
     if (this.selectedRequirementId) formdata.append('candidatesAddingAgainst', this.selectedRequirementId);
-
     if (this.genderName) formdata.append('candidateGender', this.genderName);
     if (this.candidateForm.value.candidateFirstName && this.candidateForm.value.candidateLastName && this.candidateForm.value.candidateGender
       && this.candidateForm.value.candidateemail && this.candidateForm.value.candidateMobileNo) {
@@ -201,7 +201,6 @@ export class EditComponent implements OnInit {
     if (this.validationSuccess) {
       this.http.post(`${environment.api_url}/candidate/edit`, formdata).subscribe((response) => {
         this.tostr.success('Candidate updated successfully');
-        console.log("updated");
         this.onEditSuccess.emit();
         this.dialogRef.close();
       },
@@ -216,17 +215,14 @@ export class EditComponent implements OnInit {
       this.submitted = true;
     }
   }
-
   triggerFileInput(): void {
     const fileInput = document.querySelector('input[type="file"]') as HTMLElement;
     fileInput.click();
   }
-
   cancel() {
     this.dialogRef.close();
     this.resetFormAndState();
   }
-
   resetFormAndState(): void {
     this.candidateForm.reset();
     this.selectedPrimarySkills = [];
@@ -237,18 +233,14 @@ export class EditComponent implements OnInit {
     this.showSource = false;
     this.showSearchBar = false;
     this.resumeUploadSuccess = false;
-
   }
-
   getSkillSuggestions(event: any): void {
     this.searchvalue = event?.target.value;
-    if (this.selectedSkillType) {
-      this.http.get(`${environment.api_url}/candidate/skills/list?search=${this.searchvalue}`).subscribe((res: any) => {
-        this.skillSuggestions = res.data.filter((suggestion: any) =>
-          suggestion.skillName.toLowerCase().startsWith(this.searchvalue.toLowerCase()) && !this.isSkillSelected(suggestion)
-        );
-      });
-    }
+    this.http.get(`${environment.api_url}/candidate/skills/list?search=${this.searchvalue}`).subscribe((res: any) => {
+      this.skillSuggestions = res.data.filter((suggestion: any) =>
+        suggestion.skillName.toLowerCase().startsWith(this.searchvalue.toLowerCase()) && !this.isSkillSelected(suggestion)
+      );
+    });
   }
 
   removeSkill(skillToRemove: any, type: 'primary' | 'secondary'): void {
@@ -259,21 +251,19 @@ export class EditComponent implements OnInit {
     }
   }
 
-
   isSkillSelected(suggestion: any): boolean {
     const allSelectedSkills = [...this.selectedPrimarySkills, ...this.selectedSecondarySkills];
     return allSelectedSkills.some(selectedSkill => selectedSkill.id === suggestion.id);
   }
-
-  selectSkill(suggestion: any): void {
+  selectSkill(suggestion: any, skillType: any): void {
     const selectedSkill = { id: suggestion.id, name: suggestion.skillName };
-    if (this.selectedSkillType === 'Primary Skills') {
+
+    if (skillType === 'primary') {
       this.selectedPrimarySkills.push(selectedSkill);
-    } else if (this.selectedSkillType === 'Secondary Skills') {
+    } else if (skillType === 'secondary') {
       this.selectedSecondarySkills.push(selectedSkill);
     }
     this.showSearchBar = false;
     this.skillSuggestions = [];
   }
-
 }

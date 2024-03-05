@@ -209,7 +209,8 @@
                         <ul>
                             <li *ngFor="let skill of selectedPrimarySkills" class="p-4">
                                 {{ skill.name }}
-                                <span (click)="removeSkill(skill, 'primary')" class="remove">Remove</span>
+                                <!-- <span (click)="removeSkill(skill, 'primary')" class="remove">Remove</span> -->
+                                <i class="fa fa-trash-o  delete-color" aria-hidden="true" (click)="removeSkill(skill, 'primary')"></i>
                             </li>
                         </ul>
                     </div>
@@ -218,7 +219,8 @@
                         <ul>
                             <li *ngFor="let skill of selectedSecondarySkills" class="p-4">
                                 {{ skill.name }}
-                                <span (click)="removeSkill(skill, 'secondary')" class="remove">Remove</span>
+                                <!-- <span (click)="removeSkill(skill, 'secondary')" class="remove">Remove</span> -->
+                                <i class="fa fa-trash-o  delete-color" aria-hidden="true" (click)="removeSkill(skill, 'secondary')"></i>
                             </li>
                         </ul>
                     </div>
