@@ -1,6 +1,13 @@
-<div class="main p-10">
-    <p class="confirm">Are you sure want to delete ? </p>
-    <div class="d-flex j-space btn m-l-11">
+<div class="main  d-flex align-center m-t-15">
+    <!-- <img src="assets/images/Group 97.png" alt="" height="80px" width="80px" class="p-t-8"> -->
+    <div class="p-15">
+        <p class="confirm ">Are you sure? </p>
+        <div class="p-t-8">
+            <p class="text">If you proceed ,</p>
+            <p class="text">You will lose the candidate data</p>
+        </div>
+    </div>
+    <div class="d-flex btn">
         <button (click)="cancel()" class="cancel-btn">Cancel</button>
         <button (click)="delete()" class="delete-btn">Delete</button>
     </div>

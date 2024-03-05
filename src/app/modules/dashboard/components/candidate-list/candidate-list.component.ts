@@ -12,7 +12,6 @@ import { EditComponent } from 'src/app/components/edit/edit.component';
 })
 export class CandidateListComponent {
   @Input() appCustomLength: number = 0;
-
   length: any = 20;
   pageSize = 10;
   pageIndex = 1;
@@ -70,8 +69,8 @@ export class CandidateListComponent {
   delete(id: any): void {
     const dialogRef = this.dialog.open(DeleteComponent, {
       data: id,
-      width: '350px',
-      height: '150px'
+      width: '500px',
+      height: '250px'
     })
     dialogRef.componentInstance.onDeleteSuccess.subscribe(() => {
       this.fetchCandidates('');
@@ -80,8 +79,11 @@ export class CandidateListComponent {
   edit(id: any): void {
     const dialogRef = this.dialog.open(EditComponent, {
       data: id,
-      width: '900px',
-      height: '600px'
+      width: '950px',
+      height: '980px'
+    })
+    dialogRef.componentInstance.onEditSuccess.subscribe(() => {
+      this.fetchCandidates('');
     })
   }
 
