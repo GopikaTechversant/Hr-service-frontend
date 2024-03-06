@@ -41,7 +41,7 @@ export class AddCandidateModalComponent implements OnInit {
   validationSuccess: boolean = false;
   requirementListOpen: boolean = false;
   candidateCreatedby: any;
-  resumeUploadSuccess : boolean = false;
+  resumeUploadSuccess: boolean = false;
 
   constructor(private tostr: ToastrServices, private formBuilder: UntypedFormBuilder, private http: HttpClient, private datePipe: DatePipe, private el: ElementRef) {
     this.candidateForm = this.formBuilder.group({
@@ -63,14 +63,14 @@ export class AddCandidateModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.candidateCreatedby = localStorage.getItem('userId')    
+    this.candidateCreatedby = localStorage.getItem('userId')
   }
 
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
       this.showDropdown = false;
-      this.showSource =false;
+      this.showSource = false;
       this.requirementListOpen = false;
     }
   }
@@ -88,17 +88,29 @@ export class AddCandidateModalComponent implements OnInit {
   }
 
   selectsource(sourceid: any, sourceName: any): void {
-    // this.showSource = false;
     this.sourceId = sourceid;
     this.sourceName = sourceName;
   }
 
   selectRequirement(id: any, name: any): void {
-    // this.requirementListOpen = false;
     if (this.selectedRequirementName !== name && this.selectedRequirementId !== id) {
       this.selectedRequirementName = name;
       this.selectedRequirementId = id;
     }
+  }
+
+  onKeypress(event: any): void {
+    const enteredKey: string = event.key;
+    const allowedCharacters: RegExp = /^[0-9]+$/;
+
+    if (!allowedCharacters.test(enteredKey)) {
+      event.preventDefault();
+      return;
+    }
+  }
+
+  onPaste(event: any): void {
+    event.preventDefault();
   }
 
   dateChange(event: any): void {
@@ -116,8 +128,8 @@ export class AddCandidateModalComponent implements OnInit {
 
   onFileSelected(event: any) {
     this.fileInputClicked = true;
-    this.selectedFile = event.target.files[0];    
-    if(event.target.files.length > 0) this.resumeUploadSuccess = true;
+    this.selectedFile = event.target.files[0];
+    if (event.target.files.length > 0) this.resumeUploadSuccess = true;
   }
 
   submitClick(): void {
@@ -139,17 +151,16 @@ export class AddCandidateModalComponent implements OnInit {
     formdata.append('candidateSecondarySkills', this.secondaryskills);
     formdata.append('resumeSourceId', this.sourceId);
     formdata.append('candidatesAddingAgainst', this.selectedRequirementId);
-    // formdata.append('candidatesAddingAgainst', this.selectedRequirementId);
-    
+
     if (this.candidateForm.value.candidateFirstName && this.candidateForm.value.candidateLastName && this.candidateForm.value.candidateGender
       && this.candidateForm.value.candidateEmail && this.candidateForm.value.candidateMobileNo) {
       this.validationSuccess = true;
     } else this.tostr.warning('Please fill all mandatory fields');
     if (this.validationSuccess) {
       this.http.post(`${environment.api_url}/candidate/create`, formdata).subscribe((response) => {
-          this.tostr.success('Candidate created successfully');
-          this.resetFormAndState();
-        },
+        this.tostr.success('Candidate created successfully');
+        this.resetFormAndState();
+      },
         (error) => {
           if (error?.status === 500) this.tostr.error("Internal Server Error")
           else {
@@ -181,7 +192,6 @@ export class AddCandidateModalComponent implements OnInit {
     this.showSource = false;
     this.showSearchBar = false;
     this.resumeUploadSuccess = false;
-
   }
 
   getSkillSuggestions(event: any): void {

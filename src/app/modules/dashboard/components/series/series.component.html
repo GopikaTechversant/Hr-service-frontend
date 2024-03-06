@@ -8,10 +8,10 @@
             <div class="d-flex j-space heading p-7">
                 <span class="name p-t-4 p-l-3">{{candidate?.candidateFirstName}} {{candidate?.candidateLastName}}</span>
                 <select *ngIf="candidate?.serviceStatus !== 'done'" [id]="'status' + i"
-                    (click)="onCandidateSelectionChange($event, candidate, i)" class="select c-pointer">
-                    <option value="pending" [selected]="candidate?.serviceStatus === 'pending' ? true : false"
-                        class="select c-pointer">
-                        Pending
+                    (change)="onCandidateSelectionChange($event, candidate, i)" class="select c-pointer">
+                    <option value="pending"
+                        [selected]="candidate?.serviceStatus === 'pending' || candidate?.serviceStatus !== 'selected' || candidate?.serviceStatus !== 'rejected' ? true : false"
+                        class="select c-pointer">Pending
                     </option>
                     <option value="selected" [selected]="candidate?.serviceStatus === 'selected' ? true : false"
                         class="select c-pointer">
@@ -22,8 +22,7 @@
                         Rejected
                     </option>
                 </select>
-                <span *ngIf="candidate?.serviceStatus === 'done'" value="done" selected
-                    class="name done p-t-4">Done</span>
+                <span *ngIf="candidate?.serviceStatus === 'done'" class="name done p-t-4">Done</span>
             </div>
             <div class="info-container">
                 <div class="info-pair d-flex j-space">

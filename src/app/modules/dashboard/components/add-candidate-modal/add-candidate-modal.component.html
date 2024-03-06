@@ -51,7 +51,7 @@
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Mobile<span class="required">*</span></span>
-                <input type="text" class="input-box" formControlName="candidateMobileNo" maxlength="10">
+                <input type="text" class="input-box" formControlName="candidateMobileNo" maxlength="10" (keypress)="onKeypress($event)"  (paste)="onPaste($event)">
                 <div
                     *ngIf="candidateForm.get('candidateMobileNo')?.hasError('required') && candidateForm.get('candidateMobileNo')?.touched">
                     <mat-error>Mobile No Required</mat-error>
@@ -205,7 +205,7 @@
                 </div>
                 <div class="child-skill d-flex m-b-10">
                     <div *ngIf="selectedPrimarySkills.length > 0">
-                        <span>Selected Primary Skills</span>
+                        <span class="p-l-20">Selected Primary Skills</span>
                         <ul>
                             <li *ngFor="let skill of selectedPrimarySkills" class="p-4">
                                 {{ skill.name }}
@@ -215,7 +215,7 @@
                         </ul>
                     </div>
                     <div *ngIf="selectedSecondarySkills.length > 0">
-                        <span>Selected Secondary Skills</span>
+                        <span class="p-l-20">Selected Secondary Skills</span>
                         <ul>
                             <li *ngFor="let skill of selectedSecondarySkills" class="p-4">
                                 {{ skill.name }}

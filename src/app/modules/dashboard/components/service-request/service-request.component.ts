@@ -7,7 +7,10 @@ import { ToastrServices } from 'src/app/services/toastr.service';
 @Component({
   selector: 'app-service-request',
   templateUrl: './service-request.component.html',
-  styleUrls: ['./service-request.component.css']
+  styleUrls: ['./service-request.component.css'],
+  host: {
+    '(document:click)': 'onBodyClick($event)'
+  }
 })
 export class ServiceRequestComponent implements OnInit {
   @ViewChild('serviceInput') serviceInput!: ElementRef<HTMLInputElement>;
@@ -36,6 +39,14 @@ export class ServiceRequestComponent implements OnInit {
   }
   ngOnInit(): void {
 
+  }
+
+  onBodyClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.no-close')) {      
+      this.teamListOpen = false;
+      this.idListOpen =false;
+    }
   }
 
   fetchServiceId(): void {
@@ -87,7 +98,7 @@ export class ServiceRequestComponent implements OnInit {
     if (hrStation && !this.selectedStationsId.includes(hrStation.stationId)) this.selectedStationsId.push(hrStation.stationId);
   }
 
-  sumitClick(): void {
+  submitClick(): void {
     this.skillsArray = this.skills.nativeElement.value.split(',').map(skill => skill.trim());
     const requestData = {
       requestServiceId: this.selectedId,
