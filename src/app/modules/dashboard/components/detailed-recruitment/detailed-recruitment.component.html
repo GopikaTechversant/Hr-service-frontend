@@ -70,10 +70,21 @@
             </div>
         </table>
     </div>
-    <div class="pagination d-flex p-10 j-end" *ngIf="candidateList.length > 0 ">
+    <!-- <div class="pagination d-flex p-10 j-end" *ngIf="candidateList.length > 0 ">
         <mat-paginator (page)="handlePageEvent($event)" [length]="length" [pageSize]="pageSize"
             [showFirstLastButtons]="showFirstLastButtons"  [pageSizeOptions]="[5, 10, 25, 100]" [pageIndex]="pageIndex"
             aria-label="Select page">
         </mat-paginator>
+    </div> -->
+    <div class="page  d-flex j-space">
+        <button *ngIf="currentPage !== 1" class="box" (click)="onPageChange(currentPage - 1)">{{currentPage -
+            1}}</button>
+        <button class="box current-page">{{ currentPage }}</button>
+        <button class="box" (click)="onPageChange(currentPage + 1)"
+            [disabled]="candidateList?.length === 0 || !candidateList">{{currentPage + 1}}</button>
+        <button class="box" (click)="onPageChange(currentPage + 1)"
+            [disabled]="candidateList?.length === 0 || !candidateList"> <img src="assets/images/next-arrow.png" alt=""
+                height="18px" width="18px">
+        </button>
     </div>
 </div>

@@ -29,6 +29,9 @@ export class CandidateListComponent {
   totalCount: any;
   data: any;
   candidateId: any;
+  currentPage: number = 1;
+  lastPage: any;
+  userCount: any;
   constructor(private http: HttpClient, private router: Router, private dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -36,13 +39,20 @@ export class CandidateListComponent {
   }
 
   fetchCandidates(searchKey: string): void {
+    const totalPages = Math.ceil(this.userCount / this.pageSize);
+    this.lastPage = totalPages;
+    if (this.currentPage > totalPages) {
+      this.currentPage = totalPages;
+    }
     this.searchQuery.searchWord = searchKey;
-    this.http.get(`${environment.api_url}/candidate/list?search=${this.searchQuery.searchWord}&page=${this.pageIndex}&limit=${this.pageSize}`)
+    this.http.get(`${environment.api_url}/candidate/list?search=${this.searchQuery.searchWord}&page=${this.currentPage}&limit=${this.pageSize}`)
       .subscribe((data: any) => {
         this.data = data;
         this.candidateList = [];
         this.candidateList = data?.candidates;
         this.totalCount = data?.candidateCount;
+        console.log(" this.totalCount", this.totalCount);
+
       });
   }
 
@@ -60,12 +70,12 @@ export class CandidateListComponent {
     this.currentPag = skip;
   }
 
-  handlePageEvent(event: any) {
-    this.length = event.length;
-    this.pageSize = event.pageSize;
-    this.pageIndex = event.pageIndex;
-    this.fetchCandidates('');
-  }
+  // handlePageEvent(event: any) {
+  //   this.length = event.length;
+  //   this.pageSize = event.pageSize;
+  //   this.pageIndex = event.pageIndex;
+  //   this.fetchCandidates('');
+  // }
 
   delete(id: any): void {
     const dialogRef = this.dialog.open(DeleteComponent, {
@@ -77,7 +87,7 @@ export class CandidateListComponent {
       this.fetchCandidates('');
     })
   }
-  
+
   edit(id: any): void {
     const dialogRef = this.dialog.open(EditComponent, {
       data: id,
@@ -88,5 +98,8 @@ export class CandidateListComponent {
       this.fetchCandidates('');
     })
   }
-
+  onPageChange(pageNumber: number): void {
+    this.currentPage = Math.max(1, pageNumber);
+    this.fetchCandidates('');
+  }
 }

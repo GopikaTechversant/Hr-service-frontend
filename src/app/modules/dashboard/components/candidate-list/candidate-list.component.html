@@ -15,22 +15,22 @@
             </div>
         </div>
     </div>
-        <div class="table-container m-b-0">
-            <table class="table">
-                <tr class="table-header p-b-10">
-                    <td>Name</td>
-                    <td>Email</td>
-                    <td>Mobile</td>
-                    <td>Current Organization</td>
-                    <td>Previous Organization</td>
-                    <td>Experience</td>
-                    <td>Current Salary</td>
-                    <td>Education</td>
-                    <td>Skills</td>
-                    <td>Actions</td>
-                </tr>
-                <ng-container *ngIf="candidateList?.length > 0">
-                    <tr class="c-pointer details" *ngFor="let item of candidateList">
+    <div class="table-container m-b-0">
+        <table class="table">
+            <tr class="table-header p-b-10">
+                <td>Name</td>
+                <td>Email</td>
+                <td>Mobile</td>
+                <td>Current Organization</td>
+                <td>Previous Organization</td>
+                <td>Experience</td>
+                <td>Current Salary</td>
+                <td>Education</td>
+                <td>Skills</td>
+                <td>Actions</td>
+            </tr>
+            <ng-container *ngIf="candidateList?.length > 0">
+                <tr class="c-pointer details" *ngFor="let item of candidateList">
                     <td>{{item?.candidateFirstName}} {{item?.candidateLastName}}</td>
                     <td>{{item?.candidateEmail}}</td>
                     <td>{{item?.candidateMobileNo}}</td>
@@ -39,17 +39,19 @@
                     <td>{{item?.candidateExperience}} years</td>
                     <td>{{item?.candidateCurrentSalary}}</td>
                     <td>{{item?.candidateEducation}}</td>
-                         <td>{{item?.candidateSkill.length > 0 ? item?.candidateSkill[0]?.skills?.skillName : 'N/A'}}</td>
-                        <td>
-                            <i class="fa fa-pencil-square-o p-r-5 icon-color" aria-hidden="true" (click)="edit(item?.candidateId)"></i>
-                            <i class="fa fa-trash-o p-l-5 delete-color" aria-hidden="true" (click)="delete(item?.candidateId)"></i>
-                        </td>
-                    </tr>
-                </ng-container>
-                <div *ngIf="candidateList?.length === 0 || !candidateList" class="no-data"> No Data Found</div>
-            </table>
-        </div>
-    <div class="pagination d-flex j-end" *ngIf="candidateList?.length > 0">
+                    <td>{{item?.candidateSkill.length > 0 ? item?.candidateSkill[0]?.skills?.skillName : 'N/A'}}</td>
+                    <td>
+                        <i class="fa fa-pencil-square-o p-r-5 icon-color" aria-hidden="true"
+                            (click)="edit(item?.candidateId)"></i>
+                        <i class="fa fa-trash-o p-l-5 delete-color" aria-hidden="true"
+                            (click)="delete(item?.candidateId)"></i>
+                    </td>
+                </tr>
+            </ng-container>
+            <div *ngIf="candidateList?.length === 0 || !candidateList" class="no-data"> No Data Found</div>
+        </table>
+    </div>
+    <!-- <div class="pagination d-flex j-end" *ngIf="candidateList?.length > 0">
         <mat-paginator
         (page)="handlePageEvent($event)"
         [length]="length"
@@ -59,5 +61,16 @@
         [pageIndex]="pageIndex"
         aria-label="Select page">
     </mat-paginator>
+    </div> -->
+    <div class="page  d-flex j-space">
+        <button *ngIf="currentPage !== 1" class="box" (click)="onPageChange(currentPage - 1)">{{currentPage -
+            1}}</button>
+        <button class="box current-page">{{ currentPage }}</button>
+        <button class="box" (click)="onPageChange(currentPage + 1)"
+            [disabled]="candidateList?.length === 0 || !candidateList">{{currentPage + 1}}</button>
+        <button class="box" (click)="onPageChange(currentPage + 1)"
+            [disabled]="candidateList?.length === 0 || !candidateList"> <img src="assets/images/next-arrow.png" alt=""
+                height="18px" width="18px">
+        </button>
     </div>
 </div>
