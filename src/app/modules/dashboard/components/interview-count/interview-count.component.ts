@@ -30,7 +30,9 @@ export class InterviewCountComponent implements OnInit {
   showDepartment :boolean = false;
   teamId: any = '';
   teamName : string = 'Choose Department';
-
+  currentPage: number = 1;
+  lastPage: any;
+  userCount: any;
   constructor(private datePipe: DatePipe, private http: HttpClient) { }
   ngOnInit(): void {
     Chart.register(ChartDataLabels);
@@ -141,5 +143,9 @@ export class InterviewCountComponent implements OnInit {
     this.length = event.length;
     this.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
+  }
+  onPageChange(pageNumber: number): void {
+    this.currentPage = Math.max(1, pageNumber);
+    // this.fetchCandidateList('');
   }
 }
