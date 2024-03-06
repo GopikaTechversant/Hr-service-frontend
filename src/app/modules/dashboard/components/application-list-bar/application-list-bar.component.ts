@@ -81,19 +81,19 @@ export class ApplicationListBarComponent implements OnInit {
             grid: {
               display: false,
             },
-          //   ticks: {
-          //     autoSkip: false,
-          //     maxRotation: 0,
-          //     minRotation: 0,
-          //     callback: function (value, index, values) {
-          //       const stringValue = value.toString();
-          //       const maxLabelLength = 10;
-          //       if (stringValue.length > maxLabelLength) {
-          //         return stringValue.match(new RegExp('.{1,' + maxLabelLength + '}', 'g'));
-          //       }
-          //       return stringValue;
-          //     }
-          //   }
+            // ticks: {
+            //   autoSkip: false,
+            //   maxRotation: 0,
+            //   minRotation: 0,
+            //   callback: function (value, index, values) {
+            //     const stringValue = value.toString();
+            //     const maxLabelLength = 10;
+            //     if (stringValue.length > maxLabelLength) {
+            //       return stringValue.match(new RegExp('.{1,' + maxLabelLength + '}', 'g'));
+            //     }
+            //     return stringValue;
+            //   }
+            // }
           }
         },
         layout: {

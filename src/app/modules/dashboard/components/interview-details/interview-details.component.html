@@ -5,7 +5,7 @@
     <div class="d-flex j-space parent">
         <div class="child d-flex m-b-10" #recruiterNameDiv>
             <span class="label m-b-4">Recruiter Name</span>
-            <div class="input-box p-t-10 p-l-9 c-pointer" (click)="showRecruiters = !showRecruiters">
+            <div class="input-box p-t-10 p-l-9 c-pointer p-relative" (click)="showRecruiters = !showRecruiters">
                 <span *ngIf="!recruiterName">Select Name</span>
                 <span *ngIf="recruiterName">{{recruiterName}}</span>
                 <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
@@ -43,7 +43,7 @@
         </div>
         <div class="child d-flex m-b-10" #positionDiv>
             <span class="label m-b-4">Requirement</span>
-            <div class="input-box p-t-10 p-l-6 c-pointer" (click)="showDropdown = !showDropdown">
+            <div class="input-box p-t-10 p-l-6 c-pointer p-relative" (click)="showDropdown = !showDropdown">
                 <span *ngIf="!positionName">Select Requirement</span>
                 <span *ngIf="positionName" class="p-l-9 p-5">{{positionName}}</span>
                 <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
@@ -59,7 +59,7 @@
     <div class="d-flex j-space parent">
         <div class="child d-flex m-b-10" #candidatenameDiv>
             <span class="label m-b-4">Candidate Name</span>
-            <div class="input-box p-t-10 p-l-6 c-pointer" (click)="showcandidate = !showcandidate">
+            <div class="input-box p-t-10 p-l-6 c-pointer p-relative" (click)="showcandidate = !showcandidate">
                 <span *ngIf="!candidateName && !candidate?.candidateFirstName">Select Name</span>
                 <span *ngIf="candidate?.candidateFirstName"> {{candidate?.candidateFirstName}}</span>
                 <span *ngIf="candidateName" class="p-l-9 c-pointer p-5">{{candidateName}}</span>
@@ -98,7 +98,7 @@
 
         <div class="child d-flex m-b-10" #panelDiv>
             <span class="label m-b-4">Interview Panel</span>
-            <div class="input-box p-t-10 p-l-6 c-pointer" (click)="showPanel = !showPanel; fetchPanel();">
+            <div class="input-box p-t-10 p-l-6 c-pointer p-relative" (click)="showPanel = !showPanel; fetchPanel();">
                 <span *ngIf="!panelName">Select Name</span>
                 <span *ngIf="panelName" class="p-l-9">{{panelName}}</span>
                 <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>

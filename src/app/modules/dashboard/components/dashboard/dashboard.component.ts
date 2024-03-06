@@ -4,7 +4,10 @@ import { environment } from 'src/environments/environments';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
+  host: {
+    '(document:click)': 'onBodyClick($event)'
+  }
 })
 export class DashboardComponent implements OnInit {
   candidates: any;
@@ -19,6 +22,13 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.fetchcount();
     this.fetchRequirements();
+  }
+
+  onBodyClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.no-close')) {      
+      this.requestList_open = false;
+    }
   }
 
   fetchcount(): void {

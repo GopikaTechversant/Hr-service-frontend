@@ -4,9 +4,9 @@
     </div>
     <div class="d-flex j-end m-r-10">
         <div class="input p-t-10 p-l-6 c-pointer no-close p-relative" (click)="requestList_open = !requestList_open;">
-            <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
+            <span><i class="f-right p-r-10 fa fa-chevron-down s-text no-close"></i></span>
             {{displayPosition}}
-            <div class="no-close dropdown c-pointer" *ngIf="requestList_open">
+            <div class="no-close dropdown c-pointer no-close" *ngIf="requestList_open">
                 <div  (click)='selectPosition(name?.requestName,name?.requestId);'*ngFor="let name of requestList" class="p-5">
                     {{name?.requestName}}
                 </div>
