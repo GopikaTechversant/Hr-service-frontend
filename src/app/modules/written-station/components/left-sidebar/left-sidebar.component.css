@@ -1,0 +1,37 @@
+
+.main {
+    border: 1px #E9E9E9;
+    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+    width: 100%;
+    height: 100%;
+    background-color: #FFFFFF;
+  }
+  
+  .menu {
+    height: 32px;
+    padding-top: 10px;
+    top: 126px;
+    left: 34px;
+    line-height: 21.33px !important;
+    border-radius: 0 37px 37px 0;
+    padding-left: 21px;
+  }
+  
+  .menu-text {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 21px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #4F4F4F;
+    padding-left: 6px;
+  }
+  
+  .menu:hover .menu-text{
+    background-color: #005EC9;
+    color: white;
+  }
+  
+  .menu:hover{
+    background-color: #005EC9;
+  }

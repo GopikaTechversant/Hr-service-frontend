@@ -1,19 +1,127 @@
-.container{
-    width: 97%;
-    flex-wrap: wrap;
-  }
+.search {
+  background-color: #005EC9;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  width: 25px;
+  height: 22px;
+  padding: 11px;
+}
 
-  .candidate-details {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #fff;
-    border-radius: 4px;
-    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 2px 1px;
-    border: 0.01rem solid #B9B9B9;
-    width: 200px;
-  }
+.fa-search {
+  color: #FFFFFF;
+  padding-left: 3px;
+  font-size: 18px;
+}
 
-  .status{
-    color: green;
-  }
+.input {
+  border: 1px solid #E9E9E9;
+  outline: none;
+  background-color: #FFFFFF;
+  border-radius: 3px;
+  width: 327px;
+  height: 33px;
+  padding-right: 10px;
+  color: #000000;
+}
+
+.create-btn {
+  background-color: #575F6E;
+  border: none;
+  border-radius: 3px;
+  width: 145px;
+ font-size: 16px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: 0em;
+  padding: 8px;
+  height: 20px;
+  padding-left: 15px;
+  color: #FFFFFF;
+}
+
+.title-right {
+  width: 24%;
+}
+
+
+.title-left {
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 36px;
+  letter-spacing: 0em;
+  text-align: left;
+  Width: 255px;
+  Height: 36px;
+  color: #000000;
+
+}
+
+.content{
+  flex-wrap: wrap;
+}
+
+.f-column{
+  flex-direction: column;
+}
+
+.candidate-card {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  width: 328px;
+  height: auto;
+  margin-bottom: 29px;
+  background-color: #FFFFFF;
+  border-left: 2px solid #005EC9;
+  padding: 10px;
+  position: relative;
+  padding: 10px;
+}
+
+.info-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.info-pair {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 323px;
+}
+
+.key,
+.value {
+    flex: 1;
+    margin: 5px;
+    text-align: left;
+    font-weight: 400;
+    letter-spacing: 0em;
+}
+
+.key {
+    color: #575F6E;
+    width: auto;
+}
+
+.value {
+    color: #575F6E;
+    text-align: left;
+}
+
+.candidates{
+  font-weight: 500;
+  font-size: 17px;
+}
+
+.count{
+  color: #005EC9;
+  font-size: 21px;
+  font-weight: 500;
+}
+
+.main{
+  background-color: #F7F7F7;
+  width: 100%;
+}

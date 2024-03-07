@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class CandidateListComponent implements OnInit {
   candidates_list: any = [];
+  searchQuery: string = '';
   constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
@@ -22,5 +23,7 @@ export class CandidateListComponent implements OnInit {
     if (queryParams) this.router.navigate([path], { queryParams: queryParams });
     else this.router.navigate([path]);
   }
-
+  candidateSearch(){
+    
+  }
 }
