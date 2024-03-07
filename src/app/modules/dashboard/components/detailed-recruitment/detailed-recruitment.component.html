@@ -79,9 +79,9 @@
             1}}</button>
         <button class="box current-page">{{ currentPage }}</button>
         <button class="box" (click)="onPageChange(currentPage + 1)"
-            [disabled]="candidateList?.length === 0 || !candidateList">{{currentPage + 1}}</button>
+            [disabled]="candidateList.length === 0 || !candidateList">{{currentPage + 1}}</button>
         <button class="box" (click)="onPageChange(currentPage + 1)"
-            [disabled]="candidateList?.length === 0 || !candidateList"> <img src="assets/images/next-arrow.png" alt=""
+            [disabled]="candidateList.length === 0 || !candidateList"> <img src="assets/images/next-arrow.png" alt=""
                 height="18px" width="18px">
         </button>
     </div>
