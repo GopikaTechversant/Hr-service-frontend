@@ -1,18 +1,49 @@
-<div class="d-flex">
-    <div class="container m-l-26 m-t-20 d-flex j-space p-20">
 
-        <div *ngFor="let candidate of candidates_list" class="d-flex j-center p-20"
+<div class="main m-r-11">
+    <div class="heading d-flex j-space">
+        <div class="title-left p-l-12"><span>Requirement List</span></div>
+        <div class="d-flex j-space title-right">
+            <span class="">
+                <input type="text" class="input p-l-5" placeholder="Search Requirement" (click)="candidateSearch()"
+                    (keydown.enter)="candidateSearch()" autocomplete="off" >
+                <span class="search" (click)="candidateSearch()">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </span>
+            </span>
+            
+        </div>
+    </div>
+    <div class="content p-t-10 d-flex m-t-10 m-l-5">
+        <div *ngFor="let candidate of candidates_list" class="candidate-card c-pointer col-md-4"
             (click)="navigate('/written/series/',candidate.requestId)">
-            <div class="candidate-details">
-                <!-- <p>Name : {{candidate.candidateFirstName }} {{candidate.candidateLastName }}</p> -->
-                <p>Candidates Count : {{candidate.candidatesCount}}</p>
-                <p>Designation : {{candidate.requestName}}</p>
-                <p>Team : {{candidate.teamName}}</p>
-                <p>Skills : {{candidate.requestSkills}}</p>
-                <p class="status">{{candidate.status}}</p>
-                <p></p>
+            <div class="d-flex j-space m-b-4 count-title">
+                <span class="p-l-6 candidates">Candidates</span>
+                <span class="count">{{candidate.candidatesCount}}</span>
+            </div>
+            <div class="info-container">
+                <div class="info-pair">
+                    <div class="key">Requirement</div>
+                    <div class="value">: {{candidate.requestName}}</div>
+                </div>
+                <div class="info-pair">
+                    <div class="key">Team</div>
+                    <div class="value">: {{candidate.teamName}}</div>
+                </div>
+                <div class="info-pair">
+                    <div class="key">Skills</div>
+                    <div class="value">: {{candidate.requestSkills}}</div>
+                </div>
+                <div class="info-pair p-l-5">
+                    <div [ngStyle]="{'color': candidate.status === 'progress' ? '#F57C02' : '#08E179'}">
+                        {{candidate.status}}</div>
+                </div>
             </div>
         </div>
-
     </div>
+    <!-- <div class="pagination d-flex p-10 j-end" *ngIf="candidates_list?.length > 0">
+        <mat-paginator (page)="handlePageEvent($event)" [length]="length" [pageSize]="pageSize"
+            [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="pageSizeOptions" [pageIndex]="pageIndex"
+            aria-label="Select page">
+        </mat-paginator>
+    </div> -->
 </div>
