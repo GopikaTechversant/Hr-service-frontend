@@ -127,6 +127,7 @@
     padding-left: 10px;
     padding-top: 10px;
     position: absolute;
+    z-index: 1;
 }
 
 .dropdown :hover {

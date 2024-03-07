@@ -6,7 +6,7 @@
         <div class="d-flex parent">
             <div class="m-t-20 m-b-10 child">
                 <span class="sub-head">Interview Rounds</span>
-                <div class="d-flex j-space  input">
+                <div class="d-flex j-space  input p-relative">
                     <div *ngIf="!stationName"
                         class="no-close s-list m-t-8 m-l-5 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">
                         Screening -> Hr Manager
@@ -14,12 +14,12 @@
                     <div *ngIf="stationName" class="m-t-8 m-l-5">
                         {{ "Screening" + " -> " + stationName + " -> " + "Hr Manager" }}
                     </div>
-                    <button class="add-btn" (click)="idListOpen = !idListOpen;fetchStations();">Add</button>
-                </div>
-                <div class=" m-b-2 drop-list" *ngIf="idListOpen">
-                    <div (click)="selectStation(station.stationId,station.stationName)"
-                        *ngFor="let station  of stationsList.slice(1, -1)" class=" p-t-5 p-b-5 p-l-8 c-pointer">
-                        {{station.stationName}}</div>
+                    <button class="add-btn no-close" (click)="idListOpen = !idListOpen;fetchStations();">Add</button>
+                    <div class=" m-b-2 drop-list no-close" *ngIf="idListOpen">
+                        <div (click)="selectStation(station.stationId,station.stationName)" *ngFor="let station  of stationsList.slice(1, -1)"
+                            class=" p-t-5 p-b-5 p-l-8 c-pointer no-close"> {{station.stationName}}
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="m-t-20 m-b-10 p-l-10 m-l-10 m-l-10 child">
@@ -42,7 +42,7 @@
                     <div class="no-close s-list c-pointer m-b-2 flex-1 d-flex j-end sub"><i
                             class="no-close s-list fa fa-chevron-down s-text"></i>
                     </div>
-                    <div class=" m-b-2 drop-list" *ngIf="teamListOpen">
+                    <div class=" m-b-2 drop-list no-close" *ngIf="teamListOpen">
                         <div (click)="selectTeam(team.teamId,team.teamName)" *ngFor="let team of list_team"
                             class=" p-t-5 p-b-5 p-l-8 c-pointer">{{team.teamName}}</div>
                     </div>
@@ -86,7 +86,7 @@
         <div class="p-20">
             <div class="d-flex j-end p-t-10 m-t-10">
                 <div class="mat-ripple m-r-10 button c-pointer d-flex align-center"><button class="btn-submit"
-                        (click)="sumitClick()">Submit</button></div>
+                        (click)="submitClick()">Submit</button></div>
                 <div class="mat-ripple c-pointer d-flex align-center"><button class="btn-cancel"
                         (click)="cancel()">Cancel</button></div>
             </div>

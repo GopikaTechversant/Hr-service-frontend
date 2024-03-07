@@ -46,14 +46,14 @@ export class FeedbackComponent implements OnInit {
         state: { candidate: this.data?.candidateDetails }
       });
     }
-    
+
     this.http.post(`${environment.api_url}/screening-station/reject/candidate`, payload).subscribe((res: any) => {
       // if(res?.message === 'Candidate Selected' || res?.message === 'Candidate Already selected'){
       //   this.router.navigate(['dashboard/interview-details'], {
       //     state: { candidate : this.data?.candidateDetails}     
       //   });
       // } 
-     
+
       if (this.data?.status === 'pending') this.selectedCandidatesEmitter.emit([this.candidateServiceId]);
     })
   }
