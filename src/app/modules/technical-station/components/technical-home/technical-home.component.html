@@ -1,44 +1,13 @@
-<div class="header">
-    <app-header></app-header>
-</div>
-<div class="m-10">
-    <div class="p-l-5">
-        <span class="f-s-18 f-w-500 detail-head p-t-5">Technical Station</span>
+<div class="page">
+    <div class="header">
+        <app-header></app-header>
     </div>
-    <div class="main d-flex">
-        <div class="table-container m-b-0 w-75">
-            <table class="table">
-                <tr class="table-header f-w-500 p-b-10">
-                    <td>Candidate ID</td>
-                    <td>Name</td>
-                    <td>Email</td>
-                    <td>Contact Number</td>
-                    <td>Status</td>
-                </tr>
-                <div *ngIf="loader" class="loader-parent">
-                    <img src="assets/gif/loader.gif">
-                </div>
-                <ng-container *ngIf="candidateList?.length > 0">
-                    <ng-container *ngFor="let innerArray of candidateList">
-                        <ng-container *ngFor="let item of innerArray">
-                            <tr class="candidate c-pointer" [class.selected]="selectedItem === item"
-                                (click)="onSelect(item)" (dblclick)="navigateToDetail(item['candidate.candidateId'])">
-                                <td>{{ item['candidate.candidateId'] }}</td>
-                                <td>{{ item['candidate.candidateFirstName'] }} {{ item['candidate.candidateLastName'] }}</td>
-                                <td>{{ item['candidate.candidateEmail'] }}</td>
-                                <td>{{ item['candidate.candidateMobileNo'] }}</td>
-                                <td>{{ item.serviceStatus }}</td>
-                            </tr>
-                        </ng-container>
-                    </ng-container>
-                </ng-container>
-                <div *ngIf="candidateList?.length === 0 && !loader" class="data">
-                    No Data Found
-                </div>
-            </table>
+    <div class="d-flex main">
+        <div class="w-20">
+            <app-technical-sidebar></app-technical-sidebar>
         </div>
-        <div class="sidebar w-25 p-10">
-            <app-technical-sidebar [selectedItem]="selectedItem"></app-technical-sidebar>
+        <div class="w-80 m-10">
+            <router-outlet></router-outlet>
         </div>
     </div>
 </div>

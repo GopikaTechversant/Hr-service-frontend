@@ -32,15 +32,14 @@
         <div class="d-flex parent">
             <div class="m-t-20 m-b-10 child">
                 <span class="sub-head">Department Name</span>
-                <div class="no-close col-md-3 s-list d-flex input j-space m-text align-center p-relative"
+                <div class="no-close col-md-3 s-list d-flex input j-space m-text p-relative"
                     (click)="teamListOpen = !teamListOpen;fetchServiceTeam();">
-                    <div *ngIf="!selectedTeam"
-                        class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">
+                    <div *ngIf="!selectedTeam" class="no-close s-list m-r-10 m-text align-center m-b-2 f-w-400 c-pointer h-min sub flex-1">
                         Select Department
                     </div>
-                    <div *ngIf="selectedTeam">{{selectedTeam}}</div>
-                    <div class="no-close s-list c-pointer m-b-2 flex-1 d-flex j-end sub"><i
-                            class="no-close s-list fa fa-chevron-down s-text"></i>
+                    <div class="align-center" *ngIf="selectedTeam">{{selectedTeam}}</div>
+                    <div class="no-close s-list c-pointer align-center m-b-2 flex-1 d-flex j-end sub"><i
+                            class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
                     </div>
                     <div class=" m-b-2 drop-list no-close" *ngIf="teamListOpen">
                         <div (click)="selectTeam(team.teamId,team.teamName)" *ngFor="let team of list_team"

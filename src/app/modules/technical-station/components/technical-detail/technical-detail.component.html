@@ -1,1 +1,55 @@
-<p>technical-detail works!</p>
+<div class="m-10">
+    <div class="d-flex j-space p-l-5 m-b-20">
+        <span class="f-s-20 f-w-500 p-t-5">Technical Round</span>
+        <div class="input p-t-10 p-l-6 c-pointer no-close p-relative" >Filter Candidate by Status
+            <span><i class="f-right p-r-10 fa fa-chevron-down s-text no-close"></i></span>       
+            <div class="no-close dropdown c-pointer no-close" >
+                <div  class="p-5">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main d-flex">
+        <div class="table-container m-b-0 w-100">
+            <table class="table">
+                <tr class="table-header f-w-500 p-b-10">
+                    <td>Candidate ID</td>
+                    <td>Name</td>
+                    <td>Email</td>
+                    <td>Phone</td>
+                    <td>Status</td>
+                    <td>Candidate Selection Status</td>
+                    <td>More Detail</td>
+
+                </tr>
+                <div *ngIf="loader" class="loader-parent">
+                    <img src="assets/gif/loader.gif">
+                </div>
+                <ng-container *ngIf="candidateList?.length > 0">
+                    <ng-container *ngFor="let innerArray of candidateList">
+                        <ng-container *ngFor="let item of innerArray">
+                            <tr class="candidate c-pointer" [class.selected]="selectedItem === item"
+                                (click)="onSelect(item)" (dblclick)="navigateToDetail(item['candidate.candidateId'])">
+                                <td>{{ item['candidate.candidateId'] }}</td>
+                                <td>{{ item['candidate.candidateFirstName'] }} {{ item['candidate.candidateLastName'] }}</td>
+                                <td>{{ item['candidate.candidateEmail'] }}</td>
+                                <td>{{ item['candidate.candidateMobileNo'] }}</td>
+                                <td>{{ item.serviceStatus }}</td>
+                                <td class="drop">
+                                    <div class="input p-t-10 p-l-6 c-pointer no-close p-relative " >Choose Candidate Status
+                                        <span><i class="f-right p-r-10 fa fa-chevron-down s-text no-close"></i></span>       
+                                        <div class="no-close dropdown c-pointer no-close" >
+                                            <div  class="p-5">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><button class="btn">View detail</button></td>
+                            </tr>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>       
+            </table>
+        </div>
+    </div>
+</div>

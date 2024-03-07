@@ -1,89 +1,37 @@
-.sidebar {
-    margin-top: 11px;
-    box-shadow: #0000001a 0 4px 6px -1px, #0000000f 0 2px 4px -1px;
-    overflow: hidden;
-    height: calc(100vh - 175px);
-    padding-bottom: 20px;
-    overflow: auto !important;
-    border-radius: 5px !important;
 
-}
-
-.head {
-    background-color: #9bcfff;
-    min-height: 50px;
-    max-height: 50px;
-    /* text-align: center; */
+.main {
+    border: 1px #E9E9E9;
+    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+    width: 100%;
+    height: 100%;
+    background-color: #FFFFFF;
+  }
+  
+  .menu {
+    height: 32px;
     padding-top: 10px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.details {
-    display: flex;
-    /* justify-content: space-between; */
-    align-items: start;
-}
-
-.detail-head {
-    color: #365169;
-}
-
-.justify-content-end {
-    justify-content: end;
-}
-
-.head-wrap {
-    width: 170px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    cursor: pointer;
-}
-
-.btn {
-    padding: 0px 22px;
-    font-size: 0.92rem;
-    margin-right: 10px;
-    border: 1px solid #1a2952;
-    color: #fff;
-    background-color: rgb(57, 57, 136);
-    outline: none;
-    padding: 5px;
-    border-radius: 5px;
-}
-
-input[type="text"] {
-    outline: none !important;
-    border: 1px solid rgb(207, 205, 205);
-    border-radius: 5px;
-    height: 25px;
-}
-
-.btn-reject {
-    padding: 0px 22px;
-    font-size: 0.92rem;
-    margin-right: 10px;
-    border: 1px solid #ff0419;
-    color: #fff;
-    background-color: rgb(150, 39, 45);
-    outline: none;
-    padding: 5px;
-    border-radius: 5px;
-}
-
-.btn-approve {
-    padding: 0px 22px;
-    font-size: 0.92rem;
-    margin-right: 10px;
-    border: 1px solid #00144d;
-    color: #fff;
-    background-color: rgb(15, 15, 247);
-    outline: none;
-    padding: 5px;
-    border-radius: 5px;
-}
-
-.btn-parent {
-    text-align: center;
-}
+    top: 126px;
+    left: 34px;
+    line-height: 21.33px !important;
+    border-radius: 0 37px 37px 0;
+    padding-left: 21px;
+  }
+  
+  .menu-text {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 21px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #4F4F4F;
+    padding-left: 6px;
+  }
+  
+  .menu:hover .menu-text{
+    background-color: #005EC9;
+    color: white;
+  }
+  
+  .menu:hover{
+    background-color: #005EC9;
+  }

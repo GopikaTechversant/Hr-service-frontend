@@ -7,11 +7,18 @@ import { SharedModule } from '../shared/shared.module';
 import { TechnicalDetailComponent } from './components/technical-detail/technical-detail.component';
 
 const routes: Routes = [
-  { path:'',component:TechnicalHomeComponent},
-  // { path:'/detail',component:TechnicalDetailComponent},
-  { path: '**', redirectTo:'', pathMatch: 'full' }
+  {
+    path: '', component: TechnicalHomeComponent,
+    children: [
+      { path: '', component:  TechnicalDetailComponent},
+      
+    ]
+  },
 
 ]
+  
+
+
 
 @NgModule({
   declarations: [
