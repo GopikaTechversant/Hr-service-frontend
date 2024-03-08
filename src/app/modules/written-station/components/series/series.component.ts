@@ -71,6 +71,8 @@ export class SeriesComponent implements OnInit {
   fetchCandidates(): void {
     this.http.get(`${environment.api_url}/screening-station/list-batch/${this.requestId}?station=2`).subscribe((res: any) => {
       this.candidates_list = res.candidates;
+      console.log(" this.candidates_list ", this.candidates_list );
+      
       this.candidates_list.forEach((candidate: any) => {
         if (candidate.serviceId) {
           this.serviceIds.push(candidate.serviceId);
