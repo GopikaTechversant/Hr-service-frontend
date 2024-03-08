@@ -4,7 +4,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { AddCandidateModalComponent } from 'src/app/modules/dashboard/components/add-candidate-modal/add-candidate-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environments';
 @Component({
   selector: 'app-header',
@@ -22,6 +22,7 @@ export class HeaderComponent implements OnInit {
   candidateList: any;
   showCandidates: boolean = false;
   stationsList: any[] = [];
+  headers: any;
   constructor(private http: HttpClient, private apiService: ApiService, private auth: AuthService, private dialog: MatDialog, private router: Router, private renderer: Renderer2, private el: ElementRef) { }
 
   @HostListener('document:click', ['$event'])
@@ -38,9 +39,10 @@ export class HeaderComponent implements OnInit {
   }
 
   fetchStations(): void {
-    this.http.get(`${environment.api_url}/user/stations`).subscribe((res: any) => {
+    const headers = new HttpHeaders().set('ngrok-skip-browser-warning', 'true');
+    this.http.get(`${environment.api_url}/user/stations`, { headers }).subscribe((res: any) => {
       this.stationsList = res.data;
-    })
+    });
   }
 
   navigate(station: any): void {
@@ -55,7 +57,9 @@ export class HeaderComponent implements OnInit {
 
   searchCandidate(searchKeyword: string): void {
     this.searchKeyword = searchKeyword;
-    this.http.get(`${environment.api_url}/candidate/search/list?search=${this.searchKeyword}`).subscribe((res: any) => {
+    const headers = new HttpHeaders().set('ngrok-skip-browser-warning', 'true');
+
+    this.http.get(`${environment.api_url}/candidate/search/list?search=${this.searchKeyword}` ,{headers}).subscribe((res: any) => {
       if (res?.data) {
         this.candidateList = res?.data
         if (this.candidateList?.length > 0) this.showCandidates = true;

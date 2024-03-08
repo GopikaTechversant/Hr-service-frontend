@@ -1,6 +1,6 @@
 <div class="m-10">
     <div class="d-flex j-space p-l-5 m-b-20">
-        <span class="f-s-20 f-w-500 p-t-5">Technical Round</span>
+        <span class="f-s-20 f-w-500 p-t-5">Technical Round {{stationId === '3' ? '1' : '2'}}</span>
         <div class="input p-t-10 p-l-6 c-pointer no-close p-relative" >Filter Candidate by Status
             <span><i class="f-right p-r-10 fa fa-chevron-down s-text no-close"></i></span>       
             <div class="no-close dropdown c-pointer no-close" >
@@ -36,12 +36,12 @@
                                 <td>{{ item['candidate.candidateMobileNo'] }}</td>
                                 <td>{{ item.serviceStatus }}</td>
                                 <td class="drop">
-                                    <div class="input p-t-10 p-l-6 c-pointer no-close p-relative " >Choose Candidate Status
+                                    <div class="input p-t-10 p-l-6 c-pointer no-close p-relative" >Choose Candidate Status
                                         <span><i class="f-right p-r-10 fa fa-chevron-down s-text no-close"></i></span>       
-                                        <div class="no-close dropdown c-pointer no-close" >
+                                        <!-- <div class="no-close dropdown c-pointer no-close" >
                                             <div  class="p-5">
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </td>
                                 <td><button class="btn">View detail</button></td>

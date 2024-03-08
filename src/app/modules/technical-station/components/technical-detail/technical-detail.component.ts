@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environments';
 
 @Component({
@@ -14,8 +14,14 @@ export class TechnicalDetailComponent implements OnInit {
   candidateList: any = [];
   loader: boolean = false;
   selectedItem: any;
+  stationId: any;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {
+    this.route.params.subscribe(params => {
+      this.stationId = params['id'];
+    });
+  }
+
   ngOnInit(): void {
     this.fetchList();
   }
@@ -26,6 +32,8 @@ export class TechnicalDetailComponent implements OnInit {
       this.loader = false;
       if (data.candidates) {
         this.candidateList.push(data.candidates);
+        console.log("Candidates" , this.candidateList);
+        
         this.selectedItem = this.candidateList[0][0];
         this.itemSelected.emit(this.selectedItem);
       }
@@ -39,7 +47,7 @@ export class TechnicalDetailComponent implements OnInit {
 
   navigateToDetail(id: any): void {
     this.router.navigate(['/detail'], {
-   
+
     });
   }
 }
