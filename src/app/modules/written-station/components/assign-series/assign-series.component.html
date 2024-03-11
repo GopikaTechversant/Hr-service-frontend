@@ -1,0 +1,34 @@
+<div class="main ">
+    <div>
+        <p class="name">Assign Series</p>
+        <div class="d-flex j-space content">
+            <div class="d-flex dropdown p-relative" (click)="showDropdown = !showDropdown">
+                <div class=" j-space">
+                    <div class="" *ngIf="!selectedSeries">
+                        <span>Choose Series</span>
+                    </div>
+                    <div *ngIf="selectedSeries">{{selectedSeries}}</div>
+                </div>
+                <div class="no-close  s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub p-r-17 m-t-9"><i
+                        class="no-close s-list fa fa-chevron-down s-text"></i>
+                </div>
+                <div class="dropdown-list p-absolute" *ngIf="showDropdown">
+                    <div *ngFor="let series of seriesList" (click)="selectSeries(series.id,series.name);">
+                        {{series.name}}</div>
+                </div>
+            </div>
+            <div class="d-flex j-space btn">
+                <button class="cancel-btn" (click)="cancel()">Cancel</button>
+                <button class="save-btn" (click)="save()">Save</button>
+            </div>
+        </div>
+    </div>
+   
+</div>
+<!-- <div *ngIf="seriesList.length === 0" class="create-series">
+    <div class="d-flex flex-column align-center p-t-16">
+        <p class="title1">Please Create Series</p>
+        <p class="para2">You have not created series to assign</p>
+        <button class="ok-btn">Ok</button>
+    </div>
+</div> -->
