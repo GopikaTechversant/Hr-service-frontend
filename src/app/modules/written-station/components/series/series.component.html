@@ -6,7 +6,7 @@
             <div *ngIf="list?.length === 0 || !list" class="parent-conatiner">
                 <div class="centerd-div"><span class="no-data">No Candidates To Add</span></div>
             </div>
-            <div class="d-flex m-t-10" *ngIf="list.length > 0">
+            <div class="d-flex  flex-wrap" *ngIf="list.length > 0">
                 <div *ngFor="let candidate of list" class=" candidate-box">
                     <p class="candidate-name">{{candidate.name}}</p>
                     <div class="info-container">
@@ -26,12 +26,9 @@
                             <div class="key">Email</div>
                             <div class="value">: {{candidate.email}}</div>
                         </div>
-                        <div class="info-pair p-l-5">
-                            <div [ngStyle]="{'color': candidate.status === 'progress' ? '#F57C02' : '#08E179'}">
-                                {{candidate.status}}</div>
-                        </div>
+                        
                     </div>
-                    <button class="assign" (click)="openAssignModal()">Assign</button>
+                    <button class="assign" (click)="openAssignModal(candidate.id)">Assign</button>
                 </div>
             </div>
         </div>
@@ -51,36 +48,37 @@
                     <div class=" flex-column  j-center c-pointer" (click)="seriesBoxClick(series)"
                         [ngClass]="{'active-series' : series?.active}" (dragover)="allowDrop($event)"
                         (drop)="productDrop($event,series)">
-                        <div class="w-100  j-center candidates">
-                            <p class="m-b-0 p-t-10 p-b-5  series-name m-r-10">{{series.name}}</p>
+                              <!-- <p class="m-b-0 p-t-10 p-b-5  series-name-child1 m-r-10">Series 1</p> -->
+                              <p class="m-b-0 p-t-10 p-b-5  series-name-child1 m-r-10">{{series.name}}</p>
+                        <div class="  j-center candidates">
+                            <!-- <p class="m-b-0 p-t-10 p-b-5  series-name m-r-10">{{series.name}}</p> -->
 
-                            <div *ngIf="series.candidates && series.candidates.length > 0" class="d-flex">
-                                <div *ngFor="let candidate of list" class=" candidate-box-child1">
-                                    <p class="candidate-name">{{candidate.name}}</p>
+                            <div *ngIf="series.candidates && series.candidates.length > 0" class="d-flex flex-wrap">
+                                <div *ngFor="let candidate of series.candidates" class=" candidate-box-child1">
+                                    <p class="candidate-name-child1">{{candidate.candidateFirstName}}</p>
                                     <div class="info-container">
                                         <div class="info-pair">
                                             <div class="key">Designation</div>
-                                            <div class="value">: {{candidate.designation}}</div>
+                                            <div class="value">: {{candidate.candidateFirstName}}</div>
                                         </div>
                                         <div class="info-pair">
                                             <div class="key">Team</div>
-                                            <div class="value">: {{candidate.team}}</div>
+                                            <div class="value">: {{candidate.candidateFirstName}}</div>
                                         </div>
                                         <div class="info-pair">
                                             <div class="key">Skills</div>
-                                            <div class="value">: {{candidate.skills}}</div>
+                                            <div class="value">: {{candidate.candidateLastName}}</div>
                                         </div>
                                         <div class="info-pair">
                                             <div class="key">Email</div>
-                                            <div class="value">: {{candidate.email}}</div>
+                                            <div class="value">: {{candidate.candidateEmail}}</div>
                                         </div>
-                                        <div class="info-pair p-l-5">
-                                            <div
-                                                [ngStyle]="{'color': candidate.status === 'progress' ? '#F57C02' : '#08E179'}">
-                                                {{candidate.status}}</div>
-                                        </div>
+                                        
                                     </div>
-                                    <button class="result" (click)="openAssignModal()">Add Result</button>
+                                    <div class="d-flex m-t-12">
+                                        <button class="result">Add Result</button>
+                                        <button class="assign-child1 m-l-10" (click)="openAssignModal(candidate)">Assign</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-assign-series',
@@ -8,25 +8,14 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class AssignSeriesComponent implements OnInit {
   showDropdown: boolean = false;
   selectedSeries: string = '';
-  seriesList: any[] = [
-    // {
-    //   name: 'Series1',
-    //   id: 1
-    // },
-    // {
-    //   name: 'Series2',
-    //   id: 2
-    // },
-    // {
-    //   name: 'Series3',
-    //   id: 3
-    // },
-  ]
-  constructor(public dialogRef: MatDialogRef<AssignSeriesComponent>) {
+  seriesList: any[] = [];
+ 
+  constructor(public dialogRef: MatDialogRef<AssignSeriesComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
 
   }
   ngOnInit(): void {
-
+    this.seriesList = this.data.seriesList;
+    console.log("qwert", this.seriesList);
   }
   selectSeries(id: any, name: any): void {
     this.selectedSeries = name;
@@ -35,6 +24,6 @@ export class AssignSeriesComponent implements OnInit {
     this.dialogRef.close();
   }
   save(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(this.selectedSeries);
   }
 }

@@ -58,6 +58,7 @@ export class SeriesComponent implements OnInit {
   droppedAllowed: boolean = false;
   list: any[] = [
     {
+      id: 1,
       name: 'John',
       designation: 'Software Engineer',
       team: 'Coldfusion',
@@ -65,6 +66,7 @@ export class SeriesComponent implements OnInit {
       email: 'john@gmail.com'
     },
     {
+      id: 2,
       name: 'Akash',
       designation: 'Software Engineer',
       team: 'Coldfusion',
@@ -72,6 +74,7 @@ export class SeriesComponent implements OnInit {
       email: 'john@gmail.com'
     },
     {
+      id: 3,
       name: 'Devika',
       designation: 'Software Engineer',
       team: 'Coldfusion',
@@ -79,6 +82,15 @@ export class SeriesComponent implements OnInit {
       email: 'john@gmail.com'
     },
     {
+      id: 4,
+      name: 'Malu',
+      designation: 'Software Engineer',
+      team: 'Coldfusion',
+      skills: 'Python',
+      email: 'john@gmail.com'
+    },
+    {
+      id: 5,
       name: 'Malu',
       designation: 'Software Engineer',
       team: 'Coldfusion',
@@ -95,7 +107,7 @@ export class SeriesComponent implements OnInit {
   ngOnInit(): void {
     this.fetchCandidates();
     this.fetchCandidatesWithSeriess();
-    this.fetchQuestions();
+    // this.fetchQuestions();
     this.refreshed = true;
     this.newSeriesCreated = false;
   }
@@ -209,6 +221,7 @@ export class SeriesComponent implements OnInit {
     if (!candidate.progressId) {
       series.candidates = series.candidates || [];
       series.candidates.push(candidate);
+      console.log("series.candidates", series.candidates);
     }
     // Create a new array with only serviceId values for each series
     this.payload_series_list = this.series_list.map((s: any) => {
@@ -302,13 +315,18 @@ export class SeriesComponent implements OnInit {
     }
     )
   }
-  openAssignModal() {
+  openAssignModal(candidate: any) {
     if (this.series_list.length <= 0) {
       this.tostr.warning('You have not created series to assign');
     } else {
+      console.log("this.series_list.length", this.series_list.length);
       const dialogRef = this.dialog.open(AssignSeriesComponent, {
         height: '265px',
         width: '477px',
+        data: { seriesList: this.series_list }
+      });
+      dialogRef.afterClosed().subscribe((selectedSeries: any) => {
+        
       })
     }
   }

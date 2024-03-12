@@ -8,12 +8,12 @@
 
 .name {
     color: #000000;
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 500;
     line-height: 28px;
     letter-spacing: 0em;
     text-align: left;
-    /* position: absolute; */
+  
 }
 
 .body {
@@ -25,6 +25,7 @@
     height: 281px;
     border: 1px solid #575F6E;
     border-radius: 2px;
+    overflow-y: scroll;
 }
 
 .no-data {
@@ -111,6 +112,7 @@
     margin-top: 10px;
 }
 
+
 .series-name {
     font-size: 18px;
     font-weight: 500;
@@ -123,14 +125,12 @@
 
 
 .drop-down {
-    width: 278px;
-
-    padding-left: 14px;
+    width: 84%;
+    padding-left: 13px;
     background-color: white;
     height: 34px;
     margin-left: 18px;
     margin-top: 8px;
-
 }
 
 .drop-list {
@@ -157,6 +157,8 @@
     width: 259px;
     border-right: 1px solid #D7D7D7;
     padding-left: 18px;
+    /* margin-top: 17px; */
+    margin-bottom: 19px;
 }
 
 
@@ -175,29 +177,32 @@
     width: 68px;
 }
 
-.flex-column{
+.flex-column {
     flex-direction: column;
 }
 
-.candidates{
-    height: 232px;
+.candidates {
+    height: 225px;
     margin-left: 10px;
     border: 1px solid #E3E0E0;
-    margin-top: 18px;
+    width: 96% !important;
+    overflow-y: scroll;
 }
 
-.body-child1{
-    width: 96%;
-    margin-left: 10px;
+.body-child1 {
+    width: 100%;
+    margin-left: 17px;
+    overflow-y: scroll;
+    height: 444px;
 }
 
-.candidate-box-child1{
-    width: 259px;
-    
+.candidate-box-child1 {
+    width: 251px;
+    padding-top: 23px;
     padding-left: 18px;
 }
 
-.result{
+.result {
     width: 91px;
     border-radius: 3px;
     background: #005EC9;
@@ -210,17 +215,44 @@
     display: flex;
     justify-content: space-between;
     width: 284px;
-  }
-  .key{
-  
-    width: 83px;
-  }
-  .value{
-    flex: 1;
-  }
+}
 
-  .info-container {
+.key {
+    color: #575F6E;
+    width: 83px;
+}
+
+.value {
+    flex: 1;
+    color: #575F6E;
+}
+
+.info-container {
     display: flex;
     flex-direction: column;
     gap: 9px;
-  } 
+}
+
+.assign-child1 {
+    border-radius: 3px;
+    background: #575F6E;
+    color: white;
+    border: none;
+    height: 30px;
+    width: 91px;
+}
+
+.candidate-name-child1{
+    color: #575F6E;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.series-name-child1{
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 21px;
+    letter-spacing: 0em;
+    color: #005EC9;
+    margin-left: 9px;
+}

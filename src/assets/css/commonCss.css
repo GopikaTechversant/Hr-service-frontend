@@ -1417,6 +1417,10 @@
   display: flex;
 }
 
+.flex-wrap{
+  flex-wrap: wrap;
+}
+
 .j-end {
   justify-content: end !important;
 }
