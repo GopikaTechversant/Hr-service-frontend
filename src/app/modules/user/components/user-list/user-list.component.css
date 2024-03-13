@@ -74,7 +74,14 @@
 }
 
 tr:nth-child(even) {
-    background-color: #f5faff;
+    background: #FFFFFF;
+    border-width: 0px, 1px, 1px, 1px;
+    color: #575F6E;
+    border-style: solid;
+    height: 62px;
+    border-color: #EDEDED;
+
+
 }
 
 td {
@@ -86,14 +93,14 @@ td {
     border: 1px solid #dfdfdf;
 } */
 
-.table-header {
+/* .table-header {
     position: sticky;
     top: 0;
     background: #9bcfff;
     Padding: 10px;
     Text-align: center;
     Font-weight: 500;
-}
+} */
 
 .candidate:hover {
     background-color: #cee3f4;
@@ -116,14 +123,35 @@ td {
 }
 
 .detail-head {
-    color: #365169;
+    color:#000000;
+    
 }
 
-.page{
+.page {
     float: right;
 }
 
-.page-btn{
+.page-btn {
     background-color: rgb(57, 57, 136);
     color: white;
+}
+
+tr:nth-last-child(odd) {
+    background: #F0F7FF;
+    border-width: 0px, 1px, 1px, 1px;
+    border-style: solid;
+    border-color: #EDEDED;
+    color: #575F6E;
+    height: 62px;
+}
+
+tr:first-child{
+    background-color: #F4F2F2;
+    color: #000000;
+    position: sticky;
+    top: 0;
+    Padding: 10px;
+    Text-align: center;
+    Font-weight: 500;
+    height: 57px;
 }

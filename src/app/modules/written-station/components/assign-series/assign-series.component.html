@@ -1,4 +1,4 @@
-<div class="main ">
+<div class="main "*ngIf="seriesList.length > 0">
     <div>
         <p class="name">Assign Series</p>
         <div class="d-flex j-space content">
@@ -25,10 +25,10 @@
     </div>
    
 </div>
-<!-- <div *ngIf="seriesList.length === 0" class="create-series">
+<div *ngIf="seriesList.length === 0" class="create-series">
     <div class="d-flex flex-column align-center p-t-16">
         <p class="title1">Please Create Series</p>
         <p class="para2">You have not created series to assign</p>
-        <button class="ok-btn">Ok</button>
+        <button class="ok-btn" (click)="cancel()">Ok</button>
     </div>
-</div> -->
+</div>

@@ -58,44 +58,49 @@ export class SeriesComponent implements OnInit {
   droppedAllowed: boolean = false;
   list: any[] = [
     {
-      id: 1,
-      name: 'John',
+      serviceId: 400,
+      candidateFirstName: 'Akash',
       designation: 'Software Engineer',
       team: 'Coldfusion',
-      skills: 'Python',
-      email: 'john@gmail.com'
+      candidateLastName: 'Python',
+      candidateEmail: 'john@gmail.com',
+      candidateId: 501
     },
     {
-      id: 2,
-      name: 'Akash',
+      serviceId: 401,
+      candidateFirstName: 'Sam',
       designation: 'Software Engineer',
       team: 'Coldfusion',
-      skills: 'Python',
-      email: 'john@gmail.com'
+      candidateLastName: 'Python',
+      candidateEmail: 'john@gmail.com',
+      candidateId: 502
     },
     {
-      id: 3,
-      name: 'Devika',
+      serviceId: 402,
+      candidateFirstName: 'Arnab',
       designation: 'Software Engineer',
       team: 'Coldfusion',
-      skills: 'Python',
-      email: 'john@gmail.com'
+      candidateLastName: 'Python',
+      candidateEmail: 'john@gmail.com',
+      candidateId: 503
     },
     {
-      id: 4,
-      name: 'Malu',
+      serviceId: 403,
+      candidateFirstName: 'Emma',
       designation: 'Software Engineer',
       team: 'Coldfusion',
-      skills: 'Python',
-      email: 'john@gmail.com'
+      candidateLastName: 'Python',
+      candidateEmail: 'john@gmail.com',
+      candidateId: 504
     },
     {
-      id: 5,
-      name: 'Malu',
+      serviceId: 404,
+      candidateFirstName: 'Aysha',
       designation: 'Software Engineer',
       team: 'Coldfusion',
-      skills: 'Python',
-      email: 'john@gmail.com'
+      candidateLastName: 'Python',
+      candidateEmail: 'john@gmail.com',
+      candidateId: 505
     },
   ];
   constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices) {
@@ -103,7 +108,6 @@ export class SeriesComponent implements OnInit {
       this.requestId = params['requestId'];
     });
   }
-
   ngOnInit(): void {
     this.fetchCandidates();
     this.fetchCandidatesWithSeriess();
@@ -111,7 +115,6 @@ export class SeriesComponent implements OnInit {
     this.refreshed = true;
     this.newSeriesCreated = false;
   }
-
   fetchCandidates(): void {
     this.http.get(`${environment.api_url}/screening-station/list-batch/${this.requestId}?station=2`).subscribe((res: any) => {
       this.candidates_list = res.candidates;
@@ -120,30 +123,23 @@ export class SeriesComponent implements OnInit {
       this.candidates_list.forEach((candidate: any) => {
         if (candidate.serviceId) {
           this.serviceIds.push(candidate.serviceId);
-
         }
       });
     });
   }
-
-
   fetchQuestions(): void {
     this.http.get(`${environment.api_url}/written-station/questions`).subscribe((data: any) => {
       this.questions_list = data.data.filter((question: any) => !this.assignedQuestionIds.includes(question.questionId));
     });
   }
-
   fetchCandidatesWithSeries(): void {
     this.http.get(`${environment.api_url}/screening-station/list-batch/${this.requestId}?station=2`).subscribe((res => {
     }))
   }
-
-
   fetchCandidatesWithSeriess(): void {
     this.http.get(`${environment.api_url}/written-station/questionBatchList/${this.requestId}`).subscribe((res: any) => {
       this.series_list = res.data;
       console.log(" this.series_list", this.series_list);
-
       res?.data.forEach((data: any) => {
         this.assignedQuestionIds.push(data.questionId);
         this.assignedQuestionsName.push({
@@ -152,36 +148,15 @@ export class SeriesComponent implements OnInit {
         });
       })
       this.newSeriesCreated = false;
-
     });
   }
-
   seriesBoxClick(series: any) {
     this.series_list.forEach((s: any) => s.active = false);
     series.active = true;
     this.activeSeries = series;
     this.activeDropdownSeries = series;
     console.log(" this.series_list", this.activeSeries);
-
   }
-
-  allowDrop(ev: any) {
-    ev.preventDefault();
-  }
-
-
-  onDrop(event: any) {
-    this.selectedCandidate = event.itemquestionId.data;
-  }
-
-  moved(event: any) {
-    this.pointerPosition = event.pointerPosition;
-  }
-
-  itemDropped(event: any, series: any) {
-
-  }
-
   createSeries(): void {
     this.refreshed = true;
     this.newSeriesCreated = true;
@@ -192,58 +167,6 @@ export class SeriesComponent implements OnInit {
     this.activeDropdownSeries = newSeries;
     this.fetchCandidatesWithSeries();
   }
-
-  dragStart(event: any, candidate: any) {
-    if (!candidate.progressId) {
-      event.dataTransfer.setData('text/plain', JSON.stringify(candidate));
-    } else {
-      event.preventDefault();
-    }
-  }
-
-
-  dragOver(event: DragEvent) {
-    event.preventDefault();
-  }
-
-  productDrop(event: any, series: any) {
-    event.preventDefault();
-    const candidateData = event.dataTransfer.getData('text/plain');
-    const candidate = JSON.parse(candidateData);
-    this.series_list.forEach((s: any) => {
-      if (s?.candidates) {
-        s.candidates = s.candidates.filter((c: any) => c?.candidateId !== candidate?.candidateId);
-      }
-    });
-    // Remove the candidate from the candidates_list
-    this.candidates_list = this.candidates_list.filter((c: any) => c?.candidateId !== candidate?.candidateId);
-    // Add the dropped candidate to the candidates array of the new series
-    if (!candidate.progressId) {
-      series.candidates = series.candidates || [];
-      series.candidates.push(candidate);
-      console.log("series.candidates", series.candidates);
-    }
-    // Create a new array with only serviceId values for each series
-    this.payload_series_list = this.series_list.map((s: any) => {
-      this.serviceId = s.candidates.map((c: any) => c?.serviceId);
-      if (s.candidates) {
-        let array = s.questions
-        return {
-          questions: s.questions,
-        };
-      }
-      return s;
-    });
-    this.series_list = [...this.series_list];
-    event.preventDefault();
-    event.stopPropagation();
-  }
-
-  dragOverSeries(event: DragEvent, series: any) {
-    event.preventDefault();
-    this.dragEnteredSeries = series;
-  }
-
   approve(): void {
     const averageScoreInput = document.getElementById('averageScore') as HTMLInputElement;
     const averageScore = averageScoreInput.value;
@@ -255,7 +178,6 @@ export class SeriesComponent implements OnInit {
       alert("approved");
     })
   }
-
   resultClick(candidate: any, id: any): void {
     this.selectedCandidate = candidate;
     this.selectedCandidateIds = id;
@@ -291,13 +213,10 @@ export class SeriesComponent implements OnInit {
       this.activeDropdownSeries = null;
     }
   }
-
-
   isQuestionSelected(series: any, question: any): void {
     this.selectedQuestions[series.name]?.id === question.questionId;
     this.questionSelected = true;
   }
-
   assignQuestion(): void {
     const requestData = {
       questionAssignee: null,
@@ -315,18 +234,49 @@ export class SeriesComponent implements OnInit {
     }
     )
   }
-  openAssignModal(candidate: any) {
-    if (this.series_list.length <= 0) {
-      this.tostr.warning('You have not created series to assign');
+  openAssignModal(candidate: any, series: any) {
+    if (this.series_list.length == 0) {
+      const dialogRef = this.dialog.open(AssignSeriesComponent, {
+        height: '150px',
+        width: '300px',
+      })
     } else {
-      console.log("this.series_list.length", this.series_list.length);
       const dialogRef = this.dialog.open(AssignSeriesComponent, {
         height: '265px',
         width: '477px',
         data: { seriesList: this.series_list }
       });
-      dialogRef.afterClosed().subscribe((selectedSeries: any) => {
-        
+      dialogRef.afterClosed().subscribe((selectedSeries: string) => {
+        if (selectedSeries) {
+          const selectedSeriesObj = this.series_list.find((s: any) => s.name === selectedSeries);
+          if (selectedSeriesObj) {
+            // remove the candidate from the candidate list
+            this.list = this.list.filter(c => c.candidateId !== candidate.candidateId);
+            // remove the candidate from the previous series candidate array
+            this.series_list.forEach((s: any) => {
+              if (s.candidates && s !== selectedSeriesObj) {
+                s.candidates = s.candidates.filter((c: any) => c.candidateId !== candidate.candidateId);
+              }
+            });
+            //add the candidates to the selected series 
+            if (!candidate.progressId) {
+              selectedSeriesObj.candidates = selectedSeriesObj.candidates || [];
+              selectedSeriesObj.candidates.push(candidate);
+            }
+            this.payload_series_list = this.series_list.map((s: any) => {
+              if (s && s.candidates) {
+                this.serviceId = s.candidates.map((c: any) => c?.serviceId);
+                let array = s.questions;
+                return { questions: s.questions };
+              }
+              return s;
+            });
+
+            this.series_list = [...this.series_list];
+          } else {
+            console.error('Selected series not found');
+          }
+        }
       })
     }
   }
