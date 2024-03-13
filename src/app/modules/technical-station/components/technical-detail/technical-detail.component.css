@@ -69,8 +69,19 @@
     border-radius: 3px;
     width: 300px;
     height: 28px;
-  }
-  
+}
+
+
+.input-1 {
+    border: 1px solid #E9E9E9;
+    outline: none;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    width: 200px;
+    height: 28px;
+}
+
+
 
 table {
     width: 100%;
@@ -81,8 +92,7 @@ table {
     flex-grow: 1;
     overflow: auto;
     margin-bottom: 10px;
-    max-height: calc(100% - 60px);
-    max-height: calc(100% - 60px);
+    max-height: calc(100vh - 60px);
 }
 
 tr:nth-child(odd) {
@@ -93,12 +103,10 @@ tr:nth-child(even) {
     background: #FFFFFF;
 }
 
-
 td {
     padding: 10px;
-    text-align: center;
-    border: 1px solid #E9E9E9;
-    justify-content: center;
+    text-align: center !important;
+    border: 1px solid #E9E9E9 ;
 }
 
 tr {
@@ -117,27 +125,12 @@ tr {
     text-align: center;
 }
 
-/* .candidate:hover {
-    background-color: #cee3f4;
-}
-
-.table .selected {
-    background-color: #cee3f4;
-} */
-
 .table-view {
     height: calc(100vh - 200px);
     overflow: auto;
 }
 
-/* .table-view select {
-    outline: none;
-    border: none;
-    background-color: white;
-    margin-right: 5px;
-} */
-
-.btn{
+.btn {
     width: 75%;
     height: 35px;
     color: #FFFFFF;
@@ -146,10 +139,47 @@ tr {
     cursor: pointer;
     font-size: 16px;
     font-weight: 500;
-    
+
 }
 
-.drop{
-    display: flex;
-    justify-content: center;
+.dropdown {
+    background: white;
+    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+    max-height: 150px;
+    overflow-y: auto;
+    font-size: 14px;
+    font-weight: 400;
+    width: 292px;
+    padding: 5px;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 999;
+    margin-top: 5px;
+    top: 100%;
+    left: 0;
+}
+
+.dropdown :hover {
+    color: blue;
+}
+
+.dropdown-1 {
+    background: white;
+    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+    max-height: 50px;
+    overflow-y: auto;
+    font-size: 14px;
+    font-weight: 400;
+    width: 198px;
+    padding: 5px;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 999;
+    margin-top: 5px;
+    top: 100%;
+    left: 0;
+}
+
+.dropdown-1 :hover {
+    color: blue;
 }

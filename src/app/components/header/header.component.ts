@@ -4,7 +4,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { AddCandidateModalComponent } from 'src/app/modules/dashboard/components/add-candidate-modal/add-candidate-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environments';
 @Component({
   selector: 'app-header',
@@ -22,6 +22,7 @@ export class HeaderComponent implements OnInit {
   candidateList: any;
   showCandidates: boolean = false;
   stationsList: any[] = [];
+  headers: any;
   constructor(private http: HttpClient, private apiService: ApiService, private auth: AuthService, private dialog: MatDialog, private router: Router, private renderer: Renderer2, private el: ElementRef) { }
 
   @HostListener('document:click', ['$event'])
@@ -40,7 +41,7 @@ export class HeaderComponent implements OnInit {
   fetchStations(): void {
     this.http.get(`${environment.api_url}/user/stations`).subscribe((res: any) => {
       this.stationsList = res.data;
-    })
+    });
   }
 
   navigate(station: any): void {
@@ -49,7 +50,6 @@ export class HeaderComponent implements OnInit {
     else if (station?.stationName === 'Hr Manager') this.router.navigate(['/hr']);
     else if (station?.stationName === 'Screening') this.router.navigate(['/dashboard']);
     else if (station?.stationName === 'Written') this.router.navigate(['/written']);
-
     this.dropDown = false;
   }
 
