@@ -5,6 +5,7 @@ import { TechnicalSidebarComponent } from './components/technical-sidebar/techni
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { TechnicalDetailComponent } from './components/technical-detail/technical-detail.component';
+import { CandidateDetailModalComponent } from './components/candidate-detail-modal/candidate-detail-modal.component';
 
 const routes: Routes = [
   {
@@ -24,7 +25,8 @@ const routes: Routes = [
   declarations: [
     TechnicalHomeComponent,
     TechnicalSidebarComponent,
-    TechnicalDetailComponent
+    TechnicalDetailComponent,
+    CandidateDetailModalComponent
   ],
   imports: [
     CommonModule,

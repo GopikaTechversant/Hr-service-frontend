@@ -1,11 +1,11 @@
 <div class="m-10">
     <div class="d-flex j-space p-l-5 m-b-20">
         <span class="f-s-20 f-w-500 p-t-5">Technical Round {{stationId === '3' ? '1' : '2'}}</span>
-        <div class="input p-t-10 p-l-6 c-pointer no-close p-relative" >Filter Candidate by Status
-            <span><i class="f-right p-r-10 fa fa-chevron-down s-text no-close"></i></span>       
-            <div class="no-close dropdown c-pointer no-close" >
-                <div  class="p-5">
-                </div>
+        <div class="input c-pointer p-t-10 no-close p-relative" (click)="filterStatus = !filterStatus">
+            <span class="no-close p-l-10">{{filteredStatus}}</span>
+            <span><i class="f-right p-r-10 fa fa-chevron-down no-close'"></i></span>
+            <div class="dropdown c-pointer no-close'" *ngIf="filterStatus">
+                <p *ngFor="let type of Status" (click)="selectStatusFilter(type.status)">{{type?.status}}</p>
             </div>
         </div>
     </div>
@@ -20,7 +20,6 @@
                     <td>Status</td>
                     <td>Candidate Selection Status</td>
                     <td>More Detail</td>
-
                 </tr>
                 <div *ngIf="loader" class="loader-parent">
                     <img src="assets/gif/loader.gif">
@@ -28,27 +27,31 @@
                 <ng-container *ngIf="candidateList?.length > 0">
                     <ng-container *ngFor="let innerArray of candidateList">
                         <ng-container *ngFor="let item of innerArray">
-                            <tr class="candidate c-pointer" [class.selected]="selectedItem === item"
-                                (click)="onSelect(item)" (dblclick)="navigateToDetail(item['candidate.candidateId'])">
+                            <tr class="candidate c-pointer" [class.selected]="selectedItem === item">
                                 <td>{{ item['candidate.candidateId'] }}</td>
-                                <td>{{ item['candidate.candidateFirstName'] }} {{ item['candidate.candidateLastName'] }}</td>
+                                <td>{{ item['candidate.candidateFirstName'] }} {{ item['candidate.candidateLastName'] }}
+                                </td>
                                 <td>{{ item['candidate.candidateEmail'] }}</td>
                                 <td>{{ item['candidate.candidateMobileNo'] }}</td>
                                 <td>{{ item.serviceStatus }}</td>
-                                <td class="drop">
-                                    <div class="input p-t-10 p-l-6 c-pointer no-close p-relative" >Choose Candidate Status
-                                        <span><i class="f-right p-r-10 fa fa-chevron-down s-text no-close"></i></span>       
-                                        <!-- <div class="no-close dropdown c-pointer no-close" >
-                                            <div  class="p-5">
+                                <td class="p-l-10">
+                                    <div class="input-1 p-t-10 p-l-6 c-pointer no-close p-relative"
+                                        (click)="toggleDropdown(item, $event)">
+                                        {{item.selectedStatus || 'Choose Candidate Status'}}
+                                        <span><i class="f-right p-r-10 fa fa-chevron-down s-text no-close"></i></span>
+                                        <div *ngIf="item.selectStatus" class="no-close dropdown-1 c-pointer no-close">
+                                            <div class="p-5" *ngFor="let type of Status" (click)="statusClick(item, type?.status, $event)">
+                                                {{type?.status}}
                                             </div>
-                                        </div> -->
+                                            
+                                        </div>
                                     </div>
                                 </td>
-                                <td><button class="btn">View detail</button></td>
+                                <td><button class="btn" (click)="viewCandidateDetail(item)">View detail</button></td>
                             </tr>
                         </ng-container>
                     </ng-container>
-                </ng-container>       
+                </ng-container>
             </table>
         </div>
     </div>

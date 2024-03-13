@@ -1,0 +1,60 @@
+main {
+    padding: 10px;
+    padding-top: 20px;
+}
+
+.heading {
+    font-size: 20px;
+    font-weight: 500;
+    text-align: left;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #E3E0E0;
+}
+
+.sub-head {
+    color: #575F6E;
+    font-weight: 400;
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"] {
+    outline: none !important;
+    border: 1px solid rgb(207, 205, 205);
+    border-radius: 2px;
+    height: 25px;
+    background-color: #FFFF;
+    width: 100%;
+}
+
+.btn{
+    width: 120px;
+    height: 35px;
+    color: #FFFFFF;
+    background-color: #005EC9;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 3px;
+    margin: 10px;
+
+}
+
+.btn-reject{
+    width: 120px;
+    height: 35px;
+    color: #FFFFFF;
+    background-color: #575F6E;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 3px; 
+    margin: 10px;  
+}
+
+.btn-parent{
+    float: right;
+}
+

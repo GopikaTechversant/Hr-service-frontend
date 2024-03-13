@@ -39,8 +39,7 @@ export class HeaderComponent implements OnInit {
   }
 
   fetchStations(): void {
-    const headers = new HttpHeaders().set('ngrok-skip-browser-warning', 'true');
-    this.http.get(`${environment.api_url}/user/stations`, { headers }).subscribe((res: any) => {
+    this.http.get(`${environment.api_url}/user/stations`).subscribe((res: any) => {
       this.stationsList = res.data;
     });
   }
@@ -51,15 +50,12 @@ export class HeaderComponent implements OnInit {
     else if (station?.stationName === 'Hr Manager') this.router.navigate(['/hr']);
     else if (station?.stationName === 'Screening') this.router.navigate(['/dashboard']);
     else if (station?.stationName === 'Written') this.router.navigate(['/written']);
-
     this.dropDown = false;
   }
 
   searchCandidate(searchKeyword: string): void {
     this.searchKeyword = searchKeyword;
-    const headers = new HttpHeaders().set('ngrok-skip-browser-warning', 'true');
-
-    this.http.get(`${environment.api_url}/candidate/search/list?search=${this.searchKeyword}` ,{headers}).subscribe((res: any) => {
+    this.http.get(`${environment.api_url}/candidate/search/list?search=${this.searchKeyword}`).subscribe((res: any) => {
       if (res?.data) {
         this.candidateList = res?.data
         if (this.candidateList?.length > 0) this.showCandidates = true;
