@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatDialog } from '@angular/material/dialog';
 import { ResultComponent } from '../result/result.component';
+import { AssignSeriesComponent } from '../assign-series/assign-series.component';
+import { ToastrServices } from 'src/app/services/toastr.service';
 @Component({
   selector: 'app-series',
   templateUrl: './series.component.html',
@@ -54,7 +56,49 @@ export class SeriesComponent implements OnInit {
   candidateMarkDetail: any;
   questionAssigned: boolean = false;
   droppedAllowed: boolean = false;
-  constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog) {
+  list: any[] = [
+    {
+      id: 1,
+      name: 'John',
+      designation: 'Software Engineer',
+      team: 'Coldfusion',
+      skills: 'Python',
+      email: 'john@gmail.com'
+    },
+    {
+      id: 2,
+      name: 'Akash',
+      designation: 'Software Engineer',
+      team: 'Coldfusion',
+      skills: 'Python',
+      email: 'john@gmail.com'
+    },
+    {
+      id: 3,
+      name: 'Devika',
+      designation: 'Software Engineer',
+      team: 'Coldfusion',
+      skills: 'Python',
+      email: 'john@gmail.com'
+    },
+    {
+      id: 4,
+      name: 'Malu',
+      designation: 'Software Engineer',
+      team: 'Coldfusion',
+      skills: 'Python',
+      email: 'john@gmail.com'
+    },
+    {
+      id: 5,
+      name: 'Malu',
+      designation: 'Software Engineer',
+      team: 'Coldfusion',
+      skills: 'Python',
+      email: 'john@gmail.com'
+    },
+  ];
+  constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
     });
@@ -63,7 +107,7 @@ export class SeriesComponent implements OnInit {
   ngOnInit(): void {
     this.fetchCandidates();
     this.fetchCandidatesWithSeriess();
-    this.fetchQuestions();
+    // this.fetchQuestions();
     this.refreshed = true;
     this.newSeriesCreated = false;
   }
@@ -71,6 +115,8 @@ export class SeriesComponent implements OnInit {
   fetchCandidates(): void {
     this.http.get(`${environment.api_url}/screening-station/list-batch/${this.requestId}?station=2`).subscribe((res: any) => {
       this.candidates_list = res.candidates;
+      console.log(" this.candidates_list ", this.candidates_list);
+
       this.candidates_list.forEach((candidate: any) => {
         if (candidate.serviceId) {
           this.serviceIds.push(candidate.serviceId);
@@ -96,6 +142,8 @@ export class SeriesComponent implements OnInit {
   fetchCandidatesWithSeriess(): void {
     this.http.get(`${environment.api_url}/written-station/questionBatchList/${this.requestId}`).subscribe((res: any) => {
       this.series_list = res.data;
+      console.log(" this.series_list", this.series_list);
+
       res?.data.forEach((data: any) => {
         this.assignedQuestionIds.push(data.questionId);
         this.assignedQuestionsName.push({
@@ -113,6 +161,8 @@ export class SeriesComponent implements OnInit {
     series.active = true;
     this.activeSeries = series;
     this.activeDropdownSeries = series;
+    console.log(" this.series_list", this.activeSeries);
+
   }
 
   allowDrop(ev: any) {
@@ -171,6 +221,7 @@ export class SeriesComponent implements OnInit {
     if (!candidate.progressId) {
       series.candidates = series.candidates || [];
       series.candidates.push(candidate);
+      console.log("series.candidates", series.candidates);
     }
     // Create a new array with only serviceId values for each series
     this.payload_series_list = this.series_list.map((s: any) => {
@@ -264,6 +315,19 @@ export class SeriesComponent implements OnInit {
     }
     )
   }
-
-
+  openAssignModal(candidate: any) {
+    if (this.series_list.length <= 0) {
+      this.tostr.warning('You have not created series to assign');
+    } else {
+      console.log("this.series_list.length", this.series_list.length);
+      const dialogRef = this.dialog.open(AssignSeriesComponent, {
+        height: '265px',
+        width: '477px',
+        data: { seriesList: this.series_list }
+      });
+      dialogRef.afterClosed().subscribe((selectedSeries: any) => {
+        
+      })
+    }
+  }
 }

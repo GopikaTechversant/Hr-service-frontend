@@ -1,0 +1,99 @@
+.main {
+    height: 264px;
+    background-color: #F3F3F3;
+
+}
+
+.content {
+    flex-direction: column;
+    height: 171px;
+}
+
+.name {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 17px;
+    letter-spacing: 0em;
+    text-align: center;
+    padding-top: 24px;
+}
+
+.dropdown {
+    width: 411px;
+    background-color: white;
+    margin-left: 24px;
+    padding-left: 10px;
+    height: 34px;
+    padding-top: 13px;
+    margin-top: 29px;
+}
+
+.cancel-btn {
+    width: 183px;
+    height: 39px;
+    border-radius: 3px;
+    background: #575F6E;
+    border: none;
+    color: white;
+    font-size: 15px;
+}
+
+.save-btn {
+    width: 183px;
+    height: 39px;
+    border-radius: 3px;
+    background: #005EC9;
+    border: none;
+    color: white;
+    font-size: 15px;
+}
+
+.btn {
+    width: 420px;
+    margin-left: 24px;
+}
+
+.dropdown-list {
+    margin-top: 21px;
+    padding-top: 21px;
+    background-color: white;
+    margin-left: -10px;
+    width: 411px;
+    padding-left: 10px;
+    line-height: 27px;
+    height: 82px;
+    overflow-y: scroll;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.title1 {
+    color: #575F6E;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 21px;
+    letter-spacing: 0em;
+
+
+}
+
+.create-series {
+    width: 477px;
+    height: 185px;
+    margin-top: 29px;
+}
+
+.para2 {
+    color: #575F6E;
+}
+
+.ok-btn {
+    width: 64px;
+    height: 26px;
+    color: white;
+    border: none;
+    background: #848E9F;
+
+}

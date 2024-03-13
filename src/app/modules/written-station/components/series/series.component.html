@@ -1,4 +1,143 @@
-<div class="d-flex approve j-space">
+<div class="main">
+    <p class="title m-t-17 m-l-9">Written Station</p>
+    <div class="body m-l-13">
+        <div class="candidates-list p-l-19">
+            <p class="name p-t-10">Candidates</p>
+            <div *ngIf="list?.length === 0 || !list" class="parent-conatiner">
+                <div class="centerd-div"><span class="no-data">No Candidates To Add</span></div>
+            </div>
+            <div class="d-flex  flex-wrap" *ngIf="list.length > 0">
+                <div *ngFor="let candidate of list" class=" candidate-box">
+                    <p class="candidate-name">{{candidate.name}}</p>
+                    <div class="info-container">
+                        <div class="info-pair">
+                            <div class="key">Designation</div>
+                            <div class="value">: {{candidate.designation}}</div>
+                        </div>
+                        <div class="info-pair">
+                            <div class="key">Team</div>
+                            <div class="value">: {{candidate.team}}</div>
+                        </div>
+                        <div class="info-pair">
+                            <div class="key">Skills</div>
+                            <div class="value">: {{candidate.skills}}</div>
+                        </div>
+                        <div class="info-pair">
+                            <div class="key">Email</div>
+                            <div class="value">: {{candidate.email}}</div>
+                        </div>
+                        
+                    </div>
+                    <button class="assign" (click)="openAssignModal(candidate.id)">Assign</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex body j-space m-l-14 questions">
+
+        <div class="child1">
+            <div class="name  d-flex p-t-23 p-l-17 j-space title-child1">
+                <p>Questions To Be Assigned</p>
+                <div class="title-right">
+                    <input type="text" placeholder="Average score" id="averageScore" class="input">
+                    <button class="approve" (click)="approve()">Approve</button>
+                </div>
+            </div>
+            <div class="body-child1">
+                <ng-container *ngFor="let series of series_list">
+                    <div class=" flex-column  j-center c-pointer" (click)="seriesBoxClick(series)"
+                        [ngClass]="{'active-series' : series?.active}" (dragover)="allowDrop($event)"
+                        (drop)="productDrop($event,series)">
+                              <!-- <p class="m-b-0 p-t-10 p-b-5  series-name-child1 m-r-10">Series 1</p> -->
+                              <p class="m-b-0 p-t-10 p-b-5  series-name-child1 m-r-10">{{series.name}}</p>
+                        <div class="  j-center candidates">
+                            <!-- <p class="m-b-0 p-t-10 p-b-5  series-name m-r-10">{{series.name}}</p> -->
+
+                            <div *ngIf="series.candidates && series.candidates.length > 0" class="d-flex flex-wrap">
+                                <div *ngFor="let candidate of series.candidates" class=" candidate-box-child1">
+                                    <p class="candidate-name-child1">{{candidate.candidateFirstName}}</p>
+                                    <div class="info-container">
+                                        <div class="info-pair">
+                                            <div class="key">Designation</div>
+                                            <div class="value">: {{candidate.candidateFirstName}}</div>
+                                        </div>
+                                        <div class="info-pair">
+                                            <div class="key">Team</div>
+                                            <div class="value">: {{candidate.candidateFirstName}}</div>
+                                        </div>
+                                        <div class="info-pair">
+                                            <div class="key">Skills</div>
+                                            <div class="value">: {{candidate.candidateLastName}}</div>
+                                        </div>
+                                        <div class="info-pair">
+                                            <div class="key">Email</div>
+                                            <div class="value">: {{candidate.candidateEmail}}</div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="d-flex m-t-12">
+                                        <button class="result">Add Result</button>
+                                        <button class="assign-child1 m-l-10" (click)="openAssignModal(candidate)">Assign</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <div class="child2">
+            <div class="barcode-parent text-center m-t-14">
+                <button class="series-btn f-s-15" (click)="createSeries()">Create Series</button>
+            </div>
+            <div *ngIf="series_list?.length === 0" class="parent-conatiner">
+                <div class="centerd-div"><span class="no-data">Series Are'nt Created Yet!</span></div>
+            </div>
+            <div *ngFor="let series of series_list" class="series-list">
+                <div class="c-pointer series-box" (click)="seriesBoxClick(series)"
+                    [ngClass]="{'active-series' : series?.active}">
+                    <div class="p-l-20 p-t-10">
+                        <p class="m-b-0  series-name">
+                            {{series.name}}</p>
+                    </div>
+                    <div class="p-relative col-md-3 s-list  subscriber-drop-down j-space m-text"
+                        (click)="idListOpen = !idListOpen">
+                        <div class="d-flex align-center drop-down">
+                            <div>
+                                <div class="no-close s-list  m-text f-w-400 c-pointer flex-1">
+                                    <span
+                                        *ngIf="!selectedQuestions[series.name] && newSeriesCreated && !series.questionId"
+                                        (click)="fetchQuestions()" class="choose f-s-15">
+                                        Choose Questions</span>
+                                </div>
+                                <div *ngIf="selectedQuestions[series.name]" class="choose f-s-15">
+                                    {{ selectedQuestions[series.name].name }}
+                                </div>
+                                <div *ngIf="refreshed && !selectedQuestions[series.name] && series.questionId"
+                                    class="choose f-s-15">{{
+                                    series.questionName }}</div>
+                            </div>
+                            <div class="no-close  s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub p-r-17"><i
+                                    class="no-close s-list fa fa-chevron-down s-text"></i>
+                            </div>
+                        </div>
+                        <div class=" m-b-2 drop-list"
+                            *ngIf="idListOpen && series.active &&  !(!selectedQuestions[series.name] && series.questionId)">
+                            <div (click)="selectQuestion(question.questionId,question.questionName);assignQuestion()"
+                                *ngFor="let question of questions_list"
+                                class=" p-t-5 p-b-5 p-l-8 c-pointer drop-list-item">
+                                {{question.questionName}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- <div class="d-flex approve j-space">
     <input type="text" placeholder="Average score" id="averageScore">
     <button class="button" (click)="approve()">Approve</button>
 </div>
@@ -7,7 +146,6 @@
         <div class="barcodes-ctn p-r-3">
             <div class="item-box p-20">
                 <div class="text-center flex-column align-center c-pointer">
-                    <!-- <p class="m-b-2 m-text text-center">Series</p> -->
                     <div class="barcode-parent text-center">
                         <button class="series-btn" (click)=" createSeries()">Create Series</button>
                     </div>
@@ -20,29 +158,26 @@
                         <div class="d-flex w-100 align-center j-center">
                             <p class="m-b-0 p-t-10 p-b-5 m-text series-name m-r-10">
                                 {{series.name}}
-                                <!-- (<span class="dark-blue">{{bucket?.TrolleyEntries?.length}}</span>)</p> -->
-                                <!-- <img *ngIf="bucket?.TrolleyEntries?.length === 0 && editPermission"
-                            src="assets/icons/receiving_icons/Icon feather-trash-2.png" width="12px"
-                            height="13px" (click)="deleteBucket(bucket)" title="{{bucket?.biggies ? 'Delete Oversized' : (bucket?.incident ? 'Delete Incident Container' : 'Delete Container')}}"
-                            class="dlt-btn m-t-2 selector" aria-serieshidden="true">
-                            <img *ngIf="editPermission && !bucket?.incident" src="assets/icons/receiving_icons/move-icon.png" class="c-pointer m-l-25" width="15px" title="Move products between Carts" (click)="openReceivingDetailsDialog()"> -->
                         </div>
                         <div>
-                            <!-- <p class="container">Questions</p> -->
                             <div class="name-dropdown p-relative col-md-3 s-list d-flex subscriber-drop-down j-space m-text align-center"
                                 (click)="idListOpen = !idListOpen">
                                 <div class="no-close s-list m-r-10 m-text m-b-2 f-w-400 c-pointer h-min sub flex-1">
-                                    <span *ngIf="!selectedQuestions[series.name] && newSeriesCreated && !series.questionId"   (click)="fetchQuestions()">
+                                    <span
+                                        *ngIf="!selectedQuestions[series.name] && newSeriesCreated && !series.questionId"
+                                        (click)="fetchQuestions()">
                                         Select Questions</span>
                                 </div>
                                 <div *ngIf="selectedQuestions[series.name]">
                                     {{ selectedQuestions[series.name].name }}
                                 </div>
-                                <div *ngIf="refreshed && !selectedQuestions[series.name] && series.questionId">{{ series.questionName }}</div>
+                                <div *ngIf="refreshed && !selectedQuestions[series.name] && series.questionId">{{
+                                    series.questionName }}</div>
                                 <div class="no-close  s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub"><i
                                         class="no-close s-list fa fa-chevron-down s-text"></i>
                                 </div>
-                                <div class=" m-b-2 drop-list" *ngIf="idListOpen && series.active &&  !(!selectedQuestions[series.name] && series.questionId)">
+                                <div class=" m-b-2 drop-list"
+                                    *ngIf="idListOpen && series.active &&  !(!selectedQuestions[series.name] && series.questionId)">
                                     <div (click)="selectQuestion(question.questionId,question.questionName);assignQuestion()"
                                         *ngFor="let question of questions_list" class=" p-t-5 p-b-5 p-l-8 c-pointer">
                                         {{question.questionName}}</div>
@@ -52,7 +187,6 @@
                     </div>
                 </ng-container>
             </div>
-
         </div>
         <div class=" details-area">
             <div class="m-b-10 candidate-box p-l-15 p-r-15 p-t-10 p-b-10">
@@ -67,7 +201,7 @@
                             <p>Team: {{candidate.candidateFirstName}}</p>
                             <p>Service: {{candidate.candidateEmail}}</p>
                             <p>Service Id: {{candidate.serviceId}}</p>
-                            <!-- <p>Service Service ID: {{ candidate[0].serviceServiceId }}</p> -->
+
                         </div>
                     </div>
                 </div>
@@ -91,7 +225,8 @@
                                         <button *ngIf="candidate.progressScore == null || !candidate.progressScore"
                                             class="btn btn-primary c-pointer m-l-10"
                                             (click)="resultClick(candidate, candidate.serviceId)">Add Result</button>
-                                        <span class="p-5" *ngIf="candidate.progressScore  && candidate.progressScore !== null">Score:
+                                        <span class="p-5"
+                                            *ngIf="candidate.progressScore  && candidate.progressScore !== null">Score:
                                             {{candidate.progressScore}}</span>
                                     </div>
                                 </div>
@@ -100,7 +235,6 @@
                     </div>
                 </ng-container>
             </div>
-
         </div>
         <div class="toggle">
             <div *ngIf="isTaskDetailsOpen" class="slide-arrow-right c-pointer xxl-text fw-500"
@@ -115,4 +249,4 @@
         <div [@toggleAnimation]="isTaskDetailsOpen ? 'visible' : 'hidden'" class="task-details-area">
         </div>
     </div>
-</div>
+</div> -->
