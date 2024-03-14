@@ -1,82 +1,19 @@
-<div class="sidebar">
-    <div class="head p-10">
-        <span *ngIf="selectedItem" class="f-w-500 f-s-16">{{selectedItem['candidate.candidateFirstName']}}
-            {{selectedItem['candidate.candidateLastName']}}</span>
-        <!-- <span *ngIf="selectedItem" class="f-w-500 f-s-16">{{selectedItem.serviceStatus}}</span> -->
+<div class="main p-t-10">
+    <div class="menu d-flex c-pointer" (click)="navigate('/dashboard')">
+        <img src="assets/images/material-symbols-light_dashboard-outline.png" alt="" height="19px" width="19px"
+            top="4px" left="4px" class="img">
+        <span class="menu-text">Dashboard</span>
     </div>
-    <div class="p-t-10 p-b-10 detail-head">
-        <i class="fa xs-text drop-down-arrow icon-color c-pointer p-r-5 p-b-2"
-            (click)="showcandidates = !showcandidates"
-            [ngClass]="!showcandidates ? 'fa-chevron-right' : 'fa-chevron-down'" aria-hidden="true"></i>
-        <span class="f-w-500">Candidate Details</span>
+    <div class="menu d-flex c-pointer" (click)="navigate('detail')">
+        <img src="assets/images/gg_list.png" alt="" height="19px" width="19px" top="4px" left="4px">
+        <span class="menu-text">Requirements List</span>
     </div>
-    <div *ngIf="showcandidates">
-        <div class="details p-10">
-            <span class="f-w-500 head-wrap">Date of Birth</span>
-            <span class="head-wrap">{{selectedItem['candidate.candidateDoB'] | date:"dd/MM/yyyy"}}</span>
-        </div>
-        <div class="details p-10">
-            <span class="f-w-500 head-wrap">Experience</span>
-            <span class="head-wrap">{{selectedItem['candidate.candidateExperience']}}</span>
-        </div>
-        <div class="details p-10">
-            <span class="f-w-500 head-wrap">Previous organization</span>
-            <span class="head-wrap">{{selectedItem['candidate.candidatePreviousOrg']}}</span>
-        </div>
-        <div class="details p-10">
-            <span class="f-w-500 head-wrap">Previous designation</span>
-            <span class="head-wrap">{{selectedItem['candidate.candidatePreviousDesignation']}}</span>
-        </div>
-        <div class="details p-10">
-            <span class="f-w-500 head-wrap">Education</span>
-            <span class="head-wrap">{{selectedItem['candidate.candidateEducation']}}</span>
-        </div>
-        <div class="details p-10">
-            <span class="f-w-500 head-wrap">Expected Salary</span>
-            <span class="head-wrap">{{selectedItem['candidate.candidateExpectedSalary']}}</span>
-        </div>
-        <div class="details p-10">
-            <span class="f-w-500 head-wrap">Address</span>
-            <span class="head-wrap">{{selectedItem['candidate.candidateAddress']}}</span>
-        </div>
+    <div class="menu d-flex c-pointer" (click)="navigate('/dashboard/interview-details')">
+        <img src="/assets/images/line-md_computer-1.png" alt="" height="19px" width="19px" top="4px" left="4px">
+        <span class="menu-text">Interview Details</span>
     </div>
-    <div class="p-t-10 p-b-10 detail-head">
-        <i class="fa xs-text drop-down-arrow icon-color c-pointer p-r-5 p-b-2"
-            (click)="showProgress = !showProgress"
-            [ngClass]="!showProgress ? 'fa-chevron-right' : 'fa-chevron-down'" aria-hidden="true"></i>
-        <span class="f-w-500">Add Offer</span>
-    </div>
-    <div *ngIf="showProgress">
-        <!-- <div class="details p-10">
-            <span class="f-w-500 head-wrap">Service ID</span>
-            <span class="head-wrap" id="serviceid">{{selectedItem['serviceId']}}</span>
-        </div> -->
-        <div class="details p-10">
-            <span class="f-w-500 head-wrap">Offer Salary</span>
-            <input  type="text" class="head-wrap" id="salary"  (click)="showWarning = false" >
-            <!-- <span *ngIf="showScore" class="head-wrap">{{progressQuery.progressScore}}</span> -->
-        </div>
-        <div class="details p-10">
-            <span class="f-w-500 head-wrap">Description</span>
-            <input  type="text" class="head-wrap" id="description"  (click)="showWarning = false">
-            <!-- <span *ngIf="showDescription" class="head-wrap">{{progressQuery.progressDescription}}</span> -->
-        </div>
-        <div class="details p-10">
-            <span class="f-w-500 head-wrap">Joining Date</span>
-            <!-- <input *ngIf="!showDate" type="text" class="head-wrap" id="date"  (click)="showWarning = false"> -->
-            <input class="head-wrap" matInput [matDatepicker]="picker"
-            (dateChange)="dateChange($event)" (click)="picker?.open()" [value]="displayDate">
-            <span> <mat-datepicker #picker class=""></mat-datepicker>
-                <i class="fa fa-calendar date-picker c-pointer m-r-20 p-absolute" aria-hidden="true"
-                    (click)="picker?.open()"></i></span>
-            <!-- <span *ngIf="showDate" class="head-wrap">{{progressQuery.progressDescription}}</span> -->
-        </div>
-        
-        <div class="details p-10" *ngIf="showbtn">
-            <span class="f-w-500 head-wrap"></span>
-            <button class="btn c-pointer" (click)="addOffer()">Submit</button>
-        </div>
+    <div class="menu d-flex c-pointer" (click)="navigate('/dashboard/report-details')">
+        <img src="assets/images/Group.png" alt="" height="19px" width="19px" top="4px" left="4px">
+        <span class="menu-text">Report</span>
     </div>
 </div>
-
-

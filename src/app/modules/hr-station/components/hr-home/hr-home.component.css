@@ -1,120 +1,43 @@
 .header {
-    min-height: 70px !important;
-    max-height: 70px !important;
+    min-height: 70px;
+    max-height: 70px;
     position: sticky;
-    max-width: 100%;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    background-color: #FFF;
+}
+
+.page{
+    background: #F7F7F7;
+
 }
 
 .main {
-    display: flex;
-    flex: 1;
-}
-
-.w-75 {
-    width: 75%;
-}
-
-.w-25 {
-    width: 25%;
-}
-
-.search-icon {
-    background-color: #ffff;
-    padding: 5px;
-}
-
-.clear-filter {
-
-    background-color: #ffff;
-    padding: 5px;
-}
-
-.search-head {
-    color: #1e5181;
-    background-color: white;
-}
-
-.subscriber-listing {
-    overflow: hidden;
-    background-color: whitesmoke;
-}
-
-.loader-parent {
-    position: absolute;
-    left: 34%;
-    z-index: 9;
-}
-
-.loader-parent img {
-    width: 100px;
-}
-
-.initial-loader {
-    position: absolute;
-    top: 31%;
-    left: 1%;
-}
-
-.data {
-    position: absolute;
-    left: 34%;
-    top: 34%;
-    z-index: 9;
-}
-
-.table {
     width: 100%;
-    border: 1px solid #eeee;
+    height: calc(100vh - 70px);
+    overflow-y: hidden;
 }
 
-.table-container {
-    height: calc(100vh - 162px);
-    overflow: auto;
-    margin-top: 20px;
+.w-80 {
+    width: 80%;
+    padding-bottom: 10px;
+    overflow-y: auto !important;
+    height: calc(100vh - 125px) !important;
 }
 
-tr:nth-child(even) {
-    background-color: #f5faff;
+.w-20 {
+    width: 20%;
 }
 
-td {
-    padding: 10px;
-    text-align: center;
-}
-
-/* tr {
-    border: 1px solid #dfdfdf;
-} */
-
-.table-header {
-    position: sticky;
-    top: 0;
-    background: #9bcfff;
-    Padding: 10px;
-    Text-align: center;
-    Font-weight: 500;
-}
-
-.candidate:hover {
-    background-color: #cee3f4;
-}
-
-.table .selected {
-    background-color: #cee3f4;
-}
-
-.table-view {
-    height: calc(100vh - 200px);
-    overflow: auto;
-}
-
-.table-view select {
-    outline: none;
-    border: none;
-    background-color: white;
-    margin-right: 5px;
-}
-
-.detail-head {
-    color: #365169;
-}
+.scrollable::-webkit-scrollbar, .w-80::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scrollable, .w-80 {
+    scrollbar-width: none; /* For Firefox */
+  }
+  
+  .scrollable, .w-80 {
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+  }

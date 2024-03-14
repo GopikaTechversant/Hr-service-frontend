@@ -12,7 +12,6 @@ import { CandidateDetailModalComponent } from '../candidate-detail-modal/candida
 })
 export class TechnicalDetailComponent implements OnInit {
   @Output() itemSelected = new EventEmitter<any>();
-
   candidateList: any = [];
   loader: boolean = false;
   selectedItem: any;
@@ -35,20 +34,12 @@ export class TechnicalDetailComponent implements OnInit {
     this.fetchList();
   }
 
-  ngOnChanges(): void {
-    console.log(this.filterStatus);
-
-  }
-
   fetchList(): void {
     this.loader = true;
     this.http.get(`${environment.api_url}/technical-station/list`).subscribe((data: any) => {
       this.loader = false;
       if (data.candidates) {
         this.candidateList.push(data.candidates);
-        console.log("Candidates", this.candidateList);
-        // this.selectedItem = this.candidateList[0][0];
-        // this.itemSelected.emit(this.selectedItem);
         this.candidateList.forEach((candidate: { selectStatus: boolean; }) => {
           candidate.selectStatus = false;
         });
@@ -62,16 +53,14 @@ export class TechnicalDetailComponent implements OnInit {
 
   statusClick(candidate: any, status: string, event: Event): void {
     candidate.selectedStatus = status;
-    candidate.selectStatus = false; // Optionally close the dropdown after selection
-    event.stopPropagation(); // Prevent clicking on status from triggering other actions
+    candidate.selectStatus = false; 
+    event.stopPropagation(); 
   }
   
-
   toggleDropdown(candidate: any, event: Event): void {
     candidate.selectStatus = !candidate.selectStatus;
-    event.stopPropagation(); // Prevent interference with other click events
+    event.stopPropagation(); 
   }
-
 
   viewCandidateDetail(item: any): void {
     const dialogRef = this.dialog.open(CandidateDetailModalComponent, {
@@ -81,10 +70,9 @@ export class TechnicalDetailComponent implements OnInit {
     })
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
-        // candidate.serviceStatus = action;
+        this.fetchList();
+
       }
-      // let element: any = document.getElementById('status' + index);
-      // if (element) element.value = candidate?.serviceStatus;
 
     })
   }

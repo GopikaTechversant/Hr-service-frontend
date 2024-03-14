@@ -1,0 +1,68 @@
+<div class="sidebar">
+    <div class="head p-10">
+        <span *ngIf="selectedItem" class="f-w-500 f-s-16">{{selectedItem['candidate.candidateFirstName']}}
+            {{selectedItem['candidate.candidateLastName']}}</span>
+    </div>
+    <div class="p-l-10">
+        <div class="p-10 detail-head">
+            <span class="f-w-500">Candidate Details</span>
+        </div>
+        <div class="details p-10">
+            <span class="f-w-500 head-wrap">Date of Birth</span>
+            <span class="head-wrap">: {{selectedItem['candidate.candidateDoB'] | date:"dd/MM/yyyy"}}</span>
+        </div>
+        <div class="details p-10">
+            <span class="f-w-500 head-wrap">Experience</span>
+            <span class="head-wrap">: {{selectedItem['candidate.candidateExperience']}}</span>
+        </div>
+        <div class="details p-10">
+            <span class="f-w-500 head-wrap">Previous organization</span>
+            <span class="head-wrap">: {{selectedItem['candidate.candidatePreviousOrg']}}</span>
+        </div>
+        <div class="details p-10">
+            <span class="f-w-500 head-wrap">Previous designation</span>
+            <span class="head-wrap">: {{selectedItem['candidate.candidatePreviousDesignation']}}</span>
+        </div>
+        <div class="details p-10">
+            <span class="f-w-500 head-wrap">Education</span>
+            <span class="head-wrap">: {{selectedItem['candidate.candidateEducation']}}</span>
+        </div>
+        <div class="details p-10">
+            <span class="f-w-500 head-wrap">Expected Salary</span>
+            <span class="head-wrap">: {{selectedItem['candidate.candidateExpectedSalary']}}</span>
+        </div>
+        <div class="details p-10">
+            <span class="f-w-500 head-wrap">Address</span>
+            <span class="head-wrap">: {{selectedItem['candidate.candidateAddress']}}</span>
+        </div>
+    </div>
+    <div class="p-l-10">
+        <div class="p-10 detail-head">
+            <span class="f-w-500">Add Offer</span>
+        </div>
+        <div class="d-flex">
+            <div class="details p-10 col">
+                <span class="f-w-500">Offer Salary</span>
+                <input  type="text" class="input" id="salary"  (click)="showWarning = false" >
+            </div>
+            <div class="details p-10 col">
+                <span class="f-w-500">Joining Date</span>
+                <input class="input" matInput [matDatepicker]="picker"
+                (dateChange)="dateChange($event)" (click)="picker?.open()" [value]="displayDate">
+                <span> <mat-datepicker #picker class=""></mat-datepicker>
+                    <i class="fa fa-calendar date-picker c-pointer m-r-20" aria-hidden="true"
+                        (click)="picker?.open()"></i></span>
+            </div>  
+        </div>   
+        <div class="details p-10 col">
+            <span class="f-w-500">Description</span>
+            <input  type="text" class="input" id="description"  (click)="showWarning = false">
+        </div>     
+        <div class="details p-10" *ngIf="showbtn">
+            <span class="f-w-500 head-wrap"></span>
+            <button class="btn c-pointer" (click)="addOffer()">Submit</button>
+        </div>
+    </div>
+</div>
+
+
