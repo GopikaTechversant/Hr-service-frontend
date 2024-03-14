@@ -1,0 +1,43 @@
+.header {
+    min-height: 70px;
+    max-height: 70px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    background-color: #FFF;
+}
+
+.page{
+    background: #F7F7F7;
+
+}
+
+.main {
+    width: 100%;
+    height: calc(100vh - 70px);
+    overflow-y: hidden;
+}
+
+.w-80 {
+    width: 80%;
+    padding-bottom: 10px;
+    overflow-y: auto !important;
+    height: calc(100vh - 125px) !important;
+}
+
+.w-20 {
+    width: 20%;
+}
+
+.scrollable::-webkit-scrollbar, .w-80::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scrollable, .w-80 {
+    scrollbar-width: none; /* For Firefox */
+  }
+  
+  .scrollable, .w-80 {
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+  }

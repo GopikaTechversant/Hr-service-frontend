@@ -8,27 +8,27 @@
             </div>
             <div class="d-flex  flex-wrap" *ngIf="list.length > 0">
                 <div *ngFor="let candidate of list" class=" candidate-box">
-                    <p class="candidate-name">{{candidate.name}}</p>
+                    <p class="candidate-name">{{candidate.candidateFirstName}}</p>
                     <div class="info-container">
                         <div class="info-pair">
                             <div class="key">Designation</div>
-                            <div class="value">: {{candidate.designation}}</div>
+                            <div class="value">: {{candidate.candidateFirstName}}</div>
                         </div>
                         <div class="info-pair">
                             <div class="key">Team</div>
-                            <div class="value">: {{candidate.team}}</div>
+                            <div class="value">: {{candidate.candidateFirstName}}</div>
                         </div>
                         <div class="info-pair">
                             <div class="key">Skills</div>
-                            <div class="value">: {{candidate.skills}}</div>
+                            <div class="value">: {{candidate.candidateLastName}}</div>
                         </div>
                         <div class="info-pair">
                             <div class="key">Email</div>
-                            <div class="value">: {{candidate.email}}</div>
+                            <div class="value">: {{candidate.candidateEmail}}</div>
                         </div>
                         
                     </div>
-                    <button class="assign" (click)="openAssignModal(candidate.id)">Assign</button>
+                    <button class="assign" (click)="openAssignModal(candidate,activeSeries)">Assign</button>
                 </div>
             </div>
         </div>
@@ -46,8 +46,7 @@
             <div class="body-child1">
                 <ng-container *ngFor="let series of series_list">
                     <div class=" flex-column  j-center c-pointer" (click)="seriesBoxClick(series)"
-                        [ngClass]="{'active-series' : series?.active}" (dragover)="allowDrop($event)"
-                        (drop)="productDrop($event,series)">
+                        [ngClass]="{'active-series' : series?.active}">
                               <!-- <p class="m-b-0 p-t-10 p-b-5  series-name-child1 m-r-10">Series 1</p> -->
                               <p class="m-b-0 p-t-10 p-b-5  series-name-child1 m-r-10">{{series.name}}</p>
                         <div class="  j-center candidates">
@@ -76,8 +75,10 @@
                                         
                                     </div>
                                     <div class="d-flex m-t-12">
-                                        <button class="result">Add Result</button>
-                                        <button class="assign-child1 m-l-10" (click)="openAssignModal(candidate)">Assign</button>
+                                        <button class="result" *ngIf="candidate.progressScore == null || !candidate.progressScore">Add Result</button>
+                                        <span class=""
+                                            *ngIf="candidate.progressScore  && candidate.progressScore !== null">Score:{{candidate.progressScore}}</span>
+                                        <button *ngIf="!candidate.progressId" class="assign-child1 m-l-10" (click)="openAssignModal(candidate,series)">Assign</button>
                                     </div>
                                 </div>
                             </div>
