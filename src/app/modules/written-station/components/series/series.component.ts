@@ -111,7 +111,6 @@ export class SeriesComponent implements OnInit {
   ngOnInit(): void {
     this.fetchCandidates();
     this.fetchCandidatesWithSeriess();
-    // this.fetchQuestions();
     this.refreshed = true;
     this.newSeriesCreated = false;
   }

@@ -13,10 +13,10 @@ export class UserListComponent implements OnInit {
   userList: any = [];
   selectedItem: any;
   loader: boolean = false;
-  userCount: any;
-  pageSize: number = 4;
+  pageSize: number = 13;
   currentPage: number = 1;
   lastPage: any;
+  userCount: any;
   constructor(private http: HttpClient, private router: Router) {
 
   }

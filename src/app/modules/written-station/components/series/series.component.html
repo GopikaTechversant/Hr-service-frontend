@@ -26,7 +26,6 @@
                             <div class="key">Email</div>
                             <div class="value">: {{candidate.candidateEmail}}</div>
                         </div>
-                        
                     </div>
                     <button class="assign" (click)="openAssignModal(candidate,activeSeries)">Assign</button>
                 </div>
@@ -34,24 +33,25 @@
         </div>
     </div>
     <div class="d-flex body j-space m-l-14 questions">
-
         <div class="child1">
             <div class="name  d-flex p-t-23 p-l-17 j-space title-child1">
                 <p>Questions To Be Assigned</p>
                 <div class="title-right">
-                    <input type="text" placeholder="Average score" id="averageScore" class="input">
+                    <input type="text" placeholder="Enter the average score" id="averageScore" class="input">
                     <button class="approve" (click)="approve()">Approve</button>
                 </div>
             </div>
             <div class="body-child1">
+                <div *ngIf="series_list?.length === 0 || !series_list" class="parent-conatiner">
+                    <div class="centerd-div"><span class="no-data">Candidates are'nt assigned to any series</span></div>
+                </div>
                 <ng-container *ngFor="let series of series_list">
                     <div class=" flex-column  j-center c-pointer" (click)="seriesBoxClick(series)"
                         [ngClass]="{'active-series' : series?.active}">
-                              <!-- <p class="m-b-0 p-t-10 p-b-5  series-name-child1 m-r-10">Series 1</p> -->
-                              <p class="m-b-0 p-t-10 p-b-5  series-name-child1 m-r-10">{{series.name}}</p>
+                        <!-- <p class="m-b-0 p-t-10 p-b-5  series-name-child1 m-r-10">Series 1</p> -->
+                        <p class="m-b-0 p-t-10 p-b-5  series-name-child1 m-r-10">{{series.name}}</p>
                         <div class="  j-center candidates">
                             <!-- <p class="m-b-0 p-t-10 p-b-5  series-name m-r-10">{{series.name}}</p> -->
-
                             <div *ngIf="series.candidates && series.candidates.length > 0" class="d-flex flex-wrap">
                                 <div *ngFor="let candidate of series.candidates" class=" candidate-box-child1">
                                     <p class="candidate-name-child1">{{candidate.candidateFirstName}}</p>
@@ -72,13 +72,15 @@
                                             <div class="key">Email</div>
                                             <div class="value">: {{candidate.candidateEmail}}</div>
                                         </div>
-                                        
                                     </div>
                                     <div class="d-flex m-t-12">
-                                        <button class="result" *ngIf="candidate.progressScore == null || !candidate.progressScore">Add Result</button>
-                                        <span class=""
+                                        <button class="result"
+                                            *ngIf="candidate.progressScore == null || !candidate.progressScore"
+                                            (click)="resultClick(candidate, candidate.serviceId)">Add Result</button>
+                                        <span class="score"
                                             *ngIf="candidate.progressScore  && candidate.progressScore !== null">Score:{{candidate.progressScore}}</span>
-                                        <button *ngIf="!candidate.progressId" class="assign-child1 m-l-10" (click)="openAssignModal(candidate,series)">Assign</button>
+                                        <button *ngIf="!candidate.progressId" class="assign-child1 m-l-10"
+                                            (click)="openAssignModal(candidate,series)">Assign</button>
                                     </div>
                                 </div>
                             </div>
@@ -89,7 +91,7 @@
         </div>
         <div class="child2">
             <div class="barcode-parent text-center m-t-14">
-                <button class="series-btn f-s-15" (click)="createSeries()">Create Series</button>
+                <button class="series-btn f-s-14" (click)="createSeries()">Create Series</button>
             </div>
             <div *ngIf="series_list?.length === 0" class="parent-conatiner">
                 <div class="centerd-div"><span class="no-data">Series Are'nt Created Yet!</span></div>
@@ -97,25 +99,25 @@
             <div *ngFor="let series of series_list" class="series-list">
                 <div class="c-pointer series-box" (click)="seriesBoxClick(series)"
                     [ngClass]="{'active-series' : series?.active}">
-                    <div class="p-l-20 p-t-10">
+                    <div class=" p-t-10 series-name-container">
                         <p class="m-b-0  series-name">
                             {{series.name}}</p>
                     </div>
                     <div class="p-relative col-md-3 s-list  subscriber-drop-down j-space m-text"
                         (click)="idListOpen = !idListOpen">
                         <div class="d-flex align-center drop-down">
-                            <div>
+                            <div class="p-l-7">
                                 <div class="no-close s-list  m-text f-w-400 c-pointer flex-1">
                                     <span
                                         *ngIf="!selectedQuestions[series.name] && newSeriesCreated && !series.questionId"
-                                        (click)="fetchQuestions()" class="choose f-s-15">
+                                        (click)="fetchQuestions()" class="choose f-s-14">
                                         Choose Questions</span>
                                 </div>
-                                <div *ngIf="selectedQuestions[series.name]" class="choose f-s-15">
+                                <div *ngIf="selectedQuestions[series.name]" class="choose f-s-14">
                                     {{ selectedQuestions[series.name].name }}
                                 </div>
                                 <div *ngIf="refreshed && !selectedQuestions[series.name] && series.questionId"
-                                    class="choose f-s-15">{{
+                                    class="choose f-s-14">{{
                                     series.questionName }}</div>
                             </div>
                             <div class="no-close  s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub p-r-17"><i
@@ -126,7 +128,7 @@
                             *ngIf="idListOpen && series.active &&  !(!selectedQuestions[series.name] && series.questionId)">
                             <div (click)="selectQuestion(question.questionId,question.questionName);assignQuestion()"
                                 *ngFor="let question of questions_list"
-                                class=" p-t-5 p-b-5 p-l-8 c-pointer drop-list-item">
+                                class=" p-t-5 p-b-5 p-l-17 c-pointer drop-list-item">
                                 {{question.questionName}}</div>
                         </div>
                     </div>

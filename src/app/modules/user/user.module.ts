@@ -6,6 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
 import { HomeComponent } from './components/home/home.component';
 import { AddUserComponent } from './components/add-user/add-user.component';
+import { MaterialModule } from '../material/material.module';
 const routes: Routes = [
   { path:'',component:HomeComponent,
   children: [
@@ -24,7 +25,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    SharedModule
+    SharedModule,
+    MaterialModule
   ]
 })
 export class UserModule { }
