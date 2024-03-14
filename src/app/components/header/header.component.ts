@@ -39,7 +39,9 @@ export class HeaderComponent implements OnInit {
   }
 
   fetchStations(): void {
-    this.http.get(`${environment.api_url}/user/stations`).subscribe((res: any) => {
+    const headers = new HttpHeaders().set('ngrok-skip-browser-warning', 'true');
+
+    this.http.get(`${environment.api_url}/user/stations` ,{headers}).subscribe((res: any) => {
       this.stationsList = res.data;
     });
   }
