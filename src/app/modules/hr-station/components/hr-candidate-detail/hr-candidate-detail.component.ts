@@ -61,4 +61,10 @@ export class HrCandidateDetailComponent {
       }
     })
   }
+
+  cancelClick():void{}
+
+  submitClick():void{}
+
+  
 }

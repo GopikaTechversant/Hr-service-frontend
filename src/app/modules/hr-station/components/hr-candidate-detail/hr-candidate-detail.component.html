@@ -58,9 +58,11 @@
             <span class="f-w-500">Description</span>
             <input  type="text" class="input" id="description"  (click)="showWarning = false">
         </div>     
-        <div class="details p-10" *ngIf="showbtn">
-            <span class="f-w-500 head-wrap"></span>
-            <button class="btn c-pointer" (click)="addOffer()">Submit</button>
+        <div class="btn-parent">
+            <div class="p-10 m-10">
+                <button class="c-pointer btn-reject" (click)="cancelClick()">Cancel</button>
+                <button class="btn c-pointer" (click)="addOffer()">Submit</button>
+            </div>
         </div>
     </div>
 </div>

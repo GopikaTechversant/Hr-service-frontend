@@ -2,15 +2,15 @@
     outline: none;
     border: none;
 }
-/* 
+
 .date-picker {
     margin-left: 58px;
-} */
+}
 
 .sidebar {
     box-shadow: #0000001a 0 4px 6px -1px, #0000000f 0 2px 4px -1px;
     /* overflow: hidden; */
-    height: calc(100vh - 175px);
+    /* height: calc(100vh - 175px); */
     padding-bottom: 20px;
     overflow: auto !important;
     border-radius: 5px !important;
@@ -33,6 +33,8 @@
 
 .detail-head {
     color: #005EC9;
+    font-weight: 500;
+    font-size: 16px;
 }
 
 .justify-content-end {
@@ -74,30 +76,34 @@
 }
 
 
-.btn-reject {
-    padding: 0px 22px;
-    font-size: 0.92rem;
-    margin-right: 10px;
-    border: 1px solid #ff0419;
-    color: #fff;
-    background-color: rgb(150, 39, 45);
-    outline: none;
-    padding: 5px;
-    border-radius: 5px;
+
+.btn{
+    width: 120px;
+    height: 35px;
+    color: #FFFFFF;
+    background-color: #005EC9;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 3px;
+    margin: 10px;
+
 }
 
-.btn-approve {
-    padding: 0px 22px;
-    font-size: 0.92rem;
-    margin-right: 10px;
-    border: 1px solid #00144d;
-    color: #fff;
-    background-color: rgb(15, 15, 247);
-    outline: none;
-    padding: 5px;
-    border-radius: 5px;
+.btn-reject{
+    width: 120px;
+    height: 35px;
+    color: #FFFFFF;
+    background-color: #575F6E;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 3px; 
+    margin: 10px;  
 }
 
-.btn-parent {
-    text-align: center;
+.btn-parent{
+    float: right;
 }

@@ -39,7 +39,7 @@ export class HeaderComponent implements OnInit {
   }
 
   fetchStations(): void {
-    this.http.get(`${environment.api_url}/user/stations`).subscribe((res: any) => {
+    this.apiService.get(`/user/stations`).subscribe((res: any) => {
       this.stationsList = res.data;
     });
   }
@@ -55,7 +55,7 @@ export class HeaderComponent implements OnInit {
 
   searchCandidate(searchKeyword: string): void {
     this.searchKeyword = searchKeyword;
-    this.http.get(`${environment.api_url}/candidate/search/list?search=${this.searchKeyword}`).subscribe((res: any) => {
+    this.apiService.get(`/candidate/search/list?search=${this.searchKeyword}`).subscribe((res: any) => {
       if (res?.data) {
         this.candidateList = res?.data
         if (this.candidateList?.length > 0) this.showCandidates = true;
