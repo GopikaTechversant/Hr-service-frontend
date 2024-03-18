@@ -82,8 +82,7 @@ table {
     flex-grow: 1;
     overflow: auto;
     margin-bottom: 10px;
-    max-height: calc(100% - 60px);
-    max-height: calc(100% - 60px);
+    max-height: calc(100vh - 60px);
 }
 
 tr:nth-child(odd) {
@@ -172,13 +171,15 @@ tr {
     height: 26px;
     width: 26px;
     border: none;
-    background-color: white;
-    
+    background-color: white;  
+}
+
+.box :hover{
+    background: #F0F7FF;
 }
 
 .page{
-    width: 83px;
-    float: right;
+    margin: 10px;
 }
 
 .current-page{

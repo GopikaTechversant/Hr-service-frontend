@@ -45,7 +45,7 @@
 
 .title-left {
   font-size: 30px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 36px;
   letter-spacing: 0em;
   text-align: left;
@@ -67,7 +67,7 @@
   display: flex;
   flex-direction: column;
   margin: 10px;
-  width: 328px;
+  width: 420px;
   height: auto;
   margin-bottom: 29px;
   background-color: #FFFFFF;
@@ -85,9 +85,9 @@
 
 .info-pair {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 323px;
+  /* justify-content: space-between; */
+  /* align-items: center; */
+  width: 95%;
 }
 
 .key,
@@ -116,10 +116,35 @@
 
 .count{
   color: #005EC9;
-  font-size: 21px;
+  font-size: 25px;
   font-weight: 500;
 }
 
 .main{
   background-color: #F7F7F7;
+  min-height: calc(100vh - 60px);
+
+}
+
+.box{
+  height: 26px;
+  width: 26px;
+  border: none;
+  background-color: white;  
+}
+
+.box :hover{
+  background: #F0F7FF;
+}
+
+.page{
+  margin: 10px;
+}
+
+.current-page{
+  /* border: 1px solid black; */
+  background-color: #005EC9;
+  color: #FFFFFF;
+  height: 26px;
+  width: 26px;
 }

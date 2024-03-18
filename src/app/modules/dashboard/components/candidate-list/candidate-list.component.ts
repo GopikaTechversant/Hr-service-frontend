@@ -51,8 +51,6 @@ export class CandidateListComponent {
         this.candidateList = [];
         this.candidateList = data?.candidates;
         this.totalCount = data?.candidateCount;
-        console.log(" this.totalCount", this.totalCount);
-
       });
   }
 
