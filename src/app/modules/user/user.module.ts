@@ -7,6 +7,8 @@ import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.com
 import { HomeComponent } from './components/home/home.component';
 import { AddUserComponent } from './components/add-user/add-user.component';
 import { MaterialModule } from '../material/material.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 const routes: Routes = [
   { path:'',component:HomeComponent,
   children: [
@@ -20,13 +22,16 @@ const routes: Routes = [
   declarations: [
     UserListComponent,
     LeftSidebarComponent,
-    HomeComponent
+    HomeComponent,
+    AddUserComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     SharedModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class UserModule { }

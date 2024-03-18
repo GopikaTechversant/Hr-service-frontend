@@ -32,14 +32,15 @@ export class FeedbackComponent implements OnInit {
   apiCall(): void {
     const feedback = document.getElementById('feedback') as HTMLInputElement;
     if (feedback) this.feedback = feedback.value;
-    this.candidateServiceId = this.data?.candidateId;
+    this.candidateServiceId = this.data?.serviceId;
     this.rejectedCandidatesEmitter.emit([this.candidateServiceId]);
     this.stationId = this.data.stationId;
     const payload = {
       serviceId: this.candidateServiceId,
       stationId: this.stationId,
       status: this.data?.status,
-      feedBack: this.feedback
+      feedBack: this.feedback,
+      userId: this.data?.candidateId
     }
     if (this.data?.status === 'selected') {
       this.router.navigate(['dashboard/interview-details'], {
@@ -53,8 +54,12 @@ export class FeedbackComponent implements OnInit {
       //     state: { candidate : this.data?.candidateDetails}     
       //   });
       // } 
-
-      if (this.data?.status === 'pending') this.selectedCandidatesEmitter.emit([this.candidateServiceId]);
+      if (this.data?.status === 'Candidate Selected') {
+        this.router.navigate(['dashboard/interview-details'], {
+          state: { candidate: this.data?.candidateDetails }
+        });
+        this.selectedCandidatesEmitter.emit([this.candidateServiceId]);
+      }
     })
   }
 

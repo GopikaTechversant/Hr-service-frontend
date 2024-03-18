@@ -103,7 +103,7 @@ export class SeriesComponent implements OnInit {
     let action = event?.target?.value;
     this.candidateServiceId = candidate?.serviceId;
     const dialogRef = this.dialog.open(FeedbackComponent, {
-      data: { candidateId: candidate?.serviceId, stationId: 1, status: action , candidateDetails: candidate},
+      data: { serviceId: candidate?.serviceId, stationId: 1, status: action , candidateDetails: candidate,candidateId:candidate?.candidateId},
       width: '600px',
       height: '300px'
     })
