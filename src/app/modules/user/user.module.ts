@@ -9,6 +9,7 @@ import { AddUserComponent } from './components/add-user/add-user.component';
 import { MaterialModule } from '../material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { EditComponent } from './components/edit/edit.component';
 const routes: Routes = [
   { path:'',component:HomeComponent,
   children: [
@@ -23,7 +24,8 @@ const routes: Routes = [
     UserListComponent,
     LeftSidebarComponent,
     HomeComponent,
-    AddUserComponent
+    AddUserComponent,
+    EditComponent
   ],
   imports: [
     CommonModule,

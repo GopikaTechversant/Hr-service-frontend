@@ -27,8 +27,8 @@
                             <td>{{user.userStatus}}</td>
                             <td>
                                 <div class="d-flex j-center">
-                                    <img src="assets/images/candidate-detail/edit.svg" class="icon" alt="">
-                                    <img src="assets/images/candidate-detail/delete.svg" class="icon" alt="">
+                                    <img src="assets/images/candidate-detail/edit.svg" class="icon" alt="" (click)="update(user.id)">
+                                    <img src="assets/images/candidate-detail/delete.svg" class="icon" alt="" (click)="delete(user.userId)">
                                 </div>
                             </td>
                         </tr>

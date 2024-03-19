@@ -29,6 +29,7 @@ export class CandidateListComponent {
   totalCount: any;
   data: any;
   candidateId: any;
+  deleteCandidateId:any;
   currentPage: number = 1;
   lastPage: any;
   userCount: any;
@@ -76,13 +77,16 @@ export class CandidateListComponent {
   // }
 
   delete(id: any): void {
+    this.deleteCandidateId = id;
     const dialogRef = this.dialog.open(DeleteComponent, {
       data: id,
       width: '500px',
       height: '250px'
     })
     dialogRef.componentInstance.onDeleteSuccess.subscribe(() => {
-      this.fetchCandidates('');
+       this.http.post(`${environment.api_url}/candidate/remove-candidate`,{ candidateId:  this.deleteCandidateId }).subscribe((res:any) => {
+        this.fetchCandidates('');
+      })
     })
   }
 

@@ -22,9 +22,11 @@ export class DeleteComponent implements OnInit{
   }
   delete():void{
     this.candidateId = this.data;
-    this.http.post(`${environment.api_url}/candidate/remove-candidate`,{ candidateId: this.candidateId }).subscribe((res:any) => {
-      this.onDeleteSuccess.emit();
-      this.dialogRef.close();
-    })
+    this.onDeleteSuccess.emit();
+    this.dialogRef.close();
+    // this.http.post(`${environment.api_url}/candidate/remove-candidate`,{ candidateId: this.candidateId }).subscribe((res:any) => {
+    //   this.onDeleteSuccess.emit();
+    //   this.dialogRef.close();
+    // })
   }
 }

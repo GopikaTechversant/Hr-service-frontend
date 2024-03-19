@@ -1,4 +1,4 @@
-.header {
+/* .header {
     min-height: 70px !important;
     max-height: 70px !important;
     position: sticky;
@@ -78,7 +78,7 @@ tr:nth-child(even) {
     border-width: 0px, 1px, 1px, 1px;
     color: #575F6E;
     border-style: solid;
-    /* height: 62px; */
+   
     border-color: #EDEDED;
 
 
@@ -89,18 +89,6 @@ td {
     text-align: center;
 }
 
-/* tr {
-    border: 1px solid #dfdfdf;
-} */
-
-/* .table-header {
-    position: sticky;
-    top: 0;
-    background: #9bcfff;
-    Padding: 10px;
-    Text-align: center;
-    Font-weight: 500;
-} */
 
 .candidate:hover {
     background: #E7E7E7;
@@ -168,7 +156,7 @@ tr:first-child{
 }
 
 .current-page{
-    /* border: 1px solid black; */
+   
     background-color: #005EC9;
     color: #FFFFFF;
     height: 26px;
@@ -179,5 +167,230 @@ tr:first-child{
     height: 26px;
     width: 26px;
     border: none;
-    /* background-color: white; */
+   
+} */
+
+.header {
+    min-height: 70px !important;
+    max-height: 70px !important;
+    position: sticky;
+    max-width: 100%;
+}
+
+.main {
+    display: flex;
+    flex: 1;
+}
+
+.w-75 {
+    width: 75%;
+}
+
+.w-25 {
+    width: 25%;
+}
+
+.search-icon {
+    background-color: #ffff;
+    padding: 5px;
+}
+
+.clear-filter {
+
+    background-color: #ffff;
+    padding: 5px;
+}
+
+.search-head {
+    color: #1e5181;
+    background-color: white;
+}
+
+.subscriber-listing {
+    overflow: hidden;
+    background-color: whitesmoke;
+}
+
+.loader-parent {
+    position: absolute;
+    left: 34%;
+    z-index: 9;
+}
+
+.loader-parent img {
+    width: 100px;
+}
+
+.initial-loader {
+    position: absolute;
+    top: 31%;
+    left: 1%;
+}
+
+.data {
+    position: absolute;
+    left: 56%;
+    top: 55%;
+    z-index: 9;
+    color: red;
+}
+
+.input {
+    border: 1px solid #E9E9E9;
+    outline: none;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    width: 300px;
+    height: 28px;
+}
+
+
+.input-1 {
+    border: 1px solid #E9E9E9;
+    outline: none;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    width: 200px;
+    height: 28px;
+}
+
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-container {
+    flex-grow: 1;
+    overflow: auto;
+    margin-bottom: 10px;
+    max-height: calc(100vh - 60px);
+}
+
+tr:nth-child(odd) {
+    background: #F0F7FF;
+    color: #575F6E;
+}
+
+tr:nth-child(even) {
+    background: #FFFFFF;
+    color: #575F6E;
+}
+
+td {
+    padding: 10px;
+    text-align: center !important;
+    border: 1px solid #E9E9E9 ;
+}
+
+tr {
+    text-align: center;
+}
+
+.table-header {
+    position: sticky;
+    top: 0;
+    background-color: #F4F2F2 !important;
+    Padding: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: center;
+    
+}
+
+.table-view {
+    height: calc(100vh - 200px);
+    overflow: auto;
+}
+
+.btn {
+    width: 75%;
+    height: 35px;
+    color: #FFFFFF;
+    background-color: #005EC9;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+
+}
+
+.dropdown {
+    background: white;
+    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+    max-height: 150px;
+    overflow-y: auto;
+    font-size: 14px;
+    font-weight: 400;
+    width: 292px;
+    padding: 5px;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 999;
+    margin-top: 5px;
+    top: 100%;
+    left: 0;
+}
+
+.dropdown :hover {
+    color: blue;
+}
+
+.dropdown-1 {
+    background: white;
+    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+    max-height: 50px;
+    overflow-y: auto;
+    font-size: 14px;
+    font-weight: 400;
+    width: 198px;
+    padding: 5px;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 999;
+    margin-top: 5px;
+    top: 100%;
+    left: 0;
+}
+
+.dropdown-1 :hover {
+    color: blue;
+}
+
+.icon{
+    margin: 5px;
+    height: 27px;
+    width: 27px;
+    
+}
+
+.page{
+    width: 83px;
+    float: right;
+}
+
+.current-page{
+   
+    background-color: #005EC9;
+    color: #FFFFFF;
+    height: 26px;
+    width: 26px;
+}
+
+.box{
+    height: 26px;
+    width: 26px;
+    border: none;
+   
+}
+
+.candidate:hover {
+    background: #E7E7E7;
+}
+
+.table .selected {
+    background: #D3E8FF;
 }
