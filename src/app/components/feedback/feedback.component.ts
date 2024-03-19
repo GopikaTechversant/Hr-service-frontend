@@ -47,6 +47,7 @@ export class FeedbackComponent implements OnInit {
         state: { candidate: this.data?.candidateDetails }
       });
     }
+ 
 
     this.http.post(`${environment.api_url}/screening-station/reject/candidate`, payload).subscribe((res: any) => {
       // if(res?.message === 'Candidate Selected' || res?.message === 'Candidate Already selected'){

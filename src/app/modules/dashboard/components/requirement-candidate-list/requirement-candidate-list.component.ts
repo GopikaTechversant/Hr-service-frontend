@@ -11,7 +11,7 @@ export class RequirementCandidateListComponent implements OnInit {
   candidates_list: any = [];
   searchQuery: string = '';
   length: any = 20;
-  pageSize = 6;
+  pageSize = 9;
   pageIndex = 1;
   pageSizeOptions = [5, 10, 15, 20];
   showFirstLastButtons = true;
@@ -44,4 +44,8 @@ export class RequirementCandidateListComponent implements OnInit {
     this.fetchcandidates('');
   }
 
+  onPageChange(pageNumber: number): void {
+    this.pageIndex = Math.max(1, pageNumber);
+    this.fetchcandidates('');
+  }
 }

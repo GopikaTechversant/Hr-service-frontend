@@ -68,7 +68,15 @@ export class InterviewDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.today = new Date();
     this.fetchPosition();
-    if (history.state.candidate) this.candidate = history.state.candidate;
+    if (history.state.candidate) {
+      this.candidate = history.state.candidate;
+      console.log(this.candidate);
+      this.positionName = this.candidate['reqServiceRequest.requestName'];
+      this.positionId = this.candidate?.candidatesAddingAgainst;
+      this.fetchUsers();
+      this.fetchCandidates();
+      this.fetchPanel();
+    }
   }
 
 
@@ -134,7 +142,7 @@ export class InterviewDetailsComponent implements OnInit {
         this.serviceId = status?.serviceId;
         if (status?.interviewMode) this.interviewMode = status?.interviewMode;
         if (status?.comment) this.comment = status?.comment;
-        if (status?.interviewStatus) this.interviewStatus = status?.interviewstatus;
+        if (status?.interviewStatus) this.interviewStatus = status?.interviewStatus;
         if (status?.interviewLocation) this.Interviewlocation = status?.interviewLocation;
         this.scheduledDate = status?.serviceDate;
       })
@@ -163,6 +171,7 @@ export class InterviewDetailsComponent implements OnInit {
     this.positionName = name;
     this.fetchUsers();
     this.fetchCandidates();
+    this.fetchPanel();
   }
 
   selectCandidate(candidateId: any, candidateFirstName: any, candidateLastName: any, candidate: any): void {
@@ -207,6 +216,7 @@ export class InterviewDetailsComponent implements OnInit {
   dateChange(event: any): void {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    // if (this.interviewStatus === 'Not yet Schedule') this.interviewStatus = 'scheduled';
     if (this.interviewStatus === 'scheduled') this.interviewStatus = 'Rescheduled';
     this.changeInterviewStatus();
   }
@@ -214,11 +224,13 @@ export class InterviewDetailsComponent implements OnInit {
   changeInterviewStatus(): void {
     if (this.displayDate && this.displayTime) {
       if (!this.interviewStatus) this.interviewStatus = 'Scheduled';
+      if (this.interviewStatus === 'Not yet Schedule') this.interviewStatus = 'scheduled';
     }
   }
 
   timeChange(event: any): void {
     this.displayTime = event;
+    // if (this.interviewStatus === 'Not yet Schedule') this.interviewStatus = 'scheduled';
     if (this.interviewStatus === 'scheduled') this.interviewStatus = 'Rescheduled'
     this.changeInterviewStatus();
   }
