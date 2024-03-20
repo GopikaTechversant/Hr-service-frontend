@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environments';
 import { Router } from '@angular/router';
+import { ApiService } from 'src/app/services/api.service';
 @Component({
   selector: 'app-candidate-list',
   templateUrl: './candidate-list.component.html',
@@ -10,10 +11,10 @@ import { Router } from '@angular/router';
 export class CandidateListComponent implements OnInit {
   candidates_list: any = [];
   searchQuery: string = '';
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router,private apiService:ApiService) { }
 
   ngOnInit(): void {
-    this.http.get(`${environment.api_url}/written-station/v1/list-all`).subscribe((res: any) => {
+    this.apiService.get(`/written-station/v1/list-all`).subscribe((res: any) => {
       this.candidates_list = res.candidates;
     })
   }

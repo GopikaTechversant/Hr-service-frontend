@@ -1,13 +1,10 @@
 import { DatePipe } from '@angular/common';
-
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastrServices } from 'src/app/services/toastr.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environments';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
@@ -28,8 +25,10 @@ export class EditComponent implements OnInit {
   role: any;
   multipleRole: any[] = [];
   email: any;
-  candidateDetails: any[] = [];
-  originalUser:any[]=[];
+  candidateDetails: any = {};
+  originalUser: any[] = [];
+  dob: any;
+  workStation: any;
   constructor(private datePipe: DatePipe, private apiService: ApiService, private tostr: ToastrServices, private http: HttpClient, public dialogRef: MatDialogRef<EditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
 
@@ -38,9 +37,24 @@ export class EditComponent implements OnInit {
     this.fetchUserDetails();
   }
   fetchUserDetails(): void {
-    this.http.get(``).subscribe((res: any) => {
-      // this.candidateDetails = 
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
+    });
+    this.http.get(`${environment.api_url}/user/reqUsersList/${this.data}`, { headers }).subscribe((res: any) => {
+      console.log("res", res);
+      this.candidateDetails = res?.data;
+      console.log("this.candidateDetails ", res?.data);
+      this.populateFieldvalues();
     })
+  }
+  populateFieldvalues(): void {
+    this.firstName = this.candidateDetails?.userfirstName;
+    console.log("this.firstName", this.firstName);
+    this.lastName = this.candidateDetails?.userlastName;
+    this.displayDate = this.datePipe.transform(this.candidateDetails?.userDOB, 'yyyy-MM-dd');
+    this.email = this.candidateDetails?.userEmail;
+    this.role = this.candidateDetails?.userRole;
+    this.workStation = this.candidateDetails?.userWorkStation;
   }
   fetchStations(): void {
     this.apiService.get(`/user/stations`).subscribe((res: any) => {
@@ -72,21 +86,32 @@ export class EditComponent implements OnInit {
     this.email = (document.getElementById('email') as HTMLInputElement)?.value;
     this.role = (document.getElementById('role') as HTMLInputElement)?.value;
     this.multipleRole = (document.getElementById('multiplerole') as HTMLInputElement)?.value.split(',');
-    const payload = {
-      userfirstName: this.firstName,
-      userlastName: this.lastName,
-      userEmail: this.email,
-      userDOB: this.displayDate,
-      userPassword: this.password,
-      userWorkStation: this.selectedStationId,
-      userRole: this.role,
-      userMultipleRole: this.multipleRole
+    const payload: any = {};
+    if (this.firstName !== this.candidateDetails?.userfirstName) payload.userfirstName = this.firstName;
+    if (this.lastName !== this.candidateDetails?.userlastName) payload.userlastName = this.lastName;
+    if (this.email !== this.candidateDetails?.userEmail) payload.userEmail = this.email;
+    if (this.displayDate !== this.datePipe.transform(this.candidateDetails?.userDOB, 'yyyy-MM-dd')) payload.userDOB = this.displayDate;
+    if (this.role !== this.candidateDetails?.userRole) payload.userRole = this.role;
+    if (this.selectedStationId) {
+      if (this.selectedStationId !== this.candidateDetails?.userWorkStation) payload.userWorkStation = this.selectedStationId;
     }
-  
+    console.log("payload", payload);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
+    });
+    if (Object.keys(payload).length > 0) {
+      this.http.put(`${environment.api_url}/user/update/?userId=${this.data}`, payload, { headers }).subscribe((res: any) => {
+        this.tostr.success('User Updated');
+        this.dialogRef.close();
+      })
+    } else {
+      this.dialogRef.close();
+    }
+
   }
   cancel(): void {
     this.dialogRef.close();
-    // this.resetForm();
+
   }
   dateChange(event: any): void {
     let date = new Date(event?.value);
