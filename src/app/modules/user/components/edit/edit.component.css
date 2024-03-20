@@ -82,6 +82,7 @@
     color: #FFFFFF;
     font-weight: 400;
     font-size: 18px;
+    margin-right: 15px;
 }
 
 .add-btn {
@@ -123,7 +124,7 @@
     padding-left: 10px;
     border: 1px solid #E9E9E9;
     margin-top: 10px;
-    width: 97%;
+    width: 95%;
     padding-top: 2px;
 }
 
