@@ -73,7 +73,7 @@ export class CandidateListComponent {
       height: '250px'
     })
     dialogRef.componentInstance.onDeleteSuccess.subscribe(() => {
-       this.http.post(`${environment.api_url}/candidate/remove-candidate`,{ candidateId:  this.deleteCandidateId }).subscribe((res:any) => {
+       this.apiService.post(`/candidate/remove-candidate`,{ candidateId:  this.deleteCandidateId }).subscribe((res:any) => {
         this.fetchCandidates('');
       })
     })
