@@ -16,7 +16,8 @@
                     </div>
                     <button class="add-btn no-close" (click)="idListOpen = !idListOpen;fetchStations();">Add</button>
                     <div class=" m-b-2 drop-list no-close" *ngIf="idListOpen">
-                        <div (click)="selectStation(station.stationId,station.stationName)" *ngFor="let station  of stationsList.slice(1, -1)"
+                        <div (click)="selectStation(station.stationId,station.stationName)"
+                            *ngFor="let station  of stationsList.slice(1, -1)"
                             class=" p-t-5 p-b-5 p-l-8 c-pointer no-close"> {{station.stationName}}
                         </div>
                     </div>
@@ -34,7 +35,8 @@
                 <span class="sub-head">Department Name</span>
                 <div class="no-close col-md-3 s-list d-flex input j-space m-text p-relative"
                     (click)="teamListOpen = !teamListOpen;fetchServiceTeam();">
-                    <div *ngIf="!selectedTeam" class="no-close s-list m-r-10 m-text align-center m-b-2 f-w-400 c-pointer h-min sub flex-1">
+                    <div *ngIf="!selectedTeam"
+                        class="no-close s-list m-r-10 m-text align-center m-b-2 f-w-400 c-pointer h-min sub flex-1">
                         Select Department
                     </div>
                     <div class="align-center" *ngIf="selectedTeam">{{selectedTeam}}</div>

@@ -10,7 +10,6 @@
     padding-bottom: 10px;
 }
 
-
 .head {
     padding: 10px;
     justify-content: space-between;
@@ -167,23 +166,22 @@ tr {
     color: #C10A0A;
 }
 
-.box{
+.box {
     height: 26px;
     width: 26px;
     border: none;
-    background-color: white;  
+    background-color: white;
 }
 
-.box :hover{
+.box :hover {
     background: #F0F7FF;
 }
 
-.page{
+.page {
     margin: 10px;
 }
 
-.current-page{
-    /* border: 1px solid black; */
+.current-page {
     background-color: #005EC9;
     color: #FFFFFF;
     height: 26px;

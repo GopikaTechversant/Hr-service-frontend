@@ -7,22 +7,18 @@
         <div class="contents dflex m-l-4 " *ngFor="let candidate of candidates_list let i = index">
             <div class="d-flex j-space heading p-7">
                 <span class="name p-t-4 p-l-3">{{candidate?.candidateFirstName}} {{candidate?.candidateLastName}}</span>
-                <select *ngIf="candidate?.serviceStatus !== 'done'" [id]="'status' + i"
-                    (change)="onCandidateSelectionChange($event, candidate, i)" class="select c-pointer">
-                    <option value="pending"
-                        [selected]="candidate?.serviceStatus === 'pending' || candidate?.serviceStatus !== 'selected' || candidate?.serviceStatus !== 'rejected' ? true : false"
-                        class="select c-pointer">Pending
-                    </option>
-                    <option value="selected" [selected]="candidate?.serviceStatus === 'selected' ? true : false"
-                        class="select c-pointer">
-                        Selected
-                    </option>
-                    <option value="rejected" [selected]="candidate?.serviceStatus === 'rejected' ? true : false"
-                        class="select c-pointer">
-                        Rejected
-                    </option>
+                <span *ngIf="candidate?.serviceStatus && candidate?.serviceStatus !== 'pending'"
+                    class="name done p-t-2">
+                    {{candidate?.serviceStatus | titlecase}}
+                </span>
+                <select *ngIf="candidate?.serviceStatus === 'pending'" class="name select p-t-2 c-pointer"
+                    (change)="onStatusChange($event, candidate, i)">
+                    <option class="name select p-t-2 c-pointer f-w-500" value="" disabled selected>
+                        {{candidate?.serviceStatus |
+                        titlecase}}</option>
+                    <option class="name select p-t-2 c-pointer f-w-500" value="select">Select</option>
+                    <option class="name select p-t-2 c-pointer f-w-500" value="reject">Reject</option>
                 </select>
-                <span *ngIf="candidate?.serviceStatus === 'done'" class="name done p-t-4">Done</span>
             </div>
             <div class="info-container">
                 <div class="info-pair d-flex j-space">

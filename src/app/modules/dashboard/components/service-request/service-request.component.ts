@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ViewChild, ElementRef } from '@angular/core';
-import { environment } from 'src/environments/environments';
 import { ToastrServices } from 'src/app/services/toastr.service';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-service-request',
@@ -34,24 +33,21 @@ export class ServiceRequestComponent implements OnInit {
   stationName: any;
   selectedstations: any[] = [];
   selectedStationsId: any[] = [];
-  constructor(private http: HttpClient, private toastr: ToastrServices) {
+  constructor(private toastr: ToastrServices, private apiService: ApiService) { }
 
-  }
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void { }
 
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
-    if (!target.closest('.no-close')) {      
+    if (!target.closest('.no-close')) {
       this.teamListOpen = false;
-      this.idListOpen =false;
+      this.idListOpen = false;
     }
   }
 
   fetchServiceId(): void {
-    this.http.get(`${environment.api_url}/service-request/services`).subscribe(((res: any) => {
-      this.list_id = res.data;
+    this.apiService.get(`/service-request/services`).subscribe(((res: any) => {
+      this.list_id = res?.data;
     }))
   }
 
@@ -65,7 +61,7 @@ export class ServiceRequestComponent implements OnInit {
   }
 
   fetchServiceTeam(): void {
-    this.http.get(`${environment.api_url}/service-request/team`).subscribe((res: any) => {
+    this.apiService.get(`/service-request/team`).subscribe((res: any) => {
       this.list_team = res.data;
     })
   }
@@ -80,7 +76,7 @@ export class ServiceRequestComponent implements OnInit {
   }
 
   fetchStations(): void {
-    this.http.get(`${environment.api_url}/user/stations`).subscribe((res: any) => {
+    this.apiService.get(`/user/stations`).subscribe((res: any) => {
       this.stationsList = res.data;
       const array = this.stationsList.slice(1, -1);
     })
@@ -111,7 +107,7 @@ export class ServiceRequestComponent implements OnInit {
       requestVacancy: this.vacancy.nativeElement.value,
       requestFlowStations: this.selectedStationsId
     };
-    this.http.post(`${environment.api_url}/service-request/create`, requestData).subscribe((res) => {
+    this.apiService.post(`/service-request/create`, requestData).subscribe((res) => {
       this.toastr.success("Requirement created Successfully");
       this.resetFormAndState();
     }, (err) => {
@@ -143,5 +139,5 @@ export class ServiceRequestComponent implements OnInit {
   cancel(): void {
     this.resetFormAndState();
   }
-  
+
 }

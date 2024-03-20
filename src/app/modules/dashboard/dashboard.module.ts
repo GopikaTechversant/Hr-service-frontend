@@ -10,7 +10,6 @@ import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/materi
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { HttpClientModule } from '@angular/common/http';
 import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
-import { CandidatelistComponent } from './components/candidatelist/candidatelist.component';
 import { FormsModule } from '@angular/forms';
 import { CandidateDetailsComponent } from './components/candidate-details/candidate-details.component';
 import { RequirementFormComponent } from './components/requirement-form/requirement-form.component';
@@ -53,7 +52,6 @@ const routes: Routes = [
     DashboardComponent,
     AddCandidateModalComponent,
     LeftSidebarComponent,
-    CandidatelistComponent,
     CandidateDetailsComponent,
     RequirementFormComponent,
     ServiceRequestComponent,

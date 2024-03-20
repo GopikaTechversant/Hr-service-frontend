@@ -29,7 +29,7 @@
   border: none;
   border-radius: 3px;
   width: 145px;
- font-size: 16px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 21px;
   letter-spacing: 0em;
@@ -52,14 +52,13 @@
   Width: 255px;
   Height: 36px;
   color: #000000;
-
 }
 
-.content{
+.content {
   flex-wrap: wrap;
 }
 
-.f-column{
+.f-column {
   flex-direction: column;
 }
 
@@ -92,56 +91,55 @@
 
 .key,
 .value {
-    flex: 1;
-    margin: 5px;
-    text-align: left;
-    font-weight: 400;
-    letter-spacing: 0em;
+  flex: 1;
+  margin: 5px;
+  text-align: left;
+  font-weight: 400;
+  letter-spacing: 0em;
 }
 
 .key {
-    color: #575F6E;
-    width: auto;
+  color: #575F6E;
+  width: auto;
 }
 
 .value {
-    color: #575F6E;
-    text-align: left;
+  color: #575F6E;
+  text-align: left;
 }
 
-.candidates{
+.candidates {
   font-weight: 500;
   font-size: 17px;
 }
 
-.count{
+.count {
   color: #005EC9;
   font-size: 25px;
   font-weight: 500;
 }
 
-.main{
+.main {
   background-color: #F7F7F7;
   min-height: calc(100vh - 60px);
-
 }
 
-.box{
+.box {
   height: 26px;
   width: 26px;
   border: none;
-  background-color: white;  
+  background-color: white;
 }
 
-.box :hover{
+.box :hover {
   background: #F0F7FF;
 }
 
-.page{
+.page {
   margin: 10px;
 }
 
-.current-page{
+.current-page {
   /* border: 1px solid black; */
   background-color: #005EC9;
   color: #FFFFFF;

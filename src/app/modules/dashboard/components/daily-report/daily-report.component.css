@@ -10,7 +10,6 @@
     padding-bottom: 20px;
 }
 
-
 .head {
     padding: 10px;
     justify-content: space-between;
@@ -59,7 +58,6 @@
     color: #575F6E;
     padding: 0px 10px;
     margin-top: 6px;
-
 }
 
 .filter-icon {
@@ -70,7 +68,6 @@
 
 table {
     border-collapse: collapse;
-    /* width: calc(100vw - 215px); */
     overflow-x: scroll !important;
 }
 
@@ -90,7 +87,6 @@ tr:nth-child(odd) {
 tr:nth-child(even) {
     background: #FFFFFF;
 }
-
 
 td {
     padding: 10px;
