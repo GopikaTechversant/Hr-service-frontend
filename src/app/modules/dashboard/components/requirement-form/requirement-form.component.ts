@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ViewChild, ElementRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { environment } from 'src/environments/environments';
 import { ToastrService } from 'ngx-toastr';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-requirement-form',
@@ -43,7 +42,7 @@ export class RequirementFormComponent implements OnInit {
   today: any;
   selected: boolean = false;
   candidate: any;
-  constructor(private http: HttpClient, private datePipe: DatePipe, private tostr: ToastrService) { }
+  constructor(private apiService: ApiService, private datePipe: DatePipe, private tostr: ToastrService) { }
 
   ngOnInit(): void {
     this.today = new Date();
@@ -57,7 +56,7 @@ export class RequirementFormComponent implements OnInit {
   }
 
   fetchRequirements(): void {
-    this.http.get(`${environment.api_url}/service-request/list`).subscribe((res: any) => {
+    this.apiService.get(`apiService/service-request/list`).subscribe((res: any) => {
       if (res?.data) {
         this.list_requests = res?.data;
       }
@@ -65,7 +64,7 @@ export class RequirementFormComponent implements OnInit {
   }
 
   fetchCandidates(): void {
-    this.http.get(`${environment.api_url}/screening-station/interview-details/candidates-list?serviceRequestId=${this.selectedId}`).subscribe((candidate: any) => {
+    this.apiService.get(`apiService/screening-station/interview-details/candidates-list?serviceRequestId=${this.selectedId}`).subscribe((candidate: any) => {
       if (candidate?.candidates) {
         this.candidatesList = candidate?.candidates;
       }
@@ -73,7 +72,7 @@ export class RequirementFormComponent implements OnInit {
   }
 
   fetchcandidatesWithExperience(searchQuery: string): void {
-    this.http.get(`${environment.api_url}/screening-station/interview-details/candidates-list?exprience=${this.searchQuery}`).subscribe((res: any) => {
+    this.apiService.get(`apiService/screening-station/interview-details/candidates-list?exprience=${this.searchQuery}`).subscribe((res: any) => {
       if (res?.candidates) {
         this.candidatesList = res?.candidates;
       }
@@ -134,8 +133,7 @@ export class RequirementFormComponent implements OnInit {
       serviceAssignee: null,
       serviceDate: this.displayDate
     };
-
-    this.http.post(`${environment.api_url}/screening-station/create`, requestData).subscribe((res: any) => {
+    this.apiService.post(`/screening-station/create`, requestData).subscribe((res: any) => {
       this.tostr.success('Requirement Created Successfully')
     },
       (error) => {
@@ -154,7 +152,7 @@ export class RequirementFormComponent implements OnInit {
   resetFormAndState(): void {
     this.displayDate = null;
   }
-  
+
   cancel(): void {
     this.resetFormAndState();
     this.selectedName = null;

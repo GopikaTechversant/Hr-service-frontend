@@ -7,8 +7,7 @@
             <span class="filter p-r-10 p-t-10">Datewise</span>
             <div class="p-relative ">
                 <input class="p-l-5  input c-pointer" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate"
-                    (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate"
-                   >
+                    (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate">
                 <span> <mat-datepicker #pickerdate class=""></mat-datepicker>
                     <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
                         (click)="pickerdate ?.open()"></i>
@@ -20,5 +19,4 @@
         <div *ngIf="sourceList?.length === 0" class="no-data">No Data Found</div>
         <canvas id="MyChart"></canvas>
     </div>
-  
 </div>

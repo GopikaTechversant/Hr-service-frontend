@@ -46,7 +46,7 @@
             <div class="input-box p-t-10 p-l-6 c-pointer p-relative" (click)="showDropdown = !showDropdown">
                 <span *ngIf="!positionName">Select Requirement</span>
                 <span *ngIf="positionName" class="p-l-9 p-5">{{positionName}}</span>
-                <span  *ngIf="!positionName"><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
+                <span *ngIf="!positionName"><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
                 <div class="no-close dropdown m-t-6 p-t-10 p-l-6 c-pointer" *ngIf="showDropdown">
                     <div class="p-5" *ngFor="let position of positionList"
                         (click)="selectPosition(position.requestId,position.requestName)">

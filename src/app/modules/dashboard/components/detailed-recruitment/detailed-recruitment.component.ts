@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environments';
+import { ApiService } from 'src/app/services/api.service';
 @Component({
   selector: 'app-detailed-recruitment',
   templateUrl: './detailed-recruitment.component.html',
@@ -24,7 +25,7 @@ export class DetailedRecruitmentComponent implements OnInit {
   currentPage: number = 1;
   lastPage: any;
   userCount: any;
-  constructor(private http: HttpClient) {
+  constructor(private apiService: ApiService) {
   }
 
   onBodyClick(event: MouseEvent): void {
@@ -42,16 +43,14 @@ export class DetailedRecruitmentComponent implements OnInit {
   fetchCandidateList(recruiter: string): void {
     const totalPages = Math.ceil(this.userCount / this.pageSize);
     this.lastPage = totalPages;
-    if (this.currentPage > totalPages) {
-      this.currentPage = totalPages;
-    }
-    this.http.get(`${environment.api_url}/dashboard/requirement-report?recuriter=${recruiter}&page=${this.currentPage}&limit=${this.pageSize}`).subscribe((res: any) => {
-      this.candidateList = res.userRequirementReport;
+    if (this.currentPage > totalPages) this.currentPage = totalPages;
+    this.apiService.get(`/dashboard/requirement-report?recuriter=${recruiter}&page=${this.currentPage}&limit=${this.pageSize}`).subscribe((res: any) => {
+      this.candidateList = res?.userRequirementReport;
     })
   }
 
   fetchRecruitersList(): void {
-    this.http.get(`${environment.api_url}/dashboard/recruiter-list`).subscribe((res: any) => {
+    this.apiService.get(`/dashboard/recruiter-list`).subscribe((res: any) => {
       if (res?.data) {
         this.recruitersList = res?.data;
       }
@@ -65,12 +64,6 @@ export class DetailedRecruitmentComponent implements OnInit {
     this.fetchCandidateList(this.selectedRecruiterId)
   }
 
-  // handlePageEvent(event: any) {
-  //   this.length = event.length;
-  //   this.pageSize = event.pageSize;
-  //   this.pageIndex = event.pageIndex;
-  //   this.fetchCandidateList('');
-  // }
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);
     this.fetchCandidateList('');

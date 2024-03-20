@@ -23,12 +23,11 @@ td {
     padding: 10px;
     text-align: center;
     border: 1px solid #E9E9E9
-    
 }
 
 tr {
     text-align: center;
-}  
+}
 
 .table-header {
     position: sticky;
@@ -86,7 +85,6 @@ table {
     line-height: 15px;
     letter-spacing: 0em;
     text-align: left;
-
 }
 
 .input {
@@ -148,21 +146,19 @@ table {
     color: #525455;
 }
 
-.box{
+.box {
     height: 26px;
     width: 26px;
     border: none;
     background-color: white;
-    
 }
 
-.page{
+.page {
     width: 83px;
     float: right;
 }
 
-.current-page{
-    /* border: 1px solid black; */
+.current-page {
     background-color: #005EC9;
     color: #FFFFFF;
     height: 26px;

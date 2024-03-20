@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environments';
+import { ApiService } from 'src/app/services/api.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -17,7 +16,7 @@ export class DashboardComponent implements OnInit {
   displayPosition: string = 'Select Position';
   positionId: string = '';
 
-  constructor(private http: HttpClient) { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.fetchcount();
@@ -32,7 +31,7 @@ export class DashboardComponent implements OnInit {
   }
 
   fetchcount(): void {
-    this.http.get(`${environment.api_url}/dashboard/card-data?requestId=${this.positionId}`).subscribe((res: any) => {
+    this.apiService.get(`/dashboard/card-data?requestId=${this.positionId}`).subscribe((res: any) => {
       if(res?.data){
         this.lists = res?.data;
       }
@@ -40,7 +39,7 @@ export class DashboardComponent implements OnInit {
   }
 
   fetchRequirements(): void {
-    this.http.get(`${environment.api_url}/service-request/list`).subscribe((res: any) => {
+    this.apiService.get(`/service-request/list`).subscribe((res: any) => {
       if (res?.data) {
         this.requestList = res?.data;
       }

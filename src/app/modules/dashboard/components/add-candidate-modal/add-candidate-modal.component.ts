@@ -1,10 +1,9 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import { environment } from 'src/environments/environments';
 import { ToastrServices } from 'src/app/services/toastr.service';
+import { ApiService } from 'src/app/services/api.service';
 @Component({
   selector: 'app-add-candidate-modal',
   templateUrl: './add-candidate-modal.component.html',
@@ -43,7 +42,7 @@ export class AddCandidateModalComponent implements OnInit {
   candidateCreatedby: any;
   resumeUploadSuccess: boolean = false;
 
-  constructor(private tostr: ToastrServices, private formBuilder: UntypedFormBuilder, private http: HttpClient, private datePipe: DatePipe, private el: ElementRef) {
+  constructor(private apiService: ApiService, private tostr: ToastrServices, private formBuilder: UntypedFormBuilder, private datePipe: DatePipe) {
     this.candidateForm = this.formBuilder.group({
       candidateFirstName: [null, Validators.required],
       candidateLastName: [null, Validators.required],
@@ -76,14 +75,14 @@ export class AddCandidateModalComponent implements OnInit {
   }
 
   fetchSource(): void {
-    this.http.get(`${environment.api_url}/candidate/resume-source/list`).subscribe((res: any) => {
-      this.sourceList = res.data;
+    this.apiService.get(`/candidate/resume-source/list`).subscribe((res: any) => {
+      this.sourceList = res?.data;
     })
   }
 
   fetchRequerements(): void {
-    this.http.get(`${environment.api_url}/service-request/list`).subscribe((res: any) => {
-      this.requirementList = res.data;
+    this.apiService.get(`/service-request/list`).subscribe((res: any) => {
+      this.requirementList = res?.data;
     })
   }
 
@@ -102,7 +101,6 @@ export class AddCandidateModalComponent implements OnInit {
   onKeypress(event: any): void {
     const enteredKey: string = event.key;
     const allowedCharacters: RegExp = /^[0-9]+$/;
-
     if (!allowedCharacters.test(enteredKey)) {
       event.preventDefault();
       return;
@@ -136,9 +134,7 @@ export class AddCandidateModalComponent implements OnInit {
     let candidateDetails = this.candidateForm.value;
     this.primaryskills = this.selectedPrimarySkills.map(skill => skill.id);
     this.secondaryskills = this.selectedSecondarySkills.map(skill => skill.id);
-    const headers = new HttpHeaders({
-      'Content-Type': 'multipart/form-data'
-    });
+
     const formdata = new FormData();
     for (const key in candidateDetails) {
       if (candidateDetails[key]) {
@@ -157,20 +153,20 @@ export class AddCandidateModalComponent implements OnInit {
       this.validationSuccess = true;
     } else this.tostr.warning('Please fill all mandatory fields');
     if (this.validationSuccess) {
-      this.http.post(`${environment.api_url}/candidate/create`, formdata).subscribe((response) => {
-        this.tostr.success('Candidate created successfully');
-        this.resetFormAndState();
-      },
-        (error) => {
-          if (error?.status === 500) this.tostr.error("Internal Server Error")
-          else {
+      this.apiService.post(`/candidate/create`, formdata).subscribe({
+        next: (response) => {
+          this.tostr.success('Candidate created successfully');
+          this.resetFormAndState();
+        },
+        error: (error) => {
+          if (error?.status === 500) {
+            this.tostr.error("Internal Server Error");
+          } else {
             this.tostr.warning(error?.error?.message ? error?.error?.message : "Unable to create candidate");
           }
-        }
-      );
-    } else {
-      this.submitted = true;
-    }
+        },
+      });
+    } else this.submitted = true;
   }
 
   triggerFileInput(): void {
@@ -197,8 +193,8 @@ export class AddCandidateModalComponent implements OnInit {
   getSkillSuggestions(event: any): void {
     this.searchvalue = event?.target.value;
     if (this.selectedSkillType) {
-      this.http.get(`${environment.api_url}/candidate/skills/list?search=${this.searchvalue}`).subscribe((res: any) => {
-        this.skillSuggestions = res.data.filter((suggestion: any) =>
+      this.apiService.get(`/candidate/skills/list?search=${this.searchvalue}`).subscribe((res: any) => {
+        this.skillSuggestions = res?.data.filter((suggestion: any) =>
           suggestion.skillName.toLowerCase().startsWith(this.searchvalue.toLowerCase()) && !this.isSkillSelected(suggestion)
         );
       });
@@ -207,12 +203,11 @@ export class AddCandidateModalComponent implements OnInit {
 
   removeSkill(skillToRemove: any, type: 'primary' | 'secondary'): void {
     if (type === 'primary') {
-      this.selectedPrimarySkills = this.selectedPrimarySkills.filter(skill => skill.id !== skillToRemove.id);
+      this.selectedPrimarySkills = this.selectedPrimarySkills?.filter(skill => skill.id !== skillToRemove.id);
     } else if (type === 'secondary') {
-      this.selectedSecondarySkills = this.selectedSecondarySkills.filter(skill => skill.id !== skillToRemove.id);
+      this.selectedSecondarySkills = this.selectedSecondarySkills?.filter(skill => skill.id !== skillToRemove.id);
     }
   }
-
 
   isSkillSelected(suggestion: any): boolean {
     const allSelectedSkills = [...this.selectedPrimarySkills, ...this.selectedSecondarySkills];
@@ -221,12 +216,11 @@ export class AddCandidateModalComponent implements OnInit {
 
   selectSkill(suggestion: any): void {
     const selectedSkill = { id: suggestion.id, name: suggestion.skillName };
-    if (this.selectedSkillType === 'Primary Skills') {
-      this.selectedPrimarySkills.push(selectedSkill);
-    } else if (this.selectedSkillType === 'Secondary Skills') {
-      this.selectedSecondarySkills.push(selectedSkill);
-    }
+    if (this.selectedSkillType === 'Primary Skills') this.selectedPrimarySkills.push(selectedSkill);
+    else if (this.selectedSkillType === 'Secondary Skills') this.selectedSecondarySkills.push(selectedSkill);
+
     this.showSearchBar = false;
     this.skillSuggestions = [];
   }
+
 }

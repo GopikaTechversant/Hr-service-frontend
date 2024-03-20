@@ -1,8 +1,6 @@
 import { DatePipe } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { Router } from '@angular/router';
-import { environment } from 'src/environments/environments';
+import { Component, Input, OnInit } from '@angular/core';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-daily-report',
@@ -37,7 +35,7 @@ export class DailyReportComponent implements OnInit {
   recruiterName: string = 'Select';
   recruiterKeys: any[] = [];
   fromDate: any;
-  constructor(private http: HttpClient, private router: Router, private datePipe: DatePipe) {
+  constructor(private apiService: ApiService) {
     this.startDate = new Date();
     this.endDate = new Date();
   }
@@ -55,7 +53,7 @@ export class DailyReportComponent implements OnInit {
   }
 
   fetchDetails(): void {
-    this.http.get(`${environment.api_url}/report/report-list?reportUserId=${this.reportUserId}&reportFromDate=${this.reportFromDate}&reportToDate=${this.reportToDate}&reportPageNo=${this.reportPageNo}&reportPageLimit=${this.reportPageLimit}`)
+    this.apiService.get(`/report/report-list?reportUserId=${this.reportUserId}&reportFromDate=${this.reportFromDate}&reportToDate=${this.reportToDate}&reportPageNo=${this.reportPageNo}&reportPageLimit=${this.reportPageLimit}`)
       .subscribe((res: any) => {
         if (res?.data) {
           this.userRequirement = [];

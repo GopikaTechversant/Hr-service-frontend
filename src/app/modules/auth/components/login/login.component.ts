@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
-import { environment } from 'src/environments/environments';
 import { ToastrServices } from 'src/app/services/toastr.service';
+import { ApiService } from 'src/app/services/api.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,7 +15,7 @@ export class LoginComponent implements OnInit {
   submitted: boolean = false;
   hide: boolean = true;
 
-  constructor(private tostr: ToastrServices, private formBuilder: UntypedFormBuilder, private router: Router, private http: HttpClient, public auth: AuthService,) {
+  constructor(private tostr: ToastrServices, private formBuilder: UntypedFormBuilder, private router: Router, private apiService: ApiService, public auth: AuthService) {
     this.loginForm = this.formBuilder.group({
       userName: [null, [Validators.required]],
       userPassword: [null, [Validators.required]],
@@ -51,7 +50,7 @@ export class LoginComponent implements OnInit {
 
   loginApi() {
     if (this.loginForm.value.userPassword && this.loginForm.value.userName) {
-      this.http.post(`${environment.api_url}/user/login`, this.loginForm.value).subscribe(
+      this.apiService.post(`/user/login`, this.loginForm.value).subscribe(
         (response: any) => {
           if (response?.token) {
             localStorage.setItem('userToken', response?.token);

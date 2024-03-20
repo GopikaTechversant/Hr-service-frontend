@@ -10,7 +10,7 @@
     justify-content: space-between;
 }
 
-.text{
+.text {
     display: flex;
     flex: 2;
 }
@@ -77,14 +77,13 @@
 
 #barChartInterview {
     height: 350px !important;
-  }
-  
+}
 
 .count-table {
     width: 60%;
     background-color: #FFFFFF;
     margin-left: 15px;
-  
+
 }
 
 .calendar-icon {
@@ -103,7 +102,6 @@ tr:nth-child(even) {
     background: #FFFFFF;
 }
 
-
 td {
     padding: 10px;
     text-align: center;
@@ -114,9 +112,8 @@ tr {
     text-align: center;
 }
 
-
-.table-container{
-    height: calc(100vh - 560px);
+.table-container {
+    height: calc(100vh - 390px);
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -130,7 +127,7 @@ tr {
     font-weight: 400;
     line-height: 18px;
     letter-spacing: 0em;
-    text-align: left;   
+    text-align: left;
 }
 
 table {
@@ -185,4 +182,23 @@ table {
     width: 100%;
     justify-content: center;
     margin-top: 30px;
+}
+
+.box {
+    height: 26px;
+    width: 26px;
+    border: none;
+    background-color: white;
+}
+
+.page {
+    width: 83px;
+    float: right;
+}
+
+.current-page {
+    background-color: #005EC9;
+    color: #FFFFFF;
+    height: 26px;
+    width: 26px;
 }

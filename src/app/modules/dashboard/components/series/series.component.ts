@@ -3,8 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environments';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FeedbackComponent } from 'src/app/components/feedback/feedback.component';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ToastrServices } from 'src/app/services/toastr.service';
+import { ApiService } from 'src/app/services/api.service';
 @Component({
   selector: 'app-series',
   templateUrl: './series.component.html',
@@ -28,7 +29,8 @@ export class SeriesComponent implements OnInit {
   moreApiCalled: boolean = false;
   limit: number = 9;
   page: number = 1;
-  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private renderer: Renderer2) {
+  showDropdown: boolean = false;
+  constructor(private apiService: ApiService, private http: HttpClient, private router: Router, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private renderer: Renderer2) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
     });
@@ -51,7 +53,7 @@ export class SeriesComponent implements OnInit {
   }
 
   fetchcandidates(): void {
-    this.http.get(`${environment.api_url}/screening-station/list-batch/${this.requestId}?limit=${this.limit}&page=1`).subscribe((res: any) => {
+    this.apiService.get(`/screening-station/list-batch/${this.requestId}?limit=${this.limit}&page=1`).subscribe((res: any) => {
       this.moreApiCalled = false;
       if (res?.candidates) {
         this.candidates_list = res?.candidates
@@ -74,7 +76,7 @@ export class SeriesComponent implements OnInit {
 
   approve(): void {
     const headers = new HttpHeaders({
-      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
+      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50',
     });
     const requestData = {
       serviceIds: this.selectedCandidatesIds.length > 0 ? this.selectedCandidatesIds : this.serviceIds,
@@ -83,7 +85,6 @@ export class SeriesComponent implements OnInit {
     this.http.post(`${environment.api_url}/screening-station/accept`, requestData, { headers }).subscribe({
       next: (res: any) => {
         this.tostr.success('Approved');
-
       },
       error: (error) => {
         if (error?.status === 500) this.tostr.error("Internal Server Error");
@@ -99,11 +100,21 @@ export class SeriesComponent implements OnInit {
     this.isTaskDetailsOpen = !this.isTaskDetailsOpen;
   }
 
+  onStatusChange(event: any, candidate: any, index: number): void {
+    const selectedStatus = event.target.value;
+    if (selectedStatus === 'reject') this.onCandidateSelectionChange(event, candidate, index);
+    if (selectedStatus === 'select') {
+      this.router.navigate(['dashboard/interview-details'], {
+        state: { candidate }
+      });
+    }
+  }
+
   onCandidateSelectionChange(event: any, candidate: any, index: any): void {
     let action = event?.target?.value;
     this.candidateServiceId = candidate?.serviceId;
     const dialogRef = this.dialog.open(FeedbackComponent, {
-      data: { candidateId: candidate?.serviceId, stationId: 1, status: action , candidateDetails: candidate},
+      data: { candidateId: candidate?.serviceId, stationId: 1, status: action, candidateDetails: candidate },
       width: '600px',
       height: '300px'
     })
@@ -113,12 +124,6 @@ export class SeriesComponent implements OnInit {
       }
       let element: any = document.getElementById('status' + index);
       if (element) element.value = candidate?.serviceStatus;
-      // if (candidate?.serviceStatus === 'selected') {
-      //   this.router.navigate(['dashboard/interview-details'], {
-      //     state: { candidate }
-      //   });
-      // }
-
     })
     dialogRef.componentInstance.selectedCandidatesEmitter.subscribe((selectedCandidatesIds: any[]) => {
       this.selectedCandidatesIds.push(...selectedCandidatesIds);

@@ -29,7 +29,8 @@
                     <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
                 </div>
                 <div class="no-close  requirement-dropdown-list c-pointer" *ngIf="requestList_open">
-                    <div class="p-5" (click)='selectRequestId(name.requestName,name.requestId);' *ngFor="let name of list_requests">
+                    <div class="p-5" (click)='selectRequestId(name.requestName,name.requestId);'
+                        *ngFor="let name of list_requests">
                         {{name.requestName}}
                     </div>
                 </div>
@@ -63,15 +64,15 @@
                 <div class="info-container">
                     <div class="info-pair">
                         <div class="key">Name</div>
-                        <div class="value">: {{candidate.candidateFirstName}} {{candidate.candidateLastName}}</div>
+                        <div class="value">: {{candidate?.candidateFirstName}} {{candidate?.candidateLastName}}</div>
                     </div>
                     <div class="info-pair">
                         <div class="key">Email</div>
-                        <div class="value">: {{candidate.candidateEmail}}</div>
+                        <div class="value">: {{candidate?.candidateEmail}}</div>
                     </div>
                     <div class="info-pair">
                         <div class="key">Experience</div>
-                        <div class="value">: {{candidate.candidateExperience}}</div>
+                        <div class="value">: {{candidate?.candidateExperience}}</div>
                     </div>
                 </div>
             </div>

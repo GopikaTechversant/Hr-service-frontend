@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environments';
+import { ApiService } from 'src/app/services/api.service';
 @Component({
   selector: 'app-requirement-candidate-list',
   templateUrl: './requirement-candidate-list.component.html',
@@ -15,14 +14,14 @@ export class RequirementCandidateListComponent implements OnInit {
   pageIndex = 1;
   pageSizeOptions = [5, 10, 15, 20];
   showFirstLastButtons = true;
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private router: Router, private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.fetchcandidates('');
   }
 
   fetchcandidates(searchQuery: string): void {
-    this.http.get(`${environment.api_url}/screening-station/v1/list-all?page=${this.pageIndex}&limit=${this.pageSize}&search=${searchQuery}`).subscribe((res: any) => {
+    this.apiService.get(`/screening-station/v1/list-all?page=${this.pageIndex}&limit=${this.pageSize}&search=${searchQuery}`).subscribe((res: any) => {
       this.candidates_list = res.candidates;
     })
   }
@@ -48,4 +47,5 @@ export class RequirementCandidateListComponent implements OnInit {
     this.pageIndex = Math.max(1, pageNumber);
     this.fetchcandidates('');
   }
+
 }
