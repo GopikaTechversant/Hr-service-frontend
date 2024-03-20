@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environments';
 import { MatDialog } from '@angular/material/dialog';
 import { CandidateDetailModalComponent } from '../candidate-detail-modal/candidate-detail-modal.component';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-technical-detail',
@@ -24,7 +25,7 @@ export class TechnicalDetailComponent implements OnInit {
   ]
   filteredStatus: string = 'Filter Candidate by Status';
   candidateStatus: string = 'Choose Candidate Status';
-  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private dialog: MatDialog) {
+  constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog) {
     this.route.params.subscribe(params => {
       this.stationId = params['id'];
     });
@@ -36,7 +37,7 @@ export class TechnicalDetailComponent implements OnInit {
 
   fetchList(): void {
     this.loader = true;
-    this.http.get(`${environment.api_url}/technical-station/list`).subscribe((data: any) => {
+    this.apiService.get(`/technical-station/list`).subscribe((data: any) => {
       this.loader = false;
       if (data.candidates) {
         this.candidateList.push(data.candidates);
@@ -70,10 +71,8 @@ export class TechnicalDetailComponent implements OnInit {
     })
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
-        this.fetchList();
-
+       this.fetchList();
       }
-
     })
   }
 }

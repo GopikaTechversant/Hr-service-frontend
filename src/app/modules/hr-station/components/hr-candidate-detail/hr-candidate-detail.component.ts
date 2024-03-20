@@ -1,9 +1,7 @@
 import { DatePipe } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component, Inject, Input } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { environment } from 'src/environments/environments';
-
+import { ApiService } from 'src/app/services/api.service';
 @Component({
   selector: 'app-hr-candidate-detail',
   templateUrl: './hr-candidate-detail.component.html',
@@ -23,17 +21,14 @@ export class HrCandidateDetailComponent {
   showDescription: boolean = false;
   showbtn: boolean = true;
   serviceId: any;
-  constructor(public dialogRef: MatDialogRef<HrCandidateDetailComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient, private datePipe: DatePipe) {
+  constructor(public dialogRef: MatDialogRef<HrCandidateDetailComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private apiService: ApiService, private datePipe: DatePipe) {
     if (data) {
-      console.log(data);
       this.selectedItem = data?.candidateDetails;
     }
     this.dialogRef.updateSize('60%', '85%')
   }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void { }
 
   dateChange(event: any): void {
     let date = new Date(event?.value);
@@ -52,7 +47,7 @@ export class HrCandidateDetailComponent {
       offerDescription: this.descriptionValue,
       offerJoinDate: this.displayDate
     }
-    this.http.post(`${environment.api_url}/hr-station/candidateOffer`, payload).subscribe({
+    this.apiService.post(`/hr-station/candidateOffer`, payload).subscribe({
       next: (res: any) => {
         this.showbtn = false;
       },
@@ -62,9 +57,8 @@ export class HrCandidateDetailComponent {
     })
   }
 
-  cancelClick():void{}
+  cancelClick(): void { }
 
-  submitClick():void{}
+  submitClick(): void { }
 
-  
 }

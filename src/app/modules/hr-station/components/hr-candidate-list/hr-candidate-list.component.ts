@@ -1,8 +1,5 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { environment } from 'src/environments/environments';
 import { HrCandidateDetailComponent } from '../hr-candidate-detail/hr-candidate-detail.component';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -16,7 +13,7 @@ export class HrCandidateListComponent implements OnInit {
   candidateList: any = [];
   loader: boolean = false;
   selectedItem: any = [];
-  constructor(private http: HttpClient, private router: Router, private dialog: MatDialog, private apiService: ApiService) { }
+  constructor(private dialog: MatDialog, private apiService: ApiService) { }
   ngOnInit(): void {
     this.fetchList();
   }

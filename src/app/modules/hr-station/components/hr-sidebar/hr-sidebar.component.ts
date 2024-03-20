@@ -1,6 +1,4 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { environment } from 'src/environments/environments';
+import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -13,11 +11,11 @@ import { Router } from '@angular/router';
 export class HrSidebarComponent implements OnInit {
   constructor(private router: Router) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   navigate(path: string): void {
-    if(path === 'detail') this.router.navigate(['/detail']); 
-  
+    if (path === 'detail') this.router.navigate(['/detail']);
+
   }
 
 }
