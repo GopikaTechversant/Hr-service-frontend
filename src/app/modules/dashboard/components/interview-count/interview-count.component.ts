@@ -4,6 +4,7 @@ import { DatePipe } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environments';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-interview-count',
@@ -17,10 +18,9 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 export class InterviewCountComponent implements OnInit {
   chart: any;
   displayDate: any;
-  length = 100;
-  pageSize = 10;
-  pageIndex = 0;
-  pageSizeOptions = [5, 10, 25];
+  length: any = 20;
+  pageSize = 5;
+  pageIndex = 1;
   showFirstLastButtons = true;
   countArray: any[] = [];
   sixMonthCount: any;
@@ -33,7 +33,7 @@ export class InterviewCountComponent implements OnInit {
   currentPage: number = 1;
   lastPage: any;
   userCount: any;
-  constructor(private datePipe: DatePipe, private http: HttpClient) { }
+  constructor(private datePipe: DatePipe, private apiService: ApiService) { }
   ngOnInit(): void {
     Chart.register(ChartDataLabels);
     this.fetchInterviewCounts();
@@ -49,13 +49,16 @@ export class InterviewCountComponent implements OnInit {
   }
 
   fetchInterviewCounts(): void {
-    this.http.get(`${environment.api_url}/dashboard/interview-count`).subscribe((count: any) => {
+    const totalPages = Math.ceil(this.userCount / this.pageSize);
+    this.lastPage = totalPages;
+    if (this.currentPage > totalPages) this.currentPage = totalPages;
+    this.apiService.get(`/dashboard/interview-count`).subscribe((count: any) => {
       this.countArray = count?.data;
     })
   }
 
   fetchBarchartDetails(): void {
-    this.http.get(`${environment.api_url}/dashboard/six-month-count?team=${this.teamId}`).subscribe((res: any) => {
+    this.apiService.get(`/dashboard/six-month-count?team=${this.teamId}`).subscribe((res: any) => {
       if (res?.data) {
         this.sixMonthCount = res?.data;
         this.labels = Object.keys(this.sixMonthCount[0]);
@@ -66,7 +69,7 @@ export class InterviewCountComponent implements OnInit {
   }
 
   fetchDepartment():void{
-    this.http.get(`${environment.api_url}/service-request/team`).subscribe((res: any) => {
+    this.apiService.get(`/service-request/team`).subscribe((res: any) => {
       if(res?.data){
         this.teamDetails = res?.data
       }
@@ -81,9 +84,7 @@ export class InterviewCountComponent implements OnInit {
   }
 
   createBarChart() {
-    if (this.chart) {
-      this.chart.destroy();
-    }
+    if (this.chart) this.chart.destroy();
     this.chart = new Chart('barChartInterview', {
       type: 'bar',
       data: {
@@ -144,8 +145,10 @@ export class InterviewCountComponent implements OnInit {
     this.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
   }
+
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);
-    // this.fetchCandidateList('');
+    this.fetchInterviewCounts();
   }
+
 }

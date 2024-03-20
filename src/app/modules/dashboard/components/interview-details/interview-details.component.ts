@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environments';
 import { ToastrServices } from 'src/app/services/toastr.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ApiService } from 'src/app/services/api.service';
 @Component({
   selector: 'app-interview-details',
   templateUrl: './interview-details.component.html',
@@ -60,17 +61,22 @@ export class InterviewDetailsComponent implements OnInit {
   candidatesList: any;
   candidate: any;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private datePipe: DatePipe, private cdr: ChangeDetectorRef,
-    private http: HttpClient, private el: ElementRef, private tostr: ToastrServices) {
-
-  }
+  constructor(private datePipe: DatePipe,private http: HttpClient, private tostr: ToastrServices, private apiService : ApiService) {}
 
   ngOnInit(): void {
     this.today = new Date();
     this.fetchPosition();
-    if (history.state.candidate) this.candidate = history.state.candidate;
+    if (history.state.candidate) {
+      this.candidate = history.state.candidate;
+      this.positionName = this.candidate['reqServiceRequest.requestName'];
+      this.positionId = this.candidate?.candidatesAddingAgainst;
+      this.serviceId = '';
+      this.candidateId = this.candidate?.candidateId
+      this.fetchUsers();
+      this.fetchCandidates();
+      this.fetchPanel();
+    }
   }
-
 
   @HostListener('document:click', ['$event'])
   onBodyClick(event: Event): void {
@@ -82,14 +88,14 @@ export class InterviewDetailsComponent implements OnInit {
   }
 
   fetchPosition(): void {
-    this.http.get(`${environment.api_url}/service-request/list`).subscribe((res: any) => {
+    this.apiService.get(`/service-request/list`).subscribe((res: any) => {
       if (res?.data) this.positionList = res?.data;
     })
   }
 
   fetchCandidates() {
     if (this.positionId) {
-      this.http.get(`${environment.api_url}/screening-station/interview-details/candidates-list?serviceRequestId=${this.positionId}&search=`).subscribe((res: any) => {
+      this.apiService.get(`/screening-station/interview-details/candidates-list?serviceRequestId=${this.positionId}&search=`).subscribe((res: any) => {
         if (res?.candidates) {
           this.candidate_list = res?.candidates;
           this.candidatesList = res?.candidates;
@@ -102,18 +108,16 @@ export class InterviewDetailsComponent implements OnInit {
 
   fetchUsers(): void {
     const headers = new HttpHeaders({
-      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
+      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50',
     });
     this.http.get(`${environment.api_url}/user/lists`, { headers }).subscribe((res: any) => {
       if (res?.users) this.users_list = res?.users;
     })
   }
 
-
-
   fetchPanel(): void {
     const headers = new HttpHeaders({
-      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
+      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50',
     });
     this.http.get(`${environment.api_url}/user/lists`, { headers }).subscribe((res: any) => {
       if (res?.users) this.panel_list = res?.users;
@@ -134,7 +138,7 @@ export class InterviewDetailsComponent implements OnInit {
         this.serviceId = status?.serviceId;
         if (status?.interviewMode) this.interviewMode = status?.interviewMode;
         if (status?.comment) this.comment = status?.comment;
-        if (status?.interviewStatus) this.interviewStatus = status?.interviewstatus;
+        if (status?.interviewStatus) this.interviewStatus = status?.interviewStatus;
         if (status?.interviewLocation) this.Interviewlocation = status?.interviewLocation;
         this.scheduledDate = status?.serviceDate;
       })
@@ -143,7 +147,7 @@ export class InterviewDetailsComponent implements OnInit {
 
   fetchcandidatesWithExperience(search: string): void {
     this.seachKeyword = search;
-    this.http.get(`${environment.api_url}/screening-station/interview-details/candidates-list?serviceRequestId=${this.positionId}&exprience=${this.seachKeyword}`).subscribe((res: any) => {
+    this.apiService.get(`/screening-station/interview-details/candidates-list?serviceRequestId=${this.positionId}&exprience=${this.seachKeyword}`).subscribe((res: any) => {
       if (res?.candidates) {
         this.candidatesList = [];
         this.candidatesList = res?.candidates;
@@ -163,6 +167,7 @@ export class InterviewDetailsComponent implements OnInit {
     this.positionName = name;
     this.fetchUsers();
     this.fetchCandidates();
+    this.fetchPanel();
   }
 
   selectCandidate(candidateId: any, candidateFirstName: any, candidateLastName: any, candidate: any): void {
@@ -185,18 +190,13 @@ export class InterviewDetailsComponent implements OnInit {
     this.candidate.selected = !this.candidate.selected;
     if (this.candidate !== null) {
       if (this.candidate.selected) {
-        if (this.selectedCandidate.indexOf(item?.candidateId) === -1) {
-          this.selectedCandidate.push(item?.candidateId);
-        }
+        if (this.selectedCandidate.indexOf(item?.candidateId) === -1) this.selectedCandidate.push(item?.candidateId); 
       } else {
         const index = this.selectedCandidate.indexOf(item?.candidateId);
-        if (index > -1) {
-          this.selectedCandidate.splice(index, 1);
-        }
+        if (index > -1) this.selectedCandidate.splice(index, 1);    
       }
     }
   }
-
 
   selectPanel(panelid: any, firstname: any, secondName: any): void {
     this.showPanel = false;
@@ -207,6 +207,7 @@ export class InterviewDetailsComponent implements OnInit {
   dateChange(event: any): void {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    // if (this.interviewStatus === 'Not yet Schedule') this.interviewStatus = 'scheduled';
     if (this.interviewStatus === 'scheduled') this.interviewStatus = 'Rescheduled';
     this.changeInterviewStatus();
   }
@@ -214,11 +215,13 @@ export class InterviewDetailsComponent implements OnInit {
   changeInterviewStatus(): void {
     if (this.displayDate && this.displayTime) {
       if (!this.interviewStatus) this.interviewStatus = 'Scheduled';
+      if (this.interviewStatus === 'Not yet Schedule') this.interviewStatus = 'scheduled';
     }
   }
 
   timeChange(event: any): void {
     this.displayTime = event;
+    // if (this.interviewStatus === 'Not yet Schedule') this.interviewStatus = 'scheduled';
     if (this.interviewStatus === 'scheduled') this.interviewStatus = 'Rescheduled'
     this.changeInterviewStatus();
   }
@@ -249,25 +252,21 @@ export class InterviewDetailsComponent implements OnInit {
       comments: this.commentValue
     }
 
-    this.http.post(`${environment.api_url}/screening-station/interview-details`, payload).subscribe({
+    this.apiService.post(`/screening-station/interview-details`, payload).subscribe({
       next: (res: any) => {
         this.tostr.success('Interview Scheduled Successfully');
         this.resetFormAndState();
       },
       error: (error) => {
         if (error?.status === 500) this.tostr.error("Internal Server Error");
-        else {
-          this.tostr.warning("Unable to update");
-        }
+        else this.tostr.warning("Unable to update");
       }
     })
   }
 
   clearInputvalue(id: string) {
     const inputElement = document.getElementById(id) as HTMLInputElement;
-    if (inputElement) {
-      inputElement.value = '';
-    }
+    if (inputElement) inputElement.value = '';
   }
 
   resetFormAndState(): void {

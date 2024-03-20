@@ -1,9 +1,8 @@
 import { AfterViewInit, Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environments';
 import { DatePipe } from '@angular/common';
+import { ApiService } from 'src/app/services/api.service';
 @Component({
   selector: 'app-application-list-pie',
   templateUrl: './application-list-pie.component.html',
@@ -11,13 +10,13 @@ import { DatePipe } from '@angular/common';
   providers: [DatePipe],
 })
 export class ApplicationListPieComponent implements OnInit, AfterViewInit {
-  @Input() positionId : string = ' ';
+  @Input() positionId: string = ' ';
   chart: any;
   displayDate: any;
   sourceList: any[] = [];
   sourceLabels: any[] = [];
   sourceCount: any[] = [];
-  constructor(private http: HttpClient, private datePipe: DatePipe) { }
+  constructor(private apiService: ApiService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.displayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
@@ -29,13 +28,13 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(this.positionId) this.fetchResumeSource();    
+    if (this.positionId) this.fetchResumeSource();
   }
 
   fetchResumeSource(): void {
-    this.http.get(`${environment.api_url}/dashboard/resume-source?date=${this.displayDate}&requestId=${this.positionId}`).subscribe((res: any) => {
-      if(res?.data){
-        this.sourceList = res.data;
+    this.apiService.get(`/dashboard/resume-source?date=${this.displayDate}&requestId=${this.positionId}`).subscribe((res: any) => {
+      if (res?.data) {
+        this.sourceList = res?.data;
         this.sourceCount = this.sourceList.map((item: any) => Number(item.sourcecount));
         this.sourceLabels = this.sourceList.map((item: any) => item.sourceName)
         this.createChart();

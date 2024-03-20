@@ -1,6 +1,7 @@
 <div class="m-10 main">
     <div class="f-s-16 p-10 head">
-        <span class="f-w-500 comment-heading">Feedback</span>
+        <span *ngIf="this.data?.status !== 'reject'" class="f-w-500 comment-heading">Feedback</span>
+        <span *ngIf="this.data?.status === 'reject'" class="f-w-500 comment-heading">Reason for Rejection</span>
     </div>
     <div class="m-t-0 m-l-10">
         <textarea name="" id="feedback" cols="35" rows="7" class="comment"></textarea>

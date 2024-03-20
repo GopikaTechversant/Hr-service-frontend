@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { environment } from 'src/environments/environments';
-import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ApiService } from 'src/app/services/api.service';
 @Component({
   selector: 'app-feedback',
   templateUrl: './feedback.component.html',
@@ -15,13 +13,14 @@ export class FeedbackComponent implements OnInit {
   stationId: any;
   rejectedcandidates: any[] = [];
   candidateServiceId: any;
-  constructor(public dialogRef: MatDialogRef<FeedbackComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient,
-    private router: Router, private route: ActivatedRoute,) {
+  constructor(public dialogRef: MatDialogRef<FeedbackComponent>, @Inject(MAT_DIALOG_DATA) 
+  public data: any,
+  private apiService : ApiService) {
 
   }
 
   ngOnInit(): void {
-
+   
   }
 
   onSubmitClick(): void {
@@ -32,28 +31,17 @@ export class FeedbackComponent implements OnInit {
   apiCall(): void {
     const feedback = document.getElementById('feedback') as HTMLInputElement;
     if (feedback) this.feedback = feedback.value;
-    this.candidateServiceId = this.data?.candidateId;
+    this.candidateServiceId = this.data?.serviceId;
     this.rejectedCandidatesEmitter.emit([this.candidateServiceId]);
     this.stationId = this.data.stationId;
     const payload = {
       serviceId: this.candidateServiceId,
       stationId: this.stationId,
       status: this.data?.status,
-      feedBack: this.feedback
+      feedBack: this.feedback,
+      userId: this.data?.candidateId
     }
-    if (this.data?.status === 'selected') {
-      this.router.navigate(['dashboard/interview-details'], {
-        state: { candidate: this.data?.candidateDetails }
-      });
-    }
-
-    this.http.post(`${environment.api_url}/screening-station/reject/candidate`, payload).subscribe((res: any) => {
-      // if(res?.message === 'Candidate Selected' || res?.message === 'Candidate Already selected'){
-      //   this.router.navigate(['dashboard/interview-details'], {
-      //     state: { candidate : this.data?.candidateDetails}     
-      //   });
-      // } 
-
+    this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe((res: any) => {
       if (this.data?.status === 'pending') this.selectedCandidatesEmitter.emit([this.candidateServiceId]);
     })
   }

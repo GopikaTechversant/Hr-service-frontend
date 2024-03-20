@@ -2,7 +2,7 @@
     color: #575F6E;
 }
 
-.main{
+.main {
     overflow-y: auto;
     height: calc(100vh - 100px);
 }
@@ -89,23 +89,23 @@
     border: 1px solid #005EC9;
 }
 
-.date-color{
+.date-color {
     color: #005EC9;
 }
 
-.bor-2{
+.bor-2 {
     border-bottom: 2px dotted #84868a;
-    margin-right: 20px;   
+    margin-right: 20px;
 }
 
-.icon{
+.icon {
     margin: 5px;
     height: 35px;
     width: 35px;
     margin-top: 30px;
 }
 
-.Feedback{
+.Feedback {
     background-color: #FFFFFF;
 }
 

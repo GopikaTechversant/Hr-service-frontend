@@ -37,10 +37,8 @@
                 <input class="p-l-5 input c-pointer" placeholder="29/02/11" matInput [matDatepicker]="pickerToDate"
                     (dateChange)="dateChange($event, 'endDate')" [ngModel]="endDate" (click)="pickerToDate.open()"
                     [value]="endDate | date:'yyyy-MM-dd'" id="endDate" [min]="fromDate">
-                <span>
-                    <mat-datepicker #pickerToDate></mat-datepicker>
-                    <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"
-                        (click)="pickerToDate.open()"></i>
+                <span><mat-datepicker #pickerToDate></mat-datepicker>
+                    <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true" (click)="pickerToDate.open()"></i>
                 </span>
             </div>
         </div>
@@ -59,7 +57,6 @@
                 <tr class="c-pointer details" *ngFor="let item of userRequirement">
                     <ng-container *ngFor="let key of  recruiterKeys">
                         <td> {{ key === 'Date' ? (item[key] | date:'dd/MM/yyyy') : item[key] }}</td>
-
                     </ng-container>
                 </tr>
             </ng-container>

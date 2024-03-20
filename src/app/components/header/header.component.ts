@@ -1,11 +1,7 @@
-import { Component, OnInit, Renderer2, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-import { AuthService } from 'src/app/services/auth.service';
-import { AddCandidateModalComponent } from 'src/app/modules/dashboard/components/add-candidate-modal/add-candidate-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environments';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -23,7 +19,7 @@ export class HeaderComponent implements OnInit {
   showCandidates: boolean = false;
   stationsList: any[] = [];
   headers: any;
-  constructor(private http: HttpClient, private apiService: ApiService, private auth: AuthService, private dialog: MatDialog, private router: Router, private renderer: Renderer2, private el: ElementRef) { }
+  constructor(private apiService: ApiService, private dialog: MatDialog, private router: Router, private el: ElementRef) { }
 
   @HostListener('document:click', ['$event'])
   onBodyClick(event: Event): void {
@@ -39,7 +35,7 @@ export class HeaderComponent implements OnInit {
   }
 
   fetchStations(): void {
-    this.http.get(`${environment.api_url}/user/stations`).subscribe((res: any) => {
+    this.apiService.get(`/user/stations`).subscribe((res: any) => {
       this.stationsList = res.data;
     });
   }
@@ -55,7 +51,7 @@ export class HeaderComponent implements OnInit {
 
   searchCandidate(searchKeyword: string): void {
     this.searchKeyword = searchKeyword;
-    this.http.get(`${environment.api_url}/candidate/search/list?search=${this.searchKeyword}`).subscribe((res: any) => {
+    this.apiService.get(`/candidate/search/list?search=${this.searchKeyword}`).subscribe((res: any) => {
       if (res?.data) {
         this.candidateList = res?.data
         if (this.candidateList?.length > 0) this.showCandidates = true;
@@ -76,14 +72,6 @@ export class HeaderComponent implements OnInit {
     localStorage.removeItem('userRole');
     localStorage.removeItem('userId');
     this.router.navigate(['']);
-  }
-
-  openAddCandidateModal(): void {
-    const dialogRef = this.dialog.open(AddCandidateModalComponent, {
-      width: '700px'
-    });
-    dialogRef.afterClosed().subscribe(result => {
-    })
   }
 
 }

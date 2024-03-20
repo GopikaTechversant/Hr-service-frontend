@@ -1,8 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { environment } from 'src/environments/environments';
-
+import { ApiService } from 'src/app/services/api.service';
 @Component({
   selector: 'app-candidate-detail-modal',
   templateUrl: './candidate-detail-modal.component.html',
@@ -41,7 +39,7 @@ export class CandidateDetailModalComponent implements OnInit {
   statonId: number = 0;
   showWarning: boolean = false;
 
-  constructor(public dialogRef: MatDialogRef<CandidateDetailModalComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient,) {
+  constructor(public dialogRef: MatDialogRef<CandidateDetailModalComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private apiService: ApiService) {
     if (data) {
       console.log(data);
       this.candidateDetails = data?.candidateDetails;
@@ -99,7 +97,7 @@ export class CandidateDetailModalComponent implements OnInit {
       progressScore: this.scoreValue,
       progressDescription: this.descriptionValue
     };
-    this.http.post(`${environment.api_url}/technical-station/add-progress`, this.progressQuery).subscribe({
+    this.apiService.post(`/technical-station/add-progress`, this.progressQuery).subscribe({
       next: (res: any) => {
         this.progressAdd = true;
         sessionStorage.setItem('progress', JSON.stringify(this.progressQuery));
@@ -116,7 +114,7 @@ export class CandidateDetailModalComponent implements OnInit {
       stationId: 3,
     }
     if (this.progressAdd) {
-      this.http.post(`${environment.api_url}/screening-station/reject/candidate`, this.rejectQuery).subscribe({
+      this.apiService.post(`/screening-station/reject/candidate`, this.rejectQuery).subscribe({
         next: (res: any) => {
           this.showbtn = false;
         },
@@ -124,9 +122,7 @@ export class CandidateDetailModalComponent implements OnInit {
           console.error('Error adding progress', error);
         }
       });
-    } else {
-      this.showWarning = true;
-    }
+    } else this.showWarning = true;  
   }
 
   approveClick(): void {
@@ -134,7 +130,7 @@ export class CandidateDetailModalComponent implements OnInit {
       serviceSeqId: this.serviceId
     }
     if (this.progressAdd) {
-      this.http.post(`${environment.api_url}/technical-station/approve`, this.approveQuery).subscribe({
+      this.apiService.post(`/technical-station/approve`, this.approveQuery).subscribe({
         next: (res: any) => {
           this.showbtn = false;
         },

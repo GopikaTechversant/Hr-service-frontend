@@ -6,6 +6,10 @@ import { SharedModule } from '../shared/shared.module';
 import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
 import { HomeComponent } from './components/home/home.component';
 import { AddUserComponent } from './components/add-user/add-user.component';
+import { MaterialModule } from '../material/material.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { EditComponent } from './components/edit/edit.component';
 const routes: Routes = [
   { path:'',component:HomeComponent,
   children: [
@@ -19,12 +23,17 @@ const routes: Routes = [
   declarations: [
     UserListComponent,
     LeftSidebarComponent,
-    HomeComponent
+    HomeComponent,
+    AddUserComponent,
+    EditComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    SharedModule
+    SharedModule,
+    MaterialModule,
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class UserModule { }

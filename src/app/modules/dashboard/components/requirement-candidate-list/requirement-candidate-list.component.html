@@ -9,7 +9,7 @@
                     <i class="fa fa-search" aria-hidden="true"></i>
                 </span>
             </span>
-            <div class="create-btn c-pointer" (click)="navigate('/dashboard/requirement',false)">
+            <div class="create-btn c-pointer" (click)="navigate('/dashboard/service-requirement',false)">
                 <span class="">Create Requirement</span>
             </div>
         </div>
@@ -41,10 +41,22 @@
             </div>
         </div>
     </div>
-    <div class="pagination d-flex p-10 j-end" *ngIf="candidates_list?.length > 0">
-        <mat-paginator (page)="handlePageEvent($event)" [length]="length" [pageSize]="pageSize"
+
+    <!-- <div class="pagination d-flex p-10 j-end" *ngIf="candidates_list?.length > 0"> -->
+    <!-- <mat-paginator (page)="handlePageEvent($event)" [length]="length" [pageSize]="pageSize"
             [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="pageSizeOptions" [pageIndex]="pageIndex"
             aria-label="Select page">
         </mat-paginator>
-    </div>
+    </div> -->
+</div>
+<div class="page d-flex j-end">
+    <button *ngIf="pageIndex !== 1" class="box c-pointer" (click)="onPageChange(pageIndex - 1)">{{pageIndex -
+        1}}</button>
+    <button class="box current-page c-pointer">{{ pageIndex }}</button>
+    <button class="box c-pointer" (click)="onPageChange(pageIndex + 1)"
+        [disabled]="candidates_list?.length === 0 || !candidates_list">{{pageIndex + 1}}</button>
+    <button class="box c-pointer" (click)="onPageChange(pageIndex + 1)"
+        [disabled]="candidates_list?.length === 0 || !candidates_list"> <img
+            src="assets/images/double-arrow-right-icon.svg" alt="" height="14px" width="14px">
+    </button>
 </div>

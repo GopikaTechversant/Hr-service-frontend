@@ -13,7 +13,6 @@
 .source {
     background: #FFFFFF;
     box-shadow: 0px 4px 7px 0px #0000001F;
-
 }
 
 .source-card {
@@ -62,7 +61,6 @@
     letter-spacing: 0em;
     text-align: left;
     padding-left: 5px;
-
 }
 
 .card-icon {
@@ -118,7 +116,7 @@
 .count-table {
     background-color: #FFFFFF;
     box-shadow: 0px 4px 7px 0px #0000001F;
-   
+
 }
 
 table {
@@ -126,7 +124,7 @@ table {
     border-collapse: collapse;
 }
 
-.table-container{
+.table-container {
     height: calc(100vh - 400px);
     overflow-y: auto;
     overflow-x: hidden;
@@ -169,5 +167,3 @@ tr {
     color: gray;
     padding-bottom: 150px;
 }
-
-

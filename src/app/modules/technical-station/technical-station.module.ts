@@ -11,22 +11,17 @@ const routes: Routes = [
   {
     path: '', component: TechnicalHomeComponent,
     children: [
-      { path: '', component:  TechnicalDetailComponent},
-      
+      { path: '', component:  TechnicalDetailComponent},   
     ]
   },
-
 ]
   
-
-
-
 @NgModule({
   declarations: [
     TechnicalHomeComponent,
     TechnicalSidebarComponent,
     TechnicalDetailComponent,
-    CandidateDetailModalComponent
+    CandidateDetailModalComponent,
   ],
   imports: [
     CommonModule,

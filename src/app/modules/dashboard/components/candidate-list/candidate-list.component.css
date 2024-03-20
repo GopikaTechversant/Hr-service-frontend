@@ -10,7 +10,6 @@
     padding-bottom: 10px;
 }
 
-
 .head {
     padding: 10px;
     justify-content: space-between;
@@ -82,8 +81,7 @@ table {
     flex-grow: 1;
     overflow: auto;
     margin-bottom: 10px;
-    max-height: calc(100% - 60px);
-    max-height: calc(100% - 60px);
+    max-height: calc(100vh - 60px);
 }
 
 tr:nth-child(odd) {
@@ -168,21 +166,22 @@ tr {
     color: #C10A0A;
 }
 
-.box{
+.box {
     height: 26px;
     width: 26px;
     border: none;
     background-color: white;
-    
 }
 
-.page{
-    width: 83px;
-    float: right;
+.box :hover {
+    background: #F0F7FF;
 }
 
-.current-page{
-    /* border: 1px solid black; */
+.page {
+    margin: 10px;
+}
+
+.current-page {
     background-color: #005EC9;
     color: #FFFFFF;
     height: 26px;

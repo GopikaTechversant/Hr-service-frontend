@@ -9,7 +9,7 @@
                 <span *ngIf="!recruiterName">Select Name</span>
                 <span *ngIf="recruiterName">{{recruiterName}}</span>
                 <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
-                <div class="no-close dropdown m-t-6 p-t-10 p-l-6 c-pointer" *ngIf="showRecruiters">
+                <div class="no-close dropdown m-t-6 p-t-10 p-l-6 c-pointer" *ngIf="showRecruiters  && positionId">
                     <div class="p-5" *ngFor="let recruiter of users_list"
                         (click)="selectRecruiter(recruiter.userId,recruiter.userfirstName,recruiter.userlastName)">
                         {{recruiter.userfirstName}} {{recruiter.userlastName}}
@@ -46,7 +46,7 @@
             <div class="input-box p-t-10 p-l-6 c-pointer p-relative" (click)="showDropdown = !showDropdown">
                 <span *ngIf="!positionName">Select Requirement</span>
                 <span *ngIf="positionName" class="p-l-9 p-5">{{positionName}}</span>
-                <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
+                <span *ngIf="!positionName"><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
                 <div class="no-close dropdown m-t-6 p-t-10 p-l-6 c-pointer" *ngIf="showDropdown">
                     <div class="p-5" *ngFor="let position of positionList"
                         (click)="selectPosition(position.requestId,position.requestName)">
@@ -61,7 +61,7 @@
             <span class="label m-b-4">Candidate Name</span>
             <div class="input-box p-t-10 p-l-6 c-pointer p-relative" (click)="showcandidate = !showcandidate">
                 <span *ngIf="!candidateName && !candidate?.candidateFirstName">Select Name</span>
-                <!-- <span *ngIf="candidate?.candidateFirstName"> {{candidate?.candidateFirstName}}</span> -->
+                <span *ngIf="candidate?.candidateFirstName"> {{candidate?.candidateFirstName}}</span>
                 <span *ngIf="candidateName" class="p-l-9 c-pointer p-5">{{candidateName}}</span>
                 <span *ngIf="!candidateName && !candidate?.candidateFirstName"><i
                         class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
@@ -76,7 +76,7 @@
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Candidate Experience</span>
             <div class="input-box p-l-9">
-                <!-- <span *ngIf="candidate?.candidateExperience"> {{candidate?.candidateExperience}}</span> -->
+                <span *ngIf="candidate?.candidateExperience"> {{candidate?.candidateExperience}}</span>
                 <span>{{candidateExperience || ''}}</span>
                 <!-- <input type="text"  [value]="candidateExperience || ''"> -->
             </div>
@@ -98,11 +98,11 @@
 
         <div class="child d-flex m-b-10" #panelDiv>
             <span class="label m-b-4">Interview Panel</span>
-            <div class="input-box p-t-10 p-l-6 c-pointer p-relative" (click)="showPanel = !showPanel; fetchPanel();">
+            <div class="input-box p-t-10 p-l-6 c-pointer p-relative" (click)="showPanel = !showPanel">
                 <span *ngIf="!panelName">Select Name</span>
                 <span *ngIf="panelName" class="p-l-9">{{panelName}}</span>
                 <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
-                <div class="no-close dropdown  p-b-7 p-l-6 c-pointer" *ngIf="showPanel">
+                <div class="no-close dropdown  p-b-7 p-l-6 c-pointer" *ngIf="showPanel && positionId">
                     <div class="p-5" *ngFor="let panel of panel_list "
                         (click)="selectPanel(panel.userId,panel.userfirstName,panel.userlastName)">
                         {{panel.userfirstName}} {{panel.userlastName}}

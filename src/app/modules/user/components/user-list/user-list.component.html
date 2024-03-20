@@ -11,7 +11,6 @@
                     <td>Email</td>
                     <td>Role</td>
                     <td>Status</td>
-                   
                     <td>Actions</td>
                 </tr>
                 <div *ngIf="loader" class="loader-parent">
@@ -19,35 +18,38 @@
                 </div>
                 <ng-container *ngIf="userList?.length > 0">
                     <ng-container *ngFor="let user of userList">
-
                         <tr (click)="onSelect(user)" class="candidate c-pointer"
                             [class.selected]="selectedItem === user">
                             <td>{{user.userId}}</td>
                             <td>{{user.userfirstName}} {{user.userlastName}}</td>
-
                             <td>{{user.userEmail}}</td>
                             <td>{{user.userRole}}</td>
                             <td>{{user.userStatus}}</td>
-                           
-                            <td><img src="assets/images/delete-hr" alt=""></td>
+                            <td>
+                                <div class="d-flex j-center">
+                                    <img src="assets/images/candidate-detail/edit.svg" class="icon" alt="" (click)="update(user.userId)">
+                                    <img src="assets/images/candidate-detail/delete.svg" class="icon" alt="" (click)="delete(user.userId)">
+                                </div>
+                            </td>
                         </tr>
-
                     </ng-container>
                 </ng-container>
                 <div *ngIf="userList?.length === 0 && !loader" class="data">
                     No Data Found
                 </div>
             </table>
+            <div class="page  d-flex j-space m-t-19">
+                <button *ngIf="currentPage !== 1" class="box" (click)="onPageChange(currentPage - 1)">{{currentPage -
+                    1}}</button>
+                <button class="box current-page">{{ currentPage }}</button>
+                <button class="box" (click)="onPageChange(currentPage + 1)"
+                    [disabled]="userList?.length === 0 || !userList">{{currentPage + 1}}</button>
+                <button class="box" (click)="onPageChange(currentPage + 1)" [disabled]="userList?.length === 0 || !userList">
+                    <img src="assets/images/next-arrow.png" alt="" height="18px" width="18px">
+                </button>
+            </div> 
         </div>
-
+       
     </div>
-
-    <div class="page m-r-29">
-        <button class="page-btn" (click)="onPageChange(currentPage - 1)"
-            [disabled]="currentPage === 1">Previous</button>
-        <span>{{ currentPage }}</span>
-        <button class="page-btn" (click)="onPageChange(currentPage + 1)"
-            [disabled]="currentPage === lastPage">Next</button>
-    </div>
-
+   
 </div>
