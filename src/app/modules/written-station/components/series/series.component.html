@@ -3,11 +3,11 @@
     <div class="body m-l-13">
         <div class="candidates-list p-l-19">
             <p class="name p-t-10">Candidates</p>
-            <div *ngIf="candidates_list?.length === 0 || !candidates_list" class="parent-conatiner">
+            <div *ngIf="list?.length === 0 || !list" class="parent-conatiner">
                 <div class="centerd-div"><span class="no-data">No Candidates To Add</span></div>
             </div>
-            <div class="d-flex  flex-wrap" *ngIf="candidates_list?.length > 0">
-                <div *ngFor="let candidate of candidates_list" class=" candidate-box">
+            <div class="d-flex  flex-wrap" *ngIf="list.length > 0">
+                <div *ngFor="let candidate of list" class=" candidate-box">
                     <p class="candidate-name">{{candidate.candidateFirstName}}</p>
                     <div class="info-container">
                         <div class="info-pair">
@@ -52,7 +52,7 @@
                         <p class="m-b-0 p-t-10 p-b-5  series-name-child1 m-r-10">{{series.name}}</p>
                         <div class="  j-center candidates">
                             <!-- <p class="m-b-0 p-t-10 p-b-5  series-name m-r-10">{{series.name}}</p> -->
-                            <div *ngIf="series.candidates && series.candidates?.length > 0" class="d-flex flex-wrap">
+                            <div *ngIf="series.candidates && series.candidates.length > 0" class="d-flex flex-wrap">
                                 <div *ngFor="let candidate of series.candidates" class=" candidate-box-child1">
                                     <p class="candidate-name-child1">{{candidate.candidateFirstName}}</p>
                                     <div class="info-container">

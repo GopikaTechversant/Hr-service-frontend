@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Inject ,Output, EventEmitter } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { environment } from 'src/environments/environments';
-import { ApiService } from 'src/app/services/api.service';
+
 @Component({
   selector: 'app-result',
   templateUrl: './result.component.html',
@@ -14,7 +14,7 @@ export class ResultComponent {
   scoreValue: string = '';
   descriptionValue: string = '';
   constructor(private http: HttpClient,
-    @Inject(MAT_DIALOG_DATA) public data: any,private apiService:ApiService,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<ResultComponent>) {if (data){
       this.examServiceId = data.candidateIds
     } 
@@ -35,7 +35,7 @@ export class ResultComponent {
       examDescription: this.descriptionValue
     }
 
-    this.apiService.post(`/written-station/result`, payload).subscribe((res: any) => {
+    this.http.post(`${environment.api_url}/written-station/result`, payload).subscribe((res: any) => {
       this.dialogRef.close(true);
       this.scoreSubmitted.emit(parseInt(this.scoreValue, 10));
     }, err => {

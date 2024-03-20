@@ -7,7 +7,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ResultComponent } from '../result/result.component';
 import { AssignSeriesComponent } from '../assign-series/assign-series.component';
 import { ToastrServices } from 'src/app/services/toastr.service';
-import { ApiService } from 'src/app/services/api.service';
 @Component({
   selector: 'app-series',
   templateUrl: './series.component.html',
@@ -57,54 +56,54 @@ export class SeriesComponent implements OnInit {
   candidateMarkDetail: any;
   questionAssigned: boolean = false;
   droppedAllowed: boolean = false;
-  // list: any[] = [
-  //   {
-  //     serviceId: 400,
-  //     candidateFirstName: 'Akash',
-  //     designation: 'Software Engineer',
-  //     team: 'Coldfusion',
-  //     candidateLastName: 'Python',
-  //     candidateEmail: 'john@gmail.com',
-  //     candidateId: 501
-  //   },
-  //   {
-  //     serviceId: 401,
-  //     candidateFirstName: 'Sam',
-  //     designation: 'Software Engineer',
-  //     team: 'Coldfusion',
-  //     candidateLastName: 'Python',
-  //     candidateEmail: 'john@gmail.com',
-  //     candidateId: 502
-  //   },
-  //   {
-  //     serviceId: 402,
-  //     candidateFirstName: 'Arnab',
-  //     designation: 'Software Engineer',
-  //     team: 'Coldfusion',
-  //     candidateLastName: 'Python',
-  //     candidateEmail: 'john@gmail.com',
-  //     candidateId: 503
-  //   },
-  //   {
-  //     serviceId: 403,
-  //     candidateFirstName: 'Emma',
-  //     designation: 'Software Engineer',
-  //     team: 'Coldfusion',
-  //     candidateLastName: 'Python',
-  //     candidateEmail: 'john@gmail.com',
-  //     candidateId: 504
-  //   },
-  //   {
-  //     serviceId: 404,
-  //     candidateFirstName: 'Aysha',
-  //     designation: 'Software Engineer',
-  //     team: 'Coldfusion',
-  //     candidateLastName: 'Python',
-  //     candidateEmail: 'john@gmail.com',
-  //     candidateId: 505
-  //   },
-  // ];
-  constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices,private apiService:ApiService) {
+  list: any[] = [
+    {
+      serviceId: 400,
+      candidateFirstName: 'Akash',
+      designation: 'Software Engineer',
+      team: 'Coldfusion',
+      candidateLastName: 'Python',
+      candidateEmail: 'john@gmail.com',
+      candidateId: 501
+    },
+    {
+      serviceId: 401,
+      candidateFirstName: 'Sam',
+      designation: 'Software Engineer',
+      team: 'Coldfusion',
+      candidateLastName: 'Python',
+      candidateEmail: 'john@gmail.com',
+      candidateId: 502
+    },
+    {
+      serviceId: 402,
+      candidateFirstName: 'Arnab',
+      designation: 'Software Engineer',
+      team: 'Coldfusion',
+      candidateLastName: 'Python',
+      candidateEmail: 'john@gmail.com',
+      candidateId: 503
+    },
+    {
+      serviceId: 403,
+      candidateFirstName: 'Emma',
+      designation: 'Software Engineer',
+      team: 'Coldfusion',
+      candidateLastName: 'Python',
+      candidateEmail: 'john@gmail.com',
+      candidateId: 504
+    },
+    {
+      serviceId: 404,
+      candidateFirstName: 'Aysha',
+      designation: 'Software Engineer',
+      team: 'Coldfusion',
+      candidateLastName: 'Python',
+      candidateEmail: 'john@gmail.com',
+      candidateId: 505
+    },
+  ];
+  constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
     });
@@ -116,7 +115,7 @@ export class SeriesComponent implements OnInit {
     this.newSeriesCreated = false;
   }
   fetchCandidates(): void {
-    this.apiService.get(`/screening-station/list-batch/${this.requestId}?station=2`).subscribe((res: any) => {
+    this.http.get(`${environment.api_url}/screening-station/list-batch/${this.requestId}?station=2`).subscribe((res: any) => {
       this.candidates_list = res.candidates;
       console.log(" this.candidates_list ", this.candidates_list);
 
@@ -128,16 +127,16 @@ export class SeriesComponent implements OnInit {
     });
   }
   fetchQuestions(): void {
-    this.apiService.get(`/written-station/questions`).subscribe((data: any) => {
+    this.http.get(`${environment.api_url}/written-station/questions`).subscribe((data: any) => {
       this.questions_list = data.data.filter((question: any) => !this.assignedQuestionIds.includes(question.questionId));
     });
   }
   fetchCandidatesWithSeries(): void {
-    this.apiService.get(`/screening-station/list-batch/${this.requestId}?station=2`).subscribe((res => {
+    this.http.get(`${environment.api_url}/screening-station/list-batch/${this.requestId}?station=2`).subscribe((res => {
     }))
   }
   fetchCandidatesWithSeriess(): void {
-    this.apiService.get(`/written-station/questionBatchList/${this.requestId}`).subscribe((res: any) => {
+    this.http.get(`${environment.api_url}/written-station/questionBatchList/${this.requestId}`).subscribe((res: any) => {
       this.series_list = res.data;
       console.log(" this.series_list", this.series_list);
       res?.data.forEach((data: any) => {
@@ -174,7 +173,7 @@ export class SeriesComponent implements OnInit {
       serviceId: this.requestId,
       averageScore: averageScore
     };
-    this.apiService.post(`/written-station/approve`, payload).subscribe((res: any) => {
+    this.http.post(`${environment.api_url}/written-station/approve`, payload).subscribe((res: any) => {
       alert("approved");
     })
   }
@@ -223,7 +222,7 @@ export class SeriesComponent implements OnInit {
       questionId: this.selectedQuestionId,
       questionServiceId: this.serviceId
     }
-    this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res: any) => {
+    this.http.post(`${environment.api_url}/written-station/assign-question`, requestData).subscribe((res: any) => {
       this.questionAssigned = true;
       this.fetchCandidatesWithSeriess();
       const index = this.questions_list.findIndex((question: any) => question.questionId === this.selectedQuestionId);
@@ -235,7 +234,7 @@ export class SeriesComponent implements OnInit {
     )
   }
   openAssignModal(candidate: any, series: any) {
-    if (this.series_list?.length == 0) {
+    if (this.series_list.length == 0) {
       const dialogRef = this.dialog.open(AssignSeriesComponent, {
         height: '150px',
         width: '300px',
@@ -251,7 +250,7 @@ export class SeriesComponent implements OnInit {
           const selectedSeriesObj = this.series_list.find((s: any) => s.name === selectedSeries);
           if (selectedSeriesObj) {
             // remove the candidate from the candidate list
-            this.candidates_list = this.candidates_list.filter((c:any) => c.candidateId !== candidate.candidateId);
+            this.list = this.list.filter(c => c.candidateId !== candidate.candidateId);
             // remove the candidate from the previous series candidate array
             this.series_list.forEach((s: any) => {
               if (s.candidates && s !== selectedSeriesObj) {
@@ -273,8 +272,6 @@ export class SeriesComponent implements OnInit {
             });
 
             this.series_list = [...this.series_list];
-            console.log("this.series_list",this.series_list);
-            
           } else {
             console.error('Selected series not found');
           }
