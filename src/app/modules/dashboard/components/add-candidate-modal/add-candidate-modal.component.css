@@ -108,7 +108,7 @@
 }
 
 .skill-drop-down {
-    width: 327px;
+    width: 100%;
 }
 
 .cancel-btn {
@@ -161,7 +161,7 @@
     overflow-y: auto;
     font-size: 14px;
     font-weight: 400;
-    width: 292px;
+    width: 100%;
     padding: 5px;
     border-radius: 4px;
     position: absolute;
@@ -186,7 +186,7 @@
 .input-search {
     outline: none;
     height: 34px;
-    width: 200px;
+    width: 83%;
     border-radius: 5px;
     background: #FAFAFA;
     outline: none;

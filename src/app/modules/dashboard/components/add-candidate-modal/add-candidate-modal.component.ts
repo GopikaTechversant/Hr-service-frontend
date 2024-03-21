@@ -54,7 +54,9 @@ export class AddCandidateModalComponent implements OnInit {
       candidateEducation: [null, Validators.required],
       candidateCurrentSalary: [null, Validators.required],
       candidateExpectedSalary: [null, Validators.required],
-      candidateAddress: [null, Validators.required],
+      candidateCity: [null, Validators.required],
+      candidateDistrict: [null, Validators.required],
+      candidateState: [null, Validators.required],
       candidateEmail: [null, Validators.required],
       candidateMobileNo: [null, Validators.required],
       resumeSourceId: [null, Validators.required]
@@ -137,9 +139,7 @@ export class AddCandidateModalComponent implements OnInit {
 
     const formdata = new FormData();
     for (const key in candidateDetails) {
-      if (candidateDetails[key]) {
-        formdata.append(key, candidateDetails[key]);
-      }
+      if (candidateDetails[key]) formdata.append(key, candidateDetails[key]);  
     }
     formdata.append('candidateCreatedby', this.candidateCreatedby);
     formdata.append('candidateResume', this.selectedFile);

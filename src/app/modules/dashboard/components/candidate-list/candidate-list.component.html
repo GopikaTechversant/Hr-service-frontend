@@ -31,7 +31,7 @@
             </tr>
             <ng-container *ngIf="candidateList?.length > 0">
                 <tr class="c-pointer details" *ngFor="let item of candidateList">
-                    <td>{{item?.candidateFirstName}} {{item?.candidateLastName}}</td>
+                    <td>{{item?.candidateFirstName | titlecase}} {{item?.candidateLastName | titlecase}}</td>
                     <td>{{item?.candidateEmail}}</td>
                     <td>{{item?.candidateMobileNo}}</td>
                     <td>{{item?.candidatePreviousOrg}}</td>
@@ -39,7 +39,7 @@
                     <td>{{item?.candidateExperience}} years</td>
                     <td>{{item?.candidateCurrentSalary}}</td>
                     <td>{{item?.candidateEducation}}</td>
-                    <td>{{item?.candidateSkill.length > 0 ? item?.candidateSkill[0]?.skills?.skillName : 'N/A'}}</td>
+                    <td>{{item?.candidateSkill.length > 0 ? (item?.candidateSkill[0]?.skills?.skillName | titlecase ):'N/A'}}</td>
                     <td>
                         <i class="fa fa-pencil-square-o p-r-5 icon-color" aria-hidden="true"
                             (click)="edit(item?.candidateId)"></i>

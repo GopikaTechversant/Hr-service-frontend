@@ -9,10 +9,10 @@
                 <span *ngIf="!recruiterName">Select Name</span>
                 <span *ngIf="recruiterName">{{recruiterName}}</span>
                 <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
-                <div class="no-close dropdown m-t-6 p-t-10 p-l-6 c-pointer" *ngIf="showRecruiters  && positionId">
+                <div class="no-close dropdown m-t-6 p-t-10 p-l-6 c-pointer" *ngIf="showRecruiters">
                     <div class="p-5" *ngFor="let recruiter of users_list"
                         (click)="selectRecruiter(recruiter.userId,recruiter.userfirstName,recruiter.userlastName)">
-                        {{recruiter.userfirstName}} {{recruiter.userlastName}}
+                        {{recruiter?.userfirstName}} {{recruiter?.userlastName}}
                     </div>
                 </div>
             </div>
@@ -102,7 +102,7 @@
                 <span *ngIf="!panelName">Select Name</span>
                 <span *ngIf="panelName" class="p-l-9">{{panelName}}</span>
                 <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
-                <div class="no-close dropdown  p-b-7 p-l-6 c-pointer" *ngIf="showPanel && positionId">
+                <div class="no-close dropdown  p-b-7 p-l-6 c-pointer" *ngIf="showPanel">
                     <div class="p-5" *ngFor="let panel of panel_list "
                         (click)="selectPanel(panel.userId,panel.userfirstName,panel.userlastName)">
                         {{panel.userfirstName}} {{panel.userlastName}}

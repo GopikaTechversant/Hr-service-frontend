@@ -71,7 +71,8 @@ export class InterviewDetailsComponent implements OnInit {
       this.positionName = this.candidate['reqServiceRequest.requestName'];
       this.positionId = this.candidate?.candidatesAddingAgainst;
       this.serviceId = '';
-      this.candidateId = this.candidate?.candidateId
+      this.candidateId = this.candidate?.candidateId;
+      this.currentCompany = this.candidate?.candidatePreviousOrg;
       this.fetchUsers();
       this.fetchCandidates();
       this.fetchPanel();
