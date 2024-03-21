@@ -12,14 +12,6 @@ import { ApiService } from 'src/app/services/api.service';
   selector: 'app-series',
   templateUrl: './series.component.html',
   styleUrls: ['./series.component.css'],
-  animations: [
-    trigger('toggleAnimation', [
-      state('visible', style({ width: '25%' })),
-      state('hidden', style({ width: '0', transform: 'translateX(100%)' })),
-      transition('visible => hidden', animate('.9s ease-out')),
-      transition('hidden => visible', animate('.5s ease-in-out')),
-    ]),
-  ],
 })
 export class SeriesComponent implements OnInit {
   series_list: any = [];
@@ -57,54 +49,7 @@ export class SeriesComponent implements OnInit {
   candidateMarkDetail: any;
   questionAssigned: boolean = false;
   droppedAllowed: boolean = false;
-  // list: any[] = [
-  //   {
-  //     serviceId: 400,
-  //     candidateFirstName: 'Akash',
-  //     designation: 'Software Engineer',
-  //     team: 'Coldfusion',
-  //     candidateLastName: 'Python',
-  //     candidateEmail: 'john@gmail.com',
-  //     candidateId: 501
-  //   },
-  //   {
-  //     serviceId: 401,
-  //     candidateFirstName: 'Sam',
-  //     designation: 'Software Engineer',
-  //     team: 'Coldfusion',
-  //     candidateLastName: 'Python',
-  //     candidateEmail: 'john@gmail.com',
-  //     candidateId: 502
-  //   },
-  //   {
-  //     serviceId: 402,
-  //     candidateFirstName: 'Arnab',
-  //     designation: 'Software Engineer',
-  //     team: 'Coldfusion',
-  //     candidateLastName: 'Python',
-  //     candidateEmail: 'john@gmail.com',
-  //     candidateId: 503
-  //   },
-  //   {
-  //     serviceId: 403,
-  //     candidateFirstName: 'Emma',
-  //     designation: 'Software Engineer',
-  //     team: 'Coldfusion',
-  //     candidateLastName: 'Python',
-  //     candidateEmail: 'john@gmail.com',
-  //     candidateId: 504
-  //   },
-  //   {
-  //     serviceId: 404,
-  //     candidateFirstName: 'Aysha',
-  //     designation: 'Software Engineer',
-  //     team: 'Coldfusion',
-  //     candidateLastName: 'Python',
-  //     candidateEmail: 'john@gmail.com',
-  //     candidateId: 505
-  //   },
-  // ];
-  constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices,private apiService:ApiService) {
+  constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
     });
@@ -207,6 +152,8 @@ export class SeriesComponent implements OnInit {
   selectQuestion(id: any, name: any): void {
     if (this.activeSeries && this.selectedQuestionId !== id) {
       this.selectedQuestionId = id;
+      console.log(" this.selectedQuestionId", this.selectedQuestionId);
+      
       this.selectedQuestionName = name;
       this.selectedQuestions[this.activeSeries.name] = { id, name };
       this.activeSeries.questions = [name];
@@ -248,10 +195,13 @@ export class SeriesComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe((selectedSeries: string) => {
         if (selectedSeries) {
-          const selectedSeriesObj = this.series_list.find((s: any) => s.name === selectedSeries);
+          console.log("selectedSeries qqqqq", selectedSeries);
+          const selectedSeriesObj = this.series_list.find((s: any) => s.name === selectedSeries || s.questionName === selectedSeries)
           if (selectedSeriesObj) {
+            console.log("selectedSeriesObj",selectedSeriesObj);
+            
             // remove the candidate from the candidate list
-            this.candidates_list = this.candidates_list.filter((c:any) => c.candidateId !== candidate.candidateId);
+            this.candidates_list = this.candidates_list.filter((c: any) => c.candidateId !== candidate.candidateId);
             // remove the candidate from the previous series candidate array
             this.series_list.forEach((s: any) => {
               if (s.candidates && s !== selectedSeriesObj) {
@@ -259,7 +209,7 @@ export class SeriesComponent implements OnInit {
               }
             });
             //add the candidates to the selected series 
-            if (!candidate.progressId) {
+            if (!candidate.progressId || this.questionAssigned ) {
               selectedSeriesObj.candidates = selectedSeriesObj.candidates || [];
               selectedSeriesObj.candidates.push(candidate);
             }
@@ -273,8 +223,19 @@ export class SeriesComponent implements OnInit {
             });
 
             this.series_list = [...this.series_list];
-            console.log("this.series_list",this.series_list);
-            
+            console.log("this.series_list", this.series_list);
+            if(selectedSeriesObj.questionName) {
+              const requestData = {
+                questionAssignee: null,
+                questionId: selectedSeriesObj.questionId,
+                questionServiceId: this.serviceId
+              }
+              this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res:any) => {
+                this.questionAssigned = true;
+                this.fetchCandidatesWithSeriess();
+              })
+            }
+
           } else {
             console.error('Selected series not found');
           }

@@ -4,7 +4,7 @@
         <div class="candidates-list p-l-19">
             <p class="name p-t-10">Candidates</p>
             <div *ngIf="candidates_list?.length === 0 || !candidates_list" class="parent-conatiner">
-                <div class="centerd-div"><span class="no-data">No Candidates To Add</span></div>
+                <div class="centerd-div m-b-29"><span class="no-data">No Candidates To Add</span></div>
             </div>
             <div class="d-flex  flex-wrap" *ngIf="candidates_list?.length > 0">
                 <div *ngFor="let candidate of candidates_list" class=" candidate-box">
@@ -49,6 +49,7 @@
                     <div class=" flex-column  j-center c-pointer" (click)="seriesBoxClick(series)"
                         [ngClass]="{'active-series' : series?.active}">
                         <!-- <p class="m-b-0 p-t-10 p-b-5  series-name-child1 m-r-10">Series 1</p> -->
+                        <p *ngIf="series.questionName" class="m-b-0 p-t-10 p-b-5  series-name-child1 m-r-10">{{series.questionName}}</p>
                         <p class="m-b-0 p-t-10 p-b-5  series-name-child1 m-r-10">{{series.name}}</p>
                         <div class="  j-center candidates">
                             <!-- <p class="m-b-0 p-t-10 p-b-5  series-name m-r-10">{{series.name}}</p> -->
@@ -94,10 +95,10 @@
                 <button class="series-btn f-s-14" (click)="createSeries()">Create Series</button>
             </div>
             <div *ngIf="series_list?.length === 0" class="parent-conatiner">
-                <div class="centerd-div"><span class="no-data">Series Are'nt Created Yet!</span></div>
+                <div class="centerd-div" ><span class="no-data">Series Are'nt Created Yet!</span></div>
             </div>
             <div *ngFor="let series of series_list" class="series-list">
-                <div class="c-pointer series-box" (click)="seriesBoxClick(series)"
+                <div class="c-pointer series-box" (click)="seriesBoxClick(series)"  *ngIf="!selectedQuestions[series.name] && newSeriesCreated && !series.questionId"
                     [ngClass]="{'active-series' : series?.active}">
                     <div class=" p-t-10 series-name-container">
                         <p class="m-b-0  series-name">
@@ -116,9 +117,9 @@
                                 <div *ngIf="selectedQuestions[series.name]" class="choose f-s-14">
                                     {{ selectedQuestions[series.name].name }}
                                 </div>
-                                <div *ngIf="refreshed && !selectedQuestions[series.name] && series.questionId"
+                                <!-- <div *ngIf="refreshed && !selectedQuestions[series.name] && series.questionId"
                                     class="choose f-s-14">{{
-                                    series.questionName }}</div>
+                                    series.questionName }}</div> -->
                             </div>
                             <div class="no-close  s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub p-r-17"><i
                                     class="no-close s-list fa fa-chevron-down s-text"></i>

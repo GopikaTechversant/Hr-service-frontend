@@ -32,7 +32,7 @@ export class ServiceRequestComponent implements OnInit {
   stationId: any;
   stationName: any;
   selectedstations: any[] = [];
-  selectedStationsId: any[] = [];
+  selectedStationsId: any[] = [1,5];
   constructor(private toastr: ToastrServices, private apiService: ApiService) { }
 
   ngOnInit(): void { }

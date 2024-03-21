@@ -19,6 +19,8 @@ export class AssignSeriesComponent implements OnInit {
   }
   selectSeries(id: any, name: any): void {
     this.selectedSeries = name;
+    console.log("this.selectedSeries",this.selectedSeries);
+    
   }
   cancel(): void {
     this.dialogRef.close();

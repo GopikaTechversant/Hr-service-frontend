@@ -25,7 +25,7 @@
     height: 281px;
     border: 1px solid #575F6E;
     border-radius: 2px;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
 }
 
 .no-data {
@@ -41,7 +41,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 280px;
+    height: 225px;
+    overflow-y: scroll;
 }
 
 .child1 {
