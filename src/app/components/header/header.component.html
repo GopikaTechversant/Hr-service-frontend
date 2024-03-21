@@ -24,11 +24,13 @@
       <span class="f-w-500 user-name t-dark-blue-color"> {{ currentUser?.charAt(0) ? (currentUser?.charAt(0) |
         uppercase): '' }}</span>
     </div>
-    <div *ngIf="dropDown" class="drop-down p-12 d-flex p-absolute">
+    <div *ngIf="dropDown" class="drop-down d-flex p-absolute">
       <div class="station" *ngFor="let station of stationsList">
-        <div class="c-pointer" (click)="navigate(station)">{{station.stationName}}</div>
+        <div class="c-pointer p-l-20 p-10" (click)="navigate(station)">{{station.stationName}}</div>
       </div>
-      <div class="c-pointer f-s-16 m-l-15" (click)="logout()">Logout</div>
+      <div class="station" (click)="logout()">
+        <span class="c-pointer p-l-20 p-10">Logout</span>
+      </div>
     </div>
   </div>
 </div>

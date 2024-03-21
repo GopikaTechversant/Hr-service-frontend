@@ -184,10 +184,8 @@
                             </div>
                             <ul>
                                 <li *ngFor="let skill of selectedPrimarySkills" class="p-4">
-                                    {{skill?.name}}
-
-                                    <i class="fa fa-trash-o  delete-color" aria-hidden="true"
-                                        (click)="removeSkill(skill, 'primary')"></i>
+                                    {{skill?.name | titlecase}}
+                                    <i class="fa fa-trash-o  delete-color" aria-hidden="true" (click)="removeSkill(skill, 'primary')"></i>
                                 </li>
                             </ul>
                         </div>
@@ -212,9 +210,8 @@
                             </div>
                             <ul>
                                 <li *ngFor="let skill of selectedSecondarySkills" class="p-4">
-                                    {{skill?.name}}
-                                    <i class="fa fa-trash-o  delete-color" aria-hidden="true"
-                                        (click)="removeSkill(skill, 'secondary')"></i>
+                                    {{skill?.name | titlecase}}
+                                    <i class="fa fa-trash-o  delete-color" aria-hidden="true" (click)="removeSkill(skill, 'secondary')"></i>
                                 </li>
                             </ul>
                         </div>

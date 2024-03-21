@@ -35,14 +35,22 @@
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Gender<span class="required">*</span></span>
                 <span class="d-flex gender c-pointer">
-                    <input type="radio" id="Male" name="candidateGender" value="Male" formControlName="candidateGender">
-                    <label for="Male" class="p-t-5">Male</label>
-                    <input type="radio" id="Female" name="candidateGender" value="Female"
-                        formControlName="candidateGender">
-                    <label for="Female" class="p-t-5">Female</label>
-                    <input type="radio" id="Others" name="candidateGender" value="Others"
-                        formControlName="candidateGender">
-                    <label for="Others" class="p-t-5">Others</label>
+                    <span class="p-r-20">
+                        <input type="radio" id="Male" name="candidateGender" value="Male"
+                            formControlName="candidateGender">
+                        <label for="Male" class="p-t-5 p-l-10">Male</label>
+                    </span>
+                    <span class="p-r-20">
+                        <input type="radio" id="Female" name="candidateGender" value="Female"
+                            formControlName="candidateGender">
+                        <label for="Female" class="p-t-5 p-l-10">Female</label>
+                    </span>
+                    <span class="p-r-20">
+                        <input type="radio" id="Others" name="candidateGender" value="Others"
+                            formControlName="candidateGender">
+                        <label for="Others" class="p-t-5 p-l-10">Others</label>
+                    </span>
+
                 </span>
                 <div
                     *ngIf="candidateForm.get('candidateGender')?.hasError('required') && candidateForm.get('candidateGender')?.touched">
@@ -70,15 +78,15 @@
         <div class="d-flex   parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">City</span>
-                <input type="text" class="input-box" formControlName="candidateExperience">
+                <input type="text" class="input-box" formControlName="candidateCity">
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">District</span>
-                <input type="text" class="input-box" formControlName="candidatePreviousOrg">
+                <input type="text" class="input-box" formControlName="candidateDistrict">
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">State</span>
-                <input type="text" class="input-box" formControlName="candidatePreviousDesignation">
+                <input type="text" class="input-box" formControlName="candidateState">
             </div>
         </div>
         <div class="d-flex   parent">
@@ -184,17 +192,19 @@
                         <span class="p-l-20">Selected Primary Skills</span>
                         <ul>
                             <li *ngFor="let skill of selectedPrimarySkills" class="p-4">
-                                {{ skill.name }}
+                                {{ skill?.name | titlecase}}
                                 <i class="fa fa-trash-o  delete-color" aria-hidden="true"
                                     (click)="removeSkill(skill, 'primary')"></i>
                             </li>
                         </ul>
                     </div>
+                </div>
+                <div class="child-skill d-flex m-b-10">
                     <div *ngIf="selectedSecondarySkills.length > 0">
                         <span class="p-l-20">Selected Secondary Skills</span>
                         <ul>
                             <li *ngFor="let skill of selectedSecondarySkills" class="p-4">
-                                {{ skill.name }}
+                                {{ skill?.name | titlecase}}
                                 <i class="fa fa-trash-o  delete-color" aria-hidden="true"
                                     (click)="removeSkill(skill, 'secondary')"></i>
                             </li>

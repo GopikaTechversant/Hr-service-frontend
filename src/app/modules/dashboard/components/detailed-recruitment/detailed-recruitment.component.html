@@ -43,21 +43,25 @@
             <ng-container>
                 <ng-container *ngFor="let item of  candidateList">
                     <tr class="c-pointer">
-                        <td>{{ item['candidate.candidateFirstName']}}</td>
-                        <td>{{item['reqService.sericeNam']}}</td>
-                        <td>{{item['candidate.candidateExperience']}}</td>
-                        <td>Abcde</td>
-                        <td>{{item['reqinterviewDetail.interviewLocation']}}</td>
-                        <td>{{item['candidate.candidateNoticePeriodByDays']}}</td>
-                        <td><span>{{item?.interviewTime | date: 'dd/MM/YYY'}}</span><br><span class="blue">{{item?.interviewTime | date: 'hh:mm a'}}</span>
+                        <td>
+                            {{item['candidate.candidateFirstName'] ? item['candidate.candidateFirstName'] : ' '}}
+                            {{item['candidate.candidateLastName']}}
                         </td>
-                        <td>{{item['reqUser.userfirstName']}}</td>
-                        <td>{{item['reqinterviewDetail.interviewMode']}}</td>
+                        <td>{{item['reqService.sericeName']}}</td>
+                        <td>{{item['candidate.candidateExperience'] ? item['candidate.candidateExperience'] : 'Fresher'}}</td>
+                        <td>Abcde</td>
+                        <td>{{item['reqinterviewDetail.interviewLocation'] ? item['reqinterviewDetail.interviewLocation'] : 'NIL'}}</td>
+                        <td>{{item['candidate.candidateNoticePeriodByDays'] ? item['candidate.candidateNoticePeriodByDays'] :'NIL'}}</td>
+                        <td>
+                            <span>{{item?.interviewTime | date: 'dd/MM/YYY'}}</span><br><span class="blue">{{item?.interviewTime | date: 'hh:mm a'}}</span>
+                        </td>
+                        <td>{{item['reqUser.userfirstName'] ? item['reqUser.userfirstName'] : 'NIL'}}</td>
+                        <td>{{item['reqinterviewDetail.interviewMode'] ? item['reqinterviewDetail.interviewMode'] : 'NIL'}}</td>
                     </tr>
                 </ng-container>
             </ng-container>
             <div *ngIf="candidateList?.length === 0" class="no-data">No Data Found</div>
-        </table>
+        </table>    
     </div>
     <div class="page  d-flex j-space m-r-10">
         <button *ngIf="currentPage !== 1" class="box" (click)="onPageChange(currentPage - 1)">{{currentPage -1}}</button>

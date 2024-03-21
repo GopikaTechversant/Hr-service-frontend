@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
+import { ToastrServices } from 'src/app/services/toastr.service';
 @Component({
   selector: 'app-candidate-detail-modal',
   templateUrl: './candidate-detail-modal.component.html',
@@ -8,15 +9,11 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class CandidateDetailModalComponent implements OnInit {
   candidateDetails: any;
-  selectedItem: boolean = false;
   showRequest: boolean = false;
-  showcandidates: boolean = false;
-  showProgress: boolean = true;
-  showbtn: boolean = false;
+  progessAdded: boolean = false;
   scoreValue: string = '';
   descriptionValue: string = '';
   skillValue: string = '';
-  progressAdd: boolean = false;
   progressQuery = {
     progressAssignee: "",
     progressSkill: "",
@@ -26,67 +23,30 @@ export class CandidateDetailModalComponent implements OnInit {
   }
   serviceId: any = null
   progressAssignee: any = null;
-  showSkill: boolean = false;
-  showScore: boolean = false;
-  showDescription: boolean = false;
-  rejectQuery = {
-    serviceId: "",
-    stationId: 3
-  }
-  approveQuery = {
-    serviceSeqId: 3
-  };
-  statonId: number = 0;
-  showWarning: boolean = false;
+  stationId: any;
 
-  constructor(public dialogRef: MatDialogRef<CandidateDetailModalComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private apiService: ApiService) {
+  constructor(public dialogRef: MatDialogRef<CandidateDetailModalComponent>, private apiService: ApiService, private tostr: ToastrServices,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data) {
-      console.log(data);
       this.candidateDetails = data?.candidateDetails;
+      this.stationId = data?.stationId;
+      this.serviceId = this.candidateDetails?.serviceId;
+      if (data?.progressStatus > 0) this.progessAdded = true;
     }
-    this.dialogRef.updateSize('50%', '70%')
+    this.dialogRef.updateSize('60vw', '90vh');
   }
 
-  ngOnInit(): void {
-    this.progressAdd = false;
-    this.serviceId = this.candidateDetails.serviceId;
-    this.statonId = this.candidateDetails.serviceServiceId;
-    this.progressAssignee = this.candidateDetails.serviceAssignee;
-    if (this.candidateDetails.serviceStatus === 'pending') this.showbtn = true;
-    if (this.candidateDetails.serviceStatus !== 'pending') this.showbtn = false;
-    this.skillValue = '';
-    this.scoreValue = '';
-    this.descriptionValue = '';
-    this.progressQuery = {
-      progressAssignee: this.progressAssignee ? this.progressAssignee : '16',
-      progressSkill: "",
-      progressServiceId: this.serviceId || 0,
-      progressScore: "",
-      progressDescription: ""
-    };
-    this.showSkill = false;
-    this.showScore = false;
-    this.showDescription = false;
-    const progress = sessionStorage.getItem('progress');
-    if (progress) {
-      this.progressQuery = JSON.parse(progress)
-      if (this.progressQuery.progressAssignee === this.candidateDetails.serviceAssignee &&
-        this.progressQuery.progressServiceId === this.candidateDetails.serviceId) {
-        this.showSkill = !!this.progressQuery.progressSkill;
-        this.showScore = !!this.progressQuery.progressScore;
-        this.showDescription = !!this.progressQuery.progressDescription;
-        this.progressAdd = !!this.progressQuery.progressSkill && !!this.progressQuery.progressScore && !!this.progressQuery.progressDescription;
-      }
-    }
+  ngOnInit(): void { }
+
+  closeDialog(): void {
+    this.dialogRef.close();
   }
 
   addProgress(): void {
     const skillElement = document.getElementById('skill') as HTMLInputElement;
     this.skillValue = skillElement ? skillElement.value : '';
-
     const scoreElement = document.getElementById('score') as HTMLInputElement;
     this.scoreValue = scoreElement ? scoreElement.value : '';
-
     const descriptionElement = document.getElementById('description') as HTMLInputElement;
     this.descriptionValue = descriptionElement ? descriptionElement.value : '';
 
@@ -97,50 +57,55 @@ export class CandidateDetailModalComponent implements OnInit {
       progressScore: this.scoreValue,
       progressDescription: this.descriptionValue
     };
-    this.apiService.post(`/technical-station/add-progress`, this.progressQuery).subscribe({
-      next: (res: any) => {
-        this.progressAdd = true;
-        sessionStorage.setItem('progress', JSON.stringify(this.progressQuery));
-      },
-      error: (error) => {
-        console.error('Error adding progress', error);
-      }
-    });
-  }
-
-  rejectClick(): void {
-    this.rejectQuery = {
-      serviceId: this.serviceId,
-      stationId: 3,
-    }
-    if (this.progressAdd) {
-      this.apiService.post(`/screening-station/reject/candidate`, this.rejectQuery).subscribe({
+    let baseUrl = this.stationId === '3' ? `/technical-station` : this.stationId === '4' ? `/technical-station-two` : '';
+    if (baseUrl) {
+      this.apiService.post(`${baseUrl}/add-progress`, this.progressQuery).subscribe({
         next: (res: any) => {
-          this.showbtn = false;
+          this.tostr.success('Progress added successfully');
+          this.closeDialog();
         },
         error: (error) => {
-          console.error('Error adding progress', error);
-        }
-      });
-    } else this.showWarning = true;  
-  }
-
-  approveClick(): void {
-    this.approveQuery = {
-      serviceSeqId: this.serviceId
-    }
-    if (this.progressAdd) {
-      this.apiService.post(`/technical-station/approve`, this.approveQuery).subscribe({
-        next: (res: any) => {
-          this.showbtn = false;
-        },
-        error: (error) => {
-          console.error('Error adding progress', error);
+          this.tostr.warning('Unable to Update Progress');
         }
       });
     } else {
-      this.showWarning = true;
+      this.tostr.error('Invalid operation');
     }
   }
+
+
+  rejectClick(): void {
+    let payload = {
+      serviceId: this.serviceId,
+      stationId: 3,
+    }
+    this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
+      next: (res: any) => {
+        this.closeDialog();
+      },
+      error: (error) => {
+        this.tostr.error('Error adding progress');
+      }
+    });
+
+  }
+
+  approveClick(): void {
+    let baseUrl = '';
+    if (this.stationId === '3') baseUrl = `/technical-station`;
+    if (this.stationId === '4') baseUrl = `/technical-station-two`;
+    if (baseUrl) {
+      const payload = { serviceSeqId: this.serviceId };
+      this.apiService.post(`${baseUrl}/approve`, payload).subscribe({
+        next: (res: any) => {
+          this.tostr.success('Approval successful');
+          this.closeDialog();
+        },
+        error: (error) => this.tostr.error('Error during approval')
+      });
+    } else this.tostr.error('Invalid operation');
+
+  }
+
 
 }
