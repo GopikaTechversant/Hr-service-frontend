@@ -120,7 +120,7 @@ export class SeriesComponent implements OnInit {
       averageScore: averageScore
     };
     this.apiService.post(`/written-station/approve`, payload).subscribe((res: any) => {
-      alert("approved");
+      this.tostr.success('Approved');
     })
   }
   resultClick(candidate: any, id: any): void {
@@ -191,7 +191,7 @@ export class SeriesComponent implements OnInit {
       const dialogRef = this.dialog.open(AssignSeriesComponent, {
         height: '265px',
         width: '477px',
-        data: { seriesList: this.series_list }
+        data: { seriesList: this.series_list ,candidateServiceId:candidate?.serviceId}
       });
       dialogRef.afterClosed().subscribe((selectedSeries: string) => {
         if (selectedSeries) {
@@ -237,7 +237,7 @@ export class SeriesComponent implements OnInit {
             }
 
           } else {
-            console.error('Selected series not found');
+            this.tostr.warning('There is no selected series');
           }
         }
       })

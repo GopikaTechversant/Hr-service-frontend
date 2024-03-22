@@ -60,12 +60,16 @@ export class InterviewDetailsComponent implements OnInit {
   seachKeyword: string = '';
   candidatesList: any;
   candidate: any;
-
+  modeList:any[]=[];
+  selectedModeName:string='';
+  selectedModeId:any;
+  showModeList:boolean = false;
   constructor(private datePipe: DatePipe,private http: HttpClient, private tostr: ToastrServices, private apiService : ApiService) {}
 
   ngOnInit(): void {
     this.today = new Date();
     this.fetchPosition();
+    this.fetchMode();
     if (history.state.candidate) {
       this.candidate = history.state.candidate;
       this.positionName = this.candidate['reqServiceRequest.requestName'];
@@ -76,6 +80,7 @@ export class InterviewDetailsComponent implements OnInit {
       this.fetchUsers();
       this.fetchCandidates();
       this.fetchPanel();
+      
     }
   }
 
@@ -125,6 +130,7 @@ export class InterviewDetailsComponent implements OnInit {
     })
   }
 
+
   fetchCandidatesDetails(): void {
     this.http.get(`${environment.api_url}/screening-station/interview-details/candidate-detail?candidateId=${this.candidateId}`).subscribe((res: any) => {
       this.candidateDetails = res?.candidate;
@@ -155,7 +161,18 @@ export class InterviewDetailsComponent implements OnInit {
       }
     })
   }
-
+  fetchMode():void{
+    console.log("hdgahfgduyg");
+    
+    this.apiService.get(`/screening-station/interview-mode/list`).subscribe((res:any) => {
+      if(res?.data) this.modeList = res?.data;
+      
+    })
+  }
+  selectMode(id:any,name:any):void{
+this.selectedModeId = id;
+this.selectedModeName =name;
+  }
   selectRecruiter(recruiterid: any, firstname: any, secondName: any): void {
     this.showRecruiters = false;
     this.recruiterId = recruiterid;
@@ -232,8 +249,6 @@ export class InterviewDetailsComponent implements OnInit {
     this.noticeperiodvalue = noticeperiod.value;
     const comments = document.getElementById('comments') as HTMLInputElement;
     this.commentValue = comments.value ? comments.value : this.comment;
-    const mode = document.getElementById('mode') as HTMLInputElement;
-    this.modeValue = mode.value ? mode.value : this.interviewMode;
     const location = document.getElementById('location') as HTMLInputElement;
     this.locationValue = location.value ? location.value : this.Interviewlocation;
     if (this.displayDate && this.displayDate) this.displaydateTime = `${this.displayDate} ${this.displayTime}`;
@@ -246,7 +261,7 @@ export class InterviewDetailsComponent implements OnInit {
       location: this.locationValue,
       interviewTime: this.displaydateTime,
       interViewPanel: this.panelId,
-      interviewMode: this.modeValue,
+      interviewMode: this.selectedModeId,
       serviceId: this.serviceId ? this.serviceId : '',
       interviewStatus: this.interviewStatus,
       rescheduleStatus: this.rescheduledStatusValue,
