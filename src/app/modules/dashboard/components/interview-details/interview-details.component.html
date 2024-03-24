@@ -114,8 +114,19 @@
     <div class="d-flex j-space parent">
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Mode</span>
-            <input type="text" class="input-box p-l-9" id="mode" [value]="modeValue || interviewMode">
+            <!-- <input type="text" class="input-box p-l-9" id="mode" [value]="modeValue || interviewMode"> -->
+            <div class="input-box p-t-10 p-l-6 c-pointer p-relative" (click)="showModeList = !showModeList">
+                <span *ngIf="!selectedModeName">Select Mode</span>
+                <span *ngIf="selectedModeName" class="p-l-9">{{selectedModeName}}</span>
+                <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
+                <div class="no-close dropdown  p-b-7 p-l-6 c-pointer" *ngIf="showModeList">
+                    <div class="p-5" *ngFor="let mode of modeList " (click)="selectMode(mode.id,mode.modeName)">
+                        {{mode.modeName}}
+                    </div>
+                </div>
+            </div>
         </div>
+
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Interview Status</span>
             <input type="text" class="input-box p-l-9" id="interviewStatus" [value]="interviewStatus">
