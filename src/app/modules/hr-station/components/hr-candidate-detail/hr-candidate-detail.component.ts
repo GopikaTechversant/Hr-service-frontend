@@ -9,7 +9,6 @@ import { ApiService } from 'src/app/services/api.service';
   providers: [DatePipe],
 })
 export class HrCandidateDetailComponent {
-  @Input() selectedItem: any;
   showRequest: boolean = false;
   showcandidates: boolean = false;
   showProgress: boolean = true;
@@ -21,9 +20,11 @@ export class HrCandidateDetailComponent {
   showDescription: boolean = false;
   showbtn: boolean = true;
   serviceId: any;
+  candidateDetails: any;
+progessAdded: any;
   constructor(public dialogRef: MatDialogRef<HrCandidateDetailComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private apiService: ApiService, private datePipe: DatePipe) {
     if (data) {
-      this.selectedItem = data?.candidateDetails;
+      this.candidateDetails = data?.candidateDetails;
     }
     this.dialogRef.updateSize('60%', '85%')
   }
@@ -35,8 +36,12 @@ export class HrCandidateDetailComponent {
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
   }
 
+  closeDialog(): void {
+    this.dialogRef.close();
+  }
+
   addOffer(): void {
-    this.serviceId = this.selectedItem?.serviceId;
+    this.serviceId = this.candidateDetails?.serviceId;
     const scoreElement = document.getElementById('salary') as HTMLInputElement;
     this.salary = scoreElement ? scoreElement.value : '';
     const descriptionElement = document.getElementById('description') as HTMLInputElement;
@@ -50,6 +55,7 @@ export class HrCandidateDetailComponent {
     this.apiService.post(`/hr-station/candidateOffer`, payload).subscribe({
       next: (res: any) => {
         this.showbtn = false;
+        this.closeDialog();
       },
       error: (error) => {
         console.error('Error adding progress', error);
@@ -57,7 +63,9 @@ export class HrCandidateDetailComponent {
     })
   }
 
-  cancelClick(): void { }
+  cancelClick(): void {
+    this.closeDialog();
+   }
 
   submitClick(): void { }
 

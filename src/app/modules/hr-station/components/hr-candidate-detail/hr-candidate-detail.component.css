@@ -1,81 +1,56 @@
-.date-picker-input {
-    outline: none;
-    border: none;
-}
-
-.date-picker {
-    margin-left: 58px;
-}
-
-.sidebar {
-    box-shadow: #0000001a 0 4px 6px -1px, #0000000f 0 2px 4px -1px;
-    /* overflow: hidden; */
-    /* height: calc(100vh - 175px); */
-    padding-bottom: 20px;
-    overflow: auto !important;
-    border-radius: 5px !important;
-}
-
-.head {
-    background-color: #EDEDED;
-    min-height: 35px;
-    max-height: 35px;
-    padding-top: 10px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.details {
-    display: flex;
-    /* justify-content: space-between; */
-    align-items: start;
-}
-
-.detail-head {
-    color: #005EC9;
+.heading {
+    font-size: 20px;
     font-weight: 500;
-    font-size: 16px;
+    text-align: left;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #E3E0E0;
 }
 
-.justify-content-end {
-    justify-content: end;
+.sub-head {
+    color: #575F6E;
+    font-weight: 400;
+    display: flex;
+    flex-direction: column;
 }
 
-.head-wrap {
-    width: 190px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.input{
+    outline: none !important;
+    border: 1px solid rgb(207, 205, 205);
+    border-radius: 2px;
+    height: 30px;
+    background-color: #FFFF;
+    width: 27vw;
+}
+
+.input-1 {
+    outline: none !important;
+    border: 1px solid rgb(207, 205, 205);
+    border-radius: 2px;
+    height: 30px;
+    background-color: #FFFF;
+    width: 55vw;
+}
+
+.calendar-icon {
+    color: gray;
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    top: 8px;
+    right: 5px;
     cursor: pointer;
 }
 
-.btn {
-    padding: 0px 22px;
-    font-size: 0.92rem;
-    margin-right: 10px;
-    border: 1px solid #1a2952;
-    color: #fff;
-    background-color: rgb(57, 57, 136);
-    outline: none;
-    padding: 5px;
-    border-radius: 5px;
+.modal-header {
+    position: sticky;
+    top: 0;
+    z-index: 2; 
+    background-color: #f8f9fa; 
 }
 
-.input {
-    outline: none !important;
-    border: 1px solid rgb(207, 205, 205);
-    border-radius: 5px;
-    height: 35px;
-    width: 100%;
+.modal-content {
+    overflow-y: auto; 
 }
-
-.col{
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-
-
 
 .btn{
     width: 120px;
@@ -88,7 +63,6 @@
     font-weight: 500;
     border-radius: 3px;
     margin: 10px;
-
 }
 
 .btn-reject{
@@ -107,3 +81,4 @@
 .btn-parent{
     float: right;
 }
+

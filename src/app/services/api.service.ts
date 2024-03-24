@@ -41,7 +41,7 @@ export class ApiService {
 
   // private getHeaders(): HttpHeaders {
   //   const authToken = localStorage.getItem('userToken');
-  //   let headers = new HttpHeaders().set('', '');
+  //   let headers = new HttpHeaders().set('ngrok-skip-browser-warning', 'true');
   //   if (authToken) {
   //     headers = headers.set('Authorization', `Bearer ${authToken}`);
   //   }

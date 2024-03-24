@@ -53,7 +53,7 @@
 }
 
 #barChart {
-    height: 350px !important;
+    /* height: 350px !important; */
     width: 90% !important;
     overflow-x: auto !important;
 }

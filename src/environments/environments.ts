@@ -2,5 +2,5 @@ export const environment = {
     production: false,
     prodEnv: false,
     devEnv: true,
-    api_url: 'http://10.1.0.83:3001'
+    api_url: 'https://56ef-202-88-236-230.ngrok-free.app'
 };
