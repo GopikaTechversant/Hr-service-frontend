@@ -17,8 +17,8 @@
                     <td>Name</td>
                     <td>Email</td>
                     <td>Requirement</td>
-                    <td>Status</td>
                     <td>Progress Status</td>
+                    <td>Service Status</td>
                     <td>More Detail</td>
                 </tr>
                 <div *ngIf="loader" class="loader-parent">
@@ -33,8 +33,8 @@
                                 </td>
                                 <td>{{ item['candidate.candidateEmail'] }}</td>
                                 <td>{{ item['serviceRequest.requestName'] }}</td>
-                                <td>{{ item?.serviceStatus | titlecase}}</td>
                                 <td>{{item?.progressStatus > 0 ? 'Progress Added' : 'Pending'}}</td>
+                                <td>{{ item?.serviceStatus | titlecase}}</td>
                                     <!-- <div class="input p-t-10 p-l-6 c-pointer no-close p-relative"
                                         (click)="toggleDropdown(item, $event)">
                                         {{item?.selectedStatus || 'Choose Candidate Status'}}

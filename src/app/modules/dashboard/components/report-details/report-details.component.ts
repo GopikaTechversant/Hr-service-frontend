@@ -38,6 +38,7 @@ export class ReportDetailsComponent implements OnInit {
   pageIndex = 0;
   pageSizeOptions = [5, 10, 25];
   showFirstLastButtons = true;
+  today: any;
 
   constructor(private tostr: ToastrServices, private apiService: ApiService) { }
   onBodyClick(event: MouseEvent): void {
@@ -49,6 +50,7 @@ export class ReportDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.today = new Date()
     this.reportUserId = localStorage.getItem('userId');
     this.currentYear = new Date().getFullYear();
     this.reportMonth = new Date().getMonth() + 1;

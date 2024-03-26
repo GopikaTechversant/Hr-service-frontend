@@ -29,9 +29,17 @@ export class HrCandidateListComponent implements OnInit {
     })
   }
 
-  viewCandidateDetail(item: any): void {
+  fetchDetails(id: any, status: any): void {
+    this.apiService.get(`/hr-station/candidateDetail?serviceId=${id}`).subscribe((data: any) => {
+      if (data?.candidates) this.viewCandidateDetail(data?.candidates, status);
+    });
+
+  }
+
+
+  viewCandidateDetail(item: any, status: any): void {
     const dialogRef = this.dialog.open(HrCandidateDetailComponent, {
-      data: { candidateId: item['candidate.candidateId'], candidateDetails: item },
+      data: { candidateId: item['candidate.candidateId'], candidateDetails: item, offerStatus: status },
       width: '600px',
       height: '300px'
     })

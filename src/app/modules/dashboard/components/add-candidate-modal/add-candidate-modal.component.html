@@ -23,7 +23,7 @@
                 <div class="p-relative w-100">
                     <input class="p-l-5  input-box" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate"
                         (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate"
-                        formControlName="candidateDoB">
+                        formControlName="candidateDoB" [max]="maxDate">
                     <span> <mat-datepicker #pickerdate class=""></mat-datepicker>
                         <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
                             (click)="pickerdate ?.open()"></i>
@@ -109,41 +109,42 @@
                 <input type="text" class="input-box" formControlName="candidatePreviousDesignation">
             </div>
             <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Current Salary</span>
-                <input type="text" class="input-box" formControlName="candidateCurrentSalary">
-            </div>
-            <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Expected Salary</span>
-                <input type="text" class="input-box" formControlName="candidateExpectedSalary">
-            </div>
-        </div>
-        <div class="d-flex parent">
-            <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Application Source</span>
-                <div class="input-box c-pointer p-relative p-t-10 p-l-6 no-close"
-                    (click)="showSource = !showSource;fetchSource()">
-                    <span *ngIf="!sourceName">Select source</span>
-                    <span *ngIf="sourceName">{{sourceName}}</span>
-                    <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
-                    <div class="no-close dropdown c-pointer" *ngIf="showSource">
-                        <p *ngFor="let source of sourceList" (click)="selectsource(source.sourceId,source.sourceName)">
-                            {{source.sourceName}}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Requirement</span>
                 <div class="input-box c-pointer p-relative p-t-10 p-l-6 no-close"
-                    (click)="requirementListOpen = !requirementListOpen;fetchRequerements()">
+                    (click)="requirementListOpen = !requirementListOpen">
                     <span *ngIf="!selectedRequirementName" class="no-close">Select Requirement</span>
                     <span *ngIf="selectedRequirementName" class="no-close">{{selectedRequirementName}}</span>
                     <span><i class="f-right p-r-10 fa fa-chevron-down s-text no-close"></i></span>
                     <div class="no-close dropdown c-pointer no-close" *ngIf="requirementListOpen">
                         <p *ngFor="let requirement of requirementList"
-                            (click)="selectRequirement(requirement.requestId,requirement.requestName)">
-                            {{requirement.requestName}}</p>
+                            (click)="selectRequirement(requirement)">
+                            {{requirement?.requestName}}</p>
                     </div>
                 </div>
+            </div>
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">Application Source</span>
+                <div class="input-box c-pointer p-relative p-t-10 p-l-6 no-close"
+                    (click)="showSource = !showSource">
+                    <span *ngIf="!sourceName">Select source</span>
+                    <span *ngIf="sourceName">{{sourceName}}</span>
+                    <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
+                    <div class="no-close dropdown c-pointer" *ngIf="showSource">
+                        <p *ngFor="let source of sourceList" (click)="selectsource(source.sourceId,source.sourceName)">
+                            {{source?.sourceName}}</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="d-flex parent">
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">Current Salary</span>
+                <input type="text" class="input-box" formControlName="candidateCurrentSalary">
+            </div>
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">Expected Salary</span>
+                <input type="text" class="input-box" (keydown)="budgetCheck($event)" formControlName="candidateExpectedSalary">
             </div>
             <div class="child d-flex m-b-10 p-relative">
                 <span class="label m-b-4">Upload Resume <span class="required">*</span></span>

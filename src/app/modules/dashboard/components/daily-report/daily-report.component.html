@@ -21,7 +21,7 @@
             <span class="filter-head">From Date</span>
             <div class="p-relative">
                 <input class="p-l-5 input c-pointer" placeholder="29/02/11" matInput [matDatepicker]="pickerFromDate"
-                    [value]="startDate | date:'yyyy-MM-dd'" id="startDate"
+                    [value]="startDate | date:'yyyy-MM-dd'" id="startDate" [max]="today"
                     (dateChange)="dateChange($event, 'startDate')" [ngModel]="startDate"
                     (click)="pickerFromDate.open()">
                 <span>
@@ -36,7 +36,7 @@
             <div class="p-relative">
                 <input class="p-l-5 input c-pointer" placeholder="29/02/11" matInput [matDatepicker]="pickerToDate"
                     (dateChange)="dateChange($event, 'endDate')" [ngModel]="endDate" (click)="pickerToDate.open()"
-                    [value]="endDate | date:'yyyy-MM-dd'" id="endDate" [min]="fromDate">
+                    [value]="endDate | date:'yyyy-MM-dd'" id="endDate" [min]="fromDate" [max]="today">
                 <span><mat-datepicker #pickerToDate></mat-datepicker>
                     <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true" (click)="pickerToDate.open()"></i>
                 </span>

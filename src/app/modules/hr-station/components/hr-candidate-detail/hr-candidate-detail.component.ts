@@ -21,7 +21,8 @@ export class HrCandidateDetailComponent {
   showbtn: boolean = true;
   serviceId: any;
   candidateDetails: any;
-progessAdded: any;
+  progessAdded: any;
+  today: Date = new Date ();
   constructor(public dialogRef: MatDialogRef<HrCandidateDetailComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private apiService: ApiService, private datePipe: DatePipe) {
     if (data) {
       this.candidateDetails = data?.candidateDetails;
@@ -29,7 +30,9 @@ progessAdded: any;
     this.dialogRef.updateSize('60%', '85%')
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    this.today = new Date();
+  }
 
   dateChange(event: any): void {
     let date = new Date(event?.value);
@@ -65,7 +68,7 @@ progessAdded: any;
 
   cancelClick(): void {
     this.closeDialog();
-   }
+  }
 
   submitClick(): void { }
 

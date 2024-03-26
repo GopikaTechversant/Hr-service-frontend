@@ -41,6 +41,10 @@ export class AddCandidateModalComponent implements OnInit {
   requirementListOpen: boolean = false;
   candidateCreatedby: any;
   resumeUploadSuccess: boolean = false;
+  maxDate: any;
+  currentYear: any;
+  maxSalary: any;
+  minSalary: any;
 
   constructor(private apiService: ApiService, private tostr: ToastrServices, private formBuilder: UntypedFormBuilder, private datePipe: DatePipe) {
     this.candidateForm = this.formBuilder.group({
@@ -64,7 +68,12 @@ export class AddCandidateModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.candidateCreatedby = localStorage.getItem('userId')
+    this.candidateCreatedby = localStorage.getItem('userId');
+    this.currentYear = new Date().getFullYear();
+    this.maxDate = new Date();
+    this.maxDate.setFullYear(this.currentYear - 18);
+    this.fetchRequerements();
+    this.fetchSource();
   }
 
   onBodyClick(event: MouseEvent): void {
@@ -93,17 +102,23 @@ export class AddCandidateModalComponent implements OnInit {
     this.sourceName = sourceName;
   }
 
-  selectRequirement(id: any, name: any): void {
-    if (this.selectedRequirementName !== name && this.selectedRequirementId !== id) {
-      this.selectedRequirementName = name;
-      this.selectedRequirementId = id;
+  selectRequirement(requirement: any): void {
+    console.log(requirement);
+
+    if (this.selectedRequirementName !== requirement?.requestName && this.selectedRequirementId !== requirement?.requestId) {
+      this.selectedRequirementName = requirement?.requestName;
+      this.selectedRequirementId = requirement?.requestId;
+      this.maxSalary = requirement?.requestMaxSalary
+      this.minSalary = requirement?.requestBaseSalary
     }
   }
 
   onKeypress(event: any): void {
-    const enteredKey: string = event.key;
+    let enteredValue: string;
+    if (event.key === "Backspace") enteredValue = event.target.value.slice(0, -1);
+    else enteredValue = event.target.value + event.key;
     const allowedCharacters: RegExp = /^[0-9]+$/;
-    if (!allowedCharacters.test(enteredKey)) {
+    if (event.key !== "Backspace" && !allowedCharacters.test(enteredValue)) {
       event.preventDefault();
       return;
     }
@@ -112,6 +127,25 @@ export class AddCandidateModalComponent implements OnInit {
   onPaste(event: any): void {
     event.preventDefault();
   }
+
+  budgetCheck(event: any): void {
+    let enteredValue: string;
+    if (event.key === "Backspace") enteredValue = event.target.value.slice(0, -1);
+    else enteredValue = event.target.value + event.key;
+    const allowedCharacters: RegExp = /^[0-9]+$/;
+    if (event.key !== "Backspace" && !allowedCharacters.test(enteredValue)) {
+      event.preventDefault();
+      return;
+    }
+    if (this.maxSalary === undefined) {
+      this.tostr.warning(`Choose a Requirement`);
+      return;
+    }
+    if (enteredValue && Number(enteredValue) >= this.maxSalary) this.tostr.warning(`Budget should be less than ${this.maxSalary}`);
+
+  }
+
+
 
   dateChange(event: any): void {
     let date = new Date(event?.value);
@@ -139,7 +173,7 @@ export class AddCandidateModalComponent implements OnInit {
 
     const formdata = new FormData();
     for (const key in candidateDetails) {
-      if (candidateDetails[key]) formdata.append(key, candidateDetails[key]);  
+      if (candidateDetails[key]) formdata.append(key, candidateDetails[key]);
     }
     formdata.append('candidateCreatedby', this.candidateCreatedby);
     formdata.append('candidateResume', this.selectedFile);

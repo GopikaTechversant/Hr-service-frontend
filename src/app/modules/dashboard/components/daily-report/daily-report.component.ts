@@ -35,6 +35,7 @@ export class DailyReportComponent implements OnInit {
   recruiterName: string = 'Select';
   recruiterKeys: any[] = [];
   fromDate: any;
+  today: any;
   constructor(private apiService: ApiService) {
     this.startDate = new Date();
     this.endDate = new Date();
@@ -50,6 +51,7 @@ export class DailyReportComponent implements OnInit {
   ngOnInit(): void {
     this.reportUserId = localStorage.getItem('userId');
     this.fetchDetails();
+    this.today = new Date();
   }
 
   fetchDetails(): void {
