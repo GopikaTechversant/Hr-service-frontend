@@ -77,7 +77,7 @@ export class CandidateDetailModalComponent implements OnInit {
   rejectClick(): void {
     let payload = {
       serviceId: this.serviceId,
-      stationId: 3,
+      stationId: this.stationId,
     }
     this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
       next: (res: any) => {

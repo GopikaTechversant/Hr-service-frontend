@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, Inject, Input } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
+import { ToastrServices } from 'src/app/services/toastr.service';
 @Component({
   selector: 'app-hr-candidate-detail',
   templateUrl: './hr-candidate-detail.component.html',
@@ -9,23 +10,23 @@ import { ApiService } from 'src/app/services/api.service';
   providers: [DatePipe],
 })
 export class HrCandidateDetailComponent {
-  showRequest: boolean = false;
-  showcandidates: boolean = false;
-  showProgress: boolean = true;
-  candidateId: any;
   salary: any;
   displayDate: any;
   descriptionValue: any;
-  showWarning: boolean = false;
   showDescription: boolean = false;
-  showbtn: boolean = true;
-  serviceId: any;
+  serviceId: number = 0;
   candidateDetails: any;
-  progessAdded: any;
   today: Date = new Date ();
-  constructor(public dialogRef: MatDialogRef<HrCandidateDetailComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private apiService: ApiService, private datePipe: DatePipe) {
+  hrReview: any;
+  constructor(public dialogRef: MatDialogRef<HrCandidateDetailComponent>, @Inject(MAT_DIALOG_DATA) public data: any, 
+  private apiService: ApiService, private datePipe: DatePipe , private tostr : ToastrServices) {
     if (data) {
-      this.candidateDetails = data?.candidateDetails;
+      console.log(data);  
+      this.candidateDetails = data?.candidateDetails?.candidate;
+      this.hrReview = data?.candidateDetails?.reqHrReview;
+      this.serviceId = this.data?.candidateDetails?.serviceId;
+      console.log(this.serviceId);
+      
     }
     this.dialogRef.updateSize('60%', '85%')
   }
@@ -44,7 +45,6 @@ export class HrCandidateDetailComponent {
   }
 
   addOffer(): void {
-    this.serviceId = this.candidateDetails?.serviceId;
     const scoreElement = document.getElementById('salary') as HTMLInputElement;
     this.salary = scoreElement ? scoreElement.value : '';
     const descriptionElement = document.getElementById('description') as HTMLInputElement;
@@ -57,7 +57,7 @@ export class HrCandidateDetailComponent {
     }
     this.apiService.post(`/hr-station/candidateOffer`, payload).subscribe({
       next: (res: any) => {
-        this.showbtn = false;
+        this.tostr.success('Offer Added Successfully');
         this.closeDialog();
       },
       error: (error) => {
@@ -70,6 +70,30 @@ export class HrCandidateDetailComponent {
     this.closeDialog();
   }
 
-  submitClick(): void { }
+  rejectClick(): void {
+    let payload = {
+      serviceId: this.serviceId,
+      stationId: this.candidateDetails?.candidateStation,
+    }
+    this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
+      next: (res: any) => {
+        this.closeDialog();
+      },
+      error: (error) => {
+        this.tostr.error('Error adding progress');
+      }
+    });
 
+  }
+
+  approveClick(): void {
+      const payload = { serviceSeqId: this.serviceId };
+      this.apiService.post(`/hr-station/candidateToUser`, payload).subscribe({
+        next: (res: any) => {
+          this.tostr.success('Approval successful');
+          this.closeDialog();
+        },
+        error: (error) => this.tostr.error('Error during approval')
+      });
+  }
 }
