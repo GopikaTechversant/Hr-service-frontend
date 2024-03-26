@@ -1,26 +1,26 @@
 <div class="main p-t-10">
-  <div class="menu d-flex c-pointer" (click)="navigate('/dashboard',false)">
+  <div class="menu d-flex c-pointer" (click)="navigate('/dashboard',false)" [class.active]="isActive('/dashboard')">
     <img src="assets/images/material-symbols-light_dashboard-outline.png" alt="" height="19px" width="19px" top="4px"
       left="4px" class="img">
     <span class="menu-text">Dashboard</span>
   </div>
-  <div class="menu d-flex c-pointer" (click)="navigate('/dashboard/service-requirement',false)">
+  <div class="menu d-flex c-pointer" (click)="navigate('/dashboard/service-requirement',false)"[class.active]="isActive('/dashboard/service-requirement')">
     <img src="assets/images/file-icons_service-fabric.png" alt="" height="19px" width="19px" top="4px" left="4px">
     <span class="menu-text">Create Requirements</span>
   </div>
-  <div class="menu d-flex c-pointer" (click)="navigate('/dashboard/add-candidate',false)">
+  <div class="menu d-flex c-pointer" (click)="navigate('/dashboard/add-candidate',false)"[class.active]="isActive('/dashboard/add-candidate')">
     <img src="assets/images/mdi_user-outline.png" alt="" height="19px" width="19px" top="4px" left="4px">
     <span class="menu-text">Add Candidates</span>
   </div>
-  <div class="menu d-flex c-pointer" (click)="navigate('/dashboard/requirement-candidate-list',false)">
+  <div class="menu d-flex c-pointer" (click)="navigate('/dashboard/requirement-candidate-list',false)"[class.active]="isActive('/dashboard/requirement-candidate-list')">
     <img src="assets/images/gg_list.png" alt="" height="19px" width="19px" top="4px" left="4px">
     <span class="menu-text">Requirements List</span>
   </div>
-  <div class="menu d-flex c-pointer" (click)="navigate('/dashboard/interview-details',false)">
+  <div class="menu d-flex c-pointer" (click)="navigate('/dashboard/interview-details',false)" [class.active]="isActive('/dashboard/interview-details')">
     <img src="/assets/images/line-md_computer-1.png" alt="" height="19px" width="19px" top="4px" left="4px">
     <span class="menu-text">Interview Details</span>
   </div>
-  <div class="menu d-flex c-pointer" (click)="navigate('/dashboard/report-details',false)">
+  <div class="menu d-flex c-pointer" (click)="navigate('/dashboard/report-details',false)" [class.active]="isActive('/dashboard/report-details')">
     <img src="assets/images/Group.png" alt="" height="19px" width="19px" top="4px" left="4px">
     <span class="menu-text">Report</span>
   </div>

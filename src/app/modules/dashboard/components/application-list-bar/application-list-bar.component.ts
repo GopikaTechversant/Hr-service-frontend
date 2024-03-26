@@ -21,7 +21,7 @@ export class ApplicationListBarComponent implements OnInit {
   constructor(private apiService: ApiService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
-    this.displayDate = this.datePipe.transform(new Date(), 'dd/MM/yyy');
+    this.displayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     this.fetchApplicationList();
     Chart.register(ChartDataLabels);
     this.createBarChart();
@@ -44,7 +44,7 @@ export class ApplicationListBarComponent implements OnInit {
 
   dateChange(event: any): void {
     let date = new Date(event?.value);
-    this.displayDate = this.datePipe?.transform(date, 'dd/MM/yyy');
+    this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
     this.positionId = '';
     this.fetchApplicationList();
   }

@@ -1,6 +1,6 @@
 <div class="m-10">
     <div class="p-l-5">
-        <span class="f-s-18 f-w-500 detail-head p-t-5">HR Station</span>
+        <span class="f-s-18 f-w-500 detail-head p-5 p-l-0">HR Station</span>
     </div>
     <div class="main d-flex">
         <div class="table-container m-b-0">
@@ -9,8 +9,9 @@
                     <td>Candidate ID</td>
                     <td>Name</td>
                     <td>Email</td>
-                    <td>Phone</td>
-                    <td>Status</td>
+                    <td>Requirement</td>
+                    <td>Offer Status</td>
+                    <td>Service Status</td>
                     <td>More Details</td>
                 </tr>
                 <div *ngIf="loader" class="loader-parent">
@@ -23,9 +24,10 @@
                           <td>{{ item['candidate.candidateId'] }}</td>
                           <td>{{ item['candidate.candidateFirstName'] }} {{ item['candidate.candidateLastName'] }}</td>
                           <td>{{ item['candidate.candidateEmail'] }}</td>
+                          <td>{{ item['serviceRequest.requestName'] }}</td>
                           <td>{{ item['candidate.candidateMobileNo'] }}</td>
-                          <td>{{ item.serviceStatus }}</td>
-                          <td><button class="btn" (click)="viewCandidateDetail(item)">View detail</button></td>
+                          <td>{{ item?.serviceStatus | titlecase }}</td>
+                          <td><button class="btn" (click)="fetchDetails(item?.serviceId , item?.progressStatus)">View detail</button></td>
                         </tr>
                       </ng-container>
                     </ng-container>
