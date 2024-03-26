@@ -25,6 +25,12 @@ export class ForgotPasswordComponent implements OnInit {
 
   }
   submitClick():void{
+    const formDetails = this.passwordForm.value;
+    const formdata = new FormData;
+    for (const key in formDetails){
+      if(formDetails[key]) formdata.append(key,formDetails[key]);
+    }
+
     this.passwordForm.reset();
     this.tostr.success('Password updated ');
   }

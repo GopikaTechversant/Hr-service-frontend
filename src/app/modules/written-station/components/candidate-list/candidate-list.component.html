@@ -39,4 +39,15 @@
             </div>
         </div>
     </div>
+    <div class="page d-flex j-end">
+        <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(currentPage - 1)">{{currentPage -
+            1}}</button>
+        <button class="box current-page c-pointer">{{ currentPage }}</button>
+        <button class="box c-pointer" (click)="onPageChange(currentPage + 1)"
+            [disabled]="candidates_list?.length === 0 || !candidates_list">{{currentPage + 1}}</button>
+        <button class="box c-pointer" (click)="onPageChange(currentPage + 1)"
+            [disabled]="candidates_list?.length === 0 || !candidates_list"> <img
+                src="assets/images/double-arrow-right-icon.svg" alt="" height="14px" width="14px">
+        </button>
+    </div>
  </div>

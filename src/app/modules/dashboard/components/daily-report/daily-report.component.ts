@@ -13,14 +13,14 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class DailyReportComponent implements OnInit {
   @Input() requitersList: any;
-  length: any = 20;
-  pageSize = 10;
+  // length: any = 20;
+  pageSize = 4;
   pageIndex = 1;
-  pageSizeOptions = [10, 25, 30];
+
   showFirstLastButtons = true;
   userRequirement: any = [];
-  currentPag: number = 1;
-  currentLimit: number = 7;
+  // currentPag: number = 1;
+  // currentLimit: number = 7;
   totalCount: any;
   data: any;
   displayDate: any;
@@ -29,12 +29,15 @@ export class DailyReportComponent implements OnInit {
   reportUserId: any = '';
   reportFromDate: any = '';
   reportToDate: any = '';
-  reportPageNo: any = '';
-  reportPageLimit: any = '';
+  // reportPageNo: any = '';
+  // reportPageLimit: any = '';
   showRecruiters: boolean = false;
   recruiterName: string = 'Select';
   recruiterKeys: any[] = [];
   fromDate: any;
+  currentPage: number = 1;
+  lastPage: any;
+  userCount: any;
   constructor(private apiService: ApiService) {
     this.startDate = new Date();
     this.endDate = new Date();
@@ -53,11 +56,16 @@ export class DailyReportComponent implements OnInit {
   }
 
   fetchDetails(): void {
-    this.apiService.get(`/report/report-list?reportUserId=${this.reportUserId}&reportFromDate=${this.reportFromDate}&reportToDate=${this.reportToDate}&reportPageNo=${this.reportPageNo}&reportPageLimit=${this.reportPageLimit}`)
+    const totalPages = Math.ceil(this.userCount / this.pageSize);
+    this.lastPage = totalPages;
+    if (this.currentPage > totalPages) this.currentPage = totalPages;
+    this.apiService.get(`/report/report-list?reportUserId=${this.reportUserId}&reportFromDate=${this.reportFromDate}&reportToDate=${this.reportToDate}&reportPageNo=${this.currentPage}&reportPageLimit=${this.pageSize}`)
       .subscribe((res: any) => {
         if (res?.data) {
-          this.userRequirement = [];
+          // this.userRequirement = [];
           this.userRequirement = res?.data;
+          this.totalCount = res.reportCount;
+          console.log("this.userRequirement", this.userRequirement);
           this.userRequirement.forEach((objectItem: any) => {
             this.recruiterKeys = Object.keys(objectItem);
           })
@@ -79,22 +87,25 @@ export class DailyReportComponent implements OnInit {
     this.fromDate = this.startDate;
   }
 
-  pageChange(event: any): void {
-    let skip = parseInt(event, 10);
-    this.currentPag = skip;
-  }
+  // pageChange(event: any): void {
+  //   let skip = parseInt(event, 10);
+  //   this.currentPag = skip;
+  // }
 
-  handlePageEvent(event: any) {
-    this.length = event.length;
-    this.pageSize = event.pageSize;
-    this.pageIndex = event.pageIndex;
-    this.fetchDetails();
-  }
+  // handlePageEvent(event: any) {
+  //   this.length = event.length;
+  //   this.pageSize = event.pageSize;
+  //   this.pageIndex = event.pageIndex;
+  //   this.fetchDetails();
+  // }
 
   dateSearch(): void {
     this.reportFromDate = this.startDate;
     this.reportToDate = this.endDate;
     this.fetchDetails()
   }
-
+  onPageChange(pageNumber: number): void {
+    this.currentPage = Math.max(1, pageNumber);
+    this.fetchDetails();
+  }
 }

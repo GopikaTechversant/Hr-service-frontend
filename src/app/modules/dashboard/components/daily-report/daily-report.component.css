@@ -172,3 +172,25 @@ tr {
     margin-top: 10px;
     margin-left: -8px;
 }
+
+.box {
+    height: 26px;
+    width: 26px;
+    border: none;
+    background-color: white;
+}
+
+.box :hover {
+    background: #F0F7FF;
+}
+
+.page {
+    margin: 10px;
+}
+
+.current-page {
+    background-color: #005EC9;
+    color: #FFFFFF;
+    height: 26px;
+    width: 26px;
+}
