@@ -16,7 +16,7 @@ export class ServiceRequestComponent implements OnInit {
   @ViewChild('experienceInput') experienceInput!: ElementRef<HTMLInputElement>;
   @ViewChild('baseSalaryInput') baseSalaryInput!: ElementRef<HTMLInputElement>;
   @ViewChild('maxSalaryInput') maxSalaryInput!: ElementRef<HTMLInputElement>;
-  @ViewChild('skills') skills!: ElementRef<HTMLInputElement>;
+  // @ViewChild('skills') skills!: ElementRef<HTMLInputElement>;
   @ViewChild('vacancy') vacancy!: ElementRef<HTMLInputElement>;
   list_id: any = [];
   list_team: any = [];
@@ -32,7 +32,11 @@ export class ServiceRequestComponent implements OnInit {
   stationId: any;
   stationName: any;
   selectedstations: any[] = [];
-  selectedStationsId: any[] = [1,5];
+  selectedStationsId: any[] = [1, 5];
+  searchvalue: any;
+  skillSuggestions: any[] = [];
+  showSearchBar: boolean = false;
+  selectedSkills: any[] = [];
   constructor(private toastr: ToastrServices, private apiService: ApiService) { }
 
   ngOnInit(): void { }
@@ -47,7 +51,7 @@ export class ServiceRequestComponent implements OnInit {
 
   fetchServiceId(): void {
     this.apiService.get(`/service-request/services`).subscribe(((res: any) => {
-      this.list_id = res?.data;
+      if (res?.data) this.list_id = res?.data;
     }))
   }
 
@@ -93,9 +97,27 @@ export class ServiceRequestComponent implements OnInit {
     if (screeningStation && !this.selectedStationsId.includes(screeningStation.stationId)) this.selectedStationsId.push(screeningStation.stationId);
     if (hrStation && !this.selectedStationsId.includes(hrStation.stationId)) this.selectedStationsId.push(hrStation.stationId);
   }
+  getSkillSuggestions(event: any): void {
+    this.showSearchBar = true;
+    this.searchvalue = event?.target.value;
 
+    this.apiService.get(`/candidate/skills/list?search=${this.searchvalue}`).subscribe((res: any) => {
+      this.skillSuggestions = res?.data.filter((suggestion: any) =>
+        suggestion.skillName.toLowerCase().startsWith(this.searchvalue.toLowerCase())
+      );
+    });
+  }
+  selectSkill(suggestion: any): void {
+    const selectedSkill = { id: suggestion.id, name: suggestion.skillName };
+    this.selectedSkills.push(selectedSkill)
+    this.showSearchBar = false;
+    this.skillSuggestions = [];
+  }
+  removeSkill(skillToRemove: any): void {
+    this.selectedSkills = this.selectedSkills?.filter(skill => skill.id !== skillToRemove.id);
+  }
   submitClick(): void {
-    this.skillsArray = this.skills.nativeElement.value.split(',').map(skill => skill.trim());
+    // this.skillsArray = this.skills.nativeElement.value.split(',').map(skill => skill.trim());
     const requestData = {
       requestServiceId: this.selectedId,
       requestName: this.serviceInput.nativeElement.value,
@@ -103,7 +125,7 @@ export class ServiceRequestComponent implements OnInit {
       requestExperience: this.experienceInput.nativeElement.value,
       requestBaseSalary: this.baseSalaryInput.nativeElement.value,
       requestMaxSalary: this.maxSalaryInput.nativeElement.value,
-      requestSkills: this.skillsArray,
+      requestSkills: this.selectedSkills,
       requestVacancy: this.vacancy.nativeElement.value,
       requestFlowStations: this.selectedStationsId
     };
@@ -130,10 +152,11 @@ export class ServiceRequestComponent implements OnInit {
     this.clearInputvalue(this.serviceInput);
     this.clearInputvalue(this.baseSalaryInput);
     this.clearInputvalue(this.maxSalaryInput);
-    this.clearInputvalue(this.skills);
+    // this.clearInputvalue(this.skills);
     this.clearInputvalue(this.vacancy);
     this.idListOpen = false;
     this.teamListOpen = false;
+    this.selectedSkills = [];
   }
 
   cancel(): void {

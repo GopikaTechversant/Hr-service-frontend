@@ -179,7 +179,7 @@
                     <div class="searchbar m-t-10 c-pointer p-t-10 no-close '" *ngIf="showSearchBar">
                         <input type="search" class="input-search" placeholder="Type to search skills..."
                             (input)="getSkillSuggestions($event)" *ngIf="showSearchBar">
-                        <div *ngIf="showSearchBar" class="m-l-23 m-t-8">
+                        <div *ngIf="showSearchBar" class="m-l-23 m-t-8 drop-list">
                             <div *ngFor="let suggestion of skillSuggestions" (click)="selectSkill(suggestion)">
                                 <span class="p-t-7 "><img src="assets/images/akar-icons_check.png" alt=""
                                         class="m-t-0 p-r-4" width="13px" height="10px"></span>

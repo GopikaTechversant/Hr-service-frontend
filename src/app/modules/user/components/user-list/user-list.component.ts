@@ -19,7 +19,7 @@ export class UserListComponent implements OnInit {
   currentPage: number = 1;
   lastPage: any;
   userCount: any;
-  candidateId:any;
+  candidateId: any;
   headers = new HttpHeaders({
     'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
   });
@@ -72,23 +72,21 @@ export class UserListComponent implements OnInit {
       height: '250px'
     })
     dialogRef.componentInstance.onDeleteSuccess.subscribe(() => {
-      this.http.post(`${environment.api_url}/user/delete`,{ userId: this.candidateId },{headers}).subscribe((res:any) => {
+      this.http.post(`${environment.api_url}/user/delete`, { userId: this.candidateId }, { headers }).subscribe((res: any) => {
         console.log("deleted");
         this.fetchUserList();
       })
-     })
+    })
   }
-  update(id:any):void{
+  update(id: any): void {
     this.candidateId = id;
     const dialogRef = this.dialog.open(EditComponent, {
       data: id,
       width: '950px',
-      height: '700px'
+      height: '500px'
     })
-    // dialogRef.componentInstance.onEditSuccess.subscribe(() => {
-    //   this.fetchCandidates('');
-    // })
+    dialogRef.componentInstance.onEditSuccess.subscribe(() => {
+      this.fetchUserList();
+    })
   }
-
-  
 }

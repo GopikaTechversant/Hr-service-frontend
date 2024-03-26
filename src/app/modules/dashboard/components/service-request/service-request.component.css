@@ -108,3 +108,19 @@
 .drop-list :hover {
     background-color: rgb(240, 235, 235);
 }
+
+.input-search {
+    outline: none;
+    height: 34px;
+    width: 96%;
+    border-radius: 5px;
+    background: #FAFAFA;
+    outline: none;
+    border: 1px solid #E9E9E9
+}
+
+.drop-list-skill{
+    height: 57px;
+    overflow-y: scroll;
+    width: 417px;
+}

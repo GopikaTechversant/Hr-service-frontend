@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Inject, OnInit, ViewChild } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastrServices } from 'src/app/services/toastr.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -12,6 +12,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   providers: [DatePipe],
 })
 export class EditComponent implements OnInit {
+  public onEditSuccess: EventEmitter<void> = new EventEmitter<void>();
   hide: boolean = true;
   displayDate: any;
   passwordsMatch: boolean = true;
@@ -85,7 +86,7 @@ export class EditComponent implements OnInit {
     this.lastName = (document.getElementById('secondName') as HTMLInputElement)?.value;
     this.email = (document.getElementById('email') as HTMLInputElement)?.value;
     this.role = (document.getElementById('role') as HTMLInputElement)?.value;
-    this.multipleRole = (document.getElementById('multiplerole') as HTMLInputElement)?.value.split(',');
+    // this.multipleRole = (document.getElementById('multiplerole') as HTMLInputElement)?.value.split(',');
     const payload: any = {};
     if (this.firstName !== this.candidateDetails?.userfirstName) payload.userfirstName = this.firstName;
     if (this.lastName !== this.candidateDetails?.userlastName) payload.userlastName = this.lastName;
@@ -103,15 +104,14 @@ export class EditComponent implements OnInit {
       this.http.put(`${environment.api_url}/user/update/?userId=${this.data}`, payload, { headers }).subscribe((res: any) => {
         this.tostr.success('User Updated');
         this.dialogRef.close();
+        this.onEditSuccess.emit();
       })
     } else {
       this.dialogRef.close();
     }
-
   }
   cancel(): void {
     this.dialogRef.close();
-
   }
   dateChange(event: any): void {
     let date = new Date(event?.value);

@@ -25,7 +25,7 @@ export class CandidateListComponent implements OnInit {
     const totalPages = Math.ceil(this.userCount / this.pageSize);
     this.lastPage = totalPages;
     if (this.currentPage > totalPages) this.currentPage = totalPages;
-    this.apiService.get(`/written-station/v1/list-all&page=${this.currentPage}&limit=${this.pageSize}`).subscribe((res: any) => {
+    this.apiService.get(`/written-station/v1/list-all`).subscribe((res: any) => {
       this.candidates_list = res?.candidates;
     })
   }

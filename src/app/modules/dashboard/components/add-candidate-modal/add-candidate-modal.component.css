@@ -221,3 +221,8 @@
     color: #C10A0A;
     margin-left: 19px;
 }
+
+.drop-list{
+    height: 57px;
+    overflow-y: scroll;
+}
