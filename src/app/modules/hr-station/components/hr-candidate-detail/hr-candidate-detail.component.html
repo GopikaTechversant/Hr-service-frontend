@@ -1,6 +1,7 @@
 <div class="modal-header heading p-10 p-t-20 d-flex j-space" style="position: sticky; top: 0; z-index: 2;">
     <div>
-        <span>{{candidateDetails['candidate.candidateFirstName']}} {{candidateDetails['candidate.candidateLastName']}}</span>
+        <span>{{candidateDetails['candidate.candidateFirstName']}}
+            {{candidateDetails['candidate.candidateLastName']}}</span>
     </div>
     <div class="modal-close d-flex j-end">
         <button (click)="closeDialog()">
@@ -15,7 +16,7 @@
     <div class="d-flex p-10">
         <div class="sub-head f-w-500 f-s-14 d-flex">
             <span class="p-8">Date of Birth</span>
-            <span class="p-8">Skills</span>
+            <span class="p-8">Experince</span>
             <span class="p-8">Previous Organisation</span>
             <span class="p-8">Previous Designation</span>
             <span class="p-8">Education</span>
@@ -23,48 +24,48 @@
             <span class="p-8">Address</span>
         </div>
         <div class="sub-head d-flex">
-            <span class="p-8"> 
-                : {{candidateDetails['candidate.candidateDoB'] ?(candidateDetails['candidate.candidateDoB'] | date: 'dd/MM/YYY' ): 'NIL' }}
+            <span class="p-8">
+                : {{candidateDetails?.candidateDoB ?(candidateDetails?.candidateDoB | date: 'dd/MM/YYY' ): 'NIL' }}
             </span>
-            <span class="p-8"> 
-                : {{candidateDetails['serviceRequest.requestSkills'] ? candidateDetails['serviceRequest.requestSkills'] : 'NIL'}}
+            <span class="p-8">
+                : {{candidateDetails?.candidateExperience ? candidateDetails?.candidateExperience : 'NIL'}}
             </span>
-            <span class="p-8"> 
-                : {{candidateDetails['candidate.candidatePreviousOrg'] ? candidateDetails['candidate.candidatePreviousOrg'] : 'NIL'}}
+            <span class="p-8">
+                : {{candidateDetails?.candidatePreviousOrg ? candidateDetails?.candidatePreviousOrg : 'NIL'}}
             </span>
-            <span class="p-8"> 
-                : {{candidateDetails['candidate.candidatePreviousDesignation'] ? candidateDetails['candidate.candidatePreviousDesignation'] : 'NIL'}}
+            <span class="p-8">
+                : {{candidateDetails?.candidatePreviousDesignation ? candidateDetails?.candidatePreviousDesignation :
+                'NIL'}}
             </span>
-            <span class="p-8"> 
-                : {{candidateDetails['candidate.candidateEducation'] ? candidateDetails['candidate.candidateEducation'] : 'NIL'}}
+            <span class="p-8">
+                : {{candidateDetails?.candidateEducation ? candidateDetails?.candidateEducation : 'NIL'}}
             </span>
-            <span class="p-8"> 
-                : {{candidateDetails['candidate.candidateExpectedSalar'] ? candidateDetails['candidate.candidateExpectedSalar'] : 'NIL'}}
+            <span class="p-8">
+                : {{candidateDetails?.candidateExpectedSalary ? candidateDetails?.candidateExpectedSalary : 'NIL'}}
             </span>
-            <span class="p-8"> 
-                : {{candidateDetails['candidate.candidateCity'] ? candidateDetails['candidate.candidateCity'] : 'City '}} ,
-                {{candidateDetails['candidate.candidateDistrict'] ? candidateDetails['candidate.candidateDistrict'] : 'District '}},
-                {{candidateDetails['candidate.candidateState'] ? candidateDetails['candidate.candidateState'] : 'State '}}
+            <span class="p-8">
+                : {{candidateDetails?.candidateCity ? candidateDetails?.candidateCity : 'City '}} ,
+                {{candidateDetails?.candidateDistrict ? candidateDetails?.candidateDistrict : 'District '}},
+                {{candidateDetails?.candidateState ? candidateDetails?.candidateState : 'State '}}
             </span>
         </div>
     </div>
     <div class="heading p-10">
         <span>Add Offer</span>
     </div>
-    <!-- <div class="d-flex p-10"  > -->
+    <div *ngIf="!hrReview && data?.offerStatus === 0">
         <div class="d-flex">
             <div>
                 <span class="p-10 sub-head">Offer Salary</span>
-                <span class="p-5"> 
-                    <input class="input" type="text" id="salary">             
-                </span>
+                <span class="p-5"><input class="input" type="text" id="salary"></span>
             </div>
             <div>
                 <span class="p-10 sub-head">Joining Date</span>
-                <div class="p-relative w-100">
+                <div class="p-relative w-100" *ngIf="!hrReview?.reviewedJoiningDate">
                     <input class="p-l-5 input" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate"
-                        (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate" [max]="today">
-                    <span> <mat-datepicker #pickerdate class="" ></mat-datepicker>
+                        (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate"
+                        [max]="today">
+                    <span> <mat-datepicker #pickerdate class=""></mat-datepicker>
                         <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
                             (click)="pickerdate ?.open()"></i>
                     </span>
@@ -74,32 +75,37 @@
         <div class="sub-head f-w-500 f-s-14 d-flex">
             <span class="p-10">Description</span>
         </div>
-        <div class="sub-head d-flex">        
-            <span class="p-5"> 
-                <input class="input-1" type="text" id="description">            
+        <div class="sub-head d-flex" *ngIf="!hrReview?.reviewedDescription">
+            <span class="p-5"><input class="input-1" type="text" id="description"></span>
+        </div>
+        <div class="btn-parent">
+            <div class="m-10">
+                <button class="c-pointer btn-reject" (click)="cancelClick()">Cancel</button>
+                <button class="btn c-pointer" (click)="addOffer()">Submit</button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="hrReview && data?.offerStatus > 0">
+        <span class="sub-head">
+            <span class="p-10" *ngIf="hrReview?.reviewedSalary">
+                Offer Salary : {{hrReview?.reviewedSalary}}
             </span>
-        </div>
-        <div class="sub-head d-flex" *ngIf="data?.progressStatus > 0">
-            <span  class="p-10" *ngIf="candidateDetails['progress.progressScore']" >
-                : {{candidateDetails['progress.progressScore']}}
-             </span>
-             <span  class="p-10" *ngIf="candidateDetails['progress.progressScore']" >
-                : {{candidateDetails['progress.progressScore']}}
-             </span>
-             <span class="p-10" *ngIf="candidateDetails['progress.progressDescription']" >
-                : {{candidateDetails['progress.progressDescription']}}
-             </span>
-        </div>
-       
-    <!-- </div> -->
-    <!-- <div *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done'" class="details p-10 d-flex j-end">
-        <span class="f-w-500 head-wrap"></span>
-        <button class="btn c-pointer" (click)="addProgress()">Add progress</button>
-    </div> -->
-    <div  class="btn-parent">
+        </span>
+        <span class="sub-head">
+            <span class="p-10" *ngIf="hrReview?.reviewedJoiningDate">
+                Joining Date  : {{hrReview?.reviewedJoiningDate | date: 'dd/MM/YYY'}}
+            </span>
+        </span>
+        <span class="sub-head">
+            <span class="p-10" *ngIf="hrReview?.reviewedDescription">
+                Description : {{hrReview?.reviewedDescription}}
+            </span>
+        </span>
+    </div>
+    <div *ngIf="this.data?.candidateDetails?.serviceStatus !== 'done' && hrReview" class="btn-parent">
         <div class="m-10">
-            <button class="c-pointer btn-reject" (click)="cancelClick()">Cancel</button>
-            <button class="btn c-pointer" (click)="addOffer()">Submit</button>
+            <button class="c-pointer btn-reject" (click)="rejectClick()">Reject</button>
+            <button class="btn c-pointer" (click)="approveClick()">Approve</button>
         </div>
     </div>
 </div>
