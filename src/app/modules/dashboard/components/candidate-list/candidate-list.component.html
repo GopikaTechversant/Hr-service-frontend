@@ -52,8 +52,7 @@
         </table>
     </div>
     <div class="page d-flex j-end">
-        <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(currentPage - 1)">{{currentPage -
-            1}}</button>
+        <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(currentPage - 1)">{{currentPage -1}}</button>
         <button class="box current-page c-pointer">{{ currentPage }}</button>
         <button class="box c-pointer" (click)="onPageChange(currentPage + 1)"
             [disabled]="candidateList?.length === 0 || !candidateList">{{currentPage + 1}}</button>

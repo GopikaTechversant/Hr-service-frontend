@@ -86,12 +86,12 @@
   display: flex;
   /* justify-content: space-between; */
   /* align-items: center; */
-  width: 95%;
+  width: 100%;
 }
 
 .key,
 .value {
-  flex: 1;
+  /* flex: 1; */
   margin: 5px;
   text-align: left;
   font-weight: 400;
@@ -100,12 +100,13 @@
 
 .key {
   color: #575F6E;
-  width: auto;
+  width: 18%;
 }
 
 .value {
   color: #575F6E;
   text-align: left;
+  width: 80%;
 }
 
 .candidates {

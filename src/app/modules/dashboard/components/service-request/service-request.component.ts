@@ -37,6 +37,8 @@ export class ServiceRequestComponent implements OnInit {
   skillSuggestions: any[] = [];
   showSearchBar: boolean = false;
   selectedSkills: any[] = [];
+  skillNameValue: string = '';
+  stationIdToRemove: any;
   constructor(private toastr: ToastrServices, private apiService: ApiService) { }
 
   ngOnInit(): void { }
@@ -96,20 +98,27 @@ export class ServiceRequestComponent implements OnInit {
     const hrStation = this.stationsList.find((station: any) => station.stationName == 'Hiring Manager');
     if (screeningStation && !this.selectedStationsId.includes(screeningStation.stationId)) this.selectedStationsId.push(screeningStation.stationId);
     if (hrStation && !this.selectedStationsId.includes(hrStation.stationId)) this.selectedStationsId.push(hrStation.stationId);
+    this.selectedstations[0] = { stationName: "Screening", stationId: 1 };
+    if (stationName === 'Written') this.selectedstations[1] = { stationName: "Written", stationId: 2 };
+    if (stationName === 'Technical 1') this.selectedstations[2] = { stationName: "Technical 1", stationId: 3 };
+    if (stationName === 'Technical 2') this.selectedstations[3] = { stationName: "Technical 2", stationId: 4 };
+    this.selectedstations[4] = { stationName: "Hr Manager", stationId: 5 };
+    console.log("selectedstations", this.selectedstations);
   }
   getSkillSuggestions(event: any): void {
     this.showSearchBar = true;
     this.searchvalue = event?.target.value;
-
     this.apiService.get(`/candidate/skills/list?search=${this.searchvalue}`).subscribe((res: any) => {
-      this.skillSuggestions = res?.data.filter((suggestion: any) =>
+      if (res?.data) this.skillSuggestions = res?.data.filter((suggestion: any) =>
         suggestion.skillName.toLowerCase().startsWith(this.searchvalue.toLowerCase())
       );
     });
   }
   selectSkill(suggestion: any): void {
-    const selectedSkill = { id: suggestion.id, name: suggestion.skillName };
-    this.selectedSkills.push(selectedSkill)
+    const selectedSkill = suggestion.skillName;
+    this.selectedSkills.push(selectedSkill);
+    console.log(" this.selectedSkills", this.selectedSkills);
+
     this.showSearchBar = false;
     this.skillSuggestions = [];
   }
@@ -117,6 +126,8 @@ export class ServiceRequestComponent implements OnInit {
     this.selectedSkills = this.selectedSkills?.filter(skill => skill.id !== skillToRemove.id);
   }
   submitClick(): void {
+    const skillName = document.getElementById('skillSearch') as HTMLInputElement;
+    this.skillNameValue = skillName.value;
     // this.skillsArray = this.skills.nativeElement.value.split(',').map(skill => skill.trim());
     const requestData = {
       requestServiceId: this.selectedId,
@@ -125,7 +136,7 @@ export class ServiceRequestComponent implements OnInit {
       requestExperience: this.experienceInput.nativeElement.value,
       requestBaseSalary: this.baseSalaryInput.nativeElement.value,
       requestMaxSalary: this.maxSalaryInput.nativeElement.value,
-      requestSkills: this.selectedSkills,
+      requestSkills: this.selectedSkills.length > 0 ? this.selectedSkills : [this.skillNameValue],
       requestVacancy: this.vacancy.nativeElement.value,
       requestFlowStations: this.selectedStationsId
     };
@@ -157,6 +168,10 @@ export class ServiceRequestComponent implements OnInit {
     this.idListOpen = false;
     this.teamListOpen = false;
     this.selectedSkills = [];
+    this.selectedstations = [];
+  }
+  delete(id: any): void {
+    this.stationIdToRemove = id;
   }
 
   cancel(): void {

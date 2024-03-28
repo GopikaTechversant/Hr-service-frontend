@@ -243,4 +243,7 @@ export class SeriesComponent implements OnInit {
       })
     }
   }
+  allCandidatesHaveScores(): boolean {
+    return this.candidates_list?.every((candidate:any) => candidate.serviceStatus !== 'done');
+  }
 }
