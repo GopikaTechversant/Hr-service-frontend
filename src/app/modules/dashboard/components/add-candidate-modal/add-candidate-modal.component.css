@@ -63,8 +63,8 @@
 
 .upload-resume-btn {
     margin-left: -5px;
-    width: 80px;
-    height: 43px;
+    width: 68px;
+    height: 26px;
     top: 648px;
     left: 1340px;
     border-radius: 3px;
@@ -73,7 +73,8 @@
     color: white;
     font-size: 16px;
     font-weight: 400;
-    line-height: 19px;
+    text-align: center;
+    padding-top: 8px;
 }
 
 .text {
@@ -88,16 +89,16 @@
 .add-btn {
     margin-left: 9px;
     margin-top: 3px;
-    width: 85px;
-    height: 41px;
+    width: 55px;
+    height: 20px;
     border-radius: 3px;
     border: 1px;
     background: linear-gradient(0deg, #005EC9, #005EC9), linear-gradient(0deg, #E9E9E9, #E9E9E9);
     color: white;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
     text-align: center;
-    padding: 8px;
+    padding: 5px;
 }
 
 .skills {
@@ -198,9 +199,11 @@
     color: red;
 }
 
-.upload-success-message {
+.file-name {
+    margin: 10px; 
     color: #575F6E;
 }
+
 
 .remove {
     color: #005EC9;
@@ -222,7 +225,7 @@
     margin-left: 19px;
 }
 
-.drop-list{
+.drop-list {
     height: 57px;
     overflow-y: scroll;
 }

@@ -28,7 +28,7 @@
 
 .input {
     width: 95%;
-    height: 34px;
+    height: 40px;
     border-radius: 5px;
     outline: none;
     background: #FAFAFA;
@@ -79,7 +79,7 @@
 }
 
 .add-btn {
-    margin-left: 3px;
+    margin-left: auto;
     width: 53px;
     background: linear-gradient(0deg, #005EC9, #005EC9),
         linear-gradient(0deg, #E9E9E9, #E9E9E9);
@@ -88,6 +88,23 @@
     color: white;
     font-size: 16px;
     font-weight: 400;
+    padding: 8px;
+    text-align: center;
+}
+
+.d-flex.flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.add-button-container {
+    margin-left: auto;
+}
+
+.station-item {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
 }
 
 .drop-list {
@@ -96,10 +113,7 @@
     max-height: 100px;
     overflow-y: scroll;
     font-size: 15px;
-    margin-left: 0px;
-    width: 588px;
-    padding-left: 10px;
-    padding-top: 10px;
+    width: 92%;
     position: absolute;
     z-index: 1;
     margin-top: 35px;
@@ -119,12 +133,12 @@
     border: 1px solid #E9E9E9
 }
 
-.drop-list-skill{
+.drop-list-skill {
     height: 57px;
     overflow-y: scroll;
     width: 417px;
 }
 
-.station-flow{
-    /* border: 1px solid black; padding: 4px 8px; border-radius: 4px; */
+.fa-trash-o {
+    color: rgb(163, 7, 7);
 }

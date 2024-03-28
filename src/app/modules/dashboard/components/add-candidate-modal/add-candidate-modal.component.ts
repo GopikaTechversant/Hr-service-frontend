@@ -45,6 +45,7 @@ export class AddCandidateModalComponent implements OnInit {
   currentYear: any;
   maxSalary: any;
   minSalary: any;
+  fileName: any;
 
   constructor(private apiService: ApiService, private tostr: ToastrServices, private formBuilder: UntypedFormBuilder, private datePipe: DatePipe) {
     this.candidateForm = this.formBuilder.group({
@@ -103,13 +104,14 @@ export class AddCandidateModalComponent implements OnInit {
   }
 
   selectRequirement(requirement: any): void {
-    console.log(requirement);
-
     if (this.selectedRequirementName !== requirement?.requestName && this.selectedRequirementId !== requirement?.requestId) {
       this.selectedRequirementName = requirement?.requestName;
       this.selectedRequirementId = requirement?.requestId;
       this.maxSalary = requirement?.requestMaxSalary
       this.minSalary = requirement?.requestBaseSalary
+      this.candidateForm.patchValue({
+        candidateExpectedSalary: null
+      });
     }
   }
 
@@ -138,14 +140,14 @@ export class AddCandidateModalComponent implements OnInit {
       return;
     }
     if (this.maxSalary === undefined) {
-      this.tostr.warning(`Choose a Requirement`);
+      this.tostr.warning(`Please Choose a Requirement`);
       return;
     }
-    if (enteredValue && Number(enteredValue) >= this.maxSalary) this.tostr.warning(`Budget should be less than ${this.maxSalary}`);
-
+    if (enteredValue && Number(enteredValue) >= this.maxSalary) {
+      this.tostr.warning(`Budget should be less than ${this.maxSalary}`);
+      event.preventDefault();
+    }
   }
-
-
 
   dateChange(event: any): void {
     let date = new Date(event?.value);
@@ -165,6 +167,7 @@ export class AddCandidateModalComponent implements OnInit {
     this.selectedFile = event.target.files[0];
     if (event.target.files.length > 0) this.resumeUploadSuccess = true;
   }
+
 
   submitClick(): void {
     let candidateDetails = this.candidateForm.value;

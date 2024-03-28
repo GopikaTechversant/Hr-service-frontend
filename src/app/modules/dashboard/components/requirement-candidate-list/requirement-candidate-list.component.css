@@ -65,8 +65,8 @@
 .candidate-card {
   display: flex;
   flex-direction: column;
-  margin: 10px;
-  width: 420px;
+  margin: 8px;
+  width: 30%;
   height: auto;
   margin-bottom: 29px;
   background-color: #FFFFFF;
@@ -91,22 +91,20 @@
 
 .key,
 .value {
-  /* flex: 1; */
   margin: 5px;
   text-align: left;
   font-weight: 400;
-  letter-spacing: 0em;
 }
 
 .key {
   color: #575F6E;
-  width: 18%;
+  width: 30%;
 }
 
 .value {
   color: #575F6E;
   text-align: left;
-  width: 80%;
+  width: 70%;
 }
 
 .candidates {

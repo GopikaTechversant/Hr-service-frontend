@@ -79,8 +79,7 @@ export class InterviewDetailsComponent implements OnInit {
       this.currentCompany = this.candidate?.candidatePreviousOrg;
       this.fetchUsers();
       this.fetchCandidates();
-      this.fetchPanel();
-      
+      this.fetchPanel();     
     }
   }
 
@@ -130,7 +129,6 @@ export class InterviewDetailsComponent implements OnInit {
     })
   }
 
-
   fetchCandidatesDetails(): void {
     this.http.get(`${environment.api_url}/screening-station/interview-details/candidate-detail?candidateId=${this.candidateId}`).subscribe((res: any) => {
       this.candidateDetails = res?.candidate;
@@ -161,9 +159,7 @@ export class InterviewDetailsComponent implements OnInit {
       }
     })
   }
-  fetchMode():void{
-    console.log("hdgahfgduyg");
-    
+  fetchMode():void{    
     this.apiService.get(`/screening-station/interview-mode/list`).subscribe((res:any) => {
       if(res?.data) this.modeList = res?.data;
       

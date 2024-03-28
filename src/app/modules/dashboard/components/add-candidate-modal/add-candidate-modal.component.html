@@ -4,7 +4,8 @@
         <div class="d-flex parent p-t-10">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">First Name<span class="required">*</span></span>
-                <input type="text" class="input-box" formControlName="candidateFirstName" placeholder="John">
+                <input type="text" class="input-box" formControlName="candidateFirstName" placeholder="First Name"
+                    maxlength="20">
                 <div
                     *ngIf="candidateForm.get('candidateFirstName')?.hasError('required') && candidateForm.get('candidateFirstName')?.touched">
                     <mat-error>First Name Required</mat-error>
@@ -12,7 +13,8 @@
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Last Name<span class="required">*</span></span>
-                <input type="text" class="input-box" formControlName="candidateLastName" placeholder="Deo">
+                <input type="text" class="input-box" formControlName="candidateLastName" placeholder="Last Name"
+                    maxlength="20">
                 <div
                     *ngIf="candidateForm.get('candidateLastName')?.hasError('required') && candidateForm.get('candidateLastName')?.touched">
                     <mat-error>Last Name Required</mat-error>
@@ -75,89 +77,93 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex   parent">
-            <div class="child d-flex m-b-10">
-                <span class="label m-b-4">City</span>
-                <input type="text" class="input-box" formControlName="candidateCity">
-            </div>
-            <div class="child d-flex m-b-10">
-                <span class="label m-b-4">District</span>
-                <input type="text" class="input-box" formControlName="candidateDistrict">
-            </div>
-            <div class="child d-flex m-b-10">
-                <span class="label m-b-4">State</span>
-                <input type="text" class="input-box" formControlName="candidateState">
-            </div>
-        </div>
-        <div class="d-flex   parent">
-            <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Education</span>
-                <input type="text" class="input-box" formControlName="candidateEducation">
-            </div>
-            <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Experience</span>
-                <input type="text" class="input-box" formControlName="candidateExperience">
-            </div>
-            <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Previous Organization</span>
-                <input type="text" class="input-box" formControlName="candidatePreviousOrg">
-            </div>
-        </div>
-        <div class="d-flex   parent">
-            <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Previous Designation</span>
-                <input type="text" class="input-box" formControlName="candidatePreviousDesignation">
-            </div>
+        <div class="d-flex parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Requirement</span>
-                <div class="input-box c-pointer p-relative p-t-10 p-l-6 no-close"
+                <div class="input-box c-pointer p-relative no-close"
                     (click)="requirementListOpen = !requirementListOpen">
-                    <span *ngIf="!selectedRequirementName" class="no-close">Select Requirement</span>
-                    <span *ngIf="selectedRequirementName" class="no-close">{{selectedRequirementName}}</span>
-                    <span><i class="f-right p-r-10 fa fa-chevron-down s-text no-close"></i></span>
-                    <div class="no-close dropdown c-pointer no-close" *ngIf="requirementListOpen">
-                        <p *ngFor="let requirement of requirementList"
-                            (click)="selectRequirement(requirement)">
-                            {{requirement?.requestName}}</p>
+                    <div class="p-t-8 p-l-5">
+                        <span *ngIf="!selectedRequirementName" class="no-close">Select Requirement</span>
+                        <span *ngIf="selectedRequirementName" class="no-close">{{selectedRequirementName}}</span>
+                        <span><i class="f-right p-r-10 fa fa-chevron-down s-text no-close"></i></span>
+                        <div class="no-close dropdown c-pointer no-close" *ngIf="requirementListOpen">
+                            <p *ngFor="let requirement of requirementList" (click)="selectRequirement(requirement)">
+                                {{requirement?.requestName}}</p>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Application Source</span>
-                <div class="input-box c-pointer p-relative p-t-10 p-l-6 no-close"
-                    (click)="showSource = !showSource">
-                    <span *ngIf="!sourceName">Select source</span>
-                    <span *ngIf="sourceName">{{sourceName}}</span>
-                    <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
-                    <div class="no-close dropdown c-pointer" *ngIf="showSource">
-                        <p *ngFor="let source of sourceList" (click)="selectsource(source.sourceId,source.sourceName)">
-                            {{source?.sourceName}}</p>
+                <div class="input-box c-pointer p-relative no-close" (click)="showSource = !showSource">
+                    <div class="p-t-10 p-l-6">
+                        <span *ngIf="!sourceName">Select source</span>
+                        <span *ngIf="sourceName">{{sourceName}}</span>
+                        <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
+                        <div class="no-close dropdown c-pointer" *ngIf="showSource">
+                            <p *ngFor="let source of sourceList"
+                                (click)="selectsource(source.sourceId,source.sourceName)">
+                                {{source?.sourceName}}</p>
+                        </div>
                     </div>
                 </div>
             </div>
-
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">Experience</span>
+                <input type="text" class="input-box" formControlName="candidateExperience" maxlength="20">
+            </div>
         </div>
+        <div class="d-flex   parent">
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">City</span>
+                <input type="text" class="input-box" formControlName="candidateCity" maxlength="20">
+            </div>
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">District</span>
+                <input type="text" class="input-box" formControlName="candidateDistrict" maxlength="20">
+            </div>
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">State</span>
+                <input type="text" class="input-box" formControlName="candidateState" maxlength="20">
+            </div>
+        </div>
+        <div class="d-flex   parent">
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">Education</span>
+                <input type="text" class="input-box" formControlName="candidateEducation" maxlength="40">
+            </div>
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">Previous Organization</span>
+                <input type="text" class="input-box" formControlName="candidatePreviousOrg" maxlength="40">
+            </div>
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">Previous Designation</span>
+                <input type="text" class="input-box" formControlName="candidatePreviousDesignation" maxlength="40">
+            </div>
+        </div>
+
         <div class="d-flex parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Current Salary</span>
-                <input type="text" class="input-box" formControlName="candidateCurrentSalary">
+                <input type="text" class="input-box" (keydown)="onKeypress($event)" formControlName="candidateCurrentSalary">
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Expected Salary</span>
-                <input type="text" class="input-box" (keydown)="budgetCheck($event)" formControlName="candidateExpectedSalary">
+                <input type="text" class="input-box" (keydown)="budgetCheck($event)" (paste)="onPaste($event)"
+                    formControlName="candidateExpectedSalary">
             </div>
             <div class="child d-flex m-b-10 p-relative">
                 <span class="label m-b-4">Upload Resume <span class="required">*</span></span>
-                <div class="text-area">
-                    <button class="upload-resume-btn"
+                <div class="input-box d-flex">
+                    <div class="upload-resume-btn c-pointer"
                         (click)="triggerFileInput();$event.stopPropagation();$event.preventDefault();">
-                        Upload
-                    </button>
-                    <input type="file" #fileInput class="input-box" style="display:none"
+                        <span class="upload">Upload</span>
+                    </div>
+                    <div *ngIf="resumeUploadSuccess" class="file-name">
+                        {{selectedFile?.name}}
+                    </div>
+                    <input type="file" name="file" #fileInput class="input-box" style="display:none"
                         (change)="onFileSelected($event)">
-                    <span *ngIf="resumeUploadSuccess" class="upload-success-message">
-                        Resume uploaded successfully!
-                    </span>
                 </div>
             </div>
         </div>
@@ -166,15 +172,16 @@
                 <div class="child d-flex m-b-10">
                     <span class="text m-b-4 no-close">Skill Sets</span>
                     <div class="d-flex skill-drop-down m-t-5 no-close w-100">
-                        <div class="input-box c-pointer p-t-10 no-close p-relative"
-                            (click)="showDropdown = !showDropdown">
-                            <span class="no-close'">{{selectedSkillType || 'Skill Type'}}</span>
-                            <span><i class="f-right p-r-10 fa fa-chevron-down no-close'"></i></span>
-                            <div class="dropdown c-pointer no-close'" *ngIf="showDropdown">
-                                <p *ngFor="let type of skillTypes" (click)="selectSkillType(type)">{{type}}</p>
+                        <div class="input-box c-pointer no-close p-relative" (click)="showDropdown = !showDropdown">
+                            <div class="p-t-10 ">
+                                <span class="no-close'">{{selectedSkillType || 'Skill Type'}}</span>
+                                <span><i class="f-right p-r-10 fa fa-chevron-down no-close'"></i></span>
+                                <div class="dropdown c-pointer no-close'" *ngIf="showDropdown">
+                                    <p *ngFor="let type of skillTypes" (click)="selectSkillType(type)">{{type}}</p>
+                                </div>
                             </div>
                         </div>
-                        <button class="add-btn" (click)="$event.preventDefault();toggleSearchBar()">Add</button>
+                        <span class="add-btn" (click)="$event.preventDefault();toggleSearchBar()">Add</span>
                     </div>
                     <div class="searchbar m-t-10 c-pointer p-t-10 no-close '" *ngIf="showSearchBar">
                         <input type="search" class="input-search" placeholder="Type to search skills..."

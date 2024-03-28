@@ -16,7 +16,6 @@ export class ServiceRequestComponent implements OnInit {
   @ViewChild('experienceInput') experienceInput!: ElementRef<HTMLInputElement>;
   @ViewChild('baseSalaryInput') baseSalaryInput!: ElementRef<HTMLInputElement>;
   @ViewChild('maxSalaryInput') maxSalaryInput!: ElementRef<HTMLInputElement>;
-  // @ViewChild('skills') skills!: ElementRef<HTMLInputElement>;
   @ViewChild('vacancy') vacancy!: ElementRef<HTMLInputElement>;
   list_id: any = [];
   list_team: any = [];
@@ -30,9 +29,10 @@ export class ServiceRequestComponent implements OnInit {
   requestVacancy: any;
   stationsList: any[] = [];
   stationId: any;
-  stationName: any;
-  selectedstations: any[] = [];
-  selectedStationsId: any[] = [1, 5];
+  selectedStations: any = [
+    { stationName: "Screening", stationId: 1 },
+    { stationName: "HR", stationId: 5 }
+  ];
   searchvalue: any;
   skillSuggestions: any[] = [];
   showSearchBar: boolean = false;
@@ -41,7 +41,10 @@ export class ServiceRequestComponent implements OnInit {
   stationIdToRemove: any;
   constructor(private toastr: ToastrServices, private apiService: ApiService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.fetchStations();
+    this.fetchServiceTeam();
+  }
 
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -83,28 +86,27 @@ export class ServiceRequestComponent implements OnInit {
 
   fetchStations(): void {
     this.apiService.get(`/user/stations`).subscribe((res: any) => {
-      this.stationsList = res.data;
-      const array = this.stationsList.slice(1, -1);
+      if (res?.data)
+        this.stationsList = res?.data.slice(1, -1);
     })
   }
 
-  selectStation(stationid: any, stationName: any): void {
+  selectStation(id: any, stationName: any): void {
     this.idListOpen = false;
-    this.stationId = stationid;
-    if (!this.selectedStationsId.includes(stationid)) this.selectedStationsId.push(stationid);
-    if (!this.selectedstations.includes(stationName)) this.selectedstations.push(stationName);
-    this.stationName = this.selectedstations.join(' -> ');
-    const screeningStation = this.stationsList.find((station: any) => station.stationName == 'Screening');
-    const hrStation = this.stationsList.find((station: any) => station.stationName == 'Hiring Manager');
-    if (screeningStation && !this.selectedStationsId.includes(screeningStation.stationId)) this.selectedStationsId.push(screeningStation.stationId);
-    if (hrStation && !this.selectedStationsId.includes(hrStation.stationId)) this.selectedStationsId.push(hrStation.stationId);
-    this.selectedstations[0] = { stationName: "Screening", stationId: 1 };
-    if (stationName === 'Written') this.selectedstations[1] = { stationName: "Written", stationId: 2 };
-    if (stationName === 'Technical 1') this.selectedstations[2] = { stationName: "Technical 1", stationId: 3 };
-    if (stationName === 'Technical 2') this.selectedstations[3] = { stationName: "Technical 2", stationId: 4 };
-    this.selectedstations[4] = { stationName: "Hr Manager", stationId: 5 };
-    console.log("selectedstations", this.selectedstations);
+    if (!this.selectedStations.some((station: { stationId: any; }) => station.stationId === id)) {
+      const hrManagerIndex = this.selectedStations.findIndex((station: { stationName: string; }) => station.stationName === 'HR Manager');
+      this.selectedStations.splice(hrManagerIndex, 0, { stationName, stationId: id });
+      this.stationsList = this.stationsList.filter((station: { stationId: any; }) => station.stationId !== id);
+    }
   }
+
+  deleteStation(stationId: any, stationName: any): void {
+    if (stationId !== 1 && stationId !== 5) {
+      this.selectedStations = this.selectedStations.filter((station: { stationId: any; }) => station.stationId !== stationId);
+      this.stationsList.push({ stationId: stationId, stationName: stationName });
+    }
+  }
+
   getSkillSuggestions(event: any): void {
     this.showSearchBar = true;
     this.searchvalue = event?.target.value;
@@ -114,6 +116,7 @@ export class ServiceRequestComponent implements OnInit {
       );
     });
   }
+
   selectSkill(suggestion: any): void {
     const selectedSkill = suggestion.skillName;
     this.selectedSkills.push(selectedSkill);
@@ -122,9 +125,11 @@ export class ServiceRequestComponent implements OnInit {
     this.showSearchBar = false;
     this.skillSuggestions = [];
   }
+
   removeSkill(skillToRemove: any): void {
     this.selectedSkills = this.selectedSkills?.filter(skill => skill.id !== skillToRemove.id);
   }
+
   submitClick(): void {
     const skillName = document.getElementById('skillSearch') as HTMLInputElement;
     this.skillNameValue = skillName.value;
@@ -138,7 +143,7 @@ export class ServiceRequestComponent implements OnInit {
       requestMaxSalary: this.maxSalaryInput.nativeElement.value,
       requestSkills: this.selectedSkills.length > 0 ? this.selectedSkills : [this.skillNameValue],
       requestVacancy: this.vacancy.nativeElement.value,
-      requestFlowStations: this.selectedStationsId
+      requestFlowStations: this.selectedStations?.stationId
     };
     this.apiService.post(`/service-request/create`, requestData).subscribe((res) => {
       this.toastr.success("Requirement created Successfully");
@@ -157,7 +162,6 @@ export class ServiceRequestComponent implements OnInit {
 
   resetFormAndState(): void {
     this.stationsList = [];
-    this.stationName = null;
     this.selectedTeam = null;
     this.clearInputvalue(this.experienceInput);
     this.clearInputvalue(this.serviceInput);
@@ -168,11 +172,10 @@ export class ServiceRequestComponent implements OnInit {
     this.idListOpen = false;
     this.teamListOpen = false;
     this.selectedSkills = [];
-    this.selectedstations = [];
+    this.selectedStations = [];
   }
-  delete(id: any): void {
-    this.stationIdToRemove = id;
-  }
+
+
 
   cancel(): void {
     this.resetFormAndState();
