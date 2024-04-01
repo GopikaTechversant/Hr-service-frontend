@@ -17,7 +17,7 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class InterviewCountComponent implements OnInit {
   chart: any;
-  displayDate: any;
+  displayDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   length: any = 20;
   pageSize = 5;
   pageIndex = 1;
@@ -52,7 +52,7 @@ export class InterviewCountComponent implements OnInit {
     const totalPages = Math.ceil(this.userCount / this.pageSize);
     this.lastPage = totalPages;
     if (this.currentPage > totalPages) this.currentPage = totalPages;
-    this.apiService.get(`/dashboard/interview-count`).subscribe((count: any) => {
+    this.apiService.get(`/dashboard/interview-count?date=${this.displayDate}&page=${this.currentPage}&limit=${this.pageSize}`).subscribe((count: any) => {
       this.countArray = count?.data;
     })
   }
@@ -138,6 +138,7 @@ export class InterviewCountComponent implements OnInit {
   dateChange(event: any): void {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    this.fetchInterviewCounts();
   }
 
   handlePageEvent(event: any) {

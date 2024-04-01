@@ -43,7 +43,7 @@ export class CandidateListComponent {
     this.lastPage = totalPages;
     if (this.currentPage > totalPages) this.currentPage = totalPages;
     this.searchQuery.searchWord = searchKey;
-    this.apiService.get(`/candidate/list?search=${this.searchQuery.searchWord}&page=${this.currentPage}&limit=${this.pageSize}`).subscribe((data: any) => {
+    this.apiService.get(`/candidate/list?search=${this.searchQuery?.searchWord}&page=${this.currentPage}&limit=${this.pageSize}`).subscribe((data: any) => {
         this.data = data;
         this.candidateList = [];
         this.candidateList = data?.candidates;

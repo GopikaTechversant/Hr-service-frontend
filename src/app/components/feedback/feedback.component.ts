@@ -35,11 +35,11 @@ export class FeedbackComponent implements OnInit {
     this.rejectedCandidatesEmitter.emit([this.candidateServiceId]);
     this.stationId = this.data.stationId;
     const payload = {
-      serviceId: this.candidateServiceId,
+      serviceId: this.data?.candidateId,
       stationId: this.stationId,
       status: this.data?.status,
       feedBack: this.feedback,
-      userId: this.data?.candidateId
+      userId: this.data?.userId
     }
     this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe((res: any) => {
       if (this.data?.status === 'pending') this.selectedCandidatesEmitter.emit([this.candidateServiceId]);

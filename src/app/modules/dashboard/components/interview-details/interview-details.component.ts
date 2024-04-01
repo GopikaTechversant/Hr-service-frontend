@@ -60,11 +60,11 @@ export class InterviewDetailsComponent implements OnInit {
   seachKeyword: string = '';
   candidatesList: any;
   candidate: any;
-  modeList:any[]=[];
-  selectedModeName:string='';
-  selectedModeId:any;
-  showModeList:boolean = false;
-  constructor(private datePipe: DatePipe,private http: HttpClient, private tostr: ToastrServices, private apiService : ApiService) {}
+  modeList: any[] = [];
+  selectedModeName: string = '';
+  selectedModeId: any;
+  showModeList: boolean = false;
+  constructor(private datePipe: DatePipe, private http: HttpClient, private tostr: ToastrServices, private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.today = new Date();
@@ -79,7 +79,7 @@ export class InterviewDetailsComponent implements OnInit {
       this.currentCompany = this.candidate?.candidatePreviousOrg;
       this.fetchUsers();
       this.fetchCandidates();
-      this.fetchPanel();     
+      this.fetchPanel();
     }
   }
 
@@ -114,6 +114,7 @@ export class InterviewDetailsComponent implements OnInit {
   fetchUsers(): void {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50',
+      'ngrok-skip-browser-warning': 'true'
     });
     this.http.get(`${environment.api_url}/user/lists`, { headers }).subscribe((res: any) => {
       if (res?.users) this.users_list = res?.users;
@@ -123,6 +124,7 @@ export class InterviewDetailsComponent implements OnInit {
   fetchPanel(): void {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50',
+      'ngrok-skip-browser-warning': 'true'
     });
     this.http.get(`${environment.api_url}/user/lists`, { headers }).subscribe((res: any) => {
       if (res?.users) this.panel_list = res?.users;
@@ -159,16 +161,19 @@ export class InterviewDetailsComponent implements OnInit {
       }
     })
   }
-  fetchMode():void{    
-    this.apiService.get(`/screening-station/interview-mode/list`).subscribe((res:any) => {
-      if(res?.data) this.modeList = res?.data;
-      
+
+  fetchMode(): void {
+    this.apiService.get(`/screening-station/interview-mode/list`).subscribe((res: any) => {
+      if (res?.data) this.modeList = res?.data;
+
     })
   }
-  selectMode(id:any,name:any):void{
-this.selectedModeId = id;
-this.selectedModeName =name;
+
+  selectMode(id: any, name: any): void {
+    this.selectedModeId = id;
+    this.selectedModeName = name;
   }
+  
   selectRecruiter(recruiterid: any, firstname: any, secondName: any): void {
     this.showRecruiters = false;
     this.recruiterId = recruiterid;
@@ -204,10 +209,10 @@ this.selectedModeName =name;
     this.candidate.selected = !this.candidate.selected;
     if (this.candidate !== null) {
       if (this.candidate.selected) {
-        if (this.selectedCandidate.indexOf(item?.candidateId) === -1) this.selectedCandidate.push(item?.candidateId); 
+        if (this.selectedCandidate.indexOf(item?.candidateId) === -1) this.selectedCandidate.push(item?.candidateId);
       } else {
         const index = this.selectedCandidate.indexOf(item?.candidateId);
-        if (index > -1) this.selectedCandidate.splice(index, 1);    
+        if (index > -1) this.selectedCandidate.splice(index, 1);
       }
     }
   }
@@ -221,7 +226,6 @@ this.selectedModeName =name;
   dateChange(event: any): void {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
-    // if (this.interviewStatus === 'Not yet Schedule') this.interviewStatus = 'scheduled';
     if (this.interviewStatus === 'scheduled') this.interviewStatus = 'Rescheduled';
     this.changeInterviewStatus();
   }
@@ -235,7 +239,6 @@ this.selectedModeName =name;
 
   timeChange(event: any): void {
     this.displayTime = event;
-    // if (this.interviewStatus === 'Not yet Schedule') this.interviewStatus = 'scheduled';
     if (this.interviewStatus === 'scheduled') this.interviewStatus = 'Rescheduled'
     this.changeInterviewStatus();
   }
@@ -257,7 +260,7 @@ this.selectedModeName =name;
       location: this.locationValue,
       interviewTime: this.displaydateTime,
       interViewPanel: this.panelId,
-      interviewMode: this.selectedModeId,
+      interviewMode: this.selectedModeName,
       serviceId: this.serviceId ? this.serviceId : '',
       interviewStatus: this.interviewStatus,
       rescheduleStatus: this.rescheduledStatusValue,

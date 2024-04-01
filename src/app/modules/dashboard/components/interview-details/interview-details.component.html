@@ -49,7 +49,7 @@
                 <span *ngIf="!positionName"><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
                 <div class="no-close dropdown m-t-6 p-t-10 p-l-6 c-pointer" *ngIf="showDropdown">
                     <div class="p-5" *ngFor="let position of positionList"
-                        (click)="selectPosition(position.requestId,position.requestName)">
+                        (click)="selectPosition(position?.requestId,position?.requestName)">
                         {{position?.requestName}}
                     </div>
                 </div>
@@ -67,8 +67,8 @@
                         class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
                 <div class="no-close dropdown m-t-6 p-t-10 p-l-6 c-pointer" *ngIf="showcandidate && positionId">
                     <div class="p-5" *ngFor="let candidate of candidate_list"
-                        (click)="selectCandidate(candidate.candidateId,candidate.candidateFirstName,candidate.candidateLastName,candidate)">
-                        {{candidate.candidateFirstName}} {{candidate.candidateLastName}}
+                        (click)="selectCandidate(candidate?.candidateId,candidate?.candidateFirstName,candidate?.candidateLastName,candidate)">
+                        {{candidate?.candidateFirstName}} {{candidate?.candidateLastName}}
                     </div>
                 </div>
             </div>
@@ -104,8 +104,8 @@
                 <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
                 <div class="no-close dropdown  p-b-7 p-l-6 c-pointer" *ngIf="showPanel">
                     <div class="p-5" *ngFor="let panel of panel_list "
-                        (click)="selectPanel(panel.userId,panel.userfirstName,panel.userlastName)">
-                        {{panel.userfirstName}} {{panel.userlastName}}
+                        (click)="selectPanel(panel?.userId,panel?.userfirstName,panel?.userlastName)">
+                        {{panel?.userfirstName}} {{panel?.userlastName}}
                     </div>
                 </div>
             </div>
@@ -121,7 +121,7 @@
                 <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
                 <div class="no-close dropdown  p-b-7 p-l-6 c-pointer" *ngIf="showModeList">
                     <div class="p-5" *ngFor="let mode of modeList " (click)="selectMode(mode.id,mode.modeName)">
-                        {{mode.modeName}}
+                        {{mode?.modeName}}
                     </div>
                 </div>
             </div>

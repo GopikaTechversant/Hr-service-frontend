@@ -13,36 +13,24 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class DailyReportComponent implements OnInit {
   @Input() requitersList: any;
-  // length: any = 20;
   pageSize = 4;
   pageIndex = 1;
-
   showFirstLastButtons = true;
   userRequirement: any = [];
-  // currentPag: number = 1;
-  // currentLimit: number = 7;
   totalCount: any;
   data: any;
   displayDate: any;
-  startDate?: Date;
-  endDate?: Date;
+  startDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+  endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   reportUserId: any = '';
-  reportFromDate: any = '';
-  reportToDate: any = '';
-  // reportPageNo: any = '';
-  // reportPageLimit: any = '';
   showRecruiters: boolean = false;
   recruiterName: string = 'Select';
   recruiterKeys: any[] = [];
-  fromDate: any;
   currentPage: number = 1;
   lastPage: any;
   userCount: any;
   today: any;
-  constructor(private apiService: ApiService) {
-    this.startDate = new Date();
-    this.endDate = new Date();
-  }
+  constructor(private apiService: ApiService, private datePipe: DatePipe) { }
 
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -61,7 +49,7 @@ export class DailyReportComponent implements OnInit {
     const totalPages = Math.ceil(this.userCount / this.pageSize);
     this.lastPage = totalPages;
     if (this.currentPage > totalPages) this.currentPage = totalPages;
-    this.apiService.get(`/report/report-list?reportUserId=${this.reportUserId}&reportFromDate=${this.reportFromDate}&reportToDate=${this.reportToDate}&reportPageNo=${this.currentPage}&reportPageLimit=${this.pageSize}`)
+    this.apiService.get(`/report/report-list?reportUserId=${this.reportUserId}&reportFromDate=${this.startDate}&reportToDate=${this.endDate}&reportPageNo=${this.currentPage}&reportPageLimit=${this.pageSize}`)
       .subscribe((res: any) => {
         if (res?.data) {
           // this.userRequirement = [];
@@ -84,28 +72,19 @@ export class DailyReportComponent implements OnInit {
 
   dateChange(event: any, range: string): void {
     let date = new Date(event?.value);
-    if (range == 'startDate') this.startDate = date;
-    if (range == 'endDate') this.endDate = date;
-    this.fromDate = this.startDate;
+    if (range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    if (range == 'endDate') this.endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    this.fetchDetails();
   }
 
-  // pageChange(event: any): void {
-  //   let skip = parseInt(event, 10);
-  //   this.currentPag = skip;
-  // }
 
-  // handlePageEvent(event: any) {
-  //   this.length = event.length;
-  //   this.pageSize = event.pageSize;
-  //   this.pageIndex = event.pageIndex;
-  //   this.fetchDetails();
-  // }
-
-  dateSearch(): void {
-    this.reportFromDate = this.startDate;
-    this.reportToDate = this.endDate;
+  dateSearch(start: any, end: any, name: any): void {
+    this.startDate = start;
+    this.endDate = end;
+    this.recruiterName = name;
     this.fetchDetails()
   }
+
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);
     this.fetchDetails();

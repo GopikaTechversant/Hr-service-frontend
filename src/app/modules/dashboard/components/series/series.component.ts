@@ -113,8 +113,9 @@ export class SeriesComponent implements OnInit {
   onCandidateSelectionChange(event: any, candidate: any, index: any): void {
     let action = event?.target?.value;
     this.candidateServiceId = candidate?.serviceId;
+    const userId = localStorage.getItem('userId');
     const dialogRef = this.dialog.open(FeedbackComponent, {
-      data: { candidateId: candidate?.serviceId, stationId: 1, status: action, candidateDetails: candidate },
+      data: { candidateId: candidate?.serviceId, stationId: 1, status: 'rejected', candidateDetails: candidate ,userId : userId },
       width: '600px',
       height: '300px'
     })
