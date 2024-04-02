@@ -49,9 +49,10 @@ export class CandidateDetailModalComponent implements OnInit {
     this.scoreValue = scoreElement ? scoreElement.value : '';
     const descriptionElement = document.getElementById('description') as HTMLInputElement;
     this.descriptionValue = descriptionElement ? descriptionElement.value : '';
+    const userId = localStorage.getItem('userId');
 
     this.progressQuery = {
-      progressAssignee: this.progressAssignee ? this.progressAssignee : '16',
+      progressAssignee: this.progressAssignee ? this.progressAssignee : userId,
       progressSkill: this.skillValue,
       progressServiceId: this.serviceId || 0,
       progressScore: this.scoreValue,
@@ -73,13 +74,12 @@ export class CandidateDetailModalComponent implements OnInit {
     }
   }
 
-
   rejectClick(): void {
     const userId = localStorage.getItem('userId');
     let payload = {
       serviceId: this.serviceId,
       stationId: this.stationId,
-      userId : userId,
+      userId: userId,
       status: "rejected",
     }
     this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
@@ -90,7 +90,6 @@ export class CandidateDetailModalComponent implements OnInit {
         this.tostr.error('Error adding progress');
       }
     });
-
   }
 
   approveClick(): void {

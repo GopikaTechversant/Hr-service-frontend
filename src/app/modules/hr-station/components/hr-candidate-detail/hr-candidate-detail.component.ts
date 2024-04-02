@@ -24,7 +24,6 @@ export class HrCandidateDetailComponent {
       this.candidateDetails = data?.candidateDetails?.candidate;
       this.hrReview = data?.candidateDetails?.reqHrReview;
       this.serviceId = this.data?.candidateDetails?.serviceId;
-
     }
     this.dialogRef.updateSize('60%', '85%')
   }
@@ -84,7 +83,6 @@ export class HrCandidateDetailComponent {
         this.tostr.error('Error adding progress');
       }
     });
-
   }
 
   approveClick(): void {

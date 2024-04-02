@@ -35,39 +35,35 @@ export class TechnicalDetailComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.stationId = params['id'];
       this.candidateList = [];
-      this.fetchList(); 
+      this.fetchList();
     });
   }
 
   fetchList(): void {
-    this.loader = true;    
-    if(this.stationId === '3'){
+    this.loader = true;
+    if (this.stationId === '3') {
       this.apiService.get(`/technical-station/list`).subscribe((data: any) => {
         this.loader = false;
-        if (data?.candidates) {
-          this.candidateList.push(data.candidates);
-        }
+        if (data?.candidates) this.candidateList.push(data.candidates);
       });
-    }else if(this.stationId === '4'){
+    } else if (this.stationId === '4') {
       this.apiService.get(`/technical-station-two/list`).subscribe((data: any) => {
         this.loader = false;
-        if (data?.candidates) {
-          this.candidateList.push(data.candidates);
-        }
+        if (data?.candidates) this.candidateList.push(data.candidates);
       });
-    }  
+    }
   }
 
-  fetchDetails(id: any , status :any) : void {
-    if(this.stationId === '3'){
-    this.apiService.get(`/technical-station/progressDetail?serviceId=${id}`).subscribe((data: any) => {
-      if (data?.candidates) this.viewCandidateDetail(data?.candidates , status); 
-    });
-  }else  if(this.stationId === '4'){
-    this.apiService.get(`/technical-station-two/progressDetail?serviceId=${id}`).subscribe((data: any) => {
-      if (data?.candidates) this.viewCandidateDetail(data?.candidates , status); 
-    });
-  }
+  fetchDetails(id: any, status: any): void {
+    if (this.stationId === '3') {
+      this.apiService.get(`/technical-station/progressDetail?serviceId=${id}`).subscribe((data: any) => {
+        if (data?.candidates) this.viewCandidateDetail(data?.candidates, status);
+      });
+    } else if (this.stationId === '4') {
+      this.apiService.get(`/technical-station-two/progressDetail?serviceId=${id}`).subscribe((data: any) => {
+        if (data?.candidates) this.viewCandidateDetail(data?.candidates, status);
+      });
+    }
   }
 
   selectStatusFilter(item: string): void {
@@ -76,26 +72,24 @@ export class TechnicalDetailComponent implements OnInit {
 
   statusClick(candidate: any, status: string, event: Event): void {
     candidate.selectedStatus = status;
-    candidate.selectStatus = false; 
-    event.stopPropagation(); 
-  }
-  
-  toggleDropdown(candidate: any, event: Event): void {
-    candidate.selectStatus = !candidate.selectStatus;
-    event.stopPropagation(); 
+    candidate.selectStatus = false;
+    event.stopPropagation();
   }
 
-  viewCandidateDetail(item: any , status :any): void {
+  toggleDropdown(candidate: any, event: Event): void {
+    candidate.selectStatus = !candidate.selectStatus;
+    event.stopPropagation();
+  }
+
+  viewCandidateDetail(item: any, status: any): void {
     const dialogRef = this.dialog.open(CandidateDetailModalComponent, {
-      data: { candidateId: item['candidate.candidateId'], stationId: this.stationId, candidateDetails: item , progressStatus: status},
+      data: { candidateId: item['candidate.candidateId'], stationId: this.stationId, candidateDetails: item, progressStatus: status },
       width: '600px',
       height: '300px'
     })
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-      console.log('Modal closed, refreshing list.');
-
       this.candidateList = [];
-       this.fetchList();
+      this.fetchList();
     })
   }
 
