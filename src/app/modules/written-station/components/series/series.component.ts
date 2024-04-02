@@ -56,7 +56,7 @@ export class SeriesComponent implements OnInit {
   }
   ngOnInit(): void {
     this.fetchCandidates();
-    this.fetchCandidatesWithSeriess();
+    this.fetchCandidatesWithSeries();
     this.refreshed = true;
     this.newSeriesCreated = false;
   }
@@ -74,11 +74,11 @@ export class SeriesComponent implements OnInit {
       this.questions_list = data.data.filter((question: any) => !this.assignedQuestionIds.includes(question.questionId));
     });
   }
+  // fetchCandidatesWithSeries(): void {
+  //   this.apiService.get(`/screening-station/list-batch/${this.requestId}?station=2`).subscribe((res => {
+  //   }))
+  // }
   fetchCandidatesWithSeries(): void {
-    this.apiService.get(`/screening-station/list-batch/${this.requestId}?station=2`).subscribe((res => {
-    }))
-  }
-  fetchCandidatesWithSeriess(): void {
     this.apiService.get(`/written-station/questionBatchList/${this.requestId}`).subscribe((res: any) => {
       this.series_list = res.data;
       console.log(" this.series_list", this.series_list);
@@ -97,17 +97,17 @@ export class SeriesComponent implements OnInit {
     series.active = true;
     this.activeSeries = series;
     this.activeDropdownSeries = series;
-    console.log(" this.series_list", this.activeSeries);
+    console.log(" this.series_list", this.series_list);
   }
   createSeries(): void {
     this.refreshed = true;
     this.newSeriesCreated = true;
-    const newSeriesName = `Series${this.series_list.length + 1}`;
+    const newSeriesName = `Question Box${this.series_list.length + 1}`;
     const newSeries = { name: newSeriesName, questions: [] };
     this.series_list.push(newSeries);
     this.activeSeries = newSeries;
     this.activeDropdownSeries = newSeries;
-    this.fetchCandidatesWithSeries();
+    // this.fetchCandidatesWithSeries();
   }
   approve(): void {
     const averageScoreInput = document.getElementById('averageScore') as HTMLInputElement;
@@ -137,7 +137,7 @@ export class SeriesComponent implements OnInit {
         candidate: this.selectedCandidate,
         score: this.selectedCandidate.examScore
       }
-      this.fetchCandidatesWithSeriess();
+      this.fetchCandidatesWithSeries();
     });
   }
 
@@ -169,7 +169,7 @@ export class SeriesComponent implements OnInit {
     }
     this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res: any) => {
       this.questionAssigned = true;
-      this.fetchCandidatesWithSeriess();
+      this.fetchCandidatesWithSeries();
       const index = this.questions_list.findIndex((question: any) => question.questionId === this.selectedQuestionId);
       if (index !== -1) {
         this.questions_list.splice(index, 1);
@@ -181,9 +181,14 @@ export class SeriesComponent implements OnInit {
   openAssignModal(candidate: any, series: any) {
     if (this.series_list?.length == 0) {
       const dialogRef = this.dialog.open(AssignSeriesComponent, {
-        height: this.series_list?.length == 0 ? '150px' : '265px',
-        width: this.series_list?.length == 0 ? '300px' : '477px',
-        data: this.series_list?.length != 0 ? { seriesList: this.series_list, candidateServiceId: candidate?.serviceId } : undefined
+        height: '150px',
+        width: '300px',
+      })
+    } else {
+      const dialogRef = this.dialog.open(AssignSeriesComponent, {
+        height: '265px',
+        width: '477px',
+        data: { seriesList: this.series_list ,candidateServiceId:candidate?.serviceId}
       });
       dialogRef.afterClosed().subscribe((selectedSeries: string) => {
         if (selectedSeries) {
@@ -220,7 +225,7 @@ export class SeriesComponent implements OnInit {
               }
               this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res: any) => {
                 this.questionAssigned = true;
-                this.fetchCandidatesWithSeriess();
+                this.fetchCandidatesWithSeries();
               })
             }
 
