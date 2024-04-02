@@ -11,6 +11,7 @@ import { DeleteComponent } from './components/delete/delete.component';
 import { EditComponent } from './components/edit/edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './modules/material/material.module';
+import { LogoutModalComponent } from './components/logout-modal/logout-modal.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { MaterialModule } from './modules/material/material.module';
     FeedbackComponent,
     DeleteComponent,
     EditComponent,
+    LogoutModalComponent,
   ],
   imports: [
     BrowserModule,

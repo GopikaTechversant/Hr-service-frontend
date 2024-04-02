@@ -108,10 +108,10 @@
                         (click)="idListOpen = !idListOpen">
                         <div class="d-flex align-center drop-down">
                             <div class="p-l-7">
-                                <div class="no-close s-list  m-text f-w-400 c-pointer flex-1">
+                                <div class="no-close s-list  m-text f-w-400 c-pointer flex-1"  (click)="fetchQuestions()">
                                     <span
                                         *ngIf="!selectedQuestions[series.name] && newSeriesCreated && !series.questionId"
-                                        (click)="fetchQuestions()" class="choose f-s-14">
+                                        class="choose f-s-14">
                                         Choose Questions</span>
                                 </div>
                                 <div *ngIf="selectedQuestions[series.name]" class="choose f-s-14">

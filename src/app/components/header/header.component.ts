@@ -2,6 +2,8 @@ import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { LogoutModalComponent } from '../logout-modal/logout-modal.component';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -68,10 +70,9 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem('userToken');
-    localStorage.removeItem('userRole');
-    localStorage.removeItem('userId');
-    this.router.navigate(['']);
+    const dialogRef = this.dialog.open(LogoutModalComponent, {
+      width: '300px',
+      height: '270px'
+    })
   }
-
 }
