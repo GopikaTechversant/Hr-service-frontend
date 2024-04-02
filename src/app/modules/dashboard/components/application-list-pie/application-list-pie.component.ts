@@ -12,7 +12,7 @@ import { ApiService } from 'src/app/services/api.service';
 export class ApplicationListPieComponent implements OnInit, AfterViewInit {
   @Input() positionId: string = ' ';
   chart: any;
-  displayDate: any;
+  displayDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   sourceList: any[] = [];
   sourceLabels: any[] = [];
   sourceCount: any[] = [];

@@ -120,8 +120,6 @@ export class ServiceRequestComponent implements OnInit {
   selectSkill(suggestion: any): void {
     const selectedSkill = suggestion.skillName;
     this.selectedSkills.push(selectedSkill);
-    console.log(" this.selectedSkills", this.selectedSkills);
-
     this.showSearchBar = false;
     this.skillSuggestions = [];
   }
@@ -134,6 +132,7 @@ export class ServiceRequestComponent implements OnInit {
     const skillName = document.getElementById('skillSearch') as HTMLInputElement;
     this.skillNameValue = skillName.value;
     // this.skillsArray = this.skills.nativeElement.value.split(',').map(skill => skill.trim());
+    const stationIds = this.selectedStations.map((station: { stationId: any; }) => station.stationId);
     const requestData = {
       requestServiceId: this.selectedId,
       requestName: this.serviceInput.nativeElement.value,
@@ -143,7 +142,7 @@ export class ServiceRequestComponent implements OnInit {
       requestMaxSalary: this.maxSalaryInput.nativeElement.value,
       requestSkills: this.selectedSkills.length > 0 ? this.selectedSkills : [this.skillNameValue],
       requestVacancy: this.vacancy.nativeElement.value,
-      requestFlowStations: this.selectedStations?.stationId
+      requestFlowStations: stationIds
     };
     this.apiService.post(`/service-request/create`, requestData).subscribe((res) => {
       this.toastr.success("Requirement created Successfully");

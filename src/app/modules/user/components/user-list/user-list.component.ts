@@ -73,7 +73,6 @@ export class UserListComponent implements OnInit {
     })
     dialogRef.componentInstance.onDeleteSuccess.subscribe(() => {
       this.http.post(`${environment.api_url}/user/delete`, { userId: this.candidateId }, { headers }).subscribe((res: any) => {
-        console.log("deleted");
         this.fetchUserList();
       })
     })

@@ -42,15 +42,12 @@ export class EditComponent implements OnInit {
       'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
     });
     this.http.get(`${environment.api_url}/user/reqUsersList/${this.data}`, { headers }).subscribe((res: any) => {
-      console.log("res", res);
       this.candidateDetails = res?.data;
-      console.log("this.candidateDetails ", res?.data);
       this.populateFieldvalues();
     })
   }
   populateFieldvalues(): void {
     this.firstName = this.candidateDetails?.userfirstName;
-    console.log("this.firstName", this.firstName);
     this.lastName = this.candidateDetails?.userlastName;
     this.displayDate = this.datePipe.transform(this.candidateDetails?.userDOB, 'yyyy-MM-dd');
     this.email = this.candidateDetails?.userEmail;
@@ -96,7 +93,6 @@ export class EditComponent implements OnInit {
     if (this.selectedStationId) {
       if (this.selectedStationId !== this.candidateDetails?.userWorkStation) payload.userWorkStation = this.selectedStationId;
     }
-    console.log("payload", payload);
     const headers = new HttpHeaders({
       'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
     });

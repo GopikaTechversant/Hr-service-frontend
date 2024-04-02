@@ -32,25 +32,25 @@ export class AddUserComponent implements OnInit {
   ngOnInit(): void {
 
   }
+  
   fetchStations(): void {
     this.apiService.get(`/user/stations`).subscribe((res: any) => {
-      console.log("fgyufgryug");
-      console.log("res", res);
-      this.stationList = res.data;
+      this.stationList = res?.data;
     })
   }
+  
   selectStation(stationid: any, stationName: any): void {
     // this.idListOpen = false;
     this.selectedStation = stationName;
     this.selectedStationId = stationid;
   }
+
   matchPasswordvalidator() {
     this.password = (document.getElementById('password') as HTMLInputElement)?.value;
     const confirmPassword = (document.getElementById('conformPassword') as HTMLInputElement)?.value;
-
-    // console.log("password",password);
     return this.password === confirmPassword;
   }
+
   clearInputValue(inputElement: ElementRef<HTMLInputElement>) {
     inputElement.nativeElement.value = '';
   }
@@ -66,7 +66,6 @@ export class AddUserComponent implements OnInit {
     this.email = (document.getElementById('email') as HTMLInputElement)?.value;
     this.role = (document.getElementById('role') as HTMLInputElement)?.value;
     //  this.multipleRole = (document.getElementById('multiplerole') as HTMLInputElement)?.value.split(',');
-    //   console.log("UserMultipleRole", this.multipleRole);
     const payload = {
       userfirstName: this.firstName,
       userlastName: this.lastName,
@@ -80,15 +79,16 @@ export class AddUserComponent implements OnInit {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
     })
-    console.log("payload", payload);
     this.http.post(`${environment.api_url}/user/create`, payload, { headers }).subscribe((res: any) => {
       this.tostr.success('User Created');
     })
     // this.resetForm();
   }
+
   cancel(): void {
     // this.resetForm();
   }
+
   dateChange(event: any): void {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');

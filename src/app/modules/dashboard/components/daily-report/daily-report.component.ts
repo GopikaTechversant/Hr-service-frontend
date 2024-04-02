@@ -52,10 +52,9 @@ export class DailyReportComponent implements OnInit {
     this.apiService.get(`/report/report-list?reportUserId=${this.reportUserId}&reportFromDate=${this.startDate}&reportToDate=${this.endDate}&reportPageNo=${this.currentPage}&reportPageLimit=${this.pageSize}`)
       .subscribe((res: any) => {
         if (res?.data) {
-          // this.userRequirement = [];
+          this.userRequirement = [];
           this.userRequirement = res?.data;
-          this.totalCount = res.reportCount;
-          console.log("this.userRequirement", this.userRequirement);
+          this.totalCount = res?.reportCount;
           this.userRequirement.forEach((objectItem: any) => {
             this.recruiterKeys = Object.keys(objectItem);
           })

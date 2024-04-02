@@ -10,21 +10,20 @@ export class AssignSeriesComponent implements OnInit {
   selectedSeries: string = '';
   seriesList: any[] = [];
  
-  constructor(public dialogRef: MatDialogRef<AssignSeriesComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(public dialogRef: MatDialogRef<AssignSeriesComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
-  }
   ngOnInit(): void {
     this.seriesList = this.data?.seriesList;
-    console.log("qwert", this.seriesList);
   }
+
   selectSeries(id: any, name: any): void {
-    this.selectedSeries = name;
-    console.log("this.selectedSeries",this.selectedSeries);
-    
+    this.selectedSeries = name;    
   }
+  
   cancel(): void {
     this.dialogRef.close();
   }
+  
   save(): void {
     this.dialogRef.close(this.selectedSeries);
   }

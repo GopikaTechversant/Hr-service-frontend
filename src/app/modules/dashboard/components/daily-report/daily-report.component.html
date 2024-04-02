@@ -47,7 +47,8 @@
         </div>
     </div>
     <div class="table-container m-b-0">
-        <table class="table">
+        <div class="no-data" *ngIf="!userRequirement || userRequirement.length === 0">No Data Found</div>
+        <table class="table" *ngIf="userRequirement.length > 0">
             <tr class="table-header p-b-10">
                 <ng-container *ngFor="let key of  recruiterKeys">
                     <td>{{key}}</td>
@@ -60,8 +61,9 @@
                     </ng-container>
                 </tr>
             </ng-container>
-        </table>
+        </table>     
     </div>
+    
     <!-- <div class="pagination d-flex j-end" *ngIf="userRequirement?.length > 0">
         <mat-paginator (page)="handlePageEvent($event)" [length]="length" [pageSize]="pageSize"
             [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="pageSizeOptions" [pageIndex]="pageIndex"

@@ -16,12 +16,11 @@ export class ApplicationListBarComponent implements OnInit {
   applicationList: any[] = [];
   labels: any;
   dataSet: any;
-  displayDate: any;
+  displayDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
 
   constructor(private apiService: ApiService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
-    this.displayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     this.fetchApplicationList();
     Chart.register(ChartDataLabels);
     this.createBarChart();

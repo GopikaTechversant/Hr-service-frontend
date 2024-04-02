@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <div class="add-btn no-close c-pointer" (click)="idListOpen = !idListOpen">
-                        <span>Add</span>
+                        <span class="p-t-20">Add</span>
                     </div>
                     <div class="drop-list no-close" *ngIf="idListOpen && (selectedStations.length < 5)">
                         <div (click)="selectStation(station?.stationId,station?.stationName)"
