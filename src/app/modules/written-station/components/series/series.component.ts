@@ -62,14 +62,11 @@ export class SeriesComponent implements OnInit {
   }
   fetchCandidates(): void {
     this.apiService.get(`/screening-station/list-batch/${this.requestId}?station=2`).subscribe((res: any) => {
-      this.candidates_list = res.candidates;
+      if(res?.candidates) this.candidates_list = res?.candidates;
       console.log(" this.candidates_list ", this.candidates_list);
-
-      this.candidates_list.forEach((candidate: any) => {
-        if (candidate.serviceId) {
-          this.serviceIds.push(candidate.serviceId);
-        }
-      });
+      // this.candidates_list.forEach((candidate: any) => {
+      //   if (candidate.serviceId) this.serviceIds.push(candidate.serviceId);
+      // });
     });
   }
   fetchQuestions(): void {
@@ -153,7 +150,7 @@ export class SeriesComponent implements OnInit {
     if (this.activeSeries && this.selectedQuestionId !== id) {
       this.selectedQuestionId = id;
       console.log(" this.selectedQuestionId", this.selectedQuestionId);
-      
+
       this.selectedQuestionName = name;
       this.selectedQuestions[this.activeSeries.name] = { id, name };
       this.activeSeries.questions = [name];
@@ -184,22 +181,14 @@ export class SeriesComponent implements OnInit {
   openAssignModal(candidate: any, series: any) {
     if (this.series_list?.length == 0) {
       const dialogRef = this.dialog.open(AssignSeriesComponent, {
-        height: '150px',
-        width: '300px',
-      })
-    } else {
-      const dialogRef = this.dialog.open(AssignSeriesComponent, {
-        height: '265px',
-        width: '477px',
-        data: { seriesList: this.series_list ,candidateServiceId:candidate?.serviceId}
+        height: this.series_list?.length == 0 ? '150px' : '265px',
+        width: this.series_list?.length == 0 ? '300px' : '477px',
+        data: this.series_list?.length != 0 ? { seriesList: this.series_list, candidateServiceId: candidate?.serviceId } : undefined
       });
       dialogRef.afterClosed().subscribe((selectedSeries: string) => {
         if (selectedSeries) {
-          console.log("selectedSeries qqqqq", selectedSeries);
           const selectedSeriesObj = this.series_list.find((s: any) => s.name === selectedSeries || s.questionName === selectedSeries)
           if (selectedSeriesObj) {
-            console.log("selectedSeriesObj",selectedSeriesObj);
-            
             // remove the candidate from the candidate list
             this.candidates_list = this.candidates_list.filter((c: any) => c.candidateId !== candidate.candidateId);
             // remove the candidate from the previous series candidate array
@@ -209,14 +198,13 @@ export class SeriesComponent implements OnInit {
               }
             });
             //add the candidates to the selected series 
-            if (!candidate.progressId || this.questionAssigned ) {
+            if (!candidate.progressId || this.questionAssigned) {
               selectedSeriesObj.candidates = selectedSeriesObj.candidates || [];
               selectedSeriesObj.candidates.push(candidate);
             }
             this.payload_series_list = this.series_list.map((s: any) => {
               if (s && s.candidates) {
                 this.serviceId = s.candidates.map((c: any) => c?.serviceId);
-                let array = s.questions;
                 return { questions: s.questions };
               }
               return s;
@@ -224,13 +212,13 @@ export class SeriesComponent implements OnInit {
 
             this.series_list = [...this.series_list];
             console.log("this.series_list", this.series_list);
-            if(selectedSeriesObj.questionName) {
+            if (selectedSeriesObj.questionName) {
               const requestData = {
                 questionAssignee: null,
                 questionId: selectedSeriesObj.questionId,
                 questionServiceId: this.serviceId
               }
-              this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res:any) => {
+              this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res: any) => {
                 this.questionAssigned = true;
                 this.fetchCandidatesWithSeriess();
               })
@@ -244,6 +232,6 @@ export class SeriesComponent implements OnInit {
     }
   }
   allCandidatesHaveScores(): boolean {
-    return this.candidates_list?.every((candidate:any) => candidate.serviceStatus !== 'done');
+    return this.candidates_list?.every((candidate: any) => candidate.serviceStatus !== 'done');
   }
 }
