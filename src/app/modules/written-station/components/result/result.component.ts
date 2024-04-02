@@ -40,6 +40,7 @@ export class ResultComponent {
       this.dialogRef.close(true);
       this.scoreSubmitted.emit(parseInt(this.scoreValue, 10));
     }, err => {
+      this.dialogRef.close();
       if (err?.status === 500) this.tostr.error("Internal Server Error")
       else this.tostr.warning(err?.error?.message ? err?.error?.message : "Cannot update Result")
     });
