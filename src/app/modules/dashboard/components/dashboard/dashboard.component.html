@@ -3,19 +3,18 @@
         <span class="head">Dashboard</span>
     </div>
     <div class="d-flex j-end m-r-10">
-        <div class="input p-t-10 p-l-6 c-pointer no-close p-relative" (click)="requestList_open = !requestList_open;"> 
+        <div class="input p-t-10 p-l-6 c-pointer no-close p-relative"> 
             <span class="f-right d-flex">
-                <span class="clear-filter">x</span>     
-                <div >
-                    <i [ngClass]="requestList_open ? ' fa fa-chevron-down' : ' fa fa-chevron-up'" class="p-r-10 s-text no-close"></i>
+                <span *ngIf="displayPosition" (click)="clearFilter()" class="clear-filter">x</span>     
+                <div  (click)="requestList_open = !requestList_open">
+                    <i [ngClass]="requestList_open ? ' fa fa-chevron-up' : ' fa fa-chevron-down'" class="m-l-5 p-r-10 s-text no-close"></i>
                 </div>
             </span> 
-            {{displayPosition || 'Select Position'}}
+            <span (click)="requestList_open = !requestList_open">{{displayPosition || 'Select Position'}}</span>
             <div class="no-close dropdown c-pointer no-close" *ngIf="requestList_open">
-                <div  (click)='selectPosition(name?.requestName,name?.requestId);'*ngFor="let name of requestList" class="p-5">
+                <div  (click)='selectPosition(name?.requestName,name?.requestId); !requestList_open'*ngFor="let name of requestList" class="p-5">
                     {{name?.requestName}}
-                </div>
-                
+                </div>               
             </div>
         </div>
     </div>

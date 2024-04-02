@@ -39,6 +39,7 @@ export class ServiceRequestComponent implements OnInit {
   selectedSkills: any[] = [];
   skillNameValue: string = '';
   stationIdToRemove: any;
+  stationsLists: any;
   constructor(private toastr: ToastrServices, private apiService: ApiService) { }
 
   ngOnInit(): void {
@@ -86,18 +87,27 @@ export class ServiceRequestComponent implements OnInit {
 
   fetchStations(): void {
     this.apiService.get(`/user/stations`).subscribe((res: any) => {
-      if (res?.data)
-        this.stationsList = res?.data.slice(1, -1);
+      if (res?.data) {
+        this.stationsLists = res?.data;
+        this.stationsList = [
+          { "stationName": "Written", "stationId": 2 },
+          { "stationName": "Technical", "stationId": 6 } 
+        ];
+      }
     })
   }
 
-  selectStation(id: any, stationName: any): void {
-    this.idListOpen = false;
-    if (!this.selectedStations.some((station: { stationId: any; }) => station.stationId === id)) {
-      const hrManagerIndex = this.selectedStations.findIndex((station: { stationName: string; }) => station.stationName === 'HR Manager');
-      this.selectedStations.splice(hrManagerIndex, 0, { stationName, stationId: id });
-      this.stationsList = this.stationsList.filter((station: { stationId: any; }) => station.stationId !== id);
-    }
+  selectStation(id: any, stationName: any): void {  
+    if(stationName !== "Technical"){
+      if (!this.selectedStations.some((station: { stationId: any; }) => station.stationId === id)) {
+        const hrManagerIndex = this.selectedStations.findIndex((station: { stationName: string; }) => station.stationName === 'HR Manager');
+        this.selectedStations.splice(hrManagerIndex, 0, { stationName, stationId: id });
+        this.stationsList = this.stationsList.filter((station: { stationId: any; }) => station.stationId !== id);  
+        this.idListOpen = false;
+      } 
+    }   
+    if (stationName === "Written" || stationName === "Technical") this.stationsList = this.stationsLists.slice(2, -1)
+    else if (stationName === "Technical 2") this.stationsList = this.stationsList.filter(station => station.stationName !== "Technical 1");   
   }
 
   deleteStation(stationId: any, stationName: any): void {
@@ -105,6 +115,7 @@ export class ServiceRequestComponent implements OnInit {
       this.selectedStations = this.selectedStations.filter((station: { stationId: any; }) => station.stationId !== stationId);
       this.stationsList.push({ stationId: stationId, stationName: stationName });
     }
+    this.fetchStations();
   }
 
   getSkillSuggestions(event: any): void {
