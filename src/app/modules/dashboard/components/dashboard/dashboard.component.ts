@@ -49,11 +49,18 @@ export class DashboardComponent implements OnInit {
   }
 
   selectPosition(name: string, id: string): void {
+    this.requestList_open = false;
     this.displayPosition = name;
     this.positionId = id;
     sessionStorage.setItem('position', this.displayPosition);
     sessionStorage.setItem('positionId', this.positionId);
     this.fetchcount();
+  }
+
+  clearFilter(): void {
+    this.displayPosition = '';
+    this.positionId = '';
+    this. selectPosition( this.displayPosition, this.positionId)
   }
 
 }
