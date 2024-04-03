@@ -116,7 +116,7 @@ tr {
 .table-container {
     overflow-y: auto;
     overflow-x: hidden;
-    max-height: calc(100vh - 60px);
+    min-height: calc(100vh - 505px);
 }
 
 .table-header {

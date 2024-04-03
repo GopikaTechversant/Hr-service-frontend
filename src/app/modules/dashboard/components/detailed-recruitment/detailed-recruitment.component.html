@@ -63,7 +63,7 @@
             <div *ngIf="candidateList?.length === 0" class="no-data">No Data Found</div>
         </table>    
     </div>
-    <div class="page  d-flex j-space m-r-10">
+    <div class="page d-flex j-end">
         <button *ngIf="currentPage !== 1" class="box" (click)="onPageChange(currentPage - 1)">{{currentPage -1}}</button>
         <button class="box current-page">{{ currentPage }}</button>
         <button class="box" (click)="onPageChange(currentPage + 1)"

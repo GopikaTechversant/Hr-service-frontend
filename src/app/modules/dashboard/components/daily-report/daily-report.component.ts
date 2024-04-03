@@ -13,7 +13,7 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class DailyReportComponent implements OnInit {
   @Input() requitersList: any;
-  pageSize = 4;
+  pageSize = 7;
   pageIndex = 1;
   showFirstLastButtons = true;
   userRequirement: any = [];

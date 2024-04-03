@@ -23,11 +23,11 @@
     padding: 5px;
 }
 
-.clear-filter {
-
-    background-color: #ffff;
-    padding: 5px;
-}
+.clear-filter{
+    padding: 0px 4px;
+    border: 1px solid #3c40434d;
+    border-radius: 50%;
+  }
 
 .search-head {
     color: #1e5181;
@@ -150,7 +150,6 @@ tr {
     font-size: 14px;
     font-weight: 400;
     width: 292px;
-    padding: 5px;
     border-radius: 4px;
     position: absolute;
     z-index: 999;
@@ -160,7 +159,7 @@ tr {
 }
 
 .dropdown :hover {
-    color: blue;
+    background-color: #eceaea;
 }
 
 .dropdown-1 {
@@ -182,4 +181,26 @@ tr {
 
 .dropdown-1 :hover {
     color: blue;
+}
+
+.box {
+    height: 26px;
+    width: 26px;
+    border: none;
+    background-color: white;
+}
+
+.box :hover {
+    background: #F0F7FF;
+}
+
+.page {
+    margin: 10px;
+}
+
+.current-page {
+    background-color: #005EC9;
+    color: #FFFFFF;
+    height: 26px;
+    width: 26px;
 }

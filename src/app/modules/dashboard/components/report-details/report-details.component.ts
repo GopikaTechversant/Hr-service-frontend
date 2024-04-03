@@ -72,7 +72,7 @@ export class ReportDetailsComponent implements OnInit {
   }
 
   fetchInterviewStatus(): void {
-    this.apiService.get(`/report/over-all-interview-status`).subscribe((res: any) => {
+    this.apiService.get(`/report/over-all-interview-status?page=1&limit=2`).subscribe((res: any) => {
       if (res?.data) {
         this.interviewDetails = res?.data;
       }
