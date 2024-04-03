@@ -31,7 +31,7 @@
                 <div class="no-close  requirement-dropdown-list c-pointer" *ngIf="requestList_open">
                     <div class="p-5" (click)='selectRequestId(name.requestName,name.requestId);'
                         *ngFor="let name of list_requests">
-                        {{name.requestName}}
+                        {{name?.requestName}}
                     </div>
                 </div>
             </div>

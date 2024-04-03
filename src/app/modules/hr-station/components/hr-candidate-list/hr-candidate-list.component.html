@@ -1,6 +1,18 @@
 <div class="m-10">
-    <div class="p-l-5">
+    <div class="p-l-5 d-flex j-space p-b-10">
         <span class="f-s-18 f-w-500 detail-head p-5 p-l-0">HR Station</span>
+        <div class="input c-pointer p-t-10 no-close p-relative">
+            <span class="no-close p-l-10" (click)="filterStatus = !filterStatus">{{filteredStatus=== ' ' ? 'Filter by Status' : filteredStatus | titlecase}}</span>
+            <span class="f-right">
+                <span *ngIf="filteredStatus && filteredStatus !== ' '" (click)="clearFilter()" class="clear-filter">x</span>
+                <span  (click)="filterStatus = !filterStatus"><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
+            </span>    
+            <div class="dropdown c-pointer no-close'" *ngIf="filterStatus" >
+                <span class="d-flex p-0" *ngFor="let type of Status" (click)="selectStatusFilter(type?.status);filterStatus = !filterStatus">
+                   <span class="p-l-10 p-5">{{type?.status | titlecase}}</span> 
+                </span>
+            </div>
+        </div>
     </div>
     <div class="main d-flex">
         <div class="table-container m-b-0">

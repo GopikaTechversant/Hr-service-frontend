@@ -58,9 +58,9 @@ export class DashboardComponent implements OnInit {
   }
 
   clearFilter(): void {
-    this.displayPosition = '';
-    this.positionId = '';
-    this. selectPosition( this.displayPosition, this.positionId)
+    this.displayPosition = ' ';
+    this.positionId = ' ';
+    this.selectPosition(this.displayPosition, this.positionId)
   }
 
 }

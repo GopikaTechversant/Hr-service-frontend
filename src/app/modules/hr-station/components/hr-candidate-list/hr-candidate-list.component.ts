@@ -13,13 +13,20 @@ export class HrCandidateListComponent implements OnInit {
   candidateList: any = [];
   loader: boolean = false;
   selectedItem: any = [];
+  Status: any = [
+    { status: 'pending' },
+    { status: 'rejected' },
+    { status: 'done' }
+  ]
+  filteredStatus: any = ' ';
+  filterStatus:boolean = false;
   constructor(private dialog: MatDialog, private apiService: ApiService) { }
   ngOnInit(): void {
     this.fetchList();
   }
 
   fetchList() {
-    this.apiService.get(`/hr-station/list`).subscribe((data: any) => {
+    this.apiService.get(`/hr-station/list?status_filter=${this.filteredStatus}`).subscribe((data: any) => {
       this.candidateList = [];
       this.loader = false;
       if (data.candidates) {
@@ -29,6 +36,18 @@ export class HrCandidateListComponent implements OnInit {
       }
     })
   }
+
+  selectStatusFilter(item: string): void {
+    this.filteredStatus = item;
+    sessionStorage.setItem('status', this.filteredStatus);
+    this.fetchList();
+  }
+
+  clearFilter(): void {
+    this.filteredStatus = ' ';
+    this.selectStatusFilter(this.filteredStatus);
+  }
+
 
   fetchDetails(id: any, status: any): void {
     this.apiService.get(`/hr-station/candidateDetail?serviceId=${id}`).subscribe((data: any) => {

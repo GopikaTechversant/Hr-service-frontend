@@ -19,12 +19,16 @@ export class TechnicalDetailComponent implements OnInit {
   stationId: any;
   filterStatus: boolean = false;
   selectStatus: boolean = false;
-  Status: any = [{ status: 'active' },
-  { status: 'pending' },
-  { status: 'done' }
+  limit: number = 10;
+  Status: any = [
+    { status: 'pending' },
+    { status: 'rejected' },
+    { status: 'done' }
   ]
-  filteredStatus: string = 'Filter Candidate by Status';
+  filteredStatus: any = ' ';
   candidateStatus: string = 'Choose Candidate Status';
+  currentPage: number = 1;
+
   constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog) {
     // this.route.params.subscribe(params => {
     //   this.stationId = params['id'];
@@ -32,6 +36,7 @@ export class TechnicalDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.filteredStatus = sessionStorage.getItem('status');
     this.route.params.subscribe(params => {
       this.stationId = params['id'];
       this.candidateList = [];
@@ -41,13 +46,17 @@ export class TechnicalDetailComponent implements OnInit {
 
   fetchList(): void {
     this.loader = true;
+    this.candidateList = [];
+    // const totalPages = Math.ceil(this.userCount / this.pageSize);
+    // this.lastPage = totalPages;
+    // if (this.currentPage > totalPages) this.currentPage = totalPages;
     if (this.stationId === '3') {
-      this.apiService.get(`/technical-station/list`).subscribe((data: any) => {
+      this.apiService.get(`/technical-station/list?page=${this.currentPage}&limit=${this.limit}&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
         this.loader = false;
         if (data?.candidates) this.candidateList.push(data.candidates);
       });
     } else if (this.stationId === '4') {
-      this.apiService.get(`/technical-station-two/list`).subscribe((data: any) => {
+      this.apiService.get(`/technical-station-two/list?page=${this.currentPage}&limit=10&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
         this.loader = false;
         if (data?.candidates) this.candidateList.push(data.candidates);
       });
@@ -67,7 +76,14 @@ export class TechnicalDetailComponent implements OnInit {
   }
 
   selectStatusFilter(item: string): void {
-    this.filteredStatus = item
+    this.filteredStatus = item;
+    sessionStorage.setItem('status', this.filteredStatus);
+    this.fetchList();
+  }
+
+  clearFilter(): void {
+    this.filteredStatus = ' ';
+    this.selectStatusFilter(this.filteredStatus);
   }
 
   statusClick(candidate: any, status: string, event: Event): void {
@@ -91,6 +107,11 @@ export class TechnicalDetailComponent implements OnInit {
       this.candidateList = [];
       this.fetchList();
     })
+  }
+
+  onPageChange(pageNumber: number): void {
+    this.currentPage = Math.max(1, pageNumber);
+    this.fetchList();
   }
 
 }
