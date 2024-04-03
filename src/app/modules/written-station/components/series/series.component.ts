@@ -49,6 +49,8 @@ export class SeriesComponent implements OnInit {
   candidateMarkDetail: any;
   questionAssigned: boolean = false;
   droppedAllowed: boolean = false;
+  selectedQuestion: any;
+  candidatesStatus: any[] = [];
   constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -57,12 +59,13 @@ export class SeriesComponent implements OnInit {
   ngOnInit(): void {
     this.fetchCandidates();
     this.fetchCandidatesWithSeries();
+    this.fetchQuestions();
     this.refreshed = true;
     this.newSeriesCreated = false;
   }
   fetchCandidates(): void {
     this.apiService.get(`/screening-station/list-batch/${this.requestId}?station=2`).subscribe((res: any) => {
-      if(res?.candidates) this.candidates_list = res?.candidates;
+      if (res?.candidates) this.candidates_list = res?.candidates;
       console.log(" this.candidates_list ", this.candidates_list);
       // this.candidates_list.forEach((candidate: any) => {
       //   if (candidate.serviceId) this.serviceIds.push(candidate.serviceId);
@@ -80,18 +83,34 @@ export class SeriesComponent implements OnInit {
   // }
   fetchCandidatesWithSeries(): void {
     this.apiService.get(`/written-station/questionBatchList/${this.requestId}`).subscribe((res: any) => {
-      this.series_list = res.data;
-      console.log(" this.series_list", this.series_list);
-      res?.data.forEach((data: any) => {
-        this.assignedQuestionIds.push(data.questionId);
-        this.assignedQuestionsName.push({
-          id: data.questionId,
-          name: data.questionName
-        });
+      this.candidatesStatus = res?.data;
+      this.candidatesStatus.forEach((data: any) => {
+        console.log("data", data);
+
       })
-      this.newSeriesCreated = false;
+      if (res.result && res.data) {
+        this.series_list = res.data.map((item: { questionId: any; questionName: any; candidates: any; }, index: number) => ({
+          name: `Series ${index + 1}`,
+          active: false,
+          questionId: item.questionId,
+          questionName: item.questionName,
+          showQuestions: false,
+          selectedQuestion: null,
+          candidates: item.candidates
+        }));
+        console.log("this.series_list", this.series_list);
+      } else {
+        console.error('Failed to fetch series data:', res.message);
+
+      }
+    }, error => {
+      console.error('Error fetching series data:', error);
+
     });
+
+
   }
+
   seriesBoxClick(series: any) {
     this.series_list.forEach((s: any) => s.active = false);
     series.active = true;
@@ -99,16 +118,20 @@ export class SeriesComponent implements OnInit {
     this.activeDropdownSeries = series;
     console.log(" this.series_list", this.series_list);
   }
-  createSeries(): void {
-    this.refreshed = true;
-    this.newSeriesCreated = true;
-    const newSeriesName = `Question Box${this.series_list.length + 1}`;
-    const newSeries = { name: newSeriesName, questions: [] };
+
+  createSeries() {
+    const newSeries = {
+      name: `Series ${this.series_list.length + 1}`,
+      active: false,
+      questionId: null,
+      showQuestions: false,
+      selectedQuestion: null
+    };
     this.series_list.push(newSeries);
-    this.activeSeries = newSeries;
-    this.activeDropdownSeries = newSeries;
-    // this.fetchCandidatesWithSeries();
+    this.newSeriesCreated = true;
   }
+
+
   approve(): void {
     const averageScoreInput = document.getElementById('averageScore') as HTMLInputElement;
     const averageScore = averageScoreInput.value;
@@ -146,38 +169,43 @@ export class SeriesComponent implements OnInit {
     this.activeDropdownSeries = null;
   }
 
-  selectQuestion(id: any, name: any): void {
-    if (this.activeSeries && this.selectedQuestionId !== id) {
-      this.selectedQuestionId = id;
-      console.log(" this.selectedQuestionId", this.selectedQuestionId);
 
-      this.selectedQuestionName = name;
-      this.selectedQuestions[this.activeSeries.name] = { id, name };
-      this.activeSeries.questions = [name];
-      this.activeDropdownSeries = null;
-    }
+  selectQuestion(questionId: string, questionName: string, series: any): void {
+    this.selectedQuestion = questionName;
+    this.questions_list = this.questions_list.filter((question: { questionId: any; }) => question.questionId !== questionId);
+    this.selectedQuestionId = questionId;
+    this.assignQuestion(questionId, series);
   }
+
   isQuestionSelected(series: any, question: any): void {
     this.selectedQuestions[series.name]?.id === question.questionId;
     this.questionSelected = true;
   }
-  assignQuestion(): void {
+
+
+  assignQuestion(questionId: string, series: any): void {
     const requestData = {
       questionAssignee: null,
-      questionId: this.selectedQuestionId,
-      questionServiceId: this.serviceId
+      questionId: questionId,
+      questionServiceId: [] as string[]
+    };
+    // Get candidate service IDs for the current series
+    if (series.candidates && series.candidates.length > 0) {
+      series.candidates.forEach((candidate: { serviceId: string }) => {
+        if (candidate.serviceId) requestData.questionServiceId.push(candidate.serviceId);
+      });
     }
     this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res: any) => {
       this.questionAssigned = true;
-      this.fetchCandidatesWithSeries();
-      const index = this.questions_list.findIndex((question: any) => question.questionId === this.selectedQuestionId);
+      // Remove assigned question from the available questions list
+      const index = this.questions_list.findIndex((question: any) => question.questionId === questionId);
       if (index !== -1) {
         this.questions_list.splice(index, 1);
         this.questions_list = [...this.questions_list];
       }
-    }
-    )
+    });
   }
+
   openAssignModal(candidate: any, series: any) {
     if (this.series_list?.length == 0) {
       const dialogRef = this.dialog.open(AssignSeriesComponent, {
@@ -188,7 +216,7 @@ export class SeriesComponent implements OnInit {
       const dialogRef = this.dialog.open(AssignSeriesComponent, {
         height: '265px',
         width: '477px',
-        data: { seriesList: this.series_list ,candidateServiceId:candidate?.serviceId}
+        data: { seriesList: this.series_list, candidateServiceId: candidate?.serviceId }
       });
       dialogRef.afterClosed().subscribe((selectedSeries: string) => {
         if (selectedSeries) {
@@ -217,21 +245,9 @@ export class SeriesComponent implements OnInit {
 
             this.series_list = [...this.series_list];
             console.log("this.series_list", this.series_list);
-            if (selectedSeriesObj.questionName) {
-              const requestData = {
-                questionAssignee: null,
-                questionId: selectedSeriesObj.questionId,
-                questionServiceId: this.serviceId
-              }
-              this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res: any) => {
-                this.questionAssigned = true;
-                this.fetchCandidatesWithSeries();
-              })
-            }
-
-          } else {
-            this.tostr.warning('There is no selected series');
-          }
+            console.log("selectedSeriesObj", selectedSeriesObj);
+            if (selectedSeriesObj.questionName) this.assignQuestion(selectedSeriesObj.questionId, selectedSeriesObj)
+          } else this.tostr.warning('There is no selected series');
         }
       })
     }
