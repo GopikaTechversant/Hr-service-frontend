@@ -1,0 +1,40 @@
+.main {
+    flex-direction: column;
+}
+
+.text1 {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 21.33px;
+    text-align: center;
+}
+
+.text2 {
+    line-height: 21.33px;
+    text-align: center;
+}
+
+.btns {
+    width: 152px;
+}
+
+.button {
+    height: 28px;
+    width: 71px;
+}
+
+.cancel-btn {
+    outline: #575F6E;
+    border-radius: 5px;
+    background-color: white;
+    color: #575F6E;
+    border: none;
+    border: 1px solid #575F6E;
+}
+
+.logout-btn {
+    background-color: #005EC9;
+    border-radius: 5px;
+    color: white;
+    border: none;
+}

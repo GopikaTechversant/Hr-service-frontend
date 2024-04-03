@@ -56,20 +56,17 @@ export class SeriesComponent implements OnInit {
   }
   ngOnInit(): void {
     this.fetchCandidates();
-    this.fetchCandidatesWithSeriess();
+    this.fetchCandidatesWithSeries();
     this.refreshed = true;
     this.newSeriesCreated = false;
   }
   fetchCandidates(): void {
     this.apiService.get(`/screening-station/list-batch/${this.requestId}?station=2`).subscribe((res: any) => {
-      this.candidates_list = res.candidates;
+      if(res?.candidates) this.candidates_list = res?.candidates;
       console.log(" this.candidates_list ", this.candidates_list);
-
-      this.candidates_list.forEach((candidate: any) => {
-        if (candidate.serviceId) {
-          this.serviceIds.push(candidate.serviceId);
-        }
-      });
+      // this.candidates_list.forEach((candidate: any) => {
+      //   if (candidate.serviceId) this.serviceIds.push(candidate.serviceId);
+      // });
     });
   }
   fetchQuestions(): void {
@@ -77,11 +74,11 @@ export class SeriesComponent implements OnInit {
       this.questions_list = data.data.filter((question: any) => !this.assignedQuestionIds.includes(question.questionId));
     });
   }
+  // fetchCandidatesWithSeries(): void {
+  //   this.apiService.get(`/screening-station/list-batch/${this.requestId}?station=2`).subscribe((res => {
+  //   }))
+  // }
   fetchCandidatesWithSeries(): void {
-    this.apiService.get(`/screening-station/list-batch/${this.requestId}?station=2`).subscribe((res => {
-    }))
-  }
-  fetchCandidatesWithSeriess(): void {
     this.apiService.get(`/written-station/questionBatchList/${this.requestId}`).subscribe((res: any) => {
       this.series_list = res.data;
       console.log(" this.series_list", this.series_list);
@@ -100,17 +97,17 @@ export class SeriesComponent implements OnInit {
     series.active = true;
     this.activeSeries = series;
     this.activeDropdownSeries = series;
-    console.log(" this.series_list", this.activeSeries);
+    console.log(" this.series_list", this.series_list);
   }
   createSeries(): void {
     this.refreshed = true;
     this.newSeriesCreated = true;
-    const newSeriesName = `Series${this.series_list.length + 1}`;
+    const newSeriesName = `Question Box${this.series_list.length + 1}`;
     const newSeries = { name: newSeriesName, questions: [] };
     this.series_list.push(newSeries);
     this.activeSeries = newSeries;
     this.activeDropdownSeries = newSeries;
-    this.fetchCandidatesWithSeries();
+    // this.fetchCandidatesWithSeries();
   }
   approve(): void {
     const averageScoreInput = document.getElementById('averageScore') as HTMLInputElement;
@@ -140,7 +137,7 @@ export class SeriesComponent implements OnInit {
         candidate: this.selectedCandidate,
         score: this.selectedCandidate.examScore
       }
-      this.fetchCandidatesWithSeriess();
+      this.fetchCandidatesWithSeries();
     });
   }
 
@@ -153,7 +150,7 @@ export class SeriesComponent implements OnInit {
     if (this.activeSeries && this.selectedQuestionId !== id) {
       this.selectedQuestionId = id;
       console.log(" this.selectedQuestionId", this.selectedQuestionId);
-      
+
       this.selectedQuestionName = name;
       this.selectedQuestions[this.activeSeries.name] = { id, name };
       this.activeSeries.questions = [name];
@@ -172,7 +169,7 @@ export class SeriesComponent implements OnInit {
     }
     this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res: any) => {
       this.questionAssigned = true;
-      this.fetchCandidatesWithSeriess();
+      this.fetchCandidatesWithSeries();
       const index = this.questions_list.findIndex((question: any) => question.questionId === this.selectedQuestionId);
       if (index !== -1) {
         this.questions_list.splice(index, 1);
@@ -195,11 +192,8 @@ export class SeriesComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe((selectedSeries: string) => {
         if (selectedSeries) {
-          console.log("selectedSeries qqqqq", selectedSeries);
           const selectedSeriesObj = this.series_list.find((s: any) => s.name === selectedSeries || s.questionName === selectedSeries)
           if (selectedSeriesObj) {
-            console.log("selectedSeriesObj",selectedSeriesObj);
-            
             // remove the candidate from the candidate list
             this.candidates_list = this.candidates_list.filter((c: any) => c.candidateId !== candidate.candidateId);
             // remove the candidate from the previous series candidate array
@@ -209,14 +203,13 @@ export class SeriesComponent implements OnInit {
               }
             });
             //add the candidates to the selected series 
-            if (!candidate.progressId || this.questionAssigned ) {
+            if (!candidate.progressId || this.questionAssigned) {
               selectedSeriesObj.candidates = selectedSeriesObj.candidates || [];
               selectedSeriesObj.candidates.push(candidate);
             }
             this.payload_series_list = this.series_list.map((s: any) => {
               if (s && s.candidates) {
                 this.serviceId = s.candidates.map((c: any) => c?.serviceId);
-                let array = s.questions;
                 return { questions: s.questions };
               }
               return s;
@@ -224,15 +217,15 @@ export class SeriesComponent implements OnInit {
 
             this.series_list = [...this.series_list];
             console.log("this.series_list", this.series_list);
-            if(selectedSeriesObj.questionName) {
+            if (selectedSeriesObj.questionName) {
               const requestData = {
                 questionAssignee: null,
                 questionId: selectedSeriesObj.questionId,
                 questionServiceId: this.serviceId
               }
-              this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res:any) => {
+              this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res: any) => {
                 this.questionAssigned = true;
-                this.fetchCandidatesWithSeriess();
+                this.fetchCandidatesWithSeries();
               })
             }
 
@@ -244,6 +237,6 @@ export class SeriesComponent implements OnInit {
     }
   }
   allCandidatesHaveScores(): boolean {
-    return this.candidates_list?.every((candidate:any) => candidate.serviceStatus !== 'done');
+    return this.candidates_list?.every((candidate: any) => candidate.serviceStatus !== 'done');
   }
 }

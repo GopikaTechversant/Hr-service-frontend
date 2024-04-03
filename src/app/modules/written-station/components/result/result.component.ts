@@ -3,6 +3,7 @@ import { Component, Inject ,Output, EventEmitter } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { environment } from 'src/environments/environments';
 import { ApiService } from 'src/app/services/api.service';
+import { ToastrServices } from 'src/app/services/toastr.service';
 @Component({
   selector: 'app-result',
   templateUrl: './result.component.html',
@@ -14,7 +15,7 @@ export class ResultComponent {
   scoreValue: string = '';
   descriptionValue: string = '';
   constructor(private http: HttpClient,
-    @Inject(MAT_DIALOG_DATA) public data: any,private apiService:ApiService,
+    @Inject(MAT_DIALOG_DATA) public data: any,private apiService:ApiService,private tostr:ToastrServices,
     private dialogRef: MatDialogRef<ResultComponent>) {if (data){
       this.examServiceId = data.candidateIds
     } 
@@ -39,8 +40,9 @@ export class ResultComponent {
       this.dialogRef.close(true);
       this.scoreSubmitted.emit(parseInt(this.scoreValue, 10));
     }, err => {
-      if (err?.status === 500) alert("Internal Server Error")
-      else alert(err?.error?.message ? err?.error?.message : "Cannot update Result")
+      this.dialogRef.close();
+      if (err?.status === 500) this.tostr.error("Internal Server Error")
+      else this.tostr.warning(err?.error?.message ? err?.error?.message : "Cannot update Result")
     });
 
   }

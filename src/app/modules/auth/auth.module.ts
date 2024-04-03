@@ -7,6 +7,7 @@ import { MaterialModule } from '../material/material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
+
 const routes: Routes = [
   { path: '', component: LoginComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
@@ -15,6 +16,7 @@ const routes: Routes = [
   declarations: [
     LoginComponent,
     ForgotPasswordComponent,
+    
    
   ],
   imports: [

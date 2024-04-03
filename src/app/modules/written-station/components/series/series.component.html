@@ -36,7 +36,7 @@
         <div class="child1">
             <div class="name  d-flex p-t-23 p-l-17 j-space title-child1">
                 <p>Questions To Be Assigned</p>
-                <div class="title-right" *ngIf="candidates_list?.length > 0 || !allCandidatesHaveScores()">
+                <div class="title-right" *ngIf="allCandidatesHaveScores()">
                     <input type="text" placeholder="Enter the average score" id="averageScore" class="input p-l-10">
                     <button class="approve" (click)="approve()">Approve</button>
                 </div>
@@ -108,10 +108,10 @@
                         (click)="idListOpen = !idListOpen">
                         <div class="d-flex align-center drop-down">
                             <div class="p-l-7">
-                                <div class="no-close s-list  m-text f-w-400 c-pointer flex-1">
+                                <div class="no-close s-list  m-text f-w-400 c-pointer flex-1"  (click)="fetchQuestions()">
                                     <span
                                         *ngIf="!selectedQuestions[series.name] && newSeriesCreated && !series.questionId"
-                                        (click)="fetchQuestions()" class="choose f-s-14">
+                                        class="choose f-s-14">
                                         Choose Questions</span>
                                 </div>
                                 <div *ngIf="selectedQuestions[series.name]" class="choose f-s-14">
