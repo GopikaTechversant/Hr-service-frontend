@@ -90,52 +90,55 @@
                 </ng-container>
             </div>
         </div>
-        <div class="child2">
+            <div class="child2">
             <div class="barcode-parent text-center m-t-14">
                 <button class="series-btn f-s-14" (click)="createSeries()">Create Series</button>
             </div>
             <div *ngIf="series_list?.length === 0" class="parent-conatiner">
-                <div class="centerd-div" ><span class="no-data">Series Are'nt Created Yet!</span></div>
+                <div class="centerd-div"><span class="no-data">Series Aren't Created Yet!</span></div>
             </div>
             <div *ngFor="let series of series_list" class="series-list">
-                <div class="c-pointer series-box" (click)="seriesBoxClick(series)"  *ngIf="!selectedQuestions[series.name] && newSeriesCreated && !series.questionId"
-                    [ngClass]="{'active-series' : series?.active}">
-                    <div class=" p-t-10 series-name-container">
-                        <p class="m-b-0  series-name">
-                            {{series.name}}</p>
-                    </div>
-                    <div class="p-relative col-md-3 s-list  subscriber-drop-down j-space m-text"
-                        (click)="idListOpen = !idListOpen">
-                        <div class="d-flex align-center drop-down">
-                            <div class="p-l-7">
-                                <div class="no-close s-list  m-text f-w-400 c-pointer flex-1"  (click)="fetchQuestions()">
-                                    <span
-                                        *ngIf="!selectedQuestions[series.name] && newSeriesCreated && !series.questionId"
-                                        class="choose f-s-14">
-                                        Choose Questions</span>
-                                </div>
-                                <div *ngIf="selectedQuestions[series.name]" class="choose f-s-14">
-                                    {{ selectedQuestions[series.name].name }}
-                                </div>
-                                <!-- <div *ngIf="refreshed && !selectedQuestions[series.name] && series.questionId"
-                                    class="choose f-s-14">{{
-                                    series.questionName }}</div> -->
-                            </div>
-                            <div class="no-close  s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub p-r-17"><i
-                                    class="no-close s-list fa fa-chevron-down s-text"></i>
-                            </div>
+                <div class="series-box" (click)="seriesBoxClick(series)"
+                     *ngIf="!selectedQuestions[series.name] && newSeriesCreated && !series.questionId"
+                     [ngClass]="{'active-series' : series?.active}">
+                     <div class="p-t-10 series-name-container">
+                        <p class="m-b-0 series-name">{{series.name}}</p>
+                     </div>
+                     <div class="d-flex align-center drop-down p-relative" (click)="$event.stopPropagation(); series.showQuestions = !series.showQuestions">
+                        <span class="d-flex j-space "> 
+                            <span class="p-l-7 select-question">{{series.selectedQuestion || 'Select a Question'}}</span>
+                            <i class="fa fa-chevron-down filter-icon"></i>
+                        </span>
+                        <div class="m-b-2 drop-list" *ngIf="series.showQuestions">
+                          <div (click)="selectQuestion(question.questionId, question.questionName, series)"
+                               *ngFor="let question of questions_list" class="p-t-5 p-b-5 p-l-17 c-pointer drop-list-item">
+                            {{question?.questionName}}
+                          </div>
                         </div>
-                        <div class=" m-b-2 drop-list"
-                            *ngIf="idListOpen && series.active &&  !(!selectedQuestions[series.name] && series.questionId)">
-                            <div (click)="selectQuestion(question.questionId,question.questionName);assignQuestion()"
-                                *ngFor="let question of questions_list"
-                                class=" p-t-5 p-b-5 p-l-17 c-pointer drop-list-item">
-                                {{question.questionName}}</div>
-                        </div>
-                    </div>
+                     </div>
                 </div>
-            </div>
-        </div>
+                <div class="series-box" (click)="seriesBoxClick(series)"
+                *ngIf="!(!selectedQuestions[series.name] && newSeriesCreated && !series.questionId)"
+                [ngClass]="{'active-series' : series?.active}">
+                <div class="p-t-10 series-name-container">
+                   <p class="m-b-0 series-name">{{series.name}}</p>
+                </div>
+                <div class="d-flex align-center drop-down p-relative" (click)="$event.stopPropagation(); series.showQuestions = !series.showQuestions">
+                   <span class="d-flex j-space"> 
+                       {{series.selectedQuestion || 'Select a Question'}}
+                       <i class="fa fa-chevron-down filter-icon"></i>
+                   </span>
+                   <div class="m-b-2 drop-list" *ngIf="series.showQuestions">
+                     <div (click)="selectQuestion(question.questionId, question.questionName, series)"
+                          *ngFor="let question of questions_list" class="p-t-5 p-b-5 p-l-17 c-pointer drop-list-item">
+                       {{question?.questionName}}
+                     </div>
+                   </div>
+                </div>
+           </div>
+              </div>
+                   
+        </div>   
     </div>
 </div>
 
