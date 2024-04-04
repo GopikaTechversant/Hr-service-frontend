@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, HostListener, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { ApiService } from 'src/app/services/api.service';
@@ -16,22 +16,34 @@ export class ApplicationListBarComponent implements OnInit {
   applicationList: any[] = [];
   labels: any;
   dataSet: any;
+  requestId: any;
+  today : Date = new Date();
+
   displayDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
 
   constructor(private apiService: ApiService, private datePipe: DatePipe) { }
+  // @HostListener('window:beforeunload', ['$event'])
+  // unloadNotification($event: any) {
+  //   $event.returnValue = true; 
+  // }
+
 
   ngOnInit(): void {
     this.fetchApplicationList();
     Chart.register(ChartDataLabels);
     this.createBarChart();
+    this.requestId = this.positionId ? this.positionId : ' ';
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.positionId) this.fetchApplicationList();
+    if (this.positionId) {
+      this.requestId = this.positionId;
+      this.fetchApplicationList();
+    }
   }
 
   fetchApplicationList(): void {
-    this.apiService.get(`/dashboard/department-daily-application?date=${this.displayDate}&requestId=${this.positionId}`).subscribe((res: any) => {
+    this.apiService.get(`/dashboard/department-daily-application?date=${this.displayDate}&requestId=${this.requestId}`).subscribe((res: any) => {
       if (res?.data) {
         this.applicationList = res?.data;
         this.labels = this.applicationList.map((app: any) => app.requestName);

@@ -19,8 +19,8 @@ export class DashboardComponent implements OnInit {
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    this.displayPosition = sessionStorage.getItem('position');
-    this.positionId = sessionStorage.getItem('positionId');
+    this.displayPosition = sessionStorage.getItem('position') ?  sessionStorage.getItem('position') : ' ';
+    this.positionId = sessionStorage.getItem('positionId') ? sessionStorage.getItem('positionId') : ' ';
     this.fetchcount();
     this.fetchRequirements();
   }

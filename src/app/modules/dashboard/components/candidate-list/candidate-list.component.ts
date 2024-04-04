@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteComponent } from 'src/app/components/delete/delete.component';
@@ -10,45 +10,56 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./candidate-list.component.css']
 })
 export class CandidateListComponent {
-  @Input() appCustomLength: number = 0;
+  @Input() positionId: any 
   length: any = 20;
   pageSize = 10;
   pageIndex = 1;
   pageSizeOptions = [10, 25, 30];
   showFirstLastButtons = true;
   candidateList: any;
-  searchWord: string = '';
-  searchQuery: any = {
-    searchWord: '',
-    page: 1,
-    limit: 25,
-  };
+  searchKeyword: string = '';
   currentPag: number = 1;
   currentLimit: number = 7;
   totalCount: any;
   data: any;
   candidateId: any;
-  deleteCandidateId:any;
+  deleteCandidateId: any;
   currentPage: number = 1;
   lastPage: any;
   userCount: any;
+  requestId: any;
   constructor(private apiService: ApiService, private router: Router, private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.requestId = this.positionId ? this.positionId : ' ';
     this.fetchCandidates('');
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.positionId) {
+      this.requestId = this.positionId;
+      this.fetchCandidates('');
+    }
   }
 
   fetchCandidates(searchKey: string): void {
     const totalPages = Math.ceil(this.userCount / this.pageSize);
     this.lastPage = totalPages;
     if (this.currentPage > totalPages) this.currentPage = totalPages;
-    this.searchQuery.searchWord = searchKey;
-    this.apiService.get(`/candidate/list?search=${this.searchQuery?.searchWord}&page=${this.currentPage}&limit=${this.pageSize}`).subscribe((data: any) => {
-        this.data = data;
-        this.candidateList = [];
-        this.candidateList = data?.candidates;
-        this.totalCount = data?.candidateCount;
-      });
+    this.searchKeyword = searchKey;
+    this.apiService.get(`/candidate/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.pageSize}&serviceRequestId=${this.requestId}`).subscribe((data: any) => {
+      this.data = data;
+      this.candidateList = [];
+      this.candidateList = data?.candidates;
+      this.totalCount = data?.candidateCount;
+    });
+  }
+
+  searchCandidate(search: string): void {
+    this.searchKeyword = search;
+    console.log(this.searchKeyword);
+    
+    this.fetchCandidates(this.searchKeyword);
   }
 
   navigate(path: any, queryParam: any): void {
@@ -73,7 +84,7 @@ export class CandidateListComponent {
       height: '250px'
     })
     dialogRef.componentInstance.onDeleteSuccess.subscribe(() => {
-       this.apiService.post(`/candidate/remove-candidate`,{ candidateId:  this.deleteCandidateId }).subscribe((res:any) => {
+      this.apiService.post(`/candidate/remove-candidate`, { candidateId: this.deleteCandidateId }).subscribe((res: any) => {
         this.fetchCandidates('');
       })
     })
@@ -89,7 +100,7 @@ export class CandidateListComponent {
       this.fetchCandidates('');
     })
   }
-  
+
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);
     this.fetchCandidates('');

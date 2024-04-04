@@ -12,6 +12,7 @@ import { EditComponent } from './components/edit/edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './modules/material/material.module';
 import { LogoutModalComponent } from './components/logout-modal/logout-modal.component';
+import { ResubmissionModalComponent } from './components/resubmission-modal/resubmission-modal.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { LogoutModalComponent } from './components/logout-modal/logout-modal.com
     DeleteComponent,
     EditComponent,
     LogoutModalComponent,
+    ResubmissionModalComponent,
   ],
   imports: [
     BrowserModule,

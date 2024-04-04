@@ -63,7 +63,7 @@
                 <span *ngIf="!candidateName && !candidate?.candidateFirstName">Select Name</span>
                 <span *ngIf="candidate?.candidateFirstName"> {{candidate?.candidateFirstName}}</span>
                 <span *ngIf="candidateName" class="p-l-9 c-pointer p-5">{{candidateName}}</span>
-                <span *ngIf="!candidateName && !candidate?.candidateFirstName"><i
+                <span *ngIf="!candidate?.candidateFirstName"><i
                         class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
                 <div class="no-close dropdown m-t-6 p-t-10 p-l-6 c-pointer" *ngIf="showcandidate && positionId">
                     <div class="p-5" *ngFor="let candidate of candidate_list"
