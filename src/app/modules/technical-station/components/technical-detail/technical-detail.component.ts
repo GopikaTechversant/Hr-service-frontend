@@ -36,7 +36,7 @@ export class TechnicalDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.filteredStatus = sessionStorage.getItem('status');
+    this.filteredStatus = sessionStorage.getItem('status') ? sessionStorage.getItem('status') : ' ';
     this.route.params.subscribe(params => {
       this.stationId = params['id'];
       this.candidateList = [];

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ViewChild, ElementRef } from '@angular/core';
 import { ToastrServices } from 'src/app/services/toastr.service';
 import { ApiService } from 'src/app/services/api.service';
@@ -41,6 +41,11 @@ export class ServiceRequestComponent implements OnInit {
   stationIdToRemove: any;
   stationsLists: any;
   constructor(private toastr: ToastrServices, private apiService: ApiService) { }
+
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any) {
+    $event.returnValue = true; 
+  }
 
   ngOnInit(): void {
     this.fetchStations();

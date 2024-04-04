@@ -16,10 +16,14 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
   sourceList: any[] = [];
   sourceLabels: any[] = [];
   sourceCount: any[] = [];
+  requestId: any;
+  today : Date = new Date();
+
   constructor(private apiService: ApiService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.displayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+    this.requestId = this.positionId ? this.positionId : ' ';
     this.fetchResumeSource()
   }
 
@@ -28,11 +32,14 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.positionId) this.fetchResumeSource();
+    if (this.positionId) {
+      this.requestId = this.positionId;
+      this.fetchResumeSource();
+    }
   }
 
   fetchResumeSource(): void {
-    this.apiService.get(`/dashboard/resume-source?date=${this.displayDate}&requestId=${this.positionId}`).subscribe((res: any) => {
+    this.apiService.get(`/dashboard/resume-source?date=${this.displayDate}&requestId=${this.requestId}`).subscribe((res: any) => {
       if (res?.data) {
         this.sourceList = res?.data;
         this.sourceCount = this.sourceList.map((item: any) => Number(item.sourcecount));

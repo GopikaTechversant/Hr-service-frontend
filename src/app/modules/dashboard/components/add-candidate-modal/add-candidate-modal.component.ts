@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { DatePipe } from '@angular/common';
@@ -67,6 +67,12 @@ export class AddCandidateModalComponent implements OnInit {
       resumeSourceId: [null, Validators.required]
     })
   }
+
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any) {
+    $event.returnValue = true; 
+  }
+
 
   ngOnInit(): void {
     this.candidateCreatedby = localStorage.getItem('userId');
