@@ -70,12 +70,9 @@
                 candidateDetails['candidate.candidateExpectedSalar'] : 'NIL'}}
             </span>
             <span class="p-8">
-                : {{candidateDetails['candidate.candidateCity'] ? candidateDetails['candidate.candidateCity'] : 'City
-                '}} ,
-                {{candidateDetails['candidate.candidateDistrict'] ? candidateDetails['candidate.candidateDistrict'] :
-                'District '}},
-                {{candidateDetails['candidate.candidateState'] ? candidateDetails['candidate.candidateState'] : 'State
-                '}}
+                : {{candidateDetails['candidate.candidateCity'] ? candidateDetails['candidate.candidateCity'] : 'City'}} ,
+                {{candidateDetails['candidate.candidateDistrict'] ? candidateDetails['candidate.candidateDistrict'] :'District '}},
+                {{candidateDetails['candidate.candidateState'] ? candidateDetails['candidate.candidateState'] : 'State'}}
             </span>
         </div>
     </div>
@@ -116,10 +113,23 @@
         <span class="f-w-500 head-wrap"></span>
         <button class="btn c-pointer" (click)="addProgress()">Add progress</button>
     </div>
-    <div *ngIf="candidateDetails?.serviceStatus !== 'done' && progessAdded" class="btn-parent">
+    <div *ngIf="candidateDetails?.serviceStatus !== 'done' && progessAdded">
+        <div class="heading p-10">
+            <span>Feedback</span>
+        </div>
         <div class="m-10">
-            <button class="c-pointer btn-reject" (click)="rejectClick()">Reject</button>
-            <button class="btn c-pointer" (click)="approveClick()">Approve</button>
+            <textarea class="text-area" id="feedback" cols="30" rows="10" placeholder="Add Feedback for Approval or Rejection"></textarea>
+            <div  class="btn-parent">
+                <button class="c-pointer btn-reject" (click)="rejectClick()">Reject</button>
+                <button class="btn c-pointer" (click)="approveClick()">Approve</button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="this.data?.candidateDetails?.serviceStatus !== 'pending'">
+        <div class="heading p-10">
+            <span>Feedback</span>
+        </div>
+        <div class="m-10">
         </div>
     </div>
 </div>

@@ -24,6 +24,8 @@ export class CandidateDetailModalComponent implements OnInit {
   serviceId: any = null
   progressAssignee: any = null;
   stationId: any;
+  feedback: any;
+  userId: any;
 
   constructor(public dialogRef: MatDialogRef<CandidateDetailModalComponent>, private apiService: ApiService, private tostr: ToastrServices,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -38,7 +40,10 @@ export class CandidateDetailModalComponent implements OnInit {
     this.dialogRef.updateSize('60vw', '90vh');
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.userId = localStorage.getItem('userId');
+
+   }
 
   closeDialog(): void {
     this.dialogRef.close();
@@ -77,12 +82,14 @@ export class CandidateDetailModalComponent implements OnInit {
   }
 
   rejectClick(): void {
-    const userId = localStorage.getItem('userId');
+    const feedback = document.getElementById('feedback') as HTMLInputElement;
+    if (feedback) this.feedback = feedback?.value;
     let payload = {
       serviceId: this.serviceId,
       stationId: this.stationId,
-      userId: userId,
+      userId: this.userId,
       status: "rejected",
+      feedBack: this.feedback,
     }
     this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
       next: (res: any) => {
@@ -95,11 +102,19 @@ export class CandidateDetailModalComponent implements OnInit {
   }
 
   approveClick(): void {
+    const feedback = document.getElementById('feedback') as HTMLInputElement;
+    if (feedback) this.feedback = feedback?.value;
+    console.log(this.feedback);
+    
     let baseUrl = '';
     if (this.stationId === '3') baseUrl = `/technical-station`;
     if (this.stationId === '4') baseUrl = `/technical-station-two`;
     if (baseUrl) {
-      const payload = { serviceSeqId: this.serviceId };
+      const payload =  {
+        serviceSeqId: this.serviceId,
+        feedBack: this.feedback,
+        feedBackBy : this.userId
+      };
       this.apiService.post(`${baseUrl}/approve`, payload).subscribe({
         next: (res: any) => {
           this.tostr.success('Approval successful');
