@@ -6,7 +6,7 @@
     /* border-bottom: 1px solid #E3E0E0; */
 }
 
-.head{
+.head {
     font-size: 18px;
     font-weight: 500;
     text-align: left;
@@ -22,7 +22,7 @@
     flex-direction: column;
 }
 
-.input{
+.input {
     outline: none !important;
     border: 1px solid rgb(207, 205, 205);
     border-radius: 2px;
@@ -53,15 +53,15 @@
 .modal-header {
     position: sticky;
     top: 0;
-    z-index: 2; 
-    background-color: #f8f9fa; 
+    z-index: 2;
+    background-color: #f8f9fa;
 }
 
 .modal-content {
-    overflow-y: auto; 
+    overflow-y: auto;
 }
 
-.btn{
+.btn {
     width: 120px;
     height: 35px;
     color: #FFFFFF;
@@ -74,7 +74,18 @@
     margin: 10px;
 }
 
-.btn-reject{
+.text-area {
+    width: 98%;
+    height: 136px;
+    border-radius: 3px;
+    border: 1px solid #E2E1E1;
+    background: #FFFFFF;
+    padding: 8px;
+    outline: none !important;
+}
+
+
+.btn-reject {
     width: 120px;
     height: 35px;
     color: #FFFFFF;
@@ -83,11 +94,10 @@
     cursor: pointer;
     font-size: 16px;
     font-weight: 500;
-    border-radius: 3px; 
-    margin: 10px;  
+    border-radius: 3px;
+    margin: 10px;
 }
 
-.btn-parent{
+.btn-parent {
     float: right;
 }
-

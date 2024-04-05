@@ -1,7 +1,6 @@
 <div class="modal-header heading p-10 p-t-20 d-flex j-space" style="position: sticky; top: 0; z-index: 2;">
     <div>
-        <span>{{candidateDetails?.candidateFirstName}}
-            {{candidateDetails?.candidateLastName}}</span>
+        <span>{{candidateDetails?.candidateFirstName}} {{candidateDetails?.candidateLastName}}</span>
     </div>
     <div class="modal-close d-flex j-end">
         <button class="c-pointer" (click)="closeDialog()">
@@ -54,7 +53,7 @@
         <span>Add Offer</span>
     </div>
     <div *ngIf="!hrReview">
-        <div class="d-flex">
+        <div class="d-flex m-10">
             <div>
                 <span class="p-10 sub-head">Offer Salary</span>
                 <span class="p-5"><input class="input" type="text" id="salary"></span>
@@ -64,7 +63,7 @@
                 <div class="p-relative w-100" *ngIf="!hrReview?.reviewedJoiningDate">
                     <input class="p-l-5 input" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate"
                         (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate"
-                        [max]="today">
+                        [min]="today">
                     <span> <mat-datepicker #pickerdate class=""></mat-datepicker>
                         <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
                             (click)="pickerdate ?.open()"></i>
@@ -85,27 +84,34 @@
             </div>
         </div>
     </div>
-    <div *ngIf="hrReview && data?.offerStatus > 0">
-        <span class="sub-head">
-            <span class="p-10" *ngIf="hrReview?.reviewedSalary">
-                Offer Salary : {{hrReview?.reviewedSalary}}
-            </span>
-        </span>
-        <span class="sub-head">
-            <span class="p-10" *ngIf="hrReview?.reviewedJoiningDate">
-                Joining Date  : {{hrReview?.reviewedJoiningDate | date: 'dd/MM/YYY'}}
-            </span>
-        </span>
-        <span class="sub-head">
-            <span class="p-10" *ngIf="hrReview?.reviewedDescription">
-                Description : {{hrReview?.reviewedDescription}}
-            </span>
-        </span>
+    <div *ngIf="hrReview && data?.offerStatus > 0" class="p-10">
+        <div class="p-10" *ngIf="hrReview?.reviewedSalary">
+            <span class="f-w-500">Offer Salary : </span> {{hrReview?.reviewedSalary}}
+        </div>
+        <div class="p-10" *ngIf="hrReview?.reviewedJoiningDate">
+            <span class="f-w-500">Joining Date : </span>{{hrReview?.reviewedJoiningDate | date: 'dd/MM/YYY'}}
+        </div>
+        <div class="p-10" *ngIf="hrReview?.reviewedDescription">
+            <span class="f-w-500">Description : </span>{{hrReview?.reviewedDescription}}
+        </div>
     </div>
-    <div *ngIf="this.data?.candidateDetails?.serviceStatus !== 'done' && hrReview" class="btn-parent">
+    <div *ngIf="this.data?.candidateDetails?.serviceStatus !== 'done' && hrReview">
+        <div class="head p-10">
+            <span>Feedback</span>
+        </div>
         <div class="m-10">
-            <button class="c-pointer btn-reject" (click)="rejectClick()">Reject</button>
-            <button class="btn c-pointer" (click)="approveClick()">Approve</button>
+            <textarea class="text-area" id="" cols="30" rows="10" id="feedback" placeholder="Add Feedback for Approval or Rejection"></textarea>
+            <div class="btn-parent">
+                <button class="c-pointer btn-reject" (click)="rejectClick()">Reject</button>
+                <button class="btn c-pointer" (click)="approveClick()">Approve</button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="this.data?.candidateDetails?.serviceStatus !== 'pending'">
+        <div class="head p-10">
+            <span>Feedback</span>
+        </div>
+        <div class="m-10">
         </div>
     </div>
 </div>

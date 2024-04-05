@@ -20,17 +20,14 @@
       <span class="f-w-500 user-name t-dark-blue-color"> {{ currentUser?.charAt(0) ? (currentUser?.charAt(0) |
         uppercase) + currentUser?.slice(1) : '' }}</span>
     </div>
-    <div class="user-profile-ctn c-pointer" (click)="dropDown = !dropDown">
+    <div class="user-profile-ctn c-pointer p-relative" (click)="dropDown = !dropDown">
       <span class="f-w-500 user-name t-dark-blue-color"> {{ currentUser?.charAt(0) ? (currentUser?.charAt(0) |
         uppercase): '' }}</span>
+         <div *ngIf="dropDown" class="drop-down d-flex p-absolute">
+          <div class="station" *ngFor="let station of stationsList">
+            <div class="c-pointer p-10" (click)="navigate(station)">{{station?.stationName}}</div>
+          </div>
     </div>
-    <div *ngIf="dropDown" class="drop-down d-flex p-absolute">
-      <div class="station" *ngFor="let station of stationsList">
-        <div class="c-pointer p-l-20 p-10" (click)="navigate(station)">{{station.stationName}}</div>
-      </div>
-      <div class="station" (click)="logout()">
-        <span class="c-pointer p-l-20 p-10">Logout</span>
-      </div>
-    </div>
+   
   </div>
 </div>

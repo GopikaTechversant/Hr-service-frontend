@@ -18,6 +18,8 @@ export class HrCandidateDetailComponent {
   candidateDetails: any;
   today: Date = new Date();
   hrReview: any;
+  feedback: any;
+  userId: any;
   constructor(public dialogRef: MatDialogRef<HrCandidateDetailComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
     private apiService: ApiService, private datePipe: DatePipe, private tostr: ToastrServices) {
     if (data) {
@@ -30,6 +32,7 @@ export class HrCandidateDetailComponent {
 
   ngOnInit(): void {
     this.today = new Date();
+    this.userId = localStorage.getItem('userId');
   }
 
   dateChange(event: any): void {
@@ -68,11 +71,12 @@ export class HrCandidateDetailComponent {
   }
 
   rejectClick(): void {
-    const userId = localStorage.getItem('userId');
+    const feedback = document.getElementById('feedback') as HTMLInputElement;
+    if (feedback) this.feedback = feedback?.value;
     let payload = {
       serviceId: this.serviceId,
       stationId: this.candidateDetails?.candidateStation,
-      userId: userId,
+      userId: this.userId,
       status: "rejected",
     }
     this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
@@ -86,7 +90,13 @@ export class HrCandidateDetailComponent {
   }
 
   approveClick(): void {
-    const payload = { serviceSeqId: this.serviceId };
+    const feedback = document.getElementById('feedback') as HTMLInputElement;
+    if (feedback) this.feedback = feedback?.value;
+    const payload = {
+      serviceSeqId: this.serviceId,
+      feedBack: this.feedback,
+      feedBackBy : this.userId
+    };
     this.apiService.post(`/hr-station/candidateToUser`, payload).subscribe({
       next: (res: any) => {
         this.tostr.success('Approval successful');
