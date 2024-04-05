@@ -18,11 +18,7 @@ export class SeriesComponent implements OnInit {
   activeSeries: any;
   candidates_list: any;
   selectedCandidate: any;
-  pointerPosition: any;
-  dragEnteredSeries: any;
   candidates: any = [];
-  biggieMoveSelected: boolean = false;
-  activeBucket: any;
   requestId: any;
   isTaskDetailsOpen: boolean = false;
   serviceIds: any = [];
@@ -36,7 +32,6 @@ export class SeriesComponent implements OnInit {
   serviceId: any = [];
   payload_series_list: any = [];
   score: number = 0;
-  candidates_score: any = [];
   questionSelected: boolean = false;
   selectedCandidateIds: any[] = [];
   resultadded: any[] = [];
@@ -51,7 +46,7 @@ export class SeriesComponent implements OnInit {
   droppedAllowed: boolean = false;
   selectedQuestion: any;
   candidatesStatus: any[] = [];
-  // approvedCandidates:boolean=false;
+  averageScore: string | null = null;
   showAverageScoreInput: boolean = false;
   constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService) {
     this.route.queryParams.subscribe(params => {
@@ -68,28 +63,24 @@ export class SeriesComponent implements OnInit {
   fetchCandidates(): void {
     this.apiService.get(`/screening-station/list-batch/${this.requestId}?station=2`).subscribe((res: any) => {
       if (res?.candidates) this.candidates_list = res?.candidates;
-      console.log(" this.candidates_list ", this.candidates_list);
       this.showAverageScoreInput = this.candidates_list.some((candidate: any) => candidate.serviceStatus === 'pending');
-      // this.candidates_list.forEach((candidate: any) => {
-      //   if (candidate.serviceId) this.serviceIds.push(candidate.serviceId);
-      // });
     });
   }
+
   fetchQuestions(): void {
     this.apiService.get(`/written-station/questions`).subscribe((data: any) => {
-      this.questions_list = data.data.filter((question: any) => !this.assignedQuestionIds.includes(question.questionId));
+      const filteredQuestions = data.data.filter((question: any) => {
+        return !this.series_list.some((series: any) => series.questionId === question.questionId);
+      });
+      this.questions_list = filteredQuestions;
     });
   }
-  // fetchCandidatesWithSeries(): void {
-  //   this.apiService.get(`/screening-station/list-batch/${this.requestId}?station=2`).subscribe((res => {
-  //   }))
-  // }
+
+
   fetchCandidatesWithSeries(): void {
     this.apiService.get(`/written-station/questionBatchList/${this.requestId}`).subscribe((res: any) => {
       this.candidatesStatus = res?.data;
       this.candidatesStatus.forEach((data: any) => {
-        console.log("data", data);
-
       })
       if (res.result && res.data) {
         this.series_list = res.data.map((item: { questionId: any; questionName: any; candidates: any; }, index: number) => ({
@@ -101,17 +92,10 @@ export class SeriesComponent implements OnInit {
           selectedQuestion: null,
           candidates: item.candidates
         }));
-        console.log("this.series_list", this.series_list);
-      } else {
-        console.error('Failed to fetch series data:', res.message);
-
-      }
+      } else this.tostr.error(res.message);
     }, error => {
-      console.error('Error fetching series data:', error);
-
+      this.tostr.error(error);
     });
-
-
   }
 
   seriesBoxClick(series: any) {
@@ -119,7 +103,6 @@ export class SeriesComponent implements OnInit {
     series.active = true;
     this.activeSeries = series;
     this.activeDropdownSeries = series;
-    console.log(" this.series_list", this.series_list);
   }
 
   createSeries() {
@@ -134,24 +117,23 @@ export class SeriesComponent implements OnInit {
     this.newSeriesCreated = true;
   }
 
-
   approve(): void {
-    const isScoreAdded = this.candidatesStatus.some(candidate => candidate.serviceStatus !== 'done' && candidate.progressScore !== null);
-    const demo = this.candidatesStatus.some(candidate => candidate.serviceStatus !== 'done' && candidate.progressScore == null);
+    const ScoreAddedTrue = this.candidatesStatus.some(candidate => candidate.serviceStatus !== 'done' && candidate.progressScore !== null);
+    const ScoreAddedFalse = this.candidatesStatus.some(candidate => candidate.serviceStatus !== 'done' && candidate.progressScore == null);
     const averageScoreInput = document.getElementById('averageScore') as HTMLInputElement;
     const averageScore = averageScoreInput.value;
     const payload = {
       serviceId: this.requestId,
       averageScore: averageScore
     };
-    if(isScoreAdded){
+    if (ScoreAddedTrue) {
       this.apiService.post(`/written-station/approve`, payload).subscribe((res: any) => {
         this.tostr.success('Approved');
+        this.averageScore = averageScore;
       })
-    }else if(demo) this.tostr.warning('Please add score');
-    else this.tostr.warning('already moved to next round')
-   
+    } else if (ScoreAddedFalse) this.tostr.warning('Please add score');
   }
+
   resultClick(candidate: any, id: any): void {
     this.selectedCandidate = candidate;
     this.selectedCandidateIds = id;
@@ -173,12 +155,6 @@ export class SeriesComponent implements OnInit {
     });
   }
 
-  toggleTaskDetails() {
-    this.isTaskDetailsOpen = !this.isTaskDetailsOpen;
-    this.activeDropdownSeries = null;
-  }
-
-
   selectQuestion(questionId: string, questionName: string, series: any): void {
     this.selectedQuestion = questionName;
     this.questions_list = this.questions_list.filter((question: { questionId: any; }) => question.questionId !== questionId);
@@ -190,7 +166,6 @@ export class SeriesComponent implements OnInit {
     this.selectedQuestions[series.name]?.id === question.questionId;
     this.questionSelected = true;
   }
-
 
   assignQuestion(questionId: string, series: any): void {
     const requestData = {
@@ -251,17 +226,11 @@ export class SeriesComponent implements OnInit {
               }
               return s;
             });
-
             this.series_list = [...this.series_list];
-            console.log("this.series_list", this.series_list);
-            console.log("selectedSeriesObj", selectedSeriesObj);
             if (selectedSeriesObj.questionName) this.assignQuestion(selectedSeriesObj.questionId, selectedSeriesObj)
           } else this.tostr.warning('There is no selected series');
         }
       })
     }
-  }
-  allCandidatesHaveScores(): boolean {
-    return this.candidates_list?.every((candidate: any) => candidate.serviceStatus !== 'done');
   }
 }
