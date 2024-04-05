@@ -19,14 +19,15 @@ export class HrCandidateListComponent implements OnInit {
     { status: 'done' }
   ]
   filteredStatus: any = ' ';
-  filterStatus:boolean = false;
+  filterStatus: boolean = false;
   constructor(private dialog: MatDialog, private apiService: ApiService) { }
   ngOnInit(): void {
+    this.filteredStatus = sessionStorage.getItem('status') ? sessionStorage.getItem('status') : ' ';
     this.fetchList();
   }
 
   fetchList() {
-    this.apiService.get(`/hr-station/list?status_filter=${this.filteredStatus}`).subscribe((data: any) => {
+    this.apiService.get(`/hr-station/list?page=1&limit=1&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
       this.candidateList = [];
       this.loader = false;
       if (data.candidates) {

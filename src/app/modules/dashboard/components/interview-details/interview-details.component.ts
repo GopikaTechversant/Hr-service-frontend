@@ -64,6 +64,7 @@ export class InterviewDetailsComponent implements OnInit {
   selectedModeName: string = '';
   selectedModeId: any;
   showModeList: boolean = false;
+  scheduleStatus : boolean = false;
   constructor(private datePipe: DatePipe, private http: HttpClient, private tostr: ToastrServices, private apiService: ApiService) { }
 
   ngOnInit(): void {
@@ -74,6 +75,7 @@ export class InterviewDetailsComponent implements OnInit {
       this.candidate = history.state.candidate;
       this.positionName = this.candidate['reqServiceRequest.requestName'];
       this.positionId = this.candidate?.candidatesAddingAgainst;
+      this.scheduleStatus = true;
       this.serviceId = '';
       this.candidateId = this.candidate?.candidateId;
       this.currentCompany = this.candidate?.candidatePreviousOrg;
@@ -81,6 +83,10 @@ export class InterviewDetailsComponent implements OnInit {
       this.fetchCandidates();
       this.fetchPanel();
     }
+  }
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any) {
+    $event.returnValue = true; 
   }
 
   @HostListener('document:click', ['$event'])
@@ -100,7 +106,7 @@ export class InterviewDetailsComponent implements OnInit {
 
   fetchCandidates() {
     if (this.positionId) {
-      this.apiService.get(`/screening-station/interview-details/candidates-list?serviceRequestId=${this.positionId}&search=`).subscribe((res: any) => {
+      this.apiService.get(`/screening-station/interview-details/candidates-list?serviceRequestId=${this.positionId}&scheduleStatus=${this.scheduleStatus}`).subscribe((res: any) => {
         if (res?.candidates) {
           this.candidate_list = res?.candidates;
           this.candidatesList = res?.candidates;
@@ -114,8 +120,9 @@ export class InterviewDetailsComponent implements OnInit {
   fetchUsers(): void {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50',
+      // 'ngrok-skip-browser-warning': 'true'
     });
-    this.http.get(`${environment.api_url}/user/lists`, { headers }).subscribe((res: any) => {
+    this.http.get(`${environment.api_url}/user/lists?userRole=1`, { headers }).subscribe((res: any) => {
       if (res?.users) this.users_list = res?.users;
     })
   }
@@ -123,14 +130,15 @@ export class InterviewDetailsComponent implements OnInit {
   fetchPanel(): void {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50',
+      // 'ngrok-skip-browser-warning': 'true'
     });
-    this.http.get(`${environment.api_url}/user/lists`, { headers }).subscribe((res: any) => {
+    this.http.get(`${environment.api_url}/user/lists?userRole=2`, { headers }).subscribe((res: any) => {
       if (res?.users) this.panel_list = res?.users;
     })
   }
 
   fetchCandidatesDetails(): void {
-    this.http.get(`${environment.api_url}/screening-station/interview-details/candidate-detail?candidateId=${this.candidateId}`).subscribe((res: any) => {
+    this.apiService.get(`/screening-station/interview-details/candidate-detail?candidateId=${this.candidateId}`).subscribe((res: any) => {
       this.candidateDetails = res?.candidate;
       this.candidateStatus = res?.candidateStatus;
       this.candidateDetails.forEach((candidate: any) => {
@@ -163,6 +171,7 @@ export class InterviewDetailsComponent implements OnInit {
   fetchMode(): void {
     this.apiService.get(`/screening-station/interview-mode/list`).subscribe((res: any) => {
       if (res?.data) this.modeList = res?.data;
+
     })
   }
 
@@ -170,7 +179,7 @@ export class InterviewDetailsComponent implements OnInit {
     this.selectedModeId = id;
     this.selectedModeName = name;
   }
-  
+
   selectRecruiter(recruiterid: any, firstname: any, secondName: any): void {
     this.showRecruiters = false;
     this.recruiterId = recruiterid;

@@ -46,7 +46,7 @@ tr {
 }
 
 .table-container {
-    height: calc(100vh - 420px);
+    min-height: calc(100vh - 420px);
     overflow-y: auto;
     overflow-x: hidden;
 }
