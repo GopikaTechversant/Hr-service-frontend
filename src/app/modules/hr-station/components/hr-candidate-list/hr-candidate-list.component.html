@@ -1,20 +1,20 @@
 <div class="m-10">
     <div class="p-l-5 d-flex j-space p-b-10">
         <span class="f-s-18 f-w-500 detail-head p-5 p-l-0">HR Station</span>
-        <div class="input c-pointer p-t-10 no-close p-relative">
+        <div class="input c-pointer p-t-10 no-close p-relative no-close">
             <span class="no-close p-l-10" (click)="filterStatus = !filterStatus">{{filteredStatus=== ' ' ? 'Filter by Status' : filteredStatus | titlecase}}</span>
-            <span class="f-right">
+            <span class="f-right no-close">
                 <span *ngIf="filteredStatus && filteredStatus !== ' '" (click)="clearFilter()" class="clear-filter">x</span>
                 <span  (click)="filterStatus = !filterStatus"><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
             </span>    
             <div class="dropdown c-pointer no-close'" *ngIf="filterStatus" >
-                <span class="d-flex p-0" *ngFor="let type of Status" (click)="selectStatusFilter(type?.status);filterStatus = !filterStatus">
-                   <span class="p-l-10 p-5">{{type?.status | titlecase}}</span> 
+                <span class="d-flex p-0 no-close" *ngFor="let type of Status" (click)="selectStatusFilter(type?.status);filterStatus = !filterStatus">
+                   <span class="p-l-10 p-5 no-close">{{type?.status | titlecase}}</span> 
                 </span>
             </div>
         </div>
     </div>
-    <div class="main d-flex">
+    <div class="main">
         <div class="table-container m-b-0">
             <table class="table">
                 <tr class="table-header f-w-500 p-b-10">
@@ -38,17 +38,27 @@
                           <td>{{ item['candidate.candidateEmail'] }}</td>
                           <td>{{ item['serviceRequest.requestName'] }}</td>
                           <td>{{item?.progressStatus > 0 ? 'Offer Added' : 'Pending'}}</td>
-                          <td>{{ item?.serviceStatus | titlecase }}</td>
+                          <td class="f-w-500" [ngClass]="{'blue': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
+                          'red': item?.serviceStatus === 'rejected'}">{{ item?.serviceStatus | titlecase}}</td>
                           <td><button class="btn" (click)="fetchDetails(item?.serviceId , item?.progressStatus)">View detail</button></td>
                         </tr>
                       </ng-container>
                     </ng-container>
                   </ng-container>
-                  
-                <!-- <div *ngIf="candidateList?.length === 0 && !loader" class="data">
+                <div *ngIf="(this.candidateList[0]?.length === 0 || !this.candidateList[0]) && !loader " class="data">
                     No Data Found
-                </div> -->
-            </table>
+                </div>
+            </table>       
+        </div>
+        <div class="page d-flex j-end p-10">
+            <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(currentPage - 1)">{{currentPage -1}}</button>
+            <button class="box current-page c-pointer">{{ currentPage }}</button>
+            <button class="box c-pointer" (click)="onPageChange(currentPage + 1)"
+                [disabled]="candidateList?.length === 0 || !candidateList">{{currentPage + 1}}</button>
+            <button class="box c-pointer" (click)="onPageChange(currentPage + 1)"
+                [disabled]="candidateList?.length === 0 || !candidateList"> <img
+                    src="assets/images/double-arrow-right-icon.svg" alt="" height="14px" width="14px">
+            </button>
         </div>
     </div>
 </div>

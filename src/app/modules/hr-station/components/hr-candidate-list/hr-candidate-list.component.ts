@@ -6,12 +6,15 @@ import { ApiService } from 'src/app/services/api.service';
 @Component({
   selector: 'app-hr-candidate-list',
   templateUrl: './hr-candidate-list.component.html',
-  styleUrls: ['./hr-candidate-list.component.css']
+  styleUrls: ['./hr-candidate-list.component.css'],
+  host: {
+    '(document:click)': 'onBodyClick($event)'
+  }
 })
 export class HrCandidateListComponent implements OnInit {
   @Output() itemSelected = new EventEmitter<any>();
   candidateList: any = [];
-  loader: boolean = false;
+  loader: boolean = true;
   selectedItem: any = [];
   Status: any = [
     { status: 'pending' },
@@ -20,20 +23,28 @@ export class HrCandidateListComponent implements OnInit {
   ]
   filteredStatus: any = ' ';
   filterStatus: boolean = false;
+  currentPage: number = 1;
+  limit: number = 10
   constructor(private dialog: MatDialog, private apiService: ApiService) { }
+  onBodyClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.no-close')) {
+      this.filterStatus = false;
+    }    
+  }
+
   ngOnInit(): void {
+    this.loader = true;
     this.filteredStatus = sessionStorage.getItem('status') ? sessionStorage.getItem('status') : ' ';
     this.fetchList();
   }
 
   fetchList() {
-    this.apiService.get(`/hr-station/list?page=1&limit=1&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
+    this.apiService.get(`/hr-station/list?page=${this.currentPage}&limit=${this.limit}&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
       this.candidateList = [];
       this.loader = false;
       if (data.candidates) {
-        this.candidateList.push(data.candidates);
-        this.selectedItem = this.candidateList[0][0];
-        this.itemSelected.emit(this.selectedItem);
+        this.candidateList.push(data.candidates);        
       }
     })
   }
@@ -67,5 +78,11 @@ export class HrCandidateListComponent implements OnInit {
       this.fetchList();
     })
   }
+
+  onPageChange(pageNumber: number): void {
+    this.currentPage = Math.max(1, pageNumber);
+    this.fetchList();
+  }
+
 
 }

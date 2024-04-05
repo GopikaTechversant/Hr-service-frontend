@@ -9,7 +9,10 @@ import { ApiService } from 'src/app/services/api.service';
 @Component({
   selector: 'app-technical-detail',
   templateUrl: './technical-detail.component.html',
-  styleUrls: ['./technical-detail.component.css']
+  styleUrls: ['./technical-detail.component.css'],
+  host: {
+    '(document:click)': 'onBodyClick($event)'
+  }
 })
 export class TechnicalDetailComponent implements OnInit {
   @Output() itemSelected = new EventEmitter<any>();
@@ -34,6 +37,12 @@ export class TechnicalDetailComponent implements OnInit {
     //   this.stationId = params['id'];
     // });
   }
+  onBodyClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.no-close')) {
+      this.filterStatus = false;
+    }    
+  }
 
   ngOnInit(): void {
     this.filteredStatus = sessionStorage.getItem('status') ? sessionStorage.getItem('status') : ' ';
@@ -53,12 +62,12 @@ export class TechnicalDetailComponent implements OnInit {
     if (this.stationId === '3') {
       this.apiService.get(`/technical-station/list?page=${this.currentPage}&limit=${this.limit}&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
         this.loader = false;
-        if (data?.candidates) this.candidateList.push(data.candidates);
+        if (data?.candidates) this.candidateList.push(data?.candidates);
       });
     } else if (this.stationId === '4') {
       this.apiService.get(`/technical-station-two/list?page=${this.currentPage}&limit=10&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
         this.loader = false;
-        if (data?.candidates) this.candidateList.push(data.candidates);
+        if (data?.candidates) this.candidateList.push(data?.candidates);
       });
     }
   }

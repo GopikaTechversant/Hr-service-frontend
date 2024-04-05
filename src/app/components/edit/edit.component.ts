@@ -67,6 +67,7 @@ export class EditComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchCandidateDetails();
+    this.fetchRequerements();
   }
 
   onBodyClick(event: MouseEvent): void {

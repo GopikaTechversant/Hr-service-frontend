@@ -5,7 +5,7 @@
   <div>
     <input type="text" class="input p-l-5" placeholder="Search Candidates" [(ngModel)]="searchKeyword"
       (keydown)="searchCandidate(searchKeyword)">
-    <span class="search" (click)="searchCandidate(searchKeyword)">
+    <span class="search c-pointer" (click)="searchCandidate(searchKeyword)">
       <i class="fa fa-search" aria-hidden="true"></i>
     </span>
     <div *ngIf="showCandidates" class="p-absolute candidate-dropdown no-close">

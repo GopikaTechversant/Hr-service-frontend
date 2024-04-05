@@ -31,14 +31,15 @@
                 </div>
                 <ng-container *ngIf="candidateList?.length > 0">
                     <ng-container *ngFor="let innerArray of candidateList">
-                        <ng-container *ngFor="let item of innerArray">
-                            <tr class="candidate c-pointer" [class.selected]="selectedItem === item">
+                        <ng-container  *ngFor="let item of innerArray">
+                            <tr class="candidate c-pointer">
                                 <td>{{ item['candidate.candidateId'] }}</td>
                                 <td>{{ item['candidate.candidateFirstName'] }} {{ item['candidate.candidateLastName'] }}</td>
                                 <td>{{ item['candidate.candidateEmail'] }}</td>
                                 <td>{{ item['serviceRequest.requestName'] }}</td>
                                 <td>{{item?.progressStatus > 0 ? 'Progress Added' : 'Pending'}}</td>
-                                <td>{{ item?.serviceStatus | titlecase}}</td>
+                                <td class="f-w-500" [ngClass]="{'blue': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
+                                    'red': item?.serviceStatus === 'rejected'}">{{ item?.serviceStatus | titlecase}}</td>
                                     <!-- <div class="input p-t-10 p-l-6 c-pointer no-close p-relative"
                                         (click)="toggleDropdown(item, $event)">
                                         {{item?.selectedStatus || 'Choose Candidate Status'}}
@@ -55,6 +56,9 @@
                         </ng-container>
                     </ng-container>
                 </ng-container>
+                <div *ngIf="(this.candidateList[0]?.length === 0 || !this.candidateList[0]) && !loader " class="data">
+                    No Data Found
+                </div>
             </table>
         </div>
         <div class="page d-flex j-end p-10">
