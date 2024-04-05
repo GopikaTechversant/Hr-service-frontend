@@ -36,8 +36,9 @@
         <div class="child1">
             <div class="name  d-flex p-t-23 p-l-17 j-space title-child1">
                 <p>Questions To Be Assigned</p>
-                <div class="title-right" *ngIf="allCandidatesHaveScores()">
+                <div class="title-right" *ngIf="showAverageScoreInput">
                     <input type="text" placeholder="Enter the average score" id="averageScore" class="input p-l-10">
+                    <!-- <span *ngIf="averageScore">Previous {{averageScore}}</span> -->
                     <button class="approve" (click)="approve()">Approve</button>
                 </div>
             </div>
@@ -49,7 +50,7 @@
                     <div class=" flex-column  j-center c-pointer" (click)="seriesBoxClick(series)"
                         [ngClass]="{'active-series' : series?.active}">
                         <!-- <p class="m-b-0 p-t-10 p-b-5  series-name-child1 m-r-10">Series 1</p> -->
-                        <p *ngIf="series.questionName" class="m-b-0 p-t-10 p-b-5  series-name-child1 m-r-10">{{series.questionName}}</p>
+                        <!-- <p *ngIf="series.questionName" class="m-b-0 p-t-10 p-b-5  series-name-child1 m-r-10">{{series.questionName}}</p> -->
                         <p class="m-b-0 p-t-10 p-b-5  series-name-child1 m-r-10">{{series.name}}</p>
                         <div class="  j-center candidates">
                             <!-- <p class="m-b-0 p-t-10 p-b-5  series-name m-r-10">{{series.name}}</p> -->
@@ -105,8 +106,8 @@
                         <p class="m-b-0 series-name">{{series.name}}</p>
                      </div>
                      <div class="d-flex align-center drop-down p-relative" (click)="$event.stopPropagation(); series.showQuestions = !series.showQuestions">
-                        <span class="d-flex j-space "> 
-                            <span class="p-l-7 select-question">{{series.selectedQuestion || 'Select a Question'}}</span>
+                        <span class="d-flex j-space select-question"> 
+                            <span class="p-l-7 ">{{series.selectedQuestion || 'Select a Question'}}</span>
                             <i class="fa fa-chevron-down filter-icon"></i>
                         </span>
                         <div class="m-b-2 drop-list" *ngIf="series.showQuestions">
@@ -124,8 +125,8 @@
                    <p class="m-b-0 series-name">{{series.name}}</p>
                 </div>
                 <div class="d-flex align-center drop-down p-relative" (click)="$event.stopPropagation(); series.showQuestions = !series.showQuestions">
-                   <span class="d-flex j-space"> 
-                       {{series.selectedQuestion || 'Select a Question'}}
+                   <span class="d-flex j-space select-question"> 
+                    <span class="p-l-7 ">{{series.selectedQuestion || 'Select a Question'}}</span>
                        <i class="fa fa-chevron-down filter-icon"></i>
                    </span>
                    <div class="m-b-2 drop-list" *ngIf="series.showQuestions">

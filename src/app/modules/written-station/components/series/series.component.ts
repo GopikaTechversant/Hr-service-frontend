@@ -51,6 +51,8 @@ export class SeriesComponent implements OnInit {
   droppedAllowed: boolean = false;
   selectedQuestion: any;
   candidatesStatus: any[] = [];
+  // approvedCandidates:boolean=false;
+  showAverageScoreInput: boolean = false;
   constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -67,6 +69,7 @@ export class SeriesComponent implements OnInit {
     this.apiService.get(`/screening-station/list-batch/${this.requestId}?station=2`).subscribe((res: any) => {
       if (res?.candidates) this.candidates_list = res?.candidates;
       console.log(" this.candidates_list ", this.candidates_list);
+      this.showAverageScoreInput = this.candidates_list.some((candidate: any) => candidate.serviceStatus === 'pending');
       // this.candidates_list.forEach((candidate: any) => {
       //   if (candidate.serviceId) this.serviceIds.push(candidate.serviceId);
       // });
@@ -121,7 +124,7 @@ export class SeriesComponent implements OnInit {
 
   createSeries() {
     const newSeries = {
-      name: `Series ${this.series_list.length + 1}`,
+      name: `Question Box ${this.series_list.length + 1}`,
       active: false,
       questionId: null,
       showQuestions: false,
@@ -133,15 +136,21 @@ export class SeriesComponent implements OnInit {
 
 
   approve(): void {
+    const isScoreAdded = this.candidatesStatus.some(candidate => candidate.serviceStatus !== 'done' && candidate.progressScore !== null);
+    const demo = this.candidatesStatus.some(candidate => candidate.serviceStatus !== 'done' && candidate.progressScore == null);
     const averageScoreInput = document.getElementById('averageScore') as HTMLInputElement;
     const averageScore = averageScoreInput.value;
     const payload = {
       serviceId: this.requestId,
       averageScore: averageScore
     };
-    this.apiService.post(`/written-station/approve`, payload).subscribe((res: any) => {
-      this.tostr.success('Approved');
-    })
+    if(isScoreAdded){
+      this.apiService.post(`/written-station/approve`, payload).subscribe((res: any) => {
+        this.tostr.success('Approved');
+      })
+    }else if(demo) this.tostr.warning('Please add score');
+    else this.tostr.warning('already moved to next round')
+   
   }
   resultClick(candidate: any, id: any): void {
     this.selectedCandidate = candidate;
