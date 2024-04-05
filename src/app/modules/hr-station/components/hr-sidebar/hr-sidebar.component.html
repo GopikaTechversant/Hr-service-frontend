@@ -1,19 +1,19 @@
 <div class="main p-t-10">
-    <div class="menu d-flex c-pointer" (click)="navigate('/dashboard')">
+    <!-- <div class="menu d-flex c-pointer" (click)="navigate('/dashboard')">
         <img src="assets/images/material-symbols-light_dashboard-outline.png" alt="" height="19px" width="19px"
             top="4px" left="4px" class="img">
         <span class="menu-text">Dashboard</span>
-    </div>
-    <div class="menu d-flex c-pointer" (click)="navigate('detail')">
+    </div> -->
+    <div class="menu d-flex c-pointer" (click)="navigate('/hr')" [class.active]="isActive('/hr')">
         <img src="assets/images/gg_list.png" alt="" height="19px" width="19px" top="4px" left="4px">
         <span class="menu-text">Requirements List</span>
     </div>
-    <div class="menu d-flex c-pointer" (click)="navigate('/dashboard/interview-details')">
+    <!-- <div class="menu d-flex c-pointer" (click)="navigate('/dashboard/interview-details')">
         <img src="/assets/images/line-md_computer-1.png" alt="" height="19px" width="19px" top="4px" left="4px">
         <span class="menu-text">Interview Details</span>
     </div>
     <div class="menu d-flex c-pointer" (click)="navigate('/dashboard/report-details')">
         <img src="assets/images/Group.png" alt="" height="19px" width="19px" top="4px" left="4px">
         <span class="menu-text">Report</span>
-    </div>
+    </div> -->
 </div>

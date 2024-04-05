@@ -40,7 +40,7 @@
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">DOB</span>
                 <div class="p-relative w-100">
-                    <input class="p-l-5  input-box" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate"
+                    <input class="p-l-5  input-box c-pointer" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate"
                         (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate"
                         formControlName="candidateDoB">
                     <span> <mat-datepicker #pickerdate class=""></mat-datepicker>
@@ -114,7 +114,7 @@
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Requirement</span>
                 <div class="input-box c-pointer p-relative p-t-10 p-l-6 no-close"
-                    (click)="requirementListOpen = !requirementListOpen;fetchRequerements()">
+                    (click)="requirementListOpen = !requirementListOpen">
                     <span *ngIf="!selectedRequirementName" class="no-close">{{candidateDetails?.position}}</span>
                     <span *ngIf="selectedRequirementName" class="no-close">{{selectedRequirementName}}</span>
                     <span><i class="f-right p-r-10 fa fa-chevron-down s-text no-close"></i></span>
@@ -140,8 +140,7 @@
             </div>
             <div class="child d-flex m-b-10 p-relative">
                 <span class="label m-b-4">Uploaded Resume</span>
-                <div class="d-flex">
-
+                <div class="d-flex c-pointer">
                     <img src="assets/images/resume-uploaded.png" alt="" height="48px"
                         (click)="triggerFileInput();$event.stopPropagation();$event.preventDefault();">
                     <span *ngIf="!resumeUploadSuccess" class="upload-success-message">
@@ -170,7 +169,7 @@
                                     (click)="toggleSearchBarPrimary()">
                                     <input type="search" class="input-search p-l-8"
                                         placeholder="Search primary skills..." (input)="getSkillSuggestions($event)">
-                                    <div class="m-t-8 skill-drop-list" *ngIf="showPrimary">
+                                    <div class="m-t-8 skill-drop-list c-pointer" *ngIf="showPrimary">
                                         <div *ngFor="let suggestion of skillSuggestions"
                                             (click)="selectSkill(suggestion,'primary')">
                                             <span class="p-t-7" *ngIf="showPrimary">
@@ -185,7 +184,7 @@
                             <ul>
                                 <li *ngFor="let skill of selectedPrimarySkills" class="p-4">
                                     {{skill?.name | titlecase}}
-                                    <i class="fa fa-trash-o  delete-color" aria-hidden="true" (click)="removeSkill(skill, 'primary')"></i>
+                                    <i class="fa fa-trash-o delete-color c-pointer" aria-hidden="true" (click)="removeSkill(skill, 'primary')"></i>
                                 </li>
                             </ul>
                         </div>
@@ -196,7 +195,7 @@
                                     (click)="toggleSearchBarSecondary()">
                                     <input type="search" class="input-search p-l-8"
                                         placeholder="Search secondary skills..." (input)="getSkillSuggestions($event)">
-                                    <div class="m-t-8 skill-drop-list" *ngIf="showSecondary">
+                                    <div class="m-t-8 skill-drop-list c-pointer" *ngIf="showSecondary">
                                         <div *ngFor="let suggestion of skillSuggestions"
                                             (click)="selectSkill(suggestion,'secondary')">
                                             <span class="p-t-7" *ngIf="showSecondary">
@@ -211,7 +210,7 @@
                             <ul>
                                 <li *ngFor="let skill of selectedSecondarySkills" class="p-4">
                                     {{skill?.name | titlecase}}
-                                    <i class="fa fa-trash-o  delete-color" aria-hidden="true" (click)="removeSkill(skill, 'secondary')"></i>
+                                    <i class="fa fa-trash-o delete-color c-pointer" aria-hidden="true" (click)="removeSkill(skill, 'secondary')"></i>
                                 </li>
                             </ul>
                         </div>
@@ -221,7 +220,7 @@
         </div>
         <div class="d-flex f-right btns">
             <span class="cancel-btn c-pointer" (click)="cancel()">Cancel</span>
-            <button class="add-candidate" type="submit">Update</button>
+            <button class="add-candidate c-pointer" type="submit">Update</button>
         </div>
     </form>
 </div>

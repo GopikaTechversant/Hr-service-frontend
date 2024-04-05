@@ -1,7 +1,15 @@
 <div class="modal-header heading p-10 p-t-20 d-flex j-space" style="position: sticky; top: 0; z-index: 2;">
-    <div><span>Candidate Requested Details</span></div>
+    <div>
+        <span>Candidate Requested Details - </span>
+        <span class="blue">( {{candidateDetails['candidate.candidateId']}} )</span>
+    </div>
     <div class="modal-close d-flex j-end">
-        <button (click)="closeDialog()">
+        <span class="p-10" [ngClass]="{
+            'blue': candidateDetails?.serviceStatus === 'pending',
+            'green': candidateDetails?.serviceStatus === 'done',
+            'red': candidateDetails?.serviceStatus === 'rejected'
+        }">{{candidateDetails?.serviceStatus | titlecase}}</span>
+        <button class="c-pointer" (click)="closeDialog()">
             <mat-icon>close</mat-icon>
         </button>
     </div>
@@ -16,7 +24,7 @@
             <span class="p-8">Max Salary</span>
         </div>
         <div class="sub-head d-flex">
-            <span class="p-8"> : {{candidateDetails['candidate.candidateFirstName']}}</span>
+            <span class="p-8"> : {{candidateDetails['candidate.candidateFirstName']}} {{candidateDetails['candidate.candidateLastName']}}</span>
             <span class="p-8"> : {{candidateDetails['serviceRequest.requestSkills']}}</span>
             <span class="p-8"> : {{candidateDetails['serviceRequest.requestExperience']}}</span>
             <span class="p-8"> : {{candidateDetails['serviceRequest.requestBaseSalary']}}</span>
@@ -37,63 +45,72 @@
             <span class="p-8">Address</span>
         </div>
         <div class="sub-head d-flex">
-            <span class="p-8"> 
-                : {{candidateDetails['candidate.candidateDoB'] ?(candidateDetails['candidate.candidateDoB'] | date: 'dd/MM/YYY' ): 'NIL' }}
+            <span class="p-8">
+                : {{candidateDetails['candidate.candidateDoB'] ?(candidateDetails['candidate.candidateDoB'] | date:
+                'dd/MM/YYY' ): 'NIL' }}
             </span>
-            <span class="p-8"> 
-                : {{candidateDetails['serviceRequest.requestSkills'] ? candidateDetails['serviceRequest.requestSkills'] : 'NIL'}}
+            <span class="p-8">
+                : {{candidateDetails['serviceRequest.requestSkills'] ? candidateDetails['serviceRequest.requestSkills']
+                : 'NIL'}}
             </span>
-            <span class="p-8"> 
-                : {{candidateDetails['candidate.candidatePreviousOrg'] ? candidateDetails['candidate.candidatePreviousOrg'] : 'NIL'}}
+            <span class="p-8">
+                : {{candidateDetails['candidate.candidatePreviousOrg'] ?
+                candidateDetails['candidate.candidatePreviousOrg'] : 'NIL'}}
             </span>
-            <span class="p-8"> 
-                : {{candidateDetails['candidate.candidatePreviousDesignation'] ? candidateDetails['candidate.candidatePreviousDesignation'] : 'NIL'}}
+            <span class="p-8">
+                : {{candidateDetails['candidate.candidatePreviousDesignation'] ?
+                candidateDetails['candidate.candidatePreviousDesignation'] : 'NIL'}}
             </span>
-            <span class="p-8"> 
-                : {{candidateDetails['candidate.candidateEducation'] ? candidateDetails['candidate.candidateEducation'] : 'NIL'}}
+            <span class="p-8">
+                : {{candidateDetails['candidate.candidateEducation'] ? candidateDetails['candidate.candidateEducation']
+                : 'NIL'}}
             </span>
-            <span class="p-8"> 
-                : {{candidateDetails['candidate.candidateExpectedSalar'] ? candidateDetails['candidate.candidateExpectedSalar'] : 'NIL'}}
+            <span class="p-8">
+                : {{candidateDetails['candidate.candidateExpectedSalar'] ?
+                candidateDetails['candidate.candidateExpectedSalar'] : 'NIL'}}
             </span>
-            <span class="p-8"> 
-                : {{candidateDetails['candidate.candidateCity'] ? candidateDetails['candidate.candidateCity'] : 'City '}} ,
-                {{candidateDetails['candidate.candidateDistrict'] ? candidateDetails['candidate.candidateDistrict'] : 'District '}},
-                {{candidateDetails['candidate.candidateState'] ? candidateDetails['candidate.candidateState'] : 'State '}}
+            <span class="p-8">
+                : {{candidateDetails['candidate.candidateCity'] ? candidateDetails['candidate.candidateCity'] : 'City
+                '}} ,
+                {{candidateDetails['candidate.candidateDistrict'] ? candidateDetails['candidate.candidateDistrict'] :
+                'District '}},
+                {{candidateDetails['candidate.candidateState'] ? candidateDetails['candidate.candidateState'] : 'State
+                '}}
             </span>
         </div>
     </div>
     <div class="heading p-10">
         <span>Add Progress</span>
     </div>
-    <div class="d-flex p-10"  >
+    <div class="d-flex p-10">
         <div class="sub-head f-w-500 f-s-14 d-flex">
             <span class="p-10">Skill</span>
             <span class="p-10">Score</span>
             <span class="p-10">Description</span>
         </div>
         <div class="sub-head d-flex" *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done'">
-            <span class="p-5"> 
-                <input *ngIf="!candidateDetails['progress.progressScore']" type="text" id="skill">             
+            <span class="p-5">
+                <input *ngIf="!candidateDetails['progress.progressScore']" type="text" id="skill">
             </span>
-            <span class="p-5"> 
-                <input *ngIf="!candidateDetails['progress.progressScore']" type="text" id="score">              
+            <span class="p-5">
+                <input *ngIf="!candidateDetails['progress.progressScore']" type="text" id="score">
             </span>
-            <span class="p-5"> 
-                <input *ngIf="!candidateDetails['progress.progressDescription']" type="text" id="description">            
+            <span class="p-5">
+                <input *ngIf="!candidateDetails['progress.progressDescription']" type="text" id="description">
             </span>
         </div>
         <div class="sub-head d-flex" *ngIf="data?.progressStatus > 0">
-            <span  class="p-10" *ngIf="candidateDetails['progress.progressScore']" >
+            <span class="p-10" *ngIf="candidateDetails['progress.progressScore']">
                 : {{candidateDetails['progress.progressScore']}}
-             </span>
-             <span  class="p-10" *ngIf="candidateDetails['progress.progressScore']" >
+            </span>
+            <span class="p-10" *ngIf="candidateDetails['progress.progressScore']">
                 : {{candidateDetails['progress.progressScore']}}
-             </span>
-             <span class="p-10" *ngIf="candidateDetails['progress.progressDescription']" >
+            </span>
+            <span class="p-10" *ngIf="candidateDetails['progress.progressDescription']">
                 : {{candidateDetails['progress.progressDescription']}}
-             </span>
+            </span>
         </div>
-       
+
     </div>
     <div *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done'" class="details p-10 d-flex j-end">
         <span class="f-w-500 head-wrap"></span>

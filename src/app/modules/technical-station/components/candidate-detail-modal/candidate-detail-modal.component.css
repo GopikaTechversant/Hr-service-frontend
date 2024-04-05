@@ -22,6 +22,18 @@ input[type="text"] {
     width: 50vw;
 }
 
+.blue{
+    color: #005EC9;
+}
+
+.red{
+    color: rgb(167, 14, 14);
+}
+
+.green{
+    color: green;
+}
+
 .modal-header {
     position: sticky;
     top: 0;

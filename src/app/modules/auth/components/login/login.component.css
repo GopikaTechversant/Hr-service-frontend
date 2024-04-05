@@ -26,6 +26,7 @@
   background: linear-gradient(0deg, #E9E9E9, #E9E9E9),
     linear-gradient(0deg, #FAFAFA, #FAFAFA);
   outline: none;
+  margin-top: 5px;
 }
 
 .form-field {
@@ -99,9 +100,14 @@
   color: #0034C4;
 }
 
-.clear {
-  clear: both;
+.requiredField {
+  min-height: 20px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px; 
 }
+
 
 .error {
   color: red;

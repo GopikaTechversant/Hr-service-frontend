@@ -56,11 +56,15 @@ export class CandidateListComponent {
   }
 
   searchCandidate(search: string): void {
-    this.searchKeyword = search;
-    console.log(this.searchKeyword);
-    
+    this.searchKeyword = search;    
     this.fetchCandidates(this.searchKeyword);
   }
+
+  clearFilter(): void {
+    this.searchKeyword = '';
+    this.fetchCandidates(this.searchKeyword);
+  }
+
 
   navigate(path: any, queryParam: any): void {
     if (queryParam) this.router.navigate([path], { queryParams: { type: queryParam } });

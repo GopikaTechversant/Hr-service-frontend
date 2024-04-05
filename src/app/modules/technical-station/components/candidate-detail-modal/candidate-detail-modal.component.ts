@@ -31,6 +31,8 @@ export class CandidateDetailModalComponent implements OnInit {
       this.candidateDetails = data?.candidateDetails;
       this.stationId = data?.stationId;
       this.serviceId = this.candidateDetails?.serviceId;
+      console.log(this.candidateDetails);
+      
       if (data?.progressStatus > 0) this.progessAdded = true;
     }
     this.dialogRef.updateSize('60vw', '90vh');

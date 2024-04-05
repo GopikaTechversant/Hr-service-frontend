@@ -27,11 +27,12 @@
     padding-left: 6px;
   }
   
-  .menu:hover .menu-text{
+  .menu:hover, .menu.active {
+    background-color: #005EC9;
+  }
+  
+  .menu:hover .menu-text, .menu.active .menu-text {
     background-color: #005EC9;
     color: white;
   }
   
-  .menu:hover{
-    background-color: #005EC9;
-  }

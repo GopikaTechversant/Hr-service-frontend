@@ -6,8 +6,9 @@
 }
 
 .main {
-    display: flex;
-    flex: 1;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 8px 0px #0000001A;
+    width: 100%;
 }
 
 .w-75 {
@@ -23,11 +24,23 @@
     padding: 5px;
 }
 
-.clear-filter{
-    padding: 0px 4px;
-    border: 1px solid #3c40434d;
-    border-radius: 50%;
-  }
+.clear-filter {
+
+    background-color: #ffff;
+    padding: 5px;
+}
+
+.blue {
+    color: #005EC9;
+}
+
+.red {
+    color: #C10A0A;
+}
+
+.green {
+    color: #08E179;
+}
 
 .search-head {
     color: #1e5181;
@@ -41,7 +54,7 @@
 
 .loader-parent {
     position: absolute;
-    left: 34%;
+    left: 53%;
     z-index: 9;
 }
 
@@ -57,9 +70,13 @@
 
 .data {
     position: absolute;
-    left: 34%;
+    left: 52%;
     top: 34%;
     z-index: 9;
+}
+
+.candidate:hover {
+    background-color: #D3E8FF;
 }
 
 .input {
@@ -67,21 +84,9 @@
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
-    width: 300px;
+    width: 220px;
     height: 28px;
 }
-
-
-.input-1 {
-    border: 1px solid #E9E9E9;
-    outline: none;
-    background-color: #FFFFFF;
-    border-radius: 3px;
-    width: 200px;
-    height: 28px;
-}
-
-
 
 table {
     width: 100%;
@@ -89,10 +94,8 @@ table {
 }
 
 .table-container {
-    flex-grow: 1;
     overflow: auto;
-    margin-bottom: 10px;
-    max-height: calc(100vh - 60px);
+    min-height: calc(100vh - 240px);
 }
 
 tr:nth-child(odd) {
@@ -106,7 +109,7 @@ tr:nth-child(even) {
 td {
     padding: 10px;
     text-align: center !important;
-    border: 1px solid #E9E9E9 ;
+    border: 1px solid #E9E9E9;
 }
 
 tr {
@@ -142,6 +145,12 @@ tr {
 
 }
 
+.clear-filter {
+    padding: 0px 4px;
+    border: 1px solid #3c40434d;
+    border-radius: 50%;
+}
+
 .dropdown {
     background: white;
     box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
@@ -170,7 +179,6 @@ tr {
     font-size: 14px;
     font-weight: 400;
     width: 198px;
-    padding: 5px;
     border-radius: 4px;
     position: absolute;
     z-index: 999;
@@ -192,10 +200,6 @@ tr {
 
 .box :hover {
     background: #F0F7FF;
-}
-
-.page {
-    margin: 10px;
 }
 
 .current-page {
