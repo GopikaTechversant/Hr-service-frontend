@@ -5,7 +5,7 @@
         </div>
         <div class="d-flex j-space">
             <span class="input">
-                <input type="text" class="p-10" placeholder="Search Candidates" [(ngModel)]="searchKeyword">
+                <input type="text" class="p-10" placeholder="Search Candidates" [(ngModel)]="searchKeyword" (keydown.enter)="searchCandidate(searchKeyword)">
                 <span *ngIf="searchKeyword !== ''" (click)="clearFilter()"
                     class="clear-filter c-pointer m-l-10">x</span>     
             </span>

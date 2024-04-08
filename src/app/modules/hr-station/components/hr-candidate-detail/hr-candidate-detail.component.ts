@@ -73,36 +73,40 @@ export class HrCandidateDetailComponent {
   rejectClick(): void {
     const feedback = document.getElementById('feedback') as HTMLInputElement;
     if (feedback) this.feedback = feedback?.value;
-    let payload = {
-      serviceId: this.serviceId,
-      stationId: this.candidateDetails?.candidateStation,
-      userId: this.userId,
-      status: "rejected",
-    }
-    this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
-      next: (res: any) => {
-        this.closeDialog();
-      },
-      error: (error) => {
-        this.tostr.error('Error adding progress');
+    if (this.feedback.trim() !== '') {
+      let payload = {
+        serviceId: this.serviceId,
+        stationId: this.candidateDetails?.candidateStation,
+        userId: this.userId,
+        status: "rejected",
       }
-    });
+      this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
+        next: (res: any) => {
+          this.closeDialog();
+        },
+        error: (error) => {
+          this.tostr.error('Error adding progress');
+        }
+      });
+    } else this.tostr.warning('Please Add Feedback');
   }
 
   approveClick(): void {
     const feedback = document.getElementById('feedback') as HTMLInputElement;
     if (feedback) this.feedback = feedback?.value;
-    const payload = {
-      serviceSeqId: this.serviceId,
-      feedBack: this.feedback,
-      feedBackBy : this.userId
-    };
-    this.apiService.post(`/hr-station/candidateToUser`, payload).subscribe({
-      next: (res: any) => {
-        this.tostr.success('Approval successful');
-        this.closeDialog();
-      },
-      error: (error) => this.tostr.error('Error during approval')
-    });
+    if (this.feedback.trim() !== '') {
+      const payload = {
+        serviceSeqId: this.serviceId,
+        feedBack: this.feedback,
+        feedBackBy: this.userId
+      };
+      this.apiService.post(`/hr-station/candidateToUser`, payload).subscribe({
+        next: (res: any) => {
+          this.tostr.success('Approval successful');
+          this.closeDialog();
+        },
+        error: (error) => this.tostr.error('Error during approval')
+      });
+    } else this.tostr.warning('Please Add Feedback');
   }
 }

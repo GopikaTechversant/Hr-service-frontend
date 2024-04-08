@@ -1,3 +1,11 @@
+.main {
+    overflow: auto;
+    background-color: #FFFFFF;
+    padding: 20px;
+    height: calc(100vh - 160px);
+
+}
+
 .title {
     font-weight: 500;
     color: #000000;
@@ -15,17 +23,16 @@
 
 .cards {
     width: 100%;
-    height: calc(100vh - 253px);
-    border-radius: 3px;
-    border: 1px red;
     flex-wrap: wrap;
-    overflow-y: auto;
+    column-gap: 40px;
 }
 
 .contents {
     flex-direction: column;
-    width: 359px;
+    width: 30%;
     margin-bottom: 26px;
+    border-radius: 3px;
+    border: 1px red;
 }
 
 .heading {
@@ -67,13 +74,6 @@
 
 .name {
     font-size: 16px;
-}
-
-.main {
-    overflow-y: hidden;
-    overflow-x: hidden;
-    background-color: #FFFFFF;
-    padding: 20px;
 }
 
 .done {

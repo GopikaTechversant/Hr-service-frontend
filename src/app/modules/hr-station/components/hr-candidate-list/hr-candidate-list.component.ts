@@ -25,12 +25,14 @@ export class HrCandidateListComponent implements OnInit {
   filterStatus: boolean = false;
   currentPage: number = 1;
   limit: number = 10
+  totalCount: any;
+  lastPage: any;
   constructor(private dialog: MatDialog, private apiService: ApiService) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
       this.filterStatus = false;
-    }    
+    }
   }
 
   ngOnInit(): void {
@@ -44,9 +46,32 @@ export class HrCandidateListComponent implements OnInit {
       this.candidateList = [];
       this.loader = false;
       if (data.candidates) {
-        this.candidateList.push(data.candidates);        
+        this.candidateList.push(data.candidates);
+        this.totalCount = data?.totalCount
+        const totalPages = Math.ceil(this.totalCount / this.limit);
+        this.lastPage = totalPages;
+        if (this.currentPage > totalPages) this.currentPage = totalPages;
       }
     })
+  }
+
+  generatePageNumbers() {
+    let pages = [];
+    if (this.lastPage <= 5) {
+      for (let i = 1; i <= this.lastPage; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      let start = Math.max(2, this.currentPage - 1);
+      let end = Math.min(this.lastPage - 1, this.currentPage + 1);
+
+      if (this.currentPage <= 3) end = 4;
+      else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
+      if (start > 2) pages.push('...');
+      for (let i = start; i <= end; i++) pages.push(i);
+      if (end < this.lastPage - 1) pages.push('...');
+      pages.push(this.lastPage);
+    }
+    return pages;
   }
 
   selectStatusFilter(item: string): void {

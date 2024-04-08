@@ -58,9 +58,9 @@ export class SeriesComponent implements OnInit {
       if (res?.candidates) {
         this.candidates_list = res?.candidates
         this.candidates_list = [];
-        this.candidates_list = [...this.candidates_list, ...res.candidates];
+        this.candidates_list = [...this.candidates_list, ...res?.candidates];
         this.candidates_list.forEach((candidate: any) => {
-          if (candidate.serviceId) this.serviceIds.push(candidate.serviceId);
+          if (candidate.serviceId) this.serviceIds.push(candidate?.serviceId);
         });
       }
     })
@@ -74,35 +74,35 @@ export class SeriesComponent implements OnInit {
     }
   }
 
-  approve(): void {
-    const headers = new HttpHeaders({
-      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50',
-    });
-    const requestData = {
-      serviceIds: this.selectedCandidatesIds.length > 0 ? this.selectedCandidatesIds : this.serviceIds,
-      requestId: this.requestId
-    }
-    this.http.post(`${environment.api_url}/screening-station/accept`, requestData, { headers }).subscribe({
-      next: (res: any) => {
-        this.tostr.success('Approved');
-      },
-      error: (error) => {
-        if (error?.status === 500) this.tostr.error("Internal Server Error");
-        else {
-          this.tostr.warning(error?.error?.message ? error?.error?.message : "Unable to fetch details");
-          this.error = true;
-        }
-      }
-    })
-  }
+  // approve(): void {
+  //   const headers = new HttpHeaders({
+  //     'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50',
+  //   });
+  //   const requestData = {
+  //     serviceIds: this.selectedCandidatesIds.length > 0 ? this.selectedCandidatesIds : this.serviceIds,
+  //     requestId: this.requestId
+  //   }
+  //   this.http.post(`${environment.api_url}/screening-station/accept`, requestData, { headers }).subscribe({
+  //     next: (res: any) => {
+  //       this.tostr.success('Approved');
+  //     },
+  //     error: (error) => {
+  //       if (error?.status === 500) this.tostr.error("Internal Server Error");
+  //       else {
+  //         this.tostr.warning(error?.error?.message ? error?.error?.message : "Unable to fetch details");
+  //         this.error = true;
+  //       }
+  //     }
+  //   })
+  // }
 
   toggleTaskDetails() {
     this.isTaskDetailsOpen = !this.isTaskDetailsOpen;
   }
 
-  onStatusChange(event: any, candidate: any, index: number): void {
-    const selectedStatus = event.target.value;
-    if (selectedStatus === 'reject') this.onCandidateSelectionChange(event, candidate, index);
+  onStatusChange(event: any, candidate: any): void {
+    const selectedStatus = event?.target?.value;
+    if (selectedStatus === 'reject') this.onCandidateSelectionChange(candidate);
     if (selectedStatus === 'select') {
       this.router.navigate(['dashboard/interview-details'], {
         state: { candidate }
@@ -110,25 +110,18 @@ export class SeriesComponent implements OnInit {
     }
   }
 
-  onCandidateSelectionChange(event: any, candidate: any, index: any): void {
-    let action = event?.target?.value;
+  onCandidateSelectionChange( candidate: any): void {
     this.candidateServiceId = candidate?.serviceId;
     const userId = localStorage.getItem('userId');
     const dialogRef = this.dialog.open(FeedbackComponent, {
-      data: { candidateId: candidate?.serviceId, stationId: 1, status: 'rejected', candidateDetails: candidate ,userId : userId },
+      data: { candidateId: candidate?.serviceId, stationId: 1, status: 'rejected', candidateDetails: candidate, userId: userId },
       width: '600px',
       height: '300px'
     })
-    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-      if (confirmed) {
-        candidate.serviceStatus = action;
-      }
-      let element: any = document.getElementById('status' + index);
-      if (element) element.value = candidate?.serviceStatus;
-    })
-    dialogRef.componentInstance.selectedCandidatesEmitter.subscribe((selectedCandidatesIds: any[]) => {
-      this.selectedCandidatesIds.push(...selectedCandidatesIds);
-    })
+  
+    dialogRef.afterClosed().subscribe(() => {
+      this.fetchcandidates();
+    });
   }
 
 }

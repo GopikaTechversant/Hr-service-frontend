@@ -190,31 +190,28 @@
                             <div class="d-flex">
                                 <div class="col-1">
                                     <div class="p-10">
-                                        <span class="text-color p-r-10 f-w-500">{{item?.['reqUser.userName']}}</span>
-                                        <span class="text-color p-r-10 f-w-500">Admin</span>
-                                        <span class="p-r-10">Screening - </span>
-                                        <span class="p-r-10 date-color"> {{item?.commentDate | date:
-                                            'dd/MM/yyyy'}}</span>
-                                        <span class="p-r-10 date-color">29/02/2024</span>
+                                        <span class="text-color p-r-10 f-w-500">{{item?.['reqServiceSequence.reqUser.userName']}}</span>
+                                        <span class="p-r-10">{{item?.['reqServiceSequence.reqStation.stationName']}} - </span>
+                                        <span class="p-r-10 date-color"> {{item?.['reqServiceSequence.serviceDate'] | date:'dd/MM/yyyy'}}</span>
                                     </div>
                                     <div class="p-10">
                                         <span>{{item?.commentComment}}</span>
                                     </div>
                                 </div>
-                                <div class="d-flex j-end">
+                                <!-- <div class="d-flex j-end">
                                     <img src="assets/images/candidate-detail/edit.svg" class="icon" alt="">
                                     <img src="assets/images/candidate-detail/delete.svg" class="icon" alt="">
-                                </div>
+                                </div> -->
                             </div>
                             <div *ngIf="!last" class="bor-2"></div>
                         </ng-container>
                     </div>
                     <div class="p-10" *ngIf="candidateFeedback?.length === 0">No other Feedback Available</div>
-                    <div class="m-b-20">
-                        <textarea class="text-area" id="" cols="30" rows="10" placeholder="Add New Feedback"></textarea>
-                        <button class="btn-cancel">Cancel</button>
-                        <button class="btn-submit">Submit</button>
-                    </div>
+                    <!-- <div class="m-b-20">
+                        <textarea class="text-area" id="feedback" cols="30" rows="10" placeholder="Add New Feedback"></textarea>
+                        <button class="btn-cancel c-pointer">Cancel</button>
+                        <button class="btn-submit c-pointer">Submit</button>
+                    </div> -->
                 </div>
             </div>
         </ng-container>

@@ -93,7 +93,7 @@
                         <ul>
                             <li *ngFor="let skill of selectedSkills" class="p-4">
                                 {{ skill | titlecase}}
-                                <i class="fa fa-trash-o  delete-color" aria-hidden="true"
+                                <i class="fa fa-trash-o  delete-color c-pointer" aria-hidden="true"
                                     (click)="removeSkill(skill)"></i>
                             </li>
                         </ul>

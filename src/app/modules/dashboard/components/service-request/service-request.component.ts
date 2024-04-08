@@ -44,7 +44,7 @@ export class ServiceRequestComponent implements OnInit {
 
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
-    $event.returnValue = true; 
+    $event.returnValue = true;
   }
 
   ngOnInit(): void {
@@ -96,23 +96,23 @@ export class ServiceRequestComponent implements OnInit {
         this.stationsLists = res?.data;
         this.stationsList = [
           { "stationName": "Written", "stationId": 2 },
-          { "stationName": "Technical", "stationId": 6 } 
+          { "stationName": "Technical", "stationId": 6 }
         ];
       }
     })
   }
 
-  selectStation(id: any, stationName: any): void {  
-    if(stationName !== "Technical"){
+  selectStation(id: any, stationName: any): void {
+    if (stationName !== "Technical") {
       if (!this.selectedStations.some((station: { stationId: any; }) => station.stationId === id)) {
         const hrManagerIndex = this.selectedStations.findIndex((station: { stationName: string; }) => station.stationName === 'HR Manager');
         this.selectedStations.splice(hrManagerIndex, 0, { stationName, stationId: id });
-        this.stationsList = this.stationsList.filter((station: { stationId: any; }) => station.stationId !== id);  
+        this.stationsList = this.stationsList.filter((station: { stationId: any; }) => station.stationId !== id);
         this.idListOpen = false;
-      } 
-    }   
+      }
+    }
     if (stationName === "Written" || stationName === "Technical") this.stationsList = this.stationsLists.slice(2, -1)
-    else if (stationName === "Technical 2") this.stationsList = this.stationsList.filter(station => station.stationName !== "Technical 1");   
+    else if (stationName === "Technical 2") this.stationsList = this.stationsList.filter(station => station.stationName !== "Technical 1");
   }
 
   deleteStation(stationId: any, stationName: any): void {
@@ -169,6 +169,7 @@ export class ServiceRequestComponent implements OnInit {
         this.toastr.warning(err?.message ? err?.message : "Unable to create requirement");
       }
     })
+
   }
 
   clearInputvalue(inputElement: ElementRef<HTMLInputElement>) {
@@ -177,17 +178,19 @@ export class ServiceRequestComponent implements OnInit {
 
   resetFormAndState(): void {
     this.stationsList = [];
-    this.selectedTeam = null;
+    this.selectedTeam = 'Select Department';
     this.clearInputvalue(this.experienceInput);
     this.clearInputvalue(this.serviceInput);
     this.clearInputvalue(this.baseSalaryInput);
     this.clearInputvalue(this.maxSalaryInput);
-    // this.clearInputvalue(this.skills);
     this.clearInputvalue(this.vacancy);
     this.idListOpen = false;
     this.teamListOpen = false;
     this.selectedSkills = [];
-    this.selectedStations = [];
+    this.selectedStations = [
+      { stationName: "Screening", stationId: 1 },
+      { stationName: "HR", stationId: 5 }
+    ];
   }
 
 

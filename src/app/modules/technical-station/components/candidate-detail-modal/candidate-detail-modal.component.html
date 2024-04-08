@@ -24,7 +24,8 @@
             <span class="p-8">Max Salary</span>
         </div>
         <div class="sub-head d-flex">
-            <span class="p-8"> : {{candidateDetails['candidate.candidateFirstName']}} {{candidateDetails['candidate.candidateLastName']}}</span>
+            <span class="p-8"> : {{candidateDetails['candidate.candidateFirstName']}}
+                {{candidateDetails['candidate.candidateLastName']}}</span>
             <span class="p-8"> : {{candidateDetails['serviceRequest.requestSkills']}}</span>
             <span class="p-8"> : {{candidateDetails['serviceRequest.requestExperience']}}</span>
             <span class="p-8"> : {{candidateDetails['serviceRequest.requestBaseSalary']}}</span>
@@ -70,9 +71,12 @@
                 candidateDetails['candidate.candidateExpectedSalar'] : 'NIL'}}
             </span>
             <span class="p-8">
-                : {{candidateDetails['candidate.candidateCity'] ? candidateDetails['candidate.candidateCity'] : 'City'}} ,
-                {{candidateDetails['candidate.candidateDistrict'] ? candidateDetails['candidate.candidateDistrict'] :'District '}},
-                {{candidateDetails['candidate.candidateState'] ? candidateDetails['candidate.candidateState'] : 'State'}}
+                : {{candidateDetails['candidate.candidateCity'] ? candidateDetails['candidate.candidateCity'] : 'City'}}
+                ,
+                {{candidateDetails['candidate.candidateDistrict'] ? candidateDetails['candidate.candidateDistrict']
+                :'District '}},
+                {{candidateDetails['candidate.candidateState'] ? candidateDetails['candidate.candidateState'] :
+                'State'}}
             </span>
         </div>
     </div>
@@ -113,23 +117,28 @@
         <span class="f-w-500 head-wrap"></span>
         <button class="btn c-pointer" (click)="addProgress()">Add progress</button>
     </div>
-    <div *ngIf="candidateDetails?.serviceStatus !== 'done' && progessAdded">
+    <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'pending' && progessAdded">
         <div class="heading p-10">
             <span>Feedback</span>
         </div>
         <div class="m-10">
-            <textarea class="text-area" id="feedback" cols="30" rows="10" placeholder="Add Feedback for Approval or Rejection"></textarea>
-            <div  class="btn-parent">
+            <textarea class="text-area" id="feedback" cols="30" rows="10"
+                placeholder="Add Feedback for Approval or Rejection"></textarea>
+            <div class="btn-parent">
                 <button class="c-pointer btn-reject" (click)="rejectClick()">Reject</button>
                 <button class="btn c-pointer" (click)="approveClick()">Approve</button>
             </div>
         </div>
     </div>
-    <div *ngIf="this.data?.candidateDetails?.serviceStatus !== 'pending'">
+    <div
+        *ngIf="this.data?.candidateDetails?.serviceStatus === 'done' || this.data?.candidateDetails?.serviceStatus === 'rejected'">
         <div class="heading p-10">
             <span>Feedback</span>
         </div>
-        <div class="m-10">
+        <div class="sub-head d-flex">
+            <span class="p-10" *ngIf="candidateDetails['reqCandidateComment.commentComment']">
+                {{candidateDetails['reqCandidateComment.commentComment']}}
+            </span>
         </div>
     </div>
 </div>

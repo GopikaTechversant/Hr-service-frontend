@@ -95,7 +95,7 @@
             <span class="f-w-500">Description : </span>{{hrReview?.reviewedDescription}}
         </div>
     </div>
-    <div *ngIf="this.data?.candidateDetails?.serviceStatus !== 'done' && hrReview">
+    <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'pending' && hrReview">
         <div class="head p-10">
             <span>Feedback</span>
         </div>
@@ -107,11 +107,12 @@
             </div>
         </div>
     </div>
-    <div *ngIf="this.data?.candidateDetails?.serviceStatus !== 'pending'">
+    <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'done' || this.data?.candidateDetails?.serviceStatus === 'rejected'">
         <div class="head p-10">
             <span>Feedback</span>
         </div>
-        <div class="m-10">
+        <div class="p-10" *ngIf="hrReview?.reviewedSalary">
+            <span></span>
         </div>
     </div>
 </div>

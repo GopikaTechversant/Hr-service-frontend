@@ -80,9 +80,9 @@
         <div class="d-flex parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Requirement</span>
-                <div class="input-box c-pointer p-relative no-close"
+                <div class="input-box p-t-5 p-l-5 c-pointer p-relative no-close"
                     (click)="requirementListOpen = !requirementListOpen">
-                    <div class="p-t-8 p-l-5">
+                    <div class="p-t-5">
                         <span *ngIf="!selectedRequirementName" class="no-close">Select Requirement</span>
                         <span *ngIf="selectedRequirementName" class="no-close">{{selectedRequirementName}}</span>
                         <span><i class="f-right p-r-10 fa fa-chevron-down s-text no-close"></i></span>
@@ -95,8 +95,8 @@
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Application Source</span>
-                <div class="input-box c-pointer p-relative no-close" (click)="showSource = !showSource">
-                    <div class="p-t-10 p-l-6">
+                <div class="input-box p-t-5 p-l-5 c-pointer p-relative no-close" (click)="showSource = !showSource">
+                    <div class="p-t-5">
                         <span *ngIf="!sourceName">Select source</span>
                         <span *ngIf="sourceName">{{sourceName}}</span>
                         <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
@@ -172,8 +172,8 @@
                 <div class="child d-flex m-b-10">
                     <span class="text m-b-4 no-close">Skill Sets</span>
                     <div class="d-flex skill-drop-down m-t-5 no-close w-100">
-                        <div class="input-box c-pointer no-close p-relative" (click)="showDropdown = !showDropdown">
-                            <div class="p-t-10 ">
+                        <div class="input-box p-t-5 p-l-5 c-pointer no-close p-relative" (click)="showDropdown = !showDropdown">
+                            <div class="p-t-5">
                                 <span class="no-close'">{{selectedSkillType || 'Skill Type'}}</span>
                                 <span><i class="f-right p-r-10 fa fa-chevron-down no-close'"></i></span>
                                 <div class="dropdown c-pointer no-close'" *ngIf="showDropdown">

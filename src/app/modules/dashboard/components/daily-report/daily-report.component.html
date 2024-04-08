@@ -8,7 +8,7 @@
                 <div class=" d-flex j-space p-5 p-b-0">
                     {{recruiterName}}
                     <i class="fa fa-chevron-down filter-icon no-close"></i>
-                    <div *ngIf="showRecruiters" class="p-absolute month-dropdown no-close m-t-20">
+                    <div *ngIf="showRecruiters" class="p-absolute dropdown no-close">
                         <div class="month-column" *ngFor="let item of requitersList"
                             (click)="selectRecruiter(item?.userFullName , item?.userId) ; showRecruiters = !showRecruiters">
                             {{item?.userFullName}}
@@ -63,16 +63,8 @@
             </ng-container>
         </table>     
     </div>
-    
-    <!-- <div class="pagination d-flex j-end" *ngIf="userRequirement?.length > 0">
-        <mat-paginator (page)="handlePageEvent($event)" [length]="length" [pageSize]="pageSize"
-            [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="pageSizeOptions" [pageIndex]="pageIndex"
-            aria-label="Select page">
-        </mat-paginator>
-    </div> -->
     <div class="page d-flex j-end">
-        <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(currentPage - 1)">{{currentPage -
-            1}}</button>
+        <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(currentPage - 1)">{{currentPage - 1}}</button>
         <button class="box current-page c-pointer">{{ currentPage }}</button>
         <button class="box c-pointer" (click)="onPageChange(currentPage + 1)"
             [disabled]="userRequirement?.length === 0 || !userRequirement">{{currentPage + 1}}</button>
