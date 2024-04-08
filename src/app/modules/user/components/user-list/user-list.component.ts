@@ -15,7 +15,7 @@ export class UserListComponent implements OnInit {
   userList: any = [];
   selectedItem: any;
   loader: boolean = false;
-  pageSize: number = 13;
+  pageSize: number = 10;
   currentPage: number = 1;
   lastPage: any;
   userCount: any;

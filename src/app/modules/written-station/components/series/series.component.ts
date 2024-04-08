@@ -48,6 +48,7 @@ export class SeriesComponent implements OnInit {
   candidatesStatus: any[] = [];
   averageScore: string | null = null;
   showAverageScoreInput: boolean = false;
+  candidateResult: any[] = [];
   constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -69,19 +70,19 @@ export class SeriesComponent implements OnInit {
 
   fetchQuestions(): void {
     this.apiService.get(`/written-station/questions`).subscribe((data: any) => {
-      const filteredQuestions = data.data.filter((question: any) => {
-        return !this.series_list.some((series: any) => series.questionId === question.questionId);
-      });
-      this.questions_list = filteredQuestions;
+      console.log("questions", data);
+      if (this.series_list.length > 0) {
+        this.series_list.forEach((element: any) => {
+          this.questions_list = data?.data.filter((question: { questionId: any; }) => question.questionId !== element.questionId);
+        });
+      } else this.questions_list = data?.data;
     });
   }
-
-
   fetchCandidatesWithSeries(): void {
+    this.newSeriesCreated = false;
     this.apiService.get(`/written-station/questionBatchList/${this.requestId}`).subscribe((res: any) => {
       this.candidatesStatus = res?.data;
-      this.candidatesStatus.forEach((data: any) => {
-      })
+      this.candidateResult = res.result;
       if (res.result && res.data) {
         this.series_list = res.data.map((item: { questionId: any; questionName: any; candidates: any; }, index: number) => ({
           name: `Series ${index + 1}`,
@@ -92,10 +93,10 @@ export class SeriesComponent implements OnInit {
           selectedQuestion: null,
           candidates: item.candidates
         }));
+        this.newSeriesCreated = false;
       } else this.tostr.error(res.message);
-    }, error => {
-      this.tostr.error(error);
     });
+    this.newSeriesCreated = false;
   }
 
   seriesBoxClick(series: any) {
@@ -130,11 +131,13 @@ export class SeriesComponent implements OnInit {
       this.apiService.post(`/written-station/approve`, payload).subscribe((res: any) => {
         this.tostr.success('Approved');
         this.averageScore = averageScore;
+        this.fetchCandidatesWithSeries();
       })
     } else if (ScoreAddedFalse) this.tostr.warning('Please add score');
   }
 
   resultClick(candidate: any, id: any): void {
+    this.newSeriesCreated = false;
     this.selectedCandidate = candidate;
     this.selectedCandidateIds = id;
     const dialogRef = this.dialog.open(ResultComponent, {
@@ -151,15 +154,19 @@ export class SeriesComponent implements OnInit {
         candidate: this.selectedCandidate,
         score: this.selectedCandidate.examScore
       }
+      this.newSeriesCreated = false;
+      console.log("this.newSeriesCreated", this.newSeriesCreated);
       this.fetchCandidatesWithSeries();
     });
   }
 
   selectQuestion(questionId: string, questionName: string, series: any): void {
+    series.showQuestions = false;
     this.selectedQuestion = questionName;
     this.questions_list = this.questions_list.filter((question: { questionId: any; }) => question.questionId !== questionId);
     this.selectedQuestionId = questionId;
     this.assignQuestion(questionId, series);
+    series.showQuestions = false;
   }
 
   isQuestionSelected(series: any, question: any): void {
@@ -181,12 +188,6 @@ export class SeriesComponent implements OnInit {
     }
     this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res: any) => {
       this.questionAssigned = true;
-      // Remove assigned question from the available questions list
-      const index = this.questions_list.findIndex((question: any) => question.questionId === questionId);
-      if (index !== -1) {
-        this.questions_list.splice(index, 1);
-        this.questions_list = [...this.questions_list];
-      }
     });
   }
 
@@ -204,7 +205,7 @@ export class SeriesComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe((selectedSeries: string) => {
         if (selectedSeries) {
-          const selectedSeriesObj = this.series_list.find((s: any) => s.name === selectedSeries || s.questionName === selectedSeries)
+          let selectedSeriesObj = this.series_list.find((s: any) => s.name === selectedSeries || s.questionName === selectedSeries)
           if (selectedSeriesObj) {
             // remove the candidate from the candidate list
             this.candidates_list = this.candidates_list.filter((c: any) => c.candidateId !== candidate.candidateId);
@@ -219,15 +220,23 @@ export class SeriesComponent implements OnInit {
               selectedSeriesObj.candidates = selectedSeriesObj.candidates || [];
               selectedSeriesObj.candidates.push(candidate);
             }
-            this.payload_series_list = this.series_list.map((s: any) => {
-              if (s && s.candidates) {
-                this.serviceId = s.candidates.map((c: any) => c?.serviceId);
-                return { questions: s.questions };
-              }
-              return s;
-            });
             this.series_list = [...this.series_list];
-            if (selectedSeriesObj.questionName) this.assignQuestion(selectedSeriesObj.questionId, selectedSeriesObj)
+            if (selectedSeriesObj.questionName) {
+              let questionId = selectedSeriesObj.questionId;
+              selectedSeriesObj = selectedSeriesObj.candidates.filter((candidate: any) => !candidate.progressScore);
+              const requestData = {
+                questionAssignee: null,
+                questionId: questionId,
+                questionServiceId: [] as string[]
+              };
+              if (selectedSeriesObj[0].serviceId) requestData.questionServiceId.push(selectedSeriesObj[0].serviceId);
+              this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res: any) => {
+                this.newSeriesCreated = false;
+                this.questionAssigned = true;
+                this.newSeriesCreated = false;
+                this.fetchCandidatesWithSeries();
+              });
+            }
           } else this.tostr.warning('There is no selected series');
         }
       })
