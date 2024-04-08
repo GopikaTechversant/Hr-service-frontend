@@ -208,3 +208,10 @@ tr {
     height: 26px;
     width: 26px;
 }
+
+.page {
+    margin: 10px;
+    background-color: white;
+  }
+  
+

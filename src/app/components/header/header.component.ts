@@ -42,9 +42,7 @@ export class HeaderComponent implements OnInit {
       this.stationsList.push({
         "stationName": "Log Out",
         "stationId": 0
-    })
-      console.log(this.stationsList);
-      
+      })      
     });
   }
 
@@ -55,7 +53,6 @@ export class HeaderComponent implements OnInit {
     else if (station?.stationName === 'Screening') this.router.navigate(['/dashboard']);
     else if (station?.stationName === 'Written') this.router.navigate(['/written']);
     else if (station?.stationName === 'Log Out') this.logout();
-
     this.dropDown = false;
   }
 

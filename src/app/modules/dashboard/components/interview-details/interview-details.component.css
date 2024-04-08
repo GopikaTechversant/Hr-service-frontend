@@ -118,7 +118,7 @@
 .dropdown {
     background: white;
     box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
-    max-height: 100px;
+    max-height: 150px;
     overflow-y: scroll;
     font-size: 14px;
     margin-left: 3px;

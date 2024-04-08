@@ -33,10 +33,9 @@ export class ReportDetailsComponent implements OnInit {
   recruiterName: string = 'Select Recruiters';
   error: boolean = false;
   interviewDetails: any;
-  length = 100;
-  pageSize = 10;
-  pageIndex = 0;
-  pageSizeOptions = [5, 10, 25];
+  currentPage: number = 1;
+  pageSize = 11;
+  pageSizeOptions = [10, 25, 30];
   showFirstLastButtons = true;
   today: any;
 
@@ -72,7 +71,7 @@ export class ReportDetailsComponent implements OnInit {
   }
 
   fetchInterviewStatus(): void {
-    this.apiService.get(`/report/over-all-interview-status?page=1&limit=2`).subscribe((res: any) => {
+    this.apiService.get(`/report/over-all-interview-status?page=${this.currentPage}&limit=${this.pageSize}`).subscribe((res: any) => {
       if (res?.data) {
         this.interviewDetails = res?.data;
       }
@@ -126,12 +125,11 @@ export class ReportDetailsComponent implements OnInit {
     this.fetchDetails();
   }
 
-  handlePageEvent(event: any) {
-    this.length = event.length;
-    this.pageSize = event.pageSize;
-    this.pageIndex = event.pageIndex;
+  onPageChange(pageNumber: number): void {
+    this.currentPage = Math.max(1, pageNumber);
     this.fetchInterviewStatus();
   }
+
 
   getCurrentMonth(): void {
     this.currentMonth = this.monthData.find(item => item.number == this.reportMonth);

@@ -1,34 +1,28 @@
 <div class="main m-4">
     <div class="d-flex j-space">
         <span class="title">Candidates</span>
-        <!-- <button class="approve-btn" (click)="approve();">Approve</button> -->
     </div>
-    <div class="cards d-flex j-space m-t-10" #scrollTop>
-        <div class="contents dflex m-l-4 " *ngFor="let candidate of candidates_list let i = index">
+    <div class="cards d-flex  m-t-10" #scrollTop>
+        <div class="contents d-flex m-l-4 " *ngFor="let candidate of candidates_list">
             <div class="d-flex j-space heading p-7">
                 <span class="name p-t-4 p-l-3">{{candidate?.candidateFirstName}} {{candidate?.candidateLastName}}</span>
-                <span *ngIf="candidate?.serviceStatus && candidate?.serviceStatus !== 'pending'"
-                    class="name done p-t-2">
+                <span *ngIf="candidate?.serviceStatus && candidate?.serviceStatus !== 'pending'" class="name done p-t-2">
                     {{candidate?.serviceStatus | titlecase}}
                 </span>
-                <select *ngIf="candidate?.serviceStatus === 'pending'" class="name select p-t-2 c-pointer"
-                    (change)="onStatusChange($event, candidate, i)">
-                    <option class="name select p-t-2 c-pointer f-w-500" value="" disabled selected>
-                        {{candidate?.serviceStatus |
-                        titlecase}}</option>
+                <select *ngIf="candidate?.serviceStatus === 'pending'" class="name select p-t-2 c-pointer" (change)="onStatusChange($event, candidate)">
+                    <option class="name select p-t-2 c-pointer f-w-500" value="" disabled selected>{{candidate?.serviceStatus | titlecase}}</option>
                     <option class="name select p-t-2 c-pointer f-w-500" value="select">Select</option>
                     <option class="name select p-t-2 c-pointer f-w-500" value="reject">Reject</option>
                 </select>
             </div>
             <div class="info-container">
                 <div class="info-pair d-flex j-space">
-                    <div class="key">Email</div>
-                    <div class="value">: {{candidate?.candidateEmail}}</div>
+                    <span class="key">Email</span>
+                    <span class="value">: {{candidate?.candidateEmail}}</span>
                 </div>
                 <div class="info-pair d-flex">
-                    <div class="key">Experience</div>
-                    <div class="value">: {{candidate?.candidateExperience === '0' ? 'Fresher' :
-                        candidate?.candidateExperience }}</div>
+                    <span class="key">Experience</span>
+                    <span class="value">: {{candidate?.candidateExperience === '0' ? 'Fresher' : candidate?.candidateExperience }}</span>
                 </div>
             </div>
         </div>

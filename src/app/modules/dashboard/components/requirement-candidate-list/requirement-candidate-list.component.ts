@@ -8,12 +8,13 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class RequirementCandidateListComponent implements OnInit {
   candidates_list: any = [];
-  searchQuery: string = '';
+  searchKeyword: string = '';
   length: any = 20;
-  pageSize = 9;
-  pageIndex = 1;
-  pageSizeOptions = [5, 10, 15, 20];
+  limit = 9;
+  currentPage = 1;
   showFirstLastButtons = true;
+  totalCount: any;
+  lastPage: any;
   constructor(private router: Router, private apiService: ApiService) { }
 
   ngOnInit(): void {
@@ -21,13 +22,39 @@ export class RequirementCandidateListComponent implements OnInit {
   }
 
   fetchcandidates(searchQuery: string): void {
-    this.apiService.get(`/screening-station/v1/list-all?page=${this.pageIndex}&limit=${this.pageSize}&search=${searchQuery}`).subscribe((res: any) => {
-      this.candidates_list = res.candidates;
+    this.apiService.get(`/screening-station/v1/list-all?page=${this.currentPage}&limit=${this.limit}&search=${searchQuery}`).subscribe((res: any) => {
+      if (res) {
+        this.candidates_list = res?.candidates;
+        this.totalCount = res?.totalCount;        
+        const totalPages = Math.ceil(this.totalCount / this.limit);
+        this.lastPage = totalPages;        
+        if (this.currentPage > totalPages) this.currentPage = totalPages;
+      }
     })
   }
 
-  candidateSearch(): void {
-    this.fetchcandidates(this.searchQuery);
+  generatePageNumbers() {
+    let pages = [];
+    if (this.lastPage <= 5) {
+      for (let i = 1; i <= this.lastPage; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      let start = Math.max(2, this.currentPage - 1);
+      let end = Math.min(this.lastPage - 1, this.currentPage + 1);
+
+      if (this.currentPage <= 3) end = 4;
+      else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
+      if (start > 2) pages.push('...');
+      for (let i = start; i <= end; i++) pages.push(i);
+      if (end < this.lastPage - 1) pages.push('...');
+      pages.push(this.lastPage);
+    }
+    return pages;
+  }
+
+  candidateSearch(search: any): void {
+    this.searchKeyword = search
+    this.fetchcandidates(this.searchKeyword);
   }
 
   navigate(path: any, requestId?: any): void {
@@ -36,15 +63,9 @@ export class RequirementCandidateListComponent implements OnInit {
     else this.router.navigate([path]);
   }
 
-  handlePageEvent(event: any) {
-    this.length = event.length;
-    this.pageSize = event.pageSize;
-    this.pageIndex = event.pageIndex;
-    this.fetchcandidates('');
-  }
 
   onPageChange(pageNumber: number): void {
-    this.pageIndex = Math.max(1, pageNumber);
+    this.currentPage = Math.max(1, pageNumber);
     this.fetchcandidates('');
   }
 

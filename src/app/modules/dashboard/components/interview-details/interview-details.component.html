@@ -83,17 +83,17 @@
         </div>
         <div class="child d-flex m-b-10">
             <span class="label m-b-4 ">Notice Period</span>
-            <input type="text" class="input-box p-l-9" [value]="noticePeriod || noticeperiodvalue" id="noticePeriod">
+            <input type="text" class="input-box p-l-9 p-t-2 p-b-3" [value]="noticeperiodvalue || ''" id="noticePeriod">
         </div>
     </div>
     <div class="d-flex j-space parent">
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Current Company</span>
-            <input type="text" class="input-box" [value]="currentCompany || ''">
+            <input type="text" class="input-box p-t-2 p-b-3" [value]="currentCompany || ''">
         </div>
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Location</span>
-            <input type="text" class="input-box p-l-9" id="location" [value]="Interviewlocation || locationValue">
+            <input type="text" class="input-box p-l-9 p-t-2 p-b-3" id="location" [value]="Interviewlocation || locationValue">
         </div>
 
         <div class="child d-flex m-b-10" #panelDiv>
@@ -114,7 +114,6 @@
     <div class="d-flex j-space parent">
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Mode</span>
-            <!-- <input type="text" class="input-box p-l-9" id="mode" [value]="modeValue || interviewMode"> -->
             <div class="input-box p-t-10 p-l-6 c-pointer p-relative" (click)="showModeList = !showModeList">
                 <span *ngIf="!selectedModeName">Select Mode</span>
                 <span *ngIf="selectedModeName" class="p-l-9">{{selectedModeName}}</span>
@@ -129,7 +128,7 @@
 
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Interview Status</span>
-            <input type="text" class="input-box p-l-9" id="interviewStatus" [value]="interviewStatus">
+            <input type="text" class="input-box p-l-9 p-t-2 p-b-3" id="interviewStatus" [value]="interviewStatus | titlecase">
         </div>
     </div>
     <div class="child d-flex m-b-10">

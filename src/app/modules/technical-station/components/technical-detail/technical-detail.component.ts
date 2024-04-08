@@ -1,7 +1,5 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { environment } from 'src/environments/environments';
+import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CandidateDetailModalComponent } from '../candidate-detail-modal/candidate-detail-modal.component';
 import { ApiService } from 'src/app/services/api.service';
@@ -31,6 +29,8 @@ export class TechnicalDetailComponent implements OnInit {
   filteredStatus: any = ' ';
   candidateStatus: string = 'Choose Candidate Status';
   currentPage: number = 1;
+  totalCount: any;
+  lastPage: any;
 
   constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog) {
     // this.route.params.subscribe(params => {
@@ -41,7 +41,7 @@ export class TechnicalDetailComponent implements OnInit {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
       this.filterStatus = false;
-    }    
+    }
   }
 
   ngOnInit(): void {
@@ -56,20 +56,48 @@ export class TechnicalDetailComponent implements OnInit {
   fetchList(): void {
     this.loader = true;
     this.candidateList = [];
-    // const totalPages = Math.ceil(this.userCount / this.pageSize);
-    // this.lastPage = totalPages;
-    // if (this.currentPage > totalPages) this.currentPage = totalPages;
     if (this.stationId === '3') {
       this.apiService.get(`/technical-station/list?page=${this.currentPage}&limit=${this.limit}&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
         this.loader = false;
-        if (data?.candidates) this.candidateList.push(data?.candidates);
+        if (data?.candidates) {
+          this.candidateList.push(data?.candidates);
+          this.totalCount = data?.totalCount
+          const totalPages = Math.ceil(this.totalCount / this.limit);
+          this.lastPage = totalPages;
+          if (this.currentPage > totalPages) this.currentPage = totalPages;
+        }
       });
     } else if (this.stationId === '4') {
       this.apiService.get(`/technical-station-two/list?page=${this.currentPage}&limit=10&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
         this.loader = false;
-        if (data?.candidates) this.candidateList.push(data?.candidates);
+        if (data?.candidates) {
+          this.candidateList.push(data?.candidates);
+          this.totalCount = data?.totalCount
+          const totalPages = Math.ceil(this.totalCount / this.limit);
+          this.lastPage = totalPages;
+          if (this.currentPage > totalPages) this.currentPage = totalPages;
+        }
       });
     }
+  }
+
+  generatePageNumbers() {
+    let pages = [];
+    if (this.lastPage <= 5) {
+      for (let i = 1; i <= this.lastPage; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      let start = Math.max(2, this.currentPage - 1);
+      let end = Math.min(this.lastPage - 1, this.currentPage + 1);
+
+      if (this.currentPage <= 3) end = 4;
+      else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
+      if (start > 2) pages.push('...');
+      for (let i = start; i <= end; i++) pages.push(i);
+      if (end < this.lastPage - 1) pages.push('...');
+      pages.push(this.lastPage);
+    }
+    return pages;
   }
 
   fetchDetails(id: any, status: any): void {
@@ -102,7 +130,7 @@ export class TechnicalDetailComponent implements OnInit {
   }
 
   toggleDropdown(candidate: any, event: Event): void {
-    candidate.selectStatus = !candidate.selectStatus;
+    candidate.selectStatus = !candidate?.selectStatus;
     event.stopPropagation();
   }
 

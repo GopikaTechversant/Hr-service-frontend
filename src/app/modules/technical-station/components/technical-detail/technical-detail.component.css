@@ -105,15 +105,15 @@ tr {
     text-align: center;
 }
 
-.blue{
+.blue {
     color: #005EC9;
 }
 
-.red{
+.red {
     color: #C10A0A;
 }
 
-.green{
+.green {
     color: #08E179;
 }
 
@@ -209,4 +209,9 @@ tr {
     color: #FFFFFF;
     height: 26px;
     width: 26px;
+}
+
+.page {
+    margin: 10px;
+    background-color: white;
 }

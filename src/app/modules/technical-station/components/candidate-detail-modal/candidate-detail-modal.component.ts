@@ -30,12 +30,14 @@ export class CandidateDetailModalComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<CandidateDetailModalComponent>, private apiService: ApiService, private tostr: ToastrServices,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data) {
+      console.log(data);
+      
       this.candidateDetails = data?.candidateDetails;
       this.stationId = data?.stationId;
       this.serviceId = this.candidateDetails?.serviceId;
-      console.log(this.candidateDetails);
-      
       if (data?.progressStatus > 0) this.progessAdded = true;
+      console.log(this.progessAdded);
+      
     }
     this.dialogRef.updateSize('60vw', '90vh');
   }
@@ -43,7 +45,7 @@ export class CandidateDetailModalComponent implements OnInit {
   ngOnInit(): void {
     this.userId = localStorage.getItem('userId');
 
-   }
+  }
 
   closeDialog(): void {
     this.dialogRef.close();
@@ -56,10 +58,9 @@ export class CandidateDetailModalComponent implements OnInit {
     this.scoreValue = scoreElement ? scoreElement.value : '';
     const descriptionElement = document.getElementById('description') as HTMLInputElement;
     this.descriptionValue = descriptionElement ? descriptionElement.value : '';
-    const userId = localStorage.getItem('userId');
 
     this.progressQuery = {
-      progressAssignee: this.progressAssignee ? this.progressAssignee : userId,
+      progressAssignee: this.progressAssignee ? this.progressAssignee :  this.userId,
       progressSkill: this.skillValue,
       progressServiceId: this.serviceId || 0,
       progressScore: this.scoreValue,
@@ -84,46 +85,48 @@ export class CandidateDetailModalComponent implements OnInit {
   rejectClick(): void {
     const feedback = document.getElementById('feedback') as HTMLInputElement;
     if (feedback) this.feedback = feedback?.value;
-    let payload = {
-      serviceId: this.serviceId,
-      stationId: this.stationId,
-      userId: this.userId,
-      status: "rejected",
-      feedBack: this.feedback,
-    }
-    this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
-      next: (res: any) => {
-        this.closeDialog();
-      },
-      error: (error) => {
-        this.tostr.error('Error adding progress');
+    if (this.feedback.trim() !== '') {
+      let payload = {
+        serviceId: this.serviceId,
+        stationId: this.stationId,
+        userId: this.userId,
+        status: "rejected",
+        feedBack: this.feedback, 
       }
-    });
+      this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
+        next: (res: any) => {
+          this.closeDialog();
+        },
+        error: (error) => {
+          this.tostr.error('Error adding progress');
+        }
+      });
+    } else this.tostr.warning('Please Add Feedback');
   }
 
   approveClick(): void {
     const feedback = document.getElementById('feedback') as HTMLInputElement;
     if (feedback) this.feedback = feedback?.value;
-    console.log(this.feedback);
-    
     let baseUrl = '';
     if (this.stationId === '3') baseUrl = `/technical-station`;
     if (this.stationId === '4') baseUrl = `/technical-station-two`;
     if (baseUrl) {
-      const payload =  {
-        serviceSeqId: this.serviceId,
-        feedBack: this.feedback,
-        feedBackBy : this.userId
-      };
-      this.apiService.post(`${baseUrl}/approve`, payload).subscribe({
-        next: (res: any) => {
-          this.tostr.success('Approval successful');
-          this.closeDialog();
-        },
-        error: (error) => this.tostr.error('Error during approval')
-      });
-    } else this.tostr.error('Invalid operation');
-
+      if (this.feedback.trim() !== '') {
+        const payload = {
+          serviceSeqId: this.serviceId,
+          feedBack: this.feedback,
+          feedBackBy: this.userId
+        };
+        this.apiService.post(`${baseUrl}/approve`, payload).subscribe({
+          next: (res: any) => {
+            this.tostr.success('Approval successful');
+            this.closeDialog();
+          },
+          error: (error) => this.tostr.error('Error during approval')
+        });
+      }else this.tostr.warning('Please Add Feedback');   
+    } 
+    else this.tostr.error('Invalid operation');
   }
 
 

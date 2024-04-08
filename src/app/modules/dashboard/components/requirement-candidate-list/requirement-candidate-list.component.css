@@ -120,7 +120,7 @@
 
 .main {
   background-color: #F7F7F7;
-  min-height: calc(100vh - 60px);
+  min-height: calc(100vh - 170px);
 }
 
 .box {
@@ -136,10 +136,10 @@
 
 .page {
   margin: 10px;
+  background-color: white;
 }
 
 .current-page {
-  /* border: 1px solid black; */
   background-color: #005EC9;
   color: #FFFFFF;
   height: 26px;

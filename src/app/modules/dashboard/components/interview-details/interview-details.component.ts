@@ -34,7 +34,6 @@ export class InterviewDetailsComponent implements OnInit {
   candidateId: any;
   candidateName: any;
   candidateExperience: any;
-  noticePeriod: any;
   currentCompany: any;
   locationValue: string = '';
   panelId: any;
@@ -64,7 +63,7 @@ export class InterviewDetailsComponent implements OnInit {
   selectedModeName: string = '';
   selectedModeId: any;
   showModeList: boolean = false;
-  scheduleStatus : boolean = false;
+  scheduleStatus: boolean = false;
   constructor(private datePipe: DatePipe, private http: HttpClient, private tostr: ToastrServices, private apiService: ApiService) { }
 
   ngOnInit(): void {
@@ -86,7 +85,7 @@ export class InterviewDetailsComponent implements OnInit {
   }
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
-    $event.returnValue = true; 
+    $event.returnValue = true;
   }
 
   @HostListener('document:click', ['$event'])
@@ -145,7 +144,7 @@ export class InterviewDetailsComponent implements OnInit {
         this.candidateExperience = candidate?.candidateExperience;
         this.currentCompany = candidate?.candidatePreviousOrg;
         this.id = candidate?.candidateId;
-        if (candidate?.candidateNoticePeriodByDays) this.noticePeriod = candidate?.candidateNoticePeriodByDays;
+        if (candidate?.candidateNoticePeriodByDays) this.noticeperiodvalue = candidate?.candidateNoticePeriodByDays;
       })
       this.candidateStatus.forEach((status: any) => {
         this.serviceId = status?.serviceId;
@@ -171,7 +170,6 @@ export class InterviewDetailsComponent implements OnInit {
   fetchMode(): void {
     this.apiService.get(`/screening-station/interview-mode/list`).subscribe((res: any) => {
       if (res?.data) this.modeList = res?.data;
-
     })
   }
 
@@ -251,7 +249,7 @@ export class InterviewDetailsComponent implements OnInit {
 
   submit(): void {
     const noticeperiod = document.getElementById('noticePeriod') as HTMLInputElement;
-    this.noticeperiodvalue = noticeperiod.value;
+    this.noticeperiodvalue = noticeperiod?.value ? noticeperiod?.value : this.noticeperiodvalue;
     const comments = document.getElementById('comments') as HTMLInputElement;
     this.commentValue = comments.value ? comments.value : this.comment;
     const location = document.getElementById('location') as HTMLInputElement;
@@ -297,19 +295,18 @@ export class InterviewDetailsComponent implements OnInit {
     this.displayDate = null;
     this.panelName = null;
     this.candidateExperience = null;
-    this.noticePeriod = null;
     this.currentCompany = null;
     this.showRecruiters = false;
     this.showDropdown = false;
     this.showPanel = false;
     this.candidateName = null;
     this.scheduledDate = null;
-    this.noticeperiodvalue = null;
     this.modeValue = null;
     this.locationValue = '';
     this.noticeperiodvalue = '';
     this.commentValue = null;
     this.comment = '';
+    this.displayTime = '';
 
     this.clearInputvalue('location');
     this.clearInputvalue('mode');
