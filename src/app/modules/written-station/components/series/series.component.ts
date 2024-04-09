@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environments';
 import { ActivatedRoute } from '@angular/router';
-import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatDialog } from '@angular/material/dialog';
 import { ResultComponent } from '../result/result.component';
 import { AssignSeriesComponent } from '../assign-series/assign-series.component';
@@ -30,7 +28,6 @@ export class SeriesComponent implements OnInit {
   selectedQuestions: { [key: string]: { id: any, name: any } } = {};
   requestData: any = [];
   serviceId: any = [];
-  payload_series_list: any = [];
   score: number = 0;
   questionSelected: boolean = false;
   selectedCandidateIds: any[] = [];
@@ -40,16 +37,14 @@ export class SeriesComponent implements OnInit {
   assignedQuestionIds: any[] = [];
   assignedQuestionsName: any[] = [];
   newSeriesCreated: boolean = false;
-  oldseries: boolean = false;
   candidateMarkDetail: any;
   questionAssigned: boolean = false;
-  droppedAllowed: boolean = false;
   selectedQuestion: any;
   candidatesStatus: any[] = [];
   averageScore: string | null = null;
   showAverageScoreInput: boolean = false;
   candidateResult: any[] = [];
-  previousAveragescore:any;
+  previousAveragescore: any;
   constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -71,7 +66,6 @@ export class SeriesComponent implements OnInit {
 
   fetchQuestions(): void {
     this.apiService.get(`/written-station/questions`).subscribe((data: any) => {
-      console.log("questions", data);
       if (this.series_list.length > 0) {
         this.series_list.forEach((element: any) => {
           this.questions_list = data?.data.filter((question: { questionId: any; }) => question.questionId !== element.questionId);
@@ -79,13 +73,14 @@ export class SeriesComponent implements OnInit {
       } else this.questions_list = data?.data;
     });
   }
+  
   fetchCandidatesWithSeries(): void {
     this.newSeriesCreated = false;
     this.apiService.get(`/written-station/questionBatchList/${this.requestId}`).subscribe((res: any) => {
       this.candidatesStatus = res?.data;
       this.candidateResult = res.result;
-      this.candidatesStatus.forEach((mark:any) => this.previousAveragescore = mark?.questionTotalMark)
-     if (res.result && res.data) {
+      this.candidatesStatus[0].candidates.forEach((mark: any) => this.previousAveragescore = mark.progressAverageScore);
+      if (res.result && res.data) {
         this.series_list = res.data.map((item: { questionId: any; questionName: any; candidates: any; }, index: number) => ({
           name: `Series ${index + 1}`,
           active: false,
@@ -157,7 +152,6 @@ export class SeriesComponent implements OnInit {
         score: this.selectedCandidate.examScore
       }
       this.newSeriesCreated = false;
-      console.log("this.newSeriesCreated", this.newSeriesCreated);
       this.fetchCandidatesWithSeries();
     });
   }
@@ -209,6 +203,7 @@ export class SeriesComponent implements OnInit {
         if (selectedSeries) {
           let selectedSeriesObj = this.series_list.find((s: any) => s.name === selectedSeries || s.questionName === selectedSeries)
           if (selectedSeriesObj) {
+            this.newSeriesCreated = false;
             // remove the candidate from the candidate list
             this.candidates_list = this.candidates_list.filter((c: any) => c.candidateId !== candidate.candidateId);
             // remove the candidate from the previous series candidate array
