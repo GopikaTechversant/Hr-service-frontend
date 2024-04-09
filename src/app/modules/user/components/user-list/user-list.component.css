@@ -99,12 +99,10 @@ table {
 
 tr:nth-child(odd) {
     background: #F0F7FF;
-    color: #575F6E;
 }
 
 tr:nth-child(even) {
     background: #FFFFFF;
-    color: #575F6E;
 }
 
 td {
