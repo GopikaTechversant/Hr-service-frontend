@@ -276,3 +276,10 @@
 .select-question {
     width: 95%;
 }
+
+.averagescore{
+    float: right;
+    margin-right: 14px;
+    margin-top: 4px;
+    color: #005EC9;
+}

@@ -49,6 +49,7 @@ export class SeriesComponent implements OnInit {
   averageScore: string | null = null;
   showAverageScoreInput: boolean = false;
   candidateResult: any[] = [];
+  previousAveragescore:any;
   constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -83,7 +84,8 @@ export class SeriesComponent implements OnInit {
     this.apiService.get(`/written-station/questionBatchList/${this.requestId}`).subscribe((res: any) => {
       this.candidatesStatus = res?.data;
       this.candidateResult = res.result;
-      if (res.result && res.data) {
+      this.candidatesStatus.forEach((mark:any) => this.previousAveragescore = mark?.questionTotalMark)
+     if (res.result && res.data) {
         this.series_list = res.data.map((item: { questionId: any; questionName: any; candidates: any; }, index: number) => ({
           name: `Series ${index + 1}`,
           active: false,

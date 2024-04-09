@@ -40,8 +40,9 @@
                     <input type="text" placeholder="Enter the average score" id="averageScore" class="input p-l-10">
                     <button class="approve c-pointer" (click)="approve()">Approve</button>
                 </div>
-                <!-- <div> <span *ngIf="averageScore !== null">Previous Average Score: {{ averageScore }}</span></div> -->
+               
             </div>
+            <div class="averagescore"> <span *ngIf="previousAveragescore !== null">Previous Average Score: {{ previousAveragescore }}</span></div>
             <div class="body-child1">
                 <div *ngIf="series_list?.length === 0 || !series_list" class="parent-conatiner">
                     <div class="centerd-div"><span class="no-data">Candidates are'nt assigned to any series</span></div>
@@ -106,7 +107,7 @@
                         (click)="$event.stopPropagation(); series.showQuestions = !series.showQuestions">
                         <span class="d-flex j-space select-question p-l-7">
                             <span *ngIf="selectedQuestion">{{selectedQuestion}}</span>
-                            <span *ngIf="!selectedQuestion">Choose a Question</span>
+                            <span *ngIf="!selectedQuestion" class="c-pointer">Choose a Question</span>
                             <i class="fa fa-chevron-down filter-icon"></i>
                         </span>
                        
