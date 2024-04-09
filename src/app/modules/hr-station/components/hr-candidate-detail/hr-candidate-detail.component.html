@@ -111,8 +111,8 @@
         <div class="head p-10">
             <span>Feedback</span>
         </div>
-        <div class="p-10" *ngIf="hrReview?.reviewedSalary">
-            <span></span>
+        <div class="p-10" *ngIf="feedback">
+            <span class="p-5">{{feedback ? feedback : 'Not Updated'}}</span>
         </div>
     </div>
 </div>

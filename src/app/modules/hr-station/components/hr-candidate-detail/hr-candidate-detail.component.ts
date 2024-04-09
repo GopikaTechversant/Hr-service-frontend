@@ -26,6 +26,7 @@ export class HrCandidateDetailComponent {
       this.candidateDetails = data?.candidateDetails?.candidate;
       this.hrReview = data?.candidateDetails?.reqHrReview;
       this.serviceId = this.data?.candidateDetails?.serviceId;
+      this.feedback = data?.candidateDetails?.reqCandidateComment?.commentComment;      
     }
     this.dialogRef.updateSize('60%', '85%')
   }
