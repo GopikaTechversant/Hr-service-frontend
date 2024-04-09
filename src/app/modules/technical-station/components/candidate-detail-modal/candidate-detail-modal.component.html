@@ -137,7 +137,7 @@
         </div>
         <div class="sub-head d-flex">
             <span class="p-10" *ngIf="candidateDetails['reqCandidateComment.commentComment']">
-                {{candidateDetails['reqCandidateComment.commentComment']}}
+                {{candidateDetails['reqCandidateComment.commentComment'] ? candidateDetails['reqCandidateComment.commentComment'] : 'Not Updated'}}
             </span>
         </div>
     </div>
