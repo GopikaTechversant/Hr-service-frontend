@@ -45,9 +45,11 @@ export class TechnicalDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.filteredStatus = sessionStorage.getItem('status') ? sessionStorage.getItem('status') : ' ';
     this.route.params.subscribe(params => {
       this.stationId = params['id'];
+      this.filteredStatus = sessionStorage.getItem(`status_${this.stationId}`) ? sessionStorage.getItem(`status_${this.stationId}`) : ' ';
+      this.currentPage = 1 ;
+      this.limit = 10;
       this.candidateList = [];
       this.fetchList();
     });
@@ -114,7 +116,7 @@ export class TechnicalDetailComponent implements OnInit {
 
   selectStatusFilter(item: string): void {
     this.filteredStatus = item;
-    sessionStorage.setItem('status', this.filteredStatus);
+    sessionStorage.setItem(`status_${this.stationId}`, this.filteredStatus);
     this.fetchList();
   }
 

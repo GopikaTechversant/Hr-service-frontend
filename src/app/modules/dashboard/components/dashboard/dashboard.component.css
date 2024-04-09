@@ -12,7 +12,7 @@
   outline: none;
   background-color: #FFFFFF;
   border-radius: 3px;
-  width: 350px;
+  width: 28%;
   height: 28px;
 }
 
@@ -102,7 +102,7 @@
   overflow-y: auto;
   font-size: 14px;
   font-weight: 400;
-  width: 292px;
+  width: 98%;
   padding: 5px;
   border-radius: 4px;
   position: absolute;
