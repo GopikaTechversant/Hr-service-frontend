@@ -94,7 +94,7 @@ export class AddCandidateModalComponent implements OnInit {
 
   fetchSource(): void {
     this.apiService.get(`/candidate/resume-source/list`).subscribe((res: any) => {
-      this.sourceList = res?.data;
+      this.sourceList = res?.data;      
     })
   }
 
@@ -114,7 +114,7 @@ export class AddCandidateModalComponent implements OnInit {
       this.selectedRequirementName = requirement?.requestName;
       this.selectedRequirementId = requirement?.requestId;
       this.maxSalary = requirement?.requestMaxSalary
-      this.minSalary = requirement?.requestBaseSalary
+      this.minSalary = requirement?.requestBaseSalary      
       this.candidateForm.patchValue({
         candidateExpectedSalary: null
       });
@@ -189,6 +189,7 @@ export class AddCandidateModalComponent implements OnInit {
     formdata.append('candidatePrimarySkills', this.primaryskills);
     formdata.append('candidateSecondarySkills', this.secondaryskills);
     formdata.append('resumeSourceId', this.sourceId);
+    if (!this.sourceId) this.tostr.warning('Please Enter a Application source');
     formdata.append('candidatesAddingAgainst', this.selectedRequirementId);
 
     if (this.candidateForm.value.candidateFirstName && this.candidateForm.value.candidateLastName && this.candidateForm.value.candidateGender

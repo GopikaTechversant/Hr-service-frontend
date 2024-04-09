@@ -47,8 +47,8 @@
         </div>
     </div>
     <div class="table-container m-b-0">
-        <div class="no-data" *ngIf="!userRequirement || userRequirement.length === 0">No Data Found</div>
-        <table class="table" *ngIf="userRequirement.length > 0">
+        <div class="no-data" *ngIf="!userRequirement || userRequirement?.length === 0">No Data Found</div>
+        <table class="table" *ngIf="userRequirement?.length > 0">
             <tr class="table-header p-b-10">
                 <ng-container *ngFor="let key of  recruiterKeys">
                     <td>{{key}}</td>

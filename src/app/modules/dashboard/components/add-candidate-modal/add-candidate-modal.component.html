@@ -61,7 +61,7 @@
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Mobile<span class="required">*</span></span>
-                <input type="text" class="input-box" formControlName="candidateMobileNo" maxlength="10"
+                <input type="text" class="input-box" formControlName="candidateMobileNo" maxlength="10" title="Enter a 10 digit Mobile number"
                     (keypress)="onKeypress($event)" (paste)="onPaste($event)">
                 <div
                     *ngIf="candidateForm.get('candidateMobileNo')?.hasError('required') && candidateForm.get('candidateMobileNo')?.touched">
@@ -102,7 +102,7 @@
                         <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
                         <div class="no-close dropdown c-pointer" *ngIf="showSource">
                             <p *ngFor="let source of sourceList"
-                                (click)="selectsource(source.sourceId,source.sourceName)">
+                                (click)="selectsource(source?.sourceId, source?.sourceName)">
                                 {{source?.sourceName}}</p>
                         </div>
                     </div>
@@ -145,7 +145,7 @@
         <div class="d-flex parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Current Salary</span>
-                <input type="text" class="input-box" (keydown)="onKeypress($event)" formControlName="candidateCurrentSalary">
+                <input type="text" class="input-box" (keydown)="onKeypress($event)" formControlName="candidateCurrentSalary" [maxlength]="maxSalary?.length ? maxSalary?.length : 7">
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Expected Salary</span>
@@ -190,7 +190,7 @@
                             <div *ngFor="let suggestion of skillSuggestions" (click)="selectSkill(suggestion)">
                                 <span class="p-t-7 "><img src="assets/images/akar-icons_check.png" alt=""
                                         class="m-t-0 p-r-4" width="13px" height="10px"></span>
-                                <span class="c-pointer ">{{suggestion?.skillName}}</span>
+                                <span class="c-pointer ">{{suggestion?.skillName | titlecase}}</span>
                             </div>
                         </div>
                     </div>

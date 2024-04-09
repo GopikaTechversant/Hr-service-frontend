@@ -71,11 +71,13 @@
                 </div>
             </div>
         </div>
-        <div class="sub-head f-w-500 f-s-14 d-flex">
-            <span class="p-10">Description</span>
-        </div>
-        <div class="sub-head d-flex" *ngIf="!hrReview?.reviewedDescription">
-            <span class="p-5"><input class="input-1" type="text" id="description"></span>
+        <div class="m-10">
+            <div class="sub-head f-w-500 f-s-14 d-flex">
+                <span class="p-10">Description</span>
+            </div>
+            <div class="sub-head d-flex" *ngIf="!hrReview?.reviewedDescription">
+                <span class="p-5"><input class="input-1" type="text" id="description"></span>
+            </div>
         </div>
         <div class="btn-parent">
             <div class="m-10">
@@ -100,14 +102,16 @@
             <span>Feedback</span>
         </div>
         <div class="m-10">
-            <textarea class="text-area" id="" cols="30" rows="10" id="feedback" placeholder="Add Feedback for Approval or Rejection"></textarea>
+            <textarea class="text-area" id="" cols="30" rows="10" id="feedback"
+                placeholder="Add Feedback for Approval or Rejection"></textarea>
             <div class="btn-parent">
                 <button class="c-pointer btn-reject" (click)="rejectClick()">Reject</button>
                 <button class="btn c-pointer" (click)="approveClick()">Approve</button>
             </div>
         </div>
     </div>
-    <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'done' || this.data?.candidateDetails?.serviceStatus === 'rejected'">
+    <div
+        *ngIf="this.data?.candidateDetails?.serviceStatus === 'done' || this.data?.candidateDetails?.serviceStatus === 'rejected'">
         <div class="head p-10">
             <span>Feedback</span>
         </div>
