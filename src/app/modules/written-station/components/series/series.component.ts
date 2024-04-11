@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environments';
 import { ActivatedRoute } from '@angular/router';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatDialog } from '@angular/material/dialog';
 import { ResultComponent } from '../result/result.component';
 import { AssignSeriesComponent } from '../assign-series/assign-series.component';
@@ -12,39 +14,28 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./series.component.css'],
 })
 export class SeriesComponent implements OnInit {
-  series_list: any = [];
-  activeSeries: any;
-  candidates_list: any;
-  selectedCandidate: any;
-  candidates: any = [];
+  candidates_list: any[] = [];
   requestId: any;
-  isTaskDetailsOpen: boolean = false;
-  serviceIds: any = [];
+  series_list: any[] = [];
+  newSeriesCreated: boolean = false;
+  activeSeries: any;
   questions_list: any = [];
   idListOpen: boolean = false;
+  showQuestions: boolean = false;
+  activeDropdownSeries: any = null;
   selectedQuestionId: any;
   selectedQuestionName: any;
-  activeDropdownSeries: any = null;
-  selectedQuestions: { [key: string]: { id: any, name: any } } = {};
-  requestData: any = [];
-  serviceId: any = [];
-  score: number = 0;
-  questionSelected: boolean = false;
-  selectedCandidateIds: any[] = [];
-  resultadded: any[] = [];
-  selectedCandidateId: any;
-  refreshed: boolean = false;
-  assignedQuestionIds: any[] = [];
-  assignedQuestionsName: any[] = [];
-  newSeriesCreated: boolean = false;
-  candidateMarkDetail: any;
   questionAssigned: boolean = false;
-  selectedQuestion: any;
+  questionSelected: boolean = false;
+  selectedQuestions: { [key: string]: { id: any, name: any } } = {};
   candidatesStatus: any[] = [];
-  averageScore: string | null = null;
-  showAverageScoreInput: boolean = false;
   candidateResult: any[] = [];
   previousAveragescore: any;
+  selectedCandidate: any;
+  selectedCandidateIds: any[] = [];
+  candidateMarkDetail: any;
+  averageScore: string | null = null;
+  showAverageScoreInput: boolean = false;
   constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -54,9 +45,8 @@ export class SeriesComponent implements OnInit {
     this.fetchCandidates();
     this.fetchCandidatesWithSeries();
     this.fetchQuestions();
-    this.refreshed = true;
-    this.newSeriesCreated = false;
   }
+
   fetchCandidates(): void {
     this.apiService.get(`/screening-station/list-batch/${this.requestId}?station=2`).subscribe((res: any) => {
       if (res?.candidates) this.candidates_list = res?.candidates;
@@ -64,16 +54,6 @@ export class SeriesComponent implements OnInit {
     });
   }
 
-  fetchQuestions(): void {
-    this.apiService.get(`/written-station/questions`).subscribe((data: any) => {
-      if (this.series_list.length > 0) {
-        this.series_list.forEach((element: any) => {
-          this.questions_list = data?.data.filter((question: { questionId: any; }) => question.questionId !== element.questionId);
-        });
-      } else this.questions_list = data?.data;
-    });
-  }
-  
   fetchCandidatesWithSeries(): void {
     this.newSeriesCreated = false;
     this.apiService.get(`/written-station/questionBatchList/${this.requestId}`).subscribe((res: any) => {
@@ -96,6 +76,32 @@ export class SeriesComponent implements OnInit {
     this.newSeriesCreated = false;
   }
 
+ 
+  fetchQuestions(): void {
+    this.showQuestions = true;
+    this.apiService.get(`/written-station/questions`).subscribe((data: any) => {
+      if (this.series_list.length > 0) {
+        this.questions_list = data?.data.slice(); 
+        this.series_list.forEach((series: any) => {
+        this.questions_list = this.questions_list.filter((question: { questionId: any; }) => question.questionId !== series.questionId);
+        });
+      } else {
+        this.questions_list = data?.data; 
+      }
+    });
+  }
+  
+  createSeries(): void {
+    this.newSeriesCreated = true;
+    const newSeries = {
+      name: `Question Box${this.series_list.length + 1}`,
+      questions: []
+    };
+    this.series_list.push(newSeries);
+    this.activeSeries = newSeries;
+    this.activeDropdownSeries = newSeries;
+  }
+
   seriesBoxClick(series: any) {
     this.series_list.forEach((s: any) => s.active = false);
     series.active = true;
@@ -103,71 +109,14 @@ export class SeriesComponent implements OnInit {
     this.activeDropdownSeries = series;
   }
 
-  createSeries() {
-    const newSeries = {
-      name: `Question Box ${this.series_list.length + 1}`,
-      active: false,
-      questionId: null,
-      showQuestions: false,
-      selectedQuestion: null
-    };
-    this.series_list.push(newSeries);
-    this.newSeriesCreated = true;
-  }
-
-  approve(): void {
-    const ScoreAddedTrue = this.candidatesStatus.some(candidate => candidate.serviceStatus !== 'done' && candidate.progressScore !== null);
-    const ScoreAddedFalse = this.candidatesStatus.some(candidate => candidate.serviceStatus !== 'done' && candidate.progressScore == null);
-    const averageScoreInput = document.getElementById('averageScore') as HTMLInputElement;
-    const averageScore = averageScoreInput.value;
-    const payload = {
-      serviceId: this.requestId,
-      averageScore: averageScore
-    };
-    if (ScoreAddedTrue) {
-      this.apiService.post(`/written-station/approve`, payload).subscribe((res: any) => {
-        this.tostr.success('Approved');
-        this.averageScore = averageScore;
-        this.fetchCandidatesWithSeries();
-      })
-    } else if (ScoreAddedFalse) this.tostr.warning('Please add score');
-  }
-
-  resultClick(candidate: any, id: any): void {
-    this.newSeriesCreated = false;
-    this.selectedCandidate = candidate;
-    this.selectedCandidateIds = id;
-    const dialogRef = this.dialog.open(ResultComponent, {
-      data: {
-        candidateIds: this.selectedCandidateIds,
-        candidate: this.selectedCandidate
-      }
+  selectQuestion(series: any, id: any, name: any): void {
+    this.questions_list = this.questions_list.filter((question: { questionId: any; }) => question.questionId !== id);
+    if (series && series === this.activeSeries) {
+      series.selectedQuestionId = id;
+      series.selectedQuestionName = name;
+      // Remove the selected question from the questions list array
+      this.assignQuestion(id, series);
     }
-    );
-    dialogRef.componentInstance.scoreSubmitted.subscribe((score: number) => {
-      this.selectedCandidate.examScore = score;
-      this.candidateMarkDetail = {
-        candidateIds: this.selectedCandidateIds,
-        candidate: this.selectedCandidate,
-        score: this.selectedCandidate.examScore
-      }
-      this.newSeriesCreated = false;
-      this.fetchCandidatesWithSeries();
-    });
-  }
-
-  selectQuestion(questionId: string, questionName: string, series: any): void {
-    series.showQuestions = false;
-    this.selectedQuestion = questionName;
-    this.questions_list = this.questions_list.filter((question: { questionId: any; }) => question.questionId !== questionId);
-    this.selectedQuestionId = questionId;
-    this.assignQuestion(questionId, series);
-    series.showQuestions = false;
-  }
-
-  isQuestionSelected(series: any, question: any): void {
-    this.selectedQuestions[series.name]?.id === question.questionId;
-    this.questionSelected = true;
   }
 
   assignQuestion(questionId: string, series: any): void {
@@ -203,7 +152,7 @@ export class SeriesComponent implements OnInit {
         if (selectedSeries) {
           let selectedSeriesObj = this.series_list.find((s: any) => s.name === selectedSeries || s.questionName === selectedSeries)
           if (selectedSeriesObj) {
-            this.newSeriesCreated = false;
+            // this.newSeriesCreated = false;
             // remove the candidate from the candidate list
             this.candidates_list = this.candidates_list.filter((c: any) => c.candidateId !== candidate.candidateId);
             // remove the candidate from the previous series candidate array
@@ -238,5 +187,46 @@ export class SeriesComponent implements OnInit {
         }
       })
     }
+  }
+
+  resultClick(candidate: any, id: any): void {
+    this.newSeriesCreated = false;
+    this.selectedCandidate = candidate;
+    this.selectedCandidateIds = id;
+    const dialogRef = this.dialog.open(ResultComponent, {
+      data: {
+        candidateIds: this.selectedCandidateIds,
+        candidate: this.selectedCandidate
+      }
+    }
+    );
+    dialogRef.componentInstance.scoreSubmitted.subscribe((score: number) => {
+      this.selectedCandidate.examScore = score;
+      this.candidateMarkDetail = {
+        candidateIds: this.selectedCandidateIds,
+        candidate: this.selectedCandidate,
+        score: this.selectedCandidate.examScore
+      }
+      this.newSeriesCreated = false;
+      this.fetchCandidatesWithSeries();
+    });
+  }
+
+  approve(): void {
+    const ScoreAddedTrue = this.candidatesStatus.some(candidate => candidate.serviceStatus !== 'done' && candidate.progressScore !== null);
+    const ScoreAddedFalse = this.candidatesStatus.some(candidate => candidate.serviceStatus !== 'done' && candidate.progressScore == null);
+    const averageScoreInput = document.getElementById('averageScore') as HTMLInputElement;
+    const averageScore = averageScoreInput.value;
+    const payload = {
+      serviceId: this.requestId,
+      averageScore: averageScore
+    };
+    if (ScoreAddedTrue) {
+      this.apiService.post(`/written-station/approve`, payload).subscribe((res: any) => {
+        this.tostr.success('Approved');
+        this.averageScore = averageScore;
+        this.fetchCandidatesWithSeries();
+      })
+    } else if (ScoreAddedFalse) this.tostr.warning('Please add score');
   }
 }

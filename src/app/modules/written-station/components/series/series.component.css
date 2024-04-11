@@ -13,20 +13,19 @@
     line-height: 28px;
     letter-spacing: 0em;
     text-align: left;
-
+  
 }
 
 .body {
     margin-top: 15px;
     width: 98%;
-
 }
 
 .candidates-list {
     height: 281px;
     border: 1px solid #575F6E;
     border-radius: 2px;
-    background-color: white;
+    /* overflow-y: scroll; */
 }
 
 .no-data {
@@ -51,7 +50,6 @@
     border: 1px solid #575F6E;
     border-radius: 2px;
     overflow-y: scroll;
-    background-color: white;
 }
 
 .child2 {
@@ -60,7 +58,6 @@
     border-radius: 2px;
     overflow-y: scroll;
     padding-left: 6px;
-    background-color: white;
 }
 
 .questions {
@@ -114,6 +111,8 @@
 }
 
 .series-list {
+    /* margin-left: 17px;
+    padding-left: 15px; */
     margin-top: 10px;
 }
 
@@ -123,12 +122,15 @@
     font-weight: 500;
     line-height: 21px;
     letter-spacing: 0em;
+    /* text-align: left; */
     color: #FFFFFF;
+
 }
 
 
 .drop-down {
     width: 82%;
+    /* padding-left: 8px; */
     background-color: white;
     height: 34px;
     margin: 0 auto;
@@ -157,8 +159,10 @@
     width: 259px;
     border-right: 1px solid #D7D7D7;
     padding-left: 18px;
+    /* margin-top: 17px; */
     margin-bottom: 19px;
 }
+
 
 .candidate-name {
     color: #005EC9;
@@ -241,13 +245,13 @@
     width: 91px;
 }
 
-.candidate-name-child1 {
+.candidate-name-child1{
     color: #575F6E;
     font-weight: 500;
     font-size: 18px;
 }
 
-.series-name-child1 {
+.series-name-child1{
     font-size: 18px;
     font-weight: 500;
     line-height: 21px;
@@ -256,7 +260,7 @@
     margin-left: 9px;
 }
 
-.score {
+.score{
     border: 1px dashed #08E1795E;
     background: #08E17921;
     width: 95px;
@@ -268,13 +272,9 @@
     font-weight: 500;
 }
 
-.series-name-container {
-    width: 85%;
+.series-name-container{
+    width: 83%;
     margin: 0 auto;
-}
-
-.select-question {
-    width: 95%;
 }
 
 .averagescore{
@@ -282,4 +282,16 @@
     margin-right: 14px;
     margin-top: 4px;
     color: #005EC9;
+}
+
+.drop-down-question-name{
+    width: 92%;
+    background-color: white;
+    height: 34px;
+    margin: 0 auto;
+}
+
+.series-name-container2{
+    width: 93%;
+    margin: 0 auto;
 }
