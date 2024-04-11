@@ -5,19 +5,19 @@
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">First Name<span class="required">*</span></span>
                 <input type="text" class="input-box" formControlName="candidateFirstName" placeholder="First Name"
-                    maxlength="20">
+                    maxlength="20" (keydown)="nameValidation($event)" >
                 <div
                     *ngIf="candidateForm.get('candidateFirstName')?.hasError('required') && candidateForm.get('candidateFirstName')?.touched">
-                    <mat-error>First Name Required</mat-error>
+                    <mat-error>Please Enter First Name</mat-error>
                 </div>
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Last Name<span class="required">*</span></span>
                 <input type="text" class="input-box" formControlName="candidateLastName" placeholder="Last Name"
-                    maxlength="20">
+                    maxlength="20" (keydown)="nameValidation($event)">
                 <div
                     *ngIf="candidateForm.get('candidateLastName')?.hasError('required') && candidateForm.get('candidateLastName')?.touched">
-                    <mat-error>Last Name Required</mat-error>
+                    <mat-error>Please Enter Last Name</mat-error>
                 </div>
             </div>
             <div class="child d-flex m-b-10">
@@ -65,15 +65,15 @@
                     (keypress)="onKeypress($event)" (paste)="onPaste($event)">
                 <div
                     *ngIf="candidateForm.get('candidateMobileNo')?.hasError('required') && candidateForm.get('candidateMobileNo')?.touched">
-                    <mat-error>Mobile No Required</mat-error>
+                    <mat-error>Mobile Number is mandatory</mat-error>
                 </div>
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Email<span class="required">*</span></span>
-                <input type="text" class="input-box" formControlName="candidateEmail">
+                <input type="text" class="input-box" formControlName="candidateEmail" max="256">
                 <div
                     *ngIf="candidateForm.get('candidateEmail')?.hasError('required') && candidateForm.get('candidateEmail')?.touched">
-                    <mat-error>Email ID Required</mat-error>
+                    <mat-error>Email ID is Mandatory</mat-error>
                 </div>
             </div>
         </div>

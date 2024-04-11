@@ -70,7 +70,7 @@ export class AddCandidateModalComponent implements OnInit {
 
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
-    $event.returnValue = true; 
+    $event.returnValue = true;
   }
 
 
@@ -94,7 +94,7 @@ export class AddCandidateModalComponent implements OnInit {
 
   fetchSource(): void {
     this.apiService.get(`/candidate/resume-source/list`).subscribe((res: any) => {
-      this.sourceList = res?.data;      
+      this.sourceList = res?.data;
     })
   }
 
@@ -102,6 +102,17 @@ export class AddCandidateModalComponent implements OnInit {
     this.apiService.get(`/service-request/list`).subscribe((res: any) => {
       this.requirementList = res?.data;
     })
+  }
+
+  nameValidation(event: any): void {
+    const allowedCharacters = /^[A-Za-z\s]+$/;
+    let enteredValue = event.target.value;
+    if (!event.ctrlKey && !event.metaKey && !event.altKey && event.key.length === 1) {
+      enteredValue += event.key;
+    }
+    if (!allowedCharacters.test(enteredValue)) {
+      event.preventDefault();
+    }
   }
 
   selectsource(sourceid: any, sourceName: any): void {
@@ -114,7 +125,7 @@ export class AddCandidateModalComponent implements OnInit {
       this.selectedRequirementName = requirement?.requestName;
       this.selectedRequirementId = requirement?.requestId;
       this.maxSalary = requirement?.requestMaxSalary
-      this.minSalary = requirement?.requestBaseSalary      
+      this.minSalary = requirement?.requestBaseSalary
       this.candidateForm.patchValue({
         candidateExpectedSalary: null
       });
@@ -174,32 +185,75 @@ export class AddCandidateModalComponent implements OnInit {
     if (event.target.files.length > 0) this.resumeUploadSuccess = true;
   }
 
+  checkValidation(): void {
+    const validations = [
+      {
+        condition: !this.candidateForm?.value?.candidateEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.candidateForm?.value?.candidateEmail),
+        message: 'Please Enter a Valid email'
+      },
+      {
+        condition: !this.candidateForm?.value?.candidateFirstName,
+        message: 'Please Enter the First Name'
+      },
+      {
+        condition: !this.candidateForm?.value?.candidateLastName,
+        message: 'Please Enter the Last Name'
+      },
+      {
+        condition: !this.candidateForm?.value?.candidateGender,
+        message: 'Please Enter Gender'
+      },
+      {
+        condition: !this.candidateForm?.value?.candidateMobileNo,
+        message: 'Please Enter Mobile No'
+      },
+      {
+        condition: !this.sourceId,
+        message: 'Please Enter an Application source'
+      },
+      {
+        condition: !this.selectedFile,
+        message: 'Please Upload Candidate Resume'
+      },
+      {
+        condition: !this.selectedRequirementId,
+        message: 'Please Select a Requirement'
+      }
+    ];
+  
+    this.validationSuccess = true; 
+  
+    validations.forEach(({ condition, message }) => {
+      if (condition) {
+        this.tostr.warning(message);
+        this.validationSuccess = false; 
+      }
+    });
+  }
+  
+  
+
 
   submitClick(): void {
-    let candidateDetails = this.candidateForm.value;
-    this.primaryskills = this.selectedPrimarySkills.map(skill => skill.id);
-    this.secondaryskills = this.selectedSecondarySkills.map(skill => skill.id);
-
-    const formdata = new FormData();
-    for (const key in candidateDetails) {
-      if (candidateDetails[key]) formdata.append(key, candidateDetails[key]);
-    }
-    formdata.append('candidateCreatedby', this.candidateCreatedby);
-    formdata.append('candidateResume', this.selectedFile);
-    formdata.append('candidatePrimarySkills', this.primaryskills);
-    formdata.append('candidateSecondarySkills', this.secondaryskills);
-    formdata.append('resumeSourceId', this.sourceId);
-    if (!this.sourceId) this.tostr.warning('Please Enter a Application source');
-    formdata.append('candidatesAddingAgainst', this.selectedRequirementId);
-
-    if (this.candidateForm.value.candidateFirstName && this.candidateForm.value.candidateLastName && this.candidateForm.value.candidateGender
-      && this.candidateForm.value.candidateEmail && this.candidateForm.value.candidateMobileNo) {
-      this.validationSuccess = true;
-    } else this.tostr.warning('Please fill all mandatory fields');
+    this.checkValidation();
     if (this.validationSuccess) {
+      let candidateDetails = this.candidateForm.value;
+      this.primaryskills = this.selectedPrimarySkills.map(skill => skill.id);
+      this.secondaryskills = this.selectedSecondarySkills.map(skill => skill.id);
+      const formdata = new FormData();
+      for (const key in candidateDetails) {
+        if (candidateDetails[key]) formdata.append(key, candidateDetails[key]);
+      }
+      formdata.append('candidateCreatedby', this.candidateCreatedby);
+      formdata.append('candidateResume', this.selectedFile);
+      formdata.append('candidatePrimarySkills', this.primaryskills);
+      formdata.append('candidateSecondarySkills', this.secondaryskills);
+      formdata.append('resumeSourceId', this.sourceId);
+      formdata.append('candidatesAddingAgainst', this.selectedRequirementId);
+  
       this.apiService.post(`/candidate/create`, formdata).subscribe({
         next: (response) => {
-          this.tostr.success('Candidate created successfully');
+          this.tostr.success('Candidate Created successfully');
           this.resetFormAndState();
         },
         error: (error) => {
@@ -210,8 +264,11 @@ export class AddCandidateModalComponent implements OnInit {
           }
         },
       });
-    } else this.submitted = true;
+    } else {
+      this.submitted = true; 
+    }
   }
+  
 
   triggerFileInput(): void {
     const fileInput = document.querySelector('input[type="file"]') as HTMLElement;

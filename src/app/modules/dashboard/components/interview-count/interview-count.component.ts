@@ -19,7 +19,7 @@ export class InterviewCountComponent implements OnInit {
   chart: any;
   displayDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   length: any = 20;
-  pageSize = 5;
+  pageSize = 10;
   pageIndex = 1;
   showFirstLastButtons = true;
   countArray: any[] = [];
