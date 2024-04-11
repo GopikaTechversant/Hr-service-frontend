@@ -16,6 +16,13 @@
     justify-content: space-between;
 }
 
+.text-wrap{
+    max-width: 120px !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .clear-filter {
     padding: 0px 4px;
     border: 1px solid #3c40434d;
@@ -201,4 +208,10 @@ tr {
     color: #FFFFFF;
     height: 26px;
     width: 26px;
+}
+
+.dot {
+    font-size: 20px;
+    color: black;
+    font-weight: 500;
 }

@@ -1,6 +1,7 @@
 <div class="m-10">
     <div class="d-flex j-space p-l-5 m-b-20">
         <span class="f-s-20 f-w-500 p-t-5">Technical Round {{stationId === '3' ? '1' : '2'}}</span>
+        <input type="text" class="input p-l-5" placeholder="Search Candidates">
         <div class="input c-pointer p-t-10 no-close p-relative">
             <span class="no-close p-l-10" (click)="filterStatus = !filterStatus">{{filteredStatus=== ' ' ? 'Filter by Status' : filteredStatus | titlecase}}</span>
             <span class="f-right">
@@ -69,7 +70,7 @@
                 <img src="assets/images/inactive-double-arrow-left.svg" alt="" height="23px" width="23px">
             </button>
             <ng-container *ngFor="let page of generatePageNumbers()">
-                <button *ngIf="page === '...'" class="box" disabled>...</button>
+                <button *ngIf="page === '...'" class="box dot" disabled>...</button>
                 <button *ngIf="page !== '...' && page === currentPage" class="box current-page c-pointer">{{ page }}</button>
                 <button *ngIf="page !== '...' && page !== currentPage" class="box c-pointer" (click)="onPageChange(page)">{{ page }}</button>
             </ng-container>

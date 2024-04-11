@@ -14,7 +14,7 @@ export class DetailedRecruitmentComponent implements OnInit {
   chart: any;
   displayDate: any;
   length: any = 20;
-  pageSize = 5;
+  pageSize = 7;
   pageIndex = 1;
   showFirstLastButtons = true;
   candidateList: any[] = [];
@@ -25,6 +25,7 @@ export class DetailedRecruitmentComponent implements OnInit {
   currentPage: number = 1;
   lastPage: any;
   userCount: any;
+  totalCount: any;
   constructor(private apiService: ApiService) {
   }
 
@@ -41,12 +42,33 @@ export class DetailedRecruitmentComponent implements OnInit {
   }
 
   fetchCandidateList(recruiter: string): void {
-    const totalPages = Math.ceil(this.userCount / this.pageSize);
-    this.lastPage = totalPages;
-    if (this.currentPage > totalPages) this.currentPage = totalPages;
+
     this.apiService.get(`/dashboard/requirement-report?recuriter=${recruiter}&page=${this.currentPage}&limit=${this.pageSize}`).subscribe((res: any) => {
       this.candidateList = res?.userRequirementReport;
+      this.totalCount = res?.requirementCount;        
+      const totalPages = Math.ceil(this.totalCount / this.pageSize);
+      this.lastPage = totalPages;        
+      if (this.currentPage > totalPages) this.currentPage = totalPages;
     })
+  }
+
+  generatePageNumbers() {
+    let pages = [];
+    if (this.lastPage <= 5) {
+      for (let i = 1; i <= this.lastPage; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      let start = Math.max(2, this.currentPage - 1);
+      let end = Math.min(this.lastPage - 1, this.currentPage + 1);
+
+      if (this.currentPage <= 3) end = 4;
+      else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
+      if (start > 2) pages.push('...');
+      for (let i = start; i <= end; i++) pages.push(i);
+      if (end < this.lastPage - 1) pages.push('...');
+      pages.push(this.lastPage);
+    }
+    return pages;
   }
 
   fetchRecruitersList(): void {

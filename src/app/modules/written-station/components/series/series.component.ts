@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environments';
 import { ActivatedRoute } from '@angular/router';
-import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatDialog } from '@angular/material/dialog';
 import { ResultComponent } from '../result/result.component';
 import { AssignSeriesComponent } from '../assign-series/assign-series.component';

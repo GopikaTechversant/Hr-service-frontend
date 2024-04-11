@@ -4,28 +4,29 @@
             <div class="d-flex p-10">
                 <div class="p-r-20 bor">
                     <div class="p-10">
-                        <span class="f-w-500 f-s-16">{{candidateDetails?.candidateFirstName}}
-                            {{candidateDetails?.candidateLastName}}</span>
+                        <span class="f-w-500 f-s-16 text-wrap" [title]="candidateDetails?.candidateFirstName + candidateDetails?.candidateLastName">
+                            {{candidateDetails?.candidateFirstName}} {{candidateDetails?.candidateLastName}}
+                        </span>
                     </div>
                     <div class="text-color p-5">
                         <i class="fa fa-envelope p-r-10" aria-hidden="true"></i>
-                        <span>{{candidateDetails?.candidateEmail}}</span>
+                        <span class="text-wrap" [title]="candidateDetails?.candidateEmail">{{candidateDetails?.candidateEmail}}</span>
                     </div>
                     <div class="text-color p-5">
                         <img src="assets/images/candidate-detail/mob.svg" alt="">
-                        <span class="p-l-10 p-b-10">{{candidateDetails?.candidateMobileNo}}</span>
+                        <span class="p-l-10 p-b-10 text-wrap" title="candidateDetails?.candidateMobileNo">{{candidateDetails?.candidateMobileNo}}</span>
                     </div>
                 </div>
                 <div class="col-1">
                     <span class="f-w-500">Position</span>
-                    <span class="text-color p-5 p-l-0">{{candidateDetails?.position}}</span>
+                    <span class="text-color p-5 p-l-0" class="text-wrap" [title]="candidateDetails?.position">{{candidateDetails?.position}}</span>
                 </div>
             </div>
             <div class=" w-90 m-b-20">
                 <div class="basic-head">
                     <span class="f-w-500 f-s-16">Basic Info & Professional Info </span>
                     <span>Click to view resume :
-                        <i class="fa fa-file-text-o" aria-hidden="true"
+                        <i class="fa fa-file-text-o" aria-hidden="true" title="View resume"
                             (click)="viewResume(candidateDetails?.candidateResume)"></i>
                     </span>
                 </div>
@@ -38,7 +39,7 @@
                                 </span>
                             </div>
                             <div class="details">
-                                <span>: {{candidateDetails?.candidateDoB | date: 'dd-MM-yyyy'}}</span>
+                                <span class="text-wrap" [title]="candidateDetails?.candidateDoB | date: 'dd-MM-yyyy'">: {{candidateDetails?.candidateDoB | date: 'dd-MM-yyyy'}}</span>
                             </div>
                         </div>
                         <div class="details">
@@ -49,7 +50,7 @@
                                 </span>
                             </div>
                             <div class="details">
-                                <span>: {{candidateDetails?.candidatePreviousOrg ?
+                                <span class="text-wrap" [title]="candidateDetails?.candidatePreviousOrg">: {{candidateDetails?.candidatePreviousOrg ?
                                     candidateDetails?.candidatePreviousOrg : 'Nil'}}</span>
                             </div>
                         </div>
@@ -60,7 +61,7 @@
                                     Experience</span>
                             </div>
                             <div class="details">
-                                <span>: {{candidateDetails?.candidateExperience ? candidateDetails?.candidateExperience
+                                <span class="text-wrap" [title]="candidateDetails?.candidateExperience">: {{candidateDetails?.candidateExperience ? candidateDetails?.candidateExperience
                                     : 'Nil'}}</span>
                             </div>
                         </div>
@@ -72,7 +73,7 @@
                                 </span>
                             </div>
                             <div class="details">
-                                <span>: {{candidateDetails?.candidateCurrentSalary ?
+                                <span class="text-wrap" [title]="candidateDetails?.candidateCurrentSalary">: {{candidateDetails?.candidateCurrentSalary ?
                                     candidateDetails?.candidateCurrentSalary : 'Nil'}}</span>
                             </div>
                         </div>
@@ -84,7 +85,7 @@
                                 </span>
                             </div>
                             <div class="details">
-                                <span>: {{candidateDetails?.candidateExpectedSalary ?
+                                <span class="text-wrap" [title]="candidateDetails?.candidateExpectedSalary">: {{candidateDetails?.candidateExpectedSalary ?
                                     candidateDetails?.candidateExpectedSalary : 'Nil'}}</span>
                             </div>
                         </div>
@@ -96,7 +97,7 @@
                                 </span>
                             </div>
                             <div class="details">
-                                <span>: {{candidateDetails?.candidateStatus[0]?.interviewStationName
+                                <span class="text-wrap" [title]="candidateDetails?.candidateStatus[0]?.interviewStationName">: {{candidateDetails?.candidateStatus[0]?.interviewStationName
                                     ? candidateDetails?.candidateStatus[0]?.interviewStationName : 'Nil'}}</span>
                             </div>
                         </div>
@@ -105,25 +106,24 @@
                         <div class="details">
                             <div class="details">
                                 <span class="f-w-500">
-                                    <img src="assets/images/candidate-detail/education.svg" class="p-r-10"
-                                        alt="">Education
+                                    <img src="assets/images/candidate-detail/education.svg" class="p-r-10" alt="">Education
                                 </span>
                             </div>
                             <div class="details">
-                                <span>: {{candidateDetails?.candidateEducation ? candidateDetails?.candidateEducation :
-                                    'Nil'}}</span>
+                                <span class="text-wrap" [title]="candidateDetails?.candidateEducation">: 
+                                    {{candidateDetails?.candidateEducation ? candidateDetails?.candidateEducation : 'Nil'}}</span>
                             </div>
                         </div>
                         <div class="details">
                             <div class="details">
                                 <span class="f-w-500">
-                                    <img src="assets/images/candidate-detail/org.svg" class="p-r-10" alt="">Previous
-                                    Designation
+                                    <img src="assets/images/candidate-detail/org.svg" class="p-r-10" alt="">Previous Designation
                                 </span>
                             </div>
                             <div class="details">
-                                <span>: {{candidateDetails?.candidatePreviousDesignation ?
-                                    candidateDetails?.candidatePreviousDesignation : 'Nil'}}</span>
+                                <span class="text-wrap" [title]="candidateDetails?.candidatePreviousDesignation">: 
+                                    {{candidateDetails?.candidatePreviousDesignation ? candidateDetails?.candidatePreviousDesignation : 'Nil'}}
+                                </span>
                             </div>
                         </div>
                         <div class="details">
@@ -131,34 +131,32 @@
                                 <span class="f-w-500"><i class="fa fa-home p-r-10" aria-hidden="true"></i>Address</span>
                             </div>
                             <div class="details">
-                                <span>: {{candidateDetails?.candidateAddress ? candidateDetails?.candidateAddress :
+                                <span class="text-wrap" [title]="candidateDetails?.candidateAddress">: {{candidateDetails?.candidateAddress ? candidateDetails?.candidateAddress :
                                     'Nil'}}</span>
                             </div>
                         </div>
                         <div class="details">
                             <div class="details">
                                 <span class="f-w-500">
-                                    <img src="assets/images/candidate-detail/user.svg" class="p-r-10" alt="">Interview
-                                    Status
+                                    <img src="assets/images/candidate-detail/user.svg" class="p-r-10" alt="">Interview Status
                                 </span>
                             </div>
                             <div class="details">
-                                <span>: {{candidateDetails?.candidateStatus[0]?.interViewStatus ?
-                                    candidateDetails?.candidateStatus[0]?.interViewStatus : 'Nil'}}</span>
+                                <span class="text-wrap" [title]="candidateDetails?.candidateStatus[0]?.interViewStatus ? candidateDetails?.candidateStatus[0]?.interViewStatus : 'Nil'">: 
+                                    {{candidateDetails?.candidateStatus[0]?.interViewStatus ? candidateDetails?.candidateStatus[0]?.interViewStatus : 'Nil'}}
+                                </span>
                             </div>
                         </div>
                         <div class="details">
                             <div class="details">
                                 <span class="f-w-500">
-                                    <img src="assets/images/candidate-detail/user.svg" class="p-r-10" alt="">Primary
-                                    Skills
+                                    <img src="assets/images/candidate-detail/user.svg" class="p-r-10" alt="">Primary Skills
                                 </span>
                             </div>
                             <div class="details">
-                                <span>:
-                                    <ng-container
-                                        *ngFor="let item of candidateDetails?.candidatePrimarySkills; let last = last">
-                                        <span> {{ item?.skillType }}<span *ngIf="!last">,</span> </span>
+                                <span >:
+                                    <ng-container *ngFor="let item of candidateDetails?.candidatePrimarySkills; let last = last">
+                                        <span class="text-wrap" [title]="item?.skillType"> {{ item?.skillType }}<span *ngIf="!last">,</span> </span>
                                     </ng-container>
                                 </span>
                             </div>
@@ -171,10 +169,10 @@
                                 </span>
                             </div>
                             <div class="details">
-                                <span>:
+                                <span class="text-wrap">:
                                     <ng-container
                                         *ngFor="let item of candidateDetails?.candidateSecondarySkills; let last = last">
-                                        <span> {{ item?.skillType }}<span *ngIf="!last">,</span> </span>
+                                        <span class="text-wrap" [title]="item?.skillType"> {{ item?.skillType }}<span *ngIf="!last">,</span> </span>
                                     </ng-container>
                                 </span>
                             </div>
@@ -190,12 +188,15 @@
                             <div class="d-flex">
                                 <div class="col-1">
                                     <div class="p-10">
-                                        <span class="text-color p-r-10 f-w-500">{{item?.['reqServiceSequence.reqUser.userName']}}</span>
+                                        <span class="f-w-500 user-icon"> 
+                                            {{ item?.['reqServiceSequence.reqUser.userName']?.charAt(0) ? (item?.['reqServiceSequence.reqUser.userName']?.charAt(0) |uppercase) : 'U' }}
+                                        </span>
+                                        <span class="text-color p-r-10 p-l-8 f-w-500">{{item?.['reqServiceSequence.reqUser.userName']}}</span>
                                         <span class="p-r-10">{{item?.['reqServiceSequence.reqStation.stationName']}} - </span>
                                         <span class="p-r-10 date-color"> {{item?.['reqServiceSequence.serviceDate'] | date:'dd/MM/yyyy'}}</span>
                                     </div>
                                     <div class="p-10">
-                                        <span>{{item?.commentComment}}</span>
+                                        <span class="p-l-20 m-l-20">{{item?.commentComment}}</span>
                                     </div>
                                 </div>
                                 <!-- <div class="d-flex j-end">

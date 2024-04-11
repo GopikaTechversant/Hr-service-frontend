@@ -101,8 +101,7 @@
                         <span *ngIf="sourceName">{{sourceName}}</span>
                         <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
                         <div class="no-close dropdown c-pointer" *ngIf="showSource">
-                            <p *ngFor="let source of sourceList"
-                                (click)="selectsource(source?.sourceId, source?.sourceName)">
+                            <p *ngFor="let source of sourceList" (click)="selectsource(source?.sourceId, source?.sourceName)">
                                 {{source?.sourceName}}</p>
                         </div>
                     </div>
@@ -110,42 +109,43 @@
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Experience</span>
-                <input type="text" class="input-box" formControlName="candidateExperience" maxlength="20">
+                <input type="text" class="input-box" formControlName="candidateExperience" (keydown)="experienceValidation($event)">
             </div>
         </div>
         <div class="d-flex   parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">City</span>
-                <input type="text" class="input-box" formControlName="candidateCity" maxlength="20">
+                <input type="text" class="input-box" formControlName="candidateCity" maxlength="20" (keydown)="nameValidation($event)">
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">District</span>
-                <input type="text" class="input-box" formControlName="candidateDistrict" maxlength="20">
+                <input type="text" class="input-box" formControlName="candidateDistrict" maxlength="20" (keydown)="nameValidation($event)">
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">State</span>
-                <input type="text" class="input-box" formControlName="candidateState" maxlength="20">
+                <input type="text" class="input-box" formControlName="candidateState" maxlength="20" (keydown)="nameValidation($event)">
             </div>
         </div>
         <div class="d-flex   parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Education</span>
-                <input type="text" class="input-box" formControlName="candidateEducation" maxlength="40">
+                <input type="text" class="input-box" formControlName="candidateEducation" maxlength="40" (keydown)="nameValidation($event)">
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Previous Organization</span>
-                <input type="text" class="input-box" formControlName="candidatePreviousOrg" maxlength="40">
+                <input type="text" class="input-box" formControlName="candidatePreviousOrg" maxlength="40" (keydown)="nameValidation($event)">
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Previous Designation</span>
-                <input type="text" class="input-box" formControlName="candidatePreviousDesignation" maxlength="40">
+                <input type="text" class="input-box" formControlName="candidatePreviousDesignation" maxlength="40" (keydown)="nameValidation($event)">
             </div>
         </div>
 
         <div class="d-flex parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Current Salary</span>
-                <input type="text" class="input-box" (keydown)="onKeypress($event)" formControlName="candidateCurrentSalary" [maxlength]="maxSalary?.length ? maxSalary?.length : 7">
+                <input type="text" class="input-box" (keydown)="onKeypress($event)" formControlName="candidateCurrentSalary" 
+                [maxlength]="maxSalary?.length ? maxSalary?.length : 7"  (keydown)="budgetCheck($event)" (paste)="onPaste($event)">
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Expected Salary</span>

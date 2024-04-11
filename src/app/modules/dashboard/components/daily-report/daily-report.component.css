@@ -65,16 +65,17 @@
     margin-left: 10px;
     margin-top: 4px;
 }
+
 .table-container {
-    overflow-x: auto; 
-    width: 100%; 
-    max-width: 100%; 
+    overflow-x: auto;
+    width: 100%;
+    max-width: 100%;
     margin-bottom: 10px;
-    min-height: calc(100vh - 389px);
+    min-height: calc(100vh - 410px);
 }
 
 .table {
-    width: auto; 
+    width: auto;
     border-collapse: collapse;
 }
 
@@ -95,6 +96,14 @@ td {
 
 tr {
     text-align: center;
+}
+
+.text-wrap{
+    max-width: 150px !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
 }
 
 .table-header {
@@ -158,11 +167,11 @@ tr {
     z-index: 999;
     top: 100%;
     left: 0;
-  }
-  
-  .dropdown :hover {
+}
+
+.dropdown :hover {
     background-color: #eceaea;
-  }
+}
 
 .month-column {
     padding: 5px 0px 5px 10px;
@@ -193,6 +202,8 @@ tr {
 
 .page {
     margin: 10px;
+    background: #FFFFFF;
+
 }
 
 .current-page {
@@ -209,4 +220,10 @@ tr {
     color: #525455;
     width: 100%;
     padding: 5% 5%;
+}
+
+.dot {
+    font-size: 20px;
+    color: black;
+    font-weight: 500;
 }
