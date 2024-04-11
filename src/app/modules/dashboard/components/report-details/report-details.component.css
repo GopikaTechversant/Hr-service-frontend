@@ -207,3 +207,9 @@ tr {
     text-align: center;
     padding-top: 10px;
 }
+
+.dot {
+    font-size: 20px;
+    color: black;
+    font-weight: 500;
+}

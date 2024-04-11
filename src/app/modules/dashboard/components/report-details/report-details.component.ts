@@ -38,6 +38,8 @@ export class ReportDetailsComponent implements OnInit {
   pageSizeOptions = [10, 25, 30];
   showFirstLastButtons = true;
   today: any;
+  lastPage: any;
+  totalCount: any;
 
   constructor(private tostr: ToastrServices, private apiService: ApiService) { }
   onBodyClick(event: MouseEvent): void {
@@ -74,8 +76,31 @@ export class ReportDetailsComponent implements OnInit {
     this.apiService.get(`/report/over-all-interview-status?page=${this.currentPage}&limit=${this.pageSize}`).subscribe((res: any) => {
       if (res?.data) {
         this.interviewDetails = res?.data;
+        this.totalCount = 59;        
+        const totalPages = Math.ceil(this.totalCount / this.pageSize);
+        this.lastPage = totalPages;        
+        if (this.currentPage > totalPages) this.currentPage = totalPages;
       }
     })
+  }
+
+  generatePageNumbers() {
+    let pages = [];
+    if (this.lastPage <= 5) {
+      for (let i = 1; i <= this.lastPage; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      let start = Math.max(2, this.currentPage - 1);
+      let end = Math.min(this.lastPage - 1, this.currentPage + 1);
+
+      if (this.currentPage <= 3) end = 4;
+      else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
+      if (start > 2) pages.push('...');
+      for (let i = start; i <= end; i++) pages.push(i);
+      if (end < this.lastPage - 1) pages.push('...');
+      pages.push(this.lastPage);
+    }
+    return pages;
   }
 
   fetchDetails(): void {

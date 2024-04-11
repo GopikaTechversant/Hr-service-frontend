@@ -33,6 +33,7 @@ export class InterviewCountComponent implements OnInit {
   currentPage: number = 1;
   lastPage: any;
   userCount: any;
+  totalCount: any;
   constructor(private datePipe: DatePipe, private apiService: ApiService) { }
   ngOnInit(): void {
     Chart.register(ChartDataLabels);
@@ -49,13 +50,35 @@ export class InterviewCountComponent implements OnInit {
   }
 
   fetchInterviewCounts(): void {
-    const totalPages = Math.ceil(this.userCount / this.pageSize);
-    this.lastPage = totalPages;
-    if (this.currentPage > totalPages) this.currentPage = totalPages;
+  
     this.apiService.get(`/dashboard/interview-count?date=${this.displayDate}&page=${this.currentPage}&limit=${this.pageSize}`).subscribe((count: any) => {
       this.countArray = count?.data;
+      this.totalCount = 59;        
+      const totalPages = Math.ceil(this.totalCount / this.pageSize);
+      this.lastPage = totalPages;        
+      if (this.currentPage > totalPages) this.currentPage = totalPages;
     })
   }
+
+  generatePageNumbers() {
+    let pages = [];
+    if (this.lastPage <= 5) {
+      for (let i = 1; i <= this.lastPage; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      let start = Math.max(2, this.currentPage - 1);
+      let end = Math.min(this.lastPage - 1, this.currentPage + 1);
+
+      if (this.currentPage <= 3) end = 4;
+      else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
+      if (start > 2) pages.push('...');
+      for (let i = start; i <= end; i++) pages.push(i);
+      if (end < this.lastPage - 1) pages.push('...');
+      pages.push(this.lastPage);
+    }
+    return pages;
+  }
+
 
   fetchBarchartDetails(): void {
     this.apiService.get(`/dashboard/six-month-count?team=${this.teamId}`).subscribe((res: any) => {

@@ -66,6 +66,28 @@ export class ServiceRequestComponent implements OnInit {
     }))
   }
 
+  onKeypress(event: any): void {
+    let enteredValue: string;
+    if (event.key === "Backspace") enteredValue = event?.target?.value.slice(0, -1);
+    else enteredValue = event.target.value + event.key;
+    const allowedCharacters: RegExp = /^[0-9]+$/;
+    if (event.key !== "Backspace" && !allowedCharacters.test(enteredValue)) {
+      event.preventDefault();
+      return;
+    }
+  }
+
+  onPaste(event: any): void {
+    event.preventDefault();
+  }
+
+  experienceValidation(event: any): void {
+    const intermediateAllowedCharacters = /^-?(\d{0,1}\d?)?(\.\d{0,2})?$/;
+    let enteredValue = event?.target?.value + event.key;
+    if (event.key === "Backspace" || event.key === "Delete" || event.key.includes("Arrow")) return;
+    if (!intermediateAllowedCharacters.test(enteredValue)) event.preventDefault();
+  }
+
   selectId(id: any, name: any): void {
     this.idListOpen = false;
     if (this.selectedId !== id) {

@@ -106,9 +106,9 @@ export class AddCandidateModalComponent implements OnInit {
 
   nameValidation(event: any): void {
     const allowedCharacters = /^[A-Za-z\s]+$/;
-    let enteredValue = event.target.value;
+    let enteredValue = event?.target?.value;
     if (!event.ctrlKey && !event.metaKey && !event.altKey && event.key.length === 1) {
-      enteredValue += event.key;
+      enteredValue += event?.key;
     }
     if (!allowedCharacters.test(enteredValue)) {
       event.preventDefault();
@@ -134,7 +134,7 @@ export class AddCandidateModalComponent implements OnInit {
 
   onKeypress(event: any): void {
     let enteredValue: string;
-    if (event.key === "Backspace") enteredValue = event.target.value.slice(0, -1);
+    if (event.key === "Backspace") enteredValue = event?.target?.value.slice(0, -1);
     else enteredValue = event.target.value + event.key;
     const allowedCharacters: RegExp = /^[0-9]+$/;
     if (event.key !== "Backspace" && !allowedCharacters.test(enteredValue)) {
@@ -149,7 +149,7 @@ export class AddCandidateModalComponent implements OnInit {
 
   budgetCheck(event: any): void {
     let enteredValue: string;
-    if (event.key === "Backspace") enteredValue = event.target.value.slice(0, -1);
+    if (event.key === "Backspace") enteredValue = event?.target?.value.slice(0, -1);
     else enteredValue = event.target.value + event.key;
     const allowedCharacters: RegExp = /^[0-9]+$/;
     if (event.key !== "Backspace" && !allowedCharacters.test(enteredValue)) {
@@ -164,6 +164,13 @@ export class AddCandidateModalComponent implements OnInit {
       this.tostr.warning(`Budget should be less than ${this.maxSalary}`);
       event.preventDefault();
     }
+  }
+
+  experienceValidation(event: any): void { 
+   const intermediateAllowedCharacters = /^-?(\d{0,1}\d?)?(\.\d{0,2})?$/;
+   let enteredValue = event?.target?.value + event.key;
+   if (event.key === "Backspace" || event.key === "Delete" || event.key.includes("Arrow")) return;   
+   if (!intermediateAllowedCharacters.test(enteredValue)) event.preventDefault(); 
   }
 
   dateChange(event: any): void {
@@ -220,18 +227,18 @@ export class AddCandidateModalComponent implements OnInit {
         message: 'Please Select a Requirement'
       }
     ];
-  
-    this.validationSuccess = true; 
-  
+
+    this.validationSuccess = true;
+
     validations.forEach(({ condition, message }) => {
       if (condition) {
         this.tostr.warning(message);
-        this.validationSuccess = false; 
+        this.validationSuccess = false;
       }
     });
   }
-  
-  
+
+
 
 
   submitClick(): void {
@@ -250,7 +257,7 @@ export class AddCandidateModalComponent implements OnInit {
       formdata.append('candidateSecondarySkills', this.secondaryskills);
       formdata.append('resumeSourceId', this.sourceId);
       formdata.append('candidatesAddingAgainst', this.selectedRequirementId);
-  
+
       this.apiService.post(`/candidate/create`, formdata).subscribe({
         next: (response) => {
           this.tostr.success('Candidate Created successfully');
@@ -265,10 +272,10 @@ export class AddCandidateModalComponent implements OnInit {
         },
       });
     } else {
-      this.submitted = true; 
+      this.submitted = true;
     }
   }
-  
+
 
   triggerFileInput(): void {
     const fileInput = document.querySelector('input[type="file"]') as HTMLElement;

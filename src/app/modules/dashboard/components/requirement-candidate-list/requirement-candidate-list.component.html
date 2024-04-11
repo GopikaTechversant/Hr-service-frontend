@@ -52,7 +52,7 @@
         <img src="assets/images/inactive-double-arrow-left.svg" alt="" height="23px" width="23px">
     </button>
     <ng-container *ngFor="let page of generatePageNumbers()">
-        <button *ngIf="page === '...'" class="box" disabled>...</button>
+        <button *ngIf="page === '...'" class="box dot" disabled>...</button>
         <button *ngIf="page !== '...' && page === currentPage" class="box current-page c-pointer">{{ page }}</button>
         <button *ngIf="page !== '...' && page !== currentPage" class="box c-pointer" (click)="onPageChange(page)">
         {{page}}</button>

@@ -79,6 +79,23 @@
     cursor: pointer;
 }
 
+.user-icon{
+    color: #FFFFFF;
+    background: #575F6E;
+    padding: 7px;
+    text-align: center;
+    padding-left: 10px;
+    border-radius: 50%;
+}
+
+.text-wrap{
+    max-width: 270px !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
 .btn-cancel {
     background: #575F6E;
     border: 1px solid #575F6E;

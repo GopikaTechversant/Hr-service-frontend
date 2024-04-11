@@ -53,11 +53,9 @@
                             {{selectedMonth}}
                             <i class="fa fa-chevron-down filter-icon"></i>
                             <div *ngIf="showMonth" class="p-absolute dropdown no-close">
-                                <div *ngIf="showMonth" class="p-absolute dropdown no-close">
-                                    <div class="month-column" *ngFor="let item of monthData"
-                                        (click)="selectMonth(item?.number, item?.month);showMonth = !showMonth">
-                                        {{item.month}}
-                                    </div>
+                                <div class="month-column" *ngFor="let item of monthData"
+                                    (click)="selectMonth(item?.number, item?.month);showMonth = !showMonth">
+                                    {{item.month}}
                                 </div>
                             </div>
                         </div>
@@ -71,14 +69,9 @@
                             {{recruiterName}}
                             <i class="fa fa-chevron-down filter-icon"></i>
                             <div *ngIf="showRecruiters" class="p-absolute dropdown no-close">
-                                <div *ngIf="showRecruiters" class="p-absolute dropdown no-close">
-                                    <div class="month-column" *ngFor="let item of recruiters"
-                                        (click)="selectRecruiter(item?.userFullName , item?.userId);showRecruiters = !showRecruiters">
-                                        {{item?.userFullName}}
-                                        (click)="selectRecruiter(item?.userFullName , item?.userId);showRecruiters =
-                                        !showRecruiters">
-                                        {{item?.userFullName}}
-                                    </div>
+                                <div class="month-column" *ngFor="let item of recruiters"
+                                    (click)="selectRecruiter(item?.userFullName , item?.userId);showRecruiters = !showRecruiters">
+                                    {{item?.userFullName}}
                                 </div>
                             </div>
                         </div>
@@ -124,15 +117,23 @@
                         No Data Found
                     </div>
                 </div>
-                <div class="page d-flex j-end m-10">
-                    <button *ngIf="currentPage !== 1" class="box" (click)="onPageChange(currentPage - 1)">{{currentPage
-                        -1}}</button>
-                    <button class="box current-page">{{ currentPage }}</button>
-                    <button class="box" (click)="onPageChange(currentPage + 1)"
-                        [disabled]="interviewDetails?.length === 0 || !interviewDetails">{{currentPage + 1}}</button>
-                    <button class="box" (click)="onPageChange(currentPage + 1)"
-                        [disabled]="interviewDetails?.length === 0 || !interviewDetails"> <img
-                            src="assets/images/double-arrow-right-icon.svg" alt="" height="14px" width="14px">
+                <div class="page d-flex j-end p-10">
+                    <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(1)">
+                        <img src="assets/images/double-arrow-left-icon.svg" alt="" height="14px" width="14px">
+                    </button>
+                    <button *ngIf="currentPage === 1" class="box p-r-20 m-r-10">
+                        <img src="assets/images/inactive-double-arrow-left.svg" alt="" height="23px" width="23px">
+                    </button>
+                    <ng-container *ngFor="let page of generatePageNumbers()">
+                        <button *ngIf="page === '...'" class="box dot" disabled>...</button>
+                        <button *ngIf="page !== '...' && page === currentPage" class="box current-page c-pointer">{{ page }}</button>
+                        <button *ngIf="page !== '...' && page !== currentPage" class="box c-pointer" (click)="onPageChange(page)">
+                        {{page}}</button>
+                    </ng-container> <button *ngIf="currentPage < lastPage" class="box c-pointer" (click)="onPageChange(lastPage)">
+                        <img src="assets/images/double-arrow-right-icon.svg" alt="" height="14px" width="14px">
+                    </button>
+                    <button *ngIf="currentPage === lastPage" class="box">
+                        <img src="assets/images/inactive-double-arrow-right.svg" alt="" height="23px" width="23px">
                     </button>
                 </div>
             </div>
