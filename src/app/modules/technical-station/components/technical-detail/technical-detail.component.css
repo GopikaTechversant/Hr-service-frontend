@@ -68,7 +68,16 @@
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
-    width: 220px;
+    width: 250px;
+    height: 30px;
+}
+
+.input-1 {
+    border: none;
+    outline: none;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    width: 200px;
     height: 28px;
 }
 
@@ -216,8 +225,14 @@ tr {
     background-color: white;
 }
 
-.dot{
+.dot {
     font-size: 20px;
     color: black;
     font-weight: 500;
+}
+
+.clear-search {
+    padding: 0px 4px;
+    border: 1px solid #3c40434d;
+    border-radius: 50%;
 }

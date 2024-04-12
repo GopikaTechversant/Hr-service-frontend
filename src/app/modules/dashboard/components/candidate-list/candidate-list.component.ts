@@ -4,13 +4,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteComponent } from 'src/app/components/delete/delete.component';
 import { EditComponent } from 'src/app/components/edit/edit.component';
 import { ApiService } from 'src/app/services/api.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-candidate-list',
   templateUrl: './candidate-list.component.html',
   styleUrls: ['./candidate-list.component.css']
 })
 export class CandidateListComponent {
-  @Input() positionId: any 
+  @Input() positionId: any
   length: any = 20;
   pageSize = 10;
   pageIndex = 1;
@@ -28,7 +29,7 @@ export class CandidateListComponent {
   lastPage: any;
   userCount: any;
   requestId: any;
-  constructor(private apiService: ApiService, private router: Router, private dialog: MatDialog) { }
+  constructor(private apiService: ApiService, private router: Router, private dialog: MatDialog,private toastr : ToastrService) { }
 
   ngOnInit(): void {
     this.requestId = this.positionId ? this.positionId : ' ';
@@ -50,8 +51,6 @@ export class CandidateListComponent {
       this.candidateList = data?.candidates;
       this.totalCount = data?.candidateCount;
       const totalPages = Math.ceil(this.totalCount / this.pageSize);
-      console.log(totalPages);
-      
       this.lastPage = totalPages;
       if (this.currentPage > totalPages) this.currentPage = totalPages;
     });
@@ -77,7 +76,7 @@ export class CandidateListComponent {
   }
 
   searchCandidate(search: string): void {
-    this.searchKeyword = search;    
+    this.searchKeyword = search;
     this.fetchCandidates(this.searchKeyword);
   }
 
@@ -109,8 +108,13 @@ export class CandidateListComponent {
       height: '250px'
     })
     dialogRef.componentInstance.onDeleteSuccess.subscribe(() => {
-      this.apiService.post(`/candidate/remove-candidate`, { candidateId: this.deleteCandidateId }).subscribe((res: any) => {
-        this.fetchCandidates('');
+      this.apiService.post(`/candidate/remove-candidate`, { candidateId: this.deleteCandidateId }).subscribe({
+        next: (res: any) => {
+          this.fetchCandidates('');
+        },
+        error: (error) => {
+          this.toastr.error(error?.error?.message ? error?.error?.message : 'Unable to Delete candidates');
+        }
       })
     })
   }

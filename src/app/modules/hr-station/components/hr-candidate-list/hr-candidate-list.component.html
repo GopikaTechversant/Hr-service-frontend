@@ -1,8 +1,11 @@
 <div class="m-10">
     <div class="p-l-5 d-flex j-space p-b-10">
         <span class="f-s-18 f-w-500 detail-head p-5 p-l-0">HR Station</span>
-        <input type="text" class="input p-l-5" placeholder="Search Candidates">
-        <div class="input c-pointer p-t-10 no-close p-relative no-close">
+        <span class="input p-5">
+            <input type="text" class="input-1 p-l-5" placeholder="Search Candidates" [(ngModel)]="searchKeyword" (keydown)="searchCandidate(searchKeyword)">
+            <span *ngIf="searchKeyword !== ''" (click)="clearSearch()" class="clear-search c-pointer m-l-10">x</span> 
+        </span>    
+        <span class="input c-pointer p-t-10 no-close p-relative no-close">
             <span class="no-close p-l-10" (click)="filterStatus = !filterStatus">{{filteredStatus=== ' ' ? 'Filter by Status' : filteredStatus | titlecase}}</span>
             <span class="f-right no-close">
                 <span *ngIf="filteredStatus && filteredStatus !== ' '" (click)="clearFilter()" class="clear-filter">x</span>
@@ -13,7 +16,7 @@
                    <span class="p-l-10 p-5 no-close">{{type?.status | titlecase}}</span> 
                 </span>
             </div>
-        </div>
+        </span>
     </div>
     <div class="main">
         <div class="table-container m-b-0">

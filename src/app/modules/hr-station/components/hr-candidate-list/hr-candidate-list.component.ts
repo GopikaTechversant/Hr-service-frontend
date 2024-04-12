@@ -27,6 +27,7 @@ export class HrCandidateListComponent implements OnInit {
   limit: number = 10
   totalCount: any;
   lastPage: any;
+  searchKeyword: any;
   constructor(private dialog: MatDialog, private apiService: ApiService) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -38,11 +39,12 @@ export class HrCandidateListComponent implements OnInit {
   ngOnInit(): void {
     this.loader = true;
     this.filteredStatus = sessionStorage.getItem('status') ? sessionStorage.getItem('status') : ' ';
-    this.fetchList();
+    this.fetchList('');
   }
 
-  fetchList() {
-    this.apiService.get(`/hr-station/list?page=${this.currentPage}&limit=${this.limit}&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
+  fetchList(search : any) : void {
+    this.searchKeyword = search;
+    this.apiService.get(`/hr-station/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.limit}&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
       this.candidateList = [];
       this.loader = false;
       if (data.candidates) {
@@ -74,10 +76,21 @@ export class HrCandidateListComponent implements OnInit {
     return pages;
   }
 
+  searchCandidate(searchTerm: string):void{
+    this.searchKeyword = searchTerm;
+    this.fetchList(this.searchKeyword);    
+  }
+
+  clearSearch(): void {
+    this.searchKeyword = '';
+    this.fetchList('');    
+  }
+
+
   selectStatusFilter(item: string): void {
     this.filteredStatus = item;
     sessionStorage.setItem('status', this.filteredStatus);
-    this.fetchList();
+    this.fetchList('');
   }
 
   clearFilter(): void {
@@ -100,13 +113,13 @@ export class HrCandidateListComponent implements OnInit {
       height: '300px'
     })
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-      this.fetchList();
+      this.fetchList('');
     })
   }
 
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);
-    this.fetchList();
+    this.fetchList('');
   }
 
 

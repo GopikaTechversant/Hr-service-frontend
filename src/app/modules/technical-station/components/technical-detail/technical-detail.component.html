@@ -1,7 +1,10 @@
 <div class="m-10">
     <div class="d-flex j-space p-l-5 m-b-20">
         <span class="f-s-20 f-w-500 p-t-5">Technical Round {{stationId === '3' ? '1' : '2'}}</span>
-        <input type="text" class="input p-l-5" placeholder="Search Candidates">
+        <span class="input p-5">
+            <input type="text" class="input-1 p-l-5" placeholder="Search Candidates" [(ngModel)]="searchKeyword" (keydown)="searchCandidate(searchKeyword)">
+            <span *ngIf="searchKeyword !== ''" (click)="clearSearch()" class="clear-search c-pointer m-l-10">x</span> 
+        </span>         
         <div class="input c-pointer p-t-10 no-close p-relative">
             <span class="no-close p-l-10" (click)="filterStatus = !filterStatus">{{filteredStatus=== ' ' ? 'Filter by Status' : filteredStatus | titlecase}}</span>
             <span class="f-right">
