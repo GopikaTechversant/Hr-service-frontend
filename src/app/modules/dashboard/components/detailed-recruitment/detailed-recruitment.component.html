@@ -48,15 +48,16 @@
                             {{item['candidate.candidateLastName']}}
                         </td>
                         <td class="text-wrap" [title]="item['reqService.sericeName']">{{item['reqService.sericeName']}}</td>
-                        <td  class="text-wrap" >{{item['candidate.candidateExperience'] ? item['candidate.candidateExperience'] : 'Fresher'}}</td>
-                        <td  class="text-wrap" >{{item['candidate.candidatePreviousOrg']}}</td>
-                        <td  class="text-wrap" >{{item['reqinterviewDetail.interviewLocation'] ? item['reqinterviewDetail.interviewLocation'] : 'NIL'}}</td>
+                        <td  class="text-wrap" [title]="item['candidate.candidateExperience'] ">{{item['candidate.candidateExperience'] ? item['candidate.candidateExperience'] : 'Fresher'}}</td>
+                        <td  class="text-wrap" [title]="item['candidate.candidatePreviousOrg']">{{item['candidate.candidatePreviousOrg']}}</td>
+                        <td  class="text-wrap" [title]="item['reqinterviewDetail.interviewLocation']">{{item['reqinterviewDetail.interviewLocation'] ? item['reqinterviewDetail.interviewLocation'] : 'NIL'}}</td>
                         <td  class="text-wrap" >{{item['candidate.candidateNoticePeriodByDays'] ? item['candidate.candidateNoticePeriodByDays'] :'NIL'}}</td>
                         <td  class="text-wrap" >
-                            <span>{{item?.interviewTime | date: 'dd/MM/YYY'}}</span><br><span class="blue p-l-4">{{item?.interviewTime | date: 'hh:mm a'}}</span>
+                            <span [title]="item?.interviewTime | date: 'dd/MM/YYY'">{{item?.interviewTime | date: 'dd/MM/YYY'}}</span><br>
+                            <span class="blue p-l-4" [title]="item?.interviewTime | date: 'hh:mm a'">{{item?.interviewTime | date: 'hh:mm a'}}</span>
                         </td>
-                        <td>{{item['reqUser.userfirstName'] ? item['reqUser.userfirstName'] : 'NIL'}}</td>
-                        <td>{{item['reqinterviewDetail.interviewMode'] ? item['reqinterviewDetail.interviewMode'] : 'NIL'}}</td>
+                        <td class="text-wrap" [title]="item['reqUser.userfirstName'] ? item['reqUser.userfirstName'] : 'NIL'">{{item['reqUser.userfirstName'] ? item['reqUser.userfirstName'] : 'NIL'}}</td>
+                        <td class="text-wrap">{{item['reqinterviewDetail.interviewMode'] ? item['reqinterviewDetail.interviewMode'] : 'NIL'}}</td>
                     </tr>
                 </ng-container>
             </ng-container>
