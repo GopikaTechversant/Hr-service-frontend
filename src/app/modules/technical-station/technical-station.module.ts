@@ -7,6 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { TechnicalDetailComponent } from './components/technical-detail/technical-detail.component';
 import { CandidateDetailModalComponent } from './components/candidate-detail-modal/candidate-detail-modal.component';
 import { MaterialModule } from '../material/material.module';
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -28,7 +29,9 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     SharedModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+
   ]
 })
 export class TechnicalStationModule { }

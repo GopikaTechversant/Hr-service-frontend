@@ -7,6 +7,7 @@ import { HrSidebarComponent } from './components/hr-sidebar/hr-sidebar.component
 import { MaterialModule } from '../material/material.module';
 import { HrCandidateListComponent } from './components/hr-candidate-list/hr-candidate-list.component';
 import { HrCandidateDetailComponent } from './components/hr-candidate-detail/hr-candidate-detail.component';
+import { FormsModule } from '@angular/forms';
 const routes: Routes = [
   {
     path: '', component: HrHomeComponent,
@@ -26,7 +27,9 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     SharedModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+
   ],
   providers: [
     DatePipe,

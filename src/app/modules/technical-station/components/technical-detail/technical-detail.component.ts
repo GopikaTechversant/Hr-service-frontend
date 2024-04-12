@@ -31,6 +31,7 @@ export class TechnicalDetailComponent implements OnInit {
   currentPage: number = 1;
   totalCount: any;
   lastPage: any;
+  searchKeyword: any;
 
   constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog) {
     // this.route.params.subscribe(params => {
@@ -51,15 +52,17 @@ export class TechnicalDetailComponent implements OnInit {
       this.currentPage = 1 ;
       this.limit = 10;
       this.candidateList = [];
-      this.fetchList();
+      this.fetchList('');
     });
   }
 
-  fetchList(): void {
+  fetchList(search:any): void {
     this.loader = true;
     this.candidateList = [];
+    this.searchKeyword = search
     if (this.stationId === '3') {
-      this.apiService.get(`/technical-station/list?page=${this.currentPage}&limit=${this.limit}&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
+      this.searchKeyword = search;
+      this.apiService.get(`/technical-station/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.limit}&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
         this.loader = false;
         if (data?.candidates) {
           this.candidateList.push(data?.candidates);
@@ -70,7 +73,8 @@ export class TechnicalDetailComponent implements OnInit {
         }
       });
     } else if (this.stationId === '4') {
-      this.apiService.get(`/technical-station-two/list?page=${this.currentPage}&limit=10&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
+      this.searchKeyword = search;
+      this.apiService.get(`/technical-station-two/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=10&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
         this.loader = false;
         if (data?.candidates) {
           this.candidateList.push(data?.candidates);
@@ -102,6 +106,12 @@ export class TechnicalDetailComponent implements OnInit {
     return pages;
   }
 
+  searchCandidate(searchTerm: string):void{
+    this.searchKeyword = searchTerm;
+    this.fetchList(this.searchKeyword);    
+  }
+
+
   fetchDetails(id: any, status: any): void {
     if (this.stationId === '3') {
       this.apiService.get(`/technical-station/progressDetail?serviceId=${id}`).subscribe((data: any) => {
@@ -117,8 +127,14 @@ export class TechnicalDetailComponent implements OnInit {
   selectStatusFilter(item: string): void {
     this.filteredStatus = item;
     sessionStorage.setItem(`status_${this.stationId}`, this.filteredStatus);
-    this.fetchList();
+    this.fetchList('');
   }
+
+  clearSearch(): void {
+    this.searchKeyword = '';
+    this.fetchList('');    
+  }
+
 
   clearFilter(): void {
     this.filteredStatus = ' ';
@@ -144,13 +160,13 @@ export class TechnicalDetailComponent implements OnInit {
     })
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       this.candidateList = [];
-      this.fetchList();
+      this.fetchList('');
     })
   }
 
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);
-    this.fetchList();
+    this.fetchList('');
   }
 
 }

@@ -50,10 +50,9 @@ export class InterviewCountComponent implements OnInit {
   }
 
   fetchInterviewCounts(): void {
-  
     this.apiService.get(`/dashboard/interview-count?date=${this.displayDate}&page=${this.currentPage}&limit=${this.pageSize}`).subscribe((count: any) => {
       this.countArray = count?.data;
-      this.totalCount = 59;        
+      this.totalCount = count?.totalCount;        
       const totalPages = Math.ceil(this.totalCount / this.pageSize);
       this.lastPage = totalPages;        
       if (this.currentPage > totalPages) this.currentPage = totalPages;

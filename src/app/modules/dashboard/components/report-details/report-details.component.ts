@@ -76,7 +76,7 @@ export class ReportDetailsComponent implements OnInit {
     this.apiService.get(`/report/over-all-interview-status?page=${this.currentPage}&limit=${this.pageSize}`).subscribe((res: any) => {
       if (res?.data) {
         this.interviewDetails = res?.data;
-        this.totalCount = 59;        
+        this.totalCount = res?.toatlCount;        
         const totalPages = Math.ceil(this.totalCount / this.pageSize);
         this.lastPage = totalPages;        
         if (this.currentPage > totalPages) this.currentPage = totalPages;

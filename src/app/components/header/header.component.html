@@ -25,7 +25,7 @@
         uppercase): '' }}</span>
          <div *ngIf="dropDown" class="drop-down d-flex p-absolute">
           <div class="station" *ngFor="let station of stationsList">
-            <div class="c-pointer p-10" (click)="navigate(station)">{{station?.stationName}}</div>
+            <div class="c-pointer p-10 p-l-20" (click)="navigate(station)">{{station?.stationName}}</div>
           </div>
     </div>
    
