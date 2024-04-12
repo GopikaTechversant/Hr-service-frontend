@@ -9,6 +9,7 @@
     background-color: #FFFFFF;
     box-shadow: 0px 4px 8px 0px #0000001A;
     width: 100%;
+    height: calc(100vh - 200px);
 }
 
 .w-75 {
@@ -108,7 +109,7 @@ tr:nth-child(even) {
 td {
     padding: 10px;
     text-align: center !important;
-    border: 1px solid #E9E9E9 ;
+    border: 1px solid #E9E9E9;
 }
 
 tr {
@@ -125,7 +126,7 @@ tr {
     line-height: 18px;
     letter-spacing: 0em;
     text-align: center;
-    
+
 }
 
 .table-view {
@@ -187,31 +188,31 @@ tr {
     color: blue;
 }
 
-.icon{
+.icon {
     margin: 5px;
     height: 27px;
     width: 27px;
-    
+
 }
 
-.page{
+.page {
     width: 83px;
     float: right;
 }
 
-.current-page{
-   
+.current-page {
+
     background-color: #005EC9;
     color: #FFFFFF;
     height: 26px;
     width: 26px;
 }
 
-.box{
+.box {
     height: 26px;
     width: 26px;
     border: none;
-   
+
 }
 
 .candidate:hover {

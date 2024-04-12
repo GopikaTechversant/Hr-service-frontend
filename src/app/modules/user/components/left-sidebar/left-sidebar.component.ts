@@ -16,7 +16,8 @@ export class LeftSidebarComponent implements OnInit{
     if (queryParam) this.router.navigate([path], { queryParams: { type: queryParam } });
     else this.router.navigate([path]);
   }
+  
   isActive(route: string): boolean {
-    return this.router.isActive(route, false);
+    return this.router.url === route;
   }
 }

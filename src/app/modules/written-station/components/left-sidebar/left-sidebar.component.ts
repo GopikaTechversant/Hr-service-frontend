@@ -17,6 +17,6 @@ export class LeftSidebarComponent implements OnInit{
     else this.router.navigate([path]);
   }
   isActive(route: string): boolean {
-    return this.router.isActive(route, false);
+    return this.router.url === route;
   }
 }

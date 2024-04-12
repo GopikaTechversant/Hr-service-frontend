@@ -8,6 +8,7 @@ import { SeriesComponent } from './components/series/series.component';
 import { ResultComponent } from './components/result/result.component';
 import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
 import { AssignSeriesComponent } from './components/assign-series/assign-series.component';
+import { FormsModule } from '@angular/forms';
 const routes: Routes = [
   { path:'',component:HomeComponent,
   children: [
@@ -29,7 +30,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    SharedModule
+    SharedModule,
+    FormsModule
   ]
 })
 export class WrittenStationModule { }
