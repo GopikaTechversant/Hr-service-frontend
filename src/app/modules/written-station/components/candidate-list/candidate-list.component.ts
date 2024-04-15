@@ -16,29 +16,62 @@ export class CandidateListComponent implements OnInit {
   userCount: any;
   pageSize = 9;
   pageIndex = 1;
+  totalCount: any;
+  limit = 9;
+  searchKeyword: string = '';
   constructor(private http: HttpClient, private router: Router, private apiService: ApiService) { }
 
   ngOnInit(): void {
-    this.fetchRequirementDetails();
+    this.fetchRequirementDetails('');
   }
-  fetchRequirementDetails(): void {
-    const totalPages = Math.ceil(this.userCount / this.pageSize);
-    this.lastPage = totalPages;
-    if (this.currentPage > totalPages) this.currentPage = totalPages;
-    this.apiService.get(`/written-station/v1/list-all?page=${this.currentPage}&limit=${this.pageSize}`).subscribe((res: any) => {
-      this.candidates_list = res?.candidates;
+
+  fetchRequirementDetails(searchQuery: string): void {
+    this.apiService.get(`/written-station/v1/list-all?page=${this.currentPage}&limit=${this.pageSize}&search=${searchQuery}`).subscribe((res: any) => {
+      if (res) {
+        this.candidates_list = res?.candidates;
+        console.log(" this.candidates_list", this.candidates_list);
+        this.totalCount = res?.totalCount;
+        console.log("totalCount", this.totalCount);
+        const totalPages = Math.ceil(this.totalCount / this.limit);
+        this.lastPage = totalPages;
+        console.log("this.lastPage ", this.lastPage);
+        if (this.currentPage > totalPages) this.currentPage = totalPages;
+      }
     })
   }
+
   navigate(path: any, requestId?: any): void {
     const queryParams = requestId ? { requestId: requestId } : undefined;
     if (queryParams) this.router.navigate([path], { queryParams: queryParams });
     else this.router.navigate([path]);
   }
-  candidateSearch() {
 
+  candidateSearch(search: any): void {
+    this.searchKeyword = search
+    this.fetchRequirementDetails(this.searchKeyword);
   }
+  generatePageNumbers() {
+    let pages = [];
+    if (this.lastPage <= 5) {
+      for (let i = 1; i <= this.lastPage; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      let start = Math.max(2, this.currentPage - 1);
+      let end = Math.min(this.lastPage - 1, this.currentPage + 1);
+
+      if (this.currentPage <= 3) end = 4;
+      else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
+      if (start > 2) pages.push('...');
+      for (let i = start; i <= end; i++) pages.push(i);
+      if (end < this.lastPage - 1) pages.push('...');
+      pages.push(this.lastPage);
+    }
+    return pages;
+  }
+
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);
-    this.fetchRequirementDetails();
+    this.fetchRequirementDetails('');
   }
+
 }

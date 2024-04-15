@@ -63,7 +63,7 @@
 .btn-cancel {
     background-color: #575F6E;
     width: 150px;
-    height: 48px;
+    height: 40px;
     border-radius: 3px;
     outline: none;
     border: none;
@@ -75,7 +75,7 @@
 .btn-submit {
     background-color: #005EC9;
     width: 150px;
-    height: 48px;
+    height: 40px;
     border-radius: 3px;
     outline: none;
     border: none;
@@ -117,14 +117,14 @@
 }
 
 .input-station {
-    height: 38px;
+    height: 34px;
     border-radius: 5px;
     outline: none;
     background: #FAFAFA;
     padding-left: 10px;
     border: 1px solid #E9E9E9;
     margin-top: 10px;
-    width: 95%;
+    width: 91%;
     padding-top: 2px;
 }
 

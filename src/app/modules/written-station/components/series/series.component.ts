@@ -74,21 +74,21 @@ export class SeriesComponent implements OnInit {
     this.newSeriesCreated = false;
   }
 
- 
+
   fetchQuestions(): void {
     this.showQuestions = true;
     this.apiService.get(`/written-station/questions`).subscribe((data: any) => {
       if (this.series_list.length > 0) {
-        this.questions_list = data?.data.slice(); 
+        this.questions_list = data?.data.slice();
         this.series_list.forEach((series: any) => {
-        this.questions_list = this.questions_list.filter((question: { questionId: any; }) => question.questionId !== series.questionId);
+          this.questions_list = this.questions_list.filter((question: { questionId: any; }) => question.questionId !== series.questionId);
         });
       } else {
-        this.questions_list = data?.data; 
+        this.questions_list = data?.data;
       }
     });
   }
-  
+
   createSeries(): void {
     this.newSeriesCreated = true;
     const newSeries = {
@@ -150,7 +150,6 @@ export class SeriesComponent implements OnInit {
         if (selectedSeries) {
           let selectedSeriesObj = this.series_list.find((s: any) => s.name === selectedSeries || s.questionName === selectedSeries)
           if (selectedSeriesObj) {
-            // this.newSeriesCreated = false;
             // remove the candidate from the candidate list
             this.candidates_list = this.candidates_list.filter((c: any) => c.candidateId !== candidate.candidateId);
             // remove the candidate from the previous series candidate array
@@ -220,10 +219,16 @@ export class SeriesComponent implements OnInit {
       averageScore: averageScore
     };
     if (ScoreAddedTrue) {
-      this.apiService.post(`/written-station/approve`, payload).subscribe((res: any) => {
-        this.tostr.success('Approved');
-        this.averageScore = averageScore;
-        this.fetchCandidatesWithSeries();
+      this.apiService.post(`/written-station/approve`, payload).subscribe({
+        next: (res: any) => {
+          this.tostr.success('Approved');
+          this.averageScore = averageScore;
+          this.fetchCandidatesWithSeries();
+        },
+        error: (error) => {
+          if (error?.status === 500) this.tostr.error("Internal Server Error");
+          else this.tostr.warning("Unable to approve");
+        }
       })
     } else if (ScoreAddedFalse) this.tostr.warning('Please add score');
   }

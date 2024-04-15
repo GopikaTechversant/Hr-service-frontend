@@ -20,6 +20,8 @@ export class UserListComponent implements OnInit {
   lastPage: any;
   userCount: any;
   candidateId: any;
+  totalCount: any;
+  limit = 9;
   headers = new HttpHeaders({
     'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
   });
@@ -32,19 +34,22 @@ export class UserListComponent implements OnInit {
   }
 
   fetchUserList(): void {
-    const totalPages = Math.ceil(this.userCount / this.pageSize);
-    this.lastPage = totalPages;
-    if (this.currentPage > totalPages) {
-      this.currentPage = totalPages;
-    }
-
     const headers = new HttpHeaders({
       'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
     });
-
     this.http.get(`${environment.api_url}/user/lists?limit=${this.pageSize}&page=${this.currentPage}`, { headers }).subscribe((data: any) => {
       this.userList = data.users;
       this.userCount = data.userCount;
+      if (data) {
+        this.userList = data?.users;
+        console.log(" this.candidates_list", this.userList);
+        this.totalCount = data?.userCount;
+        console.log("totalCount", this.totalCount);
+        const totalPages = Math.ceil(this.totalCount / this.limit);
+        this.lastPage = totalPages;
+        console.log("this.lastPage ", this.lastPage);
+        if (this.currentPage > totalPages) this.currentPage = totalPages;
+      }
     })
   }
 
@@ -87,5 +92,23 @@ export class UserListComponent implements OnInit {
     dialogRef.componentInstance.onEditSuccess.subscribe(() => {
       this.fetchUserList();
     })
+  }
+  generatePageNumbers() {
+    let pages = [];
+    if (this.lastPage <= 5) {
+      for (let i = 1; i <= this.lastPage; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      let start = Math.max(2, this.currentPage - 1);
+      let end = Math.min(this.lastPage - 1, this.currentPage + 1);
+
+      if (this.currentPage <= 3) end = 4;
+      else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
+      if (start > 2) pages.push('...');
+      for (let i = start; i <= end; i++) pages.push(i);
+      if (end < this.lastPage - 1) pages.push('...');
+      pages.push(this.lastPage);
+    }
+    return pages;
   }
 }
