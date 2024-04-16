@@ -90,8 +90,8 @@
 
 .calendar-icon {
     color: gray;
-    Width: 18px;
-    Height: 18px;
+    width: 18px;
+    height: 18px;
     margin-left: -22px;
     top: 13px;
 }
@@ -124,7 +124,7 @@ tr {
     position: sticky;
     top: 0;
     background: #F4F2F2 !important;
-    Padding: 10px;
+    padding: 10px;
     font-size: 15px;
     font-weight: 400;
     line-height: 18px;

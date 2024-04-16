@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastrServices } from 'src/app/services/toastr.service';
+import { environment } from 'src/environments/environments';
 @Component({
   selector: 'app-candidate-detail-modal',
   templateUrl: './candidate-detail-modal.component.html',
@@ -26,6 +27,7 @@ export class CandidateDetailModalComponent implements OnInit {
   stationId: any;
   feedback: any;
   userId: any;
+  resumePath: any;
 
   constructor(public dialogRef: MatDialogRef<CandidateDetailModalComponent>, private apiService: ApiService, private tostr: ToastrServices,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -102,6 +104,11 @@ export class CandidateDetailModalComponent implements OnInit {
         }
       });
     } else this.tostr.warning('Please Add Feedback');
+  }
+
+  viewResume(resume: any) {
+    this.resumePath = resume;
+    window.open(`${environment.api_url}${this.resumePath}`, '_blank');
   }
 
   approveClick(): void {

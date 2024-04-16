@@ -5,7 +5,21 @@
     <div class="scroller-box">
         <div class="d-flex parent">
             <div class="m-t-20 m-b-10 child">
-                <span class="sub-head">Interview Rounds</span>
+                <span class="sub-head">Job Title<span class="required">*</span></span>
+                <div>
+                    <input type="text" class="input" #jobtitle  max="20">
+                </div>
+            </div>
+            <div class="m-t-20 m-b-10 p-l-10 m-l-10 child">
+                <span class="sub-head">Job Code</span>
+                <div>
+                    <input type="text" class="input" #jobCode  max="20">
+                </div>
+            </div>
+        </div>
+        <div class="d-flex parent">
+            <div class="m-t-20 m-b-10 child">
+                <span class="sub-head">Interview Rounds<span class="required">*</span></span>
                 <div class="d-flex input p-relative">
                     <div *ngFor="let item of selectedStations;let i = index">
                         <div *ngIf="item?.stationName" class="m-t-8 m-l-5">
@@ -29,25 +43,34 @@
                 </div>
             </div>
             <div class="m-t-20 m-b-10 p-l-10 m-l-10 m-l-10 child">
-                <span class="sub-head">Designation</span>
-                <div>
-                    <input type="text" class="input" #serviceInput>
+                <span class="sub-head">Designation<span class="required">*</span></span>
+                <div class="no-close col-md-3 s-list d-flex input j-space m-text p-relative">
+                    <span (click)="openDesignation = !openDesignation" class="w-100 d-flex">
+                        <span class="align-center m-t-10 c-pointer">
+                            {{selectedDesignation.trim() !== '' ? selectedDesignation : 'Select Designation'}}</span>
+                        <span class="no-close s-list c-pointer align-center m-b-2 flex-1 sub j-end"><i
+                                class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
+                        </span>
+                    </span>  
+                    <div class=" m-b-2 drop-list no-close" *ngIf="openDesignation">
+                        <div (click)="selectDesignation(designation?.designationId,designation?.designationName);!openDesignation"
+                            *ngFor="let designation of designationList" class=" p-t-5 p-b-5 p-l-8 c-pointer">
+                            {{designation?.designationName}}</div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="d-flex parent">
             <div class="m-t-20 m-b-10 child">
-                <span class="sub-head">Department Name</span>
-                <div class="no-close col-md-3 s-list d-flex input j-space m-text p-relative"
-                    (click)="teamListOpen = !teamListOpen">
-                    <div *ngIf="!selectedTeam"
-                        class="no-close s-list m-r-10 m-text align-center m-b-2 f-w-400 c-pointer h-min sub flex-1">
-                        Select Department
-                    </div>
-                    <div class="align-center m-t-10" *ngIf="selectedTeam">{{selectedTeam}}</div>
-                    <div class="no-close s-list c-pointer align-center m-b-2 flex-1 d-flex j-end sub"><i
-                            class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
-                    </div>
+                <span class="sub-head">Department Name<span class="required">*</span></span>
+                <div class="no-close col-md-3 s-list d-flex input j-space m-text p-relative">
+                    <span (click)="teamListOpen = !teamListOpen" class="w-100 d-flex">
+                        <span class="align-center m-t-10 c-pointer">
+                            {{selectedTeam.trim() !== '' ? selectedTeam : 'Select Department'}}</span>
+                        <span class="no-close s-list c-pointer align-center m-b-2 flex-1 sub j-end"><i
+                                class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
+                        </span>
+                    </span>  
                     <div class=" m-b-2 drop-list no-close" *ngIf="teamListOpen">
                         <div (click)="selectTeam(team?.teamId,team?.teamName)" *ngFor="let team of list_team"
                             class=" p-t-5 p-b-5 p-l-8 c-pointer">{{team?.teamName}}</div>
@@ -78,27 +101,30 @@
         <div class="d-flex parent">
             <div class="m-t-20 m-b-10 child">
                 <span class="sub-head">Skills</span>
-                <input type="search" class="input" placeholder="Search Skills"
-                    (input)="getSkillSuggestions($event)" id="skillSearch">
-                <div class="m-l-23 m-t-8 drop-list-skill" *ngIf="showSearchBar">
-                    <div *ngFor="let suggestion of skillSuggestions" (click)="selectSkill(suggestion)">
-                        <span class="p-t-7 "><img src="assets/images/akar-icons_check.png" alt="" class="m-t-0 p-r-4"
-                                width="13px" height="10px"></span>
-                        <span class="c-pointer ">{{suggestion?.skillName}}</span>
+                <span class="p-relative">
+                    <input type="search" class="input" placeholder="Search Skills" (input)="getSkillSuggestions($event)"
+                        id="skillSearch">
+                    <div class="m-t-8 drop-list-skill" *ngIf="showSearchBar">
+                        <div *ngFor="let suggestion of skillSuggestions" (click)="selectSkill(suggestion)">
+                            <span class="p-t-7 "><img src="assets/images/akar-icons_check.png" alt="" class="m-t-0 p-r-4" width="13px"
+                                    height="10px"></span>
+                            <span class="c-pointer ">{{suggestion?.skillName | titlecase}}</span>
+                        </div>
                     </div>
-                </div>
-                <div class=" d-flex m-t-10">
-                    <div *ngIf="selectedSkills.length > 0">
-                        <span class="">Selected Skills</span>
-                        <ul>
-                            <li *ngFor="let skill of selectedSkills" class="p-4">
-                                {{ skill | titlecase}}
-                                <i class="fa fa-trash-o  delete-color c-pointer" aria-hidden="true"
-                                    (click)="removeSkill(skill)"></i>
-                            </li>
-                        </ul>
+                    <div class=" d-flex m-t-10">
+                        <div *ngIf="selectedSkills.length > 0">
+                            <span class="">Selected Skills</span>
+                            <ul>
+                                <li *ngFor="let skill of selectedSkills" class="p-4">
+                                    {{ skill | titlecase}}
+                                    <i class="fa fa-trash-o  delete-color c-pointer" aria-hidden="true"
+                                        (click)="removeSkill(skill)"></i>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
+                </span>
+               
             </div>
             <div class="m-t-20 m-b-10 p-l-10 m-l-10 child">
                 <span class="sub-head">Vacancy</span>

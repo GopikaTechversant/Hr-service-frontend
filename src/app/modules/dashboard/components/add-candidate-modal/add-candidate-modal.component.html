@@ -79,7 +79,7 @@
         </div>
         <div class="d-flex parent">
             <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Requirement</span>
+                <span class="label m-b-4">Requirement<span class="required">*</span></span>
                 <div class="input-box p-t-5 p-l-5 c-pointer p-relative no-close"
                     (click)="requirementListOpen = !requirementListOpen">
                     <div class="p-t-5">
@@ -94,7 +94,7 @@
                 </div>
             </div>
             <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Application Source</span>
+                <span class="label m-b-4">Application Source<span class="required">*</span></span>
                 <div class="input-box p-t-5 p-l-5 c-pointer p-relative no-close" (click)="showSource = !showSource">
                     <div class="p-t-5">
                         <span *ngIf="!sourceName">Select source</span>
