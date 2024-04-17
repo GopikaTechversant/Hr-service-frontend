@@ -34,6 +34,8 @@ export class SeriesComponent implements OnInit {
   candidateMarkDetail: any;
   averageScore: string | null = null;
   showAverageScoreInput: boolean = false;
+  series_list_showAverageScoreInput: boolean = false;
+  demo: boolean = false;
   constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -59,21 +61,44 @@ export class SeriesComponent implements OnInit {
       this.candidateResult = res.result;
       this.candidatesStatus[0].candidates.forEach((mark: any) => this.previousAveragescore = mark.progressAverageScore);
       if (res.result && res.data) {
-        this.series_list = res.data.map((item: { questionId: any; questionName: any; candidates: any; }, index: number) => ({
-          name: `Series ${index + 1}`,
-          active: false,
-          questionId: item.questionId,
-          questionName: item.questionName,
-          showQuestions: false,
-          selectedQuestion: null,
-          candidates: item.candidates
-        }));
+        // Iterate over each series in the response
+        res.data.forEach((item: any) => {
+          const existingSeries = this.series_list.find((series: any) => series.questionId === item.questionId);
+          // If the series already exists, update its candidates
+          if (existingSeries) {
+            // Update existing candidates and add new candidates
+            item.candidates.forEach((newCandidate: any) => {
+              const existingCandidateIndex = existingSeries.candidates.findIndex((existingCandidate: any) => existingCandidate.serviceId === newCandidate.serviceId);
+              if (existingCandidateIndex !== -1) {
+                // Update existing candidate
+                existingSeries.candidates[existingCandidateIndex] = newCandidate;
+              } else {
+                // Add new candidate
+                existingSeries.candidates.push(newCandidate);
+              }
+            });
+          } else {
+            // Otherwise, create a new series
+            this.series_list = res.data.map((item: { questionId: any; questionName: any; candidates: any; }, index: number) => ({
+              name: `Series ${index + 1}`,
+              active: false,
+              questionId: item.questionId,
+              questionName: item.questionName,
+              showQuestions: false,
+              selectedQuestion: null,
+              candidates: item.candidates
+            }));
+          }
+        });
         this.newSeriesCreated = false;
-      } else this.tostr.error(res.message);
+        this.series_list.forEach((res: any) => {
+          this.series_list_showAverageScoreInput = res.candidates.some((candidate: any) => candidate.progressAverageScore === null)
+        })
+      } else {
+        this.tostr.error(res.message);
+      }
     });
-    this.newSeriesCreated = false;
   }
-
 
   fetchQuestions(): void {
     this.showQuestions = true;
@@ -131,6 +156,7 @@ export class SeriesComponent implements OnInit {
     }
     this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res: any) => {
       this.questionAssigned = true;
+      this.fetchCandidatesWithSeries();
     });
   }
 
@@ -150,35 +176,44 @@ export class SeriesComponent implements OnInit {
         if (selectedSeries) {
           let selectedSeriesObj = this.series_list.find((s: any) => s.name === selectedSeries || s.questionName === selectedSeries)
           if (selectedSeriesObj) {
-            // remove the candidate from the candidate list
-            this.candidates_list = this.candidates_list.filter((c: any) => c.candidateId !== candidate.candidateId);
-            // remove the candidate from the previous series candidate array
-            this.series_list.forEach((s: any) => {
-              if (s.candidates && s !== selectedSeriesObj) {
-                s.candidates = s.candidates.filter((c: any) => c.candidateId !== candidate.candidateId);
-              }
-            });
-            //add the candidates to the selected series 
-            if (!candidate.progressId || this.questionAssigned) {
-              selectedSeriesObj.candidates = selectedSeriesObj.candidates || [];
-              selectedSeriesObj.candidates.push(candidate);
-            }
-            this.series_list = [...this.series_list];
-            if (selectedSeriesObj.questionName) {
-              let questionId = selectedSeriesObj.questionId;
-              selectedSeriesObj = selectedSeriesObj.candidates.filter((candidate: any) => !candidate.progressScore);
-              const requestData = {
-                questionAssignee: null,
-                questionId: questionId,
-                questionServiceId: [] as string[]
-              };
-              if (selectedSeriesObj[0].serviceId) requestData.questionServiceId.push(selectedSeriesObj[0].serviceId);
-              this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res: any) => {
-                this.newSeriesCreated = false;
-                this.questionAssigned = true;
-                this.newSeriesCreated = false;
-                this.fetchCandidatesWithSeries();
+            // Check if the candidate is already in the selected series
+            if (selectedSeriesObj && selectedSeriesObj.candidates) var candidateExists = selectedSeriesObj.candidates.some((c: any) => c.candidateId === candidate.candidateId);
+            if (!candidateExists) {
+              // Remove the candidate from the candidate list
+              this.candidates_list = this.candidates_list.filter((c: any) => c.candidateId !== candidate.candidateId);
+              // Remove the candidate from the previous series candidate array
+              this.series_list.forEach((s: any) => {
+                if (s.candidates && s !== selectedSeriesObj) {
+                  s.candidates = s.candidates.filter((c: any) => c.candidateId !== candidate.candidateId);
+                }
               });
+              // Add the candidate to the selected series 
+              if (!candidate.progressId || this.questionAssigned) {
+                selectedSeriesObj.candidates = selectedSeriesObj.candidates || [];
+                selectedSeriesObj.candidates.push(candidate);
+              }
+              // this.series_list = [...this.series_list];
+
+
+              if (selectedSeriesObj.questionName) {
+                let questionId = selectedSeriesObj.questionId;
+                selectedSeriesObj = selectedSeriesObj.candidates.filter((candidate: any) => !candidate.progressScore);
+                const requestData = {
+                  questionAssignee: null,
+                  questionId: questionId,
+                  questionServiceId: [] as string[]
+                };
+                if (selectedSeriesObj[0].serviceId) requestData.questionServiceId.push(selectedSeriesObj[0].serviceId);
+                this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res: any) => {
+                  this.newSeriesCreated = false;
+                  this.questionAssigned = true;
+                  this.newSeriesCreated = false;
+                  // this.fetchCandidatesWithSeries();
+                });
+              }
+            } else {
+              // Candidate already exists in the selected series
+              this.tostr.warning('Candidate already assigned to this series');
             }
           } else this.tostr.warning('There is no selected series');
         }

@@ -27,7 +27,7 @@
                             <div class="value">: {{candidate.candidateEmail}}</div>
                         </div>
                     </div>
-                    <button class="assign" (click)="openAssignModal(candidate,activeSeries)">Assign</button>
+                    <button class="assign c-pointer" (click)="openAssignModal(candidate,activeSeries)">Assign</button>
                 </div>
             </div>
         </div>
@@ -36,9 +36,9 @@
         <div class="child1">
             <div class="name  d-flex p-t-23 p-l-17 j-space title-child1">
                 <p>Questions To Be Assigned</p>
-                <div class="title-right" *ngIf="showAverageScoreInput">
+                <div class="title-right" *ngIf="showAverageScoreInput || series_list_showAverageScoreInput">
                     <input type="text" placeholder="Enter the average score" id="averageScore" class="input p-l-10">
-                    <button class="approve" (click)="approve()">Approve</button>
+                    <button class="approve c-pointer" (click)="approve()">Approve</button>
                 </div>
             </div>
             <div class="averagescore"> <span *ngIf="previousAveragescore">Previous Average Score: {{ previousAveragescore }}</span></div>
@@ -50,7 +50,7 @@
                     <div class=" flex-column  j-center c-pointer" (click)="seriesBoxClick(series)"
                         [ngClass]="{'active-series' : series?.active}">
                         <p class="m-b-0 p-t-10 p-b-5  series-name-child1 m-r-10">{{series.name}}</p>
-                        <div class="  j-center candidates">
+                        <div class="j-center candidates">
 
                             <div *ngIf="series.candidates && series.candidates?.length > 0" class="d-flex flex-wrap">
                                 <div *ngFor="let candidate of series.candidates" class=" candidate-box-child1">
@@ -91,7 +91,7 @@
         </div>
         <div class="child2">
             <div class="barcode-parent text-center m-t-14">
-                <button class="series-btn f-s-14" (click)="createSeries()">Create Series</button>
+                <button class="series-btn f-s-14 c-pointer" (click)="createSeries()">Create Series</button>
             </div>
             <div *ngIf="series_list?.length === 0" class="parent-conatiner">
                 <div class="centerd-div"><span class="no-data">Series Are'nt Created Yet!</span></div>
