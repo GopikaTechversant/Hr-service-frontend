@@ -1,6 +1,6 @@
 export const environment = {
     production: true,
-    prodEnv: false,
-    devEnv: true,
-    api_url : 'http://10.1.0.83:3001'
+    prodEnv: true,
+    devEnv: false,
+    api_url : 'http://ec2-18-216-125-8.us-east-2.compute.amazonaws.com:3001'
 }

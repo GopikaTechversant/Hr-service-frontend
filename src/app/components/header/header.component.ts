@@ -28,6 +28,7 @@ export class HeaderComponent implements OnInit {
     if (!this.el.nativeElement.contains(event.target)) {
       this.dropDown = false;
       this.showCandidates = false;
+      this.searchKeyword = '';
     }
   }
 
@@ -42,7 +43,7 @@ export class HeaderComponent implements OnInit {
       this.stationsList.push({
         "stationName": "Log Out",
         "stationId": 0
-      })      
+      })
     });
   }
 
@@ -64,6 +65,7 @@ export class HeaderComponent implements OnInit {
         if (this.candidateList?.length > 0) this.showCandidates = true;
       }
     })
+    if(this.searchKeyword.trim() === '') this.showCandidates = false;
   }
 
   selectCandidate(id: any): void {

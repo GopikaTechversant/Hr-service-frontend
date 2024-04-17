@@ -93,6 +93,10 @@
     text-align: center;
 }
 
+.required{
+    color: red;
+}
+
 .d-flex.flex-wrap {
     display: flex;
     flex-wrap: wrap;
@@ -137,7 +141,10 @@
 .drop-list-skill {
     height: 57px;
     overflow-y: scroll;
-    width: 417px;
+    width: 95%;
+    max-height: 100px;
+    position: absolute;
+    background-color: #FFFFFF;
 }
 
 .fa-trash-o {

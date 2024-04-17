@@ -26,18 +26,18 @@ export class TechnicalDetailComponent implements OnInit {
     { status: 'rejected' },
     { status: 'done' }
   ]
-  filteredStatus: any = ' ';
+  filteredStatus: any = '';
   candidateStatus: string = 'Choose Candidate Status';
   currentPage: number = 1;
   totalCount: any;
   lastPage: any;
-  searchKeyword: any;
+  searchKeyword: string = '';
+  requestList: any;
+  requestList_open: any;
+  displayPosition: string = '';
+  positionId: any;
 
-  constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog) {
-    // this.route.params.subscribe(params => {
-    //   this.stationId = params['id'];
-    // });
-  }
+  constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
@@ -48,21 +48,39 @@ export class TechnicalDetailComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.stationId = params['id'];
-      this.filteredStatus = sessionStorage.getItem(`status_${this.stationId}`) ? sessionStorage.getItem(`status_${this.stationId}`) : ' ';
-      this.currentPage = 1 ;
+      this.filteredStatus = sessionStorage.getItem(`status_${this.stationId}`) ? sessionStorage.getItem(`status_${this.stationId}`) : '';      
+      const requirementData = sessionStorage.getItem(`requirement_${this.stationId}`);
+      if (requirementData) {
+        let requirement = JSON.parse(requirementData);
+        if (requirement) {
+          this.displayPosition = requirement.name;
+          this.positionId = requirement.id;
+        }
+      } else {
+        this.displayPosition = '';
+        this.positionId = '';
+      }
+      this.currentPage = 1;
       this.limit = 10;
       this.candidateList = [];
-      this.fetchList('');
+      this.fetchList();
     });
+    this.fetchRequirements();
   }
 
-  fetchList(search:any): void {
+  fetchRequirements(): void {
+    this.apiService.get(`/service-request/list`).subscribe((res: any) => {
+      if (res?.data) {
+        this.requestList = res?.data;
+      }
+    })
+  }
+
+  fetchList(): void {
     this.loader = true;
     this.candidateList = [];
-    this.searchKeyword = search
     if (this.stationId === '3') {
-      this.searchKeyword = search;
-      this.apiService.get(`/technical-station/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.limit}&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
+      this.apiService.get(`/technical-station/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.limit}&position=${this.positionId}&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
         this.loader = false;
         if (data?.candidates) {
           this.candidateList.push(data?.candidates);
@@ -73,8 +91,7 @@ export class TechnicalDetailComponent implements OnInit {
         }
       });
     } else if (this.stationId === '4') {
-      this.searchKeyword = search;
-      this.apiService.get(`/technical-station-two/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=10&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
+      this.apiService.get(`/technical-station-two/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.limit}&position=${this.positionId}&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
         this.loader = false;
         if (data?.candidates) {
           this.candidateList.push(data?.candidates);
@@ -86,31 +103,6 @@ export class TechnicalDetailComponent implements OnInit {
       });
     }
   }
-
-  generatePageNumbers() {
-    let pages = [];
-    if (this.lastPage <= 5) {
-      for (let i = 1; i <= this.lastPage; i++) pages.push(i);
-    } else {
-      pages.push(1);
-      let start = Math.max(2, this.currentPage - 1);
-      let end = Math.min(this.lastPage - 1, this.currentPage + 1);
-
-      if (this.currentPage <= 3) end = 4;
-      else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
-      if (start > 2) pages.push('...');
-      for (let i = start; i <= end; i++) pages.push(i);
-      if (end < this.lastPage - 1) pages.push('...');
-      pages.push(this.lastPage);
-    }
-    return pages;
-  }
-
-  searchCandidate(searchTerm: string):void{
-    this.searchKeyword = searchTerm;
-    this.fetchList(this.searchKeyword);    
-  }
-
 
   fetchDetails(id: any, status: any): void {
     if (this.stationId === '3') {
@@ -124,32 +116,59 @@ export class TechnicalDetailComponent implements OnInit {
     }
   }
 
+  generatePageNumbers() {
+    let pages = [];
+    if (this.lastPage <= 5) {
+      for (let i = 1; i <= this.lastPage; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      let start = Math.max(2, this.currentPage - 1);
+      let end = Math.min(this.lastPage - 1, this.currentPage + 1);
+      if (this.currentPage <= 3) end = 4;
+      else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
+      if (start > 2) pages.push('...');
+      for (let i = start; i <= end; i++) pages.push(i);
+      if (end < this.lastPage - 1) pages.push('...');
+      pages.push(this.lastPage);
+    }
+    return pages;
+  }
+
+  searchCandidate(searchTerm: string): void {
+    this.searchKeyword = searchTerm;
+    this.fetchList();
+  }
+
+  selectPosition(name: string, id: string): void {
+    this.requestList_open = false;
+    this.displayPosition = name;
+    this.positionId = id;
+    sessionStorage.setItem(`requirement_${this.stationId}`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
+    this.fetchList();
+  }
+
   selectStatusFilter(item: string): void {
     this.filteredStatus = item;
     sessionStorage.setItem(`status_${this.stationId}`, this.filteredStatus);
-    this.fetchList('');
+    this.currentPage = 1;
+    this.limit = 10;
+    this.fetchList();
   }
 
-  clearSearch(): void {
-    this.searchKeyword = '';
-    this.fetchList('');    
-  }
-
-
-  clearFilter(): void {
-    this.filteredStatus = ' ';
-    this.selectStatusFilter(this.filteredStatus);
-  }
-
-  statusClick(candidate: any, status: string, event: Event): void {
-    candidate.selectedStatus = status;
-    candidate.selectStatus = false;
-    event.stopPropagation();
-  }
-
-  toggleDropdown(candidate: any, event: Event): void {
-    candidate.selectStatus = !candidate?.selectStatus;
-    event.stopPropagation();
+  clearFilter(item: any): void {
+    if (item === 'status') {
+      this.filteredStatus = '';
+      sessionStorage.setItem(`status_${this.stationId}`, this.filteredStatus);
+    }
+    if (item === 'position') {
+      this.displayPosition = '';
+      this.positionId = '';
+      sessionStorage.setItem(`requirement_${this.stationId}`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
+    }
+    if (item === 'search') this.searchKeyword = '';
+    this.currentPage = 1;
+    this.limit = 10;
+    this.fetchList();
   }
 
   viewCandidateDetail(item: any, status: any): void {
@@ -160,13 +179,13 @@ export class TechnicalDetailComponent implements OnInit {
     })
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       this.candidateList = [];
-      this.fetchList('');
+      this.fetchList();
     })
   }
 
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);
-    this.fetchList('');
+    this.fetchList();
   }
 
 }

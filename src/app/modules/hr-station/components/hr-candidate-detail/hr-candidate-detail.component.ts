@@ -3,6 +3,7 @@ import { Component, Inject, Input } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastrServices } from 'src/app/services/toastr.service';
+import { environment } from 'src/environments/environments';
 @Component({
   selector: 'app-hr-candidate-detail',
   templateUrl: './hr-candidate-detail.component.html',
@@ -20,6 +21,7 @@ export class HrCandidateDetailComponent {
   hrReview: any;
   feedback: any;
   userId: any;
+  resumePath: any;
   constructor(public dialogRef: MatDialogRef<HrCandidateDetailComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
     private apiService: ApiService, private datePipe: DatePipe, private tostr: ToastrServices) {
     if (data) {
@@ -70,6 +72,12 @@ export class HrCandidateDetailComponent {
   cancelClick(): void {
     this.closeDialog();
   }
+
+  viewResume(resume: any) {
+    this.resumePath = resume;
+    window.open(`${environment.api_url}${this.resumePath}`, '_blank');
+  }
+
 
   rejectClick(): void {
     const feedback = document.getElementById('feedback') as HTMLInputElement;

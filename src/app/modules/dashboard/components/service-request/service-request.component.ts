@@ -15,6 +15,8 @@ export class ServiceRequestComponent implements OnInit {
   @ViewChild('serviceInput') serviceInput!: ElementRef<HTMLInputElement>;
   @ViewChild('experienceInput') experienceInput!: ElementRef<HTMLInputElement>;
   @ViewChild('baseSalaryInput') baseSalaryInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('jobtitle') jobtitle!: ElementRef<HTMLInputElement>;
+  @ViewChild('jobCode') jobCode!: ElementRef<HTMLInputElement>;
   @ViewChild('maxSalaryInput') maxSalaryInput!: ElementRef<HTMLInputElement>;
   @ViewChild('vacancy') vacancy!: ElementRef<HTMLInputElement>;
   list_id: any = [];
@@ -22,7 +24,7 @@ export class ServiceRequestComponent implements OnInit {
   idListOpen: boolean = false;
   selectedId: any;
   selectedName: any;
-  selectedTeam: any;
+  selectedTeam: string = '';
   selectedTeamName: any;
   teamListOpen: boolean = false;
   skillsArray: any = [];
@@ -40,6 +42,10 @@ export class ServiceRequestComponent implements OnInit {
   skillNameValue: string = '';
   stationIdToRemove: any;
   stationsLists: any;
+  designationList: any;
+  openDesignation: boolean = false;
+  selectedDesignation: string = '';
+  selectedDesignationId: any;
   constructor(private toastr: ToastrServices, private apiService: ApiService) { }
 
   @HostListener('window:beforeunload', ['$event'])
@@ -50,6 +56,7 @@ export class ServiceRequestComponent implements OnInit {
   ngOnInit(): void {
     this.fetchStations();
     this.fetchServiceTeam();
+    this.fetchDesignation();
   }
 
   onBodyClick(event: MouseEvent): void {
@@ -57,7 +64,14 @@ export class ServiceRequestComponent implements OnInit {
     if (!target.closest('.no-close')) {
       this.teamListOpen = false;
       this.idListOpen = false;
+      this.openDesignation = false;
     }
+  }
+
+  fetchDesignation() {
+    this.apiService.get(`/service-request/designation/list`).subscribe(((res: any) => {
+      if (res?.data) this.designationList = res?.data;
+    }))
   }
 
   fetchServiceId(): void {
@@ -65,6 +79,13 @@ export class ServiceRequestComponent implements OnInit {
       if (res?.data) this.list_id = res?.data;
     }))
   }
+
+  fetchServiceTeam(): void {
+    this.apiService.get(`/service-request/team`).subscribe((res: any) => {
+      this.list_team = res.data;
+    })
+  }
+
 
   onKeypress(event: any): void {
     let enteredValue: string;
@@ -97,19 +118,16 @@ export class ServiceRequestComponent implements OnInit {
     this.idListOpen = true;
   }
 
-  fetchServiceTeam(): void {
-    this.apiService.get(`/service-request/team`).subscribe((res: any) => {
-      this.list_team = res.data;
-    })
-  }
-
   selectTeam(teamId: any, teamName: any): void {
     this.teamListOpen = false;
-    if (this.selectedTeam !== teamName) {
-      this.selectedTeam = teamName;
-      this.selectedTeamName = teamId;
-    }
-    this.teamListOpen = true;
+    this.selectedTeam = teamName;
+    this.selectedTeamName = teamId;
+  }
+
+  selectDesignation(id: any, name: any): void {
+    this.openDesignation = false;
+    this.selectedDesignation = name;
+    this.selectedDesignationId = id;
   }
 
   fetchStations(): void {
@@ -169,18 +187,19 @@ export class ServiceRequestComponent implements OnInit {
   submitClick(): void {
     const skillName = document.getElementById('skillSearch') as HTMLInputElement;
     this.skillNameValue = skillName.value;
-    // this.skillsArray = this.skills.nativeElement.value.split(',').map(skill => skill.trim());
     const stationIds = this.selectedStations.map((station: { stationId: any; }) => station.stationId);
     const requestData = {
-      requestServiceId: this.selectedId,
-      requestName: this.serviceInput.nativeElement.value,
-      requestTeam: this.selectedTeamName,
+      requestName: this.jobtitle.nativeElement.value,
+      requestSkills: this.selectedSkills.length > 0 ? this.selectedSkills : [this.skillNameValue],
+      requestDesignation: this.selectedDesignationId,
+      requestCode: this.jobCode.nativeElement.value,
       requestExperience: this.experienceInput.nativeElement.value,
       requestBaseSalary: this.baseSalaryInput.nativeElement.value,
       requestMaxSalary: this.maxSalaryInput.nativeElement.value,
-      requestSkills: this.selectedSkills.length > 0 ? this.selectedSkills : [this.skillNameValue],
+      requestTeam: this.selectedTeamName,
       requestVacancy: this.vacancy.nativeElement.value,
-      requestFlowStations: stationIds
+      requestFlowStations: stationIds,
+      // requestServiceId: this.selectedId,
     };
     this.apiService.post(`/service-request/create`, requestData).subscribe((res) => {
       this.toastr.success("Requirement created Successfully");
@@ -200,9 +219,11 @@ export class ServiceRequestComponent implements OnInit {
 
   resetFormAndState(): void {
     this.stationsList = [];
-    this.selectedTeam = 'Select Department';
+    this.selectedTeam = '';
+    this.selectedDesignation = '';
     this.clearInputvalue(this.experienceInput);
-    this.clearInputvalue(this.serviceInput);
+    this.clearInputvalue(this.jobCode);
+    this.clearInputvalue(this.jobtitle);
     this.clearInputvalue(this.baseSalaryInput);
     this.clearInputvalue(this.maxSalaryInput);
     this.clearInputvalue(this.vacancy);
@@ -214,8 +235,6 @@ export class ServiceRequestComponent implements OnInit {
       { stationName: "HR", stationId: 5 }
     ];
   }
-
-
 
   cancel(): void {
     this.resetFormAndState();
