@@ -11,14 +11,13 @@ import { ApiService } from 'src/app/services/api.service';
   providers: [DatePipe],
 })
 export class ApplicationListBarComponent implements OnInit {
-  @Input() positionId: string = ' ';
+  @Input() positionId: string = '';
   chart: any;
   applicationList: any[] = [];
   labels: any;
   dataSet: any;
   requestId: any;
-  today : Date = new Date();
-
+  today: Date = new Date();
   displayDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
 
   constructor(private apiService: ApiService, private datePipe: DatePipe) { }
@@ -27,12 +26,10 @@ export class ApplicationListBarComponent implements OnInit {
   //   $event.returnValue = true; 
   // }
 
-
   ngOnInit(): void {
+    this.displayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+    this.requestId = this.positionId ? this.positionId : '';
     this.fetchApplicationList();
-    Chart.register(ChartDataLabels);
-    this.createBarChart();
-    this.requestId = this.positionId ? this.positionId : ' ';
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -40,6 +37,10 @@ export class ApplicationListBarComponent implements OnInit {
       this.requestId = this.positionId;
       this.fetchApplicationList();
     }
+  }
+
+  ngAfterViewInit(): void {
+    Chart.register(ChartDataLabels);
   }
 
   fetchApplicationList(): void {

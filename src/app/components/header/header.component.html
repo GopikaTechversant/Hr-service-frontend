@@ -12,14 +12,14 @@
       <div class="candidate-column" *ngFor="let item of candidateList"
         (click)="selectCandidate(item.candidateId);showCandidates = !showCandidates">
         <div *ngIf="!candidateList || candidateList?.length ===0"> No Candidate Found</div>
-        <div class="d-flex">
+        <div class="d-flex candidate">
           <div class="m-5">
             <span class="user-profile">{{item?.candidateFirstName.charAt(0) ? (item?.candidateFirstName.charAt(0) | uppercase) : 'U'}}</span>
           </div>
           <div class="p-l-5">
             <span>{{item?.candidateFirstName}} {{item?.candidateLastName}}</span><br>
-            <span>{{item?.candidateEmail}}</span><br>
-            <span>{{item?.candidateMobileNo}}</span>
+            <span class="detail">{{item?.candidateEmail}} | {{item?.candidateMobileNo}}</span>
+            <span></span>
           </div>
         </div>
       </div>

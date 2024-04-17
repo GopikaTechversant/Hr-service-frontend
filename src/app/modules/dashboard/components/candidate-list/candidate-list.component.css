@@ -167,14 +167,6 @@ tr {
     justify-content: flex-end;
 }
 
-.pagination {
-    position: sticky;
-    bottom: 0px;
-    background-color: white;
-    width: 100%;
-    padding: 10px 0;
-}
-
 .no-data {
     text-align: center;
     font-size: 16px;
@@ -201,6 +193,7 @@ tr {
 
 .page {
     margin: 10px;
+    padding-bottom: 10px;
 }
 
 .current-page {

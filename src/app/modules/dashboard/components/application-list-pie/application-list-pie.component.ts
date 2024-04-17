@@ -10,7 +10,7 @@ import { ApiService } from 'src/app/services/api.service';
   providers: [DatePipe],
 })
 export class ApplicationListPieComponent implements OnInit, AfterViewInit {
-  @Input() positionId: string = ' ';
+  @Input() positionId: string = '';
   chart: any;
   displayDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   sourceList: any[] = [];
@@ -23,7 +23,7 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.displayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
-    this.requestId = this.positionId ? this.positionId : ' ';
+    this.requestId = this.positionId ? this.positionId : '';
     this.fetchResumeSource()
   }
 

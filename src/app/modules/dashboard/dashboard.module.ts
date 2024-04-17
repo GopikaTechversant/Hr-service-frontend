@@ -25,14 +25,13 @@ import { DetailedRecruitmentComponent } from './components/detailed-recruitment/
 import { InterviewDetailsComponent } from './components/interview-details/interview-details.component';
 import { ReportDetailsComponent } from './components/report-details/report-details.component';
 import { DailyReportComponent } from './components/daily-report/daily-report.component';
+import { RequisitionDetailsComponent } from './components/requisition-details/requisition-details.component';
 
 const routes: Routes = [
   {
     path: '', component: LandingComponent,
     children: [
-      // {path: '', component: LeftSidebarComponent},
       { path: '', component: DashboardComponent },
-      // { path: 'requirement', component: RequirementFormComponent },
       { path: 'service-requirement', component: ServiceRequestComponent },
       { path: 'candidate-list', component: RequirementCandidateListComponent },
       { path: 'add-candidate', component: AddCandidateModalComponent },
@@ -40,7 +39,8 @@ const routes: Routes = [
       { path: 'requirement-candidate-list', component: RequirementCandidateListComponent },
       { path: 'report-details', component: ReportDetailsComponent },
       { path: 'candidate-details/:id', component: CandidateDetailsComponent },
-      {path: 'series', component:SeriesComponent}
+      { path: 'series', component: SeriesComponent },
+      { path: 'requisition-detail/:id', component: RequisitionDetailsComponent }
     ]
   },
   { path: 'series', component: SeriesComponent },
@@ -65,7 +65,8 @@ const routes: Routes = [
     DetailedRecruitmentComponent,
     InterviewDetailsComponent,
     ReportDetailsComponent,
-    DailyReportComponent
+    DailyReportComponent,
+    RequisitionDetailsComponent
   ],
   imports: [
     CommonModule,
