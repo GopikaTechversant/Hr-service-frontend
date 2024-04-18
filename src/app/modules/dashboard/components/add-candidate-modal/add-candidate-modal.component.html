@@ -177,16 +177,17 @@
                                 <span class="no-close'">{{selectedSkillType || 'Skill Type'}}</span>
                                 <span><i class="f-right p-r-10 fa fa-chevron-down no-close'"></i></span>
                                 <div class="dropdown c-pointer no-close'" *ngIf="showDropdown">
-                                    <p *ngFor="let type of skillTypes" (click)="selectSkillType(type)">{{type}}</p>
+                                    <p *ngFor="let type of skillTypes" (click)="selectSkillType(type);">{{type}}</p>
                                 </div>
                             </div>
                         </div>
-                        <span class="add-btn c-pointer" (click)="$event.preventDefault();toggleSearchBar()">Add</span>
+                        <!-- <span class="add-btn c-pointer" (click)="$event.preventDefault();">Add</span> -->
                     </div>
-                    <div class="searchbar m-t-10 c-pointer p-t-10 no-close '" *ngIf="showSearchBar">
+                    <div class="d-flex"> 
+                    <div class="searchbar m-t-10 c-pointer p-t-10 no-close '" >
                         <input type="search" class="input-search" placeholder="Type to search skills..."
-                            (input)="getSkillSuggestions($event)" *ngIf="showSearchBar">
-                        <div *ngIf="showSearchBar" class="m-l-23 m-t-8 drop-list">
+                            (input)="getSkillSuggestions($event)" id="addskill">
+                        <div  class="m-l-23 m-t-8 drop-list">
                             <div *ngFor="let suggestion of skillSuggestions" (click)="selectSkill(suggestion)">
                                 <span class="p-t-7 "><img src="assets/images/akar-icons_check.png" alt=""
                                         class="m-t-0 p-r-4" width="13px" height="10px"></span>
@@ -194,6 +195,8 @@
                             </div>
                         </div>
                     </div>
+                    <span class="add-btn c-pointer" (click)="$event.preventDefault();addExtraSkills()">Add</span>
+                </div>
                 </div>
                 <div class="child-skill d-flex m-b-10">
                     <div *ngIf="selectedPrimarySkills.length > 0">

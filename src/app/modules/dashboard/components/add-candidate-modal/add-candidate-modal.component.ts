@@ -46,6 +46,7 @@ export class AddCandidateModalComponent implements OnInit {
   maxSalary: any;
   minSalary: any;
   fileName: any;
+  extraSkills: any[] = [];
 
   constructor(private apiService: ApiService, private tostr: ToastrServices, private formBuilder: UntypedFormBuilder, private datePipe: DatePipe) {
     this.candidateForm = this.formBuilder.group({
@@ -166,11 +167,11 @@ export class AddCandidateModalComponent implements OnInit {
     }
   }
 
-  experienceValidation(event: any): void { 
-   const intermediateAllowedCharacters = /^-?(\d{0,1}\d?)?(\.\d{0,2})?$/;
-   let enteredValue = event?.target?.value + event.key;
-   if (event.key === "Backspace" || event.key === "Delete" || event.key.includes("Arrow")) return;   
-   if (!intermediateAllowedCharacters.test(enteredValue)) event.preventDefault(); 
+  experienceValidation(event: any): void {
+    const intermediateAllowedCharacters = /^-?(\d{0,1}\d?)?(\.\d{0,2})?$/;
+    let enteredValue = event?.target?.value + event.key;
+    if (event.key === "Backspace" || event.key === "Delete" || event.key.includes("Arrow")) return;
+    if (!intermediateAllowedCharacters.test(enteredValue)) event.preventDefault();
   }
 
   dateChange(event: any): void {
@@ -237,9 +238,6 @@ export class AddCandidateModalComponent implements OnInit {
       }
     });
   }
-
-
-
 
   submitClick(): void {
     this.checkValidation();
@@ -326,9 +324,14 @@ export class AddCandidateModalComponent implements OnInit {
     const selectedSkill = { id: suggestion.id, name: suggestion.skillName };
     if (this.selectedSkillType === 'Primary Skills') this.selectedPrimarySkills.push(selectedSkill);
     else if (this.selectedSkillType === 'Secondary Skills') this.selectedSecondarySkills.push(selectedSkill);
-
     this.showSearchBar = false;
     this.skillSuggestions = [];
   }
 
+  addExtraSkills(): void {
+    let skill = document.getElementById('addskill') as HTMLInputElement;
+    let skillValue = skill.value;
+    const extraSkill = { skillName: skillValue, id: 200 }
+    this.selectSkill(extraSkill);
+  }
 }
