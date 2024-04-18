@@ -27,7 +27,7 @@ export class SeriesComponent implements OnInit {
   candidateServiceId: any;
   error: boolean = false;
   moreApiCalled: boolean = false;
-  limit: number = 9;
+  limit: number = 12;
   page: number = 1;
   showDropdown: boolean = false;
   constructor(private apiService: ApiService, private http: HttpClient, private router: Router, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private renderer: Renderer2) {
@@ -74,28 +74,6 @@ export class SeriesComponent implements OnInit {
     }
   }
 
-  // approve(): void {
-  //   const headers = new HttpHeaders({
-  //     'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50',
-  //   });
-  //   const requestData = {
-  //     serviceIds: this.selectedCandidatesIds.length > 0 ? this.selectedCandidatesIds : this.serviceIds,
-  //     requestId: this.requestId
-  //   }
-  //   this.http.post(`${environment.api_url}/screening-station/accept`, requestData, { headers }).subscribe({
-  //     next: (res: any) => {
-  //       this.tostr.success('Approved');
-  //     },
-  //     error: (error) => {
-  //       if (error?.status === 500) this.tostr.error("Internal Server Error");
-  //       else {
-  //         this.tostr.warning(error?.error?.message ? error?.error?.message : "Unable to fetch details");
-  //         this.error = true;
-  //       }
-  //     }
-  //   })
-  // }
-
   toggleTaskDetails() {
     this.isTaskDetailsOpen = !this.isTaskDetailsOpen;
   }
@@ -110,7 +88,7 @@ export class SeriesComponent implements OnInit {
     }
   }
 
-  onCandidateSelectionChange( candidate: any): void {
+  onCandidateSelectionChange(candidate: any): void {
     this.candidateServiceId = candidate?.serviceId;
     const userId = localStorage.getItem('userId');
     const dialogRef = this.dialog.open(FeedbackComponent, {
@@ -118,7 +96,7 @@ export class SeriesComponent implements OnInit {
       width: '600px',
       height: '300px'
     })
-  
+
     dialogRef.afterClosed().subscribe(() => {
       this.fetchcandidates();
     });

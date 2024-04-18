@@ -184,8 +184,8 @@
                         <!-- <span class="add-btn c-pointer" (click)="$event.preventDefault();">Add</span> -->
                     </div>
                     <div class="d-flex"> 
-                    <div class="searchbar m-t-10 c-pointer p-t-10 no-close '" >
-                        <input type="search" class="input-search" placeholder="Type to search skills..."
+                    <div class="searchbar m-t-10 c-pointer p-t-10 no-close '"  *ngIf="selectedSkillType">
+                        <input type="search" class="input-search p-l-6" placeholder="Type to search skills..."
                             (input)="getSkillSuggestions($event)" id="addskill">
                         <div  class="m-l-23 m-t-8 drop-list">
                             <div *ngFor="let suggestion of skillSuggestions" (click)="selectSkill(suggestion)">
@@ -195,7 +195,7 @@
                             </div>
                         </div>
                     </div>
-                    <span class="add-btn c-pointer" (click)="$event.preventDefault();addExtraSkills()">Add</span>
+                    <span  *ngIf="selectedSkillType" class="add-btn c-pointer" (click)="$event.preventDefault();addExtraSkills()" >Add</span>
                 </div>
                 </div>
                 <div class="child-skill d-flex m-b-10">

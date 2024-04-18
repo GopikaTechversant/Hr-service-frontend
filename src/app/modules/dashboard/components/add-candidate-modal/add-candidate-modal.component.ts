@@ -331,7 +331,9 @@ export class AddCandidateModalComponent implements OnInit {
   addExtraSkills(): void {
     let skill = document.getElementById('addskill') as HTMLInputElement;
     let skillValue = skill.value;
-    const extraSkill = { skillName: skillValue, id: 200 }
-    this.selectSkill(extraSkill);
+    this.apiService.post(`/candidate/add/skill?skillName=${skillValue}`, skillValue).subscribe((res: any) => {
+      const extraSkill = res?.data;
+      this.selectSkill(extraSkill);
+    })
   }
 }

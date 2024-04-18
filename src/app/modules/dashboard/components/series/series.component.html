@@ -1,9 +1,9 @@
-<div class="main m-4">
-    <div class="d-flex j-space">
+<div class="main m-4" #scrollTop>
+    <div class="d-flex j-space title-candidate">
         <span class="title">Candidates</span>
     </div>
-    <div class="cards d-flex  m-t-10" #scrollTop>
-        <div class="contents d-flex m-l-4 " *ngFor="let candidate of candidates_list">
+    <div class="cards d-flex  m-t-30" >
+        <div class="contents m-l-4 " *ngFor="let candidate of candidates_list">
             <div class="d-flex j-space heading p-7">
                 <span class="name p-t-4 p-l-3">{{candidate?.candidateFirstName}} {{candidate?.candidateLastName}}</span>
                 <span *ngIf="candidate?.serviceStatus && candidate?.serviceStatus !== 'pending'" class="name done p-t-2">
