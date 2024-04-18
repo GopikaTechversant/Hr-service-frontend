@@ -67,11 +67,12 @@
 }
 
 .table-container {
-    overflow-x: auto;
+    overflow: auto !important;
     width: 100%;
     max-width: 100%;
     margin-bottom: 10px;
     min-height: calc(100vh - 410px);
+    max-height: calc(100vh - 410px);
 }
 
 .table {
@@ -98,7 +99,7 @@ tr {
     text-align: center;
 }
 
-.text-wrap{
+.text-wrap {
     max-width: 150px !important;
     overflow: hidden;
     text-overflow: ellipsis;

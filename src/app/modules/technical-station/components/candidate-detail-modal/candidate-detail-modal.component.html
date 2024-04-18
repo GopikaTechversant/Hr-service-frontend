@@ -86,33 +86,39 @@
     <div class="d-flex p-10">
         <div class="sub-head f-w-500 f-s-14 d-flex">
             <span class="p-10">Skill</span>
-            <span class="p-10">Score</span>
-            <span class="p-10">Description</span>
-            <span class="p-10">Attachment</span>
+            <span class="p-10 p-t-12">Score</span>
+            <span class="p-10 p-t-12">Description</span>
+            <span class="p-10 p-t-15">Attachment</span>
         </div>
         <div class="sub-head d-flex" *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done'">
             <span class="p-5">
-                <input *ngIf="!candidateDetails['progress.progressSkills']" type="text" id="skill">
+                <input class="input" *ngIf="!candidateDetails['progress.progressSkills']" type="text" id="skill">
             </span>
             <span class="p-5">
-                <input *ngIf="!candidateDetails['progress.progressScore']" type="text" id="score">
+                <input class="input" *ngIf="!candidateDetails['progress.progressScore']" type="text" id="score">
             </span>
             <span class="p-5">
-                <input *ngIf="!candidateDetails['progress.progressDescription']" type="text" id="description">
+                <input class="input" *ngIf="!candidateDetails['progress.progressDescription']" type="text" id="description">
             </span>
-            <span class="p-5">
-                <input type="file" id="description">
+            <span class="c-pointer input m-l-5 p-r-5 p-b-5" title="Attach File" (click)="fileInput.click()" > 
+                <img class="p-5" src="/assets/images/paperclip.svg" alt="" height="20" width="20">
+                <input type="file" id="fileInput" #fileInput style="display: none;" (change)="onFileSelected($event)">
+                <span class="m-b-10" *ngIf="file?.name">{{file?.name}}</span>
             </span>
         </div>
         <div class="sub-head d-flex" *ngIf="data?.progressStatus > 0">
-            <span class="p-10" *ngIf="candidateDetails['progress.progressSkills']">
-                : {{candidateDetails['progress.progressSkills']}}
+            <span class="p-10">
+                : {{candidateDetails['progress.progressSkills'] ? candidateDetails['progress.progressSkills'] : 'NIL'}}
             </span>
-            <span class="p-10" *ngIf="candidateDetails['progress.progressScore']">
-                : {{candidateDetails['progress.progressScore']}}
+            <span class="p-10 p-t-12">
+                : {{candidateDetails['progress.progressScore'] ? candidateDetails['progress.progressScore'] : 'NIL'}}
             </span>
-            <span class="p-10" *ngIf="candidateDetails['progress.progressDescription']">
-                : {{candidateDetails['progress.progressDescription']}}
+            <span class="p-10">
+                : {{candidateDetails['progress.progressDescription'] ? candidateDetails['progress.progressDescription'] : 'Nil'}}
+            </span>
+            <span class="p-10 p-t-15 c-pointer" >
+                : <i class="fa fa-file-text-o p-l-5 blue" aria-hidden="true" title="View Attachment" (click)="viewResume(candidateDetails['candidate.candidateResume'])"></i>      
+
             </span>
         </div>
 

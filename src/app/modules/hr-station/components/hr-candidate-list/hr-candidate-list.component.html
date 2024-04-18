@@ -14,7 +14,7 @@
             </span> 
             <span class="c-pointer" (click)="requestList_open = !requestList_open">{{displayPosition.trim() === ''  ? 'Filter by Requirement' : displayPosition}}</span>
             <div class="no-close dropdown c-pointer no-close" *ngIf="requestList_open">
-                <div  (click)='selectPosition(name?.requestName,name?.requestId); !requestList_open'*ngFor="let name of requestList" class="p-5">
+                <div  (click)='selectPosition(name?.requestName,name?.requestId); !requestList_open'*ngFor="let name of requestList" class="p-10">
                     {{name?.requestName}}
                 </div>               
             </div>

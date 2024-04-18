@@ -18,6 +18,7 @@ export class RequisitionDetailsComponent implements OnInit {
   candidateList: any;
   totalCount: any;
   lastPage: any;
+  department: any;
 
   constructor(private apiService: ApiService, private datePipe: DatePipe, private tostr: ToastrService, private router: Router, private route: ActivatedRoute) { }
 
@@ -34,6 +35,7 @@ export class RequisitionDetailsComponent implements OnInit {
       if (res?.data) {
         this.lists = res?.data;
         this.requestName = this.lists[0]?.position;
+        this.department = this.lists[0]?.team;
       }
     })
   }

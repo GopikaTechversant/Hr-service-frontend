@@ -37,6 +37,7 @@ export class HrCandidateListComponent implements OnInit {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
       this.filterStatus = false;
+      this.requestList_open = false;
     }
   }
 

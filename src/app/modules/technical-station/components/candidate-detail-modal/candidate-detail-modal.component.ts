@@ -28,6 +28,7 @@ export class CandidateDetailModalComponent implements OnInit {
   feedback: any;
   userId: any;
   resumePath: any;
+  file: File | null = null;
 
   constructor(public dialogRef: MatDialogRef<CandidateDetailModalComponent>, private apiService: ApiService, private tostr: ToastrServices,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -48,6 +49,16 @@ export class CandidateDetailModalComponent implements OnInit {
   closeDialog(): void {
     this.dialogRef.close();
   }
+
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+        this.file = file;
+        console.log('File selected:', file?.name);
+        // Handle file processing here
+    }
+}
+
 
   addProgress(): void {
     const skillElement = document.getElementById('skill') as HTMLInputElement;

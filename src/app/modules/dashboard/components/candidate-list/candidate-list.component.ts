@@ -12,15 +12,12 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CandidateListComponent {
   @Input() positionId: any
-  length: any = 20;
   pageSize = 10;
   pageIndex = 1;
   pageSizeOptions = [10, 25, 30];
   showFirstLastButtons = true;
   candidateList: any;
   searchKeyword: string = '';
-  currentPag: number = 1;
-  currentLimit: number = 7;
   totalCount: any;
   data: any;
   candidateId: any;
@@ -93,11 +90,6 @@ export class CandidateListComponent {
 
   isActive(route: string): boolean {
     return this.router.isActive(route, false);
-  }
-
-  pageChange(event: any): void {
-    let skip = parseInt(event, 10);
-    this.currentPag = skip;
   }
 
   delete(id: any): void {

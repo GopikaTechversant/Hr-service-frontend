@@ -48,8 +48,9 @@ tr {
 
 .table-container {
     max-height: calc(100vh - 420px);
-    overflow-y: auto;
-    overflow-x: hidden;
+    min-height: calc(100vh - 420px);
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
 }
 
 .blue {

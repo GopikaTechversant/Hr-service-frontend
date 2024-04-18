@@ -115,9 +115,10 @@ tr {
 }
 
 .table-container {
-    overflow-y: auto;
+    overflow-y: auto !important;
     overflow-x: hidden;
     min-height: calc(100vh - 420px);
+    max-height: calc(100vh - 420px);
 }
 
 .table-header {

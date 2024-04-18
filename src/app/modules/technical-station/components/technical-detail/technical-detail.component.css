@@ -96,8 +96,8 @@ table {
 }
 
 .table-container {
-    overflow: auto;
-    min-height: calc(100vh - 240px);
+    overflow: auto !important;
+    height: calc(100vh - 265px);
 }
 
 tr:nth-child(odd) {
@@ -146,11 +146,6 @@ tr {
     line-height: 18px;
     letter-spacing: 0em;
     text-align: center;
-}
-
-.table-view {
-    height: calc(100vh - 200px);
-    overflow: auto;
 }
 
 .btn {

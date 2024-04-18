@@ -112,8 +112,8 @@ table {
 }
 
 .table-container {
-    overflow: auto;
-    min-height: calc(100vh - 240px);
+    overflow: auto !important;
+    height: calc(100vh - 265px);
 }
 
 tr:nth-child(odd) {

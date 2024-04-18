@@ -7,6 +7,10 @@
     font-weight: 500;
 }
 
+.blue {
+    color: #005EC9;
+}
+
 .candidate-card {
     width: 340px;
     height: 139px;
@@ -59,8 +63,8 @@ table {
 }
 
 .table-container {
-    overflow-y: auto !important;
-    max-height: calc(100vh - 445px);
+    overflow-y: auto !important; 
+    height: calc(100vh - 512px); 
 }
 
 tr:nth-child(odd) {

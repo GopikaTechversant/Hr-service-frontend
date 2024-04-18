@@ -33,9 +33,11 @@
             </tr>
             <ng-container *ngIf="candidateList?.length > 0">
                 <tr class="c-pointer details" *ngFor="let item of candidateList">
-                    <td>{{item?.candidateFirstName | titlecase}} {{item?.candidateLastName | titlecase}}</td>
-                    <td>{{item?.candidateEmail}}</td>
-                    <td>{{item?.candidateMobileNo}}</td>
+                    <td class="text-wrap" [title]="(item?.candidateFirstName | titlecase) + (item?.candidateLastName | titlecase)">
+                        {{item?.candidateFirstName | titlecase}} {{item?.candidateLastName | titlecase}}
+                    </td>
+                    <td class="text-wrap" [title]="item?.candidateEmail">{{item?.candidateEmail}}</td>
+                    <td class="text-wrap" [title]="item?.candidateMobileNo">{{item?.candidateMobileNo}}</td>
                     <td class="text-wrap" [title]="item?.candidatePreviousOrg">{{item?.candidatePreviousOrg}}</td>
                     <td class="text-wrap" [title]="item?.candidatePreviousDesignation">{{item?.candidatePreviousDesignation}}</td>
                     <td class="text-wrap" [title]="item?.candidateExperience">{{item?.candidateExperience}} years</td>

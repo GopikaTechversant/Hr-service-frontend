@@ -135,7 +135,7 @@ table {
 
 .table-container {
     height: calc(100vh - 400px);
-    overflow-y: auto;
+    overflow-y: auto !important;
     overflow-x: hidden;
 }
 

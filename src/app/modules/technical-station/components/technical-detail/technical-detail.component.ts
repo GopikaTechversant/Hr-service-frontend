@@ -42,6 +42,7 @@ export class TechnicalDetailComponent implements OnInit {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
       this.filterStatus = false;
+      this.requestList_open = false;
     }
   }
 
@@ -60,6 +61,7 @@ export class TechnicalDetailComponent implements OnInit {
         this.displayPosition = '';
         this.positionId = '';
       }
+      this.searchKeyword = '';
       this.currentPage = 1;
       this.limit = 10;
       this.candidateList = [];

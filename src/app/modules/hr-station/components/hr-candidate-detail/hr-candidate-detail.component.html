@@ -90,13 +90,13 @@
         </div>
     </div>
     <div *ngIf="hrReview && data?.offerStatus > 0" class="p-10">
-        <div class="p-10" *ngIf="hrReview?.reviewedSalary">
+        <div class="p-10" *ngIf="hrReview">
             <span class="f-w-500">Offer Salary : </span> {{hrReview?.reviewedSalary}}
         </div>
-        <div class="p-10" *ngIf="hrReview?.reviewedJoiningDate">
+        <div class="p-10" *ngIf="hrReview">
             <span class="f-w-500">Joining Date : </span>{{hrReview?.reviewedJoiningDate | date: 'dd/MM/YYY'}}
         </div>
-        <div class="p-10" *ngIf="hrReview?.reviewedDescription">
+        <div class="p-10" *ngIf="hrReview">
             <span class="f-w-500">Description : </span>{{hrReview?.reviewedDescription}}
         </div>
     </div>
