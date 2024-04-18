@@ -31,15 +31,11 @@ export class CandidateDetailModalComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<CandidateDetailModalComponent>, private apiService: ApiService, private tostr: ToastrServices,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-    if (data) {
-      console.log(data);
-      
+    if (data) {      
       this.candidateDetails = data?.candidateDetails;
       this.stationId = data?.stationId;
       this.serviceId = this.candidateDetails?.serviceId;
-      if (data?.progressStatus > 0) this.progessAdded = true;
-      console.log(this.progessAdded);
-      
+      if (data?.progressStatus > 0) this.progessAdded = true;      
     }
     this.dialogRef.updateSize('60vw', '90vh');
   }

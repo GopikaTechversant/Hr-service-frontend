@@ -3,7 +3,7 @@
         <div class="title-left p-l-12"><span>Requirement List</span></div>
         <div class="d-flex  title-right">
             <span class="m-r-15">
-                <input type="text" class="input p-l-5" placeholder="Search Requirement" 
+                <input type="text" class="input p-l-5" placeholder="Search Requirement"
                     (keydown.enter)="candidateSearch(searchKeyword)" autocomplete="off" [(ngModel)]="searchKeyword">
                 <span class="search" (click)="candidateSearch(searchKeyword)">
                     <i class="fa fa-search" aria-hidden="true"></i>
@@ -54,8 +54,7 @@
     <ng-container *ngFor="let page of generatePageNumbers()">
         <button *ngIf="page === '...'" class="box dot" disabled>...</button>
         <button *ngIf="page !== '...' && page === currentPage" class="box current-page c-pointer">{{ page }}</button>
-        <button *ngIf="page !== '...' && page !== currentPage" class="box c-pointer" (click)="onPageChange(page)">
-        {{page}}</button>
+        <button *ngIf="page !== '...' && page !== currentPage" class="box c-pointer" (click)="onPageChange(page)">{{page}}</button>
     </ng-container> <button *ngIf="currentPage < lastPage" class="box c-pointer" (click)="onPageChange(lastPage)">
         <img src="assets/images/double-arrow-right-icon.svg" alt="" height="14px" width="14px">
     </button>
