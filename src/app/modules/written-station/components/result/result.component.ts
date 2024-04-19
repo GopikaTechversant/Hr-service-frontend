@@ -14,6 +14,9 @@ export class ResultComponent {
   examServiceId;
   scoreValue: string = '';
   descriptionValue: string = '';
+  fileInputClicked: boolean = false;
+  selectedFile: any;
+  resumeUploadSuccess: boolean = false;
   constructor(private http: HttpClient,
     @Inject(MAT_DIALOG_DATA) public data: any,private apiService:ApiService,private tostr:ToastrServices,
     private dialogRef: MatDialogRef<ResultComponent>) {if (data){
@@ -49,6 +52,17 @@ export class ResultComponent {
   
   cancelClick(): void {
     this.dialogRef.close(false);
+  }
+
+  triggerFileInput(): void {
+    const fileInput = document.querySelector('input[type="file"]') as HTMLElement;
+    fileInput.click();
+  }
+
+  onFileSelected(event: any) {
+    this.fileInputClicked = true;
+    this.selectedFile = event.target.files[0];
+    if (event.target.files.length > 0) this.resumeUploadSuccess = true;
   }
 }
 
