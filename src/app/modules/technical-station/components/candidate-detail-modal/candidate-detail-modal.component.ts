@@ -32,18 +32,17 @@ export class CandidateDetailModalComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<CandidateDetailModalComponent>, private apiService: ApiService, private tostr: ToastrServices,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-    if (data) {      
+    if (data) {
       this.candidateDetails = data?.candidateDetails;
       this.stationId = data?.stationId;
       this.serviceId = this.candidateDetails?.serviceId;
-      if (data?.progressStatus > 0) this.progessAdded = true;      
+      if (data?.progressStatus > 0) this.progessAdded = true;
     }
     this.dialogRef.updateSize('60vw', '90vh');
   }
 
   ngOnInit(): void {
     this.userId = localStorage.getItem('userId');
-
   }
 
   closeDialog(): void {
@@ -52,24 +51,20 @@ export class CandidateDetailModalComponent implements OnInit {
 
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
-    if (file) {
-        this.file = file;
-        console.log('File selected:', file?.name);
-        // Handle file processing here
-    }
-}
+    if (file) this.file = file;
+  }
 
 
   addProgress(): void {
     const skillElement = document.getElementById('skill') as HTMLInputElement;
-    this.skillValue = skillElement ? skillElement.value : '';
+    this.skillValue = skillElement ? skillElement?.value : '';
     const scoreElement = document.getElementById('score') as HTMLInputElement;
-    this.scoreValue = scoreElement ? scoreElement.value : '';
+    this.scoreValue = scoreElement ? scoreElement?.value : '';
     const descriptionElement = document.getElementById('description') as HTMLInputElement;
-    this.descriptionValue = descriptionElement ? descriptionElement.value : '';
+    this.descriptionValue = descriptionElement ? descriptionElement?.value : '';
 
     this.progressQuery = {
-      progressAssignee: this.progressAssignee ? this.progressAssignee :  this.userId,
+      progressAssignee: this.progressAssignee ? this.progressAssignee : this.userId,
       progressSkill: this.skillValue,
       progressServiceId: this.serviceId || 0,
       progressScore: this.scoreValue,
@@ -100,7 +95,7 @@ export class CandidateDetailModalComponent implements OnInit {
         stationId: this.stationId,
         userId: this.userId,
         status: "rejected",
-        feedBack: this.feedback, 
+        feedBack: this.feedback,
       }
       this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
         next: (res: any) => {
@@ -138,10 +133,9 @@ export class CandidateDetailModalComponent implements OnInit {
           },
           error: (error) => this.tostr.error('Error during approval')
         });
-      }else this.tostr.warning('Please Add Feedback');   
-    } 
+      } else this.tostr.warning('Please Add Feedback');
+    }
     else this.tostr.error('Invalid operation');
   }
-
 
 }

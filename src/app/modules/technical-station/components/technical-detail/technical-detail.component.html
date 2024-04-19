@@ -1,11 +1,11 @@
 <div class="m-10">
-    <div class="d-flex j-space p-l-5 m-b-20">
-        <span class="f-s-20 f-w-500 p-t-5">Technical Round {{stationId === '3' ? '1' : '2'}}</span>
-        <span class="input p-5">
-            <input type="text" class="p-l-5" placeholder="Search Candidates" [(ngModel)]="searchKeyword" (keydown)="searchCandidate(searchKeyword)">
+    <span class="f-s-20 f-w-500 p-t-5">Technical Round {{stationId === '3' ? '1' : '2'}}</span>
+    <div class="d-flex j-end p-l-5 m-b-20">
+        <span class="input p-5 m-l-10 m-r-10">
+            <input type="text" class="p-l-5" placeholder="Search Candidates from List" [(ngModel)]="searchKeyword" (keydown)="searchCandidate(searchKeyword)">
             <span *ngIf="searchKeyword.trim() !== ''" (click)="clearFilter('search')" class="clear-search c-pointer m-l-10">x</span> 
         </span> 
-        <div class="input p-t-10 p-l-6  no-close p-relative"> 
+        <div class="input p-t-10 p-l-6  no-close p-relative m-r-10"> 
             <span class="f-right d-flex">
                 <span *ngIf="displayPosition && displayPosition !== ''" (click)="clearFilter('position')" class="clear-filter c-pointer">x</span>     
                 <div  (click)="requestList_open = !requestList_open" class="c-pointer">
@@ -14,7 +14,7 @@
             </span> 
             <span class="c-pointer" (click)="requestList_open = !requestList_open">{{displayPosition.trim() === ''  ? 'Filter by Requirement' : displayPosition}}</span>
             <div class="no-close dropdown c-pointer no-close" *ngIf="requestList_open">
-                <div  (click)='selectPosition(name?.requestName,name?.requestId); !requestList_open'*ngFor="let name of requestList" class="p-10">
+                <div (click)='selectPosition(name?.requestName,name?.requestId); !requestList_open' *ngFor="let name of requestList" class="p-10">
                     {{name?.requestName}}
                 </div>               
             </div>
@@ -22,8 +22,8 @@
         <div class="input-1 c-pointer p-t-10 no-close p-relative">
             <span class="no-close p-l-10" (click)="filterStatus = !filterStatus">{{filteredStatus.trim() === '' ? 'Filter by Status' : filteredStatus | titlecase}}</span>
             <span class="f-right">
-                <span *ngIf="filteredStatus && filteredStatus !== ' '" (click)="clearFilter('status')" class="clear-filter">x</span>
-                <span  (click)="filterStatus = !filterStatus"><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
+                <span *ngIf="filteredStatus && filteredStatus.trim() !== ''" (click)="clearFilter('status')" class="clear-filter">x</span>
+                <span (click)="filterStatus = !filterStatus"><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
             </span>    
             <div class="dropdown c-pointer no-close'" *ngIf="filterStatus" >
                 <span class="d-flex p-0" *ngFor="let type of Status" (click)="selectStatusFilter(type?.status);filterStatus = !filterStatus">
@@ -41,6 +41,7 @@
                     <td>Email</td>
                     <td>Requirement</td>
                     <td>Progress Status</td>
+                    <td>Switch Rounds</td>
                     <td>Service Status</td>
                     <td>Current Station</td>
                     <td>More Detail</td>
@@ -53,13 +54,33 @@
                         <ng-container  *ngFor="let item of innerArray">
                             <tr class="candidate c-pointer">
                                 <td>{{ item['candidate.candidateId'] }}</td>
-                                <td>{{ item['candidate.candidateFirstName'] }} {{ item['candidate.candidateLastName'] }}</td>
-                                <td>{{ item['candidate.candidateEmail'] }}</td>
-                                <td>{{ item['serviceRequest.requestName'] }}</td>
-                                <td>{{item?.progressStatus > 0 ? 'Progress Added' : 'Pending'}}</td>
+                                <td class="text-wrap" [title]="item['candidate.candidateFirstName'] + item['candidate.candidateLastName']">
+                                    {{ item['candidate.candidateFirstName'] }} {{ item['candidate.candidateLastName'] }}
+                                </td>
+                                <td class="text-wrap" [title]="item['candidate.candidateEmail'] ">{{ item['candidate.candidateEmail'] }}</td>
+                                <td class="text-wrap" [title]="item['serviceRequest.requestName']">{{ item['serviceRequest.requestName'] }}</td>
+                                <td class="text-wrap f-w-500" [title]="item?.progressStatus > 0 ? 'Progress Added' : 'Pending'"
+                                    [ngClass]="item?.progressStatus > 0  ? 'green' : 'blue'">
+                                    {{item?.progressStatus > 0 ? 'Progress Added' : 'Pending'}}
+                                </td>
+                                <td> Switch stations
+                                    <!-- <div>
+                                        <span class="no-close p-l-10" (click)="switchStations = !switchStations">{{filteredStatus.trim() === '' ? 'Switch Stations' : filteredStatus | titlecase}}</span>
+                                        <span class="f-right">
+                                            <span (click)="switchStations = !switchStations"><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
+                                        </span>    
+                                        <div class="dropdown c-pointer no-close'" *ngIf="switchStations">
+                                            <span class="d-flex p-0" *ngFor="let station of stationsList" (click)="switchStations = !switchStations">
+                                               <span class="p-l-10 p-5">{{station?.stationName | titlecase}}</span> 
+                                            </span>
+                                        </div>
+                                    </div>             -->
+                                </td>
                                 <td class="f-w-500" [ngClass]="{'blue': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
-                                    'red': item?.serviceStatus === 'rejected'}">{{ item?.serviceStatus | titlecase}}</td>
-                                    <td>{{item?.currentStation | titlecase}}</td>                    
+                                    'red': item?.serviceStatus === 'rejected'}" [title]="item?.serviceStatus | titlecase">
+                                    {{ item?.serviceStatus | titlecase}}
+                                </td>
+                                <td class="text-wrap" [title]="item?.currentStation | titlecase">{{item?.currentStation | titlecase}}</td>                    
                                 <td><button class="btn" (click)="fetchDetails(item?.serviceId , item?.progressStatus)">View detail</button></td>
                             </tr>
                         </ng-container>
@@ -88,5 +109,6 @@
             <button *ngIf="currentPage === lastPage" class="box">
                 <img src="assets/images/inactive-double-arrow-right.svg" alt="" height="23px" width="23px">
             </button>
-        </div>      
+        </div>  
+    </div>    
 </div>

@@ -36,7 +36,9 @@ export class TechnicalDetailComponent implements OnInit {
   requestList_open: any;
   displayPosition: string = '';
   positionId: any;
-
+  stationsList: any;
+  switchStations: Boolean = false;;
+ 
   constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -76,6 +78,12 @@ export class TechnicalDetailComponent implements OnInit {
         this.requestList = res?.data;
       }
     })
+  }
+
+  fetchStations(): void {
+    this.apiService.get(`/user/stations`).subscribe((res: any) => {
+      this.stationsList = res?.data;
+    });
   }
 
   fetchList(): void {
@@ -176,8 +184,6 @@ export class TechnicalDetailComponent implements OnInit {
   viewCandidateDetail(item: any, status: any): void {
     const dialogRef = this.dialog.open(CandidateDetailModalComponent, {
       data: { candidateId: item['candidate.candidateId'], stationId: this.stationId, candidateDetails: item, progressStatus: status },
-      width: '600px',
-      height: '300px'
     })
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       this.candidateList = [];
