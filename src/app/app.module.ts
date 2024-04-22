@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './modules/material/material.module';
 import { LogoutModalComponent } from './components/logout-modal/logout-modal.component';
 import { ResubmissionModalComponent } from './components/resubmission-modal/resubmission-modal.component';
+import { StationSwitchComponent } from './components/station-switch/station-switch.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ResubmissionModalComponent } from './components/resubmission-modal/resu
     EditComponent,
     LogoutModalComponent,
     ResubmissionModalComponent,
+    StationSwitchComponent,
   ],
   imports: [
     BrowserModule,

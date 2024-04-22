@@ -1,0 +1,57 @@
+<div class="modal-header heading p-10 p-t-20 d-flex j-space">
+    <div>
+        <span> {{candidateDetails?.name | titlecase}} - </span>
+        <span class="blue"> 112 </span>
+    </div>
+    <div class="modal-close">
+        <span class="p-10" [ngClass]="{'blue': candidateDetails?.serviceStatus === 'pending','green': candidateDetails?.serviceStatus === 'done',
+            'red': candidateDetails?.serviceStatus === 'rejected'}">
+            {{candidateDetails?.serviceStatus | titlecase}}
+        </span>
+        <button class="c-pointer" (click)="closeDialog()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+<div class="modal-content">
+    <div class="d-flex p-10">
+        <div class="sub-head f-w-500 f-s-14 d-flex">
+            <span class="p-8">Skills</span>
+            <span class="p-8">Experience</span>
+            <span class="p-8">Current Station</span>
+            <span class="p-8">Move Candidate to</span>
+        </div>
+        <div class="sub-head d-flex">
+            <span class="p-8"> : Python</span>
+            <span class="p-8"> : 3</span>
+            <span class="p-8"> : {{candidateDetails?.currentStation ? candidateDetails?.currentStation : 'NIL'}}</span>
+            <span class="p-8 p-relative"> :
+                <span class="input c-pointer p-5 no-close p-relative">
+                    <span class="no-close p-l-10" (click)="showStations = !showStations">{{SelectedStation.trim() === ''
+                        ? 'Select Station' : SelectedStation | titlecase}}</span>
+                    <!-- <span class="f-right"> -->
+                    <span (click)="showStations = !showStations"><i
+                            class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
+                    <!-- </span>     -->
+                    <div class="dropdown c-pointer no-close'" *ngIf="showStations">
+                        <span class="d-flex p-0" *ngFor="let item of stationsList"
+                            (click)="selectStation(item?.stationName , item?.stationId);showStations = !showStations">
+                            <span class="p-l-10 p-5">{{item?.stationName | titlecase}}</span>
+                        </span>
+                    </div>
+                </span>
+            </span>
+        </div>
+    </div>
+</div>
+<div class="heading p-10">
+    <span>Comments</span>
+</div>
+<div class="m-10">
+    <textarea class="text-area" id="feedback" cols="30" rows="10" placeholder=""></textarea>
+    <div class="btn-parent">
+        <button class="c-pointer btn-reject">Cancel</button>
+        <button class="btn c-pointer">Submit</button>
+    </div>
+</div>
+

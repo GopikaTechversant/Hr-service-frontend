@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { HrCandidateDetailComponent } from '../hr-candidate-detail/hr-candidate-detail.component';
 import { ApiService } from 'src/app/services/api.service';
+import { StationSwitchComponent } from 'src/app/components/station-switch/station-switch.component';
 
 @Component({
   selector: 'app-hr-candidate-list',
@@ -161,5 +162,17 @@ export class HrCandidateListComponent implements OnInit {
     this.fetchList();
   }
 
+  onSwitchStation(candidate: any): void {
+    const userId = localStorage.getItem('userId');
+    const dialogRef = this.dialog.open(StationSwitchComponent, {
+      data: {userId: userId , name : candidate['candidate.candidateFirstName'] + ' '+  candidate['candidate.candidateLastName'], currentStation : 'HR Manager'
+      },
+      width: '700px',
+      height: '500px'
+    })
 
+    dialogRef.afterClosed().subscribe(() => {
+      this.fetchList();
+    });
+  }
 }

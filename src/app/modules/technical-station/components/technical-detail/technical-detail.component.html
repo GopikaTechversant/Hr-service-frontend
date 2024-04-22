@@ -40,10 +40,10 @@
                     <td>Name</td>
                     <td>Email</td>
                     <td>Requirement</td>
-                    <td>Progress Status</td>
-                    <td>Switch Rounds</td>
-                    <td>Service Status</td>
                     <td>Current Station</td>
+                    <td>Progress Status</td>
+                    <td>Move Candidates</td>
+                    <td>Service Status</td>
                     <td>More Detail</td>
                 </tr>
                 <div *ngIf="loader" class="loader-parent">
@@ -59,29 +59,19 @@
                                 </td>
                                 <td class="text-wrap" [title]="item['candidate.candidateEmail'] ">{{ item['candidate.candidateEmail'] }}</td>
                                 <td class="text-wrap" [title]="item['serviceRequest.requestName']">{{ item['serviceRequest.requestName'] }}</td>
+                                <td class="text-wrap" [title]="item?.currentStation | titlecase">{{item?.currentStation | titlecase}}</td>                    
+
                                 <td class="text-wrap f-w-500" [title]="item?.progressStatus > 0 ? 'Progress Added' : 'Pending'"
                                     [ngClass]="item?.progressStatus > 0  ? 'green' : 'blue'">
                                     {{item?.progressStatus > 0 ? 'Progress Added' : 'Pending'}}
                                 </td>
-                                <td> Switch stations
-                                    <!-- <div>
-                                        <span class="no-close p-l-10" (click)="switchStations = !switchStations">{{filteredStatus.trim() === '' ? 'Switch Stations' : filteredStatus | titlecase}}</span>
-                                        <span class="f-right">
-                                            <span (click)="switchStations = !switchStations"><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
-                                        </span>    
-                                        <div class="dropdown c-pointer no-close'" *ngIf="switchStations">
-                                            <span class="d-flex p-0" *ngFor="let station of stationsList" (click)="switchStations = !switchStations">
-                                               <span class="p-l-10 p-5">{{station?.stationName | titlecase}}</span> 
-                                            </span>
-                                        </div>
-                                    </div>             -->
+                                <td> <button class="btn" (click)="onSwitchStation(item)">Switch Station</button>  
                                 </td>
                                 <td class="f-w-500" [ngClass]="{'blue': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
                                     'red': item?.serviceStatus === 'rejected'}" [title]="item?.serviceStatus | titlecase">
                                     {{ item?.serviceStatus | titlecase}}
                                 </td>
-                                <td class="text-wrap" [title]="item?.currentStation | titlecase">{{item?.currentStation | titlecase}}</td>                    
-                                <td><button class="btn" (click)="fetchDetails(item?.serviceId , item?.progressStatus)">View detail</button></td>
+                                <td ><button class="btn" (click)="fetchDetails(item?.serviceId , item?.progressStatus)">View detail</button></td>
                             </tr>
                         </ng-container>
                     </ng-container>

@@ -41,6 +41,7 @@
                     <td>Email</td>
                     <td>Requirement</td>
                     <td>Offer Status</td>
+                    <td>Move Candidate</td>
                     <td>Service Status</td>
                     <td>More Details</td>
                 </tr>
@@ -58,6 +59,7 @@
                           <td class="text-wrap" [title]="item['candidate.candidateEmail']">{{ item['candidate.candidateEmail'] }}</td>
                           <td class="text-wrap" [title]="item['serviceRequest.requestName']">{{ item['serviceRequest.requestName'] }}</td>
                           <td class="text-wrap" [title]="item?.progressStatus > 0 ? 'Offer Released' : 'Pending'">{{item?.progressStatus > 0 ? 'Offer Released' : 'Pending'}}</td>
+                          <td> <button class="btn" (click)="onSwitchStation(item)">Switch Station</button>  
                           <td class="f-w-500 text-wrap" [ngClass]="{'blue': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
                           'red': item?.serviceStatus === 'rejected'}">{{ item?.serviceStatus === 'done' ? 'Offer Accepted' : item?.serviceStatus | titlecase}}</td>
                           <td><button class="btn" (click)="fetchDetails(item?.serviceId , item?.progressStatus)">View detail</button></td>

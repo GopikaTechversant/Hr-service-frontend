@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CandidateDetailModalComponent } from '../candidate-detail-modal/candidate-detail-modal.component';
 import { ApiService } from 'src/app/services/api.service';
+import { StationSwitchComponent } from 'src/app/components/station-switch/station-switch.component';
 
 @Component({
   selector: 'app-technical-detail',
@@ -194,6 +195,20 @@ export class TechnicalDetailComponent implements OnInit {
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);
     this.fetchList();
+  }
+
+  onSwitchStation(candidate: any): void {
+    const userId = localStorage.getItem('userId');
+    const dialogRef = this.dialog.open(StationSwitchComponent, {
+      data: {userId: userId , name : candidate['candidate.candidateFirstName'] + ' '+  candidate['candidate.candidateLastName'], currentStation : candidate?.currentStation
+      },
+      width: '700px',
+      height: '500px'
+    })
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.fetchList();
+    });
   }
 
 }
