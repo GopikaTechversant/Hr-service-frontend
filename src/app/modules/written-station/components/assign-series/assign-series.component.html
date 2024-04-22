@@ -4,7 +4,7 @@
         <div class="d-flex j-space content">
             <div class="d-flex dropdown p-relative" (click)="showDropdown = !showDropdown">
                 <div class=" j-space">
-                    <div class="" *ngIf="!selectedSeries">
+                    <div class="c-pointer" *ngIf="!selectedSeries">
                         <span>Choose Series</span>
                     </div>
                     <div *ngIf="selectedSeries">{{selectedSeries}}</div>
@@ -14,23 +14,22 @@
                 </div>
                 <div class="dropdown-list p-absolute" *ngIf="showDropdown">
                     <div *ngFor="let series of seriesList" >
-                        <p (click)="selectSeries(series.id,series.name);">{{series.name}}</p>
-                        <p (click)="selectSeries(series.questionId,series.questionName);">{{series.questionName}}</p>
+                        <p (click)="selectSeries(series.id,series.name);" class="c-pointer">{{series.name}}</p>
+                        <p (click)="selectSeries(series.questionId,series.questionName);" class="c-pointer">{{series.questionName}}</p>
                     </div>
                 </div>
             </div>
             <div class="d-flex j-space btn">
-                <button class="cancel-btn" (click)="cancel()">Cancel</button>
-                <button class="save-btn" (click)="save()">Save</button>
+                <button class="cancel-btn c-pointer" (click)="cancel()">Cancel</button>
+                <button class="save-btn c-pointer" (click)="save()">Save</button>
             </div>
         </div>
     </div>
-
 </div>
 <div *ngIf="!seriesList" class="create-series">
     <div class="d-flex flex-column align-center p-t-16">
         <p class="title1">Please Create Series</p>
         <p class="para2">You have not created series to assign</p>
-        <button class="ok-btn" (click)="cancel()">Ok</button>
+        <button class="ok-btn c-pointer" (click)="cancel()">Ok</button>
     </div>
 </div>

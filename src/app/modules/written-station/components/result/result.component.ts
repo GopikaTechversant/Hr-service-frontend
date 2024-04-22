@@ -22,7 +22,6 @@ export class ResultComponent {
     private dialogRef: MatDialogRef<ResultComponent>) {if (data){
       this.examServiceId = data.candidateIds
     } 
-    this.dialogRef.updateSize('30%', '40%')
   }
 
 

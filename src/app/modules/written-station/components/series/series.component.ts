@@ -193,8 +193,6 @@ export class SeriesComponent implements OnInit {
                 selectedSeriesObj.candidates.push(candidate);
               }
               // this.series_list = [...this.series_list];
-
-
               if (selectedSeriesObj.questionName) {
                 let questionId = selectedSeriesObj.questionId;
                 selectedSeriesObj = selectedSeriesObj.candidates.filter((candidate: any) => !candidate.progressScore);
@@ -203,12 +201,20 @@ export class SeriesComponent implements OnInit {
                   questionId: questionId,
                   questionServiceId: [] as string[]
                 };
-                if (selectedSeriesObj[0].serviceId) requestData.questionServiceId.push(selectedSeriesObj[0].serviceId);
+                console.log("selectedSeriesObj", selectedSeriesObj);
+
+                // if (selectedSeriesObj[0].serviceId) requestData.questionServiceId.push(selectedSeriesObj[0].serviceId);
+                // Push serviceIds for candidates without progressId
+                selectedSeriesObj.forEach((candidate: any) => {
+                  if (!candidate.progressId) {
+                    requestData.questionServiceId.push(candidate.serviceId);
+                  }
+                });
                 this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res: any) => {
                   this.newSeriesCreated = false;
                   this.questionAssigned = true;
                   this.newSeriesCreated = false;
-                  // this.fetchCandidatesWithSeries();
+                  this.fetchCandidatesWithSeries();
                 });
               }
             } else {
@@ -226,8 +232,8 @@ export class SeriesComponent implements OnInit {
     this.selectedCandidate = candidate;
     this.selectedCandidateIds = id;
     const dialogRef = this.dialog.open(ResultComponent, {
-      height:'600px',
-      // width:'600px',
+      height:'430px',
+      width:'600px',
       data: {
         candidateIds: this.selectedCandidateIds,
         candidate: this.selectedCandidate

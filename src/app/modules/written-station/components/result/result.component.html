@@ -3,13 +3,13 @@
         <span class="f-w-500 comment-heading">Add Score</span>
     </div>
     <div class="m-t-0 m-l-10">
-        <input type="text" class="form-control" id="score">
+        <input type="text" class="form-control p-l-5" id="score">
     </div>
     <div class="f-s-16 p-10 head">
         <span class="f-w-500 comment-heading">Add Description</span>
     </div>
     <div class="m-t-0 m-l-10">
-        <textarea name="" id="feedback" cols="35" rows="7" class="comment" id="description"></textarea>
+        <textarea name="" id="feedback" cols="35" rows="7" class="comment p-l-5" id="description" ></textarea>
     </div>
     <div class="f-s-16 p-10 head">
         <span class="f-w-500 comment-heading">Add Attachment</span>
@@ -21,7 +21,7 @@
                 <span class="upload"><img class="p-5" src="/assets/images/paperclip.svg" alt="" height="20"
                         width="20"></span>
             </div>
-            <div *ngIf="resumeUploadSuccess" class="file-name">
+            <div *ngIf="resumeUploadSuccess" class="file-name p-t-5">
                 {{selectedFile?.name}}
             </div>
             <input type="file" name="file" #fileInput class="input-box" style="display:none"

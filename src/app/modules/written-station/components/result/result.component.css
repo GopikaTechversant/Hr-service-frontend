@@ -6,7 +6,7 @@
     left: 9px;
     border-radius: 2px;
     border: 1px solid rgb(207, 205, 205);
-    outline: 1px solid #E6E6E6;
+   outline: none;
 }
 
 .comment-heading {
@@ -63,9 +63,6 @@ input[type="text"] {
     width: 97%;
 }
 
-.main{
-    height: 100% !important;
-}
 
 .input-box {
     outline: none !important;
@@ -74,4 +71,8 @@ input[type="text"] {
     outline: 1px solid #E6E6E6;
     height: 35px;
     width: 97%;
+}
+
+.file-name{
+    color: #575F6E;
 }
