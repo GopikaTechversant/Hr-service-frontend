@@ -17,6 +17,7 @@ export class StationSwitchComponent implements OnInit {
   showStations: boolean = false;
   SelectedStation: string ='';
   stationId: any;
+  currentStation: any;
   constructor(public dialogRef: MatDialogRef<StationSwitchComponent>, @Inject(MAT_DIALOG_DATA)
   public data: any,
     private apiService: ApiService, private tostr: ToastrServices) {
@@ -24,6 +25,7 @@ export class StationSwitchComponent implements OnInit {
         console.log(data);
         
         this.candidateDetails = data;
+        this.currentStation = data?.currentStation
       }
       this.dialogRef.updateSize('35%', '50%')
   }
@@ -41,7 +43,10 @@ export class StationSwitchComponent implements OnInit {
   fetchStations(): void {
     this.apiService.get(`/user/stations`).subscribe((res: any) => {
       this.stationsList = res?.data.slice(1);
-      console.log(this.stationsList);
+      console.log(this.stationsList , "1st");
+      
+      this.stationsList = this.stationsList.filter((station: any) => station.stationName !== this.currentStation.stationName);
+      console.log(this.stationsList , "filter");
       
     });
   }
