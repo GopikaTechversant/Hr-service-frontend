@@ -200,8 +200,9 @@ export class TechnicalDetailComponent implements OnInit {
   onSwitchStation(candidate: any): void {
     const userId = localStorage.getItem('userId');
     const dialogRef = this.dialog.open(StationSwitchComponent, {
-      data: {userId: userId , name : candidate['candidate.candidateFirstName'] + ' '+  candidate['candidate.candidateLastName'], currentStation : candidate?.currentStation
-      },
+      data: {userId: userId , name : candidate['candidate.candidateFirstName'] + ' '+  candidate['candidate.candidateLastName'], 
+       serviceId : candidate?.serviceId,currentStation : candidate?.currentStation,
+      currentStationId:this.stationId  },
       width: '700px',
       height: '500px'
     })

@@ -15,19 +15,19 @@ export class StationSwitchComponent implements OnInit {
   candidateDetails: any;
   stationsList: any;
   showStations: boolean = false;
-  SelectedStation: string ='';
+  SelectedStation: string = '';
   stationId: any;
   currentStation: any;
+  today : Date = new Date();
   constructor(public dialogRef: MatDialogRef<StationSwitchComponent>, @Inject(MAT_DIALOG_DATA)
   public data: any,
     private apiService: ApiService, private tostr: ToastrServices) {
-      if (data) {
-        console.log(data);
-        
-        this.candidateDetails = data;
-        this.currentStation = data?.currentStation
-      }
-      this.dialogRef.updateSize('35%', '50%')
+    if (data) {
+      console.log(data);
+      this.candidateDetails = data;
+      this.currentStation = data?.currentStation
+    }
+    this.dialogRef.updateSize('35%', '50%')
   }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -43,15 +43,15 @@ export class StationSwitchComponent implements OnInit {
   fetchStations(): void {
     this.apiService.get(`/user/stations`).subscribe((res: any) => {
       this.stationsList = res?.data.slice(1);
-      console.log(this.stationsList , "1st");
-      
+      console.log(this.stationsList, "1st");
+
       this.stationsList = this.stationsList.filter((station: any) => station.stationName !== this.currentStation.stationName);
-      console.log(this.stationsList , "filter");
-      
+      console.log(this.stationsList, "filter");
+
     });
   }
 
-  selectStation(station: string , id : any): void {
+  selectStation(station: string, id: any): void {
     this.SelectedStation = station;
     this.stationId = id;
   }
@@ -61,4 +61,23 @@ export class StationSwitchComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  submitClick(): void {
+    let payload = {
+      serviceId: this.data?.serviceId,
+      stationId: this.stationId,
+      assigneeId: this.data?.userId,
+      date: this.today,
+      currentStation: this.data?.currentStationId
+    }
+    this.apiService.post(`/user/station-switch`, payload).subscribe({
+      next: (res: any) => {
+        this.closeDialog();
+      },
+      error: (error) => {
+        this.tostr.error('Error adding progress');
+      }
+    });
+  }
 }
+
+
