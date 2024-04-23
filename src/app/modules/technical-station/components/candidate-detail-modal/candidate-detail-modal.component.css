@@ -22,30 +22,44 @@
     width: 50vw;
 }
 
-.blue{
+.attach {
+    outline: none !important;
+    border: 1px dotted rgb(207, 205, 205);
+    border-radius: 2px;
+    height: 30px;
+    background-color: #FFFF;
+    width: 50vw;
+}
+
+.blue {
     color: #005EC9;
 }
 
-.red{
+.red {
     color: rgb(167, 14, 14);
 }
 
-.green{
+.green {
     color: green;
 }
 
 .modal-header {
     position: sticky;
     top: 0;
-    z-index: 2; 
-    background-color: #f8f9fa; 
+    z-index: 2;
+    background-color: #f8f9fa;
 }
 
 .modal-content {
-    overflow-y: auto; 
+    overflow-y: auto;
 }
 
-.btn{
+.file {
+    text-align: center;
+    justify-content: center;
+}
+
+.btn {
     width: 120px;
     height: 35px;
     color: #FFFFFF;
@@ -58,7 +72,7 @@
     margin: 10px;
 }
 
-.btn-reject{
+.btn-reject {
     width: 120px;
     height: 35px;
     color: #FFFFFF;
@@ -67,11 +81,11 @@
     cursor: pointer;
     font-size: 16px;
     font-weight: 500;
-    border-radius: 3px; 
-    margin: 10px;  
+    border-radius: 3px;
+    margin: 10px;
 }
 
-.btn-parent{
+.btn-parent {
     float: right;
 }
 
@@ -84,4 +98,3 @@
     padding: 8px;
     outline: none !important;
 }
-

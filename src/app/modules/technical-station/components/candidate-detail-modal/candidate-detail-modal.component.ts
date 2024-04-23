@@ -29,21 +29,20 @@ export class CandidateDetailModalComponent implements OnInit {
   userId: any;
   resumePath: any;
   file: File | null = null;
-
+  fileName: string = '';
   constructor(public dialogRef: MatDialogRef<CandidateDetailModalComponent>, private apiService: ApiService, private tostr: ToastrServices,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-    if (data) {      
+    if (data) {
       this.candidateDetails = data?.candidateDetails;
       this.stationId = data?.stationId;
       this.serviceId = this.candidateDetails?.serviceId;
-      if (data?.progressStatus > 0) this.progessAdded = true;      
+      if (data?.progressStatus > 0) this.progessAdded = true;
     }
     this.dialogRef.updateSize('60vw', '90vh');
   }
 
   ngOnInit(): void {
     this.userId = localStorage.getItem('userId');
-
   }
 
   closeDialog(): void {
@@ -53,31 +52,31 @@ export class CandidateDetailModalComponent implements OnInit {
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
     if (file) {
-        this.file = file;
-        console.log('File selected:', file?.name);
-        // Handle file processing here
+      this.file = file;
+      this.fileName = file?.name;
     }
-}
+  }
 
 
   addProgress(): void {
+    const formData = new FormData();
     const skillElement = document.getElementById('skill') as HTMLInputElement;
-    this.skillValue = skillElement ? skillElement.value : '';
     const scoreElement = document.getElementById('score') as HTMLInputElement;
-    this.scoreValue = scoreElement ? scoreElement.value : '';
     const descriptionElement = document.getElementById('description') as HTMLInputElement;
-    this.descriptionValue = descriptionElement ? descriptionElement.value : '';
+    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    const file = fileInput.files ? fileInput.files[0] : null;
 
-    this.progressQuery = {
-      progressAssignee: this.progressAssignee ? this.progressAssignee :  this.userId,
-      progressSkill: this.skillValue,
-      progressServiceId: this.serviceId || 0,
-      progressScore: this.scoreValue,
-      progressDescription: this.descriptionValue
-    };
+    if (skillElement && skillElement.value) formData.append('progressSkill', skillElement.value);
+    if (scoreElement && scoreElement.value) formData.append('progressScore', scoreElement.value);
+    if (descriptionElement && descriptionElement.value) formData.append('progressDescription', descriptionElement.value);
+    if (file) formData.append('file', file, file.name);
+
+    formData.append('progressAssignee', this.progressAssignee ? this.progressAssignee : this.userId);
+    formData.append('progressServiceId', this.serviceId ? this.serviceId.toString() : '0');
+
     let baseUrl = this.stationId === '3' ? `/technical-station` : this.stationId === '4' ? `/technical-station-two` : '';
     if (baseUrl) {
-      this.apiService.post(`${baseUrl}/add-progress`, this.progressQuery).subscribe({
+      this.apiService.post(`${baseUrl}/add-progress`, formData).subscribe({
         next: (res: any) => {
           this.tostr.success('Progress added successfully');
           this.closeDialog();
@@ -100,7 +99,7 @@ export class CandidateDetailModalComponent implements OnInit {
         stationId: this.stationId,
         userId: this.userId,
         status: "rejected",
-        feedBack: this.feedback, 
+        feedBack: this.feedback,
       }
       this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
         next: (res: any) => {
@@ -138,8 +137,8 @@ export class CandidateDetailModalComponent implements OnInit {
           },
           error: (error) => this.tostr.error('Error during approval')
         });
-      }else this.tostr.warning('Please Add Feedback');   
-    } 
+      } else this.tostr.warning('Please Add Feedback');
+    }
     else this.tostr.error('Invalid operation');
   }
 
