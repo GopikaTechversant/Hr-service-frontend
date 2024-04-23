@@ -232,8 +232,8 @@ export class SeriesComponent implements OnInit {
     this.selectedCandidate = candidate;
     this.selectedCandidateIds = id;
     const dialogRef = this.dialog.open(ResultComponent, {
-      height:'430px',
-      width:'600px',
+      height: '430px',
+      width: '600px',
       data: {
         candidateIds: this.selectedCandidateIds,
         candidate: this.selectedCandidate

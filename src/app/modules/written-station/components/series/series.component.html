@@ -47,7 +47,7 @@
                     <div class="centerd-div"><span class="no-data">Candidates are'nt assigned to any series</span></div>
                 </div>
                 <ng-container *ngFor="let series of series_list">
-                    <div class=" flex-column  j-center c-pointer" (click)="seriesBoxClick(series)"
+                    <div class=" flex-column  j-center"
                         [ngClass]="{'active-series' : series?.active}">
                         <p class="m-b-0 p-t-10 p-b-5  series-name-child1 m-r-10">{{series.name}}</p>
                         <div class="j-center candidates">
@@ -79,6 +79,9 @@
                                             (click)="resultClick(candidate, candidate.serviceId)">Add Result</button>
                                         <span class="score"
                                             *ngIf="candidate.progressScore  && candidate.progressScore !== null">Score:{{candidate.progressScore}}</span>
+                                            <span class="c-pointer"
+                                            *ngIf="candidate.progressScore  && candidate.progressScore !== null"><img class="p-l-9" src="/assets/images/view-file.png" alt="" height="29"
+                                            width="29"></span>
                                         <button *ngIf="!candidate.progressId" class="assign-child1 m-l-10 c-pointer"
                                             (click)="openAssignModal(candidate,series)">Assign</button>
                                     </div>
@@ -97,7 +100,7 @@
                 <div class="centerd-div"><span class="no-data">Series Are'nt Created Yet!</span></div>
             </div>
             <div *ngFor="let series of series_list" class="series-list">
-                <div class="c-pointer series-box" (click)="seriesBoxClick(series)"
+                <div class=" series-box" (click)="seriesBoxClick(series)"
                     [ngClass]="{'active-series' : series?.active}">
                     <div class="p-relative col-md-3 s-list  subscriber-drop-down j-space m-text"
                         (click)="idListOpen = !idListOpen"
@@ -135,7 +138,7 @@
                         </div>
                         <div class="d-flex align-center drop-down-question-name p-relative"
                             (click)="$event.stopPropagation(); series.showQuestions = !series.showQuestions">
-                            <span class="d-flex j-space select-question">
+                            <span class="d-flex j-space select-question c-default">
                                 <span class="p-l-7">{{series.questionName}}</span>
                             </span>
                         </div>
