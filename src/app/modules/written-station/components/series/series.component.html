@@ -10,13 +10,13 @@
                 <div *ngFor="let candidate of candidates_list" class=" candidate-box">
                     <p class="candidate-name">{{candidate.candidateFirstName}}</p>
                     <div class="info-container">
-                        <div class="info-pair">
+                        <!-- <div class="info-pair">
                             <div class="key">Designation</div>
-                            <div class="value">: {{candidate.candidateFirstName}}</div>
-                        </div>
+                            <div class="value">: {{candidate['reqServiceRequest.team.teamName']}}</div>
+                        </div> -->
                         <div class="info-pair">
                             <div class="key">Team</div>
-                            <div class="value">: {{candidate.candidateFirstName}}</div>
+                            <div class="value">: {{candidate['reqServiceRequest.team.teamName']}}</div>
                         </div>
                         <div class="info-pair">
                             <div class="key">Skills</div>
@@ -56,13 +56,13 @@
                                 <div *ngFor="let candidate of series.candidates" class=" candidate-box-child1">
                                     <p class="candidate-name-child1">{{candidate.candidateFirstName}}</p>
                                     <div class="info-container">
-                                        <div class="info-pair">
+                                        <!-- <div class="info-pair">
                                             <div class="key">Designation</div>
                                             <div class="value">: {{candidate.candidateFirstName}}</div>
-                                        </div>
+                                        </div> -->
                                         <div class="info-pair">
                                             <div class="key">Team</div>
-                                            <div class="value">: {{candidate.candidateFirstName}}</div>
+                                            <div class="value">: {{candidate.progressId}}</div>
                                         </div>
                                         <div class="info-pair">
                                             <div class="key">Skills</div>
