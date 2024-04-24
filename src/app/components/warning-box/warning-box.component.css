@@ -1,0 +1,35 @@
+.btn-reject {
+    width: 120px;
+    height: 35px;
+    color: #005EC9;
+    background-color: #FFFFFF;
+    border: 1px solid #005EC9;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    box-sizing: border-box;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.content,
+.btn-parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.btn-parent {
+    margin-top: 20px;
+}

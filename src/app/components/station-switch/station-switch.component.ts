@@ -18,16 +18,12 @@ export class StationSwitchComponent implements OnInit {
   SelectedStation: string = '';
   stationId: any;
   currentStation: any;
-  today : Date = new Date();
+  today: Date = new Date();
   constructor(public dialogRef: MatDialogRef<StationSwitchComponent>, @Inject(MAT_DIALOG_DATA)
   public data: any,
     private apiService: ApiService, private tostr: ToastrServices) {
-    if (data) {
-      console.log(data);
-      this.candidateDetails = data;
-      this.currentStation = data?.currentStation
-    }
-    this.dialogRef.updateSize('35%', '50%')
+    if (data) this.data = data
+    this.dialogRef.updateSize('35%', '45%')
   }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -42,13 +38,9 @@ export class StationSwitchComponent implements OnInit {
 
   fetchStations(): void {
     this.apiService.get(`/user/stations`).subscribe((res: any) => {
-      this.stationsList = res?.data.slice(1);
-      console.log(this.stationsList, "1st");
-
-      this.stationsList = this.stationsList.filter((station: any) => station.stationName !== this.currentStation.stationName);
-      console.log(this.stationsList, "filter");
-
+      this.stationsList = res?.data.slice(1).filter((station: any) => station.stationId.toString() !== this.data.currentStationId);
     });
+
   }
 
   selectStation(station: string, id: any): void {
@@ -74,7 +66,7 @@ export class StationSwitchComponent implements OnInit {
         this.closeDialog();
       },
       error: (error) => {
-        this.tostr.error('Error adding progress');
+        this.tostr.error('Error Moving Candidate');
       }
     });
   }

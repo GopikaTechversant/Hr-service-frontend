@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { HrCandidateDetailComponent } from '../hr-candidate-detail/hr-candidate-detail.component';
 import { ApiService } from 'src/app/services/api.service';
 import { StationSwitchComponent } from 'src/app/components/station-switch/station-switch.component';
+import { WarningBoxComponent } from 'src/app/components/warning-box/warning-box.component';
 
 @Component({
   selector: 'app-hr-candidate-list',
@@ -163,16 +164,29 @@ export class HrCandidateListComponent implements OnInit {
   }
 
   onSwitchStation(candidate: any): void {
-    const userId = localStorage.getItem('userId');
-    const dialogRef = this.dialog.open(StationSwitchComponent, {
-      data: {userId: userId , name : candidate['candidate.candidateFirstName'] + ' '+  candidate['candidate.candidateLastName'], currentStation : 'HR Manager'
-      },
-      width: '700px',
-      height: '500px'
-    })
+    if (candidate?.serviceStatus === 'pending' && candidate?.progressStatus > 0) {
+      const userId = localStorage.getItem('userId');
+      const dialogRef = this.dialog.open(StationSwitchComponent, {
+        data: {
+          userId: userId, 
+          name: candidate['candidate.candidateFirstName'] + ' ' + candidate['candidate.candidateLastName'],
+          serviceId: candidate?.serviceId,
+          currentStation: 'Hr Manager',
+          currentStationId: '5',
+          requirement : candidate['serviceRequest.requestName']
+        },
+        width: '700px',
+        height: '500px'
+      })
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.fetchList();
-    });
+      dialogRef.afterClosed().subscribe(() => {
+        this.fetchList();
+      });
+    }else{
+      const dialogRef = this.dialog.open(WarningBoxComponent, {})
+      dialogRef.afterClosed().subscribe(() => {
+        this.fetchList();
+      });
+    }
   }
 }

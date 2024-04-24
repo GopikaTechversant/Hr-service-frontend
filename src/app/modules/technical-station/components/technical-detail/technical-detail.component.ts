@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CandidateDetailModalComponent } from '../candidate-detail-modal/candidate-detail-modal.component';
 import { ApiService } from 'src/app/services/api.service';
 import { StationSwitchComponent } from 'src/app/components/station-switch/station-switch.component';
+import { WarningBoxComponent } from 'src/app/components/warning-box/warning-box.component';
 
 @Component({
   selector: 'app-technical-detail',
@@ -39,7 +40,7 @@ export class TechnicalDetailComponent implements OnInit {
   positionId: any;
   stationsList: any;
   switchStations: Boolean = false;;
- 
+
   constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -52,7 +53,7 @@ export class TechnicalDetailComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.stationId = params['id'];
-      this.filteredStatus = sessionStorage.getItem(`status_${this.stationId}`) ? sessionStorage.getItem(`status_${this.stationId}`) : '';      
+      this.filteredStatus = sessionStorage.getItem(`status_${this.stationId}`) ? sessionStorage.getItem(`status_${this.stationId}`) : '';
       const requirementData = sessionStorage.getItem(`requirement_${this.stationId}`);
       if (requirementData) {
         let requirement = JSON.parse(requirementData);
@@ -198,18 +199,29 @@ export class TechnicalDetailComponent implements OnInit {
   }
 
   onSwitchStation(candidate: any): void {
-    const userId = localStorage.getItem('userId');
-    const dialogRef = this.dialog.open(StationSwitchComponent, {
-      data: {userId: userId , name : candidate['candidate.candidateFirstName'] + ' '+  candidate['candidate.candidateLastName'], 
-       serviceId : candidate?.serviceId,currentStation : candidate?.currentStation,
-      currentStationId:this.stationId  },
-      width: '700px',
-      height: '500px'
-    })
+    if (candidate?.serviceStatus === 'pending' && ((this.stationId === '3' && candidate?.currentStation === 'Technical 1') || (this.stationId === '4' && candidate?.currentStation === 'Technical 2'))) {
+      const userId = localStorage.getItem('userId');
+      const dialogRef = this.dialog.open(StationSwitchComponent, {
+        data: {
+          userId: userId, name: candidate['candidate.candidateFirstName'] + ' ' + candidate['candidate.candidateLastName'],
+          serviceId: candidate?.serviceId,
+          currentStation: candidate?.currentStation,
+          currentStationId: this.stationId,
+          requirement : candidate['serviceRequest.requestName']
+        },
+        width: '700px',
+        height: '500px'
+      })
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.fetchList();
-    });
+      dialogRef.afterClosed().subscribe(() => {
+        this.fetchList();
+      });
+    }else{
+      const dialogRef = this.dialog.open(WarningBoxComponent, {})
+      dialogRef.afterClosed().subscribe(() => {
+        this.fetchList();
+      });
+    }
   }
 
 }

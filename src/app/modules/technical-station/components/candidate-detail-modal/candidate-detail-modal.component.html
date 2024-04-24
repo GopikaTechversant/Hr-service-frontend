@@ -80,7 +80,7 @@
             <span class="p-10 p-t-12">Description</span>
             <span class="p-10 p-t-15">Attachment</span>
         </div>
-        <div class="sub-head d-flex" *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done'">
+        <div class="sub-head d-flex" *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done' && candidateDetails?.serviceStatus !== 'moved'">
             <span class="p-5">
                 <input class="input" *ngIf="!candidateDetails['progress.progressSkills']" type="text" id="skill">
             </span>
@@ -96,7 +96,7 @@
                 <input type="file" id="fileInput" #fileInput style="display: none;" (change)="onFileSelected($event)">
             </span>
         </div>
-        <div class="sub-head d-flex" *ngIf="data?.progressStatus > 0">
+        <div class="sub-head d-flex" *ngIf="data?.progressStatus > 0 || candidateDetails?.serviceStatus === 'moved'">
             <span class="p-10">
                 : {{candidateDetails['progress.progressSkills'] ? candidateDetails['progress.progressSkills'] : 'NIL'}}
             </span>
@@ -112,7 +112,7 @@
             </span>
         </div>
     </div>
-    <div *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done'" class="details p-10 d-flex j-end">
+    <div *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done' && candidateDetails?.serviceStatus !== 'moved'" class="details p-10 d-flex j-end">
         <span class="f-w-500 head-wrap"></span>
         <button class="btn c-pointer" (click)="addProgress()">Add progress</button>
     </div>
