@@ -23,7 +23,7 @@ export class StationSwitchComponent implements OnInit {
   public data: any,
     private apiService: ApiService, private tostr: ToastrServices) {
     if (data) this.data = data
-    this.dialogRef.updateSize('35%', '45%')
+    this.dialogRef.updateSize('45%', '55%')
   }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;

@@ -12,7 +12,6 @@ import { EditComponent } from './components/edit/edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './modules/material/material.module';
 import { LogoutModalComponent } from './components/logout-modal/logout-modal.component';
-import { ResubmissionModalComponent } from './components/resubmission-modal/resubmission-modal.component';
 import { StationSwitchComponent } from './components/station-switch/station-switch.component';
 import { WarningBoxComponent } from './components/warning-box/warning-box.component';
 
@@ -23,7 +22,6 @@ import { WarningBoxComponent } from './components/warning-box/warning-box.compon
     DeleteComponent,
     EditComponent,
     LogoutModalComponent,
-    ResubmissionModalComponent,
     StationSwitchComponent,
     WarningBoxComponent,
   ],

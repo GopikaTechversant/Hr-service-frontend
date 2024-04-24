@@ -18,7 +18,7 @@
     background-color: #FFFFFF;
     border-radius: 3px;
     width: 200px;
-    height: 25px;
+    height: 20px;
 }
 
 
@@ -78,13 +78,12 @@
 
 .text-area {
     width: 98%;
+    height: 136px;
+    border-radius: 3px;
+    border: 1px solid #E2E1E1;
+    background: #FFFFFF;
     padding: 8px;
     outline: none !important;
-    height: 54px;
-    gap: 0px;
-    border-radius: 4px;
-    border: 1px solid rgb(207, 205, 205);
-    opacity: 0px;
 }
 
 .dropdown {
