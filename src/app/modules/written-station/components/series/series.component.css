@@ -22,10 +22,10 @@
 }
 
 .candidates-list {
-    height: 281px;
+    height: 225px;
     border: 1px solid #575F6E;
     border-radius: 2px;
-    /* overflow-y: scroll; */
+    overflow-y: scroll;
 }
 
 .no-data {
@@ -122,7 +122,7 @@
     font-weight: 500;
     line-height: 21px;
     letter-spacing: 0em;
-    /* text-align: left; */
+    cursor: default !important;
     color: #FFFFFF;
 
 }
@@ -185,7 +185,7 @@
 }
 
 .candidates {
-    height: 225px;
+    height: 195px;
     margin-left: 8px;
     border: 1px solid #E3E0E0;
     width: 98% !important;
@@ -270,6 +270,7 @@
     color: #08BC66;
     border-radius: 2px;
     font-weight: 500;
+   
 }
 
 .series-name-container{
@@ -294,4 +295,8 @@
 .series-name-container2{
     width: 93%;
     margin: 0 auto;
+}
+
+.c-default{
+    cursor: default;
 }

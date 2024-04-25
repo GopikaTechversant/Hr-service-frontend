@@ -6,6 +6,7 @@ import { ResultComponent } from '../result/result.component';
 import { AssignSeriesComponent } from '../assign-series/assign-series.component';
 import { ToastrServices } from 'src/app/services/toastr.service';
 import { ApiService } from 'src/app/services/api.service';
+import { environment } from 'src/environments/environments';
 @Component({
   selector: 'app-series',
   templateUrl: './series.component.html',
@@ -36,6 +37,8 @@ export class SeriesComponent implements OnInit {
   showAverageScoreInput: boolean = false;
   series_list_showAverageScoreInput: boolean = false;
   demo: boolean = false;
+  teamName:any;
+  showAssignButton:boolean = false;
   constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -49,15 +52,19 @@ export class SeriesComponent implements OnInit {
 
   fetchCandidates(): void {
     this.apiService.get(`/screening-station/list-batch/${this.requestId}?station=2`).subscribe((res: any) => {
-      if (res?.candidates) this.candidates_list = res?.candidates;
+      if (res && res?.candidates) this.candidates_list = res?.candidates; else console.log("Failed to fetch candidates");
+      
       this.showAverageScoreInput = this.candidates_list.some((candidate: any) => candidate.serviceStatus === 'pending');
     });
   }
 
   fetchCandidatesWithSeries(): void {
-    this.newSeriesCreated = false;
+    // this.newSeriesCreated = false;
     this.apiService.get(`/written-station/questionBatchList/${this.requestId}`).subscribe((res: any) => {
-      this.candidatesStatus = res?.data;
+      if(res?.data) this.candidatesStatus = res?.data; else console.log("erroer res?.data");
+      
+      console.log(" this.candidatesStatus",  this.candidatesStatus);
+      
       this.candidateResult = res.result;
       this.candidatesStatus[0].candidates.forEach((mark: any) => this.previousAveragescore = mark.progressAverageScore);
       if (res.result && res.data) {
@@ -88,6 +95,8 @@ export class SeriesComponent implements OnInit {
               selectedQuestion: null,
               candidates: item.candidates
             }));
+            console.log("this.series_list",this.series_list);
+            
           }
         });
         this.newSeriesCreated = false;
@@ -150,6 +159,8 @@ export class SeriesComponent implements OnInit {
     };
     // Get candidate service IDs for the current series
     if (series.candidates && series.candidates.length > 0) {
+      console.log("series.candidates",series);
+      this.teamName = series.teamName;
       series.candidates.forEach((candidate: { serviceId: string }) => {
         if (candidate.serviceId) requestData.questionServiceId.push(candidate.serviceId);
       });
@@ -157,6 +168,7 @@ export class SeriesComponent implements OnInit {
     this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res: any) => {
       this.questionAssigned = true;
       this.fetchCandidatesWithSeries();
+      this.fetchCandidates();
     });
   }
 
@@ -193,8 +205,6 @@ export class SeriesComponent implements OnInit {
                 selectedSeriesObj.candidates.push(candidate);
               }
               // this.series_list = [...this.series_list];
-
-
               if (selectedSeriesObj.questionName) {
                 let questionId = selectedSeriesObj.questionId;
                 selectedSeriesObj = selectedSeriesObj.candidates.filter((candidate: any) => !candidate.progressScore);
@@ -203,12 +213,24 @@ export class SeriesComponent implements OnInit {
                   questionId: questionId,
                   questionServiceId: [] as string[]
                 };
-                if (selectedSeriesObj[0].serviceId) requestData.questionServiceId.push(selectedSeriesObj[0].serviceId);
+                console.log("selectedSeriesObj", selectedSeriesObj);
+
+                // if (selectedSeriesObj[0].serviceId) requestData.questionServiceId.push(selectedSeriesObj[0].serviceId);
+                // Push serviceIds for candidates without progressId
+                selectedSeriesObj.forEach((candidate: any) => {
+                  if (!candidate.progressId) {
+                    requestData.questionServiceId.push(candidate.serviceId);
+                  }
+                });
                 this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res: any) => {
-                  this.newSeriesCreated = false;
+                  // this.newSeriesCreated = false;
+                  this.showAssignButton = true;
                   this.questionAssigned = true;
-                  this.newSeriesCreated = false;
+                  // this.newSeriesCreated = false;
                   // this.fetchCandidatesWithSeries();
+                  this.fetchCandidates();
+                  this.fetchQuestions();
+
                 });
               }
             } else {
@@ -226,8 +248,8 @@ export class SeriesComponent implements OnInit {
     this.selectedCandidate = candidate;
     this.selectedCandidateIds = id;
     const dialogRef = this.dialog.open(ResultComponent, {
-      height:'600px',
-      // width:'600px',
+      height: '430px',
+      width: '600px',
       data: {
         candidateIds: this.selectedCandidateIds,
         candidate: this.selectedCandidate
@@ -269,4 +291,9 @@ export class SeriesComponent implements OnInit {
       })
     } else if (ScoreAddedFalse) this.tostr.warning('Please add score');
   }
+
+  viewProgressFile(progressFile: string) {
+    window.open(`${environment.api_url}${progressFile}`, '_blank');
+}
+
 }
