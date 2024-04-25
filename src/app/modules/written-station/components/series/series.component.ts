@@ -244,7 +244,7 @@ export class SeriesComponent implements OnInit {
   }
 
   resultClick(candidate: any, id: any): void {
-    this.newSeriesCreated = false;
+    // this.newSeriesCreated = false;
     this.selectedCandidate = candidate;
     this.selectedCandidateIds = id;
     const dialogRef = this.dialog.open(ResultComponent, {
@@ -263,7 +263,7 @@ export class SeriesComponent implements OnInit {
         candidate: this.selectedCandidate,
         score: this.selectedCandidate.examScore
       }
-      this.newSeriesCreated = false;
+      // this.newSeriesCreated = false;
       this.fetchCandidatesWithSeries();
     });
   }
