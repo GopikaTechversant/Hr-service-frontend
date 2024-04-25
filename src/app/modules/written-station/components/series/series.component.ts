@@ -7,6 +7,8 @@ import { AssignSeriesComponent } from '../assign-series/assign-series.component'
 import { ToastrServices } from 'src/app/services/toastr.service';
 import { ApiService } from 'src/app/services/api.service';
 import { environment } from 'src/environments/environments';
+import { StationSwitchComponent } from 'src/app/components/station-switch/station-switch.component';
+import { WarningBoxComponent } from 'src/app/components/warning-box/warning-box.component';
 @Component({
   selector: 'app-series',
   templateUrl: './series.component.html',
@@ -37,8 +39,8 @@ export class SeriesComponent implements OnInit {
   showAverageScoreInput: boolean = false;
   series_list_showAverageScoreInput: boolean = false;
   demo: boolean = false;
-  teamName:any;
-  showAssignButton:boolean = false;
+  teamName: any;
+  showAssignButton: boolean = false;
   constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -53,7 +55,7 @@ export class SeriesComponent implements OnInit {
   fetchCandidates(): void {
     this.apiService.get(`/screening-station/list-batch/${this.requestId}?station=2`).subscribe((res: any) => {
       if (res && res?.candidates) this.candidates_list = res?.candidates; else console.log("Failed to fetch candidates");
-      
+
       this.showAverageScoreInput = this.candidates_list.some((candidate: any) => candidate.serviceStatus === 'pending');
     });
   }
@@ -61,10 +63,10 @@ export class SeriesComponent implements OnInit {
   fetchCandidatesWithSeries(): void {
     // this.newSeriesCreated = false;
     this.apiService.get(`/written-station/questionBatchList/${this.requestId}`).subscribe((res: any) => {
-      if(res?.data) this.candidatesStatus = res?.data; else console.log("erroer res?.data");
-      
-      console.log(" this.candidatesStatus",  this.candidatesStatus);
-      
+      if (res?.data) this.candidatesStatus = res?.data; else console.log("erroer res?.data");
+
+      console.log(" this.candidatesStatus", this.candidatesStatus);
+
       this.candidateResult = res.result;
       this.candidatesStatus[0].candidates.forEach((mark: any) => this.previousAveragescore = mark.progressAverageScore);
       if (res.result && res.data) {
@@ -95,8 +97,8 @@ export class SeriesComponent implements OnInit {
               selectedQuestion: null,
               candidates: item.candidates
             }));
-            console.log("this.series_list",this.series_list);
-            
+            console.log("this.series_list", this.series_list);
+
           }
         });
         this.newSeriesCreated = false;
@@ -159,7 +161,7 @@ export class SeriesComponent implements OnInit {
     };
     // Get candidate service IDs for the current series
     if (series.candidates && series.candidates.length > 0) {
-      console.log("series.candidates",series);
+      console.log("series.candidates", series);
       this.teamName = series.teamName;
       series.candidates.forEach((candidate: { serviceId: string }) => {
         if (candidate.serviceId) requestData.questionServiceId.push(candidate.serviceId);
@@ -268,6 +270,37 @@ export class SeriesComponent implements OnInit {
     });
   }
 
+  onSwitchStation(candidate: any): void {
+    console.log("candidate", candidate);
+
+    if (candidate?.serviceStatus === 'pending') {
+      const userId = localStorage.getItem('userId');
+      const dialogRef = this.dialog.open(StationSwitchComponent, {
+        data: {
+          userId: userId,
+          name: candidate['candidate.candidateFirstName'] + ' ' + candidate['candidate.candidateLastName'],
+          serviceId: candidate?.serviceId,
+          currentStation: 'Written',
+          currentStationId: '2',
+          requirement: candidate['reqServiceRequest.requestName']
+        },
+        width: '700px',
+        height: '500px'
+      })
+
+      dialogRef.afterClosed().subscribe(() => {
+        this.fetchCandidates();
+        this.fetchCandidatesWithSeries();
+      });
+    } else {
+      const dialogRef = this.dialog.open(WarningBoxComponent, {})
+      dialogRef.afterClosed().subscribe(() => {
+        this.fetchCandidates();
+        this.fetchCandidatesWithSeries();
+      });
+    }
+  }
+
   approve(): void {
     const ScoreAddedTrue = this.candidatesStatus.some(candidate => candidate.serviceStatus !== 'done' && candidate.progressScore !== null);
     const ScoreAddedFalse = this.candidatesStatus.some(candidate => candidate.serviceStatus !== 'done' && candidate.progressScore == null);
@@ -294,6 +327,6 @@ export class SeriesComponent implements OnInit {
 
   viewProgressFile(progressFile: string) {
     window.open(`${environment.api_url}${progressFile}`, '_blank');
-}
+  }
 
 }

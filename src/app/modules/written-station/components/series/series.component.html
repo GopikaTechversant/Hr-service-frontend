@@ -8,7 +8,10 @@
             </div>
             <div class="d-flex  flex-wrap" *ngIf="candidates_list.length > 0">
                 <div *ngFor="let candidate of candidates_list" class=" candidate-box">
-                    <p class="candidate-name">{{candidate.candidateFirstName}}</p>
+                    <div class="d-flex j-space">
+                        <p class="candidate-name">{{candidate.candidateFirstName}}</p><button
+                            (click)="onSwitchStation(candidate)" class="m-r-14 move">Move</button>
+                    </div>
                     <div class="info-container">
                         <div class="info-pair">
                             <div class="key">Email</div>
@@ -37,20 +40,23 @@
                     <button class="approve c-pointer" (click)="approve()">Approve</button>
                 </div>
             </div>
-            <div class="averagescore"> <span *ngIf="previousAveragescore">Previous Average Score: {{ previousAveragescore }}</span></div>
+            <div class="averagescore"> <span *ngIf="previousAveragescore">Previous Average Score: {{
+                    previousAveragescore }}</span></div>
             <div class="body-child1">
                 <div *ngIf="series_list?.length === 0 || !series_list" class="parent-conatiner">
                     <div class="centerd-div"><span class="no-data">Candidates are'nt assigned to any series</span></div>
                 </div>
                 <ng-container *ngFor="let series of series_list">
-                    <div class=" flex-column  j-center"
-                        [ngClass]="{'active-series' : series?.active}">
+                    <div class=" flex-column  j-center" [ngClass]="{'active-series' : series?.active}">
                         <p class="m-b-0 p-t-10 p-b-5  series-name-child1 m-r-10">{{series.name}}</p>
                         <div class="j-center candidates">
 
                             <div *ngIf="series.candidates && series.candidates?.length > 0" class="d-flex flex-wrap">
                                 <div *ngFor="let candidate of series.candidates" class=" candidate-box-child1">
-                                    <p class="candidate-name-child1">{{candidate.candidateFirstName}}</p>
+                                    <div class="d-flex j-space">
+                                        <p class="candidate-name-child1">{{candidate.candidateFirstName}}</p>
+                                        <button (click)="onSwitchStation(candidate)" class="m-r-14 move">Move</button>
+                                    </div>
                                     <div class="info-container">
                                         <!-- <div class="info-pair">
                                             <div class="key">Designation</div>
@@ -75,9 +81,10 @@
                                             (click)="resultClick(candidate, candidate.serviceId)">Add Result</button>
                                         <span class="score"
                                             *ngIf="candidate.progressScore  && candidate.progressScore !== null">Score:{{candidate.progressScore}}</span>
-                                            <span class="c-pointer"
-                                            *ngIf="candidate.progressScore  && candidate.progressScore !== null"><img class="p-l-9" src="/assets/images/view-file.png" alt="" height="29"
-                                            width="29" (click)="viewProgressFile(candidate.progressFile)"></span>
+                                        <span class="c-pointer"
+                                            *ngIf="candidate.progressScore  && candidate.progressScore !== null"><img
+                                                class="p-l-9" src="/assets/images/view-file.png" alt="" height="29"
+                                                width="29" (click)="viewProgressFile(candidate.progressFile)"></span>
                                         <button *ngIf="!candidate.progressId" class="assign-child1 m-l-10 c-pointer"
                                             (click)="openAssignModal(candidate,series)">Assign</button>
                                     </div>
@@ -109,7 +116,8 @@
                             <div class="p-l-7">
                                 <div class="no-close s-list  m-text f-w-400 c-pointer flex-1"
                                     (click)="showQuestions = !showQuestions">
-                                    <span *ngIf="!series.selectedQuestionName" class="choose f-s-14">Choose Questions</span>
+                                    <span *ngIf="!series.selectedQuestionName" class="choose f-s-14">Choose
+                                        Questions</span>
                                     <span *ngIf="series.selectedQuestionName">{{series.selectedQuestionName}}</span>
                                 </div>
                             </div>

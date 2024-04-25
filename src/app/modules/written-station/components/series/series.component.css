@@ -300,3 +300,15 @@
 .c-default{
     cursor: default;
 }
+
+.move {
+    width: 36%;
+    height: 25px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    color: #005EC9;
+    background-color: #FFFFFF;
+    border: 1px solid #005EC9;
+}
