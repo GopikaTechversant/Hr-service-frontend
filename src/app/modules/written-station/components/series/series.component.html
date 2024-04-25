@@ -10,7 +10,7 @@
                 <div *ngFor="let candidate of candidates_list" class=" candidate-box">
                     <p class="candidate-name">{{candidate.candidateFirstName}}</p>
                     <div class="info-container">
-                       <div class="info-pair">
+                        <div class="info-pair">
                             <div class="key">Email</div>
                             <div class="value">: {{candidate.candidateEmail}}</div>
                         </div>
@@ -109,7 +109,7 @@
                             <div class="p-l-7">
                                 <div class="no-close s-list  m-text f-w-400 c-pointer flex-1"
                                     (click)="showQuestions = !showQuestions">
-                                    <span *ngIf="!series.selectedQuestionName" class="choose f-s-14">ChooseQuestions</span>
+                                    <span *ngIf="!series.selectedQuestionName" class="choose f-s-14">Choose Questions</span>
                                     <span *ngIf="series.selectedQuestionName">{{series.selectedQuestionName}}</span>
                                 </div>
                             </div>
