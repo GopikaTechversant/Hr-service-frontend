@@ -32,13 +32,19 @@ export class ResultComponent {
     if (scoreElement) this.scoreValue = scoreElement.value;
     const descriptionElement = document.getElementById('description') as HTMLInputElement;
     if (descriptionElement) this.descriptionValue = descriptionElement.value;
+    const formdata = new FormData;
+    formdata.append('examScore',this.scoreValue);
+    formdata.append('examServiceId',this.examServiceId);
+    formdata.append('examDescription',this.descriptionValue);
+    if(this.selectedFile) formdata.append('file',this.selectedFile);
+    
     let payload = {
       examScore: this.scoreValue,
       examServiceId: this.examServiceId,
       examDescription: this.descriptionValue
     }
 
-    this.apiService.post(`/written-station/result`, payload).subscribe((res: any) => {
+    this.apiService.post(`/written-station/result`, formdata).subscribe((res: any) => {
       this.dialogRef.close(true);
       this.scoreSubmitted.emit(parseInt(this.scoreValue, 10));
     }, err => {

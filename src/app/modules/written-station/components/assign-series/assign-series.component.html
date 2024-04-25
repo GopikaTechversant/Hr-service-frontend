@@ -3,19 +3,21 @@
         <p class="name">Assign Series</p>
         <div class="d-flex j-space content">
             <div class="d-flex dropdown p-relative" (click)="showDropdown = !showDropdown">
-                <div class=" j-space">
+                <div class="j-space">
                     <div class="c-pointer" *ngIf="!selectedSeries">
                         <span>Choose Series</span>
                     </div>
                     <div *ngIf="selectedSeries">{{selectedSeries}}</div>
                 </div>
-                <div class="no-close  s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub p-r-17 m-t-9"><i
-                        class="no-close s-list fa fa-chevron-down s-text"></i>
+                <div class="no-close s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub p-r-17 m-t-9">
+                    <i class="no-close s-list fa fa-chevron-down s-text"></i>
                 </div>
                 <div class="dropdown-list p-absolute" *ngIf="showDropdown">
-                    <div *ngFor="let series of seriesList" >
-                        <p (click)="selectSeries(series.id,series.name);" class="c-pointer">{{series.name}}</p>
-                        <p (click)="selectSeries(series.questionId,series.questionName);" class="c-pointer">{{series.questionName}}</p>
+                    <div *ngFor="let series of seriesList">
+                        <!-- Check if 'questionName' exists in the current series object -->
+                        <p (click)="selectSeries(series.id, series.questionName ? series.questionName : series.name);" class="c-pointer">
+                            {{ series.questionName ? series.questionName : series.name }}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -24,12 +26,5 @@
                 <button class="save-btn c-pointer" (click)="save()">Save</button>
             </div>
         </div>
-    </div>
-</div>
-<div *ngIf="!seriesList" class="create-series">
-    <div class="d-flex flex-column align-center p-t-16">
-        <p class="title1">Please Create Series</p>
-        <p class="para2">You have not created series to assign</p>
-        <button class="ok-btn c-pointer" (click)="cancel()">Ok</button>
     </div>
 </div>

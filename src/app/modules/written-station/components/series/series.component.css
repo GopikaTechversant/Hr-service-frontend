@@ -25,7 +25,7 @@
     height: 225px;
     border: 1px solid #575F6E;
     border-radius: 2px;
-    /* overflow-y: scroll; */
+    overflow-y: scroll;
 }
 
 .no-data {

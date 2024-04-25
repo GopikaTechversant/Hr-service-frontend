@@ -14,6 +14,8 @@ export class AssignSeriesComponent implements OnInit {
 
   ngOnInit(): void {
     this.seriesList = this.data?.seriesList;
+    console.log("this.seriesList",this.seriesList);
+    
   }
 
   selectSeries(id: any, name: any): void {

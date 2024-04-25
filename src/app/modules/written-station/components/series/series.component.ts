@@ -6,6 +6,7 @@ import { ResultComponent } from '../result/result.component';
 import { AssignSeriesComponent } from '../assign-series/assign-series.component';
 import { ToastrServices } from 'src/app/services/toastr.service';
 import { ApiService } from 'src/app/services/api.service';
+import { environment } from 'src/environments/environments';
 @Component({
   selector: 'app-series',
   templateUrl: './series.component.html',
@@ -37,6 +38,7 @@ export class SeriesComponent implements OnInit {
   series_list_showAverageScoreInput: boolean = false;
   demo: boolean = false;
   teamName:any;
+  showAssignButton:boolean = false;
   constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -50,15 +52,17 @@ export class SeriesComponent implements OnInit {
 
   fetchCandidates(): void {
     this.apiService.get(`/screening-station/list-batch/${this.requestId}?station=2`).subscribe((res: any) => {
-      if (res?.candidates) this.candidates_list = res?.candidates;
+      if (res && res?.candidates) this.candidates_list = res?.candidates; else console.log("Failed to fetch candidates");
+      
       this.showAverageScoreInput = this.candidates_list.some((candidate: any) => candidate.serviceStatus === 'pending');
     });
   }
 
   fetchCandidatesWithSeries(): void {
-    this.newSeriesCreated = false;
+    // this.newSeriesCreated = false;
     this.apiService.get(`/written-station/questionBatchList/${this.requestId}`).subscribe((res: any) => {
-      this.candidatesStatus = res?.data;
+      if(res?.data) this.candidatesStatus = res?.data; else console.log("erroer res?.data");
+      
       console.log(" this.candidatesStatus",  this.candidatesStatus);
       
       this.candidateResult = res.result;
@@ -91,6 +95,8 @@ export class SeriesComponent implements OnInit {
               selectedQuestion: null,
               candidates: item.candidates
             }));
+            console.log("this.series_list",this.series_list);
+            
           }
         });
         this.newSeriesCreated = false;
@@ -218,10 +224,12 @@ export class SeriesComponent implements OnInit {
                 });
                 this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res: any) => {
                   // this.newSeriesCreated = false;
+                  this.showAssignButton = true;
                   this.questionAssigned = true;
                   // this.newSeriesCreated = false;
-                  this.fetchCandidatesWithSeries();
+                  // this.fetchCandidatesWithSeries();
                   this.fetchCandidates();
+                  this.fetchQuestions();
 
                 });
               }
@@ -283,4 +291,9 @@ export class SeriesComponent implements OnInit {
       })
     } else if (ScoreAddedFalse) this.tostr.warning('Please add score');
   }
+
+  viewProgressFile(progressFile: string) {
+    window.open(`${environment.api_url}${progressFile}`, '_blank');
+}
+
 }

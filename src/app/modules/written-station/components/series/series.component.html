@@ -10,21 +10,17 @@
                 <div *ngFor="let candidate of candidates_list" class=" candidate-box">
                     <p class="candidate-name">{{candidate.candidateFirstName}}</p>
                     <div class="info-container">
-                        <!-- <div class="info-pair">
-                            <div class="key">Designation</div>
-                            <div class="value">: {{candidate['reqServiceRequest.team.teamName']}}</div>
-                        </div> -->
-                        <div class="info-pair">
-                            <div class="key">Team</div>
-                            <div class="value">: {{candidate['reqServiceRequest.team.teamName']}}</div>
-                        </div>
-                        <div class="info-pair">
-                            <div class="key">Skills</div>
-                            <div class="value">: {{candidate.candidateLastName}}</div>
-                        </div>
-                        <div class="info-pair">
+                       <div class="info-pair">
                             <div class="key">Email</div>
                             <div class="value">: {{candidate.candidateEmail}}</div>
+                        </div>
+                        <div class="info-pair">
+                            <div class="key">Education</div>
+                            <div class="value">: {{candidate.candidateEducation}}</div>
+                        </div>
+                        <div class="info-pair">
+                            <div class="key">City</div>
+                            <div class="value">: {{candidate.candidateCity}}</div>
                         </div>
                     </div>
                     <button class="assign c-pointer" (click)="openAssignModal(candidate,activeSeries)">Assign</button>
@@ -61,16 +57,16 @@
                                             <div class="value">: {{candidate.candidateFirstName}}</div>
                                         </div> -->
                                         <div class="info-pair">
-                                            <div class="key">Team</div>
-                                            <div class="value">: {{candidate.progressId}}</div>
-                                        </div>
-                                        <div class="info-pair">
-                                            <div class="key">Skills</div>
-                                            <div class="value">: {{candidate.candidateLastName}}</div>
-                                        </div>
-                                        <div class="info-pair">
                                             <div class="key">Email</div>
                                             <div class="value">: {{candidate.candidateEmail}}</div>
+                                        </div>
+                                        <div class="info-pair">
+                                            <div class="key">Education</div>
+                                            <div class="value">: {{candidate.candidateEducation}}</div>
+                                        </div>
+                                        <div class="info-pair">
+                                            <div class="key">City</div>
+                                            <div class="value">: {{candidate.candidateCity}}</div>
                                         </div>
                                     </div>
                                     <div class="d-flex m-t-12">
@@ -81,7 +77,7 @@
                                             *ngIf="candidate.progressScore  && candidate.progressScore !== null">Score:{{candidate.progressScore}}</span>
                                             <span class="c-pointer"
                                             *ngIf="candidate.progressScore  && candidate.progressScore !== null"><img class="p-l-9" src="/assets/images/view-file.png" alt="" height="29"
-                                            width="29"></span>
+                                            width="29" (click)="viewProgressFile(candidate.progressFile)"></span>
                                         <button *ngIf="!candidate.progressId" class="assign-child1 m-l-10 c-pointer"
                                             (click)="openAssignModal(candidate,series)">Assign</button>
                                     </div>
@@ -113,8 +109,7 @@
                             <div class="p-l-7">
                                 <div class="no-close s-list  m-text f-w-400 c-pointer flex-1"
                                     (click)="showQuestions = !showQuestions">
-                                    <span *ngIf="!series.selectedQuestionName" class="choose f-s-14">Choose
-                                        Questions</span>
+                                    <span *ngIf="!series.selectedQuestionName" class="choose f-s-14">ChooseQuestions</span>
                                     <span *ngIf="series.selectedQuestionName">{{series.selectedQuestionName}}</span>
                                 </div>
                             </div>
