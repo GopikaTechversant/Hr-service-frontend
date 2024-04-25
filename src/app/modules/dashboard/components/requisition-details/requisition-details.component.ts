@@ -19,15 +19,19 @@ export class RequisitionDetailsComponent implements OnInit {
   totalCount: any;
   lastPage: any;
   department: any;
-
+  filterStatus: Boolean = false;
+  filteredStatus: string = "Total Applicants";
   constructor(private apiService: ApiService, private datePipe: DatePipe, private tostr: ToastrService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.requestId = params['id'];
     });
+    this.filteredStatus = sessionStorage.getItem('requirement_status') ?? 'Total Applicants';
+    this.currentPage = 1;
+    this.pageSize = 10
     this.fetchcount();
-    this.fetchCandidates('');
+    this.fetchCandidates();
   }
 
   fetchcount(): void {
@@ -40,14 +44,14 @@ export class RequisitionDetailsComponent implements OnInit {
     })
   }
 
-  fetchCandidates(searchKey: string): void {
-    // this.apiService.get(`/candidate/list?search=${searchKey}&page=${this.currentPage}&limit=${this.pageSize}&serviceRequestId=${this.requestId}`).subscribe((data: any) => {
-    // this.candidateList = data?.candidates;
-    this.totalCount = 100;
-    const totalPages = Math.ceil(this.totalCount / this.pageSize);
-    this.lastPage = totalPages;
-    if (this.currentPage > totalPages) this.currentPage = totalPages;
-    // });
+  fetchCandidates(): void {
+    this.apiService.get(`/dashboard/candidate-by-status?positionId=${this.requestId}&page=${this.currentPage}&limit=${this.pageSize}&status=${this.filteredStatus.split(' ')[0].toLowerCase()}`).subscribe((data: any) => {
+      this.candidateList = data?.candidates;
+      this.totalCount = data?.totalCount;
+      const totalPages = Math.ceil(this.totalCount / this.pageSize);
+      this.lastPage = totalPages;
+      if (this.currentPage > totalPages) this.currentPage = totalPages;
+    });
   }
 
   generatePageNumbers() {
@@ -69,9 +73,25 @@ export class RequisitionDetailsComponent implements OnInit {
     return pages;
   }
 
+  selectStatusFilter(item: any): void {
+    this.filteredStatus = item;
+    sessionStorage.setItem('requirement_status', this.filteredStatus);
+    this.currentPage = 1;
+    this.pageSize = 10
+    this.fetchCandidates();
+  }
+
+  clearFilter(): void {
+    this.filteredStatus = "Total Applicants";
+    sessionStorage.setItem('requirement_status', this.filteredStatus);
+    this.currentPage = 1;
+    this.pageSize = 10
+    this.fetchCandidates();
+  }
+
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);
-    this.fetchCandidates('');
+    this.fetchCandidates();
   }
 
 

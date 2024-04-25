@@ -57,14 +57,23 @@
     padding: 10px 0px;
 }
 
+.input {
+    border: 1px solid #E9E9E9;
+    outline: none;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    width: 20%;
+    height: 30px;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
 }
 
 .table-container {
-    overflow-y: auto !important; 
-    height: calc(100vh - 512px); 
+    overflow-y: auto !important;
+    height: calc(100vh - 530px);
 }
 
 tr:nth-child(odd) {
@@ -103,7 +112,7 @@ tr {
     font-size: 16px;
     font-weight: 500;
     color: #525455;
-    width: 100%;
+    width: 70%;
     padding: 50% 350%;
 }
 
@@ -141,4 +150,30 @@ tr {
     font-size: 20px;
     color: black;
     font-weight: 500;
+}
+
+.clear-filter {
+    padding: 0px 4px;
+    border: 1px solid #3c40434d;
+    border-radius: 50%;
+}
+
+.dropdown {
+    background: white;
+    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+    max-height: 150px;
+    overflow-y: auto;
+    font-size: 14px;
+    font-weight: 400;
+    width: 100%;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 999;
+    margin-top: 5px;
+    top: 100%;
+    left: 0;
+}
+
+.dropdown :hover {
+    background-color: #eceaea;
 }

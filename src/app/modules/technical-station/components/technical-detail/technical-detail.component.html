@@ -40,7 +40,7 @@
                     <td>Name</td>
                     <td>Email</td>
                     <td>Requirement</td>
-                    <td>Current Station</td>
+                    <td>Candidate Station</td>
                     <td>Progress Status</td>
                     <td>Move Candidates</td>
                     <td>Service Status</td>
@@ -66,7 +66,7 @@
                                     {{item?.progressStatus > 0 ? 'Progress Added' : 'Pending'}}
                                 </td>
                                 <td> 
-                                    <button class="btn" *ngIf="item" (click)="onSwitchStation(item)">Move</button>  
+                                    <button class="move" *ngIf="item" (click)="onSwitchStation(item)">Move</button>  
                                 </td>
                                 <td class="f-w-500" [ngClass]="{'blue': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
                                     'red': item?.serviceStatus === 'rejected'}" [title]="item?.serviceStatus | titlecase">

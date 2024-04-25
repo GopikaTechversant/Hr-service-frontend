@@ -16,7 +16,7 @@ export class WarningBoxComponent {
     if (data) {
       this.data = data;
     }
-    this.dialogRef.updateSize('25%', '25%');
+    this.dialogRef.updateSize('25vw', '25vh');
   }
 
   closeDialog(): void {

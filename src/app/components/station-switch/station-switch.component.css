@@ -78,7 +78,8 @@
 
 .text-area {
     width: 98%;
-    height: 136px;
+    min-height: 10vh;
+    max-height: 17vh;
     border-radius: 3px;
     border: 1px solid #E2E1E1;
     background: #FFFFFF;

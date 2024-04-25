@@ -40,6 +40,7 @@
                     <td>Name</td>
                     <td>Email</td>
                     <td>Requirement</td>
+                    <td>Candidate Station</td>
                     <td>Offer Status</td>
                     <td>Move Candidate</td>
                     <td>Service Status</td>
@@ -58,8 +59,12 @@
                             </td>
                           <td class="text-wrap" [title]="item['candidate.candidateEmail']">{{ item['candidate.candidateEmail'] }}</td>
                           <td class="text-wrap" [title]="item['serviceRequest.requestName']">{{ item['serviceRequest.requestName'] }}</td>
-                          <td class="text-wrap" [title]="item?.progressStatus > 0 ? 'Offer Released' : 'Pending'">{{item?.progressStatus > 0 ? 'Offer Released' : 'Pending'}}</td>
-                          <td> <button class="btn" (click)="onSwitchStation(item)">Move</button>  
+                          <td class="text-wrap">{{item?.currentStation}}</td>
+                          <td class="text-wrap f-w-500" [title]="item?.progressStatus > 0 ? 'Offer Released' : 'Pending'" 
+                            [ngClass]="item?.progressStatus > 0  ? 'green' : 'blue'">
+                            {{item?.progressStatus > 0 ? 'Offer Released' : 'Pending'}}
+                          </td>
+                          <td> <button class="move" (click)="onSwitchStation(item)">Move</button>  
                           <td class="f-w-500 text-wrap" [ngClass]="{'blue': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
                           'red': item?.serviceStatus === 'rejected'}">{{ item?.serviceStatus === 'done' ? 'Offer Accepted' : item?.serviceStatus | titlecase}}</td>
                           <td><button class="btn" (click)="fetchDetails(item?.serviceId , item?.progressStatus)">View detail</button></td>
