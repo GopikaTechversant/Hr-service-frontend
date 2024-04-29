@@ -2,8 +2,8 @@
     <div class="d-flex head j-space p-b-10">
         <div>
             <span class="heading">Detailed Recruitment Report - </span><span class="p-l-5 recruiter-name"
-                *ngIf="selectedRecruitername === 'Choose Recruiter' "> All</span>
-            <span class="p-l-5 recruiter-name" *ngIf="selectedRecruitername !== 'Choose Recruiter'">
+                *ngIf="selectedRecruitername.trim() === ''"> All</span>
+            <span class="p-l-5 recruiter-name" *ngIf="selectedRecruitername.trim() !== ''">
                 {{selectedRecruitername}}</span>
         </div>
         <div>
@@ -11,9 +11,12 @@
                 <span class="filter p-r-10 p-t-10 p-b-5">File Recruiter</span>
                 <div class="input no-close text col-md-3 p-l-8 d-flex recruiter-drop-down j-space m-text align-center p-relative text-color"
                     (click)="recruitersListOpen = !recruitersListOpen">
-                    <div *ngIf="selectedRecruitername">{{selectedRecruitername}}</div>
-                    <div class="no-close s-list c-pointer m-b-2 flex-1 d-flex j-end sub p-r-10"><i
-                            class="no-close s-list fa fa-chevron-down s-text"></i>
+                    <div>{{selectedRecruitername ? selectedRecruitername : 'Choose Recruiter'}}</div>
+                    <div class="no-close s-list c-pointer m-b-2 flex-1 d-flex j-end sub p-r-10">
+                        <span class="f-right">
+                            <span *ngIf="selectedRecruitername && selectedRecruitername !== ''" (click)="clearFilter()" class="clear-filter">x</span>
+                            <span  (click)="recruitersListOpen = !recruitersListOpen"><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
+                        </span>  
                     </div>
                     <div class=" m-b-2 drop-list" *ngIf="recruitersListOpen">
                         <div (click)="selectedRecruiter(item.userId,item.userFullName);recruitersListOpen = !recruitersListOpen"

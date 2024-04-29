@@ -20,7 +20,7 @@ export class ReportDetailsComponent implements OnInit {
   requirementDetail: any;
   totalReport: any;
   requirementDetailData: any;
-  selectedMonth: string = 'Select Month';
+  selectedMonth: string = '';
   showMonth: boolean = false;
   currentMonth: any;
   monthValue: any;
@@ -30,7 +30,7 @@ export class ReportDetailsComponent implements OnInit {
   { month: 'November', number: '11' }, { month: 'December', number: '12' }];
   recruiters: any;
   showRecruiters: boolean = false;
-  recruiterName: string = 'Select Recruiters';
+  recruiterName: string = '';
   error: boolean = false;
   interviewDetails: any;
   currentPage: number = 1;
@@ -76,9 +76,9 @@ export class ReportDetailsComponent implements OnInit {
     this.apiService.get(`/report/over-all-interview-status?page=${this.currentPage}&limit=${this.pageSize}`).subscribe((res: any) => {
       if (res?.data) {
         this.interviewDetails = res?.data;
-        this.totalCount = res?.toatlCount;        
+        this.totalCount = res?.toatlCount;
         const totalPages = Math.ceil(this.totalCount / this.pageSize);
-        this.lastPage = totalPages;        
+        this.lastPage = totalPages;
         if (this.currentPage > totalPages) this.currentPage = totalPages;
       }
     })
@@ -147,6 +147,18 @@ export class ReportDetailsComponent implements OnInit {
     this.recruiterName = recruiter;
     this.reportUserId = recruiterId;
     this.showRecruiters = false;
+    this.fetchDetails();
+  }
+
+  clearFilter(item: string): void {
+    if (item === 'month') {
+      this.reportMonth = new Date().getMonth() + 1;
+      this.selectedMonth = "";
+    }
+    if (item === 'recruiter') {
+      this.recruiterName = "";
+      this.reportUserId = "";
+    }
     this.fetchDetails();
   }
 

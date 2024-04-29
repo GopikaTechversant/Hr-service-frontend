@@ -26,22 +26,21 @@ export class CandidateListComponent {
   lastPage: any;
   userCount: any;
   requestId: any;
-  constructor(private apiService: ApiService, private router: Router, private dialog: MatDialog,private toastr : ToastrService) { }
+  constructor(private apiService: ApiService, private router: Router, private dialog: MatDialog, private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.requestId = this.positionId ? this.positionId : ' ';
-    this.fetchCandidates('');
+    this.requestId = this.positionId ? this.positionId : '';
+    this.fetchCandidates();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.positionId) {
       this.requestId = this.positionId;
-      this.fetchCandidates('');
+      this.fetchCandidates();
     }
   }
 
-  fetchCandidates(searchKey: string): void {
-    this.searchKeyword = searchKey;
+  fetchCandidates(): void {
     this.apiService.get(`/candidate/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.pageSize}&serviceRequestId=${this.requestId}`).subscribe((data: any) => {
       this.data = data;
       this.candidateList = [];
@@ -74,12 +73,16 @@ export class CandidateListComponent {
 
   searchCandidate(search: string): void {
     this.searchKeyword = search;
-    this.fetchCandidates(this.searchKeyword);
+    this.currentPage = 1;
+    this.pageSize = 10;
+    this.fetchCandidates();
   }
 
   clearFilter(): void {
     this.searchKeyword = '';
-    this.fetchCandidates(this.searchKeyword);
+    this.currentPage = 1;
+    this.pageSize = 10;
+    this.fetchCandidates();
   }
 
 
@@ -102,7 +105,9 @@ export class CandidateListComponent {
     dialogRef.componentInstance.onDeleteSuccess.subscribe(() => {
       this.apiService.post(`/candidate/remove-candidate`, { candidateId: this.deleteCandidateId }).subscribe({
         next: (res: any) => {
-          this.fetchCandidates('');
+          this.currentPage = 1;
+          this.pageSize = 10;
+          this.fetchCandidates();
         },
         error: (error) => {
           this.toastr.error(error?.error?.message ? error?.error?.message : 'Unable to Delete candidates');
@@ -118,13 +123,17 @@ export class CandidateListComponent {
       height: '980px'
     })
     dialogRef.componentInstance.onEditSuccess.subscribe(() => {
-      this.fetchCandidates('');
+      this.currentPage = 1;
+      this.pageSize = 10;
+      this.fetchCandidates();
     })
   }
 
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);
-    this.fetchCandidates('');
+    this.currentPage = 1;
+    this.pageSize = 10;
+    this.fetchCandidates();
   }
 
 }

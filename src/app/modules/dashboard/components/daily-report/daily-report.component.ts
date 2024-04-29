@@ -89,6 +89,8 @@ export class DailyReportComponent implements OnInit {
     this.recruiterName = recruiter;
     this.reportUserId = recruiterId;
     this.showRecruiters = false;
+    this.currentPage = 1;
+    this.pageSize = 10;
     this.fetchDetails();
   }
 
@@ -96,6 +98,8 @@ export class DailyReportComponent implements OnInit {
     let date = new Date(event?.value);
     if (range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
     if (range == 'endDate') this.endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    this.currentPage = 1;
+    this.pageSize = 10;
     this.fetchDetails();
   }
 

@@ -15,6 +15,17 @@
     line-height: 35.55px;
 }
 
+.loader-parent {
+    position: absolute;
+    left: 53%;
+    z-index: 9;
+    top: 37%;
+}
+
+.loader-parent img {
+    width: 150px;
+}
+
 .parent {
     column-gap: 18px;
     display: flex;

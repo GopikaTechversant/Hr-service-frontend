@@ -46,6 +46,7 @@ export class ServiceRequestComponent implements OnInit {
   openDesignation: boolean = false;
   selectedDesignation: string = '';
   selectedDesignationId: any;
+  loader: boolean = false;
   constructor(private toastr: ToastrServices, private apiService: ApiService) { }
 
   @HostListener('window:beforeunload', ['$event'])
@@ -185,6 +186,7 @@ export class ServiceRequestComponent implements OnInit {
   }
 
   submitClick(): void {
+    this.loader = true;
     const skillName = document.getElementById('skillSearch') as HTMLInputElement;
     this.skillNameValue = skillName.value;
     const stationIds = this.selectedStations.map((station: { stationId: any; }) => station.stationId);
@@ -199,15 +201,18 @@ export class ServiceRequestComponent implements OnInit {
       requestTeam: this.selectedTeamName,
       requestVacancy: this.vacancy.nativeElement.value,
       requestFlowStations: stationIds,
-      // requestServiceId: this.selectedId,
     };
     this.apiService.post(`/service-request/create`, requestData).subscribe((res) => {
+      this.loader = false;
       this.toastr.success("Requirement created Successfully");
       this.resetFormAndState();
     }, (err) => {
+      this.loader = false;
       if (err?.status === 500) this.toastr.error("Internal Server Error")
       else {
-        this.toastr.warning(err?.message ? err?.message : "Unable to create requirement");
+        this.loader = false;
+        // this.toastr.warning(err?.message ? err?.message : "Unable to create requirement Please try again");
+        this.toastr.warning("Unable to create requirement Please try again");
       }
     })
 

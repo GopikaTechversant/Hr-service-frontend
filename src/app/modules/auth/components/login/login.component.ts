@@ -53,11 +53,11 @@ export class LoginComponent implements OnInit {
       this.apiService.post(`/user/login`, this.loginForm.value).subscribe(
         (response: any) => {
           if (response?.token) {
+            this.tostr.success('Login Successfully');
             localStorage.setItem('userToken', response?.token);
             localStorage.setItem('userRole', response?.user?.userRole);
             localStorage.setItem('userId', response?.user?.userId);
             this.router.navigate(['/dashboard']);
-            this.tostr.success('Login Successfully');
           }
         },
         (error) => {

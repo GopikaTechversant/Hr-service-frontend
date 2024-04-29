@@ -18,18 +18,15 @@ import { ApiService } from 'src/app/services/api.service';
 export class InterviewCountComponent implements OnInit {
   chart: any;
   displayDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
-  length: any = 20;
   pageSize = 10;
-  pageIndex = 1;
-  showFirstLastButtons = true;
   countArray: any[] = [];
   sixMonthCount: any;
   labels: any;
   dataSet: any;
   teamDetails: any;
-  showDepartment :boolean = false;
+  showDepartment: boolean = false;
   teamId: any = '';
-  teamName : string = 'Choose Department';
+  teamName: string = '';
   currentPage: number = 1;
   lastPage: any;
   userCount: any;
@@ -52,9 +49,9 @@ export class InterviewCountComponent implements OnInit {
   fetchInterviewCounts(): void {
     this.apiService.get(`/dashboard/interview-count?date=${this.displayDate}&page=${this.currentPage}&limit=${this.pageSize}`).subscribe((count: any) => {
       this.countArray = count?.data;
-      this.totalCount = count?.totalCount;        
+      this.totalCount = count?.totalCount;
       const totalPages = Math.ceil(this.totalCount / this.pageSize);
-      this.lastPage = totalPages;        
+      this.lastPage = totalPages;
       if (this.currentPage > totalPages) this.currentPage = totalPages;
     })
   }
@@ -90,9 +87,9 @@ export class InterviewCountComponent implements OnInit {
     })
   }
 
-  fetchDepartment():void{
+  fetchDepartment(): void {
     this.apiService.get(`/service-request/team`).subscribe((res: any) => {
-      if(res?.data){
+      if (res?.data) {
         this.teamDetails = res?.data
       }
     })
@@ -102,6 +99,11 @@ export class InterviewCountComponent implements OnInit {
     this.teamName = team;
     this.teamId = teamId;
     this.showDepartment = false;
+    this.fetchBarchartDetails();
+  }
+
+  clearFilter(): void {
+    this.teamName = "";
     this.fetchBarchartDetails();
   }
 
@@ -160,13 +162,9 @@ export class InterviewCountComponent implements OnInit {
   dateChange(event: any): void {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    this.currentPage = 1;
+    this.pageSize = 10;
     this.fetchInterviewCounts();
-  }
-
-  handlePageEvent(event: any) {
-    this.length = event.length;
-    this.pageSize = event.pageSize;
-    this.pageIndex = event.pageIndex;
   }
 
   onPageChange(pageNumber: number): void {

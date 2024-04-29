@@ -2,6 +2,9 @@
     <div class="heading">
         <span>Interview Details</span>
     </div>
+    <div *ngIf="loader" class="loader-parent">
+        <img src="assets/gif/loader.gif">
+    </div>
     <div class="d-flex j-space parent">
         <div class="child d-flex m-b-10" #recruiterNameDiv>
             <span class="label m-b-4">Recruiter Name</span>

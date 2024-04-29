@@ -24,10 +24,9 @@
             <span class="p-8"> : {{data?.requirement}}</span>
             <span class="p-8"> : {{data?.currentStation ? data?.currentStation : 'NIL'}}</span>
             <span class="p-8 p-relative"> :
-                <span class="input c-pointer p-5 p-l-2 no-close p-relative">
-                    <span class="no-close p-l-10" (click)="showStations = !showStations">{{SelectedStation.trim() === ''
-                        ? 'Select Station' : SelectedStation | titlecase}}</span>
-                    <span class="f-right" (click)="showStations = !showStations"><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
+                <span class="input c-pointer p-5 p-l-2 no-close p-relative" (click)="showStations = !showStations">
+                    <span class="no-close p-l-10">{{SelectedStation.trim() === '' ? 'Select Station' : SelectedStation | titlecase}}</span>
+                    <span class="f-right"><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
                     <div class="dropdown c-pointer no-close'" *ngIf="showStations">
                         <span class="d-flex p-0" *ngFor="let item of stationsList"
                             (click)="selectStation(item?.stationName , item?.stationId);showStations = !showStations">
@@ -43,7 +42,7 @@
     <span>Comments</span>
 </div>
 <div class="m-10">
-    <textarea class="text-area" id="feedback" placeholder=""></textarea>
+    <textarea class="text-area" id="comment" placeholder=""></textarea>
     <div class="btn-parent">
         <button class="c-pointer btn-reject">Cancel</button>
         <button class="btn c-pointer" (click)="submitClick()">Submit</button>

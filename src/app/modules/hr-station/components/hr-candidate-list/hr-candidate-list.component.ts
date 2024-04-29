@@ -21,7 +21,8 @@ export class HrCandidateListComponent implements OnInit {
   Status: any = [
     { status: 'pending' },
     { status: 'rejected' },
-    { status: 'done' }
+    { status: 'done' },
+    { status: 'moved' }
   ]
   filteredStatus: any = '';
   filterStatus: boolean = false;
@@ -150,8 +151,6 @@ export class HrCandidateListComponent implements OnInit {
   viewCandidateDetail(item: any, status: any): void {
     const dialogRef = this.dialog.open(HrCandidateDetailComponent, {
       data: { candidateDetails: item, offerStatus: status },
-      width: '600px',
-      height: '300px'
     })
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       this.fetchList();
@@ -164,25 +163,22 @@ export class HrCandidateListComponent implements OnInit {
   }
 
   onSwitchStation(candidate: any): void {
-    if (candidate?.serviceStatus === 'pending' && candidate?.progressStatus > 0) {
+    if (candidate?.serviceStatus === 'pending' && candidate?.progressStatus === '0') {
       const userId = localStorage.getItem('userId');
       const dialogRef = this.dialog.open(StationSwitchComponent, {
         data: {
-          userId: userId, 
+          userId: userId,
           name: candidate['candidate.candidateFirstName'] + ' ' + candidate['candidate.candidateLastName'],
           serviceId: candidate?.serviceId,
           currentStation: 'Hr Manager',
           currentStationId: '5',
-          requirement : candidate['serviceRequest.requestName']
+          requirement: candidate['serviceRequest.requestName']
         },
-        width: '700px',
-        height: '500px'
       })
-
       dialogRef.afterClosed().subscribe(() => {
         this.fetchList();
       });
-    }else{
+    } else {
       const dialogRef = this.dialog.open(WarningBoxComponent, {})
       dialogRef.afterClosed().subscribe(() => {
         this.fetchList();

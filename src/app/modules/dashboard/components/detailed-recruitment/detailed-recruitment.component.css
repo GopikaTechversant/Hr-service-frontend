@@ -109,6 +109,12 @@ table {
     right: 11%;
 }
 
+.clear-filter {
+    padding: 0px 4px;
+    border: 1px solid #3c40434d;
+    border-radius: 50%;
+}
+
 .drop-list {
     background: white;
     box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
@@ -116,7 +122,7 @@ table {
     overflow-y: auto;
     font-size: 14px;
     font-weight: 400;
-    width: 292px;
+    width: 100%;
     padding: 5px;
     border-radius: 4px;
     position: absolute;

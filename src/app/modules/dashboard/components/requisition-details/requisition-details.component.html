@@ -21,11 +21,11 @@
             <div class="input c-pointer p-t-10 no-close p-relative">
                 <span class="no-close p-l-10" (click)="filterStatus = !filterStatus">{{filteredStatus.trim() === '' ? 'Filter by Status' : filteredStatus | titlecase}}</span>
                 <span class="f-right">
-                    <span *ngIf="filteredStatus && filteredStatus !== ' '" (click)="clearFilter()" class="clear-filter">x</span>
+                    <span *ngIf="filteredStatus && filteredStatus !== 'Total Applicants'" (click)="clearFilter()" class="clear-filter">x</span>
                     <span  (click)="filterStatus = !filterStatus"><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
                 </span>    
                 <div class="dropdown c-pointer no-close'" *ngIf="filterStatus" >
-                    <span class="d-flex p-0" *ngFor="let type of lists" (click)="selectStatusFilter(type?.name);filterStatus = !filterStatus">
+                    <span class="d-flex p-0" *ngFor="let type of lists.slice(1)" (click)="selectStatusFilter(type?.name);filterStatus = !filterStatus">
                        <span class="p-l-10 p-5">{{type?.name | titlecase}}</span> 
                     </span>
                 </div>
@@ -45,14 +45,14 @@
                 </tr>
                 <ng-container *ngFor="let item of candidateList">
                     <tr class="c-pointer details">
-                        <td>{{item?.candidateFirstName}} {{item?.candidateLastName}}</td>
-                        <td class="text-wrap">{{item?.candidateEducation}}</td>
-                        <td class="text-wrap">{{item?.candidateExperience}} years</td>
-                        <td class="text-wrap">{{item?.candidatePreviousOrg ? item?.candidatePreviousOrg : 'Nil'}}</td>
-                        <td class="text-wrap">{{item?.candidatePreviousDesignation ? item?.candidatePreviousDesignation : 'Nil'}}</td>
-                        <td class="text-wrap"> {{item?.candidateCity ? item?.candidateCity : 'Nil'}}</td>
-                        <td>{{item?.candidateStation ? item?.candidateStation : 'Not Updated'}}</td>
-                        <td>{{item?.candidateInterviewStatus ? item?.candidateInterviewStatus : 'Nil'}}</td>
+                        <td class="text-wrap" [title]="item?.candidateFirstName + '' + item?.candidateLastName">{{item?.candidateFirstName}} {{item?.candidateLastName}}</td>
+                        <td class="text-wrap" [title]="item?.candidateEducation">{{item?.candidateEducation}}</td>
+                        <td class="text-wrap" [title]="item?.candidateExperience ? item?.candidateExperience : 'Fresher'">{{item?.candidateExperience ? item?.candidateExperience + 'years': 'Fresher' }}</td>
+                        <td class="text-wrap" [title]="item?.candidatePreviousOrg ? item?.candidatePreviousOrg : 'Nil'">{{item?.candidatePreviousOrg ? item?.candidatePreviousOrg : 'Nil'}}</td>
+                        <td class="text-wrap" [title]="item?.candidatePreviousDesignation ? item?.candidatePreviousDesignation : 'Nil'">{{item?.candidatePreviousDesignation ? item?.candidatePreviousDesignation : 'Nil'}}</td>
+                        <td class="text-wrap" [title]="item?.candidateCity ? item?.candidateCity : 'Nil'"> {{item?.candidateCity ? item?.candidateCity : 'Nil'}}</td>
+                        <td class="text-wrap" [title]="item?.candidateStation ? item?.candidateStation : 'Not Updated'">{{item?.candidateStation ? item?.candidateStation : 'Not Updated'}}</td>
+                        <td class="text-wrap" [title]="item?.candidateInterviewStatus ? item?.candidateInterviewStatus : 'Nil'">{{item?.candidateInterviewStatus ? (item?.candidateInterviewStatus | titlecase) : 'Nil'}}</td>
                     </tr>
                 </ng-container>
                 <div *ngIf="candidateList?.length === 0 || !candidateList" class="no-data"> No Data Found</div>
