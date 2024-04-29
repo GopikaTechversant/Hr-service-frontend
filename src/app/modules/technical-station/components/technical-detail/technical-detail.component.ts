@@ -26,7 +26,8 @@ export class TechnicalDetailComponent implements OnInit {
   Status: any = [
     { status: 'pending' },
     { status: 'rejected' },
-    { status: 'done' }
+    { status: 'done' },
+    { status: 'moved' }
   ]
   filteredStatus: any = '';
   candidateStatus: string = 'Choose Candidate Status';
@@ -203,20 +204,18 @@ export class TechnicalDetailComponent implements OnInit {
       const userId = localStorage.getItem('userId');
       const dialogRef = this.dialog.open(StationSwitchComponent, {
         data: {
-          userId: userId, name: candidate['candidate.candidateFirstName'] + ' ' + candidate['candidate.candidateLastName'],
+          userId: userId, 
+          name: candidate['candidate.candidateFirstName'] + ' ' + candidate['candidate.candidateLastName'],
           serviceId: candidate?.serviceId,
           currentStation: candidate?.currentStation,
           currentStationId: this.stationId,
-          requirement : candidate['serviceRequest.requestName']
+          requirement: candidate['serviceRequest.requestName']
         },
-        width: '700px',
-        height: '500px'
       })
-
       dialogRef.afterClosed().subscribe(() => {
         this.fetchList();
       });
-    }else{
+    } else {
       const dialogRef = this.dialog.open(WarningBoxComponent, {})
       dialogRef.afterClosed().subscribe(() => {
         this.fetchList();

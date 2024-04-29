@@ -34,7 +34,7 @@ import { WarningBoxComponent } from './components/warning-box/warning-box.compon
     BrowserAnimationsModule, 
     MaterialModule,
     ToastrModule.forRoot({
-      timeOut: 3000,
+      timeOut: 2000,
       positionClass: 'toast-top-right',
       preventDuplicates: true
     }),],

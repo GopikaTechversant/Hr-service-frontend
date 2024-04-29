@@ -20,7 +20,7 @@ export class DetailedRecruitmentComponent implements OnInit {
   candidateList: any[] = [];
   recruitersList: any[] = [];
   recruitersListOpen: boolean = false;
-  selectedRecruitername: string = 'Choose Recruiter';
+  selectedRecruitername: string = '';
   selectedRecruiterId: any;
   currentPage: number = 1;
   lastPage: any;
@@ -37,17 +37,17 @@ export class DetailedRecruitmentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchCandidateList('');
+    this.selectedRecruiterId = '';
+    this.fetchCandidateList();
     this.fetchRecruitersList();
   }
 
-  fetchCandidateList(recruiter: string): void {
-
-    this.apiService.get(`/dashboard/requirement-report?recuriter=${recruiter}&page=${this.currentPage}&limit=${this.pageSize}`).subscribe((res: any) => {
+  fetchCandidateList(): void {
+    this.apiService.get(`/dashboard/requirement-report?recuriter=${this.selectedRecruiterId}&page=${this.currentPage}&limit=${this.pageSize}`).subscribe((res: any) => {
       this.candidateList = res?.userRequirementReport;
-      this.totalCount = res?.requirementCount;        
+      this.totalCount = res?.requirementCount;
       const totalPages = Math.ceil(this.totalCount / this.pageSize);
-      this.lastPage = totalPages;        
+      this.lastPage = totalPages;
       if (this.currentPage > totalPages) this.currentPage = totalPages;
     })
   }
@@ -71,6 +71,14 @@ export class DetailedRecruitmentComponent implements OnInit {
     return pages;
   }
 
+  clearFilter(): void {
+    this.selectedRecruitername = "";
+    this.selectedRecruiterId = "";
+    this.currentPage = 1;
+    this.pageSize = 7;
+    this.fetchCandidateList()
+  }
+
   fetchRecruitersList(): void {
     this.apiService.get(`/dashboard/recruiter-list`).subscribe((res: any) => {
       if (res?.data) {
@@ -83,12 +91,14 @@ export class DetailedRecruitmentComponent implements OnInit {
     this.selectedRecruitername = name;
     this.selectedRecruiterId = id;
     this.recruitersListOpen = false;
-    this.fetchCandidateList(this.selectedRecruiterId)
+    this.currentPage = 1;
+    this.pageSize = 7;
+    this.fetchCandidateList()
   }
 
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);
-    this.fetchCandidateList('');
+    this.fetchCandidateList();
   }
 
 }

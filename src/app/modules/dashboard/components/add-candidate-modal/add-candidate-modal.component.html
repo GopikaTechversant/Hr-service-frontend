@@ -1,5 +1,8 @@
 <div class="main p-l-20 p-r-20">
     <span class="heading  m-t-12">Add Candidates</span>
+    <div *ngIf="loader" class="loader-parent">
+        <img src="assets/gif/loader.gif">
+    </div>
     <form [formGroup]="candidateForm" (ngSubmit)="submitClick(); $event.preventDefault()" enctype="multipart/form-data">
         <div class="d-flex parent p-t-10">
             <div class="child d-flex m-b-10">

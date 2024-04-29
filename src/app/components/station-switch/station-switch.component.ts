@@ -38,9 +38,8 @@ export class StationSwitchComponent implements OnInit {
 
   fetchStations(): void {
     this.apiService.get(`/user/stations`).subscribe((res: any) => {
-      this.stationsList = res?.data.slice(1).filter((station: any) => station.stationId.toString() !== this.data.currentStationId);
+      this.stationsList = res?.data.slice(1).filter((station: any) => station?.stationId.toString() !== this.data?.currentStationId);
     });
-
   }
 
   selectStation(station: string, id: any): void {
@@ -48,27 +47,30 @@ export class StationSwitchComponent implements OnInit {
     this.stationId = id;
   }
 
-
   closeDialog(): void {
     this.dialogRef.close();
   }
 
   submitClick(): void {
-    let payload = {
-      serviceId: this.data?.serviceId,
-      stationId: this.stationId,
-      assigneeId: this.data?.userId,
-      date: this.today,
-      currentStation: this.data?.currentStationId
-    }
-    this.apiService.post(`/user/station-switch`, payload).subscribe({
-      next: (res: any) => {
-        this.closeDialog();
-      },
-      error: (error) => {
-        this.tostr.error('Error Moving Candidate');
+    const commentElement = document.getElementById('comment') as HTMLInputElement;
+    if (commentElement?.value.trim() !== '') {
+      let payload = {
+        serviceId: this.data?.serviceId,
+        stationId: this.stationId,
+        assigneeId: this.data?.userId,
+        date: this.today,
+        currentStation: this.data?.currentStationId,
+        comment: commentElement?.value
       }
-    });
+      this.apiService.post(`/user/station-switch`, payload).subscribe({
+        next: (res: any) => {
+          this.closeDialog();
+        },
+        error: (error) => {
+          this.tostr.error('Error Moving Candidate');
+        }
+      });
+    } else this.tostr.warning('Please add a comment');
   }
 }
 

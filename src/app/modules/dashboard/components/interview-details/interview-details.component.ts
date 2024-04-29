@@ -64,14 +64,15 @@ export class InterviewDetailsComponent implements OnInit {
   selectedModeId: any;
   showModeList: boolean = false;
   scheduleStatus: boolean = false;
+  loader: boolean = false;
   constructor(private datePipe: DatePipe, private http: HttpClient, private tostr: ToastrServices, private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.today = new Date();
     this.fetchPosition();
     this.fetchMode();
-    if (history.state.candidate) {
-      this.candidate = history.state.candidate;
+    if (history?.state?.candidate) {
+      this.candidate = history?.state?.candidate;
       this.positionName = this.candidate['reqServiceRequest.requestName'];
       this.positionId = this.candidate?.candidatesAddingAgainst;
       this.scheduleStatus = true;
@@ -248,6 +249,7 @@ export class InterviewDetailsComponent implements OnInit {
   }
 
   submit(): void {
+    this.loader =true;
     const noticeperiod = document.getElementById('noticePeriod') as HTMLInputElement;
     this.noticeperiodvalue = noticeperiod?.value ? noticeperiod?.value : this.noticeperiodvalue;
     const comments = document.getElementById('comments') as HTMLInputElement;
@@ -270,13 +272,14 @@ export class InterviewDetailsComponent implements OnInit {
       rescheduleStatus: this.rescheduledStatusValue,
       comments: this.commentValue
     }
-
     this.apiService.post(`/screening-station/interview-details`, payload).subscribe({
       next: (res: any) => {
+        this.loader =false ;
         this.tostr.success('Interview Scheduled Successfully');
         this.resetFormAndState();
       },
       error: (error) => {
+        this.loader =false ;
         if (error?.status === 500) this.tostr.error("Internal Server Error");
         else this.tostr.warning("Unable to update");
       }

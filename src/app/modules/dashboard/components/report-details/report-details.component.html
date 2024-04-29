@@ -50,8 +50,11 @@
                     <span class="filter p-r-10 p-t-10">Filter Month</span>
                     <span class="c-pointer input-filter p-relative no-close" (click)="showMonth = !showMonth">
                         <div class="input d-flex j-space p-5 p-b-0 no-close">
-                            {{selectedMonth}}
-                            <i class="fa fa-chevron-down filter-icon"></i>
+                            {{selectedMonth ? selectedMonth : 'Select Month'}}
+                            <span class="f-right">
+                                <span *ngIf="selectedMonth && selectedMonth !== ''" (click)="clearFilter('month')" class="clear-filter">x</span>
+                                <span  (click)="showMonth = !showMonth"><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
+                            </span>  
                             <div *ngIf="showMonth" class="p-absolute dropdown no-close">
                                 <div class="month-column" *ngFor="let item of monthData"
                                     (click)="selectMonth(item?.number, item?.month);showMonth = !showMonth">
@@ -66,9 +69,11 @@
                     <span class="c-pointer input-filter p-relative no-close c-pointer"
                         (click)="showRecruiters = !showRecruiters">
                         <div class="input d-flex j-space p-5 p-b-0 no-close">
-                            {{recruiterName}}
-                            <i class="fa fa-chevron-down filter-icon"></i>
-                            <div *ngIf="showRecruiters" class="p-absolute dropdown no-close">
+                            {{recruiterName ? recruiterName : 'Select Recruiter'}}
+                            <span class="f-right">
+                                <span *ngIf="recruiterName && recruiterName !== ''" (click)="clearFilter('recruiter')" class="clear-filter">x</span>
+                                <span  (click)="showRecruiters = !showRecruiters"><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
+                            </span>                             <div *ngIf="showRecruiters" class="p-absolute dropdown no-close">
                                 <div class="month-column" *ngFor="let item of recruiters"
                                     (click)="selectRecruiter(item?.userFullName , item?.userId);showRecruiters = !showRecruiters">
                                     {{item?.userFullName}}
