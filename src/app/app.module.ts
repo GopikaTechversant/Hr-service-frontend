@@ -14,6 +14,7 @@ import { MaterialModule } from './modules/material/material.module';
 import { LogoutModalComponent } from './components/logout-modal/logout-modal.component';
 import { StationSwitchComponent } from './components/station-switch/station-switch.component';
 import { WarningBoxComponent } from './components/warning-box/warning-box.component';
+import { FileUploadS3Component } from './components/file-upload-s3/file-upload-s3.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { WarningBoxComponent } from './components/warning-box/warning-box.compon
     LogoutModalComponent,
     StationSwitchComponent,
     WarningBoxComponent,
+    FileUploadS3Component,
   ],
   imports: [
     BrowserModule,
