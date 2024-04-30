@@ -40,6 +40,7 @@ export class ReportDetailsComponent implements OnInit {
   today: any;
   lastPage: any;
   totalCount: any;
+  loader:boolean = false;
 
   constructor(private tostr: ToastrServices, private apiService: ApiService) { }
   onBodyClick(event: MouseEvent): void {
@@ -104,36 +105,40 @@ export class ReportDetailsComponent implements OnInit {
   }
 
   fetchDetails(): void {
-    this.apiService.get(`/report/month-report-data?month=${this.currentYear}-${this.reportMonth}&userId=${this.reportUserId}`)
-      .subscribe((res: any) => {
-        if (res) {
-          this.userRequirement = [];
-          this.userRequirement = res?.data;
-          this.totalReport = res?.totalReportMonth[0];
-          for (let requirement of this.userRequirement) {
-            this.requirementDetail = requirement;
-            if (this.userRequirement.length > 0) {
-              this.error = false;
-              const requirementDetail = this.userRequirement[this.userRequirement.length - 1];
-              this.requirementDetailData = [
-                requirementDetail.sourcedScreened ?? '0',
-                requirementDetail.candidateContacted ?? '0',
-                requirementDetail.candidatesInterested ?? '0',
-                requirementDetail.interviewScheduled ?? '0',
-                requirementDetail.offerReleased ?? '0'
-              ];
-              this.createChart();
-            } else this.requirementDetailData = ['0', '0', '0', '0', '0'];
-          }
+    this.reportUserId = localStorage.getItem('userId');
+    this.apiService.get(`/report/month-report-data?month=${this.currentYear}-${this.reportMonth}&userId=${this.reportUserId}`).subscribe((res: any) => {
+      if (res?.data) {
+        this.userRequirement = [];
+        this.userRequirement = res?.data;
+        this.totalReport = res?.totalReportMonth[0];
+        for (let requirement of this.userRequirement) {
+          this.requirementDetail = requirement;
+          if (this.userRequirement.length > 0) {
+            this.error = false;
+            const requirementDetail = this.userRequirement[this.userRequirement.length - 1];
+            this.requirementDetailData = [
+              requirementDetail.sourcedScreened ?? '0',
+              requirementDetail.candidateContacted ?? '0',
+              requirementDetail.candidatesInterested ?? '0',
+              requirementDetail.interviewScheduled ?? '0',
+              requirementDetail.offerReleased ?? '0'
+            ];
+            this.createChart();
+          } else this.requirementDetailData = ['0', '0', '0', '0', '0'];
         }
-      }, (error) => {
-        if (error?.status === 500) this.tostr.error("Internal Server Error");
-        else {
-          this.tostr.warning(error?.error?.message ? error?.error?.message : "Unable to fetch details");
-          this.error = true;
-        }
-        if (this.chart) this.chart.destroy();
-      });
+      }
+    }, (error) => {
+      if (error?.status === 500) {
+        this.tostr.error("Internal Server Error");
+      } else {
+        this.tostr.warning("No data found due to invalid request");
+        this.userRequirement = [];
+        this.error = true;
+      }
+      if (this.chart) {
+        this.chart.destroy();
+      }
+    });
   }
 
   selectMonth(monthNumber: string, month: string): void {
@@ -166,7 +171,6 @@ export class ReportDetailsComponent implements OnInit {
     this.currentPage = Math.max(1, pageNumber);
     this.fetchInterviewStatus();
   }
-
 
   getCurrentMonth(): void {
     this.currentMonth = this.monthData.find(item => item.number == this.reportMonth);
