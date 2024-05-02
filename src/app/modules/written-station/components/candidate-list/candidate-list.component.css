@@ -47,7 +47,7 @@
 
 .title-left {
   font-size: 30px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 36px;
   letter-spacing: 0em;
   text-align: left;
@@ -125,7 +125,24 @@
 
 .main {
   background-color: #F7F7F7;
-  width: 100%;
+  min-height: calc(100vh - 170px);
+}
+
+.loader-parent {
+  position: absolute;
+  left: 53%;
+  z-index: 9;
+}
+
+.loader-parent img {
+  width: 100px;
+}
+
+.data {
+  position: absolute;
+  left: 52%;
+  top: 34%;
+  z-index: 9;
 }
 
 .box {
@@ -141,6 +158,7 @@
 
 .page {
   margin: 10px;
+  background-color: white;
 }
 
 .current-page {
@@ -148,4 +166,10 @@
   color: #FFFFFF;
   height: 26px;
   width: 26px;
+}
+
+.dot {
+  font-size: 20px;
+  color: black;
+  font-weight: 500;
 }

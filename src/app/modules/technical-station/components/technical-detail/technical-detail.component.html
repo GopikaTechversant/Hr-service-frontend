@@ -46,7 +46,7 @@
                     <td>Service Status</td>
                     <td>More Detail</td>
                 </tr>
-                <div *ngIf="loader" class="loader-parent">
+                <div *ngIf="loader && !initialLoader" class="loader-parent">
                     <img src="assets/gif/loader.gif">
                 </div>
                 <ng-container *ngIf="candidateList?.length > 0">
@@ -60,7 +60,6 @@
                                 <td class="text-wrap" [title]="item['candidate.candidateEmail'] ">{{ item['candidate.candidateEmail'] }}</td>
                                 <td class="text-wrap" [title]="item['serviceRequest.requestName']">{{ item['serviceRequest.requestName'] }}</td>
                                 <td class="text-wrap" [title]="item?.currentStation | titlecase">{{item?.currentStation | titlecase}}</td>                    
-
                                 <td class="text-wrap f-w-500" [title]="item?.progressStatus > 0 ? 'Progress Added' : 'Pending'"
                                     [ngClass]="item?.progressStatus > 0  ? 'green' : 'blue'">
                                     {{item?.progressStatus > 0 ? 'Progress Added' : 'Pending'}}
@@ -77,8 +76,26 @@
                         </ng-container>
                     </ng-container>
                 </ng-container>
-                <div *ngIf="(this.candidateList[0]?.length === 0 || !this.candidateList[0]) && !loader " class="data">
+                <div *ngIf="(candidateList[0]?.length === 0 || !candidateList[0]) && !loader && !initialLoader " class="data">
                     No Data Found
+                </div>
+                <div *ngIf="initialLoader"  class="row m-l-20 initial-loader">
+                    <div *ngFor="let item of [0,1,2,3,4,5]" class="col-md-6 m-t-10 m-b-10">
+                        <div class="gravatar-title">
+                            <div>
+                                <ngx-skeleton-loader [theme]="{
+                                width: '900px',
+                                'border-radius': '0',
+                                height: '15px',
+                                'margin-bottom': '10px'
+                                }"></ngx-skeleton-loader>
+                            </div>
+                            <div>
+                                <ngx-skeleton-loader [theme]="{ width: '1300px', 'border-radius': '0', height: '15px' }">
+                                </ngx-skeleton-loader>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </table>
         </div>

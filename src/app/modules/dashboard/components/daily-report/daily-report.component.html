@@ -50,13 +50,16 @@
         </div> -->
     </div>
     <div class="table-container m-b-0">
-        <div class="no-data" *ngIf="!userRequirement || userRequirement?.length === 0">No Data Found</div>
+        <div class="no-data" *ngIf="(!userRequirement || userRequirement?.length === 0) && !initialLoader && !loader">No Data Found</div>
         <table class="table" *ngIf="userRequirement?.length > 0">
             <tr class="table-header p-b-10">
                 <ng-container *ngFor="let key of  recruiterKeys">
                     <td>{{key}}</td>
                 </ng-container>
             </tr>
+            <div *ngIf="loader && !initialLoader" class="loader-parent">
+                <img src="assets/gif/loader.gif">
+            </div>
             <ng-container *ngIf="userRequirement?.length > 0 ">
                 <tr class="c-pointer details" *ngFor="let item of userRequirement">
                     <ng-container *ngFor="let key of  recruiterKeys">
@@ -64,6 +67,24 @@
                     </ng-container>
                 </tr>
             </ng-container>
+            <div *ngIf="initialLoader"  class="row m-l-20 initial-loader">
+                <div *ngFor="let item of [0,1,2,3,4,5]" class="col-md-6 m-t-10 m-b-10">
+                    <div class="gravatar-title">
+                        <div>
+                            <ngx-skeleton-loader [theme]="{
+                            width: '900px',
+                            'border-radius': '0',
+                            height: '15px',
+                            'margin-bottom': '10px'
+                            }"></ngx-skeleton-loader>
+                        </div>
+                        <div>
+                            <ngx-skeleton-loader [theme]="{ width: '1300px', 'border-radius': '0', height: '15px' }">
+                            </ngx-skeleton-loader>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </table>     
     </div>
     <div class="page d-flex j-end p-10">

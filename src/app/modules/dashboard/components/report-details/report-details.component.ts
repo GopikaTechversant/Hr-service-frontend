@@ -41,7 +41,7 @@ export class ReportDetailsComponent implements OnInit {
   lastPage: any;
   totalCount: any;
   loader:boolean = false;
-
+  initialLoader:boolean = false;
   constructor(private tostr: ToastrServices, private apiService: ApiService) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -52,6 +52,7 @@ export class ReportDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.initialLoader = true;
     this.today = new Date()
     this.reportUserId = localStorage.getItem('userId');
     this.currentYear = new Date().getFullYear();
@@ -76,6 +77,7 @@ export class ReportDetailsComponent implements OnInit {
   fetchInterviewStatus(): void {
     this.apiService.get(`/report/over-all-interview-status?page=${this.currentPage}&limit=${this.pageSize}`).subscribe((res: any) => {
       if (res?.data) {
+        this.initialLoader =false;
         this.interviewDetails = res?.data;
         this.totalCount = res?.toatlCount;
         const totalPages = Math.ceil(this.totalCount / this.pageSize);

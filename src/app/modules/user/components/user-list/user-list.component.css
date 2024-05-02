@@ -12,6 +12,13 @@
     height: calc(100vh - 200px);
 }
 
+.initial-loader {
+    position: absolute;
+    top: 31%;
+    left: 1%;
+}
+
+
 .w-75 {
     width: 75%;
 }

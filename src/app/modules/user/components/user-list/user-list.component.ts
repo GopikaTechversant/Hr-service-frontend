@@ -22,6 +22,7 @@ export class UserListComponent implements OnInit {
   candidateId: any;
   totalCount: any;
   limit = 9;
+  initialLoader : boolean = false;
   headers = new HttpHeaders({
     'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
   });
@@ -30,6 +31,7 @@ export class UserListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.initialLoader = true;
     this.fetchUserList();
   }
 
@@ -41,13 +43,11 @@ export class UserListComponent implements OnInit {
       this.userList = data.users;
       this.userCount = data.userCount;
       if (data) {
+        this.initialLoader = false;
         this.userList = data?.users;
-        console.log(" this.candidates_list", this.userList);
         this.totalCount = data?.userCount;
-        console.log("totalCount", this.totalCount);
         const totalPages = Math.ceil(this.totalCount / this.limit);
         this.lastPage = totalPages;
-        console.log("this.lastPage ", this.lastPage);
         if (this.currentPage > totalPages) this.currentPage = totalPages;
       }
     })

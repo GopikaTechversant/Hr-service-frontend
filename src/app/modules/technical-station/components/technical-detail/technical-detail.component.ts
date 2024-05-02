@@ -41,7 +41,7 @@ export class TechnicalDetailComponent implements OnInit {
   positionId: any;
   stationsList: any;
   switchStations: Boolean = false;;
-
+  initialLoader: boolean = false;
   constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -52,6 +52,7 @@ export class TechnicalDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.initialLoader = true;
     this.route.params.subscribe(params => {
       this.stationId = params['id'];
       this.filteredStatus = sessionStorage.getItem(`status_${this.stationId}`) ? sessionStorage.getItem(`status_${this.stationId}`) : '';
@@ -90,11 +91,12 @@ export class TechnicalDetailComponent implements OnInit {
   }
 
   fetchList(): void {
-    this.loader = true;
+    if(!this.initialLoader) this.loader = true;
     this.candidateList = [];
     if (this.stationId === '3') {
       this.apiService.get(`/technical-station/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.limit}&position=${this.positionId}&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
         this.loader = false;
+        this.initialLoader = false;
         if (data?.candidates) {
           this.candidateList.push(data?.candidates);
           this.totalCount = data?.totalCount
@@ -106,6 +108,7 @@ export class TechnicalDetailComponent implements OnInit {
     } else if (this.stationId === '4') {
       this.apiService.get(`/technical-station-two/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.limit}&position=${this.positionId}&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
         this.loader = false;
+        this.initialLoader = false;
         if (data?.candidates) {
           this.candidateList.push(data?.candidates);
           this.totalCount = data?.totalCount
@@ -204,7 +207,7 @@ export class TechnicalDetailComponent implements OnInit {
       const userId = localStorage.getItem('userId');
       const dialogRef = this.dialog.open(StationSwitchComponent, {
         data: {
-          userId: userId, 
+          userId: userId,
           name: candidate['candidate.candidateFirstName'] + ' ' + candidate['candidate.candidateLastName'],
           serviceId: candidate?.serviceId,
           currentStation: candidate?.currentStation,
