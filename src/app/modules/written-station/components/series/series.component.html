@@ -1,5 +1,66 @@
 <div class="main">
     <p class="title m-t-17 m-l-9">Written Station</p>
+    <div class="candidates-list">
+        <p class="name p-t-10 p-l-10">Candidates</p>
+        <div *ngIf="candidates_list.length === 0 || !candidates_list" class="parent-conatiner">
+            <div class="centerd-div m-b-29"><span class="no-data">No Candidates To Add</span></div>
+        </div>
+        <div class="d-flex flex-wrap" *ngIf="candidates_list.length > 0">
+            <div *ngFor="let candidate of candidates_list" class="candidate-box">
+                <div class="d-flex j-space">
+                    <p class="candidate-name">{{candidate.candidateFirstName}}</p>
+                    <img src="/assets/images/move-station.png" alt="" height="20px" width="20px" class="c-pointer">
+                    <!-- <button (click)="onSwitchStation(candidate)" class="m-r-14 move">Move</button> -->
+                </div>
+                <div class="info-container">
+                    <div class="info-pair">
+                        <div class="key">Email</div>
+                        <div class="value">: {{candidate.candidateEmail}}</div>
+                    </div>
+                    <div class="info-pair">
+                        <div class="key">Education</div>
+                        <div class="value">: {{candidate.candidateEducation}}</div>
+                    </div>
+                    <div class="info-pair">
+                        <div class="key">City</div>
+                        <div class="value">: {{candidate.candidateCity}}</div>
+                    </div>
+                </div>
+                <button class="assign c-pointer" (click)="openAssignModal()">Assign</button>
+            </div>
+        </div>
+    </div>
+    <div class="question-assign-box m-r-10">
+        <div class="name  d-flex p-t-23 p-l-7 j-space">
+            <p>Questions To Be Assigned</p>
+            <div class="" *ngIf="showAverageScoreInput || series_list_showAverageScoreInput">
+                <input type="text" placeholder="Enter the average score" id="averageScore" class="input p-l-10">
+                <button class="approve c-pointer" (click)="approve()">Approve</button>
+                <button class="create-questionbox m-l-19 c-pointer" (click)="createQuestionBox()">Create Question Box</button>
+            </div>
+        </div>
+        <div class="question-box-child" *ngIf="created_Box?.length === 0 || !created_Box">
+            <div class="centerd-div m-b-29"><span class="no-data">No Question Box Created</span></div>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- <div class="input-box d-flex">
+                <div class="upload-resume-btn c-pointer"
+                    (click)="triggerFileInput();$event.stopPropagation();$event.preventDefault();">
+                    <span class="upload">Upload</span>
+                </div>
+                <div class="file-name">
+                   
+                </div>
+                <input type="file" name="file" #fileInput class="input-box" style="display:none"
+                    (change)="onFileSelected($event)">
+            </div> -->
+
+<!-- <div class="main">
+    <p class="title m-t-17 m-l-9">Written Station</p>
     <div class="body m-l-13">
         <div class="candidates-list p-l-19">
             <p class="name p-t-10">Candidates</p>
@@ -58,10 +119,7 @@
                                         <button (click)="onSwitchStation(candidate)" class="m-r-14 move">Move</button>
                                     </div>
                                     <div class="info-container">
-                                        <!-- <div class="info-pair">
-                                            <div class="key">Designation</div>
-                                            <div class="value">: {{candidate.candidateFirstName}}</div>
-                                        </div> -->
+                                      
                                         <div class="info-pair">
                                             <div class="key">Email</div>
                                             <div class="value">: {{candidate.candidateEmail}}</div>
@@ -150,4 +208,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->

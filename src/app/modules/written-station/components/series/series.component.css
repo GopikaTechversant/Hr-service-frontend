@@ -6,6 +6,122 @@
     text-align: left;
 }
 
+.candidate-box {
+    border-right: 1px solid #D7D7D7;
+    padding-left: 18px;
+    overflow-y: scroll;
+}
+
+.info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.info-pair {
+    display: flex;
+    justify-content: space-between;
+    width: 284px;
+}
+
+.key {
+    color: #575F6E;
+    width: 83px;
+}
+
+.value {
+    flex: 1;
+    color: #575F6E;
+}
+
+.parent-conatiner {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 225px;
+    overflow-y: scroll;
+}
+
+.candidates-list {
+    height: 225px;
+    border: 1px solid #575F6E;
+    border-radius: 2px;
+}
+
+.name {
+    color: #000000;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.candidate-name {
+    color: #005EC9;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.assign {
+    border-radius: 3px;
+    background: #005EC9;
+    color: white;
+    border: none;
+    height: 30px;
+    width: 68px;
+    margin-top: 11px;
+    padding-bottom: 2px;
+}
+
+.input {
+    border: 1px solid #E9E9E9;
+    outline: none;
+    border-right: none;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    width: 327px;
+    height: 33px;
+    padding-right: 10px;
+    color: #000000;
+}
+
+.approve {
+    height: 35px;
+    border: none;
+    background-color: #575F6E;
+    color: white;
+    border-radius: 3px;
+    border-left: none;
+}
+
+.create-questionbox{
+    outline: none !important;
+    border: none;
+    border: 1px solid #575F6E;
+    border-radius: 4px;
+    color: #575F6E;
+    height: 33px;
+    background-color: white;
+}
+
+.no-data {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 27px;
+    letter-spacing: 0em;
+    color: #C10A0A;
+}
+
+/* .title {
+    font-size: 27px;
+    font-weight: 500;
+    line-height: 36px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
 .name {
     color: #000000;
     font-size: 18px;
@@ -92,7 +208,7 @@
 .series-btn {
     width: 90%;
     height: 35px;
-    /* margin-top: 13px; */
+  
     border: 1px solid #575F6E;
     border-radius: 4px;
     background-color: white;
@@ -111,8 +227,7 @@
 }
 
 .series-list {
-    /* margin-left: 17px;
-    padding-left: 15px; */
+   
     margin-top: 10px;
 }
 
@@ -130,7 +245,7 @@
 
 .drop-down {
     width: 82%;
-    /* padding-left: 8px; */
+    
     background-color: white;
     height: 34px;
     margin: 0 auto;
@@ -159,7 +274,7 @@
     width: 259px;
     border-right: 1px solid #D7D7D7;
     padding-left: 18px;
-    /* margin-top: 17px; */
+   
     margin-bottom: 19px;
 }
 
@@ -311,4 +426,4 @@
     color: #005EC9;
     background-color: #FFFFFF;
     border: 1px solid #005EC9;
-}
+} */
