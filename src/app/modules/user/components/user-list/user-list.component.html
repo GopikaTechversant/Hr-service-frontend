@@ -13,7 +13,7 @@
                     <td>Status</td>
                     <td>Actions</td>
                 </tr>
-                <div *ngIf="loader" class="loader-parent">
+                <div *ngIf="loader && !initialLoader" class="loader-parent">
                     <img src="assets/gif/loader.gif">
                 </div>
                 <ng-container *ngIf="userList?.length > 0">
@@ -34,8 +34,26 @@
                         </tr>
                     </ng-container>
                 </ng-container>
-                <div *ngIf="userList?.length === 0 && !loader" class="data">
+                <div *ngIf="userList?.length === 0 && !loader && !initialLoader" class="data">
                     No Data Found
+                </div>
+                <div *ngIf="initialLoader"  class="row m-l-20 initial-loader">
+                    <div *ngFor="let item of [0,1,2,3,4,5]" class="col-md-6 m-t-10 m-b-10">
+                        <div class="gravatar-title">
+                            <div>
+                                <ngx-skeleton-loader [theme]="{
+                                width: '900px',
+                                'border-radius': '0',
+                                height: '15px',
+                                'margin-bottom': '10px'
+                                }"></ngx-skeleton-loader>
+                            </div>
+                            <div>
+                                <ngx-skeleton-loader [theme]="{ width: '1300px', 'border-radius': '0', height: '15px' }">
+                                </ngx-skeleton-loader>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </table>
            

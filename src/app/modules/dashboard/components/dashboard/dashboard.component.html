@@ -19,6 +19,10 @@
         </div>
     </div>
     <div class="candidate w-100 d-flex">
+        <div *ngIf="initialLoader" >
+            <app-skeleton-loader [loaderDatas]="[9]" [higherWidth]="1000" [lowerWidth]="800"
+            [gridColumn]="9"></app-skeleton-loader>
+        </div>
         <div  *ngFor="let item of lists" class="candidate-card c-pointer" (click)="navigateToDetail(item?.position)">
             <div class="d-flex p-t-5">
                 <div class="count"><span class="countsss">{{item?.count}}</span></div>

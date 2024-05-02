@@ -17,10 +17,12 @@ export class DashboardComponent implements OnInit {
   requestList_open: boolean = false;
   displayPosition: string = '';
   positionId: any;
+  initialLoader: boolean = false;
 
   constructor(private apiService: ApiService, public router: Router, private tostr: ToastrService) { }
 
   ngOnInit(): void {
+    this.initialLoader = true;
     const position = sessionStorage.getItem(`requirement`);
     if (position) {
       let requirement = JSON.parse(position);
@@ -46,6 +48,7 @@ export class DashboardComponent implements OnInit {
   fetchcount(): void {
     this.apiService.get(`/dashboard/card-data?requestId=${this.positionId}`).subscribe((res: any) => {
       if (res?.data) {
+        this.initialLoader = false;
         this.lists = res?.data;
       }
     })

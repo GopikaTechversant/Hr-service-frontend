@@ -51,8 +51,8 @@
                         <td class="text-wrap" [title]="item?.candidatePreviousOrg ? item?.candidatePreviousOrg : 'Nil'">{{item?.candidatePreviousOrg ? item?.candidatePreviousOrg : 'Nil'}}</td>
                         <td class="text-wrap" [title]="item?.candidatePreviousDesignation ? item?.candidatePreviousDesignation : 'Nil'">{{item?.candidatePreviousDesignation ? item?.candidatePreviousDesignation : 'Nil'}}</td>
                         <td class="text-wrap" [title]="item?.candidateCity ? item?.candidateCity : 'Nil'"> {{item?.candidateCity ? item?.candidateCity : 'Nil'}}</td>
-                        <td class="text-wrap" [title]="item?.candidateStation ? item?.candidateStation : 'Not Updated'">{{item?.candidateStation ? item?.candidateStation : 'Not Updated'}}</td>
-                        <td class="text-wrap" [title]="item?.candidateInterviewStatus ? item?.candidateInterviewStatus : 'Nil'">{{item?.candidateInterviewStatus ? (item?.candidateInterviewStatus | titlecase) : 'Nil'}}</td>
+                        <td class="text-wrap" [title]="item?.currentStation ? item?.currentStation : 'Not Updated'">{{item?.currentStation ? item?.currentStation : 'Not Updated'}}</td>
+                        <td class="text-wrap" [title]="item?.candidateStatus ? item?.candidateStatus : 'Nil'">{{item?.candidateStatus ? (item?.candidateStatus | titlecase) : 'Nil'}}</td>
                     </tr>
                 </ng-container>
                 <div *ngIf="candidateList?.length === 0 || !candidateList" class="no-data"> No Data Found</div>

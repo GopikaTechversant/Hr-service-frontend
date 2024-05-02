@@ -26,9 +26,11 @@ export class CandidateListComponent {
   lastPage: any;
   userCount: any;
   requestId: any;
+  initialLoader: boolean = false;
   constructor(private apiService: ApiService, private router: Router, private dialog: MatDialog, private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    this.initialLoader = true;
     this.requestId = this.positionId ? this.positionId : '';
     this.fetchCandidates();
   }
@@ -42,6 +44,7 @@ export class CandidateListComponent {
 
   fetchCandidates(): void {
     this.apiService.get(`/candidate/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.pageSize}&serviceRequestId=${this.requestId}`).subscribe((data: any) => {
+      this.initialLoader = false;
       this.data = data;
       this.candidateList = [];
       this.candidateList = data?.candidates;

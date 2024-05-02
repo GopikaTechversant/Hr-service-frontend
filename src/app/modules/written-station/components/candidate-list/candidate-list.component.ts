@@ -19,22 +19,25 @@ export class CandidateListComponent implements OnInit {
   totalCount: any;
   limit = 9;
   searchKeyword: string = '';
-  constructor(private http: HttpClient, private router: Router, private apiService: ApiService) { }
+  initialLoader:boolean = false;
+  loader:boolean = false;
+  constructor(private router: Router, private apiService: ApiService) { }
 
   ngOnInit(): void {
+    this.initialLoader = true;
     this.fetchRequirementDetails('');
   }
 
   fetchRequirementDetails(searchQuery: string): void {
-    this.apiService.get(`/written-station/v1/list-all?page=${this.currentPage}&limit=${this.pageSize}&search=${searchQuery}`).subscribe((res: any) => {
+    if(!this.initialLoader) this.loader = true;
+    this.apiService.get(`/written-station/v1/list-all?page=${this.currentPage}&limit=${this.pageSize}&search=${searchQuery.trim()}`).subscribe((res: any) => {
       if (res) {
-        this.candidates_list = res?.candidates;
-        console.log(" this.candidates_list", this.candidates_list);
+        this.initialLoader = false;
+        this.loader = false;
+        this.candidates_list = res?.candidates;        
         this.totalCount = res?.totalCount;
-        console.log("totalCount", this.totalCount);
         const totalPages = Math.ceil(this.totalCount / this.limit);
         this.lastPage = totalPages;
-        console.log("this.lastPage ", this.lastPage);
         if (this.currentPage > totalPages) this.currentPage = totalPages;
       }
     })
@@ -48,6 +51,8 @@ export class CandidateListComponent implements OnInit {
 
   candidateSearch(search: any): void {
     this.searchKeyword = search
+    this.currentPage = 1 ;
+    this.limit = 9;
     this.fetchRequirementDetails(this.searchKeyword);
   }
   generatePageNumbers() {

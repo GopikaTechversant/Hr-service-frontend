@@ -52,6 +52,12 @@
     background-color: whitesmoke;
 }
 
+.initial-loader {
+    position: absolute;
+    top: 31%;
+    left: 21%;
+}
+
 .loader-parent {
     position: absolute;
     left: 53%;
@@ -62,11 +68,6 @@
     width: 100px;
 }
 
-.initial-loader {
-    position: absolute;
-    top: 31%;
-    left: 1%;
-}
 
 .data {
     position: absolute;

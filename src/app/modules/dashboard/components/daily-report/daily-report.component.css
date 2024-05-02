@@ -118,8 +118,22 @@ tr {
     text-align: left;
 }
 
+.loader-parent {
+    margin-left: 500%;
+}
+
+.loader-parent img {
+    width: 100px;
+}
+
 .icon-color {
     color: #575F6E;
+}
+
+.initial-loader {
+    position: absolute;
+    top: 31%;
+    left: 21%;
 }
 
 .scrollable::-webkit-scrollbar,

@@ -13,6 +13,16 @@
 
         </div>
     </div>
+    <div *ngIf="initialLoader">
+        <app-skeleton-loader *ngFor="let item of [1,2,1]" [loaderDatas]="[9]" [higherWidth]="1000" [lowerWidth]="800"
+        [gridColumn]="9"></app-skeleton-loader>
+    </div>
+    <div *ngIf="loader && !initialLoader" class="loader-parent">
+        <img src="assets/gif/loader.gif">
+    </div>
+    <div *ngIf="(candidates_list?.length === 0 || !candidates_list) && !loader && !initialLoader " class="data">
+        No Data Found
+    </div>
     <div class="content p-t-10 d-flex m-t-10 m-l-5">
         <div *ngFor="let candidate of candidates_list" class="candidate-card c-pointer col-md-4"
             (click)="navigate('/written/series/',candidate.requestId)">
@@ -51,8 +61,7 @@
     <ng-container *ngFor="let page of generatePageNumbers()">
         <button *ngIf="page === '...'" class="box dot" disabled>...</button>
         <button *ngIf="page !== '...' && page === currentPage" class="box current-page c-pointer">{{ page }}</button>
-        <button *ngIf="page !== '...' && page !== currentPage" class="box c-pointer" (click)="onPageChange(page)">
-            {{page}}</button>
+        <button *ngIf="page !== '...' && page !== currentPage" class="box c-pointer" (click)="onPageChange(page)">{{page}}</button>
     </ng-container> <button *ngIf="currentPage < lastPage" class="box c-pointer" (click)="onPageChange(lastPage)">
         <img src="assets/images/double-arrow-right-icon.svg" alt="" height="14px" width="14px">
     </button>
