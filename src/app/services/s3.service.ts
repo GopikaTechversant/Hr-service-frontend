@@ -6,18 +6,17 @@ import { environment } from "src/environments/environments";
 })
 export class S3Service {
   private s3Client: S3Client;
- 
+
   constructor() {
     // Initialize AWS S3 client
     this.s3Client = new S3Client({
       region: 'us-east-2', // Specify your AWS region
       credentials: {
-        
         accessKeyId: environment.accessKeyId, // Specify your AWS access key ID
         secretAccessKey: environment.secretKey // Specify your AWS secret access key
       }
     });
-   
+
   }
 
   async uploadImage(file: File, bucketName: string, key: string): Promise<any> {
@@ -28,7 +27,7 @@ export class S3Service {
       // ACL: 'public-read' // Set ACL to make the uploaded image publicly accessible
     };
     const command = new PutObjectCommand(params);
-    console.log("command",command);
+    console.log("command", command);
     return await this.s3Client.send(command);
   }
 }
