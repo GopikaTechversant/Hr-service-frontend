@@ -12,6 +12,7 @@ export class S3Service {
     this.s3Client = new S3Client({
       region: 'us-east-2', // Specify your AWS region
       credentials: {
+        
         accessKeyId: environment.accessKeyId, // Specify your AWS access key ID
         secretAccessKey: environment.secretKey // Specify your AWS secret access key
       }
