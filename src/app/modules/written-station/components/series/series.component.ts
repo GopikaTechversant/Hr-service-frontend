@@ -21,9 +21,15 @@ export class SeriesComponent implements OnInit {
   candidates_list: any[] = [];
   selectedFile: File | null = null;
   series_list_showAverageScoreInput: boolean = false;
-  created_Box:any[]=[];
+  created_Box: any[] = [];
+  isQuestionBoxCreated: boolean = false;
+  showQuestions: boolean = false;
+  questions_list: any = [];
+  candidatesWithQuestionBox: any[] = [];
   ngOnInit(): void {
     this.fetchCandidates();
+    this.fetchCandidatesWithQuestionBox();
+    this.fetchQuestions();
   }
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService, private s3Service: S3Service) {
@@ -39,11 +45,33 @@ export class SeriesComponent implements OnInit {
     });
   }
 
+  fetchCandidatesWithQuestionBox(): void {
+    this.apiService.get(`/written-station/questionBatchList/${this.requestId}`).subscribe((res: any) => {
+      if (res?.data) this.candidatesWithQuestionBox = res?.data;
+      console.log("this.candidatesWithQuestionBox", this.candidatesWithQuestionBox);
+    })
+  }
+
+  fetchQuestions(): void {
+    this.showQuestions = true;
+    this.apiService.get(`/written-station/questions`).subscribe((data: any) => {
+      this.questions_list = data?.data;
+      console.log("data qns", this.questions_list);
+    });
+  }
+
   createQuestionBox(): void {
     const payload = { requstId: this.requestId }
     this.apiService.post(`/written-station/create-question-box`, payload).subscribe((res: any) => {
-      console.log("res");
-      if(res?.data) this.created_Box = res?.data;
+      if (res?.data) {
+        this.created_Box.push({
+          id: res.data.id,
+          requstId: res.data.requstId,
+          name: `Question Box ${this.created_Box.length + 1}`
+        });
+        this.isQuestionBoxCreated = true;
+      }
+      console.log("created_Box.length", this.created_Box);
     })
   }
 
@@ -54,10 +82,12 @@ export class SeriesComponent implements OnInit {
   approve(): void {
 
   }
+
   triggerFileInput(): void {
     const fileInput = document.querySelector('input[type="file"]') as HTMLElement;
     fileInput.click();
   }
+
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
     if (this.selectedFile) {
