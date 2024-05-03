@@ -61,7 +61,7 @@ export class SeriesComponent implements OnInit {
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
     if (this.selectedFile) {
-      this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', 'im6a54476+9878fgdff.png');
+      this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', this.selectedFile.name + '.png');
     }
   }
   // candidates_list: any[] = [];

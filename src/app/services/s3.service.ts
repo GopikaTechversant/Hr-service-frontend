@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { S3Client, PutObjectCommand, PutObjectCommandInput, GetObjectCommand, S3 } from "@aws-sdk/client-s3";
-
+import { environment } from "src/environments/environments";
 @Injectable({
   providedIn: 'root'
 })
@@ -12,8 +12,8 @@ export class S3Service {
     this.s3Client = new S3Client({
       region: 'us-east-2', // Specify your AWS region
       credentials: {
-        accessKeyId: 'AKIAVWRJX4ZISZ4UO7FR', // Specify your AWS access key ID
-        secretAccessKey: 'yG9Z5/HpcfVMaFG1epzqvMBoLx4j6ha9L31L2tsR' // Specify your AWS secret access key
+        accessKeyId: environment.accessKeyId, // Specify your AWS access key ID
+        secretAccessKey: environment.secretKey // Specify your AWS secret access key
       }
     });
    
@@ -30,6 +30,4 @@ export class S3Service {
     console.log("command",command);
     return await this.s3Client.send(command);
   }
-
- 
 }
