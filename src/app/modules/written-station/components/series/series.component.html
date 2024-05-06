@@ -1,15 +1,16 @@
 <div class="main">
     <p class="title m-t-17 m-l-9">Written Station</p>
     <div class="candidates-list">
-        <p class="name p-t-10 p-l-10">Candidates</p>
+        <p class="name-candidate p-t-10 p-l-10">Candidates</p>
         <div *ngIf="candidates_list.length === 0 || !candidates_list" class="parent-conatiner">
             <div class="centerd-div m-b-29"><span class="no-data">No Candidates To Add</span></div>
         </div>
-        <div class="d-flex flex-wrap" *ngIf="candidates_list.length > 0">
+        <div class="d-flex flex-wrap candidate-box-parent" *ngIf="candidates_list.length > 0">
             <div *ngFor="let candidate of candidates_list" class="candidate-box">
                 <div class="d-flex j-space">
                     <p class="candidate-name">{{candidate.candidateFirstName}}</p>
-                    <img src="/assets/images/move-station.png" alt="" height="20px" width="20px" class="c-pointer">
+                    <img src="/assets/images/move-station.png" alt="" height="20px" width="20px"
+                        class="c-pointer p-r-12">
                     <!-- <button (click)="onSwitchStation(candidate)" class="m-r-14 move">Move</button> -->
                 </div>
                 <div class="info-container">
@@ -26,7 +27,7 @@
                         <div class="value">: {{candidate.candidateCity}}</div>
                     </div>
                 </div>
-                <button class="assign c-pointer" (click)="openAssignModal()">Assign</button>
+                <button class="assign c-pointer" (click)="openAssignModal(candidate)">Assign</button>
             </div>
         </div>
     </div>
@@ -41,39 +42,42 @@
             </div>
         </div>
         <div class="question-box-child" *ngIf="created_Box?.length === 0 || !created_Box">
-            <div class="centerd-div m-b-29"><span class="no-data">No Question Box Created</span>
+            <div class="centerd-div m-t-29 text-center"><span class="no-data text-center">No Question Box Created</span>
             </div>
+
+
         </div>
         <div *ngIf="created_Box.length > 0" class="assign-box">
             <div *ngFor="let box of created_Box" class="candidates-list-1 m-b-23 m-t-29">
                 <div class="d-flex box-name j-space">
-                    <p class="m-t-9">{{box?.name}}</p>
-                    <div class="d-flex  drop-down">
+                    <p class="m-t-9 f-s-17">{{box?.name}}</p>
+                    <div class="d-flex  drop-down p-relative">
                         <div class="p-l-7">
                             <div class="no-close s-list  m-text f-w-400 c-pointer flex-1"
-                                (click)="showQuestions = !showQuestions">
-                                <span class="choose f-s-14 p-t-7">Choose Questions</span>
-                                <!-- <span *ngIf="series.selectedQuestionName">{{series.selectedQuestionName}}</span> -->
+                                (click)="idListOpen = !idListOpen">
+                                <span *ngIf="!selectedQuestion" class="choose f-s-14 p-t-7">Choose Questions</span>
+                                <span *ngIf="selectedQuestion" class="p-t-7">{{selectedQuestion}}</span>
                             </div>
                         </div>
                         <div class="no-close  s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub p-r-17"><i
                                 class="no-close s-list fa fa-chevron-down s-text p-t-10"></i>
                         </div>
-                    </div>
-                    <!-- <div class="m-b-2 drop-list" *ngIf="idListOpen && series.active">
-                        <div (click)="selectQuestion(series, question.questionId, question.questionName)"
-                            *ngFor="let question of questions_list" class="p-t-5 p-b-5 p-l-17 c-pointer drop-list-item">
-                            {{ question.questionName }}
+                        <div class="m-b-2 drop-list p-absolute" *ngIf="idListOpen">
+                            <div (click)="selectQuestion(box, question.questionId, question.questionName)"
+                                *ngFor="let question of questions_list" class="p-t-5 p-b-5 p-l-17 c-pointer drop-list-item">
+                                {{ question.questionName }}
+                            </div>
                         </div>
-                    </div> -->
+                    </div>
+                  
                 </div>
-                <div class="d-flex">
-                    <div *ngFor="let candidate of candidates_list" class="candidate-box d-flex m-t-3">
+                <div class="d-flex m-t-12 candidate-parent">
+                    <div *ngFor="let candidate of box.candidates" class="candidate-box-question d-flex m-t-3">
                         <div class="m-t-14">
                             <div class="d-flex j-space">
                                 <p class="candidate-name">{{candidate.candidateFirstName}}</p>
                                 <img src="/assets/images/move-station.png" alt="" height="20px" width="20px"
-                                    class="c-pointer">
+                                    class="c-pointer m-r-13">
                                 <!-- <button (click)="onSwitchStation(candidate)" class="m-r-14 move">Move</button> -->
                             </div>
                             <div class="info-container">
@@ -90,7 +94,7 @@
                                     <div class="value">: {{candidate.candidateCity}}</div>
                                 </div>
                             </div>
-                            <button class="assign c-pointer" (click)="openAssignModal()">Assign</button>
+                            <button class="assign c-pointer" (click)="openAssignModal(candidate)">Assign</button>
                         </div>
                     </div>
                 </div>
@@ -101,8 +105,8 @@
 </div>
 
 
-
-<!-- <div class="input-box d-flex">
+<!-- 
+<div class="input-box d-flex">
     <div class="upload-resume-btn c-pointer"
         (click)="triggerFileInput();$event.stopPropagation();$event.preventDefault();">
         <span class="upload">Upload</span>
@@ -111,8 +115,9 @@
 
     </div>
     <input type="file" name="file" #fileInput class="input-box" style="display:none" (change)="onFileSelected($event)">
+    <img src="https://hr-service-images.s3.us-east-2.amazonaws.com/1111.png" alt="" height="40px" width="">
 </div> -->
-
+<!-- <img [src]="imageUrl" alt="Image"> -->
 <!-- <div class="main">
     <p class="title m-t-17 m-l-9">Written Station</p>
     <div class="body m-l-13">

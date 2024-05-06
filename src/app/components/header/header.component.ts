@@ -3,6 +3,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { LogoutModalComponent } from '../logout-modal/logout-modal.component';
+import { environment } from 'src/environments/environments';
 
 @Component({
   selector: 'app-header',

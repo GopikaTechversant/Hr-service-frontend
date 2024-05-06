@@ -26,10 +26,17 @@ export class SeriesComponent implements OnInit {
   showQuestions: boolean = false;
   questions_list: any = [];
   candidatesWithQuestionBox: any[] = [];
+  imageUrl: string = '';
+  assigned_candidates: any[] = [];
+  questionListOpen: boolean = false;
+  idListOpen: boolean = false;
+  selectedQuestion: any;
+  selectedQuestionId: any;
   ngOnInit(): void {
     this.fetchCandidates();
     this.fetchCandidatesWithQuestionBox();
     this.fetchQuestions();
+    // this.image();
   }
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService, private s3Service: S3Service) {
@@ -44,6 +51,19 @@ export class SeriesComponent implements OnInit {
       this.showAverageScoreInput = this.candidates_list.some((candidate: any) => candidate.serviceStatus === 'pending');
     });
   }
+
+  image(): void {
+    this.http.get('https://hr-service-images.s3.us-east-2.amazonaws.com/Screenshot+from+2024-04-04+12-16-07.png.png', { responseType: 'blob' })
+      .subscribe((response: Blob) => {
+        // Convert the blob response to a data URL
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.imageUrl = reader.result as string;
+        };
+        reader.readAsDataURL(response);
+      });
+  }
+
 
   fetchCandidatesWithQuestionBox(): void {
     this.apiService.get(`/written-station/questionBatchList/${this.requestId}`).subscribe((res: any) => {
@@ -75,8 +95,78 @@ export class SeriesComponent implements OnInit {
     })
   }
 
-  openAssignModal(): void {
+  openAssignModal(candidate: any): void {
+    console.log("candidate", candidate);
+    if (this.created_Box.length == 0) {
+      const dialogRef = this.dialog.open(AssignSeriesComponent, {
+        height: '150px',
+        width: '350px',
+      });
+    } else {
+      const dialogRef = this.dialog.open(AssignSeriesComponent, {
+        height: '265px',
+        width: '477px',
+        data: { seriesList: this.created_Box, candidateServiceId: candidate?.serviceId }
+      });
+      dialogRef.afterClosed().subscribe((selectedQuestionBox: any) => {
+        if (selectedQuestionBox) {
+          console.log("selectedQuestionBox", selectedQuestionBox);
+          // Find the selected question box by name
+          const selectedBox = this.created_Box.find((box: any) => box.name === selectedQuestionBox);
+          if (selectedBox) {
+            // Check if candidates array already exists for this box
+            if (!selectedBox.candidates) {
+              selectedBox.candidates = []; // Initialize candidates array if not exists
+            }
+            // Check if the candidate is already assigned to this box
+            const alreadyAssigned = selectedBox.candidates.some((c: any) => c.candidateId === candidate.candidateId);
+            if (!alreadyAssigned) {
+              // Push the candidate to the candidates array of the selected box
+              selectedBox.candidates.push(candidate);
+              // Remove the candidate from the candidates_list
+              this.candidates_list = this.candidates_list.filter((item: any) => item.candidateId !== candidate.candidateId);
+              // Remove the candidate from other question boxes if already assigned
+              this.created_Box.forEach((s: any) => {
+                if (s.candidates && s !== selectedBox) {
+                  s.candidates = s.candidates.filter((c: any) => c.candidateId !== candidate.candidateId);
+                }
+              });
+              console.log("Updated created_Box", this.created_Box);
+            } else {
+              console.log("Candidate already assigned to this box");
+            }
+          }
+        }
+      });
+    }
+  }
 
+  selectQuestion(questionBox: any, id: any, name: any): void {
+    this.questions_list = this.questions_list.filter((question: { questionId: any; }) => question.questionId !== id);
+    if (questionBox) {
+      console.log("questionBox", questionBox);
+      this.selectedQuestion = name;
+      this.selectedQuestionId = id;
+      this.idListOpen = false;
+      this.assignQuestion(this.selectedQuestionId, questionBox);
+    }
+  }
+
+  assignQuestion(questionId: any, questionBox: any): void {
+    const requestData = {
+      questionAssignee: null,
+      questionId: questionId,
+      questionServiceId: [] as string[]
+    };
+    // Get candidate service IDs for the current series
+    if (questionBox.candidates && questionBox.candidates.length > 0) {
+      console.log("questionBox", questionBox);
+      questionBox.candidates.forEach((candidate: { serviceId: string }) => {
+        if (candidate.serviceId) requestData.questionServiceId.push(candidate.serviceId);
+      });
+    }
+    this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res: any) => {
+    });
   }
 
   approve(): void {
