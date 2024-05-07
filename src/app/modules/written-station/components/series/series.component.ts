@@ -32,6 +32,11 @@ export class SeriesComponent implements OnInit {
   idListOpen: boolean = false;
   selectedQuestion: any;
   selectedQuestionId: any;
+  selectedCandidate: any;
+  selectedCandidateIds: any[] = [];
+  candidateMarkDetail: any;
+  candidatesStatus: any[] = [];
+  averageScore: string | null = null;
   ngOnInit(): void {
     this.fetchCandidates();
     this.fetchCandidatesWithQuestionBox();
@@ -153,24 +158,109 @@ export class SeriesComponent implements OnInit {
   }
 
   assignQuestion(questionId: any, questionBox: any): void {
+    console.log("questionBox", questionBox);
     const requestData = {
-      questionAssignee: null,
+      questionBoxId: questionBox.id,
       questionId: questionId,
       questionServiceId: [] as string[]
     };
     // Get candidate service IDs for the current series
     if (questionBox.candidates && questionBox.candidates.length > 0) {
-      console.log("questionBox", questionBox);
+      console.log("questionBox <<<<", questionBox);
       questionBox.candidates.forEach((candidate: { serviceId: string }) => {
         if (candidate.serviceId) requestData.questionServiceId.push(candidate.serviceId);
       });
+      console.log("requestData", requestData);
+
     }
     this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res: any) => {
+      console.log("resp", res);
+      this.fetchCandidatesWithQuestionBox();
     });
   }
 
-  approve(): void {
+  onSwitchStation(candidate: any): void {
+    console.log("candidate", candidate)
+    if (candidate?.serviceStatus === 'pending') {
+      const userId = localStorage.getItem('userId');
+      const dialogRef = this.dialog.open(StationSwitchComponent, {
+        data: {
+          userId: userId,
+          name: candidate['candidate.candidateFirstName'] + ' ' + candidate['candidate.candidateLastName'],
+          serviceId: candidate?.serviceId,
+          currentStation: 'Written',
+          currentStationId: '2',
+          requirement: candidate['reqServiceRequest.requestName']
+        },
+        width: '700px',
+        height: '500px'
+      })
 
+      dialogRef.afterClosed().subscribe(() => {
+        this.fetchCandidates();
+        this.fetchCandidatesWithQuestionBox();
+      });
+    } else {
+      const dialogRef = this.dialog.open(WarningBoxComponent, {})
+      dialogRef.afterClosed().subscribe(() => {
+        this.fetchCandidates();
+        this.fetchCandidatesWithQuestionBox();
+      });
+    }
+  }
+
+  resultClick(candidate: any, id: any): void {
+    this.selectedCandidate = candidate;
+    this.selectedCandidateIds = id;
+    const dialogRef = this.dialog.open(ResultComponent, {
+      height: '430px',
+      width: '600px',
+      data: {
+        candidateIds: this.selectedCandidateIds,
+        candidate: this.selectedCandidate
+      }
+    }
+    );
+    dialogRef.componentInstance.scoreSubmitted.subscribe((score: number) => {
+      this.selectedCandidate.examScore = score;
+      this.candidateMarkDetail = {
+        candidateIds: this.selectedCandidateIds,
+        candidate: this.selectedCandidate,
+        score: this.selectedCandidate.examScore
+      }
+      this.fetchCandidatesWithQuestionBox();
+    });
+  }
+
+  viewProgressFile(progressFile: string) {
+    window.open(`${environment.api_url}${progressFile}`, '_blank');
+  }
+
+  approve(): void {
+    console.log("inside approve");
+    const ScoreAddedTrue = this.candidatesStatus.some(candidate => candidate.serviceStatus !== 'done' && candidate.progressScore !== null);
+    const ScoreAddedFalse = this.candidatesStatus.some(candidate => candidate.serviceStatus !== 'done' && candidate.progressScore == null);
+    const averageScoreInput = document.getElementById('averageScore') as HTMLInputElement;
+    const averageScore = averageScoreInput.value;
+    const payload = {
+      serviceId: this.requestId,
+      averageScore: averageScore
+    };
+    if (ScoreAddedTrue) {
+      console.log("ScoreAddedTrue");
+      
+      this.apiService.post(`/written-station/approve`, payload).subscribe({
+        next: (res: any) => {
+          this.tostr.success('Approved');
+          this.averageScore = averageScore;
+          this.fetchCandidatesWithQuestionBox();
+        },
+        error: (error) => {
+          if (error?.status === 500) this.tostr.error("Internal Server Error");
+          else this.tostr.warning("Unable to approve");
+        }
+      })
+    } else if (ScoreAddedFalse) this.tostr.warning('Please add score');
   }
 
   triggerFileInput(): void {

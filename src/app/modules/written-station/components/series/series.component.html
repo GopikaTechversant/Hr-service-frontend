@@ -10,7 +10,7 @@
                 <div class="d-flex j-space">
                     <p class="candidate-name">{{candidate.candidateFirstName}}</p>
                     <img src="/assets/images/move-station.png" alt="" height="20px" width="20px"
-                        class="c-pointer p-r-12">
+                        class="c-pointer p-r-12" (click)="onSwitchStation(candidate)">
                     <!-- <button (click)="onSwitchStation(candidate)" class="m-r-14 move">Move</button> -->
                 </div>
                 <div class="info-container">
@@ -64,12 +64,13 @@
                         </div>
                         <div class="m-b-2 drop-list p-absolute" *ngIf="idListOpen">
                             <div (click)="selectQuestion(box, question.questionId, question.questionName)"
-                                *ngFor="let question of questions_list" class="p-t-5 p-b-5 p-l-17 c-pointer drop-list-item">
+                                *ngFor="let question of questions_list"
+                                class="p-t-5 p-b-5 p-l-17 c-pointer drop-list-item">
                                 {{ question.questionName }}
                             </div>
                         </div>
                     </div>
-                  
+
                 </div>
                 <div class="d-flex m-t-12 candidate-parent">
                     <div *ngFor="let candidate of box.candidates" class="candidate-box-question d-flex m-t-3">
@@ -94,7 +95,19 @@
                                     <div class="value">: {{candidate.candidateCity}}</div>
                                 </div>
                             </div>
-                            <button class="assign c-pointer" (click)="openAssignModal(candidate)">Assign</button>
+                            <button *ngIf="!candidate.progressId" class="assign c-pointer"
+                                (click)="openAssignModal(candidate)">Assign</button>
+                            <div class="d-flex m-t-12">
+                                <button class="result c-pointer"
+                                    *ngIf="candidate.progressScore == null || !candidate.progressScore || candidate.progressId"
+                                    (click)="resultClick(candidate, candidate.serviceId)">Add Result</button>
+                                <span class="score"
+                                    *ngIf="candidate.progressScore  && candidate.progressScore !== null">Score:{{candidate.progressScore}}</span>
+                                <span class="c-pointer"
+                                    *ngIf="candidate.progressScore  && candidate.progressScore !== null"><img
+                                        class="p-l-9" src="/assets/images/view-file.png" alt="" height="29" width="29"
+                                        (click)="viewProgressFile(candidate.progressFile)"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
