@@ -10,7 +10,8 @@
                 <div class="d-flex j-space">
                     <p class="candidate-name">{{candidate.candidateFirstName}}</p>
                     <img src="/assets/images/move-station.png" alt="" height="20px" width="20px"
-                        class="c-pointer p-r-12" (click)="onSwitchStation(candidate)">
+                        class="c-pointer p-r-12" (click)="onSwitchStation(candidate)" *ngIf="candidate.serviceStatus !== 'moved'">
+                        <p *ngIf="candidate.serviceStatus === 'moved'" class="moved">Moved</p>
                     <!-- <button (click)="onSwitchStation(candidate)" class="m-r-14 move">Move</button> -->
                 </div>
                 <div class="info-container">
@@ -55,14 +56,19 @@
                         <div class="p-l-7">
                             <div class="no-close s-list  m-text f-w-400 c-pointer flex-1"
                                 (click)="idListOpen = !idListOpen">
-                                <span *ngIf="!selectedQuestion" class="choose f-s-14 p-t-7">Choose Questions</span>
-                                <span *ngIf="selectedQuestion" class="p-t-7">{{selectedQuestion}}</span>
+                                <span *ngIf="!selectedQuestion && !box.questionName && !isQuestionBoxCreated" class="choose f-s-14 p-t-7">Choose
+                                    Questions</span>
+                                    <span *ngIf="isQuestionBoxCreated && !selectedQuestion && !box.questionName" class="choose f-s-14 p-t-7">Choose
+                                        Questions</span>
+                                <span *ngIf="selectedQuestion && !box.questionName"
+                                    class="p-t-7">{{selectedQuestion}}</span>
+                                <span *ngIf="box.questionName" class="p-t-7">{{box.questionName}}</span>
                             </div>
                         </div>
-                        <div class="no-close  s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub p-r-17"><i
+                        <div *ngIf="!box.questionName" class="no-close  s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub p-r-17"><i
                                 class="no-close s-list fa fa-chevron-down s-text p-t-10"></i>
                         </div>
-                        <div class="m-b-2 drop-list p-absolute" *ngIf="idListOpen">
+                        <div class="m-b-2 drop-list p-absolute" *ngIf="idListOpen && !box.questionName">
                             <div (click)="selectQuestion(box, question.questionId, question.questionName)"
                                 *ngFor="let question of questions_list"
                                 class="p-t-5 p-b-5 p-l-17 c-pointer drop-list-item">
@@ -79,7 +85,6 @@
                                 <p class="candidate-name">{{candidate.candidateFirstName}}</p>
                                 <img src="/assets/images/move-station.png" alt="" height="20px" width="20px"
                                     class="c-pointer m-r-13">
-                                <!-- <button (click)="onSwitchStation(candidate)" class="m-r-14 move">Move</button> -->
                             </div>
                             <div class="info-container">
                                 <div class="info-pair">
@@ -99,7 +104,7 @@
                                 (click)="openAssignModal(candidate)">Assign</button>
                             <div class="d-flex m-t-12">
                                 <button class="result c-pointer"
-                                    *ngIf="candidate.progressScore == null || !candidate.progressScore || candidate.progressId"
+                                    *ngIf="candidate.progressScore === null && !candidate.progressScore && candidate.progressId"
                                     (click)="resultClick(candidate, candidate.serviceId)">Add Result</button>
                                 <span class="score"
                                     *ngIf="candidate.progressScore  && candidate.progressScore !== null">Score:{{candidate.progressScore}}</span>

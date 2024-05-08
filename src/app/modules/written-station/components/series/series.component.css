@@ -214,6 +214,32 @@
     color: #575F6E;
 }
 
+.result {
+    width: 91px;
+    border-radius: 3px;
+    background: #005EC9;
+    color: white;
+    border: none;
+    height: 30px;
+}
+
+.score{
+    border: 1px dashed #08E1795E;
+    background: #08E17921;
+    width: 95px;
+    height: 23px;
+    text-align: center;
+    padding-top: 4px;
+    color: #08BC66;
+    border-radius: 2px;
+    font-weight: 500;
+   
+}
+
+.moved{
+    margin-right: 6px;
+    color: darkred;
+}
 
 /* .title {
     font-size: 27px;
