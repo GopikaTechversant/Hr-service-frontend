@@ -30,6 +30,8 @@ export class DailyReportComponent implements OnInit {
   lastPage: any;
   userCount: any;
   today: any;
+  initialLoader: boolean = false;
+  loader: boolean = false;
   constructor(private apiService: ApiService, private datePipe: DatePipe) { }
 
   onBodyClick(event: MouseEvent): void {
@@ -40,18 +42,22 @@ export class DailyReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.initialLoader = true;
     this.reportUserId = localStorage.getItem('userId');
     this.fetchDetails();
     this.today = new Date();
   }
 
   fetchDetails(): void {
+    if (!this.initialLoader) this.loader = true
     const totalPages = Math.ceil(this.userCount / this.pageSize);
     this.lastPage = totalPages;
     if (this.currentPage > totalPages) this.currentPage = totalPages;
     this.apiService.get(`/report/report-list?reportUserId=${this.reportUserId}&reportFromDate=${this.startDate}&reportToDate=${this.endDate}&reportPageNo=${this.currentPage}&reportPageLimit=${this.pageSize}`)
       .subscribe((res: any) => {
         if (res?.data) {
+          this.initialLoader = false;
+          this.loader = false;
           this.userRequirement = [];
           this.userRequirement = res?.data;
           this.totalCount = res?.reportCount;
@@ -89,6 +95,8 @@ export class DailyReportComponent implements OnInit {
     this.recruiterName = recruiter;
     this.reportUserId = recruiterId;
     this.showRecruiters = false;
+    this.currentPage = 1;
+    this.pageSize = 10;
     this.fetchDetails();
   }
 
@@ -96,6 +104,8 @@ export class DailyReportComponent implements OnInit {
     let date = new Date(event?.value);
     if (range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
     if (range == 'endDate') this.endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    this.currentPage = 1;
+    this.pageSize = 10;
     this.fetchDetails();
   }
 

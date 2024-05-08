@@ -21,7 +21,8 @@ export class HrCandidateListComponent implements OnInit {
   Status: any = [
     { status: 'pending' },
     { status: 'rejected' },
-    { status: 'done' }
+    { status: 'done' },
+    { status: 'moved' }
   ]
   filteredStatus: any = '';
   filterStatus: boolean = false;
@@ -34,6 +35,7 @@ export class HrCandidateListComponent implements OnInit {
   displayPosition: string = '';
   positionId: any;
   requestList: any;
+  initialLoader:boolean = false
   constructor(private dialog: MatDialog, private apiService: ApiService) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -44,7 +46,7 @@ export class HrCandidateListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loader = true;
+    this.initialLoader = true;
     this.filteredStatus = sessionStorage.getItem('status') ? sessionStorage.getItem('status') : '';
     const requirementData = sessionStorage.getItem(`requirement`);
     if (requirementData) {
@@ -70,8 +72,10 @@ export class HrCandidateListComponent implements OnInit {
   }
 
   fetchList(): void {
+    if(!this.initialLoader) this.loader = true;
     this.apiService.get(`/hr-station/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.limit}&status_filter=${this.filteredStatus}&position=${this.positionId}`).subscribe((data: any) => {
       this.candidateList = [];
+      this.initialLoader = false;
       this.loader = false;
       if (data.candidates) {
         this.candidateList.push(data.candidates);
@@ -150,8 +154,6 @@ export class HrCandidateListComponent implements OnInit {
   viewCandidateDetail(item: any, status: any): void {
     const dialogRef = this.dialog.open(HrCandidateDetailComponent, {
       data: { candidateDetails: item, offerStatus: status },
-      width: '600px',
-      height: '300px'
     })
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       this.fetchList();
@@ -164,25 +166,22 @@ export class HrCandidateListComponent implements OnInit {
   }
 
   onSwitchStation(candidate: any): void {
-    if (candidate?.serviceStatus === 'pending' && candidate?.progressStatus > 0) {
+    if (candidate?.serviceStatus === 'pending' && candidate?.progressStatus === '0') {
       const userId = localStorage.getItem('userId');
       const dialogRef = this.dialog.open(StationSwitchComponent, {
         data: {
-          userId: userId, 
+          userId: userId,
           name: candidate['candidate.candidateFirstName'] + ' ' + candidate['candidate.candidateLastName'],
           serviceId: candidate?.serviceId,
           currentStation: 'Hr Manager',
           currentStationId: '5',
-          requirement : candidate['serviceRequest.requestName']
+          requirement: candidate['serviceRequest.requestName']
         },
-        width: '700px',
-        height: '500px'
       })
-
       dialogRef.afterClosed().subscribe(() => {
         this.fetchList();
       });
-    }else{
+    } else {
       const dialogRef = this.dialog.open(WarningBoxComponent, {})
       dialogRef.afterClosed().subscribe(() => {
         this.fetchList();

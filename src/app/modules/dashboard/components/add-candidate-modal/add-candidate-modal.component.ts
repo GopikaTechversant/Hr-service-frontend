@@ -47,7 +47,7 @@ export class AddCandidateModalComponent implements OnInit {
   minSalary: any;
   fileName: any;
   extraSkills: any[] = [];
-
+  loader: boolean = false;
   constructor(private apiService: ApiService, private tostr: ToastrServices, private formBuilder: UntypedFormBuilder, private datePipe: DatePipe) {
     this.candidateForm = this.formBuilder.group({
       candidateFirstName: [null, Validators.required],
@@ -228,11 +228,10 @@ export class AddCandidateModalComponent implements OnInit {
         message: 'Please Select a Requirement'
       }
     ];
-
     this.validationSuccess = true;
-
     validations.forEach(({ condition, message }) => {
       if (condition) {
+        this.loader = false;
         this.tostr.warning(message);
         this.validationSuccess = false;
       }
@@ -240,6 +239,7 @@ export class AddCandidateModalComponent implements OnInit {
   }
 
   submitClick(): void {
+    this.loader = true;
     this.checkValidation();
     if (this.validationSuccess) {
       let candidateDetails = this.candidateForm.value;
@@ -258,14 +258,17 @@ export class AddCandidateModalComponent implements OnInit {
 
       this.apiService.post(`/candidate/create`, formdata).subscribe({
         next: (response) => {
+          this.loader = false;
           this.tostr.success('Candidate Created successfully');
           this.resetFormAndState();
         },
         error: (error) => {
+          this.loader = false;
           if (error?.status === 500) {
             this.tostr.error("Internal Server Error");
           } else {
-            this.tostr.warning(error?.error?.message ? error?.error?.message : "Unable to create candidate");
+            this.loader = false;
+            this.tostr.warning(error?.error?.message ? error?.error?.message : "Unable to Add candidate");
           }
         },
       });

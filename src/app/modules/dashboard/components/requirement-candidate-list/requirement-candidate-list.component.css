@@ -118,6 +118,24 @@
   font-weight: 500;
 }
 
+.loader-parent {
+  position: absolute;
+  left: 53%;
+  z-index: 9;
+}
+
+.loader-parent img {
+  width: 100px;
+}
+
+
+.data {
+  position: absolute;
+  left: 52%;
+  top: 34%;
+  z-index: 9;
+}
+
 .main {
   background-color: #F7F7F7;
   min-height: calc(100vh - 170px);
@@ -146,7 +164,7 @@
   width: 26px;
 }
 
-.dot{
+.dot {
   font-size: 20px;
   color: black;
   font-weight: 500;

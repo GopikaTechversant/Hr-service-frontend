@@ -5,12 +5,8 @@
     <div class="login-section">
         <div class="loginContainer">
             <form [formGroup]="loginForm" (ngSubmit)="submitClick()">
-                <div class="info m-b-5">
-                    Login
-                </div>
-                <div class="content m-b-23">
-                    Access to our dashboard
-                </div>
+                <div class="info m-b-5">Login</div>
+                <div class="content m-b-23">Access to our dashboard</div>
                 <div class="form-field d-flex j-start m-b-14">
                     <span class="email">Email</span>
                     <input type="email" class="input" placeholder="Enter a valid email" formControlName="userName">
@@ -22,8 +18,7 @@
                 </div>
                 <div class="form-field d-flex j-start m-b-14 p-relative">
                     <span class="email">Password</span>
-                    <input [type]="hide ? 'password' : 'text'" class="input" placeholder="Password"
-                        formControlName="userPassword">
+                    <input [type]="hide ? 'password' : 'text'" class="input" placeholder="Password" formControlName="userPassword">
                     <span class="eyeIcon c-black p-absolute" mat-icon-button matSuffix (click)="hide = !hide"
                         [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                         <mat-icon class="m-icon">{{ hide ? "visibility_off" : "visibility" }}</mat-icon>

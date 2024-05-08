@@ -36,7 +36,7 @@ import { FileUploadS3Component } from './components/file-upload-s3/file-upload-s
     BrowserAnimationsModule, 
     MaterialModule,
     ToastrModule.forRoot({
-      timeOut: 3000,
+      timeOut: 2000,
       positionClass: 'toast-top-right',
       preventDuplicates: true
     }),],

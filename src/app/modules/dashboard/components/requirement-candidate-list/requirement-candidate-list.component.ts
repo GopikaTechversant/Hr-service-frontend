@@ -15,19 +15,25 @@ export class RequirementCandidateListComponent implements OnInit {
   showFirstLastButtons = true;
   totalCount: any;
   lastPage: any;
+  initialLoader: boolean = false;
+  loader: boolean = false;
   constructor(private router: Router, private apiService: ApiService) { }
 
   ngOnInit(): void {
+    this.initialLoader = true;
     this.fetchcandidates('');
   }
 
   fetchcandidates(searchQuery: string): void {
-    this.apiService.get(`/screening-station/v1/list-all?page=${this.currentPage}&limit=${this.limit}&search=${searchQuery}`).subscribe((res: any) => {
+    if(!this.initialLoader) this.loader = true
+    this.apiService.get(`/screening-station/v1/list-all?page=${this.currentPage}&limit=${this.limit}&search=${searchQuery.trim()}`).subscribe((res: any) => {
       if (res) {
+        this.initialLoader = false;
+        this.loader = false
         this.candidates_list = res?.candidates;
-        this.totalCount = res?.totalCount;        
+        this.totalCount = res?.totalCount;
         const totalPages = Math.ceil(this.totalCount / this.limit);
-        this.lastPage = totalPages;        
+        this.lastPage = totalPages;
         if (this.currentPage > totalPages) this.currentPage = totalPages;
       }
     })
@@ -54,6 +60,8 @@ export class RequirementCandidateListComponent implements OnInit {
 
   candidateSearch(search: any): void {
     this.searchKeyword = search
+    this.currentPage = 1 ;
+    this.limit = 9;
     this.fetchcandidates(this.searchKeyword);
   }
 
