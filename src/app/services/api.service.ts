@@ -22,20 +22,20 @@ export class ApiService {
 
     get(url: string): Observable<any> {
       // Define your header
-      // let headers = new HttpHeaders({
-      //   'ngrok-skip-browser-warning': environment['ngrok-skip-browser-warning']
-      // });
+      let headers = new HttpHeaders({
+        'ngrok-skip-browser-warning': environment['ngrok-skip-browser-warning']
+      });
   
       // Make the HTTP GET request with the specified headers
-      return this.http.get(`${environment.api_url}${url}`);
+      return this.http.get(`${environment.api_url}${url}`, { headers: headers });
     }
 
   // Generic POST method
   post(url: string, data: any): Observable<any> {
-    // let headers = new HttpHeaders({
-    //   'ngrok-skip-browser-warning': environment['ngrok-skip-browser-warning']
-    // });
-    return this.http.post(`${environment.api_url}${url}`, data);
+    let headers = new HttpHeaders({
+      'ngrok-skip-browser-warning': environment['ngrok-skip-browser-warning']
+    });
+    return this.http.post(`${environment.api_url}${url}`, data,{ headers: headers });
   }
 
   // Generic PUT method
