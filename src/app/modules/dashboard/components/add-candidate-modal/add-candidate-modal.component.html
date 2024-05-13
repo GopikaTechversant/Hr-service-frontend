@@ -9,8 +9,7 @@
                 <span class="label m-b-4">First Name<span class="required">*</span></span>
                 <input type="text" class="input-box" formControlName="candidateFirstName" placeholder="First Name"
                     maxlength="20" (keydown)="nameValidation($event)" >
-                <div
-                    *ngIf="candidateForm.get('candidateFirstName')?.hasError('required') && candidateForm.get('candidateFirstName')?.touched">
+                <div *ngIf="candidateForm.get('candidateFirstName')?.hasError('required') && candidateForm.get('candidateFirstName')?.touched">
                     <mat-error>Please Enter First Name</mat-error>
                 </div>
             </div>
@@ -18,8 +17,7 @@
                 <span class="label m-b-4">Last Name<span class="required">*</span></span>
                 <input type="text" class="input-box" formControlName="candidateLastName" placeholder="Last Name"
                     maxlength="20" (keydown)="nameValidation($event)">
-                <div
-                    *ngIf="candidateForm.get('candidateLastName')?.hasError('required') && candidateForm.get('candidateLastName')?.touched">
+                <div *ngIf="candidateForm.get('candidateLastName')?.hasError('required') && candidateForm.get('candidateLastName')?.touched">
                     <mat-error>Please Enter Last Name</mat-error>
                 </div>
             </div>
@@ -30,8 +28,7 @@
                         (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate"
                         formControlName="candidateDoB" [max]="maxDate">
                     <span> <mat-datepicker #pickerdate class=""></mat-datepicker>
-                        <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
-                            (click)="pickerdate ?.open()"></i>
+                        <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true" (click)="pickerdate ?.open()"></i>
                     </span>
                 </div>
             </div>
@@ -41,24 +38,19 @@
                 <span class="label m-b-4">Gender<span class="required">*</span></span>
                 <span class="d-flex gender c-pointer">
                     <span class="p-r-20">
-                        <input type="radio" id="Male" name="candidateGender" value="Male"
-                            formControlName="candidateGender">
+                        <input type="radio" id="Male" name="candidateGender" value="Male" formControlName="candidateGender">
                         <label for="Male" class="p-t-5 p-l-10">Male</label>
                     </span>
                     <span class="p-r-20">
-                        <input type="radio" id="Female" name="candidateGender" value="Female"
-                            formControlName="candidateGender">
+                        <input type="radio" id="Female" name="candidateGender" value="Female" formControlName="candidateGender">
                         <label for="Female" class="p-t-5 p-l-10">Female</label>
                     </span>
                     <span class="p-r-20">
-                        <input type="radio" id="Others" name="candidateGender" value="Others"
-                            formControlName="candidateGender">
+                        <input type="radio" id="Others" name="candidateGender" value="Others" formControlName="candidateGender">
                         <label for="Others" class="p-t-5 p-l-10">Others</label>
                     </span>
-
                 </span>
-                <div
-                    *ngIf="candidateForm.get('candidateGender')?.hasError('required') && candidateForm.get('candidateGender')?.touched">
+                <div *ngIf="candidateForm.get('candidateGender')?.hasError('required') && candidateForm.get('candidateGender')?.touched">
                     <mat-error>Gender Required</mat-error>
                 </div>
             </div>
@@ -66,16 +58,14 @@
                 <span class="label m-b-4">Mobile<span class="required">*</span></span>
                 <input type="text" class="input-box" formControlName="candidateMobileNo" maxlength="10" title="Enter a 10 digit Mobile number"
                     (keypress)="onKeypress($event)" (paste)="onPaste($event)">
-                <div
-                    *ngIf="candidateForm.get('candidateMobileNo')?.hasError('required') && candidateForm.get('candidateMobileNo')?.touched">
+                <div *ngIf="candidateForm.get('candidateMobileNo')?.hasError('required') && candidateForm.get('candidateMobileNo')?.touched">
                     <mat-error>Mobile Number is mandatory</mat-error>
                 </div>
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Email<span class="required">*</span></span>
                 <input type="text" class="input-box" formControlName="candidateEmail" max="256">
-                <div
-                    *ngIf="candidateForm.get('candidateEmail')?.hasError('required') && candidateForm.get('candidateEmail')?.touched">
+                <div *ngIf="candidateForm.get('candidateEmail')?.hasError('required') && candidateForm.get('candidateEmail')?.touched">
                     <mat-error>Email ID is Mandatory</mat-error>
                 </div>
             </div>
@@ -143,7 +133,6 @@
                 <input type="text" class="input-box" formControlName="candidatePreviousDesignation" maxlength="40" (keydown)="nameValidation($event)">
             </div>
         </div>
-
         <div class="d-flex parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Current Salary</span>
@@ -184,7 +173,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <span class="add-btn c-pointer" (click)="$event.preventDefault();">Add</span> -->
                     </div>
                     <div class="d-flex"> 
                     <div class="searchbar m-t-10 c-pointer p-t-10 no-close '"  *ngIf="selectedSkillType">
@@ -207,8 +195,7 @@
                         <ul>
                             <li *ngFor="let skill of selectedPrimarySkills" class="p-4">
                                 {{ skill?.name | titlecase}}
-                                <i class="fa fa-trash-o  delete-color" aria-hidden="true"
-                                    (click)="removeSkill(skill, 'primary')"></i>
+                                <i class="fa fa-trash-o  delete-color" aria-hidden="true" (click)="removeSkill(skill, 'primary')"></i>
                             </li>
                         </ul>
                     </div>
@@ -219,8 +206,7 @@
                         <ul>
                             <li *ngFor="let skill of selectedSecondarySkills" class="p-4">
                                 {{ skill?.name | titlecase}}
-                                <i class="fa fa-trash-o  delete-color" aria-hidden="true"
-                                    (click)="removeSkill(skill, 'secondary')"></i>
+                                <i class="fa fa-trash-o  delete-color" aria-hidden="true" (click)="removeSkill(skill, 'secondary')"></i>
                             </li>
                         </ul>
                     </div>

@@ -255,12 +255,12 @@ export class AddCandidateModalComponent implements OnInit {
       formdata.append('candidateSecondarySkills', this.secondaryskills);
       formdata.append('resumeSourceId', this.sourceId);
       formdata.append('candidatesAddingAgainst', this.selectedRequirementId);
-
       this.apiService.post(`/candidate/create`, formdata).subscribe({
         next: (response) => {
           this.loader = false;
           this.tostr.success('Candidate Created successfully');
           this.resetFormAndState();
+          
         },
         error: (error) => {
           this.loader = false;
@@ -293,10 +293,15 @@ export class AddCandidateModalComponent implements OnInit {
     this.selectedSecondarySkills = [];
     this.sourceName = null;
     this.selectedRequirementName = null;
+    this.selectedRequirementId = null;
     this.showDropdown = false;
     this.showSource = false;
     this.showSearchBar = false;
     this.resumeUploadSuccess = false;
+    this.selectedFile = null;
+    this.primaryskills = null;
+    this.secondaryskills = null;
+    this.sourceId = null;
   }
 
   getSkillSuggestions(event: any): void {
