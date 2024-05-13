@@ -40,9 +40,10 @@
                     <td>Name</td>
                     <td>Email</td>
                     <td>Requirement</td>
-                    <td>Candidate Station</td>
+                   
                     <td>Progress Status</td>
                     <td>Move Candidates</td>
+                    <td>Candidate Station</td>
                     <td>Service Status</td>
                     <td>More Detail</td>
                 </tr>
@@ -59,7 +60,7 @@
                                 </td>
                                 <td class="text-wrap" [title]="item['candidate.candidateEmail'] ">{{ item['candidate.candidateEmail'] }}</td>
                                 <td class="text-wrap" [title]="item['serviceRequest.requestName']">{{ item['serviceRequest.requestName'] }}</td>
-                                <td class="text-wrap" [title]="item?.currentStation | titlecase">{{item?.currentStation | titlecase}}</td>                    
+                                <!-- <td class="text-wrap" [title]="item?.currentStation | titlecase">{{item?.currentStation | titlecase}}</td>                     -->
                                 <td class="text-wrap f-w-500" [title]="item?.progressStatus > 0 ? 'Progress Added' : 'Pending'"
                                     [ngClass]="item?.progressStatus > 0  ? 'green' : 'blue'">
                                     {{item?.progressStatus > 0 ? 'Progress Added' : 'Pending'}}
@@ -67,6 +68,7 @@
                                 <td> 
                                     <button class="move" *ngIf="item" (click)="onSwitchStation(item)">Move</button>  
                                 </td>
+                                <td class="text-wrap" [title]="item?.currentStation | titlecase">{{item?.currentStation | titlecase}}</td>  
                                 <td class="f-w-500" [ngClass]="{'blue': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
                                     'red': item?.serviceStatus === 'rejected'}" [title]="item?.serviceStatus | titlecase">
                                     {{ item?.serviceStatus | titlecase}}

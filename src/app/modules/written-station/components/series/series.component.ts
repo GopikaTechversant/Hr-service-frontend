@@ -146,6 +146,7 @@ export class SeriesComponent implements OnInit {
                 // Remove the candidate from the candidates_list
                 this.candidates_list = this.candidates_list.filter((item: any) => item.candidateId !== candidate.candidateId);
                 // Remove the candidate from other question boxes if already assigned
+                
                 this.created_Box.forEach((s: any) => {
                   if (s.candidates && s !== this.selectedBox) {
                     s.candidates = s.candidates.filter((c: any) => c.candidateId !== candidate.candidateId);
@@ -161,46 +162,30 @@ export class SeriesComponent implements OnInit {
 
           else if (selectedQuestionBox.series.questionName) {
             this.selectedBox = this.created_Box.find((box: any) => box.name === selectedQuestionBox.series.name);
-            if (!this.selectedBox.candidates) {
-              this.selectedBox.candidates = []; // Initialize candidates array if not exists
-            }
-            // console.log("selectedQuestionBox", selectedQuestionBox);
-            // this.selectedBox.candidates.push(selectedQuestionBox.candidate)
-            // const requestData = {
-            //   questionBoxId: selectedQuestionBox.series.boxId,
-            //   questionId: selectedQuestionBox.series.questionId,
-            //   questionServiceId: [] as string[]
-            // };
-            // requestData.questionServiceId.push(selectedQuestionBox.candidate.serviceId);
-            // this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res: any) => {
-            //   console.log("resp", res);
-            //   this.fetchCandidatesWithQuestionBox();
-            //   this.fetchQuestions();
-            // });
+            // if (!this.selectedBox.candidates) {
+            //   this.selectedBox.candidates = []; // Initialize candidates array if not exists
+            // }
+            console.log("selectedQuestionBox", selectedQuestionBox);
+            this.selectedBox.candidates.push(selectedQuestionBox.candidate)
+            const requestData = {
+              questionBoxId: selectedQuestionBox.series.boxId,
+              questionId: selectedQuestionBox.series.questionId,
+              questionServiceId: [] as string[]
+            };
+            requestData.questionServiceId.push(selectedQuestionBox.candidate.serviceId);
+            this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res: any) => {
+              console.log("resp", res);
+              this.fetchCandidatesWithQuestionBox();
+              this.fetchCandidates();
+              this.fetchQuestions();
+            });
           }
         }
       });
     }
   }
 
-  assignQuestionBoxToServer(selectedBox: any): void {
-    const requestData = {
-        questionBoxId: selectedBox.id,
-        questionId: selectedBox.questionId,
-        questionServiceId: [] as string[]
-    };
-    // Get candidate service IDs for the current series
-    if (selectedBox.candidates && selectedBox.candidates.length > 0) {
-        selectedBox.candidates.forEach((candidate: { serviceId: string }) => {
-            if (candidate.serviceId) requestData.questionServiceId.push(candidate.serviceId);
-        });
-    }
-    this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res: any) => {
-        console.log("resp", res);
-        this.fetchCandidatesWithQuestionBox();
-        this.fetchQuestions();
-    });
-}
+
 
   selectQuestion(questionBox: any, id: any, name: any): void {
     this.questions_list = this.questions_list.filter((question: { questionId: any; }) => question.questionId !== id);
