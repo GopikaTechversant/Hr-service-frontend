@@ -1,6 +1,249 @@
 .title {
     font-size: 27px;
     font-weight: 500;
+    text-align: left;
+}
+
+.candidate-box {
+    padding-left: 18px;
+    margin-left: 10px;
+    height: 166px;
+    margin-left: 10px;
+    padding-top: 12px;
+    border: 1px solid #E3E0E0;
+    background-color: white;
+}
+
+.info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.info-pair {
+    display: flex;
+    justify-content: space-between;
+    width: 338px;
+}
+
+.key {
+    color: #575F6E;
+    width: 83px;
+}
+
+.value {
+    flex: 1;
+    color: #575F6E;
+}
+
+.parent-conatiner {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 225px;
+    overflow-y: scroll;
+}
+
+.candidates-list {
+    height: 249px;
+    border: 1px solid #575F6E;
+    border-radius: 2px;
+    background-color: #E7E7E7;
+}
+
+.candidates-list-1 {
+    height: 256px;
+    border: 1px solid #575F6E;
+    border-radius: 2px;
+}
+
+
+.name {
+    color: #000000;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.name-candidate {
+    background-color: #575F6E;
+    color: #000000;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: white;
+}
+
+.candidate-name {
+    color: #005EC9;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.assign {
+    border-radius: 3px;
+    background: #005EC9;
+    color: white;
+    border: none;
+    height: 30px;
+    width: 68px;
+    margin-top: 11px;
+    padding-bottom: 2px;
+}
+
+.input {
+    border: 1px solid #E9E9E9;
+    outline: none;
+    border-right: none;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    width: 327px;
+    height: 33px;
+    padding-right: 10px;
+    color: #000000;
+}
+
+.approve {
+    height: 35px;
+    border: none;
+    background-color: #575F6E;
+    color: white;
+    border-radius: 3px;
+    border-left: none;
+}
+
+.create-questionbox {
+    outline: none !important;
+    border: none;
+    border: 1px solid #575F6E;
+    border-radius: 4px;
+    color: #575F6E;
+    height: 33px;
+    background-color: white;
+}
+
+.no-data {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 27px;
+    letter-spacing: 0em;
+    color: #C10A0A;
+}
+
+.created-box {
+    width: 90%;
+    background: #848E9F;
+    border-radius: 2px;
+    height: 97px;
+    margin: 0 auto;
+}
+
+.centerd-div-question-box {
+    margin-top: 38px;
+    text-align: center;
+}
+
+.box-name {
+    height: 39px;
+    background-color: #6D7788;
+    padding-left: 12px;
+    color: white;
+}
+
+.assign-box {
+    height: 484px;
+    overflow-y: scroll;
+}
+
+.drop-down {
+    width: 31%;
+    background-color: white;
+    height: 34px;
+    margin-right: 7px;
+    margin-top: 2px;
+}
+
+.s-list {
+    color: black;
+}
+
+.candidate-box-question {
+    padding-left: 18px;
+    margin-left: 10px;
+    height: 182px;
+    margin-left: 10px;
+    padding-top: 4px;
+    border: 1px solid #E3E0E0;
+    background-color: white;
+    margin-top: 14px;
+}
+
+.candidate-box-parent {
+    height: 195px;
+    overflow-y: scroll;
+    margin-top: 6px;
+    gap: 18px;
+}
+
+.candidate-parent {
+    height: 200px;
+    overflow-y: scroll;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+
+
+.drop-list {
+    background-color: white;
+    width: 100%;
+    margin-top: 5px;
+    height: 137px;
+    overflow-y: scroll;
+    line-height: 24px;
+    margin: 0 auto;
+}
+
+.drop-list-item {
+    border-bottom: 1px solid #F4F2F2;
+    color: #575F6E;
+}
+
+.result {
+    width: 91px;
+    border-radius: 3px;
+    background: #005EC9;
+    color: white;
+    border: none;
+    height: 30px;
+}
+
+.score{
+    border: 1px dashed #08E1795E;
+    background: #08E17921;
+    width: 95px;
+    height: 23px;
+    text-align: center;
+    padding-top: 4px;
+    color: #08BC66;
+    border-radius: 2px;
+    font-weight: 500;
+   
+}
+
+.moved{
+    margin-right: 6px;
+    color: darkred;
+}
+
+/* .title {
+    font-size: 27px;
+    font-weight: 500;
     line-height: 36px;
     letter-spacing: 0em;
     text-align: left;
@@ -92,7 +335,7 @@
 .series-btn {
     width: 90%;
     height: 35px;
-    /* margin-top: 13px; */
+  
     border: 1px solid #575F6E;
     border-radius: 4px;
     background-color: white;
@@ -111,8 +354,7 @@
 }
 
 .series-list {
-    /* margin-left: 17px;
-    padding-left: 15px; */
+   
     margin-top: 10px;
 }
 
@@ -130,7 +372,7 @@
 
 .drop-down {
     width: 82%;
-    /* padding-left: 8px; */
+    
     background-color: white;
     height: 34px;
     margin: 0 auto;
@@ -159,7 +401,7 @@
     width: 259px;
     border-right: 1px solid #D7D7D7;
     padding-left: 18px;
-    /* margin-top: 17px; */
+   
     margin-bottom: 19px;
 }
 
@@ -300,3 +542,15 @@
 .c-default{
     cursor: default;
 }
+
+.move {
+    width: 36%;
+    height: 25px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    color: #005EC9;
+    background-color: #FFFFFF;
+    border: 1px solid #005EC9;
+} */

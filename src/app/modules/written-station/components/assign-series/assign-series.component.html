@@ -28,3 +28,11 @@
         </div>
     </div>
 </div>
+
+<div *ngIf="!seriesList" class="create-series">
+    <div class="d-flex flex-column align-center p-t-16">
+        <p class="title1">Please Create Question Box</p>
+        <p class="para2">You have not created Question Box to assign</p>
+        <button class="ok-btn" (click)="cancel()">Ok</button>
+    </div>
+</div>

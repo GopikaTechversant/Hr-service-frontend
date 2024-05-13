@@ -58,6 +58,8 @@ export class HrCandidateDetailComponent {
       offerDescription: this.descriptionValue,
       offerJoinDate: this.displayDate
     }
+    console.log("payload",payload);
+    
     this.apiService.post(`/hr-station/candidateOffer`, payload).subscribe({
       next: (res: any) => {
         this.tostr.success('Offer Added Successfully');
