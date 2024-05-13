@@ -8,7 +8,7 @@
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">First Name<span class="required">*</span></span>
                 <input type="text" class="input-box" formControlName="candidateFirstName" placeholder="First Name"
-                    maxlength="20" (keydown)="nameValidation($event)" >
+                    maxlength="20" (keydown)="nameValidation($event)">
                 <div
                     *ngIf="candidateForm.get('candidateFirstName')?.hasError('required') && candidateForm.get('candidateFirstName')?.touched">
                     <mat-error>Please Enter First Name</mat-error>
@@ -64,8 +64,8 @@
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Mobile<span class="required">*</span></span>
-                <input type="text" class="input-box" formControlName="candidateMobileNo" maxlength="10" title="Enter a 10 digit Mobile number"
-                    (keypress)="onKeypress($event)" (paste)="onPaste($event)">
+                <input type="text" class="input-box" formControlName="candidateMobileNo" maxlength="10"
+                    title="Enter a 10 digit Mobile number" (keypress)="onKeypress($event)" (paste)="onPaste($event)">
                 <div
                     *ngIf="candidateForm.get('candidateMobileNo')?.hasError('required') && candidateForm.get('candidateMobileNo')?.touched">
                     <mat-error>Mobile Number is mandatory</mat-error>
@@ -104,7 +104,8 @@
                         <span *ngIf="sourceName">{{sourceName}}</span>
                         <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
                         <div class="no-close dropdown c-pointer" *ngIf="showSource">
-                            <p *ngFor="let source of sourceList" (click)="selectsource(source?.sourceId, source?.sourceName)">
+                            <p *ngFor="let source of sourceList"
+                                (click)="selectsource(source?.sourceId, source?.sourceName)">
                                 {{source?.sourceName}}</p>
                         </div>
                     </div>
@@ -112,43 +113,51 @@
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Experience</span>
-                <input type="text" class="input-box" formControlName="candidateExperience" (keydown)="experienceValidation($event)">
+                <input type="text" class="input-box" formControlName="candidateExperience"
+                    (keydown)="experienceValidation($event)">
             </div>
         </div>
         <div class="d-flex   parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">City</span>
-                <input type="text" class="input-box" formControlName="candidateCity" maxlength="20" (keydown)="nameValidation($event)">
+                <input type="text" class="input-box" formControlName="candidateCity" maxlength="20"
+                    (keydown)="nameValidation($event)">
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">District</span>
-                <input type="text" class="input-box" formControlName="candidateDistrict" maxlength="20" (keydown)="nameValidation($event)">
+                <input type="text" class="input-box" formControlName="candidateDistrict" maxlength="20"
+                    (keydown)="nameValidation($event)">
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">State</span>
-                <input type="text" class="input-box" formControlName="candidateState" maxlength="20" (keydown)="nameValidation($event)">
+                <input type="text" class="input-box" formControlName="candidateState" maxlength="20"
+                    (keydown)="nameValidation($event)">
             </div>
         </div>
         <div class="d-flex   parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Education</span>
-                <input type="text" class="input-box" formControlName="candidateEducation" maxlength="40" (keydown)="nameValidation($event)">
+                <input type="text" class="input-box" formControlName="candidateEducation" maxlength="40"
+                    (keydown)="nameValidation($event)">
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Previous Organization</span>
-                <input type="text" class="input-box" formControlName="candidatePreviousOrg" maxlength="40" (keydown)="nameValidation($event)">
+                <input type="text" class="input-box" formControlName="candidatePreviousOrg" maxlength="40"
+                    (keydown)="nameValidation($event)">
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Previous Designation</span>
-                <input type="text" class="input-box" formControlName="candidatePreviousDesignation" maxlength="40" (keydown)="nameValidation($event)">
+                <input type="text" class="input-box" formControlName="candidatePreviousDesignation" maxlength="40"
+                    (keydown)="nameValidation($event)">
             </div>
         </div>
 
         <div class="d-flex parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Current Salary</span>
-                <input type="text" class="input-box" (keydown)="onKeypress($event)" formControlName="candidateCurrentSalary" 
-                [maxlength]="maxSalary?.length ? maxSalary?.length : 7"  (keydown)="budgetCheck($event)" (paste)="onPaste($event)">
+                <input type="text" class="input-box" (keydown)="onKeypress($event)"
+                    formControlName="candidateCurrentSalary" [maxlength]="maxSalary?.length ? maxSalary?.length : 7"
+                    (keydown)="budgetCheck($event)" (paste)="onPaste($event)">
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Expected Salary</span>
@@ -164,6 +173,9 @@
                     </div>
                     <div *ngIf="resumeUploadSuccess" class="file-name">
                         {{selectedFile?.name}}
+                        <div *ngIf="submitForm">
+                            <app-file-upload-s3 [selectedFile]="selectedFile"></app-file-upload-s3>
+                        </div>
                     </div>
                     <input type="file" name="file" #fileInput class="input-box" style="display:none"
                         (change)="onFileSelected($event)">
@@ -175,7 +187,8 @@
                 <div class="child d-flex m-b-10">
                     <span class="text m-b-4 no-close">Skill Sets</span>
                     <div class="d-flex skill-drop-down m-t-5 no-close w-100">
-                        <div class="input-box p-t-5 p-l-5 c-pointer no-close p-relative" (click)="showDropdown = !showDropdown">
+                        <div class="input-box p-t-5 p-l-5 c-pointer no-close p-relative"
+                            (click)="showDropdown = !showDropdown">
                             <div class="p-t-5">
                                 <span class="no-close'">{{selectedSkillType || 'Skill Type'}}</span>
                                 <span><i class="f-right p-r-10 fa fa-chevron-down no-close'"></i></span>
@@ -186,20 +199,21 @@
                         </div>
                         <!-- <span class="add-btn c-pointer" (click)="$event.preventDefault();">Add</span> -->
                     </div>
-                    <div class="d-flex"> 
-                    <div class="searchbar m-t-10 c-pointer p-t-10 no-close '"  *ngIf="selectedSkillType">
-                        <input type="search" class="input-search p-l-6" placeholder="Type to search skills..."
-                            (input)="getSkillSuggestions($event)" id="addskill">
-                        <div  class="m-l-23 m-t-8 drop-list">
-                            <div *ngFor="let suggestion of skillSuggestions" (click)="selectSkill(suggestion)">
-                                <span class="p-t-7 "><img src="assets/images/akar-icons_check.png" alt=""
-                                        class="m-t-0 p-r-4" width="13px" height="10px"></span>
-                                <span class="c-pointer ">{{suggestion?.skillName | titlecase}}</span>
+                    <div class="d-flex">
+                        <div class="searchbar m-t-10 c-pointer p-t-10 no-close '" *ngIf="selectedSkillType">
+                            <input type="search" class="input-search p-l-6" placeholder="Type to search skills..."
+                                (input)="getSkillSuggestions($event)" id="addskill">
+                            <div class="m-l-23 m-t-8 drop-list">
+                                <div *ngFor="let suggestion of skillSuggestions" (click)="selectSkill(suggestion)">
+                                    <span class="p-t-7 "><img src="assets/images/akar-icons_check.png" alt=""
+                                            class="m-t-0 p-r-4" width="13px" height="10px"></span>
+                                    <span class="c-pointer ">{{suggestion?.skillName | titlecase}}</span>
+                                </div>
                             </div>
                         </div>
+                        <span *ngIf="selectedSkillType" class="add-btn c-pointer"
+                            (click)="$event.preventDefault();addExtraSkills()">Add</span>
                     </div>
-                    <span  *ngIf="selectedSkillType" class="add-btn c-pointer" (click)="$event.preventDefault();addExtraSkills()" >Add</span>
-                </div>
                 </div>
                 <div class="child-skill d-flex m-b-10">
                     <div *ngIf="selectedPrimarySkills.length > 0">

@@ -1,9 +1,11 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, EventEmitter, HostListener, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { DatePipe } from '@angular/common';
 import { ToastrServices } from 'src/app/services/toastr.service';
 import { ApiService } from 'src/app/services/api.service';
+import { S3Service } from 'src/app/services/s3.service';
+
 @Component({
   selector: 'app-add-candidate-modal',
   templateUrl: './add-candidate-modal.component.html',
@@ -48,7 +50,8 @@ export class AddCandidateModalComponent implements OnInit {
   fileName: any;
   extraSkills: any[] = [];
   loader: boolean = false;
-  constructor(private apiService: ApiService, private tostr: ToastrServices, private formBuilder: UntypedFormBuilder, private datePipe: DatePipe) {
+  submitForm:boolean=false;
+  constructor(private apiService: ApiService, private tostr: ToastrServices, private formBuilder: UntypedFormBuilder, private datePipe: DatePipe, private s3Service: S3Service) {
     this.candidateForm = this.formBuilder.group({
       candidateFirstName: [null, Validators.required],
       candidateLastName: [null, Validators.required],
@@ -190,7 +193,9 @@ export class AddCandidateModalComponent implements OnInit {
   onFileSelected(event: any) {
     this.fileInputClicked = true;
     this.selectedFile = event.target.files[0];
+    console.log("this.selectedFile in add ", this.selectedFile);
     if (event.target.files.length > 0) this.resumeUploadSuccess = true;
+    // if(this.selectedFile) this.s3Service.uploadedFile.emit(this.selectedFile)
   }
 
   checkValidation(): void {
@@ -239,6 +244,7 @@ export class AddCandidateModalComponent implements OnInit {
   }
 
   submitClick(): void {
+    this.submitForm = true;
     this.loader = true;
     this.checkValidation();
     if (this.validationSuccess) {

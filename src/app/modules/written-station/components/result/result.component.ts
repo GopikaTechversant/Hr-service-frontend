@@ -17,6 +17,7 @@ export class ResultComponent {
   fileInputClicked: boolean = false;
   selectedFile: any;
   resumeUploadSuccess: boolean = false;
+  submitForm:boolean = false;
   constructor(private http: HttpClient,
     @Inject(MAT_DIALOG_DATA) public data: any,private apiService:ApiService,private tostr:ToastrServices,
     private dialogRef: MatDialogRef<ResultComponent>) {if (data){
@@ -43,16 +44,17 @@ export class ResultComponent {
       examServiceId: this.examServiceId,
       examDescription: this.descriptionValue
     }
-
-    this.apiService.post(`/written-station/result`, formdata).subscribe((res: any) => {
-      this.dialogRef.close(true);
-      this.scoreSubmitted.emit(parseInt(this.scoreValue, 10));
-    }, err => {
-      this.dialogRef.close();
-      if (err?.status === 500) this.tostr.error("Internal Server Error")
-      else this.tostr.warning(err?.error?.message ? err?.error?.message : "Cannot update Result")
-    });
-
+    if(this.scoreValue && this.examServiceId && this.descriptionValue){
+      this.submitForm = true;
+      this.apiService.post(`/written-station/result`, formdata).subscribe((res: any) => {
+        this.dialogRef.close(true);
+        this.scoreSubmitted.emit(parseInt(this.scoreValue, 10));
+      }, err => {
+        this.dialogRef.close();
+        if (err?.status === 500) this.tostr.error("Internal Server Error")
+        else this.tostr.warning(err?.error?.message ? err?.error?.message : "Cannot update Result")
+      });
+    }else this.tostr.warning('Please fill all the fields before submit')
   }
   
   cancelClick(): void {

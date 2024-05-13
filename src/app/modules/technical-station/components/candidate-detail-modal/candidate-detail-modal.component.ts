@@ -30,6 +30,7 @@ export class CandidateDetailModalComponent implements OnInit {
   resumePath: any;
   file: File | null = null;
   fileName: string = '';
+  submitForm:boolean = false;
   constructor(public dialogRef: MatDialogRef<CandidateDetailModalComponent>, private apiService: ApiService, private tostr: ToastrServices,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data) {
@@ -59,6 +60,7 @@ export class CandidateDetailModalComponent implements OnInit {
 
 
   addProgress(): void {
+    this.submitForm = true;
     const formData = new FormData();
     const skillElement = document.getElementById('skill') as HTMLInputElement;
     const scoreElement = document.getElementById('score') as HTMLInputElement;
