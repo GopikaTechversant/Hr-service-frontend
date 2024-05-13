@@ -76,5 +76,11 @@ export class RequirementCandidateListComponent implements OnInit {
     this.currentPage = Math.max(1, pageNumber);
     this.fetchcandidates('');
   }
+  update():void{
 
+  }
+
+  delete(){
+    
+  }
 }
