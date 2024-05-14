@@ -37,6 +37,7 @@ export class SeriesComponent implements OnInit {
   candidateMarkDetail: any;
   candidatesStatus: any[] = [];
   averageScore: string | null = null;
+  selectedBox: any;
   ngOnInit(): void {
     this.fetchCandidates();
     this.fetchCandidatesWithQuestionBox();
@@ -122,40 +123,69 @@ export class SeriesComponent implements OnInit {
       const dialogRef = this.dialog.open(AssignSeriesComponent, {
         height: '265px',
         width: '477px',
-        data: { seriesList: this.created_Box, candidateServiceId: candidate?.serviceId }
+        data: { seriesList: this.created_Box, candidateServiceId: candidate}
       });
       dialogRef.afterClosed().subscribe((selectedQuestionBox: any) => {
-        if (selectedQuestionBox) {
-          console.log("selectedQuestionBox", selectedQuestionBox);
-          // Find the selected question box by name
-          const selectedBox = this.created_Box.find((box: any) => box.name === selectedQuestionBox);
-          if (selectedBox) {
-            // Check if candidates array already exists for this box
-            if (!selectedBox.candidates) {
-              selectedBox.candidates = []; // Initialize candidates array if not exists
+        if (selectedQuestionBox.series) {
+          if (!selectedQuestionBox.series.questionName) {
+            console.log("selectedQuestionBox", selectedQuestionBox);
+            // Find the selected question box by name
+            this.selectedBox = this.created_Box.find((box: any) => box.name === selectedQuestionBox.series.name);
+            if (this.selectedBox) {
+              // Check if candidates array already exists for this box
+              if (!this.selectedBox.candidates) {
+                this.selectedBox.candidates = []; // Initialize candidates array if not exists
+              }
+              // Check if the candidate is already assigned to this box
+              const alreadyAssigned = this.selectedBox.candidates.some((c: any) => c.candidateId === candidate.candidateId);
+              if (!alreadyAssigned) {
+                // Push the candidate to the candidates array of the selected box
+                this.selectedBox.candidates.push(candidate);
+                console.log("selectedBox.candidates", this.selectedBox.candidates);
+
+                // Remove the candidate from the candidates_list
+                this.candidates_list = this.candidates_list.filter((item: any) => item.candidateId !== candidate.candidateId);
+                // Remove the candidate from other question boxes if already assigned
+                
+                this.created_Box.forEach((s: any) => {
+                  if (s.candidates && s !== this.selectedBox) {
+                    s.candidates = s.candidates.filter((c: any) => c.candidateId !== candidate.candidateId);
+                  }
+                });
+                console.log("Updated created_Box", this.created_Box);
+              } else {
+                console.log("Candidate already assigned to this box");
+              }
             }
-            // Check if the candidate is already assigned to this box
-            const alreadyAssigned = selectedBox.candidates.some((c: any) => c.candidateId === candidate.candidateId);
-            if (!alreadyAssigned) {
-              // Push the candidate to the candidates array of the selected box
-              selectedBox.candidates.push(candidate);
-              // Remove the candidate from the candidates_list
-              this.candidates_list = this.candidates_list.filter((item: any) => item.candidateId !== candidate.candidateId);
-              // Remove the candidate from other question boxes if already assigned
-              this.created_Box.forEach((s: any) => {
-                if (s.candidates && s !== selectedBox) {
-                  s.candidates = s.candidates.filter((c: any) => c.candidateId !== candidate.candidateId);
-                }
-              });
-              console.log("Updated created_Box", this.created_Box);
-            } else {
-              console.log("Candidate already assigned to this box");
-            }
+            console.log("selectedQuestionBox.questionName", selectedQuestionBox.questionName);
+          }
+
+          else if (selectedQuestionBox.series.questionName) {
+            this.selectedBox = this.created_Box.find((box: any) => box.name === selectedQuestionBox.series.name);
+            // if (!this.selectedBox.candidates) {
+            //   this.selectedBox.candidates = []; // Initialize candidates array if not exists
+            // }
+            console.log("selectedQuestionBox", selectedQuestionBox);
+            this.selectedBox.candidates.push(selectedQuestionBox.candidate)
+            const requestData = {
+              questionBoxId: selectedQuestionBox.series.boxId,
+              questionId: selectedQuestionBox.series.questionId,
+              questionServiceId: [] as string[]
+            };
+            requestData.questionServiceId.push(selectedQuestionBox.candidate.serviceId);
+            this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res: any) => {
+              console.log("resp", res);
+              this.fetchCandidatesWithQuestionBox();
+              this.fetchCandidates();
+              this.fetchQuestions();
+            });
           }
         }
       });
     }
   }
+
+
 
   selectQuestion(questionBox: any, id: any, name: any): void {
     this.questions_list = this.questions_list.filter((question: { questionId: any; }) => question.questionId !== id);

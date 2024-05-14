@@ -15,7 +15,7 @@
                 <div class="dropdown-list p-absolute" *ngIf="showDropdown">
                     <div *ngFor="let series of seriesList">
                         <!-- Check if 'questionName' exists in the current series object -->
-                        <p (click)="selectSeries(series.id, series.questionName ? series.questionName : series.name);" class="c-pointer">
+                        <p (click)="selectSeries(series.id, series.questionName ? series.questionName : series.name,series);" class="c-pointer">
                             {{ series.questionName ? series.questionName : series.name }}
                         </p>
                     </div>
