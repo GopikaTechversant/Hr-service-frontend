@@ -19,22 +19,13 @@ export class ApiService {
       else return token;
     }
   }
-
-    get(url: string): Observable<any> {
-      // Define your header
-      // let headers = new HttpHeaders({
-      //   'ngrok-skip-browser-warning': environment['ngrok-skip-browser-warning']
-      // });
   
-      // Make the HTTP GET request with the specified headers
-      return this.http.get(`${environment.api_url}${url}`);
-    }
+  get(url: string): Observable<any> {
+    return this.http.get(`${environment.api_url}${url}`);
+  }
 
   // Generic POST method
   post(url: string, data: any): Observable<any> {
-    // let headers = new HttpHeaders({
-    //   'ngrok-skip-browser-warning': environment['ngrok-skip-browser-warning']
-    // });
     return this.http.post(`${environment.api_url}${url}`, data);
   }
 

@@ -4,7 +4,18 @@
             <span class="heading">Application By Source</span>
         </div>
         <div class="d-flex">
-            <span class="filter p-r-10 p-t-10">Datewise</span>
+            <span class="filter p-r-10 p-t-10">From</span>
+            <div class="p-relative ">
+                <input class="p-l-5  input c-pointer" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate"
+                    (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate" [max]="today">
+                <span> <mat-datepicker #pickerdate class=""></mat-datepicker>
+                    <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
+                        (click)="pickerdate?.open()"></i>
+                </span>
+            </div>
+        </div>
+        <div class="d-flex">
+            <span class="filter p-l-10 p-r-10 p-t-10">To</span>
             <div class="p-relative ">
                 <input class="p-l-5  input c-pointer" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate"
                     (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate" [max]="today">

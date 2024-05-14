@@ -1369,6 +1369,10 @@
   width: 100% !important;
 }
 
+.w-95 {
+  width: 95% !important;
+}
+
 .w-50 {
   width: 50% !important;
 }
