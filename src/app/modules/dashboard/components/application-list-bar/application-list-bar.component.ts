@@ -18,8 +18,8 @@ export class ApplicationListBarComponent implements OnInit {
   dataSet: any;
   requestId: any;
   today: Date = new Date();
-  displayDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
-
+  startDate: string | null = this.datePipe.transform(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
+  endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   constructor(private apiService: ApiService, private datePipe: DatePipe) { }
   // @HostListener('window:beforeunload', ['$event'])
   // unloadNotification($event: any) {
@@ -27,7 +27,6 @@ export class ApplicationListBarComponent implements OnInit {
   // }
 
   ngOnInit(): void {
-    this.displayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     this.requestId = this.positionId ? this.positionId : '';
     this.fetchApplicationList();
   }
@@ -44,7 +43,7 @@ export class ApplicationListBarComponent implements OnInit {
   }
 
   fetchApplicationList(): void {
-    this.apiService.get(`/dashboard/department-daily-application?date=${this.displayDate}&requestId=${this.requestId}`).subscribe((res: any) => {
+    this.apiService.get(`/dashboard/department-daily-application?fromDate=${this.startDate}&toDate=${this.endDate}&requestId=${this.requestId}`).subscribe((res: any) => {
       if (res?.data) {
         this.applicationList = res?.data;
         this.labels = this.applicationList.map((app: any) => app.requestName);
@@ -54,9 +53,10 @@ export class ApplicationListBarComponent implements OnInit {
     });
   }
 
-  dateChange(event: any): void {
+  dateChange(event: any, range: string): void {
     let date = new Date(event?.value);
-    this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    if (range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    if (range == 'endDate') this.endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
     this.positionId = '';
     this.fetchApplicationList();
   }

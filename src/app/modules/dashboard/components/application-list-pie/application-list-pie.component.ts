@@ -12,17 +12,16 @@ import { ApiService } from 'src/app/services/api.service';
 export class ApplicationListPieComponent implements OnInit, AfterViewInit {
   @Input() positionId: string = '';
   chart: any;
-  displayDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   sourceList: any[] = [];
   sourceLabels: any[] = [];
   sourceCount: any[] = [];
   requestId: any;
   today : Date = new Date();
-
+  startDate: string | null = this.datePipe.transform(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
+  endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   constructor(private apiService: ApiService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
-    this.displayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     this.requestId = this.positionId ? this.positionId : '';
     this.fetchResumeSource()
   }
@@ -39,7 +38,7 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
   }
 
   fetchResumeSource(): void {
-    this.apiService.get(`/dashboard/resume-source?date=${this.displayDate}&requestId=${this.requestId}`).subscribe((res: any) => {
+    this.apiService.get(`/dashboard/resume-source?fromDate=${this.startDate}&toDate=${this.endDate}&requestId=${this.requestId}`).subscribe((res: any) => {
       if (res?.data) {
         this.sourceList = res?.data;
         this.sourceCount = this.sourceList.map((item: any) => Number(item.sourcecount));
@@ -49,9 +48,10 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
     })
   }
 
-  dateChange(event: any): void {
+  dateChange(event: any, range: string): void {
     let date = new Date(event?.value);
-    this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    if (range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    if (range == 'endDate') this.endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
     this.positionId = '';
     this.fetchResumeSource();
   }
