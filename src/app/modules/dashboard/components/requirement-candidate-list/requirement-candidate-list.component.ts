@@ -25,7 +25,7 @@ export class RequirementCandidateListComponent implements OnInit {
   }
 
   fetchcandidates(searchQuery: string): void {
-    if(!this.initialLoader) this.loader = true
+    if (!this.initialLoader) this.loader = true
     this.apiService.get(`/screening-station/v1/list-all?page=${this.currentPage}&limit=${this.limit}&search=${searchQuery.trim()}`).subscribe((res: any) => {
       if (res) {
         this.initialLoader = false;
@@ -60,7 +60,7 @@ export class RequirementCandidateListComponent implements OnInit {
 
   candidateSearch(search: any): void {
     this.searchKeyword = search
-    this.currentPage = 1 ;
+    this.currentPage = 1;
     this.limit = 9;
     this.fetchcandidates(this.searchKeyword);
   }
@@ -76,11 +76,19 @@ export class RequirementCandidateListComponent implements OnInit {
     this.currentPage = Math.max(1, pageNumber);
     this.fetchcandidates('');
   }
-  update():void{
+
+  onStatusChange(candidate: any): void {
+    this.router.navigate(['dashboard/add-candidate'], {
+      state: { candidate }
+    });
+  }
+
+
+  update(): void {
 
   }
 
-  delete(){
-    
+  delete() {
+
   }
 }

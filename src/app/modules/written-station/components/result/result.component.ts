@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { environment } from 'src/environments/environments';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastrServices } from 'src/app/services/toastr.service';
+import { S3Service } from 'src/app/services/s3.service';
 @Component({
   selector: 'app-result',
   templateUrl: './result.component.html',
@@ -19,7 +20,7 @@ export class ResultComponent {
   resumeUploadSuccess: boolean = false;
   submitForm:boolean = false;
   constructor(private http: HttpClient,
-    @Inject(MAT_DIALOG_DATA) public data: any,private apiService:ApiService,private tostr:ToastrServices,
+    @Inject(MAT_DIALOG_DATA) public data: any,private apiService:ApiService,private tostr:ToastrServices,private s3Service:S3Service,
     private dialogRef: MatDialogRef<ResultComponent>) {if (data){
       this.examServiceId = data.candidateIds
     } 
@@ -28,7 +29,13 @@ export class ResultComponent {
 
   ngOnInit(): void { }
 
+   
+  uploadFile():void{
+    if (this.selectedFile) this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', this.selectedFile);
+  }
+
   submitClick(): void {
+    this.uploadFile();
     const scoreElement = document.getElementById('score') as HTMLInputElement;
     if (scoreElement) this.scoreValue = scoreElement.value;
     const descriptionElement = document.getElementById('description') as HTMLInputElement;

@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastrServices } from 'src/app/services/toastr.service';
 import { environment } from 'src/environments/environments';
+import { S3Service } from 'src/app/services/s3.service';
 @Component({
   selector: 'app-candidate-detail-modal',
   templateUrl: './candidate-detail-modal.component.html',
@@ -29,9 +30,9 @@ export class CandidateDetailModalComponent implements OnInit {
   userId: any;
   resumePath: any;
   file: File | null = null;
-  fileName: string = '';
+  fileName: any;
   submitForm:boolean = false;
-  constructor(public dialogRef: MatDialogRef<CandidateDetailModalComponent>, private apiService: ApiService, private tostr: ToastrServices,
+  constructor(public dialogRef: MatDialogRef<CandidateDetailModalComponent>, private apiService: ApiService, private tostr: ToastrServices,private s3Service:S3Service,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data) {
       this.candidateDetails = data?.candidateDetails;
@@ -58,6 +59,10 @@ export class CandidateDetailModalComponent implements OnInit {
     }
   }
 
+  uploadFile():void{
+    if (this.fileName) this.s3Service.uploadImage(this.fileName, 'hr-service-images', this.fileName);
+
+  }
 
   addProgress(): void {
     this.submitForm = true;

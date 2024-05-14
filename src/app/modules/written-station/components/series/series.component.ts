@@ -314,12 +314,14 @@ export class SeriesComponent implements OnInit {
     fileInput.click();
   }
 
-  onFileSelected(event: any): void {
-    this.selectedFile = event.target.files[0];
-    if (this.selectedFile) {
-      this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', this.selectedFile.name + '.png');
-    }
-  }
+  // onFileSelected(event: any): void {
+  //   this.selectedFile = event.target.files[0];
+  //   if (this.selectedFile) {
+  //     this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', this.selectedFile.name + '.png');
+  //   }
+  // }
+
+  
   // candidates_list: any[] = [];
   // requestId: any;
   // series_list: any[] = [];

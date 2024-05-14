@@ -94,9 +94,9 @@
                 <img class="p-5" src="/assets/images/paperclip.svg" alt="" height="20" width="20">
                 <span class="m-b-10 p-5"> {{ fileName.trim() === '' ? 'Upload Attachment' : fileName }}</span>
                 <input type="file" id="fileInput" #fileInput style="display: none;" (change)="onFileSelected($event)">
-                <div *ngIf="submitForm">
+                <!-- <div *ngIf="submitForm">
                     <app-file-upload-s3 [selectedFile]="fileName"></app-file-upload-s3>
-                </div>
+                </div> -->
             </span>
         </div>
         <div class="sub-head d-flex" *ngIf="data?.progressStatus > 0 || candidateDetails?.serviceStatus === 'moved'">

@@ -50,7 +50,10 @@ export class AddCandidateModalComponent implements OnInit {
   fileName: any;
   extraSkills: any[] = [];
   loader: boolean = false;
-  submitForm:boolean=false;
+  submitForm: boolean = false;
+  fromRequirementId: any;
+  fromRequirementName: any;
+  requirement: any;
   constructor(private apiService: ApiService, private tostr: ToastrServices, private formBuilder: UntypedFormBuilder, private datePipe: DatePipe, private s3Service: S3Service) {
     this.candidateForm = this.formBuilder.group({
       candidateFirstName: [null, Validators.required],
@@ -85,6 +88,16 @@ export class AddCandidateModalComponent implements OnInit {
     this.maxDate.setFullYear(this.currentYear - 18);
     this.fetchRequerements();
     this.fetchSource();
+    if (history?.state?.candidate) {
+      this.requirementFromList()
+    }
+  }
+
+  requirementFromList(): void {
+    console.log("inside", history?.state?.candidate);
+    this.requirement = history?.state?.candidate;
+    this.selectedRequirementId = this.requirement.requestId;
+    this.fromRequirementName = this.requirement.requestName;
   }
 
   onBodyClick(event: MouseEvent): void {
@@ -195,7 +208,12 @@ export class AddCandidateModalComponent implements OnInit {
     this.selectedFile = event.target.files[0];
     console.log("this.selectedFile in add ", this.selectedFile);
     if (event.target.files.length > 0) this.resumeUploadSuccess = true;
+
     // if(this.selectedFile) this.s3Service.uploadedFile.emit(this.selectedFile)
+  }
+
+  uploadFile(): void {
+    if (this.selectedFile) this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', this.selectedFile);
   }
 
   checkValidation(): void {
@@ -246,6 +264,7 @@ export class AddCandidateModalComponent implements OnInit {
   submitClick(): void {
     this.submitForm = true;
     this.loader = true;
+    this.uploadFile();
     this.checkValidation();
     if (this.validationSuccess) {
       let candidateDetails = this.candidateForm.value;

@@ -85,7 +85,7 @@
                 <span class="label m-b-4">Requirement<span class="required">*</span></span>
                 <div class="input-box p-t-5 p-l-5 c-pointer p-relative no-close"
                     (click)="requirementListOpen = !requirementListOpen">
-                    <div class="p-t-5">
+                    <div class="p-t-5" *ngIf="!fromRequirementName">
                         <span *ngIf="!selectedRequirementName" class="no-close">Select Requirement</span>
                         <span *ngIf="selectedRequirementName" class="no-close">{{selectedRequirementName}}</span>
                         <span><i class="f-right p-r-10 fa fa-chevron-down s-text no-close"></i></span>
@@ -93,6 +93,9 @@
                             <p *ngFor="let requirement of requirementList" (click)="selectRequirement(requirement)">
                                 {{requirement?.requestName}}</p>
                         </div>
+                    </div>
+                    <div class="p-t-5" *ngIf="fromRequirementName">
+                        <span class="no-close">{{fromRequirementName}}</span>
                     </div>
                 </div>
             </div>
@@ -173,9 +176,9 @@
                     </div>
                     <div *ngIf="resumeUploadSuccess" class="file-name">
                         {{selectedFile?.name}}
-                        <div *ngIf="submitForm">
+                        <!-- <div *ngIf="submitForm">
                             <app-file-upload-s3 [selectedFile]="selectedFile"></app-file-upload-s3>
-                        </div>
+                        </div> -->
                     </div>
                     <input type="file" name="file" #fileInput class="input-box" style="display:none"
                         (change)="onFileSelected($event)">

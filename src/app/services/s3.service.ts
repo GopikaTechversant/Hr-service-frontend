@@ -19,8 +19,26 @@ export class S3Service {
     });
   }
 
-  async uploadImage(file: File, bucketName: string, key: string): Promise<any> {
-    console.log("uploadedFile", this.uploadedFile);
+  // async uploadImage(file: File, bucketName: string, key: string): Promise<any> {
+  //   console.log("uploadedFile", this.uploadedFile);
+  //   const params: PutObjectCommandInput = {
+  //     Bucket: bucketName,
+  //     Key: key,
+  //     Body: file,
+  //     // ACL: 'public-read' // Set ACL to make the uploaded image publicly accessible
+  //   };
+  //   const command = new PutObjectCommand(params);
+  //   console.log("command", command);
+  //   return await this.s3Client.send(command);
+  //   console.log("uploadedFile", this.uploadedFile);
+  // }
+
+  async uploadImage(file: File, bucketName: string, fileType: any): Promise<any> {
+    const fileExtension = file.name.split('.').pop(); // Get the file extension
+    const fileNameWithoutExtension = fileType.name.split('.').slice(0, -1).join('.');
+    // const key = `${fileType}_${Date.now()}.${fileExtension}`; // Generate key with file type and timestamp
+    const currentDate = new Date().toISOString().split('T')[0]; // Get the current date
+    const key = `${fileNameWithoutExtension}_${currentDate}.${fileExtension}`; // Generate key with filename, current date, and file extension
     const params: PutObjectCommandInput = {
       Bucket: bucketName,
       Key: key,
@@ -28,8 +46,6 @@ export class S3Service {
       // ACL: 'public-read' // Set ACL to make the uploaded image publicly accessible
     };
     const command = new PutObjectCommand(params);
-    console.log("command", command);
     return await this.s3Client.send(command);
-    console.log("uploadedFile", this.uploadedFile);
   }
 }
