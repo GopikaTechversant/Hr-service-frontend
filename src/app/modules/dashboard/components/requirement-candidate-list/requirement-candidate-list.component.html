@@ -70,17 +70,17 @@
                 <ng-container *ngIf="candidates_list?.length > 0">
 
                     <ng-container *ngFor="let candidate of candidates_list">
-                        <tr class="candidate c-pointer" (click)="navigate('/dashboard/series/',candidate?.requestId)">
-                            <td>1/29/2024</td>
-                            <td class="text-wrap">{{candidate?.candidatesCount}}</td>
-                            <td class="text-wrap">{{candidate?.requestName}}</td>
-                            <td class="text-wrap">{{candidate?.teamName}}</td>
-                            <td class="text-wrap">{{candidate?.requestSkills}}</td>
+                        <tr class="candidate c-pointer">
+                            <td class="text-wrap" (click)="navigate('/dashboard/series/',candidate?.requestId)">1/29/2024</td>
+                            <td class="text-wrap" (click)="navigate('/dashboard/series/',candidate?.requestId)">{{candidate?.candidatesCount}}</td>
+                            <td class="text-wrap" (click)="navigate('/dashboard/series/',candidate?.requestId)">{{candidate?.requestName}}</td>
+                            <td class="text-wrap" (click)="navigate('/dashboard/series/',candidate?.requestId)">{{candidate?.teamName}}</td>
+                            <td class="text-wrap" (click)="navigate('/dashboard/series/',candidate?.requestId)">{{candidate?.requestSkills}}</td>
                             <td class="text-wrap"
-                                [ngStyle]="{'color': candidate.status === 'progress' ? '#F57C02' : '#08E179'}">
+                                [ngStyle]="{'color': candidate.status === 'progress' ? '#F57C02' : '#08E179'}" (click)="navigate('/dashboard/series/',candidate?.requestId)">
                                 {{candidate.status}}
                             </td>
-                            <td><img src="assets/images/user-add.png" alt="" class="icon"></td>
+                            <td (click)="navigate('/dashboard/add-candidate/',candidate?.requestId)"><img src="assets/images/user-add.png" alt="" class="icon"></td>
                             <td>
                                 <div class="d-flex j-center">
                                     <img src="assets/images/candidate-detail/edit.svg" class="icon" alt=""
