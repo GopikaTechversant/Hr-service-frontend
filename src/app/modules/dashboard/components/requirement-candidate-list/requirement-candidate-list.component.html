@@ -44,14 +44,15 @@
 
                     <ng-container *ngFor="let candidate of candidates_list">
                         <tr class="candidate c-pointer">
-                            <td class="text-wrap" (click)="navigate('/dashboard/series/',candidate?.requestId)">1/29/2024</td>
-                            <td class="text-wrap" (click)="navigate('/dashboard/series/',candidate?.requestId)">{{candidate?.candidatesCount}}</td>
-                            <td class="text-wrap" (click)="navigate('/dashboard/series/',candidate?.requestId)">{{candidate?.requestName}}</td>
-                            <td class="text-wrap" (click)="navigate('/dashboard/series/',candidate?.requestId)">{{candidate?.teamName}}</td>
-                            <td class="text-wrap" (click)="navigate('/dashboard/series/',candidate?.requestId)">{{candidate?.requestSkills}}</td>
+                            <td class="text-wrap" [title]="1/29/2024" (click)="navigate('/dashboard/series/',candidate?.requestId)">1/29/2024</td>
+                            <td class="text-wrap" [title]="candidate?.candidatesCount" (click)="navigate('/dashboard/series/',candidate?.requestId)">{{candidate?.candidatesCount}}</td>
+                            <td class="text-wrap" [title]="candidate?.requestName" (click)="navigate('/dashboard/series/',candidate?.requestId)">{{candidate?.requestName | titlecase}}</td>
+                            <td class="text-wrap" [title]="candidate?.teamName" (click)="navigate('/dashboard/series/',candidate?.requestId)">{{candidate?.teamName | titlecase}}</td>
+                            <td class="text-wrap" [title]="candidate?.requestSkills" (click)="navigate('/dashboard/series/',candidate?.requestId)">{{candidate?.requestSkills | titlecase}}</td>
                             <td class="text-wrap"
-                                [ngStyle]="{'color': candidate.status === 'progress' ? '#F57C02' : '#08E179'}" (click)="navigate('/dashboard/series/',candidate?.requestId)">
-                                {{candidate.status}}
+                                (click)="navigate('/dashboard/series/',candidate?.requestId)">
+                                <span  [ngStyle]="{'color': candidate.status === 'progress' ? '#F57C02' : '#08E179',
+                                'background-color': candidate.status === 'progress' ? '#FEECEC' : '#08E179'}" class="status">{{candidate.status | titlecase}}</span>
                             </td>
                             <td (click)="onStatusChange(candidate)"><img src="assets/images/user-add.png" alt="" class="icon"></td>
                             <td>

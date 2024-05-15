@@ -69,11 +69,11 @@
 }
 
 .name-candidate {
-    background-color: #575F6E;
+    /* background-color: #575F6E; */
     color: #000000;
     font-size: 18px;
     font-weight: 500;
-    line-height: 28px;
+    /* line-height: 28px; */
     letter-spacing: 0em;
     text-align: left;
     color: white;
