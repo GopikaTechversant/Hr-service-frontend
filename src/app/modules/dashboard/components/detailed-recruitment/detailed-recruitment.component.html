@@ -30,6 +30,7 @@
     <div class="table-container m-b-0">
         <table class="table">
             <tr class="table-header f-w-500 p-b-10">
+                <td>Recruiter Name</td>
                 <td>Name</td>
                 <td>Position</td>
                 <td>Experience</td>
@@ -47,8 +48,12 @@
                 <ng-container *ngFor="let item of  candidateList">
                     <tr class="c-pointer">
                         <td  class="text-wrap" >
+                            {{item['candidate.createdBy.userfirstName'] ? item['candidate.createdBy.userfirstName'] : ' '}}
+                            {{item['candidate.createdBy.userlastName'] ? item['candidate.createdBy.userlastName'] : ' '}}
+                        </td>
+                        <td  class="text-wrap" >
                             {{item['candidate.candidateFirstName'] ? item['candidate.candidateFirstName'] : ' '}}
-                            {{item['candidate.candidateLastName']}}
+                            {{item['candidate.candidateLastName'] ? item['candidate.candidateLastName'] : ' '}}
                         </td>
                         <td class="text-wrap" [title]="item['reqService.sericeName']">{{item['reqService.sericeName']}}</td>
                         <td  class="text-wrap" [title]="item['candidate.candidateExperience'] ">{{item['candidate.candidateExperience'] ? item['candidate.candidateExperience'] : 'Fresher'}}</td>

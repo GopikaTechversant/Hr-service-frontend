@@ -40,6 +40,30 @@
     width: 55vw;
 }
 
+.template {
+    border: 1px solid #E9E9E9;
+    background-color: #FFFFFF;
+    border: 1px solid rgb(207, 205, 205);
+    border-radius: 2px;
+    width: 54vw;
+    height: 485px;
+    top: 536px;
+    left: 31px;
+    gap: 0px;
+    border: 1px 0px 0px 0px;
+    opacity: 0px;
+    outline: none !important;
+    padding: 10px;
+
+}
+
+#description{
+    width: 54vw;
+    height: 285px;
+    outline: none !important;
+    border: none !important;
+}
+
 .calendar-icon {
     color: gray;
     width: 18px;
@@ -62,7 +86,7 @@
 }
 
 .btn {
-    width: 120px;
+    width: 13%;
     height: 35px;
     color: #FFFFFF;
     background-color: #005EC9;
@@ -99,5 +123,9 @@
 }
 
 .btn-parent {
-    float: right;
+    /* float: right; */
+    display: flex;
+    justify-content: end;
+    width: 57vw;
+
 }

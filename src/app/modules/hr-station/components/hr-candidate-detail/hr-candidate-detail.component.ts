@@ -22,6 +22,7 @@ export class HrCandidateDetailComponent {
   feedback: any;
   userId: any;
   resumePath: any;
+  templateData: any;
   constructor(public dialogRef: MatDialogRef<HrCandidateDetailComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
     private apiService: ApiService, private datePipe: DatePipe, private tostr: ToastrServices) {
     if (data) {
@@ -36,6 +37,7 @@ export class HrCandidateDetailComponent {
   ngOnInit(): void {
     this.today = new Date();
     this.userId = localStorage.getItem('userId');
+    this.fetchTemplates();
   }
 
   dateChange(event: any): void {
@@ -45,6 +47,14 @@ export class HrCandidateDetailComponent {
 
   closeDialog(): void {
     this.dialogRef.close();
+  }
+
+  fetchTemplates(): void {
+    this.apiService.get(`/candidate/mail/template?msgType=offer&candidateId=695`).subscribe((res: any) => {
+      if (res?.data) {
+        this.templateData = res?.data;
+      }
+    })
   }
 
   addOffer(): void {

@@ -26,6 +26,7 @@ import { InterviewDetailsComponent } from './components/interview-details/interv
 import { ReportDetailsComponent } from './components/report-details/report-details.component';
 import { DailyReportComponent } from './components/daily-report/daily-report.component';
 import { RequisitionDetailsComponent } from './components/requisition-details/requisition-details.component';
+import { InterviewCountsBarComponent } from './components/interview-counts-bar/interview-counts-bar.component';
 
 const routes: Routes = [
   {
@@ -66,7 +67,8 @@ const routes: Routes = [
     InterviewDetailsComponent,
     ReportDetailsComponent,
     DailyReportComponent,
-    RequisitionDetailsComponent
+    RequisitionDetailsComponent,
+    InterviewCountsBarComponent
   ],
   imports: [
     CommonModule,

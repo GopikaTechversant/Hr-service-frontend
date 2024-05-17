@@ -94,3 +94,80 @@
 .flex-1 {
     flex: 1;
 }
+
+
+
+tr:nth-child(odd) {
+    background: #F0F7FF;
+}
+
+tr:nth-child(even) {
+    background: #FFFFFF;
+}
+
+td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #E9E9E9
+}
+
+tr {
+    text-align: center;
+}
+
+
+.date-filters {
+    display: flex;
+    align-items: center;
+}
+
+
+.table-container {
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    min-height: calc(100vh - 420px);
+    max-height: calc(100vh - 420px);
+}
+
+.table-header {
+    position: sticky;
+    top: 0;
+    background: #F4F2F2 !important;
+    padding: 10px;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.box {
+    height: 26px;
+    width: 26px;
+    border: none;
+    background-color: white;
+}
+
+.page {
+    /* width: 83px; */
+    float: right;
+}
+
+.current-page {
+    background-color: #005EC9;
+    color: #FFFFFF;
+    height: 26px;
+    width: 26px;
+}
+
+.dot {
+    font-size: 20px;
+    color: black;
+    font-weight: 500;
+}
+

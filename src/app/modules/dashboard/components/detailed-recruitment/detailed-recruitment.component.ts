@@ -13,10 +13,7 @@ import { ApiService } from 'src/app/services/api.service';
 export class DetailedRecruitmentComponent implements OnInit {
   chart: any;
   displayDate: any;
-  length: any = 20;
-  pageSize = 7;
-  pageIndex = 1;
-  showFirstLastButtons = true;
+  pageSize = 10;
   candidateList: any[] = [];
   recruitersList: any[] = [];
   recruitersListOpen: boolean = false;
