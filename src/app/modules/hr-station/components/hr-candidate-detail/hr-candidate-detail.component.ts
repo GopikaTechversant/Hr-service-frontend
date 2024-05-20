@@ -23,13 +23,16 @@ export class HrCandidateDetailComponent {
   userId: any;
   resumePath: any;
   templateData: any;
+  showSelection: boolean = false;
+  showRejection: boolean = false;
+  messageType: string = '';
   constructor(public dialogRef: MatDialogRef<HrCandidateDetailComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
     private apiService: ApiService, private datePipe: DatePipe, private tostr: ToastrServices) {
     if (data) {
       this.candidateDetails = data?.candidateDetails?.candidate;
       this.hrReview = data?.candidateDetails?.reqHrReview;
       this.serviceId = this.data?.candidateDetails?.serviceId;
-      this.feedback = data?.candidateDetails?.reqCandidateComment?.commentComment;      
+      this.feedback = data?.candidateDetails?.reqCandidateComment?.commentComment;
     }
     this.dialogRef.updateSize('60%', '85%')
   }
@@ -50,7 +53,7 @@ export class HrCandidateDetailComponent {
   }
 
   fetchTemplates(): void {
-    this.apiService.get(`/candidate/mail/template?msgType=offer&candidateId=695`).subscribe((res: any) => {
+    this.apiService.get(`/candidate/mail/template?msgType=${this.messageType}&candidateId=${this.candidateDetails?.candidateId}`).subscribe((res: any) => {
       if (res?.data) {
         this.templateData = res?.data;
       }
@@ -68,8 +71,8 @@ export class HrCandidateDetailComponent {
       offerDescription: this.descriptionValue,
       offerJoinDate: this.displayDate
     }
-    console.log("payload",payload);
-    
+    console.log("payload", payload);
+
     this.apiService.post(`/hr-station/candidateOffer`, payload).subscribe({
       next: (res: any) => {
         this.tostr.success('Offer Added Successfully');
@@ -90,6 +93,17 @@ export class HrCandidateDetailComponent {
     window.open(`${environment.api_url}${this.resumePath}`, '_blank');
   }
 
+  showMail(item: any): void {
+    if (item === 'offer') {
+      this.showSelection = true;
+      this.showRejection = false;
+    } else {
+      this.showRejection = true;
+      this.showSelection = false;
+    }
+    this.messageType = item;
+    this.fetchTemplates();
+  }
 
   rejectClick(): void {
     const feedback = document.getElementById('feedback') as HTMLInputElement;

@@ -34,7 +34,7 @@ export class ReportDetailsComponent implements OnInit {
   error: boolean = false;
   interviewDetails: any;
   currentPage: number = 1;
-  pageSize = 11;
+  pageSize = 10;
   pageSizeOptions = [10, 25, 30];
   showFirstLastButtons = true;
   today: any;
@@ -198,7 +198,7 @@ export class ReportDetailsComponent implements OnInit {
           padding: {
             top: 20,
             right: 10,
-            bottom: 20,
+            bottom: 10,
             left: 10
           }
         },

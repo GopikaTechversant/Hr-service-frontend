@@ -12,7 +12,71 @@
     text-align: left;
     padding-bottom: 10px;
     border-bottom: 1px solid #E3E0E0;
+    padding-left: 18px !important;
+}
+
+.c-blue {
     color: #005EC9;
+}
+
+.selection-btn {
+    display: flex;
+    padding-left: 10px;
+
+}
+
+.select-btn {
+    width: 48%;
+    height: 50px;
+    color: #005EC9;
+    background-color: #FFFFFF;
+    border: 1px solid #005EC9;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 3px;
+    margin: 10px;
+}
+
+.w-97 {
+    width: 97% !important;
+}
+
+.select-btn:hover {
+    color: #FFFFFF;
+    background-color: #005EC9;
+    border: 1px solid #005EC9;
+}
+
+.offer-select-btn {
+    color: #FFFFFF;
+    background-color: #005EC9;
+    border: 1px solid #005EC9;
+}
+
+.offer-reject-btn {
+    color: #FFFFFF;
+    background-color: #575F6E;
+    border: 1px solid #575F6E;
+}
+
+.reject-btn {
+    width: 47%;
+    height: 50px;
+    color: #575F6E;
+    background-color: #FFFFFF;
+    border: 1px solid #575F6E;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 3px;
+    margin: 10px;
+}
+
+.reject-btn:hover {
+    color: #FFFFFF;
+    background-color: #575F6E;
+    border: 1px solid #575F6E;
 }
 
 .sub-head {
@@ -37,7 +101,7 @@
     border-radius: 2px;
     height: 30px;
     background-color: #FFFF;
-    width: 55vw;
+    width: 100%;
 }
 
 .template {
@@ -45,7 +109,7 @@
     background-color: #FFFFFF;
     border: 1px solid rgb(207, 205, 205);
     border-radius: 2px;
-    width: 54vw;
+    width: 98%;
     height: 485px;
     top: 536px;
     left: 31px;
@@ -57,8 +121,8 @@
 
 }
 
-#description{
-    width: 54vw;
+#description {
+    width: 98%;
     height: 285px;
     outline: none !important;
     border: none !important;
@@ -72,6 +136,11 @@
     top: 8px;
     right: 5px;
     cursor: pointer;
+}
+
+.attachment {
+    width: 97%;
+    background-color: #F4F2F2;
 }
 
 .modal-header {

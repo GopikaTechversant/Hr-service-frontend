@@ -10,6 +10,7 @@
 
 .page{
     background: #F7F7F7;
+    overflow-y: hidden;
 
 }
 
@@ -23,7 +24,6 @@
     width: 80%;
     padding-bottom: 10px;
     overflow-y: auto !important;
-    height: calc(100vh - 125px) !important;
 }
 
 .w-20 {
