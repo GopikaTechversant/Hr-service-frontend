@@ -5,6 +5,7 @@ import { CandidateDetailModalComponent } from '../candidate-detail-modal/candida
 import { ApiService } from 'src/app/services/api.service';
 import { StationSwitchComponent } from 'src/app/components/station-switch/station-switch.component';
 import { WarningBoxComponent } from 'src/app/components/warning-box/warning-box.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-technical-detail',
@@ -40,9 +41,12 @@ export class TechnicalDetailComponent implements OnInit {
   displayPosition: string = '';
   positionId: any;
   stationsList: any;
-  switchStations: Boolean = false;;
+  switchStations: Boolean = false;
   initialLoader: boolean = false;
-  constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog) { }
+  today: Date = new Date();
+  startDate: string | null = this.datePipe.transform(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
+  endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+  constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog, private datePipe: DatePipe) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
@@ -118,6 +122,14 @@ export class TechnicalDetailComponent implements OnInit {
         }
       });
     }
+  }
+
+  dateChange(event: any, range: string): void {
+    let date = new Date(event?.value);
+    if (range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    if (range == 'endDate') this.endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    // this.positionId = '';
+    // this.fetchList();
   }
 
   fetchDetails(id: any, status: any): void {
@@ -203,7 +215,7 @@ export class TechnicalDetailComponent implements OnInit {
   }
 
   onSwitchStation(candidate: any): void {
-    if (candidate?.serviceStatus === 'pending' && ((this.stationId === '3' && candidate?.currentStation === 'Technical 1') || (this.stationId === '4' && candidate?.currentStation === 'Technical 2'))) {
+    if (candidate?.serviceStatus !== 'done' && ((this.stationId === '3' && candidate?.currentStation === 'Technical 1') || (this.stationId === '4' && candidate?.currentStation === 'Technical 2'))) {
       const userId = localStorage.getItem('userId');
       const dialogRef = this.dialog.open(StationSwitchComponent, {
         data: {

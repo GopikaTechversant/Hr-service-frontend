@@ -30,6 +30,9 @@ export class S3Service {
   }
 
   async uploadImage(file: File, bucketName: string, fileType: any): Promise<any> {
+    const mimeType = file.type;
+    console.log("mimeType",mimeType);
+    
     const fileExtension = file.name.split('.').pop(); // Get the file extension
     const fileNameWithoutExtension = fileType.name.split('.').slice(0, -1).join('.');
     const currentDate = new Date().toISOString().split('T')[0]; // Get the current date
@@ -39,6 +42,10 @@ export class S3Service {
       Bucket: bucketName,
       Key: key,
       Body: file,
+      ContentEncoding: 'base64',
+      ContentDisposition: 'inline',
+      ContentType: mimeType,
+      // ContentType: 'application/octet-stream'
       // ACL: 'public-read' // Set ACL to make the uploaded image publicly accessible
     };
     console.log("params",params);

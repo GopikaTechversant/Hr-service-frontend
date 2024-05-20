@@ -97,8 +97,8 @@
                                 </span>
                             </div>
                             <div class="details">
-                                <span class="text-wrap" [title]="candidateDetails?.candidateStatus[0]?.interviewStationName">: {{candidateDetails?.candidateStatus[0]?.interviewStationName
-                                    ? candidateDetails?.candidateStatus[0]?.interviewStationName : 'Nil'}}</span>
+                                <span class="text-wrap" [title]="candidateDetails?.currentStation">: {{candidateDetails?.currentStation
+                                    ? candidateDetails?.currentStation : 'Nil'}}</span>
                             </div>
                         </div>
                     </div>
@@ -191,8 +191,8 @@
                                         <span class="f-w-500 user-icon"> 
                                             {{ item?.['reqServiceSequence.reqUser.userName']?.charAt(0) ? (item?.['reqServiceSequence.reqUser.userName']?.charAt(0) |uppercase) : 'U' }}
                                         </span>
-                                        <span class="text-color p-r-10 p-l-8 f-w-500 f-s-15">{{item?.['reqServiceSequence.reqUser.userName']}}</span>
-                                        <span class="p-r-10">{{item?.['reqServiceSequence.reqStation.stationName']}} - </span>
+                                        <span class="text-color p-r-10 p-l-8 f-w-500 f-s-15">{{item?.['reqServiceSequence.reqUser.userName'] ? item?.['reqServiceSequence.reqUser.userName'] : 'User Name'}}</span>
+                                        <span class="p-r-10">{{item?.['reqServiceSequence.reqStation.stationName'] ? item?.['reqServiceSequence.reqStation.stationName'] : 'Station Name'}} - </span>
                                         <span class="p-r-10 date-color"> {{item?.['reqServiceSequence.serviceDate'] | date:'dd/MM/yyyy'}}</span>
                                     </div>
                                     <div class="p-10">

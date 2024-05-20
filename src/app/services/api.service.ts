@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environments';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -20,15 +19,38 @@ export class ApiService {
     }
   }
 
-    // get(url: string): Observable<any> {
-    //   // Define your header
-    //   let headers = new HttpHeaders({
-    //     'ngrok-skip-browser-warning': environment['ngrok-skip-browser-warning']
-    //   });
-  
-    //   // Make the HTTP GET request with the specified headers
-    //   return this.http.get(`${environment.api_url}${url}`, { headers: headers });
-    // }
+  get(url: string): Observable<any> {
+    return this.http.get(`${environment.api_url}${url}`);
+  }
+
+  // Generic POST method
+  post(url: string, data: any): Observable<any> {
+    return this.http.post(`${environment.api_url}${url}`, data);
+  }
+
+  // Generic PUT method
+  update(url: string, data: any): Observable<any> {
+    return this.http.put(`${environment.api_url}${url}`, data);
+  }
+
+  // Generic DELETE method
+  delete(url: string): Observable<any> {
+    return this.http.delete(`${environment.api_url}${url}`);
+  }
+
+  // private getHeaders(): HttpHeaders {
+  //   const authToken = localStorage.getItem('userToken');
+  //   let headers = new HttpHeaders().set('ngrok-skip-browser-warning', 'true');
+  //   if (authToken) {
+  //     headers = headers.set('Authorization', `Bearer ${authToken}`);
+  //   }
+  //   return headers;
+  // }
+
+  // // Generic GET method
+  // get(url: string): Observable<any> {
+  //   return this.http.get(`${environment.api_url}${url}`, { headers: this.getHeaders() });
+  // }
 
   // // Generic POST method
   // post(url: string, data: any): Observable<any> {
@@ -48,34 +70,7 @@ export class ApiService {
   //   return this.http.delete(`${environment.api_url}${url}`);
   // }
 
-  private getHeaders(): HttpHeaders {
-    const authToken = localStorage.getItem('userToken');
-    let headers = new HttpHeaders().set('ngrok-skip-browser-warning', 'true');
-    if (authToken) {
-      headers = headers.set('Authorization', `Bearer ${authToken}`);
-    }
-    return headers;
-  }
-
-  // Generic GET method
-  get(url: string): Observable<any> {
-    return this.http.get(`${environment.api_url}${url}`, { headers: this.getHeaders() });
-  }
-
-  // Generic POST method
-  post(url: string, data: any): Observable<any> {
-    return this.http.post(`${environment.api_url}${url}`, data, { headers: this.getHeaders() });
-  }
-
-  // Generic PUT method
-  update(url: string, data: any): Observable<any> {
-    return this.http.put(`${environment.api_url}${url}`, data, { headers: this.getHeaders() });
-  }
-
-  // Generic DELETE method
-  delete(url: string): Observable<any> {
-    return this.http.delete(`${environment.api_url}${url}`, { headers: this.getHeaders() });
-  }
+  
 }
 
 

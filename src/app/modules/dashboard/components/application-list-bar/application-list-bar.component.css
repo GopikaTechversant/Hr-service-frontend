@@ -3,11 +3,16 @@
     box-shadow: 0px 4px 8px 0px #0000001A;
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .head {
     padding: 10px;
     justify-content: space-between;
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .heading {
@@ -17,11 +22,17 @@
     font-size: 18px;
 }
 
+.date-filters {
+    display: flex;
+    align-items: center;
+}
+
 .filter {
     font-weight: 400;
     font-size: 16px;
     line-height: 18.96px;
     color: #4F4F4F;
+    margin-right: 5px;
 }
 
 .input {
@@ -29,33 +40,29 @@
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
-    width: 144px;
+    width: 100px;
     height: 33px;
 }
 
 .chart-container {
-    padding-top: 15px;
+    margin-top: 5px;
+    padding-bottom: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.arrow {
-    color: #4F4F4F;
-    position: relative;
-    top: 9px;
-    left: 122px;
+.scrollable {
+    width: 100%;
+    overflow-x: auto;
 }
 
-.calendar-icon {
-    color: gray;
-    width: 18px;
-    height: 18px;
-    margin-left: -22px;
-    top: 13px;
-}
-
-#barChart {
-    /* height: 350px !important; */
-    width: 90% !important;
-    overflow-x: auto !important;
+.scrollable canvas {
+    width: 1500px; /* Adjust width as needed to accommodate all data */
+    max-width: none;
+    height: auto;
 }
 
 .no-data {
@@ -64,6 +71,103 @@
     font-weight: 500;
     color: #525455;
     width: 100%;
-    justify-content: center;
     margin-top: 30px;
 }
+
+.p-relative {
+    position: relative;
+}
+
+.filter-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.d-flex {
+    display: flex;
+    align-items: center;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+
+
+tr:nth-child(odd) {
+    background: #F0F7FF;
+}
+
+tr:nth-child(even) {
+    background: #FFFFFF;
+}
+
+td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #E9E9E9
+}
+
+tr {
+    text-align: center;
+}
+
+
+.date-filters {
+    display: flex;
+    align-items: center;
+}
+
+
+.table-container {
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    min-height: calc(100vh - 420px);
+    max-height: calc(100vh - 420px);
+}
+
+.table-header {
+    position: sticky;
+    top: 0;
+    background: #F4F2F2 !important;
+    padding: 10px;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.box {
+    height: 26px;
+    width: 26px;
+    border: none;
+    background-color: white;
+}
+
+.page {
+    /* width: 83px; */
+    float: right;
+}
+
+.current-page {
+    background-color: #005EC9;
+    color: #FFFFFF;
+    height: 26px;
+    width: 26px;
+}
+
+.dot {
+    font-size: 20px;
+    color: black;
+    font-weight: 500;
+}
+

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { DeleteComponent } from 'src/app/components/delete/delete.component';
 import { ApiService } from 'src/app/services/api.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-requirement-candidate-list',
   templateUrl: './requirement-candidate-list.component.html',
@@ -17,7 +20,8 @@ export class RequirementCandidateListComponent implements OnInit {
   lastPage: any;
   initialLoader: boolean = false;
   loader: boolean = false;
-  constructor(private router: Router, private apiService: ApiService) { }
+  deleteRequirementId:any;
+  constructor(private router: Router, private apiService: ApiService,private dialog: MatDialog,private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.initialLoader = true;
@@ -90,7 +94,31 @@ export class RequirementCandidateListComponent implements OnInit {
     });
   }
 
-  delete(requirement:any) {
-
+  // delete(requirement:any) {
+  //   this.apiService.post(`/service-request/delete`,)
+  // }
+  delete(id: any): void {
+    this.deleteRequirementId = id;
+    console.log(" this.deleteRequirementId", this.deleteRequirementId);
+    
+    const dialogRef = this.dialog.open(DeleteComponent, {
+      data:  this.deleteRequirementId,
+      width: '500px',
+      height: '250px'
+    })
+    dialogRef.componentInstance.onDeleteSuccess.subscribe(() => {
+      this.apiService.post(`/service-request/delete`, { requestId: this.deleteRequirementId }).subscribe({
+        next: (res: any) => {
+          // this.currentPage = 1;
+          // this.pageSize = 10;
+          this.generatePageNumbers();
+          this.fetchcandidates('');
+        },
+        error: (error) => {
+          this.toastr.error(error?.error?.message ? error?.error?.message : 'Unable to Delete candidates');
+        }
+      })
+    })
   }
+
 }

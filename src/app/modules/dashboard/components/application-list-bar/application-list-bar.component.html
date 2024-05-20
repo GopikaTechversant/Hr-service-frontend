@@ -1,22 +1,74 @@
 <div class="main">
     <div class="d-flex head">
         <div>
-            <span class="heading">Application Received By Departments</span>
+            <span class="heading">Application Received</span>
         </div>
-        <div class="d-flex">
-            <span class="filter p-r-10 p-t-10">Datewise</span>
-            <div class="p-relative ">
-                <input class="p-l-5  input c-pointer" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate"
-                    (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate" [max]="today">
-                <span> <mat-datepicker #pickerdate class=""></mat-datepicker>
-                    <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
-                        (click)="pickerdate ?.open()"></i>
-                </span>
+        <div class="date-filters">
+            <div class="d-flex">
+                <span class="filter p-r-10 p-t-10">From</span>
+                <div class="p-relative">
+                    <input class="p-l-5 input c-pointer" placeholder="29/02/11" matInput
+                        [matDatepicker]="pickerFromDate" [value]="startDate | date:'yyyy-MM-dd'" id="startDate"
+                        [max]="today" (dateChange)="dateChange($event, 'startDate')" [ngModel]="startDate"
+                        (click)="pickerFromDate.open()">
+                    <mat-datepicker #pickerFromDate></mat-datepicker>
+                    <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"
+                        (click)="pickerFromDate.open()"></i>
+                </div>
+            </div>
+            <div class="d-flex">
+                <span class="filter p-l-10 p-r-10 p-t-10">To</span>
+                <div class="p-relative">
+                    <input class="p-l-5 input c-pointer" placeholder="29/02/11" matInput [matDatepicker]="pickerToDate"
+                        (dateChange)="dateChange($event, 'endDate')" [ngModel]="endDate" (click)="pickerToDate.open()"
+                        [value]="endDate | date:'yyyy-MM-dd'" id="endDate" [min]="startDate" [max]="today">
+                    <mat-datepicker #pickerToDate></mat-datepicker>
+                    <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"
+                        (click)="pickerToDate.open()"></i>
+                </div>
             </div>
         </div>
     </div>
-    <div>
-        <div *ngIf="applicationList?.length === 0" class="no-data">No Data Found</div>
-        <canvas id="barChart"></canvas>
+    <div class="table-container m-b-0 w-100">
+        <table class="table">
+            <tr class="table-header f-w-500 p-b-10">
+                <td>Requirement</td>
+                <td>Date</td>
+                <td>No of applicants</td>
+            </tr>
+            <!-- <div class="loader-parent">
+                    <img src="assets/gif/loader.gif">
+                </div> -->
+            <ng-container *ngIf="applicationList.length > 0">
+                <ng-container *ngFor="let item of applicationList">
+                    <tr class="c-pointer">
+                        <td>{{item?.requestName}}</td>
+                        <td>{{item?.createdAt | date: 'dd/MM/YYY' }}</td>
+                        <td>{{item?.applicationCount}}</td>
+                    </tr>
+                </ng-container>
+            </ng-container>
+            <div *ngIf="applicationList?.length === 0" class="no-data d-flex w-100">No Data Found</div>
+        </table>
+    </div>
+    <div class="page d-flex j-end p-10 ">
+        <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(1)">
+            <img src="assets/images/double-arrow-left-icon.svg" alt="" height="14px" width="14px">
+        </button>
+        <button *ngIf="currentPage === 1" class="box p-r-20 m-r-10">
+            <img src="assets/images/inactive-double-arrow-left.svg" alt="" height="23px" width="23px">
+        </button>
+        <ng-container *ngFor="let page of generatePageNumbers()">
+            <button *ngIf="page === '...'" class="box dot" disabled>...</button>
+            <button *ngIf="page !== '...' && page === currentPage" class="box current-page c-pointer">{{ page
+                }}</button>
+            <button *ngIf="page !== '...' && page !== currentPage" class="box c-pointer" (click)="onPageChange(page)">
+                {{page}}</button>
+        </ng-container> <button *ngIf="currentPage < lastPage" class="box c-pointer" (click)="onPageChange(lastPage)">
+            <img src="assets/images/double-arrow-right-icon.svg" alt="" height="14px" width="14px">
+        </button>
+        <button *ngIf="currentPage === lastPage" class="box">
+            <img src="assets/images/inactive-double-arrow-right.svg" alt="" height="23px" width="23px">
+        </button>
     </div>
 </div>

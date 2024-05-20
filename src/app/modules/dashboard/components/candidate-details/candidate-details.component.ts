@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { ApiService } from 'src/app/services/api.service';
 import { MatDialog } from '@angular/material/dialog';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 @Component({
   selector: 'app-candidate-details',
   templateUrl: './candidate-details.component.html',
@@ -15,7 +16,7 @@ export class CandidateDetailsComponent implements OnInit {
   resumePath: any;
   CandidateData: any;
   candidateFeedback: any;
-  constructor(private apiService: ApiService, private route: ActivatedRoute, private datePipe: DatePipe, private dialog: MatDialog) {
+  constructor(private apiService: ApiService, private route: ActivatedRoute, private datePipe: DatePipe, private dialog: MatDialog,private http:HttpClient) {
     this.route.params.subscribe(params => {
       this.candidateId = params['id'];
       this.fetchCandidateDetails();
@@ -38,10 +39,9 @@ export class CandidateDetailsComponent implements OnInit {
 
   viewResume(resume: any) {
     this.resumePath = resume;
-    console.log("this.resumePath",  this.resumePath);
+    console.log("this.resumePath", this.resumePath);
     window.open(`${environment.s3_url}${this.resumePath}`, '_blank');
+    console.log("`${environment.s3_url}${this.resumePath}`",typeof(`${environment.s3_url}${this.resumePath}`));
   }
-
   
-
 }

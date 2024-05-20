@@ -126,6 +126,8 @@ export class CandidateListComponent {
       height: '980px'
     })
     dialogRef.componentInstance.onEditSuccess.subscribe(() => {
+      console.log("edit usshhiu");
+      
       this.currentPage = 1;
       this.pageSize = 10;
       this.fetchCandidates();
@@ -134,7 +136,6 @@ export class CandidateListComponent {
 
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);
-    this.currentPage = 1;
     this.pageSize = 10;
     this.fetchCandidates();
   }

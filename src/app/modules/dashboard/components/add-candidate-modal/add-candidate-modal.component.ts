@@ -213,6 +213,8 @@ export class AddCandidateModalComponent implements OnInit {
     console.log("this.selectedFile in add ", this.selectedFile);
     if (event.target.files.length > 0) this.resumeUploadSuccess = true;
     if (this.selectedFile) this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', this.selectedFile);
+    console.log("this.selectedFile",typeof(this.selectedFile));
+    
     this.getKeyFroms3();
     // if(this.selectedFile) this.s3Service.uploadedFile.emit(this.selectedFile)
   }
@@ -308,11 +310,12 @@ export class AddCandidateModalComponent implements OnInit {
       }
       console.log("payload", payload);
 
-      this.apiService.post(`/candidate/create/v1 `, payload).subscribe({
+      this.apiService.post(`/candidate/create`, payload).subscribe({
         next: (response) => {
           this.loader = false;
           this.tostr.success('Candidate Created successfully');
           this.resetFormAndState();
+          
         },
         error: (error) => {
           this.loader = false;
@@ -346,10 +349,15 @@ export class AddCandidateModalComponent implements OnInit {
     this.selectedSecondarySkills = [];
     this.sourceName = null;
     this.selectedRequirementName = null;
+    this.selectedRequirementId = null;
     this.showDropdown = false;
     this.showSource = false;
     this.showSearchBar = false;
     this.resumeUploadSuccess = false;
+    this.selectedFile = null;
+    this.primaryskills = null;
+    this.secondaryskills = null;
+    this.sourceId = null;
   }
 
   getSkillSuggestions(event: any): void {

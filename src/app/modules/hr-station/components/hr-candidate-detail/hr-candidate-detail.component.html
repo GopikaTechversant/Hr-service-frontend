@@ -72,18 +72,31 @@
             </div>
         </div>
         <div class="m-10">
-            <div class="sub-head f-w-500 f-s-14 d-flex">
+            <!-- <div class="sub-head f-w-500 f-s-14 d-flex">
                 <span class="p-10">Description</span>
-            </div>
+            </div> -->
             <div class="sub-head d-flex" *ngIf="!hrReview?.reviewedDescription">
-                <span class="p-5"><input class="input-1" type="text" id="description"></span>
+                <span class="p-5">
+                    <div class="template" >
+                        <img src="/assets/images/techversant/techversant-logo.svg" alt="" width="155px" height="27px">
+                        <div class="p-t-10 p-b-10">
+                            <div>{{today | date: 'dd/MM/YYY' }}</div>
+                            <div>{{candidateDetails?.candidateFirstName}} {{candidateDetails?.candidateLastName}}</div>  
+                            <div>
+                                {{candidateDetails?.candidateCity }} ,{{candidateDetails?.candidateDistrict }},{{candidateDetails?.candidateState}}
+                            </div>                      
+                        </div>
+                        <div>Dear {{candidateDetails?.candidateFirstName}} {{candidateDetails?.candidateLastName}},</div>
+                        <textarea class="editable" class="p-t-10 p-b-10" type="text" id="description" [innerHTML]="templateData?.message"></textarea>
+                    </div>
+                </span>
             </div>
         </div>
         <div class="btn-parent">
-            <div class="m-10">
+            <!-- <div class="m-10"> -->
                 <button class="c-pointer btn-reject" (click)="cancelClick()">Cancel</button>
-                <button class="btn c-pointer" (click)="addOffer()">Send Offer</button>
-            </div>
+                <button class="btn c-pointer" (click)="addOffer()">Submit</button>
+            <!-- </div> -->
         </div>
     </div>
     <div *ngIf="hrReview && data?.offerStatus > 0">
@@ -97,9 +110,9 @@
             <div class="p-10" *ngIf="hrReview">
                 <span class="f-w-500">Joining Date : </span>{{hrReview?.reviewedJoiningDate | date: 'dd/MM/YYY'}}
             </div>
-            <div class="p-10" *ngIf="hrReview">
+            <!-- <div class="p-10" *ngIf="hrReview">
                 <span class="f-w-500">Description : </span>{{hrReview?.reviewedDescription}}
-            </div>
+            </div> -->
         </div>
     </div>
     <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'pending' && hrReview">

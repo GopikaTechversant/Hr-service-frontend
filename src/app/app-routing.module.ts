@@ -3,9 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
 
 const routes: Routes = [
-  {
-    path: '', loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule),
-  },
+  { path: '', loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule) },
   {
     path: 'dashboard', loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule),
     canActivate: [AuthGuard], data: { role: ['admin', 'Talent'] }
@@ -22,6 +20,7 @@ const routes: Routes = [
   {
     path: 'user', loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule)
   },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
   
 ];
 

@@ -32,6 +32,10 @@
     overflow: hidden;
     background-color: whitesmoke;
 }
+.date-filters {
+    display: flex;
+    align-items: center;
+}
 
 .loader-parent {
     position: absolute;
@@ -68,7 +72,7 @@
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
-    width: 400px;
+    width: 210px;
     height: 30px;
 }
 
@@ -81,12 +85,30 @@
     height: 30px;
 }
 
+
+.filter-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.d-flex {
+    display: flex;
+    align-items: center;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
 input[type="text"] {
     border: none;
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
-    width: 360px;
+    width: 200px;
     height: 28px;
 }
 

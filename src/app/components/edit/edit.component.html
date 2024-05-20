@@ -141,9 +141,9 @@
             <div class="child d-flex m-b-10 p-relative">
                 <span class="label m-b-4">Uploaded Resume</span>
                 <div class="d-flex c-pointer">
-                    <img src="assets/images/resume-uploaded.png" alt="" height="48px"
-                        (click)="triggerFileInput();$event.stopPropagation();$event.preventDefault();">
-                    <span *ngIf="!resumeUploadSuccess" class="upload-success-message">
+                    <img src="assets/images/file-uploaded.png" alt="" height="44px"
+                         (click)="viewResume(candidateDetails?.candidateResume)">
+                    <span *ngIf="!resumeUploadSuccess" class="upload-success-message" (click)="triggerFileInput();$event.stopPropagation();$event.preventDefault();" >
                         Click to edit resume
                     </span>
                     <input type="file" #fileInput class="input-box" style="display:none"

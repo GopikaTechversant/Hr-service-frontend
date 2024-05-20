@@ -1,89 +1,76 @@
 <div class="main d-flex">
-    <div class="barchart">
-        <div class="d-flex head">
-            <div class="text"><span class="heading">Interview Counts </span><span class="p-5 arrow">Last 6 Months</span></div>
-            <div class="d-flex drop">
-                <span class="c-pointer input-filter p-relative no-close" (click)="showDepartment = !showDepartment">
-                    <div class="input d-flex j-space p-5 p-b-0 no-close p-t-10">
-                        {{teamName ? teamName : 'Choose Department'}}
-                        <span class="f-right">
-                            <span *ngIf="teamName && teamName !== ''" (click)="clearFilter()" class="clear-filter">x</span>
-                            <span  (click)="showDepartment = !showDepartment"><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
-                        </span>                           <div *ngIf="showDepartment" class="p-absolute month-dropdown no-close m-t-20">
-                            <div class="month-column" *ngFor="let item of teamDetails"
-                                (click)="selectDepartment(item.teamName, item.teamId);showDepartment = !showDepartment">
-                                {{item?.teamName}}
-                            </div>
-                        </div>
-                    </div>
-                </span>
-            </div>
+    <div class="d-flex head w-100">
+        <div class="heading-container">
+            <span class="heading p-l-10">Interview Counts</span>
         </div>
-        <div>
-            <div *ngIf="sixMonthCount?.length === 0 || !sixMonthCount" class="no-data"> No Data Found</div>
-            <canvas id="barChartInterview"></canvas>
+        <div class="date-filters d-flex">
+            <div class="d-flex date-filter">
+                <span class="filter p-r-10 p-t-10">From</span>
+                <div class="p-relative">
+                    <input class="p-l-5 input c-pointer" placeholder="29/02/11" matInput
+                        [matDatepicker]="pickerFromDate" [value]="startDate | date:'yyyy-MM-dd'" id="startDate"
+                        [max]="today" (dateChange)="dateChange($event, 'startDate')" [ngModel]="startDate"
+                        (click)="pickerFromDate.open()">
+                    <mat-datepicker #pickerFromDate></mat-datepicker>
+                    <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"
+                        (click)="pickerFromDate.open()"></i>
+                </div>
+            </div>
+            <div class="d-flex date-filter p-r-10">
+                <span class="filter p-l-10 p-r-10 p-t-10">To</span>
+                <div class="p-relative">
+                    <input class="p-l-5 input c-pointer" placeholder="29/02/11" matInput [matDatepicker]="pickerToDate"
+                        (dateChange)="dateChange($event, 'endDate')" [ngModel]="endDate" (click)="pickerToDate.open()"
+                        [value]="endDate | date:'yyyy-MM-dd'" id="endDate" [min]="startDate" [max]="today">
+                    <mat-datepicker #pickerToDate></mat-datepicker>
+                    <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"
+                        (click)="pickerToDate.open()"></i>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="count-table m-r-15">
-        <div class="d-flex head ">
-            <div>
-                <span class="heading">Interview Counts</span><span class="p-l-5 daywise">Daywise</span>
-            </div>
-            <div class="d-flex">
-                <span class="c-pointer">
-                    <div class="p-relative ">
-                        <input class="p-l-5  input" placeholder="29/02/11" matInput [matDatepicker]="pickerdate"
-                            (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate">
-                        <span> <mat-datepicker #pickerdate class=""></mat-datepicker>
-                            <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
-                                (click)="pickerdate ?.open()"></i>
-                        </span>
-                    </div>
-                </span>
-            </div>
-        </div>
-        <div class="table-container m-b-0">
-            <table class="table">
-                <tr class="table-header f-w-500 p-b-10">
-                    <td>Recruiter Name</td>
-                    <td>Interview Schedule Count</td>
-                    <td>Interviews Conducted</td>
-                    <td>Interview Update</td>
-                </tr>
-                <!-- <div class="loader-parent">
+    <div class="table-container m-b-0 w-100">
+        <table class="table">
+            <tr class="table-header f-w-500 p-b-10">
+                <td>Recruiter Name</td>
+                <td>Interview Schedule Count</td>
+                <td>Interviews Conducted</td>
+                <td>Interview Update</td>
+            </tr>
+            <!-- <div class="loader-parent">
                     <img src="assets/gif/loader.gif">
                 </div> -->
-                <ng-container *ngIf="countArray.length > 0">
-                    <ng-container *ngFor="let item of countArray">
-                        <tr class="c-pointer">
-                            <td>{{item?.userFullName}}</td>
-                            <td>{{item?.interviewScheduled}}</td>
-                            <td>{{item?.interviewConducted}}</td>
-                            <td>1 st round scheduled</td>
-                        </tr>
-                    </ng-container>
+            <ng-container *ngIf="countArray.length > 0">
+                <ng-container *ngFor="let item of countArray">
+                    <tr class="c-pointer">
+                        <td>{{item?.userFullName}}</td>
+                        <td>{{item?.interviewScheduled}}</td>
+                        <td>{{item?.interviewConducted}}</td>
+                        <td>1 st round scheduled</td>
+                    </tr>
                 </ng-container>
-                <div *ngIf="countArray?.length === 0" class="no-data d-flex w-100">No Data Found</div>
-            </table>
-        </div>
-        <div class="page d-flex j-end p-10">
-            <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(1)">
-                <img src="assets/images/double-arrow-left-icon.svg" alt="" height="14px" width="14px">
-            </button>
-            <button *ngIf="currentPage === 1" class="box p-r-20 m-r-10">
-                <img src="assets/images/inactive-double-arrow-left.svg" alt="" height="23px" width="23px">
-            </button>
-            <ng-container *ngFor="let page of generatePageNumbers()">
-                <button *ngIf="page === '...'" class="box dot" disabled>...</button>
-                <button *ngIf="page !== '...' && page === currentPage" class="box current-page c-pointer">{{ page }}</button>
-                <button *ngIf="page !== '...' && page !== currentPage" class="box c-pointer" (click)="onPageChange(page)">
+            </ng-container>
+            <div *ngIf="countArray?.length === 0" class="no-data d-flex w-100">No Data Found</div>
+        </table>
+    </div>
+    <div class="page d-flex j-end p-10 w-100">
+        <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(1)">
+            <img src="assets/images/double-arrow-left-icon.svg" alt="" height="14px" width="14px">
+        </button>
+        <button *ngIf="currentPage === 1" class="box p-r-20 m-r-10">
+            <img src="assets/images/inactive-double-arrow-left.svg" alt="" height="23px" width="23px">
+        </button>
+        <ng-container *ngFor="let page of generatePageNumbers()">
+            <button *ngIf="page === '...'" class="box dot" disabled>...</button>
+            <button *ngIf="page !== '...' && page === currentPage" class="box current-page c-pointer">{{ page
+                }}</button>
+            <button *ngIf="page !== '...' && page !== currentPage" class="box c-pointer" (click)="onPageChange(page)">
                 {{page}}</button>
-            </ng-container> <button *ngIf="currentPage < lastPage" class="box c-pointer" (click)="onPageChange(lastPage)">
-                <img src="assets/images/double-arrow-right-icon.svg" alt="" height="14px" width="14px">
-            </button>
-            <button *ngIf="currentPage === lastPage" class="box">
-                <img src="assets/images/inactive-double-arrow-right.svg" alt="" height="23px" width="23px">
-            </button>
-        </div>
+        </ng-container> <button *ngIf="currentPage < lastPage" class="box c-pointer" (click)="onPageChange(lastPage)">
+            <img src="assets/images/double-arrow-right-icon.svg" alt="" height="14px" width="14px">
+        </button>
+        <button *ngIf="currentPage === lastPage" class="box">
+            <img src="assets/images/inactive-double-arrow-right.svg" alt="" height="23px" width="23px">
+        </button>
     </div>
 </div>
