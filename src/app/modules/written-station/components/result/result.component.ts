@@ -53,7 +53,7 @@ export class ResultComponent {
     }
     if(this.scoreValue && this.examServiceId && this.descriptionValue){
       this.submitForm = true;
-      this.apiService.post(`/written-station/result`, formdata).subscribe((res: any) => {
+      this.apiService.post(`/written-station/result`, payload).subscribe((res: any) => {
         this.dialogRef.close(true);
         this.scoreSubmitted.emit(parseInt(this.scoreValue, 10));
       }, err => {

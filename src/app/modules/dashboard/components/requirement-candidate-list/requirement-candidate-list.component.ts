@@ -84,11 +84,13 @@ export class RequirementCandidateListComponent implements OnInit {
   }
 
 
-  update(): void {
-
+  update(requirement:any): void {
+    this.router.navigate(['dashboard/service-requirement'], {
+      state: { requirement }
+    });
   }
 
-  delete() {
+  delete(requirement:any) {
 
   }
 }

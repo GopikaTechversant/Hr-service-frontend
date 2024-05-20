@@ -14,6 +14,8 @@ import { MaterialModule } from './modules/material/material.module';
 import { LogoutModalComponent } from './components/logout-modal/logout-modal.component';
 import { StationSwitchComponent } from './components/station-switch/station-switch.component';
 import { WarningBoxComponent } from './components/warning-box/warning-box.component';
+import { RequirementEditComponent } from './components/requirement-edit/requirement-edit.component';
+import { RequirementDeleteComponent } from './components/requirement-delete/requirement-delete.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,9 @@ import { WarningBoxComponent } from './components/warning-box/warning-box.compon
     LogoutModalComponent,
     StationSwitchComponent,
     WarningBoxComponent,
+    RequirementEditComponent,
+    RequirementDeleteComponent,
+  
   ],
   imports: [
     BrowserModule,

@@ -49,18 +49,21 @@
                             <td class="text-wrap" [title]="candidate?.requestName" (click)="navigate('/dashboard/series/',candidate?.requestId)">{{candidate?.requestName | titlecase}}</td>
                             <td class="text-wrap" [title]="candidate?.teamName" (click)="navigate('/dashboard/series/',candidate?.requestId)">{{candidate?.teamName | titlecase}}</td>
                             <td class="text-wrap" [title]="candidate?.requestSkills" (click)="navigate('/dashboard/series/',candidate?.requestId)">{{candidate?.requestSkills | titlecase}}</td>
-                            <td class="text-wrap"
+                            <!-- <td class="text-wrap"
                                 (click)="navigate('/dashboard/series/',candidate?.requestId)">
                                 <span  [ngStyle]="{'color': candidate.status === 'progress' ? '#F57C02' : '#08E179',
                                 'background-color': candidate.status === 'progress' ? '#FEECEC' : '#08E179'}" class="status">{{candidate.status | titlecase}}</span>
+                            </td> -->
+                            <td class="text-wrap" (click)="navigate('/dashboard/series/',candidate?.requestId)" [ngStyle]="{'color': candidate.status === 'progress' ? '#F57C02' : '#08E179'}">
+                                {{candidate.status | titlecase}}
                             </td>
                             <td (click)="onStatusChange(candidate)"><img src="assets/images/user-add.png" alt="" class="icon"></td>
                             <td>
                                 <div class="d-flex j-center">
                                     <img src="assets/images/candidate-detail/edit.svg" class="icon" alt=""
-                                        (click)="update()">
+                                        (click)="update(candidate)">
                                     <img src="assets/images/candidate-detail/delete.svg" class="icon" alt=""
-                                        (click)="delete()">
+                                        (click)="delete(candidate)">
                                 </div>
                             </td>
                         </tr>
