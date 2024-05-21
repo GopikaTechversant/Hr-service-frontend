@@ -85,6 +85,14 @@
     height: 30px;
 }
 
+.date-input{
+    border: 1px solid #E9E9E9;
+    outline: none;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    width: 105px;
+    height: 30px;
+}
 
 .filter-icon {
     position: absolute;
@@ -108,7 +116,7 @@ input[type="text"] {
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
-    width: 200px;
+    width: 170px;
     height: 28px;
 }
 

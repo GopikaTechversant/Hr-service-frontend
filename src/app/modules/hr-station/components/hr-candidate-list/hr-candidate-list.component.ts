@@ -4,6 +4,7 @@ import { HrCandidateDetailComponent } from '../hr-candidate-detail/hr-candidate-
 import { ApiService } from 'src/app/services/api.service';
 import { StationSwitchComponent } from 'src/app/components/station-switch/station-switch.component';
 import { WarningBoxComponent } from 'src/app/components/warning-box/warning-box.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-hr-candidate-list',
@@ -36,7 +37,11 @@ export class HrCandidateListComponent implements OnInit {
   positionId: any;
   requestList: any;
   initialLoader:boolean = false
-  constructor(private dialog: MatDialog, private apiService: ApiService) { }
+  experience: string = '';
+  today: Date = new Date();
+  startDate: string | null = this.datePipe.transform(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
+  endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+  constructor(private dialog: MatDialog, private apiService: ApiService , private datePipe: DatePipe) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
@@ -73,7 +78,7 @@ export class HrCandidateListComponent implements OnInit {
 
   fetchList(): void {
     if(!this.initialLoader) this.loader = true;
-    this.apiService.get(`/hr-station/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.limit}&status_filter=${this.filteredStatus}&position=${this.positionId}`).subscribe((data: any) => {
+    this.apiService.get(`/hr-station/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.limit}&experience=${this.experience.trim()}&fromDate=${this.startDate}&toDate=${this.endDate}&status_filter=${this.filteredStatus}&position=${this.positionId}`).subscribe((data: any) => {
       this.candidateList = [];
       this.initialLoader = false;
       this.loader = false;
@@ -84,7 +89,12 @@ export class HrCandidateListComponent implements OnInit {
         this.lastPage = totalPages;
         if (this.currentPage > totalPages) this.currentPage = totalPages;
       }
-    })
+    },(error: any) => {
+        this.initialLoader = false;
+        this.loader = false;
+        this.candidateList = [];
+        console.error('Failed to fetch candidates list:', error);
+    });
   }
 
   generatePageNumbers() {
@@ -106,8 +116,24 @@ export class HrCandidateListComponent implements OnInit {
     return pages;
   }
 
+  dateChange(event: any, range: string): void {
+    let date = new Date(event?.value);
+    if (range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    if (range == 'endDate') this.endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    this.currentPage = 1;
+    this.limit = 10;
+    this.fetchList();
+  }
+
   searchCandidate(searchTerm: string): void {
     this.searchKeyword = searchTerm;
+    this.currentPage = 1;
+    this.limit = 10;
+    this.fetchList();
+  }
+
+  searchByExperience(experience: string): void {
+    this.experience = experience;
     this.currentPage = 1;
     this.limit = 10;
     this.fetchList();
@@ -140,6 +166,7 @@ export class HrCandidateListComponent implements OnInit {
       sessionStorage.setItem(`requirement`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
     }
     if (item === 'search') this.searchKeyword = '';
+    if (item === 'experience') this.experience = '';
     this.currentPage = 1;
     this.limit = 10;
     this.fetchList();

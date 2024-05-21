@@ -1,8 +1,33 @@
 <div class="m-10">
     <span class="f-s-18 f-w-500 detail-head p-5 p-l-0">HR Station</span>
-    <div class="p-l-5 d-flex j-end p-b-10">
-        <span class="input p-5 m-r-10">
-            <input type="text" class="p-l-5" placeholder="Search Candidates" [(ngModel)]="searchKeyword" (keydown)="searchCandidate(searchKeyword)">
+    <div class="p-l-5 d-flex j-end p-b-10 m-t-20">
+        <div class="date-filters">
+            <div class="d-flex">
+                <span class="filter p-r-10 p-t-10">From</span>
+                <div class="p-relative">
+                    <input class="p-l-5 date-input p-5 c-pointer" placeholder="29/02/11" matInput
+                        [matDatepicker]="pickerFromDate" [value]="startDate | date:'yyyy-MM-dd'" id="startDate"
+                        [max]="today" (dateChange)="dateChange($event, 'startDate')" [ngModel]="startDate"
+                        (click)="pickerFromDate.open()">
+                    <mat-datepicker #pickerFromDate></mat-datepicker>
+                    <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"
+                        (click)="pickerFromDate.open()"></i>
+                </div>
+            </div>
+            <div class="d-flex">
+                <span class="filter p-l-10 p-r-10 p-t-10">To</span>
+                <div class="p-relative">
+                    <input class="p-l-5 date-input c-pointer p-5" placeholder="29/02/11" matInput [matDatepicker]="pickerToDate"
+                        (dateChange)="dateChange($event, 'endDate')" [ngModel]="endDate" (click)="pickerToDate.open()"
+                        [value]="endDate | date:'yyyy-MM-dd'" id="endDate" [min]="startDate" [max]="today">
+                    <mat-datepicker #pickerToDate></mat-datepicker>
+                    <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"
+                        (click)="pickerToDate.open()"></i>
+                </div>
+            </div>
+        </div>
+        <span class="input p-5 m-r-10 m-l-10">
+            <input type="text" class="p-l-5" placeholder="Search Candidates" [(ngModel)]="searchKeyword" (ngModelChange)="searchCandidate(searchKeyword)">
             <span *ngIf="searchKeyword.trim() !== ''" (click)="clearFilter('search')" class="clear-search c-pointer m-l-10">x</span> 
         </span> 
         <div class="input p-t-10 p-l-6  no-close p-relative m-r-10"> 
@@ -19,6 +44,10 @@
                 </div>               
             </div>
         </div>   
+        <span class="input p-5 m-l-10 m-r-10">
+            <input type="text" class="p-l-5" placeholder="Search by Experience" [(ngModel)]="experience" (ngModelChange)="searchByExperience(experience)"  maxlength="2">
+            <span *ngIf="experience.trim() !== ''" (click)="clearFilter('experience')" class="clear-search c-pointer m-l-10">x</span> 
+        </span> 
         <div class="input-1 c-pointer p-t-10 no-close p-relative">
             <span class="no-close p-l-10" (click)="filterStatus = !filterStatus">{{filteredStatus.trim() === '' ? 'Filter by Status' : filteredStatus | titlecase}}</span>
             <span class="f-right">
@@ -37,10 +66,10 @@
             <table class="table">
                 <tr class="table-header f-w-500 p-b-10">
                     <td>Candidate ID</td>
+                    <td>Date</td>
                     <td>Name</td>
                     <td>Email</td>
                     <td>Requirement</td>
-                    <!-- <td>Candidate Station</td> -->
                     <td>Offer Status</td>
                     <td>Move Candidate</td>
                     <td>Candidate Station</td>
@@ -55,6 +84,7 @@
                       <ng-container *ngFor="let item of innerArray">
                         <tr class="candidate c-pointer">
                           <td>{{ item['candidate.candidateId'] }}</td>
+                          <td>{{item?.serviceDate | date : 'dd/MM/YYY'}}</td>
                           <td class="text-wrap" [title]="item['candidate.candidateFirstName'] + item['candidate.candidateLastName']">
                             {{ item['candidate.candidateFirstName'] }} {{ item['candidate.candidateLastName'] }}
                             </td>

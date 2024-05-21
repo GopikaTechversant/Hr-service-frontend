@@ -90,6 +90,49 @@
     margin: 10px;
 }
 
+
+.select-btn {
+    width: 48%;
+    height: 50px;
+    color: #005EC9;
+    background-color: #FFFFFF;
+    border: 1px solid #005EC9;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 3px;
+    margin: 10px;
+}
+
+.w-97 {
+    width: 97% !important;
+}
+
+.offer-select-btn,.select-btn:hover {
+    color: #FFFFFF;
+    background-color: #005EC9;
+    border: 1px solid #005EC9;
+}
+
+.reject-btn {
+    width: 47%;
+    height: 50px;
+    color: #575F6E;
+    background-color: #FFFFFF;
+    border: 1px solid #575F6E;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 3px;
+    margin: 10px;
+}
+
+.offer-reject-btn,.reject-btn:hover {
+    color: #FFFFFF;
+    background-color: #575F6E;
+    border: 1px solid #575F6E;
+}
+
 .btn-parent {
     float: right;
 }
@@ -103,3 +146,33 @@
     padding: 8px;
     outline: none !important;
 }
+
+.attachment {
+    width: 97%;
+    background-color: #F4F2F2;
+}
+
+.template {
+    border: 1px solid #E9E9E9;
+    background-color: #FFFFFF;
+    border: 1px solid rgb(207, 205, 205);
+    border-radius: 2px;
+    width: 98%;
+    height: 485px;
+    top: 536px;
+    left: 31px;
+    gap: 0px;
+    border: 1px 0px 0px 0px;
+    opacity: 0px;
+    outline: none !important;
+    padding: 10px;
+
+}
+
+#description {
+    width: 98%;
+    height: 285px;
+    outline: none !important;
+    border: none !important;
+}
+

@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, Inject, Input } from '@angular/core';
+import { Component, ElementRef, Inject, Input, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastrServices } from 'src/app/services/toastr.service';
@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environments';
   providers: [DatePipe],
 })
 export class HrCandidateDetailComponent {
+  @ViewChild('template', { static: false }) templateRef!: ElementRef;
   salary: any;
   displayDate: any;
   descriptionValue: any;
@@ -26,6 +27,9 @@ export class HrCandidateDetailComponent {
   showSelection: boolean = false;
   showRejection: boolean = false;
   messageType: string = '';
+  isEditable: boolean = false; 
+  file: File | null = null;
+  fileName: string = '';
   constructor(public dialogRef: MatDialogRef<HrCandidateDetailComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
     private apiService: ApiService, private datePipe: DatePipe, private tostr: ToastrServices) {
     if (data) {
@@ -40,7 +44,6 @@ export class HrCandidateDetailComponent {
   ngOnInit(): void {
     this.today = new Date();
     this.userId = localStorage.getItem('userId');
-    this.fetchTemplates();
   }
 
   dateChange(event: any): void {
@@ -60,19 +63,42 @@ export class HrCandidateDetailComponent {
     })
   }
 
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.file = file;
+      this.fileName = file?.name;
+    }
+  }
+
+  submitClick(): void { 
+    const confirmationCheckbox = document.getElementById('confirmDetails') as HTMLInputElement;
+    if (confirmationCheckbox && confirmationCheckbox?.checked && (this.messageType.trim() !== '')) {
+      if(this.messageType.trim() === 'offer') this.addOffer();
+      if(this.messageType.trim() === 'rejection') this.rejectClick();
+    } else {
+      this.tostr.warning('Please confirm all details before submitting.');
+    }
+  }
+
   addOffer(): void {
     const scoreElement = document.getElementById('salary') as HTMLInputElement;
     this.salary = scoreElement ? scoreElement.value : '';
-    const descriptionElement = document.getElementById('description') as HTMLInputElement;
-    this.descriptionValue = descriptionElement ? descriptionElement.value : '';
+    if (this.templateRef) {
+      const templateElement = this.templateRef.nativeElement;
+      const htmlString = templateElement.outerHTML;
+      console.log(htmlString);
+    }
+  
     const payload = {
       offerServiceSeqId: this.serviceId,
       offerSalary: this.salary,
-      offerDescription: this.descriptionValue,
+      // offerDescription: descriptionTemplate,
       offerJoinDate: this.displayDate
-    }
+    };
+  
     console.log("payload", payload);
-
+  
     this.apiService.post(`/hr-station/candidateOffer`, payload).subscribe({
       next: (res: any) => {
         this.tostr.success('Offer Added Successfully');
@@ -81,8 +107,9 @@ export class HrCandidateDetailComponent {
       error: (error) => {
         console.error('Error adding progress', error);
       }
-    })
+    });
   }
+  
 
   cancelClick(): void {
     this.closeDialog();
@@ -108,7 +135,7 @@ export class HrCandidateDetailComponent {
   rejectClick(): void {
     const feedback = document.getElementById('feedback') as HTMLInputElement;
     if (feedback) this.feedback = feedback?.value;
-    if (this.feedback.trim() !== '') {
+    if (this.feedback.trim() !== '' || this.messageType.trim() === 'rejection') {
       let payload = {
         serviceId: this.serviceId,
         stationId: this.candidateDetails?.candidateStation,

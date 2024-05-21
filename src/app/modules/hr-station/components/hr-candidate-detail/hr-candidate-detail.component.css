@@ -42,22 +42,10 @@
     width: 97% !important;
 }
 
-.select-btn:hover {
+.offer-select-btn,.select-btn:hover {
     color: #FFFFFF;
     background-color: #005EC9;
     border: 1px solid #005EC9;
-}
-
-.offer-select-btn {
-    color: #FFFFFF;
-    background-color: #005EC9;
-    border: 1px solid #005EC9;
-}
-
-.offer-reject-btn {
-    color: #FFFFFF;
-    background-color: #575F6E;
-    border: 1px solid #575F6E;
 }
 
 .reject-btn {
@@ -73,7 +61,7 @@
     margin: 10px;
 }
 
-.reject-btn:hover {
+.offer-reject-btn,.reject-btn:hover {
     color: #FFFFFF;
     background-color: #575F6E;
     border: 1px solid #575F6E;
@@ -92,16 +80,16 @@
     border-radius: 2px;
     height: 30px;
     background-color: #FFFF;
-    width: 27vw;
+    width: 97%;
 }
 
 .input-1 {
-    outline: none !important;
+    /* outline: none !important;
     border: 1px solid rgb(207, 205, 205);
     border-radius: 2px;
     height: 30px;
-    background-color: #FFFF;
-    width: 100%;
+    background-color: #FFFF; */
+    width: 28vw;
 }
 
 .template {
@@ -194,7 +182,20 @@
 .btn-parent {
     /* float: right; */
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     width: 57vw;
+}
 
+.file {
+    text-align: center;
+    justify-content: center;
+}
+
+.attach {
+    outline: none !important;
+    border: 1px dotted rgb(207, 205, 205);
+    border-radius: 2px;
+    height: 30px;
+    background-color: #FFFF;
+    width: 97%;
 }

@@ -30,6 +30,13 @@ export class CandidateDetailModalComponent implements OnInit {
   resumePath: any;
   file: File | null = null;
   fileName: string = '';
+  messageType: any;
+  showSelection: boolean = false;
+  showRejection: boolean = false;
+  isEditable:boolean = false;
+  today: Date = new Date();
+  templateData: any;
+
   constructor(public dialogRef: MatDialogRef<CandidateDetailModalComponent>, private apiService: ApiService, private tostr: ToastrServices,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data) {
@@ -88,6 +95,33 @@ export class CandidateDetailModalComponent implements OnInit {
     } else {
       this.tostr.error('Invalid operation');
     }
+  }
+
+  showMail(item: any): void {
+    if (item === 'approve') {
+      this.showSelection = true;
+      this.showRejection = false;
+    } else {
+      this.showRejection = true;
+      this.showSelection = false;
+    }
+    this.messageType = item;
+    this.fetchTemplates();
+  }
+
+  fetchTemplates(): void {
+    this.apiService.get(`/candidate/mail/template?msgType=${this.messageType}&candidateId=${this.candidateDetails['candidate.candidateId']}`).subscribe((res: any) => {
+      if (res?.data) {
+        this.templateData = res?.data;
+      }
+    })
+  }
+  submitClick(): void {
+
+  }
+
+  cancelClick(): void {
+    this.closeDialog();
   }
 
   rejectClick(): void {

@@ -1,6 +1,6 @@
 <div class="modal-header heading p-10 p-t-20 d-flex j-space">
     <div>
-        <span> {{candidateDetails['candidate.candidateFirstName']}} {{candidateDetails['candidate.candidateLastName']}} - </span>
+        <span>{{candidateDetails['candidate.candidateFirstName']}} {{candidateDetails['candidate.candidateLastName']}}- </span>
         <span class="blue">( {{candidateDetails['candidate.candidateId']}} )</span>
     </div>
     <div class="modal-close">
@@ -46,27 +46,36 @@
         </div>
         <div class="sub-head d-flex">
             <span class="p-8">
-                : {{candidateDetails['candidate.candidateDoB'] ?(candidateDetails['candidate.candidateDoB'] | date: 'dd/MM/YYY' ): 'NIL' }}
+                : {{candidateDetails['candidate.candidateDoB'] ?(candidateDetails['candidate.candidateDoB'] | date:
+                'dd/MM/YYY' ): 'NIL' }}
             </span>
             <span class="p-8">
-                : {{candidateDetails['serviceRequest.requestSkills'] ? candidateDetails['serviceRequest.requestSkills'] : 'NIL'}}
+                : {{candidateDetails['serviceRequest.requestSkills'] ? candidateDetails['serviceRequest.requestSkills']
+                : 'NIL'}}
             </span>
             <span class="p-8">
-                : {{candidateDetails['candidate.candidatePreviousOrg'] ? candidateDetails['candidate.candidatePreviousOrg'] : 'NIL'}}
+                : {{candidateDetails['candidate.candidatePreviousOrg'] ?
+                candidateDetails['candidate.candidatePreviousOrg'] : 'NIL'}}
             </span>
             <span class="p-8">
-                : {{candidateDetails['candidate.candidatePreviousDesignation'] ? candidateDetails['candidate.candidatePreviousDesignation'] : 'NIL'}}
+                : {{candidateDetails['candidate.candidatePreviousDesignation'] ?
+                candidateDetails['candidate.candidatePreviousDesignation'] : 'NIL'}}
             </span>
             <span class="p-8">
-                : {{candidateDetails['candidate.candidateEducation'] ? candidateDetails['candidate.candidateEducation'] : 'NIL'}}
+                : {{candidateDetails['candidate.candidateEducation'] ? candidateDetails['candidate.candidateEducation']
+                : 'NIL'}}
             </span>
             <span class="p-8">
-                : {{candidateDetails['candidate.candidateExpectedSalar'] ? candidateDetails['candidate.candidateExpectedSalar'] : 'NIL'}}
+                : {{candidateDetails['candidate.candidateExpectedSalar'] ?
+                candidateDetails['candidate.candidateExpectedSalar'] : 'NIL'}}
             </span>
             <span class="p-8">
-                : {{candidateDetails['candidate.candidateCity'] ? candidateDetails['candidate.candidateCity'] : 'City'}},
-                {{candidateDetails['candidate.candidateDistrict'] ? candidateDetails['candidate.candidateDistrict'] :'District '}},
-                {{candidateDetails['candidate.candidateState'] ? candidateDetails['candidate.candidateState'] : 'State'}}
+                : {{candidateDetails['candidate.candidateCity'] ? candidateDetails['candidate.candidateCity'] :
+                'City'}},
+                {{candidateDetails['candidate.candidateDistrict'] ? candidateDetails['candidate.candidateDistrict']
+                :'District '}},
+                {{candidateDetails['candidate.candidateState'] ? candidateDetails['candidate.candidateState'] :
+                'State'}}
             </span>
         </div>
     </div>
@@ -80,7 +89,8 @@
             <span class="p-10 p-t-12">Description</span>
             <span class="p-10 p-t-15">Attachment</span>
         </div>
-        <div class="sub-head d-flex" *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done' && candidateDetails?.serviceStatus !== 'moved'">
+        <div class="sub-head d-flex"
+            *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done' && candidateDetails?.serviceStatus !== 'moved'">
             <span class="p-5">
                 <input class="input" *ngIf="!candidateDetails['progress.progressSkills']" type="text" id="skill">
             </span>
@@ -88,9 +98,11 @@
                 <input class="input" *ngIf="!candidateDetails['progress.progressScore']" type="text" id="score">
             </span>
             <span class="p-5">
-                <input class="input" *ngIf="!candidateDetails['progress.progressDescription']" type="text" id="description">
+                <input class="input" *ngIf="!candidateDetails['progress.progressDescription']" type="text"
+                    id="description">
             </span>
-            <span class="c-pointer attach m-l-5 p-r-5 p-b-5 d-flex file" title="Attach File" (click)="fileInput.click()" > 
+            <span class="c-pointer attach m-l-5 p-r-5 p-b-5 d-flex file" title="Attach File"
+                (click)="fileInput.click()">
                 <img class="p-5" src="/assets/images/paperclip.svg" alt="" height="20" width="20">
                 <span class="m-b-10 p-5"> {{ fileName.trim() === '' ? 'Upload Attachment' : fileName }}</span>
                 <input type="file" id="fileInput" #fileInput style="display: none;" (change)="onFileSelected($event)">
@@ -104,37 +116,82 @@
                 : {{candidateDetails['progress.progressScore'] ? candidateDetails['progress.progressScore'] : 'NIL'}}
             </span>
             <span class="p-10">
-                : {{candidateDetails['progress.progressDescription'] ? candidateDetails['progress.progressDescription'] : 'Nil'}}
+                : {{candidateDetails['progress.progressDescription'] ? candidateDetails['progress.progressDescription']: 'Nil'}}
             </span>
-            <span class="p-10 p-t-15 c-pointer" >
-                : <i class="fa fa-file-text-o p-l-5 blue f-s-22" aria-hidden="true" title="View Attachment" (click)="viewResume(candidateDetails['progress.progressFile'])"></i><br>
-              <span class="p-l-5 f-s-10">Attachment</span>
+            <span class="p-10 p-t-15 c-pointer">
+                : <i class="fa fa-file-text-o p-l-5 blue f-s-22" aria-hidden="true" title="View Attachment"
+                    (click)="viewResume(candidateDetails['progress.progressFile'])"></i><br>
+                <span class="p-l-5 f-s-10">Attachment</span>
             </span>
         </div>
     </div>
-    <div *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done' && candidateDetails?.serviceStatus !== 'moved'" class="details p-10 d-flex j-end w-95">
+    <div *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done' && candidateDetails?.serviceStatus !== 'moved'"
+        class="details p-10 d-flex j-end w-95">
         <span class="f-w-500 head-wrap"></span>
         <button class="btn c-pointer" (click)="addProgress()">Add progress</button>
     </div>
     <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'pending' && progessAdded">
-        <div class="heading p-10">
-            <span>Feedback</span>
-        </div>
-        <div class="m-10">
-            <textarea class="text-area" id="feedback" cols="30" rows="10" placeholder="Add Feedback for Approval or Rejection"></textarea>
-            <div class="btn-parent">
-                <button class="c-pointer btn-reject" (click)="rejectClick()">Reject</button>
-                <button class="btn c-pointer" (click)="approveClick()">Approve</button>
+        <button class="select-btn" [ngClass]="{'offer-select-btn': messageType === 'approve'}"
+            (click)="showMail('approve')">Select Candidate
+        </button>
+        <button class="reject-btn" [ngClass]="{'offer-reject-btn': messageType === 'rejection'}"
+            (click)="showMail('rejection')">Reject Candidate
+        </button>
+        <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'pending' && progessAdded && messageType.trim() !== ''">
+            <div class="head p-10">
+                <span>Email Details of 
+                    {{candidateDetails['candidate.candidateFirstName']}} {{candidateDetails['candidate.candidateLastName']}}
+                </span>
+            </div>
+            <div class="f-right m-10 p-10 c-pointer" (click)="isEditable = !isEditable;">
+                <span><img src="/assets/images/candidate-detail/edit.svg" alt="" height="10" width="10"></span>
+                <span class="c-blue p-l-5">Edit</span>
+            </div>
+            <div class="m-10">
+                    <div class="template" #template>
+                        <img src="/assets/images/techversant/techversant-logo.svg" alt="" width="155px" height="27px">
+                        <div class="p-t-10 p-b-10">
+                            <div>{{ today | date: 'dd/MM/yyyy' }}</div>
+                            <div>{{candidateDetails['candidate.candidateFirstName']}} {{candidateDetails['candidate.candidateLastName']}}</div>
+                            <div>
+                                {{candidateDetails['candidate.candidateCity'] ? candidateDetails['candidate.candidateCity'] :'City'}},
+                                {{candidateDetails['candidate.candidateDistrict'] ? candidateDetails['candidate.candidateDistrict']:'District '}},
+                                {{candidateDetails['candidate.candidateState'] ? candidateDetails['candidate.candidateState'] :'State'}}
+                            </div>
+                        </div>
+                        <div>Dear {{ candidateDetails?.candidateFirstName }} {{ candidateDetails?.candidateLastName }},</div>
+                        <textarea class="editable p-t-10 p-b-10" type="text" id="description"
+                            [readonly]="!isEditable">{{ templateData?.message }}</textarea>
+                    </div>
+                </div>
+            <div class="attachment m-10 p-8">
+                <div class="m-10">
+                    <span class="p-10 sub-head">Email CC</span>
+                    <span class="p-5"><input class="input w-97" type="text" id="salary"></span>
+                </div>
+                <div class="m-10">
+                    <span class="p-10 sub-head">Add Feedback</span>
+                    <textarea class="text-area" id="feedback" cols="30" rows="10"></textarea>
+                </div>
+                <div class="m-15">
+                    <input type="checkbox" id="confirmDetails"><span>Confirm all Details</span>
+                </div>
+                <div class="m-10 d-flex j-end">
+                        <button class="c-pointer btn-reject" (click)="cancelClick()">Cancel</button>
+                        <button class="btn c-pointer" (click)="submitClick()">Submit</button>
+                </div>
             </div>
         </div>
     </div>
-    <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'done' || this.data?.candidateDetails?.serviceStatus === 'rejected'">
+    <div
+        *ngIf="this.data?.candidateDetails?.serviceStatus === 'done' || this.data?.candidateDetails?.serviceStatus === 'rejected'">
         <div class="heading p-10">
             <span>Feedback</span>
         </div>
         <div class="sub-head d-flex">
             <span class="p-10" *ngIf="candidateDetails['reqCandidateComment.commentComment']">
-                {{candidateDetails['reqCandidateComment.commentComment'] ? candidateDetails['reqCandidateComment.commentComment'] : 'Not Updated'}}
+                {{candidateDetails['reqCandidateComment.commentComment'] ?
+                candidateDetails['reqCandidateComment.commentComment'] : 'Not Updated'}}
             </span>
         </div>
     </div>

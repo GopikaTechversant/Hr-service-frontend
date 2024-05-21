@@ -53,67 +53,75 @@
             </span>
         </div>
     </div>
-    <div class="selection-btn">
-        <button class="select-btn" [ngClass]="{'offer-select-btn': messageType === 'offer'}" (click)="showMail('offer')">Select Candidate</button>
-            <button class="reject-btn" [ngClass]="{'offer-reject-btn': messageType === 'reject'}" (click)="showMail('reject')">Reject Candidate</button>
+    <div class="selection-btn" *ngIf="data?.candidateDetails?.serviceStatus === 'pending' && !hrReview">
+        <button class="select-btn" [ngClass]="{'offer-select-btn': messageType === 'offer'}"
+            (click)="showMail('offer')">Select Candidate</button>
+        <button class="reject-btn" [ngClass]="{'offer-reject-btn': messageType === 'rejection'}"
+            (click)="showMail('rejection')">Reject Candidate</button>
     </div>
-    <div *ngIf="!hrReview && this.data?.candidateDetails?.serviceStatus !== 'moved' && (showSelection || showRejection)">
+    <div
+        *ngIf="!hrReview && this.data?.candidateDetails?.serviceStatus !== 'moved' && (showSelection || showRejection)">
         <div class="head p-10">
-            <span>Email Details of {{candidateDetails?.candidateFirstName}}{{candidateDetails?.candidateLastName}}</span>
+            <span>Email Details of
+                {{candidateDetails?.candidateFirstName}}{{candidateDetails?.candidateLastName}}</span>
         </div>
-        <div class="f-right m-10 p-10 c-pointer">
+        <div class="f-right m-10 p-10 c-pointer" (click)="isEditable = !isEditable;">
             <span><img src="/assets/images/candidate-detail/edit.svg" alt="" height="10" width="10"></span>
             <span class="c-blue p-l-5">Edit</span>
         </div>
         <div class="m-10">
-            <div class="template">
+            <div class="template" #template>
                 <img src="/assets/images/techversant/techversant-logo.svg" alt="" width="155px" height="27px">
                 <div class="p-t-10 p-b-10">
-                    <div>{{today | date: 'dd/MM/YYY' }}</div>
-                    <div>{{candidateDetails?.candidateFirstName}} {{candidateDetails?.candidateLastName}}</div>
+                    <div>{{ today | date: 'dd/MM/yyyy' }}</div>
+                    <div>{{ candidateDetails?.candidateFirstName }} {{ candidateDetails?.candidateLastName }}</div>
                     <div>
-                        {{candidateDetails?.candidateCity }} ,{{candidateDetails?.candidateDistrict}},{{candidateDetails?.candidateState}}
+                        {{ candidateDetails?.candidateCity }}, {{ candidateDetails?.candidateDistrict }}, {{
+                        candidateDetails?.candidateState }}
                     </div>
                 </div>
-                <div>Dear {{candidateDetails?.candidateFirstName}} {{candidateDetails?.candidateLastName}},
-                </div>
-                <textarea class="editable" class="p-t-10 p-b-10" type="text" id="description" [innerHTML]="templateData?.message"></textarea>
+                <div>Dear {{ candidateDetails?.candidateFirstName }} {{ candidateDetails?.candidateLastName }},</div>
+                <textarea class="editable p-t-10 p-b-10" type="text" id="description"
+                    [readonly]="!isEditable">{{ templateData?.message }}</textarea>
             </div>
         </div>
         <div class="attachment m-10 p-8">
-            <div class="d-flex m-10" *ngIf="messageType.trim() === 'offer'">
-                <div>
+            <div class="d-flex m-10 w-100" *ngIf="messageType.trim() === 'offer'">
+                <div class="input-1">
                     <span class="p-10 sub-head">Offer Salary</span>
                     <span class="p-5 m-r-5"><input class="input" type="text" id="salary"></span>
                 </div>
-                <div>
+                <div class="input-1">
                     <span class="p-10 sub-head">Joining Date</span>
-                    <div class="p-relative w-100 m-l-5" *ngIf="!hrReview?.reviewedJoiningDate">
-                        <input class="p-l-5 input" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate"
+                    <div class="p-relative w-100 m-l-10" *ngIf="!hrReview?.reviewedJoiningDate">
+                        <input class="p-l-5 input p-r-10" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate"
                             (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate"
                             [min]="today">
                         <span> <mat-datepicker #pickerdate class=""></mat-datepicker>
-                            <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true" (click)="pickerdate?.open()"></i>
+                            <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
+                                (click)="pickerdate?.open()"></i>
                         </span>
                     </div>
                 </div>
             </div>
-            <div class="m-10">
+            <div class="m-10 w-100">
                 <span class="p-10 sub-head">Email CC</span>
-                <span class="p-5"><input class="input w-97" type="text" id="salary"></span>
+                <span class="p-5"><input class="input" type="text" id="salary"></span>
             </div>
-            <div class="m-10"  *ngIf="messageType.trim() === 'offer'">
+            <div class="m-10 w-100" *ngIf="messageType.trim() === 'offer'">
                 <span class="p-10 sub-head">Add Attachment</span>
-                <span class="p-5"><input class="input w-97" type="text" id="salary"></span>
+                <span class="c-pointer attach m-l-5 p-r-5 p-b-5 d-flex file" title="Attach File" (click)="fileInput.click()">
+                    <img class="p-5" src="/assets/images/paperclip.svg" alt="" height="20" width="20">
+                    <span class="m-b-10 p-5"> {{ fileName.trim() === '' ? 'Choose File' : fileName }}</span>
+                    <input type="file" id="fileInput" #fileInput style="display: none;" (change)="onFileSelected($event)">
+                </span>
             </div>
             <div class="m-15">
-                <input type="checkbox"><span>Confirm all Details</span>
+                <input type="checkbox" id="confirmDetails"><span>Confirm all Details</span>
             </div>
             <div class="btn-parent">
-                <!-- <div class="m-10"> -->
                 <button class="c-pointer btn-reject" (click)="cancelClick()">Cancel</button>
-                <button class="btn c-pointer" (click)="addOffer()">Submit</button>
-                <!-- </div> -->
+                <button class="btn c-pointer" (click)="submitClick()">Submit</button>
             </div>
         </div>
     </div>

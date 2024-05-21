@@ -43,8 +43,9 @@ export class TechnicalDetailComponent implements OnInit {
   stationsList: any;
   switchStations: Boolean = false;
   initialLoader: boolean = false;
+  experience: string = '';
   today: Date = new Date();
-  startDate: string | null = this.datePipe.transform(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
+  startDate: string | null = this.datePipe.transform(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog, private datePipe: DatePipe) { }
   onBodyClick(event: MouseEvent): void {
@@ -95,10 +96,10 @@ export class TechnicalDetailComponent implements OnInit {
   }
 
   fetchList(): void {
-    if(!this.initialLoader) this.loader = true;
+    if (!this.initialLoader) this.loader = true;
     this.candidateList = [];
     if (this.stationId === '3') {
-      this.apiService.get(`/technical-station/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.limit}&position=${this.positionId}&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
+      this.apiService.get(`/technical-station/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.limit}&position=${this.positionId.trim()}&fromDate=${this.startDate}&toDate=${this.endDate}&experience=${this.experience.trim()}&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
         this.loader = false;
         this.initialLoader = false;
         if (data?.candidates) {
@@ -110,7 +111,7 @@ export class TechnicalDetailComponent implements OnInit {
         }
       });
     } else if (this.stationId === '4') {
-      this.apiService.get(`/technical-station-two/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.limit}&position=${this.positionId}&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
+      this.apiService.get(`/technical-station-two/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.limit}&position=${this.positionId.trim()}&experience=${this.experience.trim()}&fromDate${this.startDate}&toDate${this.endDate}&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
         this.loader = false;
         this.initialLoader = false;
         if (data?.candidates) {
@@ -128,8 +129,9 @@ export class TechnicalDetailComponent implements OnInit {
     let date = new Date(event?.value);
     if (range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
     if (range == 'endDate') this.endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
-    // this.positionId = '';
-    // this.fetchList();
+    this.currentPage = 1;
+    this.limit = 10;
+    this.fetchList();
   }
 
   fetchDetails(id: any, status: any): void {
@@ -164,6 +166,14 @@ export class TechnicalDetailComponent implements OnInit {
 
   searchCandidate(searchTerm: string): void {
     this.searchKeyword = searchTerm;
+    this.currentPage = 1;
+    this.limit = 10;
+    this.fetchList();
+  }
+  searchByExperience(experience: string): void {
+    this.experience = experience;
+    this.currentPage = 1;
+    this.limit = 10;
     this.fetchList();
   }
 
@@ -172,6 +182,8 @@ export class TechnicalDetailComponent implements OnInit {
     this.displayPosition = name;
     this.positionId = id;
     sessionStorage.setItem(`requirement_${this.stationId}`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
+    this.currentPage = 1;
+    this.limit = 10;
     this.fetchList();
   }
 
@@ -194,6 +206,7 @@ export class TechnicalDetailComponent implements OnInit {
       sessionStorage.setItem(`requirement_${this.stationId}`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
     }
     if (item === 'search') this.searchKeyword = '';
+    if (item === 'experience') this.experience = '';
     this.currentPage = 1;
     this.limit = 10;
     this.fetchList();
@@ -205,6 +218,8 @@ export class TechnicalDetailComponent implements OnInit {
     })
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       this.candidateList = [];
+      this.currentPage = 1;
+      this.limit = 10;
       this.fetchList();
     })
   }
