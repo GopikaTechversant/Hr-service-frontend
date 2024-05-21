@@ -30,6 +30,7 @@ export class SeriesComponent implements OnInit {
   limit: number = 12;
   page: number = 1;
   showDropdown: boolean = false;
+  requirementDetails:any;
   constructor(private apiService: ApiService, private http: HttpClient, private router: Router, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private renderer: Renderer2) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -37,6 +38,7 @@ export class SeriesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.fetchDetails();
     this.fetchcandidates();
   }
 
@@ -63,6 +65,15 @@ export class SeriesComponent implements OnInit {
           if (candidate.serviceId) this.serviceIds.push(candidate?.serviceId);
         });
       }
+    })
+  }
+
+  fetchDetails():void{
+    this.apiService.get(`/service-request/view?requestId=${this.requestId}`).subscribe((res:any) => {
+      console.log("data fetch",res);
+      if(res?.data) this.requirementDetails = res?.data;
+      console.log("this.requirementDetails",this.requirementDetails);
+      
     })
   }
 

@@ -35,7 +35,7 @@
                     <td>Skills</td>
                     <td>Status</td>
                     <td>Add Candidate</td>
-                    <td>Actions</td>
+                    <!-- <td>Actions</td> -->
                 </tr>
                 <div *ngIf="loader && !initialLoader" class="loader-parent">
                     <img src="assets/gif/loader.gif">
@@ -54,14 +54,14 @@
                                 {{candidate.status | titlecase}}
                             </td>
                             <td (click)="onStatusChange(candidate)"><img src="assets/images/user-add.png" alt="" class="icon"></td>
-                            <td>
+                            <!-- <td>
                                 <div class="d-flex j-center">
                                     <img src="assets/images/candidate-detail/edit.svg" class="icon" alt=""
                                         (click)="update()">
                                     <img src="assets/images/candidate-detail/delete.svg" class="icon" alt=""
                                         (click)="delete()">
                                 </div>
-                            </td>
+                            </td> -->
                         </tr>
                     </ng-container>
                 </ng-container>
@@ -122,74 +122,3 @@
 
 
 
-<!-- <div class="main m-r-11">
-    <div class="heading d-flex j-space">
-        <div class="title-left p-l-12"><span>Requirement List</span></div>
-        <div class="d-flex title-right">
-            <span class="m-r-15">
-                <input type="text" class="input p-l-5" placeholder="Search Requirement"
-                    (click)="candidateSearch(searchKeyword)" (keydown.enter)="candidateSearch(searchKeyword)"
-                    autocomplete="off" [(ngModel)]="searchKeyword">
-                <span class="search" (click)="candidateSearch(searchKeyword)">
-                    <i class="fa fa-search" aria-hidden="true"></i>
-                </span>
-            </span>
-
-        </div>
-    </div>
-    <div *ngIf="initialLoader">
-        <app-skeleton-loader *ngFor="let item of [1,2,1]" [loaderDatas]="[9]" [higherWidth]="1000" [lowerWidth]="800"
-        [gridColumn]="9"></app-skeleton-loader>
-    </div>
-    <div *ngIf="loader && !initialLoader" class="loader-parent">
-        <img src="assets/gif/loader.gif">
-    </div>
-    <div *ngIf="(candidates_list?.length === 0 || !candidates_list) && !loader && !initialLoader " class="data">
-        No Data Found
-    </div>
-    <div class="content p-t-10 d-flex m-t-10 m-l-5">
-        <div *ngFor="let candidate of candidates_list" class="candidate-card c-pointer col-md-4"
-            (click)="navigate('/written/series/',candidate.requestId)">
-            <div class="d-flex j-space m-b-4 count-title">
-                <span class="p-l-6 candidates">Candidates</span>
-                <span class="count">{{candidate.candidatesCount}}</span>
-            </div>
-            <div class="info-container">
-                <div class="info-pair">
-                    <div class="key">Requirement</div>
-                    <div class="value">: <span class="p-l-2">{{candidate.requestName}}</span></div>
-                </div>
-                <div class="info-pair">
-                    <div class="key">Team</div>
-                    <div class="value">: <span class="p-l-2">{{candidate.teamName}}</span></div>
-                </div>
-                <div class="info-pair">
-                    <div class="key">Skills</div>
-                    <div class="value">:<span class="p-l-7">{{candidate.requestSkills}}</span> </div>
-                </div>
-                <div class="info-pair p-l-5">
-                    <div [ngStyle]="{'color': candidate.status === 'progress' ? '#F57C02' : '#08E179'}">
-                        {{candidate.status}}</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="page d-flex j-end p-10">
-    <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(1)">
-        <img src="assets/images/double-arrow-left-icon.svg" alt="" height="14px" width="14px">
-    </button>
-    <button *ngIf="currentPage === 1" class="box p-r-20 m-r-10">
-        <img src="assets/images/inactive-double-arrow-left.svg" alt="" height="23px" width="23px">
-    </button>
-    <ng-container *ngFor="let page of generatePageNumbers()">
-        <button *ngIf="page === '...'" class="box dot" disabled>...</button>
-        <button *ngIf="page !== '...' && page === currentPage" class="box current-page c-pointer">{{ page }}</button>
-        <button *ngIf="page !== '...' && page !== currentPage" class="box c-pointer" (click)="onPageChange(page)">{{page}}</button>
-    </ng-container> <button *ngIf="currentPage < lastPage" class="box c-pointer" (click)="onPageChange(lastPage)">
-        <img src="assets/images/double-arrow-right-icon.svg" alt="" height="14px" width="14px">
-    </button>
-    <button *ngIf="currentPage === lastPage" class="box">
-        <img src="assets/images/inactive-double-arrow-right.svg" alt="" height="23px" width="23px">
-    </button>
-</div> -->

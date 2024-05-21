@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { DeleteComponent } from 'src/app/components/delete/delete.component';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastrService } from 'ngx-toastr';
+import { EditRequirementComponent } from '../edit-requirement/edit-requirement.component';
 @Component({
   selector: 'app-requirement-candidate-list',
   templateUrl: './requirement-candidate-list.component.html',
@@ -20,8 +21,9 @@ export class RequirementCandidateListComponent implements OnInit {
   lastPage: any;
   initialLoader: boolean = false;
   loader: boolean = false;
-  deleteRequirementId:any;
-  constructor(private router: Router, private apiService: ApiService,private dialog: MatDialog,private toastr: ToastrService) { }
+  deleteRequirementId: any;
+  editRequirement: any;
+  constructor(private router: Router, private apiService: ApiService, private dialog: MatDialog, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.initialLoader = true;
@@ -88,21 +90,26 @@ export class RequirementCandidateListComponent implements OnInit {
   }
 
 
-  update(requirement:any): void {
-    this.router.navigate(['dashboard/service-requirement'], {
-      state: { requirement }
-    });
+  // update(requirement:any): void {
+  //   this.router.navigate(['dashboard/service-requirement'], {
+  //     state: { requirement }
+  //   });
+  // }
+
+
+  update(requirement: any): void {
+    this.editRequirement = requirement;
+    const dialogRef = this.dialog.open(EditRequirementComponent,{
+      data:this.editRequirement,
+      width:'50%',
+      height:'80%'
+    })
   }
 
-  // delete(requirement:any) {
-  //   this.apiService.post(`/service-request/delete`,)
-  // }
   delete(id: any): void {
     this.deleteRequirementId = id;
-    console.log(" this.deleteRequirementId", this.deleteRequirementId);
-    
     const dialogRef = this.dialog.open(DeleteComponent, {
-      data:  this.deleteRequirementId,
+      data: this.deleteRequirementId,
       width: '500px',
       height: '250px'
     })

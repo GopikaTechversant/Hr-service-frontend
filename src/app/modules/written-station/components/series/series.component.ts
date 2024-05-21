@@ -40,6 +40,7 @@ export class SeriesComponent implements OnInit {
   selectedBox: any;
   isExperienceListOpen : boolean = false;
   experienceList = ['1','2','3'];
+  resumePath: any;
   ngOnInit(): void {
     this.fetchCandidates();
     this.fetchCandidatesWithQuestionBox();
@@ -282,8 +283,15 @@ export class SeriesComponent implements OnInit {
 
   }
 
-  viewProgressFile(progressFile: string) {
-    window.open(`${environment.api_url}${progressFile}`, '_blank');
+  // viewProgressFile(progressFile: string) {
+  //   window.open(`${environment.api_url}${progressFile}`, '_blank');
+  // }
+
+  viewResume(resume: any) {
+    this.resumePath = resume;
+    console.log("this.resumePath", this.resumePath);
+    window.open(`${environment.s3_url}${this.resumePath}`, '_blank');
+    console.log("`${environment.s3_url}${this.resumePath}`",typeof(`${environment.s3_url}${this.resumePath}`));
   }
 
   approve(): void {

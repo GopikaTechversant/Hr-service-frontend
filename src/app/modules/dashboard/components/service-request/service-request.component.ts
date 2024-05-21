@@ -58,9 +58,9 @@ export class ServiceRequestComponent implements OnInit {
     this.fetchStations();
     this.fetchServiceTeam();
     this.fetchDesignation();
-    if (history?.state?.requirement) {
-      this.requirementFromList()
-    }
+    // if (history?.state?.requirement) {
+    //   this.requirementFromList()
+    // }
   }
 
   onBodyClick(event: MouseEvent): void {
@@ -71,12 +71,10 @@ export class ServiceRequestComponent implements OnInit {
       this.openDesignation = false;
     }
   }
-  requirementFromList():void{
-    console.log("inside", history?.state?.requirement);
-    // this.requirement = history?.state?.candidate;
-    // this.selectedRequirementId = this.requirement.requestId;
-    // this.fromRequirementName = this.requirement.requestName;
-  }
+  // requirementFromList():void{
+  //   console.log("inside", history?.state?.requirement);
+    
+  // }
 
   fetchDesignation() {
     this.apiService.get(`/service-request/designation/list`).subscribe(((res: any) => {
