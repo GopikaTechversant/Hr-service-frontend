@@ -54,18 +54,23 @@ export class ApiService {
 
   // // Generic POST method
   // post(url: string, data: any): Observable<any> {
-  //   return this.http.post(`${environment.api_url}${url}`, data, { headers: this.getHeaders() });
+  //   let headers = new HttpHeaders({
+  //     'ngrok-skip-browser-warning': environment['ngrok-skip-browser-warning']
+  //   });
+  //   return this.http.post(`${environment.api_url}${url}`, data,{ headers: headers });
   // }
 
   // // Generic PUT method
   // update(url: string, data: any): Observable<any> {
-  //   return this.http.put(`${environment.api_url}${url}`, data, { headers: this.getHeaders() });
+  //   return this.http.put(`${environment.api_url}${url}`, data);
   // }
 
   // // Generic DELETE method
   // delete(url: string): Observable<any> {
-  //   return this.http.delete(`${environment.api_url}${url}`, { headers: this.getHeaders() });
+  //   return this.http.delete(`${environment.api_url}${url}`);
   // }
+
+  
 }
 
 

@@ -58,6 +58,9 @@ export class ServiceRequestComponent implements OnInit {
     this.fetchStations();
     this.fetchServiceTeam();
     this.fetchDesignation();
+    if (history?.state?.requirement) {
+      this.requirementFromList()
+    }
   }
 
   onBodyClick(event: MouseEvent): void {
@@ -67,6 +70,12 @@ export class ServiceRequestComponent implements OnInit {
       this.idListOpen = false;
       this.openDesignation = false;
     }
+  }
+  requirementFromList():void{
+    console.log("inside", history?.state?.requirement);
+    // this.requirement = history?.state?.candidate;
+    // this.selectedRequirementId = this.requirement.requestId;
+    // this.fromRequirementName = this.requirement.requestName;
   }
 
   fetchDesignation() {
@@ -119,6 +128,8 @@ export class ServiceRequestComponent implements OnInit {
     this.idListOpen = true;
   }
 
+
+  
   selectTeam(teamId: any, teamName: any): void {
     this.teamListOpen = false;
     this.selectedTeam = teamName;

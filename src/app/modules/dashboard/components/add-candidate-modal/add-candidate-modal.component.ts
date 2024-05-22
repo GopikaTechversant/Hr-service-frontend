@@ -1,9 +1,12 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { DatePipe } from '@angular/common';
 import { ToastrServices } from 'src/app/services/toastr.service';
 import { ApiService } from 'src/app/services/api.service';
+import { S3Service } from 'src/app/services/s3.service';
+import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-add-candidate-modal',
   templateUrl: './add-candidate-modal.component.html',
@@ -14,7 +17,8 @@ import { ApiService } from 'src/app/services/api.service';
   }
 })
 export class AddCandidateModalComponent implements OnInit {
-  displayDate: any
+  // @Input() key:any;
+  displayDate: any;
   showDropdown: boolean = false;
   showSource: boolean = false;
   matcher: ErrorStateMatcher = new ShowOnDirtyErrorStateMatcher();
@@ -48,7 +52,13 @@ export class AddCandidateModalComponent implements OnInit {
   fileName: any;
   extraSkills: any[] = [];
   loader: boolean = false;
-  constructor(private apiService: ApiService, private tostr: ToastrServices, private formBuilder: UntypedFormBuilder, private datePipe: DatePipe) {
+  submitForm: boolean = false;
+  fromRequirementId: any;
+  fromRequirementName: any;
+  requirement: any;
+  private keySubscription?: Subscription;
+  uploadedFileKey: string = '';
+  constructor(private apiService: ApiService, private tostr: ToastrServices, private formBuilder: UntypedFormBuilder, private datePipe: DatePipe, private s3Service: S3Service) {
     this.candidateForm = this.formBuilder.group({
       candidateFirstName: [null, Validators.required],
       candidateLastName: [null, Validators.required],
@@ -82,6 +92,16 @@ export class AddCandidateModalComponent implements OnInit {
     this.maxDate.setFullYear(this.currentYear - 18);
     this.fetchRequerements();
     this.fetchSource();
+    if (history?.state?.candidate) {
+      this.requirementFromList()
+    }
+  }
+
+  requirementFromList(): void {
+    console.log("inside", history?.state?.candidate);
+    this.requirement = history?.state?.candidate;
+    this.selectedRequirementId = this.requirement.requestId;
+    this.fromRequirementName = this.requirement.requestName;
   }
 
   onBodyClick(event: MouseEvent): void {
@@ -190,7 +210,24 @@ export class AddCandidateModalComponent implements OnInit {
   onFileSelected(event: any) {
     this.fileInputClicked = true;
     this.selectedFile = event.target.files[0];
+    console.log("this.selectedFile in add ", this.selectedFile);
     if (event.target.files.length > 0) this.resumeUploadSuccess = true;
+    if (this.selectedFile) this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', this.selectedFile);
+    console.log("this.selectedFile",typeof(this.selectedFile));
+    
+    this.getKeyFroms3();
+    // if(this.selectedFile) this.s3Service.uploadedFile.emit(this.selectedFile)
+  }
+
+  getKeyFroms3(): void {
+    this.keySubscription = this.s3Service.key.subscribe((key: string) => {
+      console.log("Uploaded file key:", key);
+      this.uploadedFileKey = key;
+    });
+  }
+
+  uploadFile(): void {
+    if (this.selectedFile) this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', this.selectedFile);
   }
 
   checkValidation(): void {
@@ -220,7 +257,7 @@ export class AddCandidateModalComponent implements OnInit {
         message: 'Please Enter an Application source'
       },
       {
-        condition: !this.selectedFile,
+        condition: !this.uploadedFileKey,
         message: 'Please Upload Candidate Resume'
       },
       {
@@ -239,23 +276,41 @@ export class AddCandidateModalComponent implements OnInit {
   }
 
   submitClick(): void {
+    this.submitForm = true;
     this.loader = true;
+    // this.uploadFile();
     this.checkValidation();
     if (this.validationSuccess) {
       let candidateDetails = this.candidateForm.value;
       this.primaryskills = this.selectedPrimarySkills.map(skill => skill.id);
       this.secondaryskills = this.selectedSecondarySkills.map(skill => skill.id);
-      const formdata = new FormData();
-      for (const key in candidateDetails) {
-        if (candidateDetails[key]) formdata.append(key, candidateDetails[key]);
+      const payload = {
+        candidateFirstName: this.candidateForm?.value?.candidateFirstName,
+        candidateLastName: this.candidateForm?.value?.candidateLastName,
+        candidateEmail: this.candidateForm?.value?.candidateEmail,
+        candidateMobileNo: this.candidateForm?.value?.candidateMobileNo,
+        candidateDoB: this.candidateForm?.value?.candidateDoB,
+        candidateExperience: this.candidateForm?.value?.candidateExperience,
+        candidatePreviousOrg: this.candidateForm?.value?.candidatePreviousOrg,
+        candidatePreviousDesignation: this.candidateForm?.value?.candidatePreviousDesignation,
+        candidateEducation: this.candidateForm?.value?.candidateEducation,
+        candidateCurrentSalary: this.candidateForm?.value?.candidateCurrentSalary,
+        candidateExpectedSalary: this.candidateForm?.value?.candidateExpectedSalary,
+        // candidateAddress: this.candidateForm?.value?.candidateFirstName,
+        candidateCreatedby: this.candidateCreatedby,
+        candidatePrimarySkills: this.primaryskills,
+        candidateSecondarySkills: this.secondaryskills,
+        resumeSourceId: this.sourceId,
+        candidatesAddingAgainst: this.selectedRequirementId,
+        candidateGender: this.candidateForm?.value?.candidateGender,
+        candidateCity: this.candidateForm?.value?.candidateCity,
+        candidateDistrict: this.candidateForm?.value?.candidateDistrict,
+        candidateState: this.candidateForm?.value?.candidateState,
+        candidateResume: this.uploadedFileKey
       }
-      formdata.append('candidateCreatedby', this.candidateCreatedby);
-      formdata.append('candidateResume', this.selectedFile);
-      formdata.append('candidatePrimarySkills', this.primaryskills);
-      formdata.append('candidateSecondarySkills', this.secondaryskills);
-      formdata.append('resumeSourceId', this.sourceId);
-      formdata.append('candidatesAddingAgainst', this.selectedRequirementId);
-      this.apiService.post(`/candidate/create`, formdata).subscribe({
+      console.log("payload", payload);
+
+      this.apiService.post(`/candidate/create`, payload).subscribe({
         next: (response) => {
           this.loader = false;
           this.tostr.success('Candidate Created successfully');
@@ -276,6 +331,7 @@ export class AddCandidateModalComponent implements OnInit {
       this.submitted = true;
     }
   }
+
 
 
   triggerFileInput(): void {
@@ -343,5 +399,11 @@ export class AddCandidateModalComponent implements OnInit {
       const extraSkill = res?.data;
       this.selectSkill(extraSkill);
     })
+  }
+
+  ngOnDestroy(): void {
+  if (this.keySubscription) {
+     this.keySubscription.unsubscribe();
+      }
   }
 }

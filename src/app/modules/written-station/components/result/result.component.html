@@ -24,11 +24,15 @@
             </div>
             <div *ngIf="resumeUploadSuccess" class="file-name d-flex j-space">
                 <div class="d-flex align-center p-t-3">
-                <span><img class="uploaded-file" src="/assets/images/file-uploaded.png" alt="" height="20"
-                        width="20"></span>
-                <span class="p-b-3">{{selectedFile?.name}}</span>
-            </div>
-            <span class="p-t-7 change-file c-pointer" (click)="triggerFileInput();$event.stopPropagation();$event.preventDefault();">Change</span>
+                    <span><img class="uploaded-file" src="/assets/images/file-uploaded.png" alt="" height="20"
+                            width="20"></span>
+                    <span class="p-b-3">{{selectedFile?.name}}</span>
+                    <!-- <div *ngIf="submitForm">
+                        <app-file-upload-s3 [selectedFile]="selectedFile"></app-file-upload-s3>
+                    </div> -->
+                </div>
+                <span class="p-t-7 change-file c-pointer"
+                    (click)="triggerFileInput();$event.stopPropagation();$event.preventDefault();">Change</span>
             </div>
             <input type="file" name="file" #fileInput class="input-box" style="display:none"
                 (change)="onFileSelected($event)">

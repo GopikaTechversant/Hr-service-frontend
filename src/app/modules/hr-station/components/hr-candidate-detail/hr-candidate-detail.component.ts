@@ -117,7 +117,9 @@ export class HrCandidateDetailComponent {
 
   viewResume(resume: any) {
     this.resumePath = resume;
-    window.open(`${environment.api_url}${this.resumePath}`, '_blank');
+    console.log("this.resumePath", this.resumePath);
+    window.open(`${environment.s3_url}${this.resumePath}`, '_blank');
+    console.log("`${environment.s3_url}${this.resumePath}`",typeof(`${environment.s3_url}${this.resumePath}`));
   }
 
   showMail(item: any): void {

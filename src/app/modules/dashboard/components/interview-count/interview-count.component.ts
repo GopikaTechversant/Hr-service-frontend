@@ -10,9 +10,9 @@ import { ApiService } from 'src/app/services/api.service';
   templateUrl: './interview-count.component.html',
   styleUrls: ['./interview-count.component.css'],
   providers: [DatePipe],
-  host: {
-    '(document:click)': 'onBodyClick($event)'
-  }
+  // host: {
+  //   '(document:click)': 'onBodyClick($event)'
+  // }
 })
 export class InterviewCountComponent implements OnInit {
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');

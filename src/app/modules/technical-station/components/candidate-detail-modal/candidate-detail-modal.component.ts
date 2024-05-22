@@ -3,12 +3,16 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastrServices } from 'src/app/services/toastr.service';
 import { environment } from 'src/environments/environments';
+import { S3Service } from 'src/app/services/s3.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-candidate-detail-modal',
   templateUrl: './candidate-detail-modal.component.html',
   styleUrls: ['./candidate-detail-modal.component.css']
 })
 export class CandidateDetailModalComponent implements OnInit {
+  private keySubscription?: Subscription;
+  uploadedFileKey: string = '';
   candidateDetails: any;
   showRequest: boolean = false;
   progessAdded: boolean = false;
@@ -29,7 +33,7 @@ export class CandidateDetailModalComponent implements OnInit {
   userId: any;
   resumePath: any;
   file: File | null = null;
-  fileName: string = '';
+  fileName: any;
   messageType: any;
   showSelection: boolean = false;
   showRejection: boolean = false;
@@ -37,7 +41,7 @@ export class CandidateDetailModalComponent implements OnInit {
   today: Date = new Date();
   templateData: any;
 
-  constructor(public dialogRef: MatDialogRef<CandidateDetailModalComponent>, private apiService: ApiService, private tostr: ToastrServices,
+  constructor(public dialogRef: MatDialogRef<CandidateDetailModalComponent>, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data) {
       this.candidateDetails = data?.candidateDetails;
@@ -61,29 +65,39 @@ export class CandidateDetailModalComponent implements OnInit {
     if (file) {
       this.file = file;
       this.fileName = file?.name;
+      if (this.fileName) this.s3Service.uploadImage(this.file, 'hr-service-images', this.file);
+      this.getKeyFroms3();
     }
   }
-
+  getKeyFroms3(): void {
+    this.keySubscription = this.s3Service.key.subscribe((key: string) => {
+      this.uploadedFileKey = key;
+    });
+  }
 
   addProgress(): void {
+    // this.submitForm = true;
     const formData = new FormData();
     const skillElement = document.getElementById('skill') as HTMLInputElement;
     const scoreElement = document.getElementById('score') as HTMLInputElement;
     const descriptionElement = document.getElementById('description') as HTMLInputElement;
-    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
-    const file = fileInput.files ? fileInput.files[0] : null;
-
-    if (skillElement && skillElement.value) formData.append('progressSkill', skillElement.value);
-    if (scoreElement && scoreElement.value) formData.append('progressScore', scoreElement.value);
-    if (descriptionElement && descriptionElement.value) formData.append('progressDescription', descriptionElement.value);
-    if (file) formData.append('file', file, file.name);
-
-    formData.append('progressAssignee', this.progressAssignee ? this.progressAssignee : this.userId);
-    formData.append('progressServiceId', this.serviceId ? this.serviceId.toString() : '0');
-
+    // const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    // const file = fileInput.files ? fileInput.files[0] : null;
+    if (!this.uploadedFileKey) {
+      this.tostr.warning('File upload is in progress, please wait.');
+      return;
+    }
+    const payload = {
+      progressAssignee: this.progressAssignee ? this.progressAssignee : this.userId,
+      progressSkill: skillElement.value,
+      progressServiceId: this.serviceId ? this.serviceId.toString() : '0',
+      progressScore: scoreElement.value,
+      progressDescription: descriptionElement.value,
+      file: this.uploadedFileKey,
+    }
     let baseUrl = this.stationId === '3' ? `/technical-station` : this.stationId === '4' ? `/technical-station-two` : '';
     if (baseUrl) {
-      this.apiService.post(`${baseUrl}/add-progress`, formData).subscribe({
+      this.apiService.post(`${baseUrl}/add-progress/v1`, payload).subscribe({
         next: (res: any) => {
           this.tostr.success('Progress added successfully');
           this.closeDialog();
@@ -146,9 +160,12 @@ export class CandidateDetailModalComponent implements OnInit {
     } else this.tostr.warning('Please Add Feedback');
   }
 
+
   viewResume(resume: any) {
     this.resumePath = resume;
-    window.open(`${environment.api_url}${this.resumePath}`, '_blank');
+    console.log("this.resumePath", this.resumePath);
+    window.open(`${environment.s3_url}${this.resumePath}`, '_blank');
+    console.log("`${environment.s3_url}${this.resumePath}`", typeof (`${environment.s3_url}${this.resumePath}`));
   }
 
   approveClick(): void {
@@ -176,4 +193,9 @@ export class CandidateDetailModalComponent implements OnInit {
     else this.tostr.error('Invalid operation');
   }
 
+  ngOnDestroy(): void {
+    if (this.keySubscription) {
+      this.keySubscription.unsubscribe();
+    }
+  }
 }

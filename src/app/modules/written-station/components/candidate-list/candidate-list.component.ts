@@ -79,4 +79,17 @@ export class CandidateListComponent implements OnInit {
     this.fetchRequirementDetails('');
   }
 
+  update(): void {
+
+  }
+
+  delete() {
+
+  }
+
+  onStatusChange(candidate: any): void {
+    this.router.navigate(['dashboard/add-candidate'], {
+      state: { candidate }
+    });
+  }
 }

@@ -1,6 +1,130 @@
 <div class="main m-r-11">
     <div class="heading d-flex j-space">
         <div class="title-left p-l-12"><span>Requirement List</span></div>
+        <div class="d-flex  title-right">
+            <span class="m-r-15">
+                <input type="text" class="input p-l-5" placeholder="Search Requirement"
+                    (keydown.enter)="candidateSearch(searchKeyword)" autocomplete="off" [(ngModel)]="searchKeyword">
+                <span class="search" (click)="candidateSearch(searchKeyword)">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </span>
+            </span>
+            <div class="create-btn c-pointer" (click)="navigate('/dashboard/service-requirement',false)">
+                <span class="">Create Requirement</span>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="initialLoader">
+        <app-skeleton-loader *ngFor="let item of [1,2,1]" [loaderDatas]="[9]" [higherWidth]="1000" [lowerWidth]="800"
+            [gridColumn]="9"></app-skeleton-loader>
+    </div>
+    <!-- <div *ngIf="loader && !initialLoader" class="loader-parent">
+        <img src="assets/gif/loader.gif">
+    </div> -->
+    <div *ngIf="(candidates_list?.length === 0 || !candidates_list) && !loader && !initialLoader " class="data">
+        No Data Found
+    </div>
+  <div class="main-table m-t-27">
+        <div class="table-container m-b-0">
+            <table class="table">
+                <tr class="table-header f-w-500 p-b-10">
+                    <td>Date</td>
+                    <td>Candidate Count</td>
+                    <td>Requirement</td>
+                    <td>Team</td>
+                    <td>Skills</td>
+                    <td>Status</td>
+                    <td>Add Candidate</td>
+                    <td>Actions</td>
+                </tr>
+                <div *ngIf="loader && !initialLoader" class="loader-parent">
+                    <img src="assets/gif/loader.gif">
+                </div>
+                <ng-container *ngIf="candidates_list?.length > 0">
+
+                    <ng-container *ngFor="let candidate of candidates_list">
+                        <tr class="candidate c-pointer">
+                            <td class="text-wrap" (click)="navigate('/written/series/',candidate.requestId)">1/29/2024</td>
+                            <td class="text-wrap" [title]="candidate?.candidatesCount" (click)="navigate('/written/series/',candidate.requestId)">{{candidate?.candidatesCount}}</td>
+                            <td class="text-wrap" [title]="candidate?.requestName" (click)="navigate('/written/series/',candidate.requestId)">{{candidate?.requestName | titlecase}}</td>
+                            <td class="text-wrap" [title]="candidate?.teamName" (click)="navigate('/written/series/',candidate.requestId)">{{candidate?.teamName | titlecase}}</td>
+                            <td class="text-wrap" [title]="candidate?.requestSkills"  (click)="navigate('/written/series/',candidate.requestId)">{{candidate?.requestSkills | titlecase}}</td>
+                            <td class="text-wrap"
+                                [ngStyle]="{'color': candidate.status === 'progress' ? '#F57C02' : '#08E179'}" (click)="navigate('/dashboard/series/',candidate?.requestId)">
+                                {{candidate.status | titlecase}}
+                            </td>
+                            <td (click)="onStatusChange(candidate)"><img src="assets/images/user-add.png" alt="" class="icon"></td>
+                            <td>
+                                <div class="d-flex j-center">
+                                    <img src="assets/images/candidate-detail/edit.svg" class="icon" alt=""
+                                        (click)="update()">
+                                    <img src="assets/images/candidate-detail/delete.svg" class="icon" alt=""
+                                        (click)="delete()">
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </ng-container>
+                <div *ngIf="(candidates_list?.length === 0 || !candidates_list) && !loader && !initialLoader "
+                    class="data">
+                    No Data Found
+                </div>
+                <div *ngIf="initialLoader" class="row m-l-20 initial-loader">
+                    <div *ngFor="let item of [0,1,2,3,4,5]" class="col-md-6 m-t-10 m-b-10">
+                        <div class="gravatar-title">
+                            <div>
+                                <ngx-skeleton-loader [theme]="{
+                                width: '900px',
+                                'border-radius': '0',
+                                height: '15px',
+                                'margin-bottom': '10px'
+                                }"></ngx-skeleton-loader>
+                            </div>
+                            <div>
+                                <ngx-skeleton-loader
+                                    [theme]="{ width: '1300px', 'border-radius': '0', height: '15px' }">
+                                </ngx-skeleton-loader>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </table>
+        </div>
+        <div class="page d-flex j-end p-10">
+            <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(1)">
+                <img src="assets/images/double-arrow-left-icon.svg" alt="" height="14px" width="14px">
+            </button>
+            <button *ngIf="currentPage === 1" class="box p-r-20 m-r-10">
+                <img src="assets/images/inactive-double-arrow-left.svg" alt="" height="23px" width="23px">
+            </button>
+            <ng-container *ngFor="let page of generatePageNumbers()">
+                <button *ngIf="page === '...'" class="box dot" disabled>...</button>
+                <button *ngIf="page !== '...' && page === currentPage" class="box current-page c-pointer">{{ page
+                    }}</button>
+                <button *ngIf="page !== '...' && page !== currentPage" class="box c-pointer"
+                    (click)="onPageChange(page)">{{ page }}</button>
+            </ng-container> <button *ngIf="currentPage < lastPage" class="box c-pointer"
+                (click)="onPageChange(lastPage)">
+                <img src="assets/images/double-arrow-right-icon.svg" alt="" height="14px" width="14px">
+            </button>
+            <button *ngIf="currentPage === lastPage" class="box">
+                <img src="assets/images/inactive-double-arrow-right.svg" alt="" height="23px" width="23px">
+            </button>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- <div class="main m-r-11">
+    <div class="heading d-flex j-space">
+        <div class="title-left p-l-12"><span>Requirement List</span></div>
         <div class="d-flex title-right">
             <span class="m-r-15">
                 <input type="text" class="input p-l-5" placeholder="Search Requirement"
@@ -68,4 +192,4 @@
     <button *ngIf="currentPage === lastPage" class="box">
         <img src="assets/images/inactive-double-arrow-right.svg" alt="" height="23px" width="23px">
     </button>
-</div>
+</div> -->
