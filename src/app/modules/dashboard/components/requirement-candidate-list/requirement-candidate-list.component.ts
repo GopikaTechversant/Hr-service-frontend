@@ -77,7 +77,6 @@ export class RequirementCandidateListComponent implements OnInit {
     else this.router.navigate([path]);
   }
 
-
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);
     this.fetchcandidates('');
@@ -89,20 +88,16 @@ export class RequirementCandidateListComponent implements OnInit {
     });
   }
 
-
-  // update(requirement:any): void {
-  //   this.router.navigate(['dashboard/service-requirement'], {
-  //     state: { requirement }
-  //   });
-  // }
-
-
   update(requirement: any): void {
     this.editRequirement = requirement;
-    const dialogRef = this.dialog.open(EditRequirementComponent,{
-      data:this.editRequirement,
-      width:'50%',
-      height:'80%'
+    const dialogRef = this.dialog.open(EditRequirementComponent, {
+      data: this.editRequirement,
+      width: '50%',
+      height: '80%'
+    })
+    dialogRef.componentInstance.onEditSuccess.subscribe(() => {
+      this.limit = 9;
+      this.fetchcandidates('');
     })
   }
 
@@ -116,8 +111,6 @@ export class RequirementCandidateListComponent implements OnInit {
     dialogRef.componentInstance.onDeleteSuccess.subscribe(() => {
       this.apiService.post(`/service-request/delete`, { requestId: this.deleteRequirementId }).subscribe({
         next: (res: any) => {
-          // this.currentPage = 1;
-          // this.pageSize = 10;
           this.generatePageNumbers();
           this.fetchcandidates('');
         },

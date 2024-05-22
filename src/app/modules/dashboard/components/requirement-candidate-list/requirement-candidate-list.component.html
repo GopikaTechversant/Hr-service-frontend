@@ -59,12 +59,13 @@
                             </td>
                             <td (click)="onStatusChange(candidate)"><img src="assets/images/user-add.png" alt="" class="icon"></td>
                             <td>
-                                <div class="d-flex j-center">
+                                <div class="d-flex j-center" *ngIf="candidate?.candidatesCount === '0'">
                                     <img src="assets/images/candidate-detail/edit.svg" class="icon" alt=""
                                         (click)="update(candidate.requestId)">
                                     <img src="assets/images/candidate-detail/delete.svg" class="icon" alt=""
                                         (click)="delete(candidate.requestId)">
                                 </div>
+                                <div *ngIf="candidate?.candidatesCount !== '0'">Nil</div>
                             </td>
                         </tr>
                     </ng-container>

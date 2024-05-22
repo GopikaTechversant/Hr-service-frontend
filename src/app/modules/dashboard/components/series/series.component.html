@@ -1,13 +1,13 @@
 <div class="container m-t-15 m-l-4">
-    <div class="title-requirement"><span class="requirement-name">Candidate Requirement - Associate Developer</span></div>
-    <div class="actions d-flex"><img src="assets/images/edit.png" class="icon" alt="" height="28px" width="28px">
+    <div class="title-requirement"><span class="requirement-name">Candidate Requirement - {{requirement_details?.requestName}}</span></div>
+    <div class="actions d-flex"><img src="assets/images/edit.png" class="icon" alt="" height="28px" width="28px" (click)="edit(requirement_details?.requestId)">
     <img src="assets/images/delete.png" class="icon" alt="" height="26px" width="26px"
-       ></div>
+    (click)="delete(requirement_details?.requestId)"></div>
     <div class="d-flex container-requirement">
         <div class="info-container-requirement m-t-25 m-l-12">
             <div class="info-pair-requirement">
                 <div class="key-requirement">Job Code</div>
-                <div class="value-requirement">: {{requirementDetails?.requestName}}</div>
+                <div class="value-requirement">: {{requirement_details?.requestCode}}</div>
             </div>
             <div class="info-pair-requirement">
                 <div class="key-requirement">Interview Rounds</div>
@@ -15,36 +15,38 @@
             </div>
             <div class="info-pair-requirement">
                 <div class="key-requirement">Experience</div>
-                <div class="value-requirement">: 5</div>
+                <div class="value-requirement">: {{requirement_details?.requestExperience}}</div>
             </div>
             <div class="info-pair-requirement">
                 <div class="key-requirement">Base Salary</div>
-                <div class="value-requirement">: 100000</div>
+                <div class="value-requirement">: {{requirement_details?.requestBaseSalary}}</div>
             </div>
             <div class="info-pair-requirement">
                 <div class="key-requirement">Maximum salary</div>
-                <div class="value-requirement">: 200000</div>
+                <div class="value-requirement">: {{requirement_details?.requestMaxSalary}}</div>
             </div>
         </div>
         <div class="info-container-requirement m-t-25 m-l-20">
             <div class="info-pair-requirement">
                 <div class="key-requirement">Designation</div>
-                <div class="value-requirement">:Associate Developer</div>
+                <div class="value-requirement">: {{requirement_details?.designationName}}</div>
+            </div>
+            <div class="info-pair-requirement">
+                <div class="key-requirement">Department</div>
+                <div class="value-requirement">: {{requirement_details?.team?.teamName}}</div>
             </div>
             <div class="info-pair-requirement">
                 <div class="key-requirement">Skills</div>
-                <div class="value-requirement">:Java, Python, C#, JavaScript, Ruby, or PHP</div>
+                <div class="value-requirement">: {{requirement_details?.requestSkills}}</div>
             </div>
             <div class="info-pair-requirement">
                 <div class="key-requirement">Vacancy</div>
-                <div class="value-requirement">:5</div>
+                <div class="value-requirement">: {{requirement_details?.requestVacancy}}</div>
             </div>
            
         </div>
     </div>
 </div>
-
-
 
 <div class="main m-4" #scrollTop>
     <div class="d-flex j-space title-candidate">

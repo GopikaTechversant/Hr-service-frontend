@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastrServices } from 'src/app/services/toastr.service';
@@ -10,6 +10,8 @@ import { ToastrServices } from 'src/app/services/toastr.service';
   styleUrls: ['./edit-requirement.component.css']
 })
 export class EditRequirementComponent implements OnInit {
+  public onEditSuccess: EventEmitter<void> = new EventEmitter<void>();
+
   selectedStations: any = [
     { stationName: "Screening", stationId: 1 },
     { stationName: "HR", stationId: 5 }
@@ -24,12 +26,8 @@ export class EditRequirementComponent implements OnInit {
   loader: boolean = false;
   list_team: any[] = [];
   teamListOpen: boolean = false;
-  // selectedTeam: string = '';
-  // selectedTeamName: any;
   openDesignation: boolean = false;
   designationList: any;
-  // selectedDesignation: string = '';
-  // selectedDesignationId: any;
   // Initial values
   initialJobTitle: string = '';
   initialJobCode: string = '';
@@ -55,37 +53,44 @@ export class EditRequirementComponent implements OnInit {
   selectedDesignation: string = '';
   selectedDesignationId: any;
   initialValues: any = {};
+  requirement_details: any = {};
+  flows: any[] = [];
   constructor(public dialogRef: MatDialogRef<EditRequirementComponent>, private tostr: ToastrServices, private apiService: ApiService,
     private datePipe: DatePipe, @Inject(MAT_DIALOG_DATA) public data: any) {
-
   }
 
   ngOnInit(): void {
     this.fetchDetails();
-    console.log("daata", this.data);
-    this.initializeDataValues();
+    this.fetchStations();
+    this.fetchServiceTeam();
+    this.fetchDesignation();
   }
 
   initializeDataValues(): void {
-    this.jobTitle = this.data.requestName || '';
-    this.jobCode = this.data.requestId || '';
-    this.experience = ''; // Assuming this data comes from another source
-    this.baseSalary = ''; // Assuming this data comes from another source
-    this.maxSalary = ''; // Assuming this data comes from another source
-    this.vacancy = this.data.candidatesCount || '';
-    this.skills = this.data.requestSkills ? this.data.requestSkills.split(',') : [];
-    this.selectedTeam = this.data.teamName || '';
-    this.selectedTeamName = this.data.teamId || '';
-    this.selectedDesignation = ''; // Assuming this data comes from another source
-    this.selectedDesignationId = ''; // Assuming th
+    this.jobTitle = this.requirement_details.requestName || '';
+    this.jobCode = this.requirement_details.requestCode || '';
+    this.experience = this.requirement_details.requestExperience || '';
+    this.baseSalary = this.requirement_details.requestBaseSalary || '';
+    this.maxSalary = this.requirement_details.requestMaxSalary || '';
+    this.vacancy = this.requirement_details.requestVacancy || '';
+    this.selectedSkills = this.requirement_details.requestSkills ? this.requirement_details.requestSkills.split(',') : [];
+    this.selectedTeam = this.requirement_details.team.teamName || '';
+    this.selectedDesignation = this.requirement_details.designationName || '';
+    if (this.flows) {
+      this.selectedStations = this.flows.map((flow: any) => ({
+        stationId: flow.flowStationId,
+        stationName: flow.flowStationName
+      }));
+    } else this.selectedStations = [];
   }
 
-fetchDetails():void{
-  this.apiService.get(`/service-request/view?requestId=${this.data}`).subscribe((res:any) => {
-    console.log("data fetch",res);
-    
-  })
-}
+  fetchDetails(): void {
+    this.apiService.get(`/service-request/view?requestId=${this.data}`).subscribe((res: any) => {
+      this.requirement_details = res?.data;
+      this.flows = res?.flows;
+      this.initializeDataValues();
+    })
+  }
 
   fetchStations(): void {
     this.apiService.get(`/user/stations`).subscribe((res: any) => {
@@ -154,21 +159,28 @@ fetchDetails():void{
   }
 
   submitClick(): void {
-    const payload: any = {};
-
-    if (this.jobTitle !== this.data.requestName) payload.jobTitle = this.jobTitle;
-    if (this.jobCode !== this.data.requestId) payload.jobCode = this.jobCode;
-    if (this.vacancy !== this.data.candidatesCount) payload.vacancy = this.vacancy;
-    if (this.skills.join(',') !== this.data.requestSkills) payload.skills = this.skills;
-    if (this.selectedTeam !== this.data.teamName) payload.selectedTeam = this.selectedTeam;
-    if (this.selectedTeamName !== this.data.teamId) payload.selectedTeamName = this.selectedTeamName;
-    this.apiService.post('/update-requirement', payload).subscribe(response => {
-      this.tostr.success('Requirement updated successfully');
-      this.dialogRef.close(response);
-    }, error => {
-      this.tostr.error('Failed to update requirement');
-    });
-
+    const payload: any = {
+      requestId: this.data
+    };
+    if (this.jobTitle !== this.requirement_details.requestName) payload.requestName = this.jobTitle;
+    if (this.jobCode !== this.requirement_details.requestCode) payload.requestCode = this.jobCode;
+    if (this.vacancy !== this.requirement_details.requestVacancy) payload.requestVacancy = this.vacancy;
+    if (this.skills !== this.requirement_details.requestSkills) payload.requestSkills = this.selectedSkills;
+    if (this.selectedStations !== this.flows) payload.requestFlowStations = this.selectedStations;
+    if (this.experience !== this.requirement_details.requestExperience) payload.requestExperience = this.experience;
+    if (this.selectedDesignation !== this.requirement_details.designationName) payload.requestDesignation = this.selectedDesignationId;
+    if (this.baseSalary !== this.requirement_details.requestBaseSalary) payload.requestBaseSalary = this.baseSalary;
+    if (this.maxSalary !== this.requirement_details.requestMaxSalary) payload.requestMaxSalary = this.maxSalary;
+    if (this.selectedTeam !== this.requirement_details.team.teamName) payload.requestTeam = this.selectedTeamName;
+    if (this.jobTitle && this.jobCode && this.vacancy && this.skills && this.selectedStations && this.experience && this.selectedDesignation && this.baseSalary && this.maxSalary && this.selectedTeam) {
+      this.apiService.post('/service-request/edit', payload).subscribe(response => {
+        this.tostr.success('Requirement updated successfully');
+        this.onEditSuccess.emit();
+        this.dialogRef.close(response);
+      }, error => {
+        this.tostr.error('Failed to update requirement');
+      });
+    } else this.tostr.warning('Please fill all mandatory fields');
   }
 
   cancel(): void {

@@ -6,6 +6,8 @@ import { FeedbackComponent } from 'src/app/components/feedback/feedback.componen
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrServices } from 'src/app/services/toastr.service';
 import { ApiService } from 'src/app/services/api.service';
+import { EditRequirementComponent } from '../edit-requirement/edit-requirement.component';
+import { DeleteComponent } from 'src/app/components/delete/delete.component';
 @Component({
   selector: 'app-series',
   templateUrl: './series.component.html',
@@ -30,7 +32,9 @@ export class SeriesComponent implements OnInit {
   limit: number = 12;
   page: number = 1;
   showDropdown: boolean = false;
-  requirementDetails:any;
+  requirement_details: any = {};
+  editRequirement:any;
+  deleteRequirementId:any;
   constructor(private apiService: ApiService, private http: HttpClient, private router: Router, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private renderer: Renderer2) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -71,8 +75,8 @@ export class SeriesComponent implements OnInit {
   fetchDetails():void{
     this.apiService.get(`/service-request/view?requestId=${this.requestId}`).subscribe((res:any) => {
       console.log("data fetch",res);
-      if(res?.data) this.requirementDetails = res?.data;
-      console.log("this.requirementDetails",this.requirementDetails);
+      if(res?.data) this.requirement_details = res?.data;
+      console.log("this.requirementDetails",this.requirement_details);
       
     })
   }
@@ -111,6 +115,42 @@ export class SeriesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(() => {
       this.fetchcandidates();
     });
+  }
+
+  edit(requirement: any): void {
+    this.editRequirement = requirement;
+    const dialogRef = this.dialog.open(EditRequirementComponent, {
+      data: this.editRequirement,
+      width: '50%',
+      height: '80%'
+    })
+    dialogRef.componentInstance.onEditSuccess.subscribe(() => {
+      this.limit = 9;
+      this.fetchDetails();
+      this.fetchcandidates()
+    })
+  }
+
+  delete(id: any): void {
+    this.deleteRequirementId = id;
+    const dialogRef = this.dialog.open(DeleteComponent, {
+      data: this.deleteRequirementId,
+      width: '500px',
+      height: '250px'
+    })
+    dialogRef.componentInstance.onDeleteSuccess.subscribe(() => {
+      this.apiService.post(`/service-request/delete`, { requestId: this.deleteRequirementId }).subscribe({
+        next: (res: any) => {
+          // this.generatePageNumbers();
+          this.fetchDetails();
+      this.fetchcandidates()
+
+        },
+        error: (error) => {
+          this.tostr.error(error?.error?.message ? error?.error?.message : 'Unable to Delete candidates');
+        }
+      })
+    })
   }
 
 }
