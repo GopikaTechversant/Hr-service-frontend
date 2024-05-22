@@ -79,7 +79,7 @@
     cursor: pointer;
 }
 
-.user-icon{
+.user-icon {
     color: #FFFFFF;
     background: #575F6E;
     padding: 7px;
@@ -88,12 +88,14 @@
     border-radius: 50%;
 }
 
-.text-wrap{
+.text-wrap {
     max-width: 270px !important;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     cursor: pointer;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 .btn-cancel {

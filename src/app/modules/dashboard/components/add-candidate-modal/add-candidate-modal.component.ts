@@ -38,7 +38,7 @@ export class AddCandidateModalComponent implements OnInit {
   showSearchBar: boolean = false;
   primaryskills: any;
   secondaryskills: any;
-  searchvalue: any;
+  searchvalue: string = '';
   selectedRequirementName: any;
   selectedRequirementId: any;
   validationSuccess: boolean = false;
@@ -201,6 +201,7 @@ export class AddCandidateModalComponent implements OnInit {
 
   selectSkillType(type: any): void {
     this.selectedSkillType = type;
+    this.searchvalue = '';
   }
 
   toggleSearchBar(): void {
@@ -213,8 +214,8 @@ export class AddCandidateModalComponent implements OnInit {
     console.log("this.selectedFile in add ", this.selectedFile);
     if (event.target.files.length > 0) this.resumeUploadSuccess = true;
     if (this.selectedFile) this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', this.selectedFile);
-    console.log("this.selectedFile",typeof(this.selectedFile));
-    
+    console.log("this.selectedFile", typeof (this.selectedFile));
+
     this.getKeyFroms3();
     // if(this.selectedFile) this.s3Service.uploadedFile.emit(this.selectedFile)
   }
@@ -309,13 +310,12 @@ export class AddCandidateModalComponent implements OnInit {
         candidateResume: this.uploadedFileKey
       }
       console.log("payload", payload);
-
       this.apiService.post(`/candidate/create`, payload).subscribe({
         next: (response) => {
           this.loader = false;
           this.tostr.success('Candidate Created successfully');
           this.resetFormAndState();
-          
+
         },
         error: (error) => {
           this.loader = false;
@@ -402,8 +402,8 @@ export class AddCandidateModalComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-  if (this.keySubscription) {
-     this.keySubscription.unsubscribe();
-      }
+    if (this.keySubscription) {
+      this.keySubscription.unsubscribe();
+    }
   }
 }

@@ -55,9 +55,9 @@
     </div>
     <div class="selection-btn" *ngIf="data?.candidateDetails?.serviceStatus === 'pending' && !hrReview">
         <button class="select-btn" [ngClass]="{'offer-select-btn': messageType === 'offer'}"
-            (click)="showMail('offer')">Select Candidate</button>
+            (click)="showMail('offer')">Offer Letter</button>
         <button class="reject-btn" [ngClass]="{'offer-reject-btn': messageType === 'rejection'}"
-            (click)="showMail('rejection')">Reject Candidate</button>
+            (click)="showMail('rejection')">Rejection Notification</button>
     </div>
     <div
         *ngIf="!hrReview && this.data?.candidateDetails?.serviceStatus !== 'moved' && (showSelection || showRejection)">
@@ -65,24 +65,28 @@
             <span>Email Details of
                 {{candidateDetails?.candidateFirstName}}{{candidateDetails?.candidateLastName}}</span>
         </div>
-        <div class="f-right m-10 p-10 c-pointer" (click)="isEditable = !isEditable;">
-            <span><img src="/assets/images/candidate-detail/edit.svg" alt="" height="10" width="10"></span>
+        <div *ngIf="!isEditable" class="f-right m-10 p-10 c-pointer" (click)="isEditable = !isEditable;" title="Edit">
+            <span><img src="/assets/images/candidate-detail/edit.svg" alt="" height="12" width="12"></span>
             <span class="c-blue p-l-5">Edit</span>
+        </div>
+        <div *ngIf="isEditable" class="f-right m-10 p-10 c-pointer" (click)="isEditable = !isEditable;" title="Save">
+            <span><img src="/assets/images/candidate-detail/save.svg" alt="" height="12" width="12"></span>
+            <span class="c-blue p-l-5">Save</span>
         </div>
         <div class="m-10">
             <div class="template" #template>
-                <img src="/assets/images/techversant/techversant-logo.svg" alt="" width="155px" height="27px">
-                <div class="p-t-10 p-b-10">
-                    <div>{{ today | date: 'dd/MM/yyyy' }}</div>
-                    <div>{{ candidateDetails?.candidateFirstName }} {{ candidateDetails?.candidateLastName }}</div>
+                <div>Dear {{ candidateDetails?.candidateFirstName }} {{ candidateDetails?.candidateLastName }},</div>
+                <textarea class="editable p-t-10 p-b-10" type="text" id="editable"
+                    [readonly]="!isEditable">{{ templateData?.message }}</textarea>
+                <span>Best Regards,</span>
+                <div class="d-flex m-t-20">
+                    <div class="company-logo"><img src="/assets/images/techversant/techversant-logo.svg" alt="" width="155px" height="27px"></div>
                     <div>
-                        {{ candidateDetails?.candidateCity }}, {{ candidateDetails?.candidateDistrict }}, {{
-                        candidateDetails?.candidateState }}
+                        <span>Requiter Name</span>
+                        <pre>Associate Talent Aquisition <br>Techversant Infotech Pvt Ltd.<br>Module No:2306 Third Floor, Yamuna Tower II,<br>Technopark Phase III Main Rd, SEZ Campus, <br>Kulathoor, Thiruvananthapuram, Kerala 695583</pre>
+                        <span>{{ today | date: 'dd/MM/yyyy' }}</span>
                     </div>
                 </div>
-                <div>Dear {{ candidateDetails?.candidateFirstName }} {{ candidateDetails?.candidateLastName }},</div>
-                <textarea class="editable p-t-10 p-b-10" type="text" id="description"
-                    [readonly]="!isEditable">{{ templateData?.message }}</textarea>
             </div>
         </div>
         <div class="attachment m-10 p-8">
@@ -105,8 +109,12 @@
                 </div>
             </div>
             <div class="m-10 w-100">
+                <span class="p-10 sub-head">Subject</span>
+                <span class="p-5"><input class="input" type="text" id="subject"></span>
+            </div>
+            <div class="m-10 w-100">
                 <span class="p-10 sub-head">Email CC</span>
-                <span class="p-5"><input class="input" type="text" id="salary"></span>
+                <span class="p-5"><input class="input" type="text" id="cc"></span>
             </div>
             <div class="m-10 w-100" *ngIf="messageType.trim() === 'offer'">
                 <span class="p-10 sub-head">Add Attachment</span>

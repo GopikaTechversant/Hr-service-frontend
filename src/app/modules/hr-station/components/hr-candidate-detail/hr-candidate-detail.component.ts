@@ -72,12 +72,13 @@ export class HrCandidateDetailComponent {
   }
 
   submitClick(): void { 
+    if(this.isEditable) this.tostr.warning('Please Save Changes in Mail');
     const confirmationCheckbox = document.getElementById('confirmDetails') as HTMLInputElement;
     if (confirmationCheckbox && confirmationCheckbox?.checked && (this.messageType.trim() !== '')) {
       if(this.messageType.trim() === 'offer') this.addOffer();
       if(this.messageType.trim() === 'rejection') this.rejectClick();
     } else {
-      this.tostr.warning('Please confirm all details before submitting.');
+      this.tostr.warning('Please confirm all details before submitting');
     }
   }
 

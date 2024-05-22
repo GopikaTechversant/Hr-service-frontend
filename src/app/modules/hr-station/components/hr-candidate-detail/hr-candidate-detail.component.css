@@ -98,7 +98,7 @@
     border: 1px solid rgb(207, 205, 205);
     border-radius: 2px;
     width: 98%;
-    height: 485px;
+    height: fit-content;
     top: 536px;
     left: 31px;
     gap: 0px;
@@ -109,7 +109,7 @@
 
 }
 
-#description {
+.editable {
     width: 98%;
     height: 285px;
     outline: none !important;
@@ -156,15 +156,14 @@
 }
 
 .text-area {
-    width: 98%;
-    height: 136px;
+    width: 99%;
+    height: 385px;
     border-radius: 3px;
     border: 1px solid #E2E1E1;
     background: #FFFFFF;
     padding: 8px;
     outline: none !important;
 }
-
 
 .btn-reject {
     width: 120px;
@@ -199,3 +198,10 @@
     background-color: #FFFF;
     width: 97%;
 }
+
+.company-logo{
+    margin-right: 10px;
+    padding-right: 20px;
+    border-right: 1px solid #575F6E;
+}
+

@@ -152,27 +152,19 @@
     background-color: #F4F2F2;
 }
 
-.template {
-    border: 1px solid #E9E9E9;
-    background-color: #FFFFFF;
+.template{
     border: 1px solid rgb(207, 205, 205);
     border-radius: 2px;
-    width: 98%;
-    height: 485px;
-    top: 536px;
-    left: 31px;
-    gap: 0px;
     border: 1px 0px 0px 0px;
-    opacity: 0px;
-    outline: none !important;
-    padding: 10px;
 
 }
 
-#description {
-    width: 98%;
-    height: 285px;
-    outline: none !important;
-    border: none !important;
+
+.company-logo{
+    margin-right: 10px;
+    padding-right: 20px;
+    border-right: 1px solid #575F6E;
 }
+
+
 

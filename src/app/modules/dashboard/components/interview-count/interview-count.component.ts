@@ -10,13 +10,10 @@ import { ApiService } from 'src/app/services/api.service';
   templateUrl: './interview-count.component.html',
   styleUrls: ['./interview-count.component.css'],
   providers: [DatePipe],
-  // host: {
-  //   '(document:click)': 'onBodyClick($event)'
-  // }
 })
 export class InterviewCountComponent implements OnInit {
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
-  endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');  
+  endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   pageSize = 10;
   countArray: any[] = [];
   currentPage: number = 1;
@@ -32,13 +29,13 @@ export class InterviewCountComponent implements OnInit {
 
   fetchInterviewCounts(): void {
     this.apiService.get(`/dashboard/interview-count?fromDate=${this.startDate}&toDate=${this.endDate}&page=${this.currentPage}&limit=${this.pageSize}`).subscribe((count: any) => {
-      if(count?.data){
+      if (count?.data) {
         this.countArray = count?.data;
         this.totalCount = count?.totalCount;
         const totalPages = Math.ceil(this.totalCount / this.pageSize);
         this.lastPage = totalPages;
         if (this.currentPage > totalPages) this.currentPage = totalPages;
-      }  
+      }
     })
   }
 
