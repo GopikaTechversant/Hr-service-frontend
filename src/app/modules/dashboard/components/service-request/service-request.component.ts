@@ -73,7 +73,7 @@ export class ServiceRequestComponent implements OnInit {
   }
   // requirementFromList():void{
   //   console.log("inside", history?.state?.requirement);
-    
+
   // }
 
   fetchDesignation() {
@@ -127,7 +127,7 @@ export class ServiceRequestComponent implements OnInit {
   }
 
 
-  
+
   selectTeam(teamId: any, teamName: any): void {
     this.teamListOpen = false;
     this.selectedTeam = teamName;
@@ -191,7 +191,7 @@ export class ServiceRequestComponent implements OnInit {
   }
 
   removeSkill(skillToRemove: any): void {
-    this.selectedSkills = this.selectedSkills?.filter(skill => skill.id !== skillToRemove.id);
+    this.selectedSkills = this.selectedSkills?.filter(skill => skill !== skillToRemove);
   }
 
   submitClick(): void {

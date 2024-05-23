@@ -155,7 +155,7 @@ export class EditRequirementComponent implements OnInit {
   }
 
   removeSkill(skillToRemove: any): void {
-    this.selectedSkills = this.selectedSkills?.filter(skill => skill.id !== skillToRemove.id);
+    this.selectedSkills = this.selectedSkills?.filter(skill => skill !== skillToRemove);
   }
 
   submitClick(): void {
@@ -166,7 +166,7 @@ export class EditRequirementComponent implements OnInit {
     if (this.jobCode !== this.requirement_details.requestCode) payload.requestCode = this.jobCode;
     if (this.vacancy !== this.requirement_details.requestVacancy) payload.requestVacancy = this.vacancy;
     if (this.skills !== this.requirement_details.requestSkills) payload.requestSkills = this.selectedSkills;
-    if (this.selectedStations !== this.flows) payload.requestFlowStations = this.selectedStations;
+    if (this.selectedStations !== this.flows) payload.requestFlowStations = this.selectedStations.map((station: any) => station.stationId);
     if (this.experience !== this.requirement_details.requestExperience) payload.requestExperience = this.experience;
     if (this.selectedDesignation !== this.requirement_details.designationName) payload.requestDesignation = this.selectedDesignationId;
     if (this.baseSalary !== this.requirement_details.requestBaseSalary) payload.requestBaseSalary = this.baseSalary;
