@@ -35,7 +35,7 @@
                     <td>Skills</td>
                     <td>Status</td>
                     <td>Add Candidate</td>
-                    <td>Actions</td>
+                    <!-- <td>Actions</td> -->
                 </tr>
                 <div *ngIf="loader && !initialLoader" class="loader-parent">
                     <img src="assets/gif/loader.gif">
@@ -64,7 +64,7 @@
                             </td>
                             <td (click)="onStatusChange(candidate)"><img src="assets/images/user-add.png" alt=""
                                     class="icon"></td>
-                            <td>
+                            <!-- <td>
                                 <div class="d-flex j-center" *ngIf="candidate?.candidatesCount === '0'">
                                     <img src="assets/images/candidate-detail/edit.svg" class="icon" alt=""
                                         (click)="update(candidate.requestId)">
@@ -72,7 +72,7 @@
                                         (click)="delete(candidate.requestId)">
                                 </div>
                                 <div *ngIf="candidate?.candidatesCount !== '0'">Nil</div>
-                            </td>
+                            </td> -->
                         </tr>
                     </ng-container>
                 </ng-container>

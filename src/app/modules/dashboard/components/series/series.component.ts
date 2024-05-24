@@ -33,8 +33,10 @@ export class SeriesComponent implements OnInit {
   page: number = 1;
   showDropdown: boolean = false;
   requirement_details: any = {};
-  editRequirement:any;
-  deleteRequirementId:any;
+  editRequirement: any;
+  deleteRequirementId: any;
+  flows: any[] = [];
+  roundNames: any;
   constructor(private apiService: ApiService, private http: HttpClient, private router: Router, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private renderer: Renderer2) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -72,12 +74,12 @@ export class SeriesComponent implements OnInit {
     })
   }
 
-  fetchDetails():void{
-    this.apiService.get(`/service-request/view?requestId=${this.requestId}`).subscribe((res:any) => {
-      console.log("data fetch",res);
-      if(res?.data) this.requirement_details = res?.data;
-      console.log("this.requirementDetails",this.requirement_details);
-      
+  fetchDetails(): void {
+    this.apiService.get(`/service-request/view?requestId=${this.requestId}`).subscribe((res: any) => {
+      console.log("data fetch", res);
+      if (res?.data) this.requirement_details = res?.data;
+      if (res?.flows) this.flows = res?.flows;
+      this.roundNames = this.flows.map(flow => flow.flowStationName).join(', ');
     })
   }
 
@@ -143,7 +145,7 @@ export class SeriesComponent implements OnInit {
         next: (res: any) => {
           // this.generatePageNumbers();
           this.fetchDetails();
-      this.fetchcandidates()
+          this.fetchcandidates()
 
         },
         error: (error) => {

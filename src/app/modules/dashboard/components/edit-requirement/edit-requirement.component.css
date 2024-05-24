@@ -155,7 +155,12 @@
 .drop-list-skill {
     height: 57px;
     overflow-y: scroll;
-    width: 95%;
+    height: 57px;
+    overflow-y: scroll;
+    width: 99%;
+    max-height: 100px;
+    position: absolute;
+    background-color: #FFFFFF;
     max-height: 100px;
     position: absolute;
     background-color: #FFFFFF;

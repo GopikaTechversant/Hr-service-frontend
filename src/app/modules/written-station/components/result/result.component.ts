@@ -59,11 +59,11 @@ export class ResultComponent {
     if (scoreElement) this.scoreValue = scoreElement.value;
     const descriptionElement = document.getElementById('description') as HTMLInputElement;
     if (descriptionElement) this.descriptionValue = descriptionElement.value;
-    if (!this.uploadedFileKey) {
-      console.log("File upload is still in progress.");
-      this.tostr.warning('File upload is in progress, please wait.');
-      return;
-    }
+    // if (!this.uploadedFileKey) {
+    //   console.log("File upload is still in progress.");
+    //   this.tostr.warning('File upload is in progress, please wait.');
+    //   return;
+    // }
     let payload = {
       examScore: this.scoreValue,
       examServiceId: this.examServiceId,
