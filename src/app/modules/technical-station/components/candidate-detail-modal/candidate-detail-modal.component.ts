@@ -38,7 +38,7 @@ export class CandidateDetailModalComponent implements OnInit {
   messageType: string = '';
   showSelection: boolean = false;
   showRejection: boolean = false;
-  isEditable:boolean = false;
+  isEditable: boolean = false;
   today: Date = new Date();
   templateData: any;
   feedbackCc: string = '';
@@ -55,7 +55,7 @@ export class CandidateDetailModalComponent implements OnInit {
       if (data?.progressStatus > 0) this.progessAdded = true;
     }
     this.dialogRef.updateSize('60vw', '90vh');
-    this.templateData = { message: '' }; 
+    this.templateData = { message: '' };
   }
 
   ngOnInit(): void {
@@ -139,18 +139,11 @@ export class CandidateDetailModalComponent implements OnInit {
   }
 
   updateHtmlContent(event: any): void {
-    this.content = event?.target?.value ?? ''; // Get the value from the event, or an empty string if it's undefined
+    this.content = event?.target?.value ?? '';
     this.templateData.message = this.content;
-    console.log('Updated content:', this.templateData.message);
-
     const templateElement = this.templateRef.nativeElement;
-   
-
-    this.htmlString = templateElement.innerHTML; // Update the htmlString with the modified template content
-}
-
-
-
+    this.htmlString = templateElement.innerHTML;
+  }
 
   submitClick(): void {
     const feedback = document.getElementById('feedback') as HTMLInputElement;
@@ -158,51 +151,59 @@ export class CandidateDetailModalComponent implements OnInit {
     const feedbackCc = document.getElementById('cc') as HTMLInputElement;
     if (feedbackCc) this.feedbackCc = feedbackCc?.value;
     const feedbackSubject = document.getElementById('subject') as HTMLInputElement;
-    if(feedbackSubject) this.feedbackSubject = feedbackSubject.value;
-    if (this.templateRef) {
-      const templateElement = this.templateRef.nativeElement;
-      const textarea = templateElement.querySelector('textarea'); 
-      if (textarea) {
-          const div = document.createElement('div'); 
+    if (feedbackSubject) this.feedbackSubject = feedbackSubject.value;
+    if (this.isEditable) this.tostr.warning('Please Save Changes in Mail');
+    const confirmationCheckbox = document.getElementById('confirmDetails') as HTMLInputElement;
+    if (confirmationCheckbox && confirmationCheckbox?.checked && (this.messageType.trim() !== '')) {
+      if (this.templateRef) {
+        const templateElement = this.templateRef.nativeElement;
+        const textarea = templateElement.querySelector('textarea');
+        if (textarea) {
+          const div = document.createElement('div');
           div.className = 'editable p-t-10 p-b-10';
-          div.style.width = '100%'; 
-          div.style.outline = 'none'; // Remove outline
-          div.style.border = 'none'; // Remove border
-          div.style.minHeight = '200px'; // Set the min height
-          div.innerText = this.content; // Set the text content of the div to the textarea value
-          textarea.replaceWith(div); // Replace the textarea with the div
+          div.style.width = '100%';
+          div.style.outline = 'none';
+          div.style.border = 'none';
+          div.style.minHeight = '200px';
+          div.innerText = this.content;
+          textarea.replaceWith(div);
+        }
+        this.htmlString = templateElement.outerHTML;
+        this.htmlString = this.templateRef.nativeElement.innerHTML.replace(textarea, '<div>');
+        if (this.messageType.trim() === 'aprove') this.approveClick();
+        if (this.messageType.trim() === 'rejection') this.rejectClick();
       }
-      this.htmlString = templateElement.outerHTML;
-      this.htmlString = this.templateRef.nativeElement.innerHTML.replace(textarea, '<div>'); // Remove the textarea from the htmlString
 
+    } else {
+      this.tostr.warning('Please confirm all details before submitting');
     }
-        const payload = {
-          // serviceSeqId: this.serviceId,
-          // feedBack: this.feedback,
-          // feedBackBy: this.userId,
-          mailId: 'alfiya.sr@techversantinfotech.com',
-          cc: this.feedbackCc,
-          message : this.htmlString,
-          subject : this.feedbackSubject,
-        };
-        this.apiService.post(`/candidate/send-mail`, payload).subscribe({
-          next: (res: any) => {
-            this.tostr.success('Approval successful');
-            this.closeDialog();
-          },
-          error: (error) => this.tostr.error('Error during approval')
-        });
-      
-    // }
-    // else this.tostr.error('Invalid operation');
-    // if(this.isEditable) this.tostr.warning('Please Save Changes in Mail');
-    // const confirmationCheckbox = document.getElementById('confirmDetails') as HTMLInputElement;
-    // if (confirmationCheckbox && confirmationCheckbox?.checked && (this.messageType.trim() !== '')) {
-    //   if(this.messageType.trim() === 'approve') this.approveClick();
-    //   if(this.messageType.trim() === 'rejection') this.rejectClick();
-    // } else {
-    //   this.tostr.warning('Please confirm all details before submitting');
-    // }
+    // const payload = {
+    //   // serviceSeqId: this.serviceId,
+    //   // feedBack: this.feedback,
+    //   // feedBackBy: this.userId,
+    //   mailId: 'alfiya.sr@techversantinfotech.com',
+    //   cc: this.feedbackCc,
+    //   message: this.htmlString,
+    //   subject: this.feedbackSubject,
+    // };
+    // this.apiService.post(`/candidate/send-mail`, payload).subscribe({
+    //   next: (res: any) => {
+    //     this.tostr.success('Approval successful');
+    //     this.closeDialog();
+    //   },
+    //   error: (error) => this.tostr.error('Error during approval')
+    // });
+
+    // // }
+    // // else this.tostr.error('Invalid operation');
+    // // if(this.isEditable) this.tostr.warning('Please Save Changes in Mail');
+    // // const confirmationCheckbox = document.getElementById('confirmDetails') as HTMLInputElement;
+    // // if (confirmationCheckbox && confirmationCheckbox?.checked && (this.messageType.trim() !== '')) {
+    // //   if(this.messageType.trim() === 'approve') this.approveClick();
+    // //   if(this.messageType.trim() === 'rejection') this.rejectClick();
+    // // } else {
+    // //   this.tostr.warning('Please confirm all details before submitting');
+    // // }
   }
 
   cancelClick(): void {
@@ -210,8 +211,6 @@ export class CandidateDetailModalComponent implements OnInit {
   }
 
   rejectClick(): void {
-    const feedback = document.getElementById('feedback') as HTMLInputElement;
-    if (feedback) this.feedback = feedback?.value;
     if (this.feedback.trim() !== '') {
       let payload = {
         serviceId: this.serviceId,
@@ -240,17 +239,10 @@ export class CandidateDetailModalComponent implements OnInit {
   }
 
   approveClick(): void {
-    const feedback = document.getElementById('feedback') as HTMLInputElement;
-    if (feedback) this.feedback = feedback?.value;
-    const feedbackCc = document.getElementById('cc') as HTMLInputElement;
-    if (feedbackCc) this.feedbackCc = feedbackCc?.value;
-    const feedbackSubject = document.getElementById('subject') as HTMLInputElement;
-    if(feedbackSubject) this.feedbackSubject = feedbackSubject.value;
     if (this.templateRef) {
       const templateElement = this.templateRef.nativeElement;
       this.htmlString = templateElement.outerHTML;
     }
-  
     let baseUrl = '';
     if (this.stationId === '3') baseUrl = `/technical-station`;
     if (this.stationId === '4') baseUrl = `/technical-station-two`;
@@ -261,8 +253,8 @@ export class CandidateDetailModalComponent implements OnInit {
           feedBack: this.feedback,
           feedBackBy: this.userId,
           feedBackCc: this.feedbackCc,
-          feedBackMailTemp : this.htmlString,
-          feedBackSubject : this.feedbackSubject,
+          feedBackMailTemp: this.htmlString,
+          feedBackSubject: this.feedbackSubject,
         };
         this.apiService.post(`${baseUrl}/approve`, payload).subscribe({
           next: (res: any) => {
@@ -281,4 +273,5 @@ export class CandidateDetailModalComponent implements OnInit {
       this.keySubscription.unsubscribe();
     }
   }
+
 }

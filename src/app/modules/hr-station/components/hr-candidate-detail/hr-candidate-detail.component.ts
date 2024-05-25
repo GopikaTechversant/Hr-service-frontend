@@ -27,9 +27,11 @@ export class HrCandidateDetailComponent {
   showSelection: boolean = false;
   showRejection: boolean = false;
   messageType: string = '';
-  isEditable: boolean = false; 
+  isEditable: boolean = false;
   file: File | null = null;
   fileName: string = '';
+  content: any;
+  htmlString: any;
   constructor(public dialogRef: MatDialogRef<HrCandidateDetailComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
     private apiService: ApiService, private datePipe: DatePipe, private tostr: ToastrServices) {
     if (data) {
@@ -55,74 +57,6 @@ export class HrCandidateDetailComponent {
     this.dialogRef.close();
   }
 
-  fetchTemplates(): void {
-    this.apiService.get(`/candidate/mail/template?msgType=${this.messageType}&candidateId=${this.candidateDetails?.candidateId}`).subscribe((res: any) => {
-      if (res?.data) {
-        this.templateData = res?.data;
-      }
-    })
-  }
-
-  onFileSelected(event: any): void {
-    const file: File = event.target.files[0];
-    if (file) {
-      this.file = file;
-      this.fileName = file?.name;
-    }
-  }
-
-  submitClick(): void { 
-    if(this.isEditable) this.tostr.warning('Please Save Changes in Mail');
-    const confirmationCheckbox = document.getElementById('confirmDetails') as HTMLInputElement;
-    if (confirmationCheckbox && confirmationCheckbox?.checked && (this.messageType.trim() !== '')) {
-      if(this.messageType.trim() === 'offer') this.addOffer();
-      if(this.messageType.trim() === 'rejection') this.rejectClick();
-    } else {
-      this.tostr.warning('Please confirm all details before submitting');
-    }
-  }
-
-  addOffer(): void {
-    const scoreElement = document.getElementById('salary') as HTMLInputElement;
-    this.salary = scoreElement ? scoreElement.value : '';
-    if (this.templateRef) {
-      const templateElement = this.templateRef.nativeElement;
-      const htmlString = templateElement.outerHTML;
-      console.log(htmlString);
-    }
-  
-    const payload = {
-      offerServiceSeqId: this.serviceId,
-      offerSalary: this.salary,
-      // offerDescription: descriptionTemplate,
-      offerJoinDate: this.displayDate
-    };
-  
-    console.log("payload", payload);
-  
-    this.apiService.post(`/hr-station/candidateOffer`, payload).subscribe({
-      next: (res: any) => {
-        this.tostr.success('Offer Added Successfully');
-        this.closeDialog();
-      },
-      error: (error) => {
-        console.error('Error adding progress', error);
-      }
-    });
-  }
-  
-
-  cancelClick(): void {
-    this.closeDialog();
-  }
-
-  viewResume(resume: any) {
-    this.resumePath = resume;
-    console.log("this.resumePath", this.resumePath);
-    window.open(`${environment.s3_url}${this.resumePath}`, '_blank');
-    console.log("`${environment.s3_url}${this.resumePath}`",typeof(`${environment.s3_url}${this.resumePath}`));
-  }
-
   showMail(item: any): void {
     if (item === 'offer') {
       this.showSelection = true;
@@ -133,6 +67,88 @@ export class HrCandidateDetailComponent {
     }
     this.messageType = item;
     this.fetchTemplates();
+  }
+
+  fetchTemplates(): void {
+    this.apiService.get(`/candidate/mail/template?msgType=${this.messageType}&candidateId=${this.candidateDetails?.candidateId}`).subscribe((res: any) => {
+      if (res?.data) {
+        this.templateData = res?.data;
+      }
+    })
+  }
+
+  updateHtmlContent(event: any): void {
+    this.content = event?.target?.value ?? '';
+    this.templateData.message = this.content;
+    const templateElement = this.templateRef.nativeElement;
+    this.htmlString = templateElement.innerHTML;
+  }
+
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.file = file;
+      this.fileName = file?.name;
+    }
+  }
+
+  submitClick(): void {
+    if (this.isEditable) this.tostr.warning('Please Save Changes in Mail');
+    const confirmationCheckbox = document.getElementById('confirmDetails') as HTMLInputElement;
+    if (confirmationCheckbox && confirmationCheckbox?.checked && (this.messageType.trim() !== '')) {
+      if (this.templateRef) {
+        const templateElement = this.templateRef.nativeElement;
+        const textarea = templateElement.querySelector('textarea');
+        if (textarea) {
+          const div = document.createElement('div');
+          div.className = 'editable p-t-10 p-b-10';
+          div.style.width = '100%';
+          div.style.outline = 'none';
+          div.style.border = 'none';
+          div.style.minHeight = '200px';
+          div.innerText = this.content;
+          textarea.replaceWith(div);
+        }
+        this.htmlString = templateElement.outerHTML;
+        this.htmlString = this.templateRef.nativeElement.innerHTML.replace(textarea, '<div>');
+        if (this.messageType.trim() === 'offer') this.addOffer();
+        if (this.messageType.trim() === 'rejection') this.rejectClick();
+      }
+
+    } else {
+      this.tostr.warning('Please confirm all details before submitting');
+    }
+  }
+
+  addOffer(): void {
+    const scoreElement = document.getElementById('salary') as HTMLInputElement;
+    this.salary = scoreElement ? scoreElement.value : '';
+    const payload = {
+      offerServiceSeqId: this.serviceId,
+      offerSalary: this.salary,
+      // offerDescription: descriptionTemplate,
+      offerJoinDate: this.displayDate
+    };
+    this.apiService.post(`/hr-station/candidateOffer`, payload).subscribe({
+      next: (res: any) => {
+        this.tostr.success('Offer Added Successfully');
+        this.closeDialog();
+      },
+      error: (error) => {
+        console.error('Error adding progress', error);
+      }
+    });
+  }
+
+  cancelClick(): void {
+    this.closeDialog();
+  }
+
+  viewResume(resume: any) {
+    this.resumePath = resume;
+    console.log("this.resumePath", this.resumePath);
+    window.open(`${environment.s3_url}${this.resumePath}`, '_blank');
+    console.log("`${environment.s3_url}${this.resumePath}`", typeof (`${environment.s3_url}${this.resumePath}`));
   }
 
   rejectClick(): void {

@@ -129,17 +129,16 @@
         <span class="f-w-500 head-wrap"></span>
         <button class="btn c-pointer" (click)="addProgress()">Add progress</button>
     </div>
-    <!-- <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'pending' && progessAdded"> -->
-        <div>
-
+    <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'pending' && progessAdded">
+        <!-- <div> -->
         <button class="select-btn" [ngClass]="{'offer-select-btn': messageType === 'approve'}"
             (click)="showMail('approve')">Interview Invitation Mail
         </button>
         <button class="reject-btn" [ngClass]="{'offer-reject-btn': messageType === 'rejection'}"
             (click)="showMail('rejection')">Rejection Notification Mail
         </button>
-        <!-- <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'pending' && progessAdded && messageType.trim() !== ''"> -->
-            <div>
+        <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'pending' && progessAdded && messageType.trim() !== ''">
+            <!-- <div> -->
             <div class="heading p-10">
                 <span >Email Details of 
                     {{candidateDetails['candidate.candidateFirstName']}} {{candidateDetails['candidate.candidateLastName']}}
@@ -183,7 +182,6 @@
                             <span><img src="https://ci3.googleusercontent.com/meips/ADKq_Nb4TwoHV9L4Pn9DRrp6vNCyU2A1NbooQ4hoVACqAVnUM0xYoySUxn5lbqBh6hEbk93JUR_a1C_WmoROWqfsW95ChnFkCKU=s0-d-e1-ft#http://www.techversantinfotech.com/images/fb.png" alt="">
                                 <a href="https://www.facebook.com/Techversant"></a>
                             </span>
-                            <!-- <span>{{ today | date: 'dd/MM/yyyy' }}</span> -->
                         </div>
                     </div>
                 </div>
@@ -205,14 +203,13 @@
                     <input type="checkbox" id="confirmDetails"><span>Confirm all Details</span>
                 </div>
                 <div class="m-10 d-flex j-end">
-                        <button class="c-pointer btn-reject" (click)="cancelClick()">Cancel</button>
-                        <button class="btn c-pointer" (click)="submitClick()">Submit</button>
+                    <button class="c-pointer btn-reject" (click)="cancelClick()">Cancel</button>
+                    <button class="btn c-pointer" (click)="submitClick()">Submit</button>
                 </div>
             </div>
         </div>
     </div>
-    <div
-        *ngIf="this.data?.candidateDetails?.serviceStatus === 'done' || this.data?.candidateDetails?.serviceStatus === 'rejected'">
+    <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'done' || this.data?.candidateDetails?.serviceStatus === 'rejected'">
         <div class="heading p-10">
             <span>Feedback</span>
         </div>
