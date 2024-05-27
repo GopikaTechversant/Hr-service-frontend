@@ -54,7 +54,7 @@ input[type="text"] {
     background-color: #FFFFFF;
     border-radius: 3px;
     width: 330px;
-    height: 38px;
+    height: 35px;
     margin-right: -21px;
 }
 
@@ -82,15 +82,15 @@ input[type="text"] {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 40px;
+    height: 35px;
     width: 150px;
     border-radius: 3px;
     background-color: #575F6E;
     color: white;
     margin-left: 10px;
-    font-size: 16px;
     margin-top: 0px;
     font-weight: 500;
+    margin-right: 11px;
 }
 
 table {
@@ -207,4 +207,22 @@ tr {
     font-size: 20px;
     color: black;
     font-weight: 500;
+}
+
+.export-btn{
+    height: 34px;
+    width: 79px;
+    border-radius: 3px;
+    height: 35px;
+    width: 81px;
+    background-color: #4F4F4F;
+    color: white;
+    font-weight: 500;
+    line-height: 35px;
+    text-align: center;
+}
+
+.search{
+    height: 19px;
+    
 }

@@ -189,3 +189,14 @@ table {
     white-space: nowrap;
     cursor: pointer;
 }
+
+.export-btn{
+    border-radius: 3px;
+    height: 34px;
+    width: 81px;
+    background-color: #4F4F4F;
+    color: white;
+    font-weight: 500;
+    line-height: 35px;
+    text-align: center;
+}
