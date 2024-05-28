@@ -6,6 +6,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { StationSwitchComponent } from 'src/app/components/station-switch/station-switch.component';
 import { WarningBoxComponent } from 'src/app/components/warning-box/warning-box.component';
 import { DatePipe } from '@angular/common';
+import { environment } from 'src/environments/environments';
 
 @Component({
   selector: 'app-technical-detail',
@@ -45,6 +46,7 @@ export class TechnicalDetailComponent implements OnInit {
   initialLoader: boolean = false;
   experience: string = '';
   today: Date = new Date();
+  isExport: boolean = false;
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog, private datePipe: DatePipe) { }
@@ -98,31 +100,40 @@ export class TechnicalDetailComponent implements OnInit {
   fetchList(): void {
     if (!this.initialLoader) this.loader = true;
     this.candidateList = [];
-    if (this.stationId === '3') {
-      this.apiService.get(`/technical-station/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.limit}&position=${this.positionId.trim()}&fromDate=${this.startDate}&toDate=${this.endDate}&experience=${this.experience.trim()}&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
-        this.loader = false;
-        this.initialLoader = false;
-        if (data?.candidates) {
-          this.candidateList.push(data?.candidates);
-          this.totalCount = data?.totalCount
-          const totalPages = Math.ceil(this.totalCount / this.limit);
-          this.lastPage = totalPages;
-          if (this.currentPage > totalPages) this.currentPage = totalPages;
-        }
-      });
-    } else if (this.stationId === '4') {
-      this.apiService.get(`/technical-station-two/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.limit}&position=${this.positionId.trim()}&experience=${this.experience.trim()}&fromDate${this.startDate}&toDate${this.endDate}&status_filter=${this.filteredStatus}`).subscribe((data: any) => {
-        this.loader = false;
-        this.initialLoader = false;
-        if (data?.candidates) {
-          this.candidateList.push(data?.candidates);
-          this.totalCount = data?.totalCount
-          const totalPages = Math.ceil(this.totalCount / this.limit);
-          this.lastPage = totalPages;
-          if (this.currentPage > totalPages) this.currentPage = totalPages;
-        }
-      });
+    if (this.stationId !== '3' && this.stationId !== '4') return;
+
+    const url = this.stationId === '3' ? `/technical-station/list` : `/technical-station-two/list`;
+    const params = [
+      `search=${this.searchKeyword}`,
+      `page=${this.currentPage}`,
+      `limit=${this.limit}`,
+      `position=${this.positionId.trim()}`,
+      `experience=${this.experience.trim()}`,
+      `fromDate=${this.startDate}`,
+      `toDate=${this.endDate}`,
+      `status_filter=${this.filteredStatus}`,
+      `report=${this.isExport}`
+    ].join('&');
+
+    if (this.isExport) {
+      const exportUrl = `${environment.api_url}${url}?${params}`;
+      window.open(exportUrl, '_blank');
+      this.isExport = false;
+      if (this.isExport === false) this.fetchList();
+      return;
     }
+
+    this.apiService.get(`${url}?${params}`).subscribe((data: any) => {
+      this.loader = false;
+      this.initialLoader = false;
+      if (data?.candidates) {
+        this.candidateList.push(data?.candidates);
+        this.totalCount = data?.totalCount;
+        const totalPages = Math.ceil(this.totalCount / this.limit);
+        this.lastPage = totalPages;
+        if (this.currentPage > totalPages) this.currentPage = totalPages;
+      }
+    });
   }
 
   dateChange(event: any, range: string): void {
@@ -162,6 +173,11 @@ export class TechnicalDetailComponent implements OnInit {
       pages.push(this.lastPage);
     }
     return pages;
+  }
+
+  exportData(): void {
+    this.isExport = true;
+    this.fetchList();
   }
 
   searchCandidate(searchTerm: string): void {

@@ -160,6 +160,9 @@ export class HrCandidateDetailComponent {
         stationId: this.candidateDetails?.candidateStation,
         userId: this.userId,
         status: "rejected",
+        // rejectCc: this.feedbackCc,
+        // rejectMailTemp: this.htmlString,
+        // rejectSubject: this.feedbackSubject
       }
       this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
         next: (res: any) => {

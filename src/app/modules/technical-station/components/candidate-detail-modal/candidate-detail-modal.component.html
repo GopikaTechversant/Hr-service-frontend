@@ -152,7 +152,7 @@
                 <span><img src="/assets/images/candidate-detail/save.svg" alt="" height="12" width="12"></span>
                 <span class="c-blue p-l-5">Save</span>
             </div>
-            <div class="m-10">
+            <div style="margin-top: 10px;">
                 <div class="template" #template style="
                 background-color: #FFFFFF;   
                 width: 98%;
@@ -163,13 +163,13 @@
                 opacity: 0px;
                 outline: none !important;
                 padding: 10px;">
-                    <div>Dear {{candidateDetails['candidate.candidateFirstName']}} {{candidateDetails['candidate.candidateLastName']}},</div>
+                    <div style="padding: 10px;">Dear {{candidateDetails['candidate.candidateFirstName']}} {{candidateDetails['candidate.candidateLastName']}},</div>
                     <textarea class="editable p-t-10 p-b-10" id="editable" [(ngModel)]="templateData.message" (input)="updateHtmlContent($event)"   [readonly]="!isEditable"
                     style="width: 100%; outline: none !important; border: none !important; min-height: 200px;
                     ">
                     </textarea><br>          
-                    <span>Best Regards,</span>
-                    <div class="d-flex m-t-20" style="display: flex; margin-top: 20;">
+                    <span style="padding: 10px;">Best Regards,</span>
+                    <!-- <div class="d-flex m-t-20" style="display: flex; margin-top: 20;">
                         <div class="company-logo" style="  margin-right: 10px;
                         padding-right: 20px;
                         border-right: 1px solid #575F6E;">
@@ -182,8 +182,8 @@
                             <span><img src="https://ci3.googleusercontent.com/meips/ADKq_Nb4TwoHV9L4Pn9DRrp6vNCyU2A1NbooQ4hoVACqAVnUM0xYoySUxn5lbqBh6hEbk93JUR_a1C_WmoROWqfsW95ChnFkCKU=s0-d-e1-ft#http://www.techversantinfotech.com/images/fb.png" alt="">
                                 <a href="https://www.facebook.com/Techversant"></a>
                             </span>
-                        </div>
-                    </div>
+                        </div> -->
+                    <!-- </div>  -->
                 </div>
             </div>
             <div class="attachment m-10 p-8">

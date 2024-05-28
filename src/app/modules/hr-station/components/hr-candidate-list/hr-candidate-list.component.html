@@ -1,6 +1,6 @@
 <div class="m-10">
     <span class="f-s-18 f-w-500 detail-head p-5 p-l-0">HR Station</span>
-    <div class="p-l-5 d-flex j-end p-b-10 m-t-20">
+    <div class="d-flex j-end m-20">
         <div class="date-filters">
             <div class="d-flex">
                 <span class="filter p-r-10 p-t-10">From</span>
@@ -59,6 +59,9 @@
                    <span class="p-l-10 p-5">{{type?.status | titlecase}}</span> 
                 </span>
             </div>
+        </div>
+        <div>
+            <button class="btn c-green c-pointer m-l-10 m-r-10" (click)="exportData()">Export</button>
         </div>
     </div>
     <div class="main m-t-10">

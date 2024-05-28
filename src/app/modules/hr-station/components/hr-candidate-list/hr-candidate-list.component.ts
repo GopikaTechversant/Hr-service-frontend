@@ -5,6 +5,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { StationSwitchComponent } from 'src/app/components/station-switch/station-switch.component';
 import { WarningBoxComponent } from 'src/app/components/warning-box/warning-box.component';
 import { DatePipe } from '@angular/common';
+import { environment } from 'src/environments/environments';
 
 @Component({
   selector: 'app-hr-candidate-list',
@@ -38,6 +39,7 @@ export class HrCandidateListComponent implements OnInit {
   requestList: any;
   initialLoader:boolean = false
   experience: string = '';
+  isExport: boolean = false;
   today: Date = new Date();
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
@@ -78,22 +80,37 @@ export class HrCandidateListComponent implements OnInit {
 
   fetchList(): void {
     if(!this.initialLoader) this.loader = true;
-    this.apiService.get(`/hr-station/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.limit}&experience=${this.experience.trim()}&fromDate=${this.startDate}&toDate=${this.endDate}&status_filter=${this.filteredStatus}&position=${this.positionId}`).subscribe((data: any) => {
-      this.candidateList = [];
-      this.initialLoader = false;
+   const url =`/hr-station/list`
+    const params = [
+      `search=${this.searchKeyword}`,
+      `page=${this.currentPage}`,
+      `limit=${this.limit}`,
+      `position=${this.positionId.trim()}`,
+      `experience=${this.experience.trim()}`,
+      `fromDate=${this.startDate}`,
+      `toDate=${this.endDate}`,
+      `status_filter=${this.filteredStatus}`,
+      `report=${this.isExport}`
+    ].join('&');
+
+    if (this.isExport) {
+      const exportUrl = `${environment.api_url}${url}?${params}`;
+      window.open(exportUrl, '_blank');
+      this.isExport = false;
+      if (this.isExport === false) this.fetchList();
+      return;
+    }
+
+    this.apiService.get(`${url}?${params}`).subscribe((data: any) => {
       this.loader = false;
-      if (data.candidates) {
-        this.candidateList.push(data.candidates);
-        this.totalCount = data?.totalCount
+      this.initialLoader = false;
+      if (data?.candidates) {
+        this.candidateList.push(data?.candidates);
+        this.totalCount = data?.totalCount;
         const totalPages = Math.ceil(this.totalCount / this.limit);
         this.lastPage = totalPages;
         if (this.currentPage > totalPages) this.currentPage = totalPages;
       }
-    },(error: any) => {
-        this.initialLoader = false;
-        this.loader = false;
-        this.candidateList = [];
-        console.error('Failed to fetch candidates list:', error);
     });
   }
 
@@ -116,6 +133,8 @@ export class HrCandidateListComponent implements OnInit {
     return pages;
   }
 
+
+
   dateChange(event: any, range: string): void {
     let date = new Date(event?.value);
     if (range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
@@ -124,6 +143,12 @@ export class HrCandidateListComponent implements OnInit {
     this.limit = 10;
     this.fetchList();
   }
+
+  exportData(): void {
+    this.isExport = true;
+    this.fetchList();
+  }
+
 
   searchCandidate(searchTerm: string): void {
     this.searchKeyword = searchTerm;

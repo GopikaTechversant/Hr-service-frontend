@@ -154,9 +154,9 @@ export class CandidateDetailModalComponent implements OnInit {
     if (feedbackSubject) this.feedbackSubject = feedbackSubject.value;
     if (this.isEditable) this.tostr.warning('Please Save Changes in Mail');
     const confirmationCheckbox = document.getElementById('confirmDetails') as HTMLInputElement;
-    if (confirmationCheckbox && confirmationCheckbox?.checked && (this.messageType.trim() !== '')) {
+    // if (confirmationCheckbox && confirmationCheckbox?.checked && (this.messageType.trim() !== '')) {
       if (this.templateRef) {
-        const templateElement = this.templateRef.nativeElement;
+        const templateElement = this.templateRef?.nativeElement;
         const textarea = templateElement.querySelector('textarea');
         if (textarea) {
           const div = document.createElement('div');
@@ -169,41 +169,44 @@ export class CandidateDetailModalComponent implements OnInit {
           textarea.replaceWith(div);
         }
         this.htmlString = templateElement.outerHTML;
-        this.htmlString = this.templateRef.nativeElement.innerHTML.replace(textarea, '<div>');
-        if (this.messageType.trim() === 'aprove') this.approveClick();
-        if (this.messageType.trim() === 'rejection') this.rejectClick();
-      }
+        this.htmlString = this.templateRef?.nativeElement?.innerHTML.replace(textarea, '<div>');
+        if (this.htmlString === undefined)this.tostr.warning('Please Edit the template');
 
-    } else {
-      this.tostr.warning('Please confirm all details before submitting');
-    }
-    // const payload = {
-    //   // serviceSeqId: this.serviceId,
-    //   // feedBack: this.feedback,
-    //   // feedBackBy: this.userId,
-    //   mailId: 'alfiya.sr@techversantinfotech.com',
-    //   cc: this.feedbackCc,
-    //   message: this.htmlString,
-    //   subject: this.feedbackSubject,
-    // };
-    // this.apiService.post(`/candidate/send-mail`, payload).subscribe({
-    //   next: (res: any) => {
-    //     this.tostr.success('Approval successful');
-    //     this.closeDialog();
-    //   },
-    //   error: (error) => this.tostr.error('Error during approval')
-    // });
+        // if (this.messageType.trim() === 'aprove') this.approveClick();
+        // if (this.messageType.trim() === 'rejection') this.rejectClick();
+      // }
 
-    // // }
-    // // else this.tostr.error('Invalid operation');
-    // // if(this.isEditable) this.tostr.warning('Please Save Changes in Mail');
-    // // const confirmationCheckbox = document.getElementById('confirmDetails') as HTMLInputElement;
-    // // if (confirmationCheckbox && confirmationCheckbox?.checked && (this.messageType.trim() !== '')) {
-    // //   if(this.messageType.trim() === 'approve') this.approveClick();
-    // //   if(this.messageType.trim() === 'rejection') this.rejectClick();
-    // // } else {
-    // //   this.tostr.warning('Please confirm all details before submitting');
-    // // }
+    // } else {
+    //   this.tostr.warning('Please confirm all details before submitting');
+    // }
+    const payload = {
+      // serviceSeqId: this.serviceId,
+      // feedBack: this.feedback,
+      // feedBackBy: this.userId,
+      mailId: 'alfiya.sr@techversantinfotech.com',
+      cc: this.feedbackCc,
+      message: this.htmlString,
+      subject: this.feedbackSubject,
+    };
+    this.apiService.post(`/candidate/send-mail`, payload).subscribe({
+      next: (res: any) => {
+        this.tostr.success('Approval successful');
+        this.closeDialog();
+      },
+      error: (error) => this.tostr.error('Error during approval')
+    });
+  }
+
+    // }
+    // else this.tostr.error('Invalid operation');
+    // if(this.isEditable) this.tostr.warning('Please Save Changes in Mail');
+    // const confirmationCheckbox = document.getElementById('confirmDetails') as HTMLInputElement;
+    // if (confirmationCheckbox && confirmationCheckbox?.checked && (this.messageType.trim() !== '')) {
+    //   if(this.messageType.trim() === 'approve') this.approveClick();
+    //   if(this.messageType.trim() === 'rejection') this.rejectClick();
+    // } else {
+    //   this.tostr.warning('Please confirm all details before submitting');
+    // }
   }
 
   cancelClick(): void {
@@ -218,6 +221,9 @@ export class CandidateDetailModalComponent implements OnInit {
         userId: this.userId,
         status: "rejected",
         feedBack: this.feedback,
+        rejectCc: this.feedbackCc,
+        rejectMailTemp: this.htmlString,
+        rejectSubject: this.feedbackSubject,
       }
       this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
         next: (res: any) => {
