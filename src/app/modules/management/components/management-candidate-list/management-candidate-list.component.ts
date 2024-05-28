@@ -9,9 +9,9 @@ import { WarningBoxComponent } from 'src/app/components/warning-box/warning-box.
   templateUrl: './management-candidate-list.component.html',
   styleUrls: ['./management-candidate-list.component.css']
 })
-export class ManagementCandidateListComponent implements OnInit{
-  candidateList:any[]=[];
-  searchKeyword:string = '';
+export class ManagementCandidateListComponent implements OnInit {
+  candidateList: any[] = [];
+  searchKeyword: string = '';
   currentPage: number = 1;
   limit: number = 10
   filteredStatus: any = '';
@@ -19,7 +19,7 @@ export class ManagementCandidateListComponent implements OnInit{
   positionId: any;
   requestList_open: any;
   requestList: any;
-  initialLoader:boolean = false
+  initialLoader: boolean = false
   loader: boolean = true;
   totalCount: any;
   lastPage: any;
@@ -30,23 +30,23 @@ export class ManagementCandidateListComponent implements OnInit{
     { status: 'done' },
     { status: 'moved' }
   ]
-  constructor(private apiService: ApiService,private dialog: MatDialog){
+  constructor(private apiService: ApiService, private dialog: MatDialog) {
 
   }
 
   ngOnInit(): void {
     this.fetchCandidates();
+    this.fetchRequirements();
   }
 
-  fetchCandidates():void{
-    if(!this.initialLoader) this.loader = true;
+  fetchCandidates(): void {
+    if (!this.initialLoader) this.loader = true;
     this.apiService.get(`/management-station/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.limit}&status_filter=${this.filteredStatus}&report=false`).subscribe((data: any) => {
       this.candidateList = [];
-      console.log("this.candidateList ", this.candidateList );
       this.initialLoader = false;
       this.loader = false;
       if (data.candidates) {
-        console.log("data.candidates",data.candidates);
+        console.log("data.candidates", data.candidates);
         this.candidateList.push(data.candidates);
         this.totalCount = data?.totalCount
         const totalPages = Math.ceil(this.totalCount / this.limit);
@@ -62,11 +62,17 @@ export class ManagementCandidateListComponent implements OnInit{
     });
   }
 
+  fetchRequirements(): void {
+    this.apiService.get(`/service-request/list`).subscribe((res: any) => {
+      if (res?.data) {
+        this.requestList = res?.data;
+      }
+    })
+  }
+
   viewCandidateDetail(item: any, status: any): void {
-    console.log("open modal");
-    
     const dialogRef = this.dialog.open(ManagementDetailComponent, {
-      // data: { candidateDetails: item, offerStatus: status },
+      data: { candidateDetails: item, offerStatus: status },
     })
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       this.fetchCandidates();
@@ -97,13 +103,9 @@ export class ManagementCandidateListComponent implements OnInit{
   }
 
   selectPosition(name: string, id: string): void {
-    console.log("selectPosition");
-    
     this.requestList_open = false;
     this.displayPosition = name;
     this.positionId = id;
-    console.log("this.positionId",this.positionId);
-    
     sessionStorage.setItem(`requirement`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
     this.fetchCandidates();
   }

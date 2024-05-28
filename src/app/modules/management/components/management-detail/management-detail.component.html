@@ -1,0 +1,134 @@
+<div class="modal-header heading p-10 p-t-20 d-flex j-space" style="position: sticky; top: 0; z-index: 2;">
+    <div>
+        <span>{{candidateDetails?.candidateFirstName}} {{candidateDetails?.candidateLastName}}</span>
+    </div>
+    <div class="modal-close d-flex j-end">
+        <button class="c-pointer" (click)="closeDialog()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+<div class="modal-content">
+    <div class="head p-10 d-flex j-space">
+        <span>Candidate Details</span>
+        <span class="c-pointer">Resume: 
+            <i class="fa fa-file-text-o p-l-5" aria-hidden="true" title="View resume" (click)="viewResume(candidateDetails?.candidateResume)"></i>      
+        </span>
+    </div>
+    <div class="d-flex p-10">
+        <div class="sub-head f-w-500 f-s-14 d-flex">
+            <span class="p-8">Date of Birth</span>
+            <span class="p-8">Experince</span>
+            <span class="p-8">Previous Organisation</span>
+            <span class="p-8">Previous Designation</span>
+            <span class="p-8">Education</span>
+            <span class="p-8">Expected Salary</span>
+            <span class="p-8">Address</span>
+        </div>
+        <div class="sub-head d-flex">
+            <span class="p-8">
+                : {{candidateDetails?.candidateDoB ?(candidateDetails?.candidateDoB | date: 'dd/MM/YYY' ): 'NIL' }}
+            </span>
+            <span class="p-8">
+                : {{candidateDetails?.candidateExperience ? candidateDetails?.candidateExperience : 'NIL'}}
+            </span>
+            <span class="p-8">
+                : {{candidateDetails?.candidatePreviousOrg ? candidateDetails?.candidatePreviousOrg : 'NIL'}}
+            </span>
+            <span class="p-8">
+                : {{candidateDetails?.candidatePreviousDesignation ? candidateDetails?.candidatePreviousDesignation :
+                'NIL'}}
+            </span>
+            <span class="p-8">
+                : {{candidateDetails?.candidateEducation ? candidateDetails?.candidateEducation : 'NIL'}}
+            </span>
+            <span class="p-8">
+                : {{candidateDetails?.candidateExpectedSalary ? candidateDetails?.candidateExpectedSalary : 'NIL'}}
+            </span>
+            <span class="p-8">
+                : {{candidateDetails?.candidateCity ? candidateDetails?.candidateCity : 'City '}} ,
+                {{candidateDetails?.candidateDistrict ? candidateDetails?.candidateDistrict : 'District '}},
+                {{candidateDetails?.candidateState ? candidateDetails?.candidateState : 'State '}}
+            </span>
+        </div>
+    </div>
+    <div *ngIf="!hrReview && this.data?.candidateDetails?.serviceStatus !== 'moved'">
+        <!-- <div class="head p-10">
+            <span>Offer</span>
+        </div>
+        <div class="d-flex m-10">
+            <div>
+                <span class="p-10 sub-head">Offer Salary</span>
+                <span class="p-5"><input class="input" type="text" id="salary"></span>
+            </div>
+            <div>
+                <span class="p-10 sub-head">Joining Date</span>
+                <div class="p-relative w-100" *ngIf="!hrReview?.reviewedJoiningDate">
+                    <input class="p-l-5 input" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate" (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate" [min]="today">
+                    <span> <mat-datepicker #pickerdate class=""></mat-datepicker>
+                        <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true" (click)="pickerdate ?.open()"></i>
+                    </span>
+                </div>
+            </div>
+        </div> -->
+        <div class="m-10">
+            <!-- <div class="sub-head f-w-500 f-s-14 d-flex">
+                <span class="p-10">Description</span>
+            </div> -->
+            <div class="sub-head d-flex" *ngIf="!hrReview?.reviewedDescription">
+                <span class="p-5">
+                    <div class="template" >
+                        <img src="/assets/images/techversant/techversant-logo.svg" alt="" width="155px" height="27px">
+                        <div class="p-t-10 p-b-10">
+                            <div>{{today | date: 'dd/MM/YYY' }}</div>
+                            <div>{{candidateDetails?.candidateFirstName}} {{candidateDetails?.candidateLastName}}</div>  
+                            <div>
+                                {{candidateDetails?.candidateCity }} ,{{candidateDetails?.candidateDistrict }},{{candidateDetails?.candidateState}}
+                            </div>                      
+                        </div>
+                        <div>Dear {{candidateDetails?.candidateFirstName}} {{candidateDetails?.candidateLastName}},</div>
+                        <textarea class="editable" class="p-t-10 p-b-10" type="text" id="description" [innerHTML]="templateData?.message"></textarea>
+                    </div>
+                </span>
+            </div>
+        </div>
+        <!-- <div class="btn-parent">
+                <button class="c-pointer btn-reject" (click)="cancelClick()">Cancel</button>
+                <button class="btn c-pointer" (click)="addOffer()">Submit</button>
+        </div> -->
+    </div>
+    <!-- <div *ngIf="hrReview && data?.offerStatus > 0">
+        <div class="head p-10">
+            <span>Offer</span>
+        </div>
+        <div  class="p-10">
+            <div class="p-10" *ngIf="hrReview">
+                <span class="f-w-500">Offer Salary : </span> {{hrReview?.reviewedSalary}}
+            </div>
+            <div class="p-10" *ngIf="hrReview">
+                <span class="f-w-500">Joining Date : </span>{{hrReview?.reviewedJoiningDate | date: 'dd/MM/YYY'}}
+            </div>
+           
+        </div>
+    </div> -->
+    <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'pending' && hrReview">
+        <div class="head p-10">
+            <span>Feedback</span>
+        </div>        
+        <!-- <div class="m-10">
+            <textarea class="text-area" id="" cols="30" rows="10" id="feedback"placeholder="Add Feedback for Approval or Rejection"></textarea>
+            <div class="btn-parent">
+                <button class="c-pointer btn-reject" (click)="rejectClick()">Rejected</button>
+                <button class="btn c-pointer" (click)="approveClick()">Accepted</button>
+            </div>
+        </div> -->
+    </div>
+    <div *ngIf="this.data?.candidateDetails?.serviceStatus !== 'pending'">
+        <div class="head p-10">
+            <span>Feedback</span>
+        </div>
+        <div class="p-10">
+            <span class="p-5">{{feedback ? feedback : 'Not Updated'}}</span>
+        </div>
+    </div>
+</div>
