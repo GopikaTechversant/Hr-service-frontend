@@ -5,6 +5,7 @@ import { DeleteComponent } from 'src/app/components/delete/delete.component';
 import { EditComponent } from 'src/app/components/edit/edit.component';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environments';
 @Component({
   selector: 'app-candidate-list',
   templateUrl: './candidate-list.component.html',
@@ -28,6 +29,7 @@ export class CandidateListComponent {
   requestId: any;
   initialLoader: boolean = false;
   report: boolean = false;
+  url:any;
   constructor(private apiService: ApiService, private router: Router, private dialog: MatDialog, private toastr: ToastrService) { }
 
   ngOnInit(): void {
@@ -44,7 +46,8 @@ export class CandidateListComponent {
   }
 
   fetchCandidates(): void {
-    this.apiService.get(`/candidate/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.pageSize}&serviceRequestId=${this.requestId}&report=${this.report}`).subscribe((data: any) => {
+    this.url = `/candidate/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.pageSize}&serviceRequestId=${this.requestId}&report=${this.report}`
+    this.apiService.get(this.url).subscribe((data: any) => {
       this.initialLoader = false;
       this.data = data;
       this.candidateList = [];
@@ -139,8 +142,11 @@ export class CandidateListComponent {
     this.fetchCandidates();
   }
 
-  exportList():void{
+  exportList(): void {
     this.report = true;
     this.fetchCandidates();
+    if( this.report = true) {
+      window.open(`${environment.api_url}${this.url}`,'_blank')
+    }
   }
 }
