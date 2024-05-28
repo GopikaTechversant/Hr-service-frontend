@@ -23,6 +23,7 @@ export class DetailedRecruitmentComponent implements OnInit {
   lastPage: any;
   userCount: any;
   totalCount: any;
+  report: boolean = false;
   constructor(private apiService: ApiService) {
   }
 
@@ -40,7 +41,7 @@ export class DetailedRecruitmentComponent implements OnInit {
   }
 
   fetchCandidateList(): void {
-    this.apiService.get(`/dashboard/requirement-report?recuriter=${this.selectedRecruiterId}&page=${this.currentPage}&limit=${this.pageSize}`).subscribe((res: any) => {
+    this.apiService.get(`/dashboard/requirement-report?recuriter=${this.selectedRecruiterId}&page=${this.currentPage}&limit=${this.pageSize}&report=${this.report}`).subscribe((res: any) => {
       this.candidateList = res?.userRequirementReport;
       this.totalCount = res?.requirementCount;
       const totalPages = Math.ceil(this.totalCount / this.pageSize);
@@ -95,6 +96,11 @@ export class DetailedRecruitmentComponent implements OnInit {
 
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);
+    this.fetchCandidateList();
+  }
+
+  exportList():void{
+    this.report = true;
     this.fetchCandidateList();
   }
 

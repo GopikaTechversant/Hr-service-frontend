@@ -27,6 +27,7 @@ export class CandidateListComponent {
   userCount: any;
   requestId: any;
   initialLoader: boolean = false;
+  report: boolean = false;
   constructor(private apiService: ApiService, private router: Router, private dialog: MatDialog, private toastr: ToastrService) { }
 
   ngOnInit(): void {
@@ -43,7 +44,7 @@ export class CandidateListComponent {
   }
 
   fetchCandidates(): void {
-    this.apiService.get(`/candidate/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.pageSize}&serviceRequestId=${this.requestId}`).subscribe((data: any) => {
+    this.apiService.get(`/candidate/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.pageSize}&serviceRequestId=${this.requestId}&report=${this.report}`).subscribe((data: any) => {
       this.initialLoader = false;
       this.data = data;
       this.candidateList = [];
@@ -126,8 +127,6 @@ export class CandidateListComponent {
       height: '980px'
     })
     dialogRef.componentInstance.onEditSuccess.subscribe(() => {
-      console.log("edit usshhiu");
-      
       this.currentPage = 1;
       this.pageSize = 10;
       this.fetchCandidates();
@@ -140,4 +139,8 @@ export class CandidateListComponent {
     this.fetchCandidates();
   }
 
+  exportList():void{
+    this.report = true;
+    this.fetchCandidates();
+  }
 }
