@@ -90,7 +90,6 @@
     margin: 10px;
 }
 
-
 .select-btn {
     width: 48%;
     height: 50px;
@@ -157,13 +156,6 @@
     border-radius: 2px;
     border: 1px 0px 0px 0px;
 
-}
-
-
-.company-logo{
-    margin-right: 10px;
-    padding-right: 20px;
-    border-right: 1px solid #575F6E;
 }
 
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, Input, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { DatePipe } from '@angular/common';
@@ -17,7 +17,6 @@ import { Subscription } from 'rxjs';
   }
 })
 export class AddCandidateModalComponent implements OnInit {
-  // @Input() key:any;
   displayDate: any;
   showDropdown: boolean = false;
   showSource: boolean = false;

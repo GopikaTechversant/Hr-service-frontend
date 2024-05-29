@@ -11,7 +11,6 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./candidate-detail-modal.component.css']
 })
 export class CandidateDetailModalComponent implements OnInit {
-  @ViewChild('template', { static: false }) templateRef!: ElementRef;
   private keySubscription?: Subscription;
   uploadedFileKey: string = '';
   candidateDetails: any;
@@ -45,6 +44,7 @@ export class CandidateDetailModalComponent implements OnInit {
   htmlString: string = '';
   feedbackSubject: string = '';
   content: any;
+  mailTemplateData: any;
 
   constructor(public dialogRef: MatDialogRef<CandidateDetailModalComponent>, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -127,87 +127,13 @@ export class CandidateDetailModalComponent implements OnInit {
       this.showSelection = false;
     }
     this.messageType = item;
-    this.fetchTemplates();
-  }
-
-  fetchTemplates(): void {
-    this.apiService.get(`/candidate/mail/template?msgType=${this.messageType}&candidateId=${this.candidateDetails['candidate.candidateId']}`).subscribe((res: any) => {
-      if (res?.data) {
-        this.templateData = res?.data;
-      }
-    })
-  }
-
-  updateHtmlContent(event: any): void {
-    this.content = event?.target?.value ?? '';
-    this.templateData.message = this.content;
-    const templateElement = this.templateRef.nativeElement;
-    this.htmlString = templateElement.innerHTML;
-  }
-
-  submitClick(): void {
-    const feedback = document.getElementById('feedback') as HTMLInputElement;
-    if (feedback) this.feedback = feedback?.value;
-    const feedbackCc = document.getElementById('cc') as HTMLInputElement;
-    if (feedbackCc) this.feedbackCc = feedbackCc?.value;
-    const feedbackSubject = document.getElementById('subject') as HTMLInputElement;
-    if (feedbackSubject) this.feedbackSubject = feedbackSubject.value;
-    if (this.isEditable) this.tostr.warning('Please Save Changes in Mail');
-    const confirmationCheckbox = document.getElementById('confirmDetails') as HTMLInputElement;
-    // if (confirmationCheckbox && confirmationCheckbox?.checked && (this.messageType.trim() !== '')) {
-      if (this.templateRef) {
-        const templateElement = this.templateRef?.nativeElement;
-        const textarea = templateElement.querySelector('textarea');
-        if (textarea) {
-          const div = document.createElement('div');
-          div.className = 'editable p-t-10 p-b-10';
-          div.style.width = '100%';
-          div.style.outline = 'none';
-          div.style.border = 'none';
-          div.style.minHeight = '200px';
-          div.innerText = this.content;
-          textarea.replaceWith(div);
-        }
-        this.htmlString = templateElement.outerHTML;
-        this.htmlString = this.templateRef?.nativeElement?.innerHTML.replace(textarea, '<div>');
-        if (this.htmlString === undefined)this.tostr.warning('Please Edit the template');
-
-        // if (this.messageType.trim() === 'aprove') this.approveClick();
-        // if (this.messageType.trim() === 'rejection') this.rejectClick();
-      // }
-
-    // } else {
-    //   this.tostr.warning('Please confirm all details before submitting');
-    // }
-    const payload = {
-      // serviceSeqId: this.serviceId,
-      // feedBack: this.feedback,
-      // feedBackBy: this.userId,
-      mailId: 'alfiya.sr@techversantinfotech.com',
-      cc: this.feedbackCc,
-      message: this.htmlString,
-      subject: this.feedbackSubject,
+    this.mailTemplateData = {
+      name: `${this.candidateDetails['candidate.candidateFirstName']} ${this.candidateDetails['candidate.candidateLastName']}`,
+      id: this.candidateDetails['candidate.candidateId'],
+      messageType: item
     };
-    this.apiService.post(`/candidate/send-mail`, payload).subscribe({
-      next: (res: any) => {
-        this.tostr.success('Approval successful');
-        this.closeDialog();
-      },
-      error: (error) => this.tostr.error('Error during approval')
-    });
   }
 
-    // }
-    // else this.tostr.error('Invalid operation');
-    // if(this.isEditable) this.tostr.warning('Please Save Changes in Mail');
-    // const confirmationCheckbox = document.getElementById('confirmDetails') as HTMLInputElement;
-    // if (confirmationCheckbox && confirmationCheckbox?.checked && (this.messageType.trim() !== '')) {
-    //   if(this.messageType.trim() === 'approve') this.approveClick();
-    //   if(this.messageType.trim() === 'rejection') this.rejectClick();
-    // } else {
-    //   this.tostr.warning('Please confirm all details before submitting');
-    // }
-  }
 
   cancelClick(): void {
     this.closeDialog();
@@ -245,10 +171,10 @@ export class CandidateDetailModalComponent implements OnInit {
   }
 
   approveClick(): void {
-    if (this.templateRef) {
-      const templateElement = this.templateRef.nativeElement;
-      this.htmlString = templateElement.outerHTML;
-    }
+    // if (this.templateRef) {
+    //   // const templateElement = this.templateRef.nativeElement;
+    //   this.htmlString = templateElement.outerHTML;
+    // }
     let baseUrl = '';
     if (this.stationId === '3') baseUrl = `/technical-station`;
     if (this.stationId === '4') baseUrl = `/technical-station-two`;

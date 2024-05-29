@@ -32,6 +32,7 @@ export class HrCandidateDetailComponent {
   fileName: string = '';
   content: any;
   htmlString: any;
+  mailTemplateData: any;
   constructor(public dialogRef: MatDialogRef<HrCandidateDetailComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
     private apiService: ApiService, private datePipe: DatePipe, private tostr: ToastrServices) {
     if (data) {
@@ -66,22 +67,11 @@ export class HrCandidateDetailComponent {
       this.showSelection = false;
     }
     this.messageType = item;
-    this.fetchTemplates();
-  }
-
-  fetchTemplates(): void {
-    this.apiService.get(`/candidate/mail/template?msgType=${this.messageType}&candidateId=${this.candidateDetails?.candidateId}`).subscribe((res: any) => {
-      if (res?.data) {
-        this.templateData = res?.data;
-      }
-    })
-  }
-
-  updateHtmlContent(event: any): void {
-    this.content = event?.target?.value ?? '';
-    this.templateData.message = this.content;
-    const templateElement = this.templateRef.nativeElement;
-    this.htmlString = templateElement.innerHTML;
+    this.mailTemplateData = {
+      name: `${this.candidateDetails?.candidateFirstName + ' ' + this.candidateDetails?.candidateLastName}`,
+      id: this.candidateDetails?.candidateId,
+      messageType: item
+    };
   }
 
   onFileSelected(event: any): void {
@@ -92,33 +82,11 @@ export class HrCandidateDetailComponent {
     }
   }
 
-  submitClick(): void {
-    if (this.isEditable) this.tostr.warning('Please Save Changes in Mail');
-    const confirmationCheckbox = document.getElementById('confirmDetails') as HTMLInputElement;
-    if (confirmationCheckbox && confirmationCheckbox?.checked && (this.messageType.trim() !== '')) {
-      if (this.templateRef) {
-        const templateElement = this.templateRef.nativeElement;
-        const textarea = templateElement.querySelector('textarea');
-        if (textarea) {
-          const div = document.createElement('div');
-          div.className = 'editable p-t-10 p-b-10';
-          div.style.width = '100%';
-          div.style.outline = 'none';
-          div.style.border = 'none';
-          div.style.minHeight = '200px';
-          div.innerText = this.content;
-          textarea.replaceWith(div);
-        }
-        this.htmlString = templateElement.outerHTML;
-        this.htmlString = this.templateRef.nativeElement.innerHTML.replace(textarea, '<div>');
-        if (this.messageType.trim() === 'offer') this.addOffer();
-        if (this.messageType.trim() === 'rejection') this.rejectClick();
-      }
-
-    } else {
-      this.tostr.warning('Please confirm all details before submitting');
-    }
+  onSubmitData(event:any):void {
+    console.log(event);
+    
   }
+
 
   addOffer(): void {
     const scoreElement = document.getElementById('salary') as HTMLInputElement;

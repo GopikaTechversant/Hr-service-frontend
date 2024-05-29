@@ -153,16 +153,10 @@ tr {
     text-align: center;
 }
 
-.blue {
-    color: #005EC9;
-}
-
-.red {
-    color: #C10A0A;
-}
 
 .green {
-    color: #08E179;
+    color: #08BC66;
+   /* background-color:#08BC66 ;  */
 }
 
 

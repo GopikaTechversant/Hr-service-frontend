@@ -32,7 +32,6 @@ const routes: Routes = [
     SharedModule,
     MaterialModule,
     FormsModule,
-
   ],
   providers: [
     DatePipe,
