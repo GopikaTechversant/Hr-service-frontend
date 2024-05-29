@@ -220,4 +220,10 @@ export class EditRequirementComponent implements OnInit {
     this.selectedDesignation = name;
     this.selectedDesignationId = id;
   }
+
+  clearFilter(): void {
+    this.searchvalue = '';
+    this.showSearchBar = false;
+    this.skillSuggestions = [];
+  }
 }

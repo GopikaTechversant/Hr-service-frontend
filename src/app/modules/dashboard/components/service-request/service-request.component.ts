@@ -176,6 +176,7 @@ export class ServiceRequestComponent implements OnInit {
   getSkillSuggestions(event: any): void {
     this.showSearchBar = true;
     this.searchvalue = event?.target.value;
+    console.log(" this.searchvalue", this.searchvalue)
     this.apiService.get(`/candidate/skills/list?search=${this.searchvalue}`).subscribe((res: any) => {
       if (res?.data) this.skillSuggestions = res?.data.filter((suggestion: any) =>
         suggestion.skillName.toLowerCase().startsWith(this.searchvalue.toLowerCase())
@@ -254,4 +255,9 @@ export class ServiceRequestComponent implements OnInit {
     this.resetFormAndState();
   }
 
+  clearFilter(): void {
+    this.searchvalue = '';
+    this.showSearchBar = false;
+    this.skillSuggestions = [];
+  }
 }

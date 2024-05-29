@@ -140,8 +140,13 @@
                 <span class="sub-head">Skills</span>
                 <div>
                     <span class="p-relative">
-                        <input type="search" class="input-interview-rounds-skill" placeholder="Search Skills"
-                            (input)="getSkillSuggestions($event)" id="skillSearch">
+                        <input type="text" class="input-interview-rounds-skill" placeholder="Search Skills"
+                            (input)="getSkillSuggestions($event)" id="skillSearch" [(ngModel)]="searchvalue">
+                        <span *ngIf="searchvalue !== ''" (click)="clearFilter()"
+                            class="clear-filter c-pointer m-l-10 p-absolute m-t-20"><img
+                                src="assets/images/skill-close-icon.png" alt="" class="m-t-0 p-r-13" width="17px"
+                                height="17px">
+                        </span>
                         <div class="m-t-8 drop-list-skill" *ngIf="showSearchBar">
                             <div *ngFor="let suggestion of skillSuggestions" (click)="selectSkill(suggestion)">
                                 <span class="p-t-7 "><img src="assets/images/akar-icons_check.png" alt=""
