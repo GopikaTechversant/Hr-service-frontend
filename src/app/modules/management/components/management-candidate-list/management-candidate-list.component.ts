@@ -118,8 +118,8 @@ export class ManagementCandidateListComponent implements OnInit {
           userId: userId,
           name: candidate['candidate.candidateFirstName'] + ' ' + candidate['candidate.candidateLastName'],
           serviceId: candidate?.serviceId,
-          currentStation: 'Hr Manager',
-          currentStationId: '5',
+          currentStation: 'Management',
+          currentStationId: '6',
           requirement: candidate['serviceRequest.requestName']
         },
       })

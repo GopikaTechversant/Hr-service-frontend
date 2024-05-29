@@ -246,3 +246,7 @@ tr {
     border: 1px solid #3c40434d;
     border-radius: 50%;
 }
+
+.view-details{
+    color: #005EC9;
+}

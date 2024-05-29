@@ -52,7 +52,7 @@
             </span>
         </div>
     </div>
-    <div *ngIf="!hrReview && this.data?.candidateDetails?.serviceStatus !== 'moved'">
+    <!-- <div *ngIf="!hrReview && this.data?.candidateDetails?.serviceStatus !== 'moved'"> -->
         <!-- <div class="head p-10">
             <span>Offer</span>
         </div>
@@ -71,11 +71,11 @@
                 </div>
             </div>
         </div> -->
-        <div class="m-10">
+        <!-- <div class="m-10"> -->
             <!-- <div class="sub-head f-w-500 f-s-14 d-flex">
                 <span class="p-10">Description</span>
             </div> -->
-            <div class="sub-head d-flex" *ngIf="!hrReview?.reviewedDescription">
+            <!-- <div class="sub-head d-flex" *ngIf="!hrReview?.reviewedDescription">
                 <span class="p-5">
                     <div class="template" >
                         <img src="/assets/images/techversant/techversant-logo.svg" alt="" width="155px" height="27px">
@@ -91,12 +91,12 @@
                     </div>
                 </span>
             </div>
-        </div>
+        </div> -->
         <!-- <div class="btn-parent">
                 <button class="c-pointer btn-reject" (click)="cancelClick()">Cancel</button>
                 <button class="btn c-pointer" (click)="addOffer()">Submit</button>
         </div> -->
-    </div>
+    <!-- </div> -->
     <!-- <div *ngIf="hrReview && data?.offerStatus > 0">
         <div class="head p-10">
             <span>Offer</span>
@@ -111,10 +111,10 @@
            
         </div>
     </div> -->
-    <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'pending' && hrReview">
+    <!-- <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'pending' && hrReview">
         <div class="head p-10">
             <span>Feedback</span>
-        </div>        
+        </div>         -->
         <!-- <div class="m-10">
             <textarea class="text-area" id="" cols="30" rows="10" id="feedback"placeholder="Add Feedback for Approval or Rejection"></textarea>
             <div class="btn-parent">
@@ -122,7 +122,7 @@
                 <button class="btn c-pointer" (click)="approveClick()">Accepted</button>
             </div>
         </div> -->
-    </div>
+    <!-- </div>
     <div *ngIf="this.data?.candidateDetails?.serviceStatus !== 'pending'">
         <div class="head p-10">
             <span>Feedback</span>
@@ -130,5 +130,5 @@
         <div class="p-10">
             <span class="p-5">{{feedback ? feedback : 'Not Updated'}}</span>
         </div>
-    </div>
+    </div> -->
 </div>
