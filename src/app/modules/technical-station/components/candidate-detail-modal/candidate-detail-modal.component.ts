@@ -76,6 +76,15 @@ export class CandidateDetailModalComponent implements OnInit {
     }
   }
 
+  // onFileSelected(event: any): void {
+  //   const file: File = event.target.files[0];
+  //   if (file) {
+  //     this.file = file;
+  //     this.fileName = file?.name;
+  //   }
+  // }
+
+
   getKeyFroms3(): void {
     this.keySubscription = this.s3Service.key.subscribe((key: string) => {
       this.uploadedFileKey = key;
@@ -90,10 +99,10 @@ export class CandidateDetailModalComponent implements OnInit {
     const descriptionElement = document.getElementById('description') as HTMLInputElement;
     // const fileInput = document.getElementById('fileInput') as HTMLInputElement;
     // const file = fileInput.files ? fileInput.files[0] : null;
-    if (!this.uploadedFileKey) {
-      this.tostr.warning('File upload is in progress, please wait.');
-      return;
-    }
+    // if (!this.uploadedFileKey) {
+    //   this.tostr.warning('File upload is in progress, please wait.');
+    //   return;
+    // }
     const payload = {
       progressAssignee: this.progressAssignee ? this.progressAssignee : this.userId,
       progressSkill: skillElement.value,
@@ -118,50 +127,107 @@ export class CandidateDetailModalComponent implements OnInit {
     }
   }
 
-  showMail(item: any): void {
-    if (item === 'approve') {
-      this.showSelection = true;
-      this.showRejection = false;
-    } else {
-      this.showRejection = true;
-      this.showSelection = false;
-    }
+  // addProgress(): void {
+  //   const formData = new FormData();
+  //   const skillElement = document.getElementById('skill') as HTMLInputElement;
+  //   const scoreElement = document.getElementById('score') as HTMLInputElement;
+  //   const descriptionElement = document.getElementById('description') as HTMLInputElement;
+  //   const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+  //   const file = fileInput.files ? fileInput.files[0] : null;
+
+  //   if (skillElement && skillElement.value) formData.append('progressSkill', skillElement.value);
+  //   if (scoreElement && scoreElement.value) formData.append('progressScore', scoreElement.value);
+  //   if (descriptionElement && descriptionElement.value) formData.append('progressDescription', descriptionElement.value);
+  //   if (file) formData.append('file', file, file.name);
+
+  //   formData.append('progressAssignee', this.progressAssignee ? this.progressAssignee : this.userId);
+  //   formData.append('progressServiceId', this.serviceId ? this.serviceId.toString() : '0');
+
+  //   let baseUrl = this.stationId === '3' ? `/technical-station` : this.stationId === '4' ? `/technical-station-two` : '';
+  //   if (baseUrl) {
+  //     this.apiService.post(`${baseUrl}/add-progress`, formData).subscribe({
+  //       next: (res: any) => {
+  //         this.tostr.success('Progress added successfully');
+  //         this.closeDialog();
+  //       },
+  //       error: (error) => {
+  //         this.tostr.warning('Unable to Update Progress');
+  //       }
+  //     });
+  //   } else {
+  //     this.tostr.error('Invalid operation');
+  //   }
+  // }
+
+  showMail(item: 'approve' | 'rejection'): void {
+    this.showSelection = item === 'approve';
+    this.showRejection = item !== 'approve';
     this.messageType = item;
     this.mailTemplateData = {
-      name: `${this.candidateDetails['candidate.candidateFirstName']} ${this.candidateDetails['candidate.candidateLastName']}`,
+      firstName: this.candidateDetails['candidate.candidateFirstName'],
+      lastName: this.candidateDetails['candidate.candidateLastName'],
       id: this.candidateDetails['candidate.candidateId'],
       messageType: item
     };
   }
 
+  onSubmitData(event: any): void {
+    if (event?.clickType === 'cancel') this.cancelClick();
+    if (event?.messageType === 'approve') this.approveClick(event);
+    if (event?.messageType === 'rejection') this.rejectClick(event);
+    console.log(event);
+  }
 
   cancelClick(): void {
     this.closeDialog();
   }
 
-  rejectClick(): void {
-    if (this.feedback.trim() !== '') {
-      let payload = {
-        serviceId: this.serviceId,
-        stationId: this.stationId,
-        userId: this.userId,
-        status: "rejected",
+  approveClick(data: any): void {
+    const baseUrl = this.stationId === '3' ? '/technical-station' : this.stationId === '4' ? '/technical-station-two' : '';
+    if (baseUrl) {
+      const payload = {
+        serviceSeqId: this.serviceId,
         feedBack: this.feedback,
-        rejectCc: this.feedbackCc,
-        rejectMailTemp: this.htmlString,
-        rejectSubject: this.feedbackSubject,
-      }
-      this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
-        next: (res: any) => {
+        feedBackBy: this.userId,
+        feedBackCc: data?.mailCc,
+        feedBackMailTemp: data?.mailTemp || '',
+        feedBackSubject: data?.mailSubject,
+        feedBcc: data?.mailBcc,
+      };
+      this.apiService.post(`${baseUrl}/approve`, payload).subscribe({
+        next: () => {
+          this.tostr.success('Approval successful');
           this.closeDialog();
         },
-        error: (error) => {
-          this.tostr.error('Error adding progress');
-        }
+        error: () => this.tostr.error('Error during approval')
       });
-    } else this.tostr.warning('Please Add Feedback');
+    } else {
+      this.tostr.error('Invalid operation');
+    }
   }
 
+
+  rejectClick(data: any): void {
+    const payload = {
+      serviceId: this.serviceId,
+      stationId: this.candidateDetails?.candidateStation,
+      userId: this.userId,
+      status: "rejected",
+      rejectCc: data?.mailCc,
+      rejectMailTemp: data?.mailTemp,
+      rejectSubject: data?.mailSubject,
+      rejectBcc: data?.mailBcc,
+    };
+
+    this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
+      next: (res: any) => {
+        this.closeDialog();
+      },
+      error: (error) => {
+        this.tostr.error('Error adding progress');
+      }
+    });
+  }
 
   viewResume(resume: any) {
     this.resumePath = resume;
@@ -170,35 +236,6 @@ export class CandidateDetailModalComponent implements OnInit {
     console.log("`${environment.s3_url}${this.resumePath}`", typeof (`${environment.s3_url}${this.resumePath}`));
   }
 
-  approveClick(): void {
-    // if (this.templateRef) {
-    //   // const templateElement = this.templateRef.nativeElement;
-    //   this.htmlString = templateElement.outerHTML;
-    // }
-    let baseUrl = '';
-    if (this.stationId === '3') baseUrl = `/technical-station`;
-    if (this.stationId === '4') baseUrl = `/technical-station-two`;
-    if (baseUrl) {
-      if (this.feedback.trim() !== '') {
-        const payload = {
-          serviceSeqId: this.serviceId,
-          feedBack: this.feedback,
-          feedBackBy: this.userId,
-          feedBackCc: this.feedbackCc,
-          feedBackMailTemp: this.htmlString,
-          feedBackSubject: this.feedbackSubject,
-        };
-        this.apiService.post(`${baseUrl}/approve`, payload).subscribe({
-          next: (res: any) => {
-            this.tostr.success('Approval successful');
-            this.closeDialog();
-          },
-          error: (error) => this.tostr.error('Error during approval')
-        });
-      } else this.tostr.warning('Please Add Feedback');
-    }
-    else this.tostr.error('Invalid operation');
-  }
 
   ngOnDestroy(): void {
     if (this.keySubscription) {

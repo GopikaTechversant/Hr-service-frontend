@@ -30,9 +30,12 @@
     </div>
     <div class="heading p-10 d-flex j-space">
         <span>Candidate Details</span>
-        <span class="c-pointer"><span class="f-s-14 f-w-400">Resume : </span>
+        <!-- <span class="c-pointer"><span class="f-s-14 f-w-400">Resume : </span>
             <i class="fa fa-file-text-o p-l-5 blue" aria-hidden="true" title="View resume" (click)="viewResume(candidateDetails['candidate.candidateResume'])"></i>
-        </span>
+        </span> -->
+        <span class="c-pointer"><span class="f-s-14 f-w-400">Resume : </span>
+        <i class="fa fa-file-text-o p-l-5 blue" aria-hidden="true" title="View resume" (click)="viewResume(candidateDetails['candidate.candidateResume'])"></i>
+    </span>
     </div>
     <div class="d-flex p-10">
         <div class="sub-head f-w-500 f-s-14 d-flex">
@@ -100,7 +103,8 @@
             </span>
             <span class="c-pointer attach m-l-5 p-r-5 p-b-5 d-flex file" title="Attach File" (click)="fileInput.click()">
                 <img class="p-5" src="/assets/images/paperclip.svg" alt="" height="20" width="20">
-                <span class="m-b-10 p-5"> {{fileName}}</span>
+                <span class="m-b-10 p-5" *ngIf="fileName"> {{fileName}}</span>
+                <span class="m-b-10 p-5" *ngIf="!fileName">Upload File</span>
                 <input type="file" id="fileInput" #fileInput style="display: none;" (change)="onFileSelected($event)">
             </span>
         </div>
@@ -133,7 +137,7 @@
             (click)="showMail('rejection')">Rejection Notification Mail
         </button>
         <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'pending' && progessAdded && messageType.trim() !== ''">
-            <app-mail-template [candidate]="mailTemplateData"></app-mail-template>
+            <app-mail-template [candidate]="mailTemplateData" (submitData)="onSubmitData($event)"></app-mail-template>
         </div>
     <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'done' || this.data?.candidateDetails?.serviceStatus === 'rejected'">
         <div class="heading p-10">

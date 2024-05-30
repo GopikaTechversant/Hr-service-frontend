@@ -1,12 +1,12 @@
 <div *ngIf="candidate">
     <div class="heading p-10">
-        <span>Email Details of{{candidate?.name}}</span>
+        <span>Email Details</span>
     </div>
     <div *ngIf="!isEditable" class="f-right m-10 p-10 c-pointer" (click)="editClick()" title="Edit">
         <span><img src="/assets/images/candidate-detail/edit.svg" alt="" height="12" width="12"></span>
         <span class="c-blue p-l-5">Edit</span>
     </div>
-    <div *ngIf="isEditable" class="f-right m-10 p-10 c-pointer" (click)="saveClick(templateData?.message)" title="Save">
+    <div *ngIf="isEditable" class="f-right m-10 p-10 c-pointer" (click)="saveClick($event)" title="Save">
         <span><img src="/assets/images/candidate-detail/save.svg" alt="" height="12" width="12"></span>
         <span class="c-blue p-l-5">Save</span>
     </div>
@@ -21,9 +21,9 @@
                     opacity: 0px;
                     outline: none !important;
                     padding: 10px;">
-            <div style="padding-bottom: px;">Dear {{candidate?.name}},</div>
-            <textarea class="editable p-t-10 p-b-10" id="editable" [(ngModel)]="templateData.message" [readonly]="!isEditable"
-                style="width: 100%; outline: none !important; border: none !important; min-height: 200px;">
+            <div style="padding-bottom: 5px;">Dear {{candidate?.firstName}},</div>
+            <textarea class="editable " id="editable"  [(ngModel)]="templateData.message" [readonly]="!isEditable" (input)="updateHtmlContent($event);" 
+                style="width: 100%; outline: none !important; border: none !important; min-height: 200px;padding-top: 5px;padding-bottom: 10px;">
                         </textarea><br>
             <span style="padding: 10px;">Best Regards,</span>
     

@@ -42,7 +42,8 @@
     width: 97% !important;
 }
 
-.offer-select-btn,.select-btn:hover {
+.offer-select-btn,
+.select-btn:hover {
     color: #FFFFFF;
     background-color: #005EC9;
     border: 1px solid #005EC9;
@@ -61,7 +62,8 @@
     margin: 10px;
 }
 
-.offer-reject-btn,.reject-btn:hover {
+.offer-reject-btn,
+.reject-btn:hover {
     color: #FFFFFF;
     background-color: #575F6E;
     border: 1px solid #575F6E;
@@ -156,8 +158,8 @@
 }
 
 .text-area {
-    width: 99%;
-    height: 385px;
+    width: 56vw;
+    height: 100px;
     border-radius: 3px;
     border: 1px solid #E2E1E1;
     background: #FFFFFF;
@@ -199,9 +201,8 @@
     width: 97%;
 }
 
-.company-logo{
+.company-logo {
     margin-right: 10px;
     padding-right: 20px;
     border-right: 1px solid #575F6E;
 }
-

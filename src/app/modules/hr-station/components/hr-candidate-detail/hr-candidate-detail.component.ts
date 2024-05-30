@@ -12,8 +12,6 @@ import { environment } from 'src/environments/environments';
 })
 export class HrCandidateDetailComponent {
   @ViewChild('template', { static: false }) templateRef!: ElementRef;
-  salary: any;
-  displayDate: any;
   descriptionValue: any;
   showDescription: boolean = false;
   serviceId: number = 0;
@@ -49,27 +47,21 @@ export class HrCandidateDetailComponent {
     this.userId = localStorage.getItem('userId');
   }
 
-  dateChange(event: any): void {
-    let date = new Date(event?.value);
-    this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
-  }
-
   closeDialog(): void {
     this.dialogRef.close();
   }
 
-  showMail(item: any): void {
-    if (item === 'offer') {
-      this.showSelection = true;
-      this.showRejection = false;
-    } else {
-      this.showRejection = true;
-      this.showSelection = false;
-    }
+  showMail(item: 'offer' | 'rejection'): void {
+    this.showSelection = item === 'offer';
+    this.showRejection = item !== 'offer';
+
+    const { candidateFirstName = '', candidateLastName = '', candidateId = '' } = this.candidateDetails || {};
+
     this.messageType = item;
     this.mailTemplateData = {
-      name: `${this.candidateDetails?.candidateFirstName + ' ' + this.candidateDetails?.candidateLastName}`,
-      id: this.candidateDetails?.candidateId,
+      firstName: candidateFirstName,
+      lastName: candidateLastName,
+      id: candidateId,
       messageType: item
     };
   }
@@ -78,25 +70,29 @@ export class HrCandidateDetailComponent {
     const file: File = event.target.files[0];
     if (file) {
       this.file = file;
-      this.fileName = file?.name;
+      this.fileName = file.name;
     }
   }
 
-  onSubmitData(event:any):void {
+  onSubmitData(event: any): void {
+    if (event?.clickType === 'cancel') this.cancelClick();
+    if (event?.messageType === 'offer') this.addOffer(event);
+    if (event?.messageType === 'rejection') this.rejectClick(event);
     console.log(event);
-    
   }
 
-
-  addOffer(): void {
-    const scoreElement = document.getElementById('salary') as HTMLInputElement;
-    this.salary = scoreElement ? scoreElement.value : '';
+  addOffer(data: any): void {
     const payload = {
       offerServiceSeqId: this.serviceId,
-      offerSalary: this.salary,
-      // offerDescription: descriptionTemplate,
-      offerJoinDate: this.displayDate
+      offerSalary: data?.offerSalary,
+      offerDescription: this.feedback,
+      offerJoinDate: data?.joiningdate,
+      offerMailTemp: data?.mailTemp,
+      offerMailSubject: data?.mailSubject,
+      offerMailBackCc: data?.mailCc,
+      offerMailBackBcc: data?.mailBcc,
     };
+
     this.apiService.post(`/hr-station/candidateOffer`, payload).subscribe({
       next: (res: any) => {
         this.tostr.success('Offer Added Successfully');
@@ -112,26 +108,27 @@ export class HrCandidateDetailComponent {
     this.closeDialog();
   }
 
-  viewResume(resume: any) {
+  viewResume(resume: any): void {
     this.resumePath = resume;
-    console.log("this.resumePath", this.resumePath);
-    window.open(`${environment.s3_url}${this.resumePath}`, '_blank');
-    console.log("`${environment.s3_url}${this.resumePath}`", typeof (`${environment.s3_url}${this.resumePath}`));
+    const resumeUrl = `${environment.s3_url}${this.resumePath}`;
+    window.open(resumeUrl, '_blank');
   }
 
-  rejectClick(): void {
+  rejectClick(data: any): void {
     const feedback = document.getElementById('feedback') as HTMLInputElement;
     if (feedback) this.feedback = feedback?.value;
-    if (this.feedback.trim() !== '' || this.messageType.trim() === 'rejection') {
-      let payload = {
+    if (this.feedback.trim() !== '' || data) {
+      const payload = {
         serviceId: this.serviceId,
         stationId: this.candidateDetails?.candidateStation,
         userId: this.userId,
         status: "rejected",
-        // rejectCc: this.feedbackCc,
-        // rejectMailTemp: this.htmlString,
-        // rejectSubject: this.feedbackSubject
-      }
+        rejectCc: data?.mailCc ?? '',
+        rejectMailTemp: data?.mailTemp ?? '',
+        rejectSubject: data?.mailSubject ?? '',
+        rejectBcc: data?.mailBcc ?? '',
+      };
+
       this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
         next: (res: any) => {
           this.closeDialog();
@@ -141,17 +138,21 @@ export class HrCandidateDetailComponent {
         }
       });
     } else this.tostr.warning('Please Add Feedback');
+
   }
 
   approveClick(): void {
-    const feedback = document.getElementById('feedback') as HTMLInputElement;
-    if (feedback) this.feedback = feedback?.value;
-    if (this.feedback.trim() !== '') {
+    const feedbackElement = document.getElementById('feedback') as HTMLInputElement;
+    const feedback = feedbackElement?.value.trim();
+
+    if (feedback) {
+      this.feedback = feedback;
       const payload = {
         serviceSeqId: this.serviceId,
         feedBack: this.feedback,
         feedBackBy: this.userId
       };
+
       this.apiService.post(`/hr-station/candidateToUser`, payload).subscribe({
         next: (res: any) => {
           this.tostr.success('Approval successful');
@@ -159,6 +160,9 @@ export class HrCandidateDetailComponent {
         },
         error: (error) => this.tostr.error('Error during approval')
       });
-    } else this.tostr.warning('Please Add Feedback');
+    } else {
+      this.tostr.warning('Please Add Feedback');
+    }
   }
+
 }

@@ -57,7 +57,7 @@
         <button class="select-btn" [ngClass]="{'offer-select-btn': messageType === 'offer'}"
             (click)="showMail('offer')">Offer Letter</button>
         <button class="reject-btn" [ngClass]="{'offer-reject-btn': messageType === 'rejection'}"
-            (click)="showMail('rejection')">Rejection Notification</button>
+            (click)="showMail('rejection')">Rejection Letter</button>
     </div>
     <div *ngIf="!hrReview && this.data?.candidateDetails?.serviceStatus !== 'moved' && (showSelection || showRejection)">
         <app-mail-template [candidate]="mailTemplateData" (submitData)="onSubmitData($event)"></app-mail-template>
@@ -83,10 +83,9 @@
             <span>Feedback</span>
         </div>
         <div class="m-10">
-            <textarea class="text-area" id="" cols="30" rows="10" id="feedback"
-                placeholder="Add Feedback for Approval or Rejection"></textarea>
+            <textarea class="text-area" id="" id="feedback" placeholder="Add Feedback"></textarea>
             <div class="btn-parent">
-                <button class="c-pointer btn-reject" (click)="rejectClick()">Rejected</button>
+                <button class="c-pointer btn-reject"  (click)="rejectClick('')">Rejected</button>
                 <button class="btn c-pointer" (click)="approveClick()">Accepted</button>
             </div>
         </div>
