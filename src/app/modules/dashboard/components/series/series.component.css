@@ -9,7 +9,7 @@
 .title {
     font-weight: 500;
     color: #000000;
-    font-size: 25px;
+    font-size: 21px;
 }
 
 .approve-btn {
@@ -25,7 +25,7 @@
     width: 100%;
     flex-wrap: wrap;
     column-gap: 40px;
-    margin-top: 43px;
+    margin-top: 22px;
 }
 
 .contents {
@@ -103,6 +103,82 @@
 }
 
 .title-candidate {
-    position: fixed;
+    /* position: fixed; */
     z-index: 1;
 }
+
+.container{
+    height: 288px;
+    width: 99%;
+    background-color: white;
+}
+
+.title-requirement{
+    padding-left: 16px;
+    height: 46px;
+    background-color: #F4F2F2;
+    line-height: 46px;
+   
+}
+
+.requirement-name{
+    color: #4F4F4F;
+    font-weight: 500;
+    font-size: 17px;
+}
+
+.info-pair-requirement {
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+.key-requirement,
+.value-requirement {
+    /* flex: 1; */
+    margin: 5px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0em;
+    color: #575F6E;
+}
+
+.key-requirement {
+    color: #000000;
+    width: 22%;
+    color: #575F6E;
+}
+
+.value-requirement {
+    color: #575F6E;
+    text-align: left;
+    width: 78%;
+}
+
+.info-container-requirement{
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+}
+
+.container-requirement{
+    gap: 38px;
+}
+
+.info-container-requirement:first-of-type{
+    border-right: 1px dotted #ABABAB
+
+}
+
+.icon {
+    margin: 5px;
+    
+  
+  }
+
+  .actions{
+    float: right;
+  }

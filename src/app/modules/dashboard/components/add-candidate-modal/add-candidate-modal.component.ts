@@ -256,10 +256,10 @@ export class AddCandidateModalComponent implements OnInit {
         condition: !this.sourceId,
         message: 'Please Enter an Application source'
       },
-      {
-        condition: !this.uploadedFileKey,
-        message: 'Please Upload Candidate Resume'
-      },
+      // {
+      //   condition: !this.uploadedFileKey,
+      //   message: 'Please Upload Candidate Resume'
+      // },
       {
         condition: !this.selectedRequirementId,
         message: 'Please Select a Requirement'

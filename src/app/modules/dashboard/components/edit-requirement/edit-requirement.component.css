@@ -10,7 +10,7 @@
 
 .header {
     color: #000000;
-    font-size: 30px;
+    font-size: 18px;
     font-weight: 500;
     line-height: 35.55px;
 }
@@ -38,12 +38,12 @@
 }
 
 .input {
-    width: 95%;
+    width: 94%;
     height: 34px;
     border-radius: 5px;
     outline: none;
     background: #FAFAFA;
-    padding-left: 5px;
+    padding-left: 10px;
     border: 1px solid #E9E9E9;
     margin-top: 10px;
 }
@@ -51,7 +51,7 @@
 .sub-head {
     color: #000000;
     font-weight: 400;
-    font-size: 16px;
+    /* font-size: 16px; */
     line-height: 21.33px;
     padding-bottom: 10px;
 }
@@ -153,13 +153,17 @@
 }
 
 .drop-list-skill {
-    height: 72px;
+    height: 57px;
     overflow-y: scroll;
-    width: 99.9%;
-    max-height: 172px;
+    height: 57px;
+    overflow-y: scroll;
+    width: 99%;
+    max-height: 100px;
     position: absolute;
     background-color: #FFFFFF;
-    z-index: 1;
+    max-height: 100px;
+    position: absolute;
+    background-color: #FFFFFF;
 }
 
 .fa-trash-o {
@@ -243,8 +247,18 @@
     color: #575F6E;
 }
 
-.input-interview-rounds {
+/* .input-interview-rounds {
     width: 97.5%;
+    height: 45px;
+    border-radius: 5px;
+    outline: none;
+    background: #FAFAFA;
+    padding-left: 5px;
+    border: 1px solid #E9E9E9;
+    margin-top: 10px;
+} */
+.input-interview-rounds {
+    width: 97.9%;
     height: 34px;
     border-radius: 5px;
     outline: none;
@@ -254,8 +268,15 @@
     margin-top: 10px;
 }
 
+.title-requirement{
+    background-color: #D9D9D9;
+    padding-left: 29px;
+    height: 50px;
+    line-height: 50px;
+}
+
 .skills-main {
-    width: 98%;
+    width: 98.2%;
     /* height: 175px; */
 }
 
@@ -294,9 +315,13 @@
     padding-left: 5px;
     border: 1px solid #E9E9E9;
     margin-top: 10px;
-    width: 97.4%;
+    width: 97.9%;
 }
 
 .clear-filter{
-    right: 29px;
+    right: 6px;
 }
+
+body::-webkit-scrollbar-track {
+    background: orange;        /* color of the tracking area */
+  }

@@ -58,9 +58,9 @@ export class ServiceRequestComponent implements OnInit {
     this.fetchStations();
     this.fetchServiceTeam();
     this.fetchDesignation();
-    if (history?.state?.requirement) {
-      this.requirementFromList()
-    }
+    // if (history?.state?.requirement) {
+    //   this.requirementFromList()
+    // }
   }
 
   onBodyClick(event: MouseEvent): void {
@@ -71,12 +71,10 @@ export class ServiceRequestComponent implements OnInit {
       this.openDesignation = false;
     }
   }
-  requirementFromList():void{
-    console.log("inside", history?.state?.requirement);
-    // this.requirement = history?.state?.candidate;
-    // this.selectedRequirementId = this.requirement.requestId;
-    // this.fromRequirementName = this.requirement.requestName;
-  }
+  // requirementFromList():void{
+  //   console.log("inside", history?.state?.requirement);
+
+  // }
 
   fetchDesignation() {
     this.apiService.get(`/service-request/designation/list`).subscribe(((res: any) => {
@@ -129,7 +127,7 @@ export class ServiceRequestComponent implements OnInit {
   }
 
 
-  
+
   selectTeam(teamId: any, teamName: any): void {
     this.teamListOpen = false;
     this.selectedTeam = teamName;
@@ -178,6 +176,7 @@ export class ServiceRequestComponent implements OnInit {
   getSkillSuggestions(event: any): void {
     this.showSearchBar = true;
     this.searchvalue = event?.target.value;
+    console.log(" this.searchvalue", this.searchvalue)
     this.apiService.get(`/candidate/skills/list?search=${this.searchvalue}`).subscribe((res: any) => {
       if (res?.data) this.skillSuggestions = res?.data.filter((suggestion: any) =>
         suggestion.skillName.toLowerCase().startsWith(this.searchvalue.toLowerCase())
@@ -193,7 +192,7 @@ export class ServiceRequestComponent implements OnInit {
   }
 
   removeSkill(skillToRemove: any): void {
-    this.selectedSkills = this.selectedSkills?.filter(skill => skill.id !== skillToRemove.id);
+    this.selectedSkills = this.selectedSkills?.filter(skill => skill !== skillToRemove);
   }
 
   submitClick(): void {
@@ -256,4 +255,9 @@ export class ServiceRequestComponent implements OnInit {
     this.resetFormAndState();
   }
 
+  clearFilter(): void {
+    this.searchvalue = '';
+    this.showSearchBar = false;
+    this.skillSuggestions = [];
+  }
 }

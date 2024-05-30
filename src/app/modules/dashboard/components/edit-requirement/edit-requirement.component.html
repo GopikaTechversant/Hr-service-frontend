@@ -1,7 +1,7 @@
+<div class="d-flex  align-center  title-requirement">
+    <span class="header">Edit Requirement</span>
+</div>
 <div class="main">
-    <div class="d-flex p-t-20 align-center p-b-10 ">
-        <span class="header">Create Requirement</span>
-    </div>
     <div *ngIf="loader" class="loader-parent">
         <img src="assets/gif/loader.gif">
     </div>
@@ -10,13 +10,13 @@
             <div class="m-t-20 m-b-10 child">
                 <span class="sub-head">Job Title<span class="required">*</span></span>
                 <div>
-                    <input type="text" class="input" #jobtitle max="20">
+                    <input type="text" class="input" max="20" [(ngModel)]="jobTitle">
                 </div>
             </div>
             <div class="m-t-20 m-b-10 p-l-10 m-l-10 child">
                 <span class="sub-head">Job Code</span>
                 <div>
-                    <input type="text" class="input" #jobCode max="20">
+                    <input type="text" class="input" max="20" [(ngModel)]="jobCode">
                 </div>
             </div>
         </div>
@@ -25,7 +25,7 @@
                 <span class="sub-head">Interview Rounds<span class="required">*</span></span>
                 <div class="d-flex input-interview-rounds p-relative">
                     <div *ngFor="let item of selectedStations; let i = index">
-                        <div *ngIf="item?.stationName" class="m-t-4 m-l-5 d-flex align-center">
+                        <div *ngIf="item?.stationName" class="m-t-8 m-l-5 d-flex align-center">
                             <!-- First station (Screening) -->
                             <ng-container *ngIf="i === 0">
                                 <span class="m-t-4">{{item?.stationName}}</span>
@@ -57,7 +57,7 @@
                         </div>
                     </div>
                     <div class="add-btn no-close c-pointer" (click)="idListOpen = !idListOpen">
-                        <span class="p-t-20">Add</span>
+                        <span class="p-t-20">Change</span>
                     </div>
                     <div class="drop-list no-close" *ngIf="idListOpen && (selectedStations?.length < 5)">
                         <div (click)="selectStation(station?.stationId, station?.stationName)"
@@ -67,14 +67,13 @@
                     </div>
                 </div>
             </div>
-
         </div>
         <div class="d-flex parent">
             <div class="m-t-20 m-b-10 child">
                 <span class="sub-head">Designation<span class="required">*</span></span>
                 <div class="no-close col-md-3 s-list d-flex input j-space m-text p-relative">
                     <span (click)="openDesignation = !openDesignation" class="w-100 d-flex">
-                        <span class="align-center m-t-6 c-pointer">
+                        <span class="align-center m-t-10 c-pointer">
                             {{selectedDesignation.trim() !== '' ? selectedDesignation : 'Select Designation'}}</span>
                         <span class="no-close s-list c-pointer align-center m-b-2 flex-1 sub j-end"><i
                                 class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
@@ -91,7 +90,7 @@
                 <span class="sub-head">Department Name<span class="required">*</span></span>
                 <div class="no-close col-md-3 s-list d-flex input j-space m-text p-relative">
                     <span (click)="teamListOpen = !teamListOpen" class="w-100 d-flex">
-                        <span class="align-center m-t-6 c-pointer">
+                        <span class="align-center m-t-10 c-pointer">
                             {{selectedTeam.trim() !== '' ? selectedTeam : 'Select Department'}}</span>
                         <span class="no-close s-list c-pointer align-center m-b-2 flex-1 sub j-end"><i
                                 class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
@@ -109,15 +108,15 @@
             <div class="m-t-20 m-b-10 child">
                 <span class="sub-head">Base salary</span>
                 <div>
-                    <input type="text" class="input" #baseSalaryInput (keypress)="onKeypress($event)"
-                        (paste)="onPaste($event)" max="20">
+                    <input type="text" class="input" (keypress)="onKeypress($event)" (paste)="onPaste($event)" max="20"
+                        [(ngModel)]="baseSalary">
                 </div>
             </div>
             <div class="m-t-20 m-b-10 p-l-10 m-l-10 child">
                 <span class="sub-head">Maximum salary</span>
                 <div>
-                    <input type="text" class="input" #maxSalaryInput (keypress)="onKeypress($event)"
-                        (paste)="onPaste($event)" max="20">
+                    <input type="text" class="input" (keypress)="onKeypress($event)" (paste)="onPaste($event)" max="20"
+                        [(ngModel)]="maxSalary">
                 </div>
             </div>
         </div>
@@ -125,13 +124,13 @@
             <div class="m-t-20 m-b-10 child">
                 <span class="sub-head">Experience</span>
                 <div>
-                    <input type="text" class="input" #experienceInput (keydown)="experienceValidation($event)">
+                    <input type="text" class="input" (keydown)="experienceValidation($event)" [(ngModel)]="experience">
                 </div>
             </div>
             <div class="m-t-20 m-b-10 p-l-10 m-l-10 child">
                 <span class="sub-head">Vacancy</span>
                 <div>
-                    <input type="text" class="input" #vacancy max="4" (keypress)="onKeypress($event)">
+                    <input type="text" class="input" max="4" (keypress)="onKeypress($event)" [(ngModel)]="vacancy">
                 </div>
             </div>
         </div>
@@ -143,9 +142,8 @@
                         <input type="text" class="input-interview-rounds-skill" placeholder="Search Skills"
                             (input)="getSkillSuggestions($event)" id="skillSearch" [(ngModel)]="searchvalue">
                         <span *ngIf="searchvalue !== ''" (click)="clearFilter()"
-                            class="clear-filter c-pointer m-l-10 p-absolute m-t-20"><img
-                                src="assets/images/skill-close-icon.png" alt="" class="m-t-0 p-r-13" width="17px"
-                                height="17px">
+                            class="clear-filter c-pointer m-l-10 p-absolute m-t-20"><img src="assets/images/skill-close-icon.png" alt=""
+                                class="m-t-0 p-r-13" width="17px" height="17px">
                         </span>
                         <div class="m-t-8 drop-list-skill" *ngIf="showSearchBar">
                             <div *ngFor="let suggestion of skillSuggestions" (click)="selectSkill(suggestion)">
@@ -172,7 +170,7 @@
             </div>
 
         </div>
-        <div class="p-29">
+        <div class="p-20">
             <div class="d-flex j-end p-t-10 m-t-10">
                 <div class="mat-ripple m-r-10 button c-pointer d-flex align-center c-pointer"><button
                         class="btn-submit c-pointer" (click)="submitClick()">Submit</button></div>

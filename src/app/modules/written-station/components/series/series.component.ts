@@ -38,8 +38,10 @@ export class SeriesComponent implements OnInit {
   candidatesStatus: any[] = [];
   averageScore: string | null = null;
   selectedBox: any;
-  isExperienceListOpen : boolean = false;
-  experienceList = ['1','2','3'];
+  isExperienceListOpen: boolean = false;
+  resumePath: any;
+  searchKeyword: string = '';
+
   ngOnInit(): void {
     this.fetchCandidates();
     this.fetchCandidatesWithQuestionBox();
@@ -54,10 +56,23 @@ export class SeriesComponent implements OnInit {
   }
 
   fetchCandidates(): void {
-    this.apiService.get(`/screening-station/list-batch/${this.requestId}?station=2`).subscribe((res: any) => {
+    this.apiService.get(`/screening-station/list-batch/${this.requestId}?station=2&experience=${this.searchKeyword}`).subscribe((res: any) => {
+      console.log("this.searchKeyworddff", this.searchKeyword);
+
       if (res && res?.candidates) this.candidates_list = res?.candidates;
       this.showAverageScoreInput = this.candidates_list.some((candidate: any) => candidate.serviceStatus === 'pending');
     });
+  }
+
+  searchCandidate(searchTerm: string): void {
+    console.log("searchTerm", searchTerm);
+    this.searchKeyword = searchTerm;
+    this.fetchCandidates();
+  }
+
+  clearFilter(item: any): void {
+    if (item === 'search') this.searchKeyword = '';
+    this.fetchCandidates();
   }
 
   image(): void {
@@ -71,7 +86,6 @@ export class SeriesComponent implements OnInit {
         reader.readAsDataURL(response);
       });
   }
-
 
   fetchCandidatesWithQuestionBox(): void {
     this.apiService.get(`/written-station/questionBatchList/${this.requestId}`).subscribe((res: any) => {
@@ -99,23 +113,23 @@ export class SeriesComponent implements OnInit {
     const payload = { requstId: this.requestId }
     const previousBoxIndex = this.created_Box.length - 1;
     const previousBoxContainsQuestions = previousBoxIndex >= 0 && this.created_Box[previousBoxIndex].questionName;
-    if(this.candidates_list.length !== 0){
-    if (previousBoxContainsQuestions || this.created_Box.length === 0) {
-      console.log("this.candidates_list.length",this.candidates_list.length);
-      
-      this.apiService.post(`/written-station/create-question-box`, payload).subscribe((res: any) => {
-        if (res?.data) {
-          this.created_Box.push({
-            id: res.data.id,
-            requstId: res.data.requstId,
-            name: `Question Box ${this.created_Box.length + 1}`
-          });
-          this.isQuestionBoxCreated = true;
-        }
-        console.log("created_Box.length", this.created_Box);
-      })
+    if (this.candidates_list.length !== 0) {
+      if (previousBoxContainsQuestions || this.created_Box.length === 0) {
+        console.log("this.candidates_list.length", this.candidates_list.length);
+
+        this.apiService.post(`/written-station/create-question-box`, payload).subscribe((res: any) => {
+          if (res?.data) {
+            this.created_Box.push({
+              id: res.data.id,
+              requstId: res.data.requstId,
+              name: `Question Box ${this.created_Box.length + 1}`
+            });
+            this.isQuestionBoxCreated = true;
+          }
+          console.log("created_Box.length", this.created_Box);
+        })
+      }
     }
-  }
   }
 
   openAssignModal(candidate: any): void {
@@ -129,7 +143,7 @@ export class SeriesComponent implements OnInit {
       const dialogRef = this.dialog.open(AssignSeriesComponent, {
         height: '265px',
         width: '477px',
-        data: { seriesList: this.created_Box, candidateServiceId: candidate}
+        data: { seriesList: this.created_Box, candidateServiceId: candidate }
       });
       dialogRef.afterClosed().subscribe((selectedQuestionBox: any) => {
         if (selectedQuestionBox.series) {
@@ -152,7 +166,7 @@ export class SeriesComponent implements OnInit {
                 // Remove the candidate from the candidates_list
                 this.candidates_list = this.candidates_list.filter((item: any) => item.candidateId !== candidate.candidateId);
                 // Remove the candidate from other question boxes if already assigned
-                
+
                 this.created_Box.forEach((s: any) => {
                   if (s.candidates && s !== this.selectedBox) {
                     s.candidates = s.candidates.filter((c: any) => c.candidateId !== candidate.candidateId);
@@ -191,8 +205,6 @@ export class SeriesComponent implements OnInit {
     }
   }
 
-
-
   selectQuestion(questionBox: any, id: any, name: any): void {
     this.questions_list = this.questions_list.filter((question: { questionId: any; }) => question.questionId !== id);
     if (questionBox) {
@@ -230,7 +242,7 @@ export class SeriesComponent implements OnInit {
 
   onSwitchStation(candidate: any): void {
     console.log("candidate", candidate)
-    if (candidate?.serviceStatus === 'pending') {
+    if (candidate?.serviceStatus === 'pending' || candidate?.serviceStatus === 'rejected') {
       const userId = localStorage.getItem('userId');
       const dialogRef = this.dialog.open(StationSwitchComponent, {
         data: {
@@ -282,8 +294,15 @@ export class SeriesComponent implements OnInit {
 
   }
 
-  viewProgressFile(progressFile: string) {
-    window.open(`${environment.api_url}${progressFile}`, '_blank');
+  // viewProgressFile(progressFile: string) {
+  //   window.open(`${environment.api_url}${progressFile}`, '_blank');
+  // }
+
+  viewResume(resume: any) {
+    this.resumePath = resume;
+    console.log("this.resumePath", this.resumePath);
+    window.open(`${environment.s3_url}${this.resumePath}`, '_blank');
+    console.log("`${environment.s3_url}${this.resumePath}`", typeof (`${environment.s3_url}${this.resumePath}`));
   }
 
   approve(): void {
@@ -318,10 +337,6 @@ export class SeriesComponent implements OnInit {
   triggerFileInput(): void {
     const fileInput = document.querySelector('input[type="file"]') as HTMLElement;
     fileInput.click();
-  }
-
-  selectExperience():void{
-
   }
 
 }
