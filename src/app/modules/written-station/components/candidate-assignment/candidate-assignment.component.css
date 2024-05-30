@@ -1,0 +1,134 @@
+.title {
+    font-size: 27px;
+    font-weight: 500;
+    text-align: left;
+}
+
+.candidates-list {
+    height: 249px;
+    border: 1px solid #575F6E;
+    border-radius: 2px;
+    background-color: #E7E7E7;
+    width: 99%;
+}
+
+.box-name {
+    height: 39px;
+    background-color: #6D7788;
+    padding-left: 12px;
+    color: white;
+}
+
+.name-candidate {
+    color: #000000;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0em;
+    text-align: left;
+    color: white;
+}
+
+.input-search {
+    border: 1px solid #E9E9E9;
+    outline: none;
+    border-radius: 3px;
+    width: 210px;
+    height: 18px;
+    background-color: white;
+    margin-top: 4px;
+}
+
+.search-text {
+    border: none;
+    outline: none;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    width: 203px;
+    height: 18px;
+}
+
+.clear-search {
+    border: 1px solid #3c40434d;
+    border-radius: 72%;
+    color: black;
+    height: 15px;
+    line-height: 15px;
+    width: 35px;
+    line-height: 15px;
+    padding-left: 4px;
+}
+
+.parent-conatiner {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 225px;
+    overflow-y: scroll;
+}
+
+.centerd-div-question-box {
+    margin-top: 38px;
+    text-align: center;
+}
+
+.info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.info-pair {
+    display: flex;
+    justify-content: space-between;
+    width: 338px;
+}
+
+.key {
+    color: #575F6E;
+    width: 83px;
+}
+
+.value {
+    flex: 1;
+    color: #575F6E;
+}
+
+.candidate-box-parent {
+    height: 195px;
+    overflow-y: scroll;
+    margin-top: 6px;
+    gap: 18px;
+}
+
+.candidate-box {
+    padding-left: 18px;
+    margin-left: 10px;
+    height: 166px;
+    margin-left: 10px;
+    padding-top: 12px;
+    border: 1px solid #E3E0E0;
+    background-color: white;
+}
+
+.candidate-name {
+    color: #005EC9;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.moved{
+    margin-right: 6px;
+    color: darkred;
+}
+
+.assign {
+    border-radius: 3px;
+    background: #005EC9;
+    color: white;
+    border: none;
+    height: 30px;
+    width: 68px;
+    margin-top: 11px;
+    padding-bottom: 2px;
+}
