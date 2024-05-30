@@ -138,14 +138,20 @@ export class EditComponent implements OnInit {
     });
   }
 
+  // onFileSelected(event: any) {
+  //   this.fileInputClicked = true;
+  //   this.selectedFile = event.target.files[0];
+  //   console.log("this.selectedFile in add ", this.selectedFile);
+  //   if (event.target.files.length > 0) this.resumeUploadSuccess = true;
+  //   if (this.selectedFile) this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', this.selectedFile);
+  //   this.getKeyFroms3();
+  //   // if(this.selectedFile) this.s3Service.uploadedFile.emit(this.selectedFile)
+  // }
+
   onFileSelected(event: any) {
     this.fileInputClicked = true;
-    this.selectedFile = event.target.files[0];
-    console.log("this.selectedFile in add ", this.selectedFile);
+    this.selectedFile = event?.target?.files[0];
     if (event.target.files.length > 0) this.resumeUploadSuccess = true;
-    if (this.selectedFile) this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', this.selectedFile);
-    this.getKeyFroms3();
-    // if(this.selectedFile) this.s3Service.uploadedFile.emit(this.selectedFile)
   }
 
   getKeyFroms3(): void {
@@ -187,59 +193,102 @@ export class EditComponent implements OnInit {
     this.showSecondary = !this.showSecondary;
   }
 
-  
   submitClick(): void {
     let candidateDetails = this.candidateForm.value;
     this.primaryskills = this.selectedPrimarySkills.map(skill => skill.id);
     this.secondaryskills = this.selectedSecondarySkills.map(skill => skill.id);
-    
-    const payload = {
-      candidateId: this.candidateDetails?.candidateId,
-      candidateFirstName: candidateDetails?.candidateFirstName !== this.candidateDetails?.candidateFirstName ? candidateDetails?.candidateFirstName : undefined,
-      candidateLastName: candidateDetails?.candidateLastName !== this.candidateDetails?.candidateLastName ? candidateDetails?.candidateLastName : undefined,
-      candidateDoB: candidateDetails?.candidateDoB !== this.candidateDetails?.candidateDoB ? candidateDetails?.candidateDoB : undefined,
-      candidateGender: candidateDetails?.candidateGender !== this.candidateDetails?.candidateGender ? candidateDetails?.candidateGender : undefined,
-      candidateExperience: candidateDetails?.candidateExperience !== this.candidateDetails?.candidateExperience ? candidateDetails?.candidateExperience : undefined,
-      candidatePreviousOrg: candidateDetails?.candidatePreviousOrg !== this.candidateDetails?.candidatePreviousOrg ? candidateDetails?.candidatePreviousOrg : undefined,
-      candidatePreviousDesignation: candidateDetails?.candidatePreviousDesignation !== this.candidateDetails?.candidatePreviousDesignation ? candidateDetails?.candidatePreviousDesignation : undefined,
-      candidateEducation: candidateDetails?.candidateEducation !== this.candidateDetails?.candidateEducation ? candidateDetails?.candidateEducation : undefined,
-      candidateCurrentSalary: candidateDetails?.candidateCurrentSalary !== this.candidateDetails?.candidateCurrentSalary ? candidateDetails?.candidateCurrentSalary : undefined,
-      candidateExpectedSalary: candidateDetails?.candidateExpectedSalary !== this.candidateDetails?.candidateExpectedSalary ? candidateDetails?.candidateExpectedSalary : undefined,
-      candidateAddress: candidateDetails?.candidateAddress !== this.candidateDetails?.candidateAddress ? candidateDetails?.candidateAddress : undefined,
-      candidateEmail: candidateDetails?.candidateemail !== this.candidateDetails?.candidateEmail ? candidateDetails?.candidateemail : undefined,
-      candidateMobileNo: candidateDetails?.candidateMobileNo !== this.candidateDetails?.candidateMobileNo ? candidateDetails?.candidateMobileNo : undefined,
-      resumeSourceId: this.sourceId,
-      candidateResume: this.uploadedFileKey,
-      candidatePrimarySkills: this.primaryskills.length > 0 ? this.primaryskills : undefined,
-      candidateSecondarySkills: this.secondaryskills.length > 0 ? this.secondaryskills : undefined,
-      candidatesAddingAgainst: this.selectedRequirementId,
-      genderName: this.genderName,
-    };
- 
+    const formdata = new FormData();
+    formdata.append('candidateId', this.candidateDetails?.candidateId);
+    if (candidateDetails.candidateFirstName !== this.candidateDetails?.candidateFirstName) formdata.append('candidateFirstName', candidateDetails?.candidateFirstName);
+    if (candidateDetails?.candidateLastName !== this.candidateDetails?.candidateLastName) formdata.append('candidateLastName', candidateDetails?.candidateLastName);
+    if (candidateDetails?.candidateDoB !== this.candidateDetails?.candidateDoB) formdata.append('candidateDoB', candidateDetails?.candidateDoB);
+    if (candidateDetails?.candidateGender !== this.candidateDetails?.candidateGender) formdata.append('candidateGender', candidateDetails?.candidateGender);
+    if (candidateDetails?.candidateExperience !== this.candidateDetails?.candidateExperience) formdata.append('candidateExperience', candidateDetails?.candidateExperience);
+    if (candidateDetails?.candidatePreviousOrg !== this.candidateDetails?.candidatePreviousOrg) formdata.append('candidatePreviousOrg', candidateDetails?.candidatePreviousOrg);
+    if (candidateDetails?.candidatePreviousDesignation !== this.candidateDetails?.candidatePreviousDesignation) formdata.append('candidatePreviousDesignation', candidateDetails?.candidatePreviousDesignation);
+    if (candidateDetails?.candidateEducation !== this.candidateDetails?.candidateEducation) formdata.append('candidateEducation', candidateDetails?.candidateEducation);
+    if (candidateDetails?.candidateCurrentSalary !== this.candidateDetails?.candidateCurrentSalary) formdata.append('candidateCurrentSalary', candidateDetails?.candidateCurrentSalary);
+    if (candidateDetails?.candidateExpectedSalary !== this.candidateDetails?.candidateExpectedSalary) formdata.append('candidateExpectedSalary', candidateDetails?.candidateExpectedSalary);
+    if (candidateDetails?.candidateAddress !== this.candidateDetails?.candidateAddress) formdata.append('candidateEducation', candidateDetails?.candidateAddress);
+    if (candidateDetails?.candidateemail !== this.candidateDetails?.candidateEmail) formdata.append('candidateemail', candidateDetails?.candidateemail);
+    if (candidateDetails?.candidateMobileNo !== this.candidateDetails?.candidateMobileNo) formdata.append('candidateMobileNo', candidateDetails?.candidateMobileNo);
+    if (this.sourceId) formdata.append('resumeSourceId', this.sourceId);
+    if (this.selectedFile) formdata.append('candidateResume', this.selectedFile);
+    if (this.primaryskills.length > 0) formdata.append('candidatePrimarySkills', this.primaryskills);
+    if (this.secondaryskills.length > 0) formdata.append('candidateSecondarySkills', this.secondaryskills);
+    if (this.selectedRequirementId) formdata.append('candidatesAddingAgainst', this.selectedRequirementId);
+    if (this.genderName) formdata.append('candidateGender', this.genderName);
     if (this.candidateForm.value.candidateFirstName && this.candidateForm.value.candidateLastName && this.candidateForm.value.candidateGender
-          && this.candidateForm.value.candidateemail && this.candidateForm.value.candidateMobileNo) {
-          this.validationSuccess = true;
-        } else this.tostr.warning('Please fill all mandatory fields');
-
+      && this.candidateForm.value.candidateemail && this.candidateForm.value.candidateMobileNo) {
+      this.validationSuccess = true;
+    } else this.tostr.warning('Please fill all mandatory fields');
     if (this.validationSuccess) {
-      this.apiService.post(`/candidate/edit`, payload).subscribe(
-        (response) => {
-          this.tostr.success('Candidate updated successfully');
-          this.onEditSuccess.emit();
-          this.dialogRef.close();
-        },
+      this.apiService.post(`/candidate/edit`, formdata).subscribe((response) => {
+        this.tostr.success('Candidate updated successfully');
+        this.onEditSuccess.emit();
+        this.dialogRef.close();
+      },
         (error) => {
-          if (error?.status === 500) {
-            this.tostr.error("Internal Server Error");
-          } else {
-            this.tostr.warning(error?.error?.message ? error?.error?.message : "Unable to create candidate");
-          }
+          if (error?.status === 500) this.tostr.error("Internal Server Error")
+          else this.tostr.warning(error?.error?.message ? error?.error?.message : "Unable to create candidate");    
         }
       );
-    } else {
-      this.submitted = true;
-    }
-}
+    } else this.submitted = true;
+  }
+
+  
+//   submitClick(): void {
+//     let candidateDetails = this.candidateForm.value;
+//     this.primaryskills = this.selectedPrimarySkills.map(skill => skill.id);
+//     this.secondaryskills = this.selectedSecondarySkills.map(skill => skill.id);
+    
+//     const payload = {
+//       candidateId: this.candidateDetails?.candidateId,
+//       candidateFirstName: candidateDetails?.candidateFirstName !== this.candidateDetails?.candidateFirstName ? candidateDetails?.candidateFirstName : undefined,
+//       candidateLastName: candidateDetails?.candidateLastName !== this.candidateDetails?.candidateLastName ? candidateDetails?.candidateLastName : undefined,
+//       candidateDoB: candidateDetails?.candidateDoB !== this.candidateDetails?.candidateDoB ? candidateDetails?.candidateDoB : undefined,
+//       candidateGender: candidateDetails?.candidateGender !== this.candidateDetails?.candidateGender ? candidateDetails?.candidateGender : undefined,
+//       candidateExperience: candidateDetails?.candidateExperience !== this.candidateDetails?.candidateExperience ? candidateDetails?.candidateExperience : undefined,
+//       candidatePreviousOrg: candidateDetails?.candidatePreviousOrg !== this.candidateDetails?.candidatePreviousOrg ? candidateDetails?.candidatePreviousOrg : undefined,
+//       candidatePreviousDesignation: candidateDetails?.candidatePreviousDesignation !== this.candidateDetails?.candidatePreviousDesignation ? candidateDetails?.candidatePreviousDesignation : undefined,
+//       candidateEducation: candidateDetails?.candidateEducation !== this.candidateDetails?.candidateEducation ? candidateDetails?.candidateEducation : undefined,
+//       candidateCurrentSalary: candidateDetails?.candidateCurrentSalary !== this.candidateDetails?.candidateCurrentSalary ? candidateDetails?.candidateCurrentSalary : undefined,
+//       candidateExpectedSalary: candidateDetails?.candidateExpectedSalary !== this.candidateDetails?.candidateExpectedSalary ? candidateDetails?.candidateExpectedSalary : undefined,
+//       candidateAddress: candidateDetails?.candidateAddress !== this.candidateDetails?.candidateAddress ? candidateDetails?.candidateAddress : undefined,
+//       candidateEmail: candidateDetails?.candidateemail !== this.candidateDetails?.candidateEmail ? candidateDetails?.candidateemail : undefined,
+//       candidateMobileNo: candidateDetails?.candidateMobileNo !== this.candidateDetails?.candidateMobileNo ? candidateDetails?.candidateMobileNo : undefined,
+//       resumeSourceId: this.sourceId,
+//       candidateResume: this.uploadedFileKey,
+//       candidatePrimarySkills: this.primaryskills.length > 0 ? this.primaryskills : undefined,
+//       candidateSecondarySkills: this.secondaryskills.length > 0 ? this.secondaryskills : undefined,
+//       candidatesAddingAgainst: this.selectedRequirementId,
+//       genderName: this.genderName,
+//     };
+ 
+//     if (this.candidateForm.value.candidateFirstName && this.candidateForm.value.candidateLastName && this.candidateForm.value.candidateGender
+//           && this.candidateForm.value.candidateemail && this.candidateForm.value.candidateMobileNo) {
+//           this.validationSuccess = true;
+//         } else this.tostr.warning('Please fill all mandatory fields');
+
+//     if (this.validationSuccess) {
+//       this.apiService.post(`/candidate/edit`, payload).subscribe(
+//         (response) => {
+//           this.tostr.success('Candidate updated successfully');
+//           this.onEditSuccess.emit();
+//           this.dialogRef.close();
+//         },
+//         (error) => {
+//           if (error?.status === 500) {
+//             this.tostr.error("Internal Server Error");
+//           } else {
+//             this.tostr.warning(error?.error?.message ? error?.error?.message : "Unable to create candidate");
+//           }
+//         }
+//       );
+//     } else {
+//       this.submitted = true;
+//     }
+// }
 
 
   triggerFileInput(): void {
@@ -291,11 +340,17 @@ export class EditComponent implements OnInit {
     this.skillSuggestions = [];
   }
 
+  // viewResume(resume: any) {
+  //   this.resumePath = resume;
+  //   console.log("this.resumePath", this.resumePath);
+  //   window.open(`${environment.s3_url}${this.resumePath}`, '_blank');
+  //   console.log("`${environment.s3_url}${this.resumePath}`",typeof(`${environment.s3_url}${this.resumePath}`));
+  // }
+
   viewResume(resume: any) {
     this.resumePath = resume;
-    console.log("this.resumePath", this.resumePath);
-    window.open(`${environment.s3_url}${this.resumePath}`, '_blank');
-    console.log("`${environment.s3_url}${this.resumePath}`",typeof(`${environment.s3_url}${this.resumePath}`));
+    window.open(`${environment.api_url}${this.resumePath}`, '_blank');
+    console.log(`${environment.api_url}${this.resumePath}`);
   }
 
   ngOnDestroy(): void {

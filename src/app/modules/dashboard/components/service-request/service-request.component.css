@@ -5,7 +5,7 @@
 }
 
 .scroller-box {
-    width: 100%;
+    width: 97%;
 }
 
 .header {
@@ -39,7 +39,7 @@
 
 .input {
     width: 95%;
-    height: 34px;
+    height: 40px;
     border-radius: 5px;
     outline: none;
     background: #FAFAFA;
@@ -96,12 +96,11 @@
     border-radius: 3px;
     border: none;
     color: white;
-    /* font-size: 16px; */
     font-weight: 400;
     text-align: center;
-    height: 25px;
-    line-height: 25px;
-    margin-top: 5px;
+    height: 30px;
+    line-height: 30px;
+    margin-top: 3px;
     right: 2px;
     right: 2px;
     margin-right: 7px;
@@ -245,13 +244,15 @@
 
 .input-interview-rounds {
     width: 97.5%;
-    height: 34px;
+    height: 40px;
     border-radius: 5px;
     outline: none;
     background: #FAFAFA;
     padding-left: 5px;
     border: 1px solid #E9E9E9;
     margin-top: 10px;
+    /* line-height: 41px; */
+    padding-top: 4px;
 }
 
 .skills-main {

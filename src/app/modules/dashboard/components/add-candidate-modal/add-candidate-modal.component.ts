@@ -261,6 +261,10 @@ export class AddCandidateModalComponent implements OnInit {
       //   message: 'Please Upload Candidate Resume'
       // },
       {
+        condition: !this.selectedFile,
+        message: 'Please Upload Candidate Resume'
+      },
+      {
         condition: !this.selectedRequirementId,
         message: 'Please Select a Requirement'
       }
@@ -276,45 +280,28 @@ export class AddCandidateModalComponent implements OnInit {
   }
 
   submitClick(): void {
-    this.submitForm = true;
     this.loader = true;
-    // this.uploadFile();
     this.checkValidation();
     if (this.validationSuccess) {
       let candidateDetails = this.candidateForm.value;
       this.primaryskills = this.selectedPrimarySkills.map(skill => skill.id);
       this.secondaryskills = this.selectedSecondarySkills.map(skill => skill.id);
-      const payload = {
-        candidateFirstName: this.candidateForm?.value?.candidateFirstName,
-        candidateLastName: this.candidateForm?.value?.candidateLastName,
-        candidateEmail: this.candidateForm?.value?.candidateEmail,
-        candidateMobileNo: this.candidateForm?.value?.candidateMobileNo,
-        candidateDoB: this.candidateForm?.value?.candidateDoB,
-        candidateExperience: this.candidateForm?.value?.candidateExperience,
-        candidatePreviousOrg: this.candidateForm?.value?.candidatePreviousOrg,
-        candidatePreviousDesignation: this.candidateForm?.value?.candidatePreviousDesignation,
-        candidateEducation: this.candidateForm?.value?.candidateEducation,
-        candidateCurrentSalary: this.candidateForm?.value?.candidateCurrentSalary,
-        candidateExpectedSalary: this.candidateForm?.value?.candidateExpectedSalary,
-        // candidateAddress: this.candidateForm?.value?.candidateFirstName,
-        candidateCreatedby: this.candidateCreatedby,
-        candidatePrimarySkills: this.primaryskills,
-        candidateSecondarySkills: this.secondaryskills,
-        resumeSourceId: this.sourceId,
-        candidatesAddingAgainst: this.selectedRequirementId,
-        candidateGender: this.candidateForm?.value?.candidateGender,
-        candidateCity: this.candidateForm?.value?.candidateCity,
-        candidateDistrict: this.candidateForm?.value?.candidateDistrict,
-        candidateState: this.candidateForm?.value?.candidateState,
-        candidateResume: this.uploadedFileKey
+      const formdata = new FormData();
+      for (const key in candidateDetails) {
+        if (candidateDetails[key]) formdata.append(key, candidateDetails[key]);
       }
-      console.log("payload", payload);
-      this.apiService.post(`/candidate/create`, payload).subscribe({
+      formdata.append('candidateCreatedby', this.candidateCreatedby);
+      formdata.append('candidateResume', this.selectedFile);
+      formdata.append('candidatePrimarySkills', this.primaryskills);
+      formdata.append('candidateSecondarySkills', this.secondaryskills);
+      formdata.append('resumeSourceId', this.sourceId);
+      formdata.append('candidatesAddingAgainst', this.selectedRequirementId);
+
+      this.apiService.post(`/candidate/create`, formdata).subscribe({
         next: (response) => {
           this.loader = false;
           this.tostr.success('Candidate Created successfully');
           this.resetFormAndState();
-
         },
         error: (error) => {
           this.loader = false;
@@ -330,6 +317,63 @@ export class AddCandidateModalComponent implements OnInit {
       this.submitted = true;
     }
   }
+
+
+  // submitClick(): void {
+  //   this.submitForm = true;
+  //   this.loader = true;
+  //   // this.uploadFile();
+  //   this.checkValidation();
+  //   if (this.validationSuccess) {
+  //     let candidateDetails = this.candidateForm.value;
+  //     this.primaryskills = this.selectedPrimarySkills.map(skill => skill.id);
+  //     this.secondaryskills = this.selectedSecondarySkills.map(skill => skill.id);
+  //     const payload = {
+  //       candidateFirstName: this.candidateForm?.value?.candidateFirstName,
+  //       candidateLastName: this.candidateForm?.value?.candidateLastName,
+  //       candidateEmail: this.candidateForm?.value?.candidateEmail,
+  //       candidateMobileNo: this.candidateForm?.value?.candidateMobileNo,
+  //       candidateDoB: this.candidateForm?.value?.candidateDoB,
+  //       candidateExperience: this.candidateForm?.value?.candidateExperience,
+  //       candidatePreviousOrg: this.candidateForm?.value?.candidatePreviousOrg,
+  //       candidatePreviousDesignation: this.candidateForm?.value?.candidatePreviousDesignation,
+  //       candidateEducation: this.candidateForm?.value?.candidateEducation,
+  //       candidateCurrentSalary: this.candidateForm?.value?.candidateCurrentSalary,
+  //       candidateExpectedSalary: this.candidateForm?.value?.candidateExpectedSalary,
+  //       // candidateAddress: this.candidateForm?.value?.candidateFirstName,
+  //       candidateCreatedby: this.candidateCreatedby,
+  //       candidatePrimarySkills: this.primaryskills,
+  //       candidateSecondarySkills: this.secondaryskills,
+  //       resumeSourceId: this.sourceId,
+  //       candidatesAddingAgainst: this.selectedRequirementId,
+  //       candidateGender: this.candidateForm?.value?.candidateGender,
+  //       candidateCity: this.candidateForm?.value?.candidateCity,
+  //       candidateDistrict: this.candidateForm?.value?.candidateDistrict,
+  //       candidateState: this.candidateForm?.value?.candidateState,
+  //       candidateResume: this.uploadedFileKey
+  //     }
+  //     console.log("payload", payload);
+  //     this.apiService.post(`/candidate/create`, payload).subscribe({
+  //       next: (response) => {
+  //         this.loader = false;
+  //         this.tostr.success('Candidate Created successfully');
+  //         this.resetFormAndState();
+
+  //       },
+  //       error: (error) => {
+  //         this.loader = false;
+  //         if (error?.status === 500) {
+  //           this.tostr.error("Internal Server Error");
+  //         } else {
+  //           this.loader = false;
+  //           this.tostr.warning(error?.error?.message ? error?.error?.message : "Unable to Add candidate");
+  //         }
+  //       },
+  //     });
+  //   } else {
+  //     this.submitted = true;
+  //   }
+  // }
 
 
 

@@ -141,7 +141,7 @@
                     <span class="p-relative">
                         <input type="text" class="input-interview-rounds-skill" placeholder="Search Skills"
                             (input)="getSkillSuggestions($event)" id="skillSearch" [(ngModel)]="searchvalue">
-                        <span *ngIf="searchvalue !== ''" (click)="clearFilter()"
+                        <span *ngIf="searchvalue.trim() !== ''" (click)="clearFilter()"
                             class="clear-filter c-pointer m-l-10 p-absolute m-t-20"><img src="assets/images/skill-close-icon.png" alt=""
                                 class="m-t-0 p-r-13" width="17px" height="17px">
                         </span>

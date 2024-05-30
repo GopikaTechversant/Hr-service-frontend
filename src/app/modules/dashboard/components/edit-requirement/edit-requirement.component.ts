@@ -125,7 +125,8 @@ export class EditRequirementComponent implements OnInit {
         this.idListOpen = false;
       }
     }
-    if (stationName === "Written" || stationName === "Technical") this.stationsList = this.stationsLists.slice(2, -1)
+    // if (stationName === "Written" || stationName === "Technical") this.stationsList = this.stationsLists.slice(2, -1)
+    if (stationName === "Written" || stationName === "Technical") this.stationsList = this.stationsLists.slice(2, -2)
     else if (stationName === "Technical 2") this.stationsList = this.stationsList.filter(station => station.stationName !== "Technical 1");
   }
 
