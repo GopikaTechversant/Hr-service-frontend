@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environments';
 import { ApiService } from 'src/app/services/api.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-detailed-recruitment',
   templateUrl: './detailed-recruitment.component.html',
@@ -25,7 +26,7 @@ export class DetailedRecruitmentComponent implements OnInit {
   totalCount: any;
   report: boolean = false;
   url:any;
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private router: Router) {
   }
 
   onBodyClick(event: MouseEvent): void {
@@ -107,6 +108,10 @@ export class DetailedRecruitmentComponent implements OnInit {
     if( this.report = true) {
       window.open(`${environment.api_url}${this.url}`,'_blank')
     }
+  }
+
+  selectCandidate(id: any): void {
+    this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
   }
 
 }
