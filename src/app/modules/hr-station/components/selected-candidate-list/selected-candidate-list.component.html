@@ -75,7 +75,7 @@
                     <td>Email</td>
                     <td>Requirement</td>
                     <!-- <td>Offer Status</td> -->
-                    <td>Move Candidate</td>
+                    <!-- <td>Move Candidate</td> -->
                     <td>Candidate Station</td>
                     <!-- <td>Service Status</td> -->
                     <td>More Details</td>
@@ -99,9 +99,9 @@
                                 [ngClass]="item?.progressStatus > 0  ? 'green' : 'orange'">
                                 {{item?.progressStatus > 0 ? 'Offer Released' : 'Pending'}}
                             </td> -->
-                            <td>
+                            <!-- <td>
                                 <img src="/assets/images/candidate-detail/move.svg" alt="move" *ngIf="item" (click)="onSwitchStation(item)">
-                            </td>
+                            </td> -->
                             <td class="text-wrap">{{item?.currentStation}}</td>
                             <!-- <td class="f-w-500 text-wrap" [ngClass]="{'orange': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
                             'red': item?.serviceStatus === 'rejected'}">
