@@ -85,12 +85,15 @@ export class MailTemplateComponent implements OnInit {
     this.isEditable = false;
     this.messageSaved = true;
     // this.updateHtmlContent(event);
+    // this.templateData.message = this.content;
+    const templateElement = this.templateRef.nativeElement;
+    this.htmlString = templateElement.innerHTML;
     console.log(event);
     
   }
 
   updateHtmlContent(event: any): void {
-    this.content = event?.target?.value;
+    this.content = event?.target?.value ? event?.target?.value : this.templateData.message;
     console.log("bghfhbn",this.content);
     
     this.templateData.message = this.content;
@@ -157,25 +160,25 @@ export class MailTemplateComponent implements OnInit {
     }
   }
   
-  submitClickTest() {
-    const payload = {
-      // serviceSeqId: this.serviceId,
-      // feedBack: this.feedback,
-      // feedBackBy: this.userId,
-      mailId: 'alfiya.sr@techversantinfotech.com',
-      cc: this.mailCc,
-      message: this.htmlString,
-      subject: this.mailSubject,
-    };
-    this.apiService.post(`/candidate/send-mail`, payload).subscribe({
-      next: (res: any) => {
-        this.tostr.success('Approval successful');
-        // this.closeDialog();
-      },
-      error: (error) => this.tostr.error('Error during approval')
-    });
+  // submitClickTest() {
+  //   const payload = {
+  //     // serviceSeqId: this.serviceId,
+  //     // feedBack: this.feedback,
+  //     // feedBackBy: this.userId,
+  //     mailId: 'alfiya.sr@techversantinfotech.com',
+  //     cc: this.mailCc,
+  //     message: this.htmlString,
+  //     subject: this.mailSubject,
+  //   };
+  //   this.apiService.post(`/candidate/send-mail`, payload).subscribe({
+  //     next: (res: any) => {
+  //       this.tostr.success('Approval successful');
+  //       // this.closeDialog();
+  //     },
+  //     error: (error) => this.tostr.error('Error during approval')
+  //   });
 
-  }
+  // }
 
   cancelClick() {
     const data = {clickType: 'cancel'};

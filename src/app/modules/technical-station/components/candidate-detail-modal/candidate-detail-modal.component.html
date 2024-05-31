@@ -136,7 +136,7 @@
         <button class="reject-btn" [ngClass]="{'offer-reject-btn': messageType === 'rejection'}"
             (click)="showMail('rejection')">Rejection Notification Mail
         </button>
-        <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'pending' && progessAdded && messageType.trim() !== ''">
+        <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'pending' && candidateDetails?.serviceStatus !== 'moved' && progessAdded && messageType.trim() !== ''">
             <app-mail-template [candidate]="mailTemplateData" (submitData)="onSubmitData($event)"></app-mail-template>
         </div>
     <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'done' || this.data?.candidateDetails?.serviceStatus === 'rejected'">

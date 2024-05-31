@@ -35,7 +35,7 @@ export class ServiceRequestComponent implements OnInit {
     { stationName: "Screening", stationId: 1 },
     { stationName: "HR", stationId: 5 }
   ];
-  searchvalue: any;
+  searchvalue: string = "";
   skillSuggestions: any[] = [];
   showSearchBar: boolean = false;
   selectedSkills: any[] = [];
@@ -161,7 +161,7 @@ export class ServiceRequestComponent implements OnInit {
         this.idListOpen = false;
       }
     }
-    if (stationName === "Written" || stationName === "Technical") this.stationsList = this.stationsLists.slice(2, -1)
+    if (stationName === "Written" || stationName === "Technical") this.stationsList = this.stationsLists.slice(2, -2)
     else if (stationName === "Technical 2") this.stationsList = this.stationsList.filter(station => station.stationName !== "Technical 1");
   }
 
@@ -245,6 +245,7 @@ export class ServiceRequestComponent implements OnInit {
     this.idListOpen = false;
     this.teamListOpen = false;
     this.selectedSkills = [];
+    this.searchvalue = '';
     this.selectedStations = [
       { stationName: "Screening", stationId: 1 },
       { stationName: "HR", stationId: 5 }

@@ -38,7 +38,7 @@
                             <ng-container *ngIf="i !== 0 && i !== selectedStations.length - 1"
                                 class="d-flex align-center">
                                 <span class="station-pill"><span>{{item?.stationName}} </span>
-                                    <div (click)="deleteStation(item?.stationId, item?.stationName)" class="circle">
+                                    <div (click)="deleteStation(item?.stationId, item?.stationName)" class="circle c-pointer">
                                         <div class="minus"></div>
                                     </div>
                                 </span>
@@ -110,14 +110,14 @@
                 <span class="sub-head">Base salary</span>
                 <div>
                     <input type="text" class="input" #baseSalaryInput (keypress)="onKeypress($event)"
-                        (paste)="onPaste($event)" max="20">
+                        (paste)="onPaste($event)" maxlength="10">
                 </div>
             </div>
             <div class="m-t-20 m-b-10 p-l-10 m-l-10 child">
                 <span class="sub-head">Maximum salary</span>
                 <div>
                     <input type="text" class="input" #maxSalaryInput (keypress)="onKeypress($event)"
-                        (paste)="onPaste($event)" max="20">
+                        (paste)="onPaste($event)" maxlength="10">
                 </div>
             </div>
         </div>

@@ -47,8 +47,8 @@ export class TechnicalDetailComponent implements OnInit {
   experience: string = '';
   today: Date = new Date();
   isExport: boolean = false;
-  startDate: string | null = this.datePipe.transform(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
-  endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+  startDate: string | null = this.datePipe.transform(new Date(Date.now() - 15 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
+  endDate: string | null = this.datePipe.transform(new Date(Date.now() + 15 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog, private datePipe: DatePipe) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;

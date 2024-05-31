@@ -20,7 +20,7 @@ export class EditRequirementComponent implements OnInit {
   idListOpen: boolean = false;
   stationsLists: any;
   showSearchBar: boolean = false;
-  searchvalue: any;
+  searchvalue: string = "";
   skillSuggestions: any[] = [];
   selectedSkills: any[] = [];
   loader: boolean = false;

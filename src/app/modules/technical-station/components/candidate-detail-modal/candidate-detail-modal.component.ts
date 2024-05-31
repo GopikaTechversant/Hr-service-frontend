@@ -210,7 +210,7 @@ export class CandidateDetailModalComponent implements OnInit {
   rejectClick(data: any): void {
     const payload = {
       serviceId: this.serviceId,
-      stationId: this.candidateDetails?.candidateStation,
+      stationId: this.stationId,
       userId: this.userId,
       status: "rejected",
       rejectCc: data?.mailCc,

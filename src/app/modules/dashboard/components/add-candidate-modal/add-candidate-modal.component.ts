@@ -53,7 +53,7 @@ export class AddCandidateModalComponent implements OnInit {
   loader: boolean = false;
   submitForm: boolean = false;
   fromRequirementId: any;
-  fromRequirementName: any;
+  fromRequirementName: string = '';
   requirement: any;
   private keySubscription?: Subscription;
   uploadedFileKey: string = '';
@@ -143,6 +143,7 @@ export class AddCandidateModalComponent implements OnInit {
   selectRequirement(requirement: any): void {
     if (this.selectedRequirementName !== requirement?.requestName && this.selectedRequirementId !== requirement?.requestId) {
       this.selectedRequirementName = requirement?.requestName;
+      // if(this.fromRequirementName) this.fromRequirementName ==
       this.selectedRequirementId = requirement?.requestId;
       this.maxSalary = requirement?.requestMaxSalary
       this.minSalary = requirement?.requestBaseSalary
@@ -176,10 +177,10 @@ export class AddCandidateModalComponent implements OnInit {
       event.preventDefault();
       return;
     }
-    if (this.maxSalary === undefined) {
-      this.tostr.warning(`Please Choose a Requirement`);
-      return;
-    }
+    // if (this.maxSalary === undefined || this.fromRequirementName.trim() !== '') {
+    //   this.tostr.warning(`Please Choose a Requirement`);
+    //   return;
+    // }
     if (enteredValue && Number(enteredValue) >= this.maxSalary) {
       this.tostr.warning(`Budget should be less than ${this.maxSalary}`);
       event.preventDefault();

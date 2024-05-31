@@ -41,8 +41,8 @@ export class HrCandidateListComponent implements OnInit {
   experience: string = '';
   isExport: boolean = false;
   today: Date = new Date();
-  startDate: string | null = this.datePipe.transform(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
-  endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+  startDate: string | null = this.datePipe.transform(new Date(Date.now() - 15 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
+  endDate: string | null = this.datePipe.transform(new Date(Date.now() + 15 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   constructor(private dialog: MatDialog, private apiService: ApiService , private datePipe: DatePipe) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
