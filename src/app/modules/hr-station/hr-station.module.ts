@@ -8,11 +8,14 @@ import { MaterialModule } from '../material/material.module';
 import { HrCandidateListComponent } from './components/hr-candidate-list/hr-candidate-list.component';
 import { HrCandidateDetailComponent } from './components/hr-candidate-detail/hr-candidate-detail.component';
 import { FormsModule } from '@angular/forms';
+import { SelectedCandidateListComponent } from './components/selected-candidate-list/selected-candidate-list.component';
 const routes: Routes = [
   {
     path: '', component: HrHomeComponent,
     children: [
       { path: '', component:  HrCandidateListComponent},   
+      { path: 'selected-candidates', component:  SelectedCandidateListComponent},   
+
     ]
   },
 ]
@@ -21,7 +24,8 @@ const routes: Routes = [
     HrHomeComponent,
     HrSidebarComponent,
     HrCandidateListComponent,
-    HrCandidateDetailComponent,  
+    HrCandidateDetailComponent,
+    SelectedCandidateListComponent,  
   ],
   imports: [
     CommonModule,

@@ -4,11 +4,11 @@
             top="4px" left="4px" class="img">
         <span class="menu-text">Dashboard</span>
     </div> -->
-    <div class="menu d-flex c-pointer" (click)="navigate('/hr')" [class.active]="isActive('/hr')">
+    <div class="menu d-flex c-pointer" (click)="navigate('/hr',false)" [class.active]="isActive('/hr')">
         <img src="assets/images/gg_list.png" alt="" height="19px" width="19px" top="4px" left="4px">
         <span class="menu-text">Dashboard</span>
     </div>
-    <div class="menu d-flex c-pointer">
+    <div class="menu d-flex c-pointer"  (click)="navigate('/hr/selected-candidates',false)" [class.active]="isActive('/hr/selected-candidates')">
         <img src="assets/images/gg_list.png" alt="" height="19px" width="19px" top="4px" left="4px">
         <span class="menu-text">Selected Candidate List</span>
     </div>
