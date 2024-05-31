@@ -104,6 +104,7 @@ export class HrCandidateListComponent implements OnInit {
     this.apiService.get(`${url}?${params}`).subscribe((data: any) => {
       this.loader = false;
       this.initialLoader = false;
+      this.candidateList = [];
       if (data?.candidates) {
         this.candidateList.push(data?.candidates);
         this.totalCount = data?.totalCount;

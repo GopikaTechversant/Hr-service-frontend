@@ -33,6 +33,7 @@
     <div class="table-container m-b-0">
         <table class="table">
             <tr class="table-header f-w-500 p-b-10">
+                <td>Select</td>
                 <td>Recruiter Name</td>
                 <td>Name</td>
                 <td>Position</td>
@@ -50,6 +51,7 @@
             <ng-container>
                 <ng-container *ngFor="let item of  candidateList">
                     <tr class="c-pointer">
+                        <td><input type="checkbox"></td>
                         <td  class="text-wrap" >
                             {{item['candidate.createdBy.userfirstName'] ? item['candidate.createdBy.userfirstName'] : ' '}}
                             {{item['candidate.createdBy.userlastName'] ? item['candidate.createdBy.userlastName'] : ' '}}

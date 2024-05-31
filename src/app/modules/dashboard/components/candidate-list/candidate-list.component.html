@@ -23,6 +23,7 @@
     <div class="table-container m-b-0">
         <table class="table">
             <tr class="table-header p-b-10">
+                <td>Select</td>
                 <td>Name</td>
                 <td>Email</td>
                 <td>Mobile</td>
@@ -36,6 +37,7 @@
             </tr>
             <ng-container *ngIf="candidateList?.length > 0">
                 <tr class="c-pointer details" *ngFor="let item of candidateList">
+                    <td><input type="checkbox"></td>
                     <td class="text-wrap" [title]="(item?.candidateFirstName | titlecase) + (item?.candidateLastName | titlecase)">
                         {{item?.candidateFirstName | titlecase}} {{item?.candidateLastName | titlecase}}
                     </td>

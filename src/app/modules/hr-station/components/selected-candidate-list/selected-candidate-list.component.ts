@@ -86,7 +86,7 @@ export class SelectedCandidateListComponent {
       `experience=${this.experience.trim()}`,
       `fromDate=${this.startDate}`,
       `toDate=${this.endDate}`,
-      `status_filter=${this.filteredStatus}`,
+      `status_filter=pending`,
       `report=${this.isExport}`
     ].join('&');
 
@@ -101,6 +101,7 @@ export class SelectedCandidateListComponent {
     this.apiService.get(`${url}?${params}`).subscribe((data: any) => {
       this.loader = false;
       this.initialLoader = false;
+      this.candidateList = [];
       if (data?.candidates) {
         this.candidateList.push(data?.candidates);
         this.totalCount = data?.totalCount;

@@ -68,6 +68,7 @@
         <div class="table-container m-b-0">
             <table class="table">
                 <tr class="table-header f-w-500 p-b-10">
+                    <td>Select</td>
                     <td>Candidate ID</td>
                     <td>Date</td>
                     <td>Name</td>
@@ -86,6 +87,7 @@
                     <ng-container *ngFor="let innerArray of candidateList">
                     <ng-container *ngFor="let item of innerArray">
                         <tr class="candidate c-pointer">
+                            <td><input type="checkbox"></td>
                             <td>{{ item['candidate.candidateId'] }}</td>
                             <td>{{item?.serviceDate | date : 'dd/MM/YYY'}}</td>
                             <td class="text-wrap" [title]="item['candidate.candidateFirstName'] +' '+ item['candidate.candidateLastName']">
