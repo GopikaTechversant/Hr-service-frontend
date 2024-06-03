@@ -1,7 +1,7 @@
 <div class="m-10">
     <span class="f-s-20 f-w-500 p-t-5">Written Round</span>
-    <div class="d-flex j-end p-l-5 m-b-20 m-t-20">
-        <span class="input p-5 m-l-10 m-r-10">
+    <div class="d-flex j-space  m-b-20 m-t-20">
+        <span class="input p-5 d-flex j-space align-center">
             <input type="text" class="p-l-5" placeholder="Search Candidates by name" [(ngModel)]="searchKeyword"
                 (keydown)="searchCandidate(searchKeyword)">
             <span *ngIf="searchKeyword.trim() !== ''" (click)="clearFilter('search')"
@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div> -->
-        <div class="input p-t-10 p-l-6  no-close p-relative m-r-10 m-l-10">
+        <div class="input p-t-10 p-l-6  no-close p-relative m-l-10">
             <span class="f-right d-flex">
                 <span *ngIf="displayPosition && displayPosition !== ''" (click)="clearFilter('position')"
                     class="clear-filter c-pointer">x</span>
@@ -44,17 +44,17 @@
             <span class="c-pointer" (click)="requestList_open = !requestList_open">{{displayPosition.trim() === '' ?
                 'Filter by Question' : displayPosition}}</span>
             <div class="no-close dropdown c-pointer no-close" *ngIf="requestList_open">
-                <div (click)='selectPosition(name?.requestName,name?.requestId); !requestList_open'
-                    *ngFor="let name of requestList" class="p-10">
-                    {{name?.requestName}}
+                <div (click)='selectPosition(name?.questionName,name?.questionId); !requestList_open'
+                    *ngFor="let name of questions_list" class="p-10">
+                    {{name?.questionName}}
                 </div>
             </div>
         </div>
-        <span class="input p-5 m-l-10 m-r-10">
+        <span class="input p-5 d-flex j-space align-center">
             <input type="text" class="p-l-5" placeholder="Search Candidates by Experience" [(ngModel)]="searchKeyword"
                 (keydown)="searchCandidate(searchKeyword)">
             <span *ngIf="searchKeyword.trim() !== ''" (click)="clearFilter('search')"
-                class="clear-search c-pointer m-l-10">x</span>
+                class="clear-search c-pointer">x</span>
         </span>
         <div class="input-1 c-pointer p-t-10 no-close p-relative">
             <span class="no-close p-l-10" (click)="filterStatus = !filterStatus">{{filteredStatus.trim() === '' ?
@@ -72,17 +72,24 @@
                 </span>
             </div>
         </div>
+        <span class="input p-5 d-flex j-space align-center">
+            <input type="text" class="p-l-5 average-score" placeholder="Enter Average Score" [(ngModel)]="searchKeyword"
+                (keydown)="searchCandidate(searchKeyword)">
+            <span *ngIf="searchKeyword.trim() !== ''" (click)="clearFilter('search')"
+                class="clear-search c-pointer">x</span>
+        </span>
     </div>
     <div class="main">
         <div class="table-container m-b-0 w-100">
             <table class="table">
                 <tr class="table-header f-w-500 p-b-10">
                     <!-- <td>Candidate ID</td> -->
+                    <td>Select</td>
                     <td>Name</td>
                     <td>Email</td>
-                    <td>Questions</td>
+                    <td>Assigned Questions</td>
                     <td>Score</td>
-                    <td>Attached File</td>
+                    <td>Attachement</td>
                     <!-- <td>Requirement</td> -->
                     <td>Progress Status</td>
                     <td>Move Candidates</td>
@@ -99,12 +106,15 @@
                         <ng-container  *ngFor="let item of innerArray.candidates">
                             <tr class="candidate c-pointer">
                                 <!-- <td>{{ item.candidateId }}</td> -->
+                                <td><input type="checkbox"></td>
                                 <td class="text-wrap" [title]="item.candidateFirstName + item.candidateLastName">
                                     {{ item.candidateFirstName }} {{ item.candidateLastName }}
                                 </td>
                                 <td class="text-wrap" [title]="item.candidateEmail">{{ item.candidateEmail }}</td>
                                 <td class="text-wrap"></td>
-                                <td class="text-wrap"></td>
+                                <td class="text-wrap"><span class="result c-pointer"
+                                    *ngIf="item.progressScore === null && !item.progressScore && item.progressId"
+                                    (click)="resultClick(item, item.serviceId)">Add Result</span></td>
                                 <td class="text-wrap"></td>
                                 <!-- <td class="text-wrap" [title]="item.requestName">{{ item.requestName }}</td> -->
                                 <!-- <td class="text-wrap" [title]="item?.currentStation | titlecase">{{item?.currentStation | titlecase}}</td>                     -->
@@ -112,9 +122,10 @@
                                     [ngClass]="item?.progressStatus > 0  ? 'green' : 'blue'">
                                     {{item?.progressStatus > 0 ? 'Progress Added' : 'Pending'}}
                                 </td>
-                                <td> 
-                                    <button class="move" *ngIf="item" (click)="onSwitchStation(item)">Move</button>  
-                                </td>
+                                <td class="p-t-15">
+                                    <!-- <button class="move" (click)="onSwitchStation(item)">Move</button>   -->
+                                    <img src="/assets/images/move.png" alt="" height="24px" width="24px"
+                                        (click)="onSwitchStation(item)"></td>
                                 <td class="f-w-500" [ngClass]="{'blue': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
                                     'red': item?.serviceStatus === 'rejected'}" [title]="item?.serviceStatus | titlecase">
                                     {{ item?.serviceStatus | titlecase}}

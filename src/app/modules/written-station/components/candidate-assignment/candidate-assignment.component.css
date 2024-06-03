@@ -92,7 +92,7 @@
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
-    width: 400px;
+    width: 288px;
     height: 30px;
 }
 
@@ -110,7 +110,7 @@ input[type="text"] {
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
-    width: 360px;
+    width: 270px;
     height: 28px;
 }
 
@@ -184,9 +184,13 @@ tr {
 }
 
 .clear-filter {
-    padding: 0px 4px;
+    /* padding: 0px 4px; */
     border: 1px solid #3c40434d;
-    border-radius: 50%;
+    border-radius: 53%;
+    height: 10px;
+    width: 8px;
+    line-height: 8px;
+    text-align: center;
 }
 
 .dropdown {
@@ -239,7 +243,27 @@ tr {
 }
 
 .clear-search {
-    padding: 0px 4px;
     border: 1px solid #3c40434d;
-    border-radius: 50%;
+    border-radius: 53%;
+    height: 17px;
+    width: 16px;
+    line-height: 17px;
+    text-align: center;
 }
+
+.result {
+    width: 91px;
+    border-radius: 3px;
+    background: #005EC9;
+    color: white;
+    border: none;
+    height: 30px;
+}
+/* .average-score{
+    border: none;
+    outline: none;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    width: 260px !important;
+    height: 28px;
+} */

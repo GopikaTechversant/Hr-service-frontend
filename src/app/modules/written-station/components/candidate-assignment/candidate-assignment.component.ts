@@ -28,6 +28,9 @@ export class CandidateAssignmentComponent implements OnInit {
   displayPosition: string = '';
   positionId: any;
   requestList: any;
+  selectedCandidate: any;
+  selectedCandidateIds: any[] = [];
+  candidateMarkDetail: any;
   Status: any = [
     { status: 'pending' },
     { status: 'rejected' },
@@ -152,5 +155,29 @@ export class CandidateAssignmentComponent implements OnInit {
         // this.fetchCandidatesWithQuestionBox();
       });
     }
+  }
+
+  resultClick(candidate: any, id: any): void {
+    this.selectedCandidate = candidate;
+    this.selectedCandidateIds = id;
+    const dialogRef = this.dialog.open(ResultComponent, {
+      height: '430px',
+      width: '600px',
+      data: {
+        candidateIds: this.selectedCandidateIds,
+        candidate: this.selectedCandidate
+      }
+    }
+    );
+    dialogRef.componentInstance.scoreSubmitted.subscribe((score: number) => {
+      this.selectedCandidate.examScore = score;
+      this.candidateMarkDetail = {
+        candidateIds: this.selectedCandidateIds,
+        candidate: this.selectedCandidate,
+        score: this.selectedCandidate.examScore
+      }
+      this.fetchCandidatesWithQuestionBox();
+    });
+
   }
 }
