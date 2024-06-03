@@ -54,9 +54,7 @@ export class HrCandidateDetailComponent {
   showMail(item: 'offer' | 'rejection'): void {
     this.showSelection = item === 'offer';
     this.showRejection = item !== 'offer';
-
     const { candidateFirstName = '', candidateLastName = '', candidateId = '' } = this.candidateDetails || {};
-
     this.messageType = item;
     this.mailTemplateData = {
       firstName: candidateFirstName,
@@ -78,7 +76,6 @@ export class HrCandidateDetailComponent {
     if (event?.clickType === 'cancel') this.cancelClick();
     if (event?.messageType === 'offer') this.addOffer(event);
     if (event?.messageType === 'rejection') this.rejectClick(event);
-    console.log(event);
   }
 
   addOffer(data: any): void {
@@ -144,7 +141,6 @@ export class HrCandidateDetailComponent {
   approveClick(): void {
     const feedbackElement = document.getElementById('feedback') as HTMLInputElement;
     const feedback = feedbackElement?.value.trim();
-
     if (feedback) {
       this.feedback = feedback;
       const payload = {

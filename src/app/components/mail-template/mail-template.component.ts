@@ -17,7 +17,7 @@ export class MailTemplateComponent implements OnInit {
 
   isEditable: boolean = false;
   templateData: any = {};
-  content: any;
+  content: string = '';
   htmlString: any;
   candidateId: any;
   feedback: any;
@@ -80,28 +80,30 @@ export class MailTemplateComponent implements OnInit {
     this.isEditable = true;
   }
 
-  saveClick(event: Event) {
-    // this.updateHtmlContent(message);
+  saveClick(event: Event): void {
+    if (this.content.trim() === '') {
+      this.tostr.warning('Please Edit and Save Mail before submitting');
+      return;
+    }
     this.isEditable = false;
     this.messageSaved = true;
-    // this.updateHtmlContent(event);
-    // this.templateData.message = this.content;
-    const templateElement = this.templateRef.nativeElement;
-    this.htmlString = templateElement.innerHTML;
-    console.log(event);
-    
   }
+  
 
   updateHtmlContent(event: any): void {
-    this.content = event?.target?.value ? event?.target?.value : this.templateData.message;
+    this.content = event?.target?.value ? event?.target?.value : '';
     console.log("bghfhbn",this.content);
     
     this.templateData.message = this.content;
     const templateElement = this.templateRef.nativeElement;
     this.htmlString = templateElement.innerHTML;
+    console.log(templateElement,"event.666666666666pppp",this.htmlString);
+
   }
 
   submitClick(): void {
+    console.log("xcvbn",this.htmlString);
+    
     if (!this.messageSaved) {
       this.tostr.warning(this.isEditable ? 'Please Save Template before submitting' : 'Please Edit and Save Mail before submitting');
       return;

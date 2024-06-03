@@ -175,7 +175,6 @@ export class CandidateDetailModalComponent implements OnInit {
     if (event?.clickType === 'cancel') this.cancelClick();
     if (event?.messageType === 'approve') this.approveClick(event);
     if (event?.messageType === 'rejection') this.rejectClick(event);
-    console.log(event);
   }
 
   cancelClick(): void {

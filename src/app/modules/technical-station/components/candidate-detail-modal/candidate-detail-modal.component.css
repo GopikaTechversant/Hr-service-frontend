@@ -19,7 +19,7 @@
     border-radius: 2px;
     height: 30px;
     background-color: #FFFF;
-    width: 50vw;
+    width: 56vw;
 }
 
 .attach {
@@ -28,7 +28,7 @@
     border-radius: 2px;
     height: 30px;
     background-color: #FFFF;
-    width: 50vw;
+    width: 56vw;
 }
 
 .blue {
@@ -90,6 +90,15 @@
     margin: 10px;
 }
 
+.input-1 {
+    outline: none !important;
+    border: 1px solid rgb(207, 205, 205);
+    border-radius: 2px;
+    height: 30px;
+    background-color: #FFFF;
+    width: 27vw;
+}
+
 .select-btn {
     width: 48%;
     height: 50px;
@@ -107,7 +116,8 @@
     width: 97% !important;
 }
 
-.offer-select-btn,.select-btn:hover {
+.offer-select-btn,
+.select-btn:hover {
     color: #FFFFFF;
     background-color: #005EC9;
     border: 1px solid #005EC9;
@@ -126,7 +136,8 @@
     margin: 10px;
 }
 
-.offer-reject-btn,.reject-btn:hover {
+.offer-reject-btn,
+.reject-btn:hover {
     color: #FFFFFF;
     background-color: #575F6E;
     border: 1px solid #575F6E;
@@ -137,26 +148,28 @@
 }
 
 .text-area {
-    width: 97%;
     height: 136px;
-    border-radius: 3px;
-    border: 1px solid #E2E1E1;
-    background: #FFFFFF;
-    padding: 8px;
     outline: none !important;
+    border: 1px solid rgb(207, 205, 205);
+    border-radius: 2px;
+    background-color: #FFFF;
+    width: 56vw;
 }
 
 .attachment {
-    width: 97%;
+    width: 56vw;
     background-color: #F4F2F2;
 }
 
-.template{
+.template {
     border: 1px solid rgb(207, 205, 205);
     border-radius: 2px;
     border: 1px 0px 0px 0px;
 
 }
 
-
-
+.progress{
+    margin: 10px;
+    /* width: 97%; */
+    background-color: #F4F2F2;
+}

@@ -90,6 +90,38 @@
                 </div>
             </div>
         </div>
+        <div *ngIf="candidate?.messageType.trim() === 'approve'">
+            <div class="d-flex m-10 w-100">
+                <div class="input-1">
+                    <span class="p-10 sub-head">Interview Panel</span>
+                    <span class="p-5 m-r-5"><input class="offer-input" type="text" id="panel"></span>
+                </div>
+                <div class="input-1">
+                    <span class="p-10 sub-head">Interview Date and time</span>
+                    <div class="p-relative w-100 m-l-10">
+                        <input class="p-l-5 offer-input p-r-10" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate"
+                            (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate" [min]="today">
+                        <span> <mat-datepicker #pickerdate class=""></mat-datepicker>
+                            <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
+                                (click)="pickerdate?.open()"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex m-10 w-100">
+                <div class="input-1">
+                    <span class="p-10 sub-head">Interview Mode</span>
+                    <span class="p-5 m-r-5"><input class="offer-input" type="text" id="mode"></span>
+                </div>
+                <div class="input-1">
+                    <span class="p-10 sub-head">Interview status</span>
+                    <div class="p-relative w-100 m-l-10">
+                        <span class="p-5 m-r-5"><input class="offer-input" type="text" id="interview-status"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
         <div class="m-10">
             <span class="p-10 sub-head">Email Subject</span>
             <span class="p-5"><input class="input w-97" type="text" id="subject"></span>
