@@ -6,6 +6,7 @@ import { StationSwitchComponent } from 'src/app/components/station-switch/statio
 import { WarningBoxComponent } from 'src/app/components/warning-box/warning-box.component';
 import { DatePipe } from '@angular/common';
 import { environment } from 'src/environments/environments';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-hr-candidate-list',
@@ -43,7 +44,7 @@ export class HrCandidateListComponent implements OnInit {
   today: Date = new Date();
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 15 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(Date.now() + 15 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
-  constructor(private dialog: MatDialog, private apiService: ApiService , private datePipe: DatePipe) { }
+  constructor(private dialog: MatDialog, private apiService: ApiService , private datePipe: DatePipe ,private router: Router) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
@@ -241,4 +242,9 @@ export class HrCandidateListComponent implements OnInit {
       });
     }
   }
+
+  selectCandidate(id: any): void {
+    this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
+  }
+
 }

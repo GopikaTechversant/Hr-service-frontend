@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CandidateDetailModalComponent } from '../candidate-detail-modal/candidate-detail-modal.component';
 import { ApiService } from 'src/app/services/api.service';
@@ -49,7 +49,7 @@ export class TechnicalDetailComponent implements OnInit {
   isExport: boolean = false;
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 15 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(Date.now() + 15 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
-  constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog, private datePipe: DatePipe) { }
+  constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog, private datePipe: DatePipe ,private router: Router) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
@@ -268,5 +268,10 @@ export class TechnicalDetailComponent implements OnInit {
       });
     }
   }
+
+  selectCandidate(id: any): void {
+    this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
+  }
+
 
 }

@@ -88,7 +88,7 @@
                 <ng-container *ngIf="candidateList?.length > 0">
                     <ng-container *ngFor="let innerArray of candidateList">
                         <ng-container  *ngFor="let item of innerArray">
-                            <tr class="candidate c-pointer">
+                            <tr class="candidate c-pointer" (dblclick)="selectCandidate(item['candidate.candidateId'])">
                                 <td><input type="checkbox"></td>
                                 <td>{{ item['candidate.candidateId'] }}</td>
                                 <td>{{item?.serviceDate | date : 'dd/MM/YYY'}}</td>
