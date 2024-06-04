@@ -1,4 +1,64 @@
 <div class="main">
+    <div class="first-box">
+        <span class="heading m-t-12">Create Requirement</span>
+        <div *ngIf="loader" class="loader-parent">
+            <img src="assets/gif/loader.gif">
+        </div>
+        <div class="d-flex parent p-t-10">
+            <div class="child d-flex m-b-10">
+                <div class="m-t-20 m-b-10">
+                    <span class="sub-head">Job Title<span class="required">*</span></span>
+                    <div>
+                        <input type="text" class="input-box" #jobtitle max="20">
+                    </div>
+                </div>
+            </div>
+            <div class="child d-flex m-b-10">
+                <div class="m-t-20 m-b-10">
+                    <span class="sub-head">Job Code<span class="required">*</span></span>
+                    <div>
+                        <input type="text" class="input-box" #jobCode max="20">
+                    </div>
+                </div>
+            </div>
+            <div class="child d-flex m-b-10">
+                <div class="m-t-20 m-b-10">
+                    <span class="sub-head">Job Posting Date<span class="required">*</span></span>
+                    <div>
+                        <input type="text" class="input-box" #jobtitle max="20">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex parent p-t-10">
+            <div class="child d-flex m-b-10">
+                <div class="m-t-20 m-b-10">
+                    <span class="sub-head">Job Title<span class="required">*</span></span>
+                    <div>
+                        <input type="text" class="input-box" #jobtitle max="20">
+                    </div>
+                </div>
+            </div>
+            <div class="child d-flex m-b-10">
+                <div class="m-t-20 m-b-10">
+                    <span class="sub-head">Job Code<span class="required">*</span></span>
+                    <div>
+                        <input type="text" class="input-box" #jobCode max="20">
+                    </div>
+                </div>
+            </div>
+            <div class="child d-flex m-b-10">
+                <div class="m-t-20 m-b-10">
+                    <span class="sub-head">Job Posting Date<span class="required">*</span></span>
+                    <div>
+                        <input type="text" class="input-box" #jobtitle max="20">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="main">
     <div class="d-flex p-t-20 align-center p-b-10 ">
         <span class="header">Create Requirement</span>
     </div>
@@ -26,7 +86,6 @@
                 <div class="d-flex input-interview-rounds p-relative">
                     <div *ngFor="let item of selectedStations; let i = index">
                         <div *ngIf="item?.stationName" class="m-t-4 m-l-5 d-flex align-center">
-                            <!-- First station (Screening) -->
                             <ng-container *ngIf="i === 0">
                                 <span class="m-t-4">{{item?.stationName}}</span>
                                 <ng-container *ngIf="selectedStations.length > 1">
@@ -34,7 +93,6 @@
                                         style="vertical-align: middle;" class="m-t-5 m-l-5">
                                 </ng-container>
                             </ng-container>
-                            <!-- Middle stations (dynamically added) -->
                             <ng-container *ngIf="i !== 0 && i !== selectedStations.length - 1"
                                 class="d-flex align-center">
                                 <span class="station-pill"><span>{{item?.stationName}} </span>
@@ -46,11 +104,9 @@
                                     class="m-l-5">
 
                             </ng-container>
-                            <!-- Last station (HR) -->
                             <ng-container *ngIf="i === selectedStations.length - 1 && selectedStations.length > 1">
                                 <span class="m-t-4">{{item?.stationName}}</span>
                             </ng-container>
-                            <!-- Handle case where only one station is present -->
                             <ng-container *ngIf="i === selectedStations.length - 1 && selectedStations.length === 1">
                                 <span>{{item?.stationName}}</span>
                             </ng-container>
@@ -181,4 +237,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->

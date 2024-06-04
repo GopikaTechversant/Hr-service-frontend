@@ -1,4 +1,72 @@
+.heading {
+    font-size: 25px;
+    font-weight: 500;
+    text-align: left;
+    padding-bottom: 10px;
+}
+
 .main {
+    background-color: #F7F7F7;
+    margin: 10px;
+}
+
+.first-box {
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 8px 0px #0000001A;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.loader-parent {
+    position: absolute;
+    left: 53%;
+    z-index: 9;
+    top: 37%;
+}
+
+.loader-parent img {
+    width: 150px;
+}
+
+.input-box {
+    width: 100%;
+    height: 34px;
+    border-radius: 5px;
+    outline: none;
+    background: #FAFAFA;
+    padding-left: 5px;
+    border: 1px solid #E9E9E9;
+}
+
+.child {
+    flex-direction: column;
+    /* flex: 1; */
+    width: 30%;
+}
+
+.parent {
+    column-gap: 18px;
+    width: 100%;
+}
+
+.input-box {
+    width: 100%;
+    height: 34px;
+    border-radius: 5px;
+    outline: none;
+    background: #FAFAFA;
+    padding-left: 5px;
+    border: 1px solid #E9E9E9;
+}
+
+
+
+
+
+
+
+
+/* .main {
     margin: 15px 20px 10px 10px;
     background: #FFFFFF;
     padding-left: 20px;
@@ -167,8 +235,6 @@
 }
 
 .station-pill {
-    display: inline-block;
-    /* width: 95px; */
     height: 28px;
     line-height: 28px;
     background-color: #575F6E;
@@ -214,7 +280,6 @@
 .station-pill {
     background-color: #575F6E;
     color: white;
-    /* padding: 5px 10px; */
     border-radius: 20px;
 }
 
@@ -225,8 +290,6 @@
     background-color: white;
     border-radius: 50%;
     text-align: center;
-    line-height: 20px;
-    /* margin: 5px; */
     top: 3px;
     right: 8px;
     margin-left: 9px;
@@ -252,13 +315,11 @@
     padding-left: 5px;
     border: 1px solid #E9E9E9;
     margin-top: 10px;
-    /* line-height: 41px; */
     padding-top: 4px;
 }
 
 .skills-main {
     width: 98%;
-    /* height: 175px; */
 }
 
 .title-added-skills {
@@ -272,7 +333,6 @@
 }
 
 .skill-set {
-    /* display: inline-block; */
     padding-left: 13px;
     background-color: white;
     height: 37px;
@@ -301,4 +361,4 @@
 
 .clear-filter{
     right: 29px;
-}
+} */
