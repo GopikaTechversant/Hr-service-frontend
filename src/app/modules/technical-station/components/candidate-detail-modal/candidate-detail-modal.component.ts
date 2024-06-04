@@ -44,6 +44,7 @@ export class CandidateDetailModalComponent implements OnInit {
   htmlString: string = '';
   feedbackSubject: string = '';
   content: any;
+  buttonType: string = '';
   mailTemplateData: any;
 
   constructor(public dialogRef: MatDialogRef<CandidateDetailModalComponent>, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
@@ -64,6 +65,11 @@ export class CandidateDetailModalComponent implements OnInit {
 
   closeDialog(): void {
     this.dialogRef.close();
+  }
+
+  selectButton(type: any): void {
+    this.buttonType = type;
+
   }
 
   onFileSelected(event: any): void {
