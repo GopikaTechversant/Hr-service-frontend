@@ -155,4 +155,9 @@ export class SeriesComponent implements OnInit {
     })
   }
 
+  selectCandidate(id: any): void {
+    this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
+  }
+  
+
 }

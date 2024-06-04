@@ -57,8 +57,8 @@
     <div class="d-flex j-space title-candidate m-t-4 p-l-8">
         <span class="title">Candidates</span>
     </div>
-    <div class="cards d-flex" >
-        <div class="contents m-l-4 " *ngFor="let candidate of candidates_list">
+    <div class="cards d-flex" *ngFor="let candidate of candidates_list" >
+        <div class="contents m-l-4 " (click)="selectCandidate(candidate?.candidateId)">
             <div class="d-flex j-space heading p-7">
                 <span class="name p-t-4 p-l-3">{{candidate?.candidateFirstName}} {{candidate?.candidateLastName}}</span>
                 <span *ngIf="candidate?.serviceStatus && candidate?.serviceStatus !== 'pending'" class="name done p-t-2">

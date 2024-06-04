@@ -50,7 +50,7 @@
             </div> -->
             <ng-container>
                 <ng-container *ngFor="let item of  candidateList">
-                    <tr class="c-pointer">
+                    <tr class="c-pointer" (click)="selectCandidate(item['candidate.candidateId'])">
                         <td><input type="checkbox"></td>
                         <td  class="text-wrap" >
                             {{item['candidate.createdBy.userfirstName'] ? item['candidate.createdBy.userfirstName'] : ' '}}
