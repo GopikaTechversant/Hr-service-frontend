@@ -7,31 +7,26 @@
             <span *ngIf="searchKeyword.trim() !== ''" (click)="clearFilter('search')"
                 class="clear-search c-pointer m-l-10">x</span>
         </span>
-        <!-- <div class="date-filters">
-            <div class="d-flex">
-                <span class="filter p-r-10 p-t-10">From</span>
-                <div class="p-relative">
-                    <input class="p-l-5 input-1 c-pointer" placeholder="29/02/11" matInput
-                        [matDatepicker]="pickerFromDate" [value]="startDate | date:'yyyy-MM-dd'" id="startDate"
-                        [max]="today" (dateChange)="dateChange($event, 'startDate')" [ngModel]="startDate"
-                        (click)="pickerFromDate.open()">
-                    <mat-datepicker #pickerFromDate></mat-datepicker>
-                    <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"
-                        (click)="pickerFromDate.open()"></i>
+
+        <div class="input p-t-10 p-l-6  no-close p-relative m-l-10">
+            <span class="f-right d-flex">
+                <span *ngIf="displayQuestion && displayQuestion !== ''" (click)="clearFilter('question')"
+                    class="clear-filter c-pointer">x</span>
+                <div (click)="displayQuestion_open = !displayQuestion_open" class="c-pointer">
+                    <i [ngClass]="displayQuestion_open ? ' fa fa-chevron-up' : ' fa fa-chevron-down'"
+                        class="m-l-5 p-r-10 s-text no-close"></i>
+                </div>
+            </span>
+            <span class="c-pointer" (click)="displayQuestion_open = !displayQuestion_open">{{displayQuestion.trim() === '' ?
+                'Filter by Question' : displayQuestion}}</span>
+            <div class="no-close dropdown c-pointer no-close" *ngIf="displayQuestion_open">
+                <div (click)='filterQuestion(name?.questionName,name?.questionId); !displayQuestion_open'
+                    *ngFor="let name of questions_list" class="p-10">
+                    {{name?.questionName}}
                 </div>
             </div>
-            <div class="d-flex">
-                <span class="filter p-l-10 p-r-10 p-t-10">To</span>
-                <div class="p-relative">
-                    <input class="p-l-5 input-1 c-pointer" placeholder="29/02/11" matInput [matDatepicker]="pickerToDate"
-                        (dateChange)="dateChange($event, 'endDate')" [ngModel]="endDate" (click)="pickerToDate.open()"
-                        [value]="endDate | date:'yyyy-MM-dd'" id="endDate" [min]="startDate" [max]="today">
-                    <mat-datepicker #pickerToDate></mat-datepicker>
-                    <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"
-                        (click)="pickerToDate.open()"></i>
-                </div>
-            </div>
-        </div> -->
+        </div>
+
         <div class="input p-t-10 p-l-6  no-close p-relative m-l-10">
             <span class="f-right d-flex">
                 <span *ngIf="displayPosition && displayPosition !== ''" (click)="clearFilter('position')"
@@ -42,7 +37,7 @@
                 </div>
             </span>
             <span class="c-pointer" (click)="requestList_open = !requestList_open">{{displayPosition.trim() === '' ?
-                'Filter by Question' : displayPosition}}</span>
+                'Assign Question' : displayPosition}}</span>
             <div class="no-close dropdown c-pointer no-close" *ngIf="requestList_open">
                 <div (click)='selectPosition(name?.questionName,name?.questionId); !requestList_open'
                     *ngFor="let name of questions_list" class="p-10">

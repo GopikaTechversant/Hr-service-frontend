@@ -38,6 +38,9 @@ export class CandidateAssignmentComponent implements OnInit {
     { status: 'moved' }
   ]
   requestList_open: any;
+  displayQuestion_open:any;
+  displayQuestion:string = '';
+  questionId:any;
   constructor(private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService, private s3Service: S3Service) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -109,6 +112,11 @@ export class CandidateAssignmentComponent implements OnInit {
       sessionStorage.setItem(`requirement`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
     }
     if (item === 'search') this.searchKeyword = '';
+    if (item === 'question') {
+      this.displayQuestion = '';
+      this.questionId = '';
+      sessionStorage.setItem(`question`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
+    }
     // this.currentPage = 1;
     // this.limit = 10;
     this.fetchCandidates();
@@ -124,6 +132,15 @@ export class CandidateAssignmentComponent implements OnInit {
     this.displayPosition = name;
     this.positionId = id;
     sessionStorage.setItem(`requirement`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
+    this.fetchCandidates();
+    this.fetchCandidatesWithQuestionBox();
+  }
+
+  filterQuestion(name: string, id: string):void{
+    this.displayQuestion_open = false;
+    this.displayQuestion = name;
+    this.questionId = id;
+    sessionStorage.setItem(`question`, JSON.stringify({ name: this.displayQuestion, id: this.questionId }));
     this.fetchCandidates();
     this.fetchCandidatesWithQuestionBox();
   }
