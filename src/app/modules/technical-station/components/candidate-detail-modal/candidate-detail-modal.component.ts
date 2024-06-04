@@ -97,12 +97,12 @@ export class CandidateDetailModalComponent implements OnInit {
     const skillElement = document.getElementById('skill') as HTMLInputElement;
     const scoreElement = document.getElementById('score') as HTMLInputElement;
     const descriptionElement = document.getElementById('description') as HTMLInputElement;
-    // const fileInput = document.getElementById('fileInput') as HTMLInputElement;
-    // const file = fileInput.files ? fileInput.files[0] : null;
-    // if (!this.uploadedFileKey) {
-    //   this.tostr.warning('File upload is in progress, please wait.');
-    //   return;
-    // }
+    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    const file = fileInput.files ? fileInput.files[0] : null;
+    if (!this.uploadedFileKey) {
+      this.tostr.warning('File upload is in progress, please wait.');
+      return;
+    }
     const payload = {
       progressAssignee: this.progressAssignee ? this.progressAssignee : this.userId,
       progressSkill: skillElement.value,

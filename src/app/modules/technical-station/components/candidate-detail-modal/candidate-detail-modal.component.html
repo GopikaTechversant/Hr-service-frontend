@@ -126,7 +126,9 @@
             <span class="p-8"> : {{candidateDetails['progress.progressSkills'] ? candidateDetails['progress.progressSkills'] : 'NIL'}}</span>
             <span class="p-8"> : {{candidateDetails['progress.progressScore'] ? candidateDetails['progress.progressScore'] : 'NIL'}}</span>
             <span class="p-8"> : <i class="fa fa-file-text-o p-l-5 blue f-s-22" aria-hidden="true" title="View Attachment"
-                (click)="viewResume(candidateDetails['progress.progressFile'])"></i></span>
+                (click)="viewResume(candidateDetails['progress.progressFile'])"></i>
+                <span class="p-l-5">{{candidateDetails['progress.progressFile']}}</span>
+            </span>
                 <span class="p-8"> : {{candidateDetails['progress.progressDescription'] ? candidateDetails['progress.progressDescription']: 'Nil'}}</span>
         </div>
     </div>  
