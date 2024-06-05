@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { ViewChild, ElementRef } from '@angular/core';
 import { ToastrServices } from 'src/app/services/toastr.service';
 import { ApiService } from 'src/app/services/api.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-service-request',
@@ -47,7 +48,18 @@ export class ServiceRequestComponent implements OnInit {
   selectedDesignation: string = '';
   selectedDesignationId: any;
   loader: boolean = false;
-  constructor(private toastr: ToastrServices, private apiService: ApiService) { }
+  // displayDate: string | null = null;
+  // closeDate: string | null = null;
+  maxDate: any;
+  currentYear: any;
+  minDate:any;
+  commentValue: any = '';
+  today : Date = new Date();
+  displayDate: string | null = null;
+  closeDate: string | null = null;
+  postDate: Date | null = null; // actual date object for post date
+  closeDateObj: Date | null = null; // actual date object for close date
+  constructor(private toastr: ToastrServices, private apiService: ApiService, private datePipe: DatePipe) { }
 
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
@@ -55,12 +67,12 @@ export class ServiceRequestComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.currentYear = new Date().getFullYear();
+    this.maxDate = new Date();
+    this.minDate = new Date();
     this.fetchStations();
     this.fetchServiceTeam();
     this.fetchDesignation();
-    // if (history?.state?.requirement) {
-    //   this.requirementFromList()
-    // }
   }
 
   onBodyClick(event: MouseEvent): void {
@@ -71,11 +83,7 @@ export class ServiceRequestComponent implements OnInit {
       this.openDesignation = false;
     }
   }
-  // requirementFromList():void{
-  //   console.log("inside", history?.state?.requirement);
-
-  // }
-
+  
   fetchDesignation() {
     this.apiService.get(`/service-request/designation/list`).subscribe(((res: any) => {
       if (res?.data) this.designationList = res?.data;
@@ -127,7 +135,12 @@ export class ServiceRequestComponent implements OnInit {
   }
 
 
-
+  dateChange(event: any, range: string): void {
+    let date = new Date(event?.value);
+    if (range == 'postdate') this.displayDate = this.datePipe.transform(date,'MM/dd/yyyy');
+    if (range == 'closeDate') this.closeDate = this.datePipe.transform(date,'MM/dd/yyyy');
+  }
+  
   selectTeam(teamId: any, teamName: any): void {
     this.teamListOpen = false;
     this.selectedTeam = teamName;
@@ -197,6 +210,8 @@ export class ServiceRequestComponent implements OnInit {
 
   submitClick(): void {
     this.loader = true;
+    const comments = document.getElementById('comments') as HTMLInputElement;
+    this.commentValue = comments.value;
     const skillName = document.getElementById('skillSearch') as HTMLInputElement;
     this.skillNameValue = skillName.value;
     const stationIds = this.selectedStations.map((station: { stationId: any; }) => station.stationId);
@@ -211,6 +226,9 @@ export class ServiceRequestComponent implements OnInit {
       requestTeam: this.selectedTeamName,
       requestVacancy: this.vacancy.nativeElement.value,
       requestFlowStations: stationIds,
+      requestDescription:this.commentValue,
+      requestPostingDate:this.displayDate,
+      requestClosingDate:this.closeDate
     };
     this.apiService.post(`/service-request/create`, requestData).subscribe((res) => {
       this.loader = false;
@@ -221,7 +239,6 @@ export class ServiceRequestComponent implements OnInit {
       if (err?.status === 500) this.toastr.error("Internal Server Error")
       else {
         this.loader = false;
-        // this.toastr.warning(err?.message ? err?.message : "Unable to create requirement Please try again");
         this.toastr.warning("Unable to create requirement Please try again");
       }
     })
