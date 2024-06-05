@@ -165,7 +165,7 @@ export class CandidateDetailModalComponent implements OnInit {
   //   }
   // }
 
-  showMail(item: 'approve' | 'rejection'): void {
+  showMail(item: string): void {
     this.showSelection = item === 'approve';
     this.showRejection = item !== 'approve';
     this.messageType = item;
@@ -201,7 +201,7 @@ export class CandidateDetailModalComponent implements OnInit {
       };
       this.apiService.post(`${baseUrl}/approve`, payload).subscribe({
         next: () => {
-          this.tostr.success('Approval successful');
+          this.tostr.success('Candidate Selected to Next Round');
           this.closeDialog();
         },
         error: () => this.tostr.error('Error during approval')

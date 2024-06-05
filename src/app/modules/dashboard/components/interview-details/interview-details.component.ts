@@ -1,9 +1,8 @@
-import { ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environments';
 import { ToastrServices } from 'src/app/services/toastr.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 import { ApiService } from 'src/app/services/api.service';
 @Component({
   selector: 'app-interview-details',
@@ -65,6 +64,8 @@ export class InterviewDetailsComponent implements OnInit {
   showModeList: boolean = false;
   scheduleStatus: boolean = false;
   loader: boolean = false;
+  messageType: string = '';
+  mailTemplateData:any;
   constructor(private datePipe: DatePipe, private http: HttpClient, private tostr: ToastrServices, private apiService: ApiService) { }
 
   ngOnInit(): void {
@@ -82,6 +83,7 @@ export class InterviewDetailsComponent implements OnInit {
       this.fetchUsers();
       this.fetchCandidates();
       this.fetchPanel();
+      // this.showMail();
     }
   }
   @HostListener('window:beforeunload', ['$event'])
@@ -103,6 +105,18 @@ export class InterviewDetailsComponent implements OnInit {
       if (res?.data) this.positionList = res?.data;
     })
   }
+
+  showMail(): void {
+    this.messageType = 'approve';
+    this.mailTemplateData = {
+      firstName:this.candidate?.candidateFirstName,
+      lastName: this.candidate?.candidateLastName,
+      id: this.candidate?.candidateId,
+      messageType: 'screening'
+    };
+  }
+
+  onSubmitData(event: any): void {}
 
   fetchCandidates() {
     if (this.positionId) {

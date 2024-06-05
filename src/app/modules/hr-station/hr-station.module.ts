@@ -9,12 +9,14 @@ import { HrCandidateListComponent } from './components/hr-candidate-list/hr-cand
 import { HrCandidateDetailComponent } from './components/hr-candidate-detail/hr-candidate-detail.component';
 import { FormsModule } from '@angular/forms';
 import { SelectedCandidateListComponent } from './components/selected-candidate-list/selected-candidate-list.component';
+import { CandidateDetailsComponent } from 'src/app/components/candidate-details/candidate-details.component';
 const routes: Routes = [
   {
     path: '', component: HrHomeComponent,
     children: [
       { path: '', component:  HrCandidateListComponent},   
-      { path: 'selected-candidates', component:  SelectedCandidateListComponent},   
+      { path: 'selected-candidates', component:  SelectedCandidateListComponent},  
+      { path: 'candidate-details/:id', component: CandidateDetailsComponent }, 
 
     ]
   },
@@ -33,6 +35,7 @@ const routes: Routes = [
     SharedModule,
     MaterialModule,
     FormsModule,
+    DatePipe
 
   ],
   providers: [

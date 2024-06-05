@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { SharedModule } from '../shared/shared.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { MaterialModule } from '../material/material.module';
 import { AddCandidateModalComponent } from './components/add-candidate-modal/add-candidate-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
@@ -11,7 +9,6 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 import { HttpClientModule } from '@angular/common/http';
 import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
 import { FormsModule } from '@angular/forms';
-import { CandidateDetailsComponent } from './components/candidate-details/candidate-details.component';
 import { RequirementFormComponent } from './components/requirement-form/requirement-form.component';
 import { ServiceRequestComponent } from './components/service-request/service-request.component';
 import { RequirementCandidateListComponent } from './components/requirement-candidate-list/requirement-candidate-list.component';
@@ -22,12 +19,17 @@ import { ApplicationListPieComponent } from './components/application-list-pie/a
 import { ApplicationListBarComponent } from './components/application-list-bar/application-list-bar.component';
 import { InterviewCountComponent } from './components/interview-count/interview-count.component';
 import { DetailedRecruitmentComponent } from './components/detailed-recruitment/detailed-recruitment.component';
-import { InterviewDetailsComponent } from './components/interview-details/interview-details.component';
 import { ReportDetailsComponent } from './components/report-details/report-details.component';
 import { DailyReportComponent } from './components/daily-report/daily-report.component';
 import { RequisitionDetailsComponent } from './components/requisition-details/requisition-details.component';
 import { InterviewCountsBarComponent } from './components/interview-counts-bar/interview-counts-bar.component';
 import { EditRequirementComponent } from './components/edit-requirement/edit-requirement.component';
+import { CandidateDetailsComponent } from 'src/app/components/candidate-details/candidate-details.component';
+import { InterviewDetailsComponent } from './components/interview-details/interview-details.component';
+import { MaterialModule } from '../material/material.module';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
   {
@@ -54,7 +56,6 @@ const routes: Routes = [
     DashboardComponent,
     AddCandidateModalComponent,
     LeftSidebarComponent,
-    CandidateDetailsComponent,
     RequirementFormComponent,
     ServiceRequestComponent,
     RequirementCandidateListComponent,
@@ -65,22 +66,24 @@ const routes: Routes = [
     ApplicationListBarComponent,
     InterviewCountComponent,
     DetailedRecruitmentComponent,
-    InterviewDetailsComponent,
     ReportDetailsComponent,
     DailyReportComponent,
     RequisitionDetailsComponent,
     InterviewCountsBarComponent,
-    EditRequirementComponent
+    EditRequirementComponent,
+    InterviewDetailsComponent
   ],
   imports: [
     CommonModule,
-    SharedModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
-    MaterialModule,
     TextFieldModule,
     HttpClientModule,
     FormsModule,
+    MaterialModule,
+    MatInputModule,
+    MatDatepickerModule,
+    SharedModule,
   ],
   exports: [RouterModule],
   providers: [

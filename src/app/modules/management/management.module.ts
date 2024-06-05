@@ -9,12 +9,14 @@ import { FormsModule } from '@angular/forms';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { ManagementSidebarComponent } from './components/management-sidebar/management-sidebar.component';
 import { ManagementCandidateListComponent } from './components/management-candidate-list/management-candidate-list.component';
+import { CandidateDetailsComponent } from 'src/app/components/candidate-details/candidate-details.component';
 
 const routes: Routes = [
   {
     path: '', component: ManagementHomeComponent,
     children: [
       { path: '', component:  ManagementCandidateListComponent},   
+      { path: 'candidate-details/:id', component: CandidateDetailsComponent },
     ]
   },
 ]

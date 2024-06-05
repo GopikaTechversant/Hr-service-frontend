@@ -9,16 +9,18 @@ import { CandidateDetailModalComponent } from './components/candidate-detail-mod
 import { MaterialModule } from '../material/material.module';
 import { FormsModule } from '@angular/forms';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
+import { CandidateDetailsComponent } from 'src/app/components/candidate-details/candidate-details.component';
 
 const routes: Routes = [
   {
     path: '', component: TechnicalHomeComponent,
     children: [
-      { path: '', component:  TechnicalDetailComponent},   
+      { path: '', component: TechnicalDetailComponent },   
+      { path: 'candidate-details/:id', component: CandidateDetailsComponent },
     ]
   },
-]
-  
+];
+
 @NgModule({
   declarations: [
     TechnicalHomeComponent,

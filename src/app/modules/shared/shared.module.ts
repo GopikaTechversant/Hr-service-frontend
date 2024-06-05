@@ -7,13 +7,15 @@ import { SkeletonLoaderComponent } from 'src/app/components/skeleton-loader/skel
 import { FileUploadS3Component } from 'src/app/components/file-upload-s3/file-upload-s3.component';
 import { MailTemplateComponent } from 'src/app/components/mail-template/mail-template.component';
 import { MaterialModule } from '../material/material.module';
+import { CandidateDetailsComponent } from 'src/app/components/candidate-details/candidate-details.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     SkeletonLoaderComponent,
     FileUploadS3Component,
-    MailTemplateComponent
+    MailTemplateComponent,
+    CandidateDetailsComponent,
   ],
   imports: [
     CommonModule,

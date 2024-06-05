@@ -138,8 +138,9 @@
             <span class="p-10 sub-head">Add Attachment</span>
             <span class="c-pointer attach m-l-5 p-r-5 p-b-5 d-flex file" title="Attach File" (click)="fileInput.click()">
                 <img class="p-5" src="/assets/images/paperclip.svg" alt="" height="20" width="20">
-                <span class="m-b-10 p-5"> {{ fileName === '' ? 'Choose File' : fileName }}</span>
-                <input type="file" name="file" #fileInput class="input-box" style="display:none"(change)="onFileSelected($event)">
+                <span class="m-b-10 p-5" *ngIf="fileName"> {{fileName}}</span>
+                <span class="m-b-10 p-5" *ngIf="!fileName">Upload File</span>
+                <input type="file" id="fileInput" #fileInput style="display: none;" (change)="onFileSelected($event)">
             </span>
         </div>
         <div class="m-10">

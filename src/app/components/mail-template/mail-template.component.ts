@@ -25,7 +25,8 @@ export class MailTemplateComponent implements OnInit {
   mailSubject: any;
   displayDate: any;
   mailBcc: any;
-  fileName: any;
+  file: File | null = null;
+  fileName: string = '';
   selectedFile: any;
   resumeUploadSuccess: boolean = false;
   fileInputClicked: boolean = false;
@@ -53,24 +54,31 @@ export class MailTemplateComponent implements OnInit {
     })
   }
 
-  onFileSelected(event: any) {
-    this.fileInputClicked = true;
-    this.selectedFile = event.target.files[0];
-    console.log("this.selectedFile in add ", this.selectedFile);
-    if (event.target.files.length > 0) this.resumeUploadSuccess = true;
-    if (this.selectedFile) this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', this.selectedFile);
-    console.log("this.selectedFile", typeof (this.selectedFile));
-    this.getKeyFroms3();
-    // if(this.selectedFile) this.s3Service.uploadedFile.emit(this.selectedFile)
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.file = file;
+      this.fileName = file?.name;
+      if (this.fileName) this.s3Service.uploadImage(this.file, 'hr-service-images', this.file);
+      this.getKeyFroms3();
+    }
   }
+
+  // onFileSelected(event: any): void {
+  //   const file: File = event.target.files[0];
+  //   if (file) {
+  //     this.file = file;
+  //     this.fileName = file?.name;
+  //   }
+  // }
+
 
   getKeyFroms3(): void {
     this.keySubscription = this.s3Service.key.subscribe((key: string) => {
-      console.log("Uploaded file key:", key);
       this.uploadedFileKey = key;
     });
   }
-
+  
   dateChange(event: any): void {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
@@ -88,44 +96,48 @@ export class MailTemplateComponent implements OnInit {
     this.isEditable = false;
     this.messageSaved = true;
   }
-  
+
 
   updateHtmlContent(event: any): void {
     this.content = event?.target?.value ? event?.target?.value : '';
-    console.log("bghfhbn",this.content);
-    
+    console.log("bghfhbn", this.content);
+
     this.templateData.message = this.content;
     const templateElement = this.templateRef.nativeElement;
     this.htmlString = templateElement.innerHTML;
-    console.log(templateElement,"event.666666666666pppp",this.htmlString);
+    console.log(templateElement, "event.666666666666pppp", this.htmlString);
 
   }
 
   submitClick(): void {
-    console.log("xcvbn",this.htmlString);
-    
+    console.log("xcvbn", this.uploadedFileKey);
+    // if (!this.uploadedFileKey && this.candidate?.messageType === 'offer') {
+    //   this.tostr.warning('File upload is in progress, please wait.');
+    //   return;
+    // }
+
     if (!this.messageSaved) {
       this.tostr.warning(this.isEditable ? 'Please Save Template before submitting' : 'Please Edit and Save Mail before submitting');
       return;
     }
-  
+
     this.feedback = (document.getElementById('feedback') as HTMLInputElement)?.value || '';
     this.mailCc = (document.getElementById('cc') as HTMLInputElement)?.value || '';
     this.mailBcc = (document.getElementById('bcc') as HTMLInputElement)?.value || '';
     this.mailSubject = (document.getElementById('subject') as HTMLInputElement)?.value || '';
     this.offerSalary = (document.getElementById('salary') as HTMLInputElement)?.value || '';
-  
+
     if (this.isEditable) {
       this.tostr.warning('Please Save Changes in Mail');
       return;
     }
-  
+
     const confirmationCheckbox = document.getElementById('confirmDetails') as HTMLInputElement;
     if (!confirmationCheckbox?.checked || !this.candidate?.messageType.trim()) {
       this.tostr.warning('Please confirm all details before submitting');
       return;
     }
-  
+
     if (this.templateRef) {
       const templateElement = this.templateRef.nativeElement;
       const textarea = templateElement.querySelector('textarea');
@@ -139,9 +151,9 @@ export class MailTemplateComponent implements OnInit {
         div.innerText = this.content;
         textarea.replaceWith(div);
       }
-      
+
       this.htmlString = templateElement.outerHTML.replace(textarea, '<div>');
-  
+
       if (this.htmlString && this.feedback.trim() && this.mailSubject.trim()) {
         const data = {
           feedback: this.feedback,
@@ -151,7 +163,8 @@ export class MailTemplateComponent implements OnInit {
           mailBcc: this.mailBcc,
           mailSubject: this.mailSubject,
           messageType: this.candidate?.messageType,
-          mailTemp : this.htmlString,
+          mailTemp: this.htmlString,
+          file: this.uploadedFileKey,
         };
         this.submitData.emit(data);
         console.log(data);
@@ -161,7 +174,7 @@ export class MailTemplateComponent implements OnInit {
       }
     }
   }
-  
+
   // submitClickTest() {
   //   const payload = {
   //     // serviceSeqId: this.serviceId,
@@ -183,8 +196,8 @@ export class MailTemplateComponent implements OnInit {
   // }
 
   cancelClick() {
-    const data = {clickType: 'cancel'};
+    const data = { clickType: 'cancel' };
     this.submitData.emit(data);
-   }
+  }
 
 }

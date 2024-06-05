@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LogoutModalComponent } from '../logout-modal/logout-modal.component';
 import { environment } from 'src/environments/environments';
 
@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
   showCandidates: boolean = false;
   stationsList: any[] = [];
   headers: any;
-  constructor(private apiService: ApiService, private dialog: MatDialog, private router: Router, private el: ElementRef) { }
+  constructor(private apiService: ApiService, private dialog: MatDialog, private router: Router, private el: ElementRef, private route: ActivatedRoute) { }
 
   @HostListener('document:click', ['$event'])
   onBodyClick(event: Event): void {
@@ -71,9 +71,8 @@ export class HeaderComponent implements OnInit {
   }
 
   selectCandidate(id: any): void {
-    this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
+    this.router.navigate([`candidate-details`, id], { relativeTo: this.route });
     this.searchKeyword = '';
-
   }
 
   profileClick() {

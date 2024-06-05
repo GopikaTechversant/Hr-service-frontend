@@ -25,12 +25,7 @@ export class TechnicalDetailComponent implements OnInit {
   filterStatus: boolean = false;
   selectStatus: boolean = false;
   limit: number = 10;
-  Status: any = [
-    { status: 'pending' },
-    { status: 'rejected' },
-    { status: 'done' },
-    { status: 'moved' }
-  ]
+  status: any;
   filteredStatus: any = '';
   candidateStatus: string = 'Choose Candidate Status';
   currentPage: number = 1;
@@ -49,7 +44,8 @@ export class TechnicalDetailComponent implements OnInit {
   isExport: boolean = false;
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 15 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(Date.now() + 15 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
-  constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog, private datePipe: DatePipe ,private router: Router) { }
+  candidateIds: any;
+  constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog, private datePipe: DatePipe, private router: Router) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
@@ -81,6 +77,7 @@ export class TechnicalDetailComponent implements OnInit {
       this.fetchList();
     });
     this.fetchRequirements();
+    this.fetchStatus();
   }
 
   fetchRequirements(): void {
@@ -97,13 +94,19 @@ export class TechnicalDetailComponent implements OnInit {
     });
   }
 
+  fetchStatus(): void {
+    this.apiService.get(`/user/filter-status`).subscribe(res => {
+      this.status = res?.data;
+    });
+  }
+
   fetchList(): void {
     if (!this.initialLoader) this.loader = true;
     this.candidateList = [];
     if (this.stationId !== '3' && this.stationId !== '4') return;
 
     const url = this.stationId === '3' ? `/technical-station/list` : `/technical-station-two/list`;
-    const params = [
+    let params = [
       `search=${this.searchKeyword}`,
       `page=${this.currentPage}`,
       `limit=${this.limit}`,
@@ -116,16 +119,23 @@ export class TechnicalDetailComponent implements OnInit {
     ].join('&');
 
     if (this.isExport) {
+      if (this.candidateIds) {
+        const idsParams = this.candidateIds.map((id: string) => `ids=${id}`).join('&');
+        params += `&${idsParams}`;
+      }
       const exportUrl = `${environment.api_url}${url}?${params}`;
+      console.log(exportUrl);
+
       window.open(exportUrl, '_blank');
       this.isExport = false;
       if (this.isExport === false) this.fetchList();
       return;
     }
-
     this.apiService.get(`${url}?${params}`).subscribe((data: any) => {
       this.loader = false;
       this.initialLoader = false;
+      this.candidateList = [];
+      this.candidateIds = [];
       if (data?.candidates) {
         this.candidateList.push(data?.candidates);
         this.totalCount = data?.totalCount;
@@ -134,6 +144,13 @@ export class TechnicalDetailComponent implements OnInit {
         if (this.currentPage > totalPages) this.currentPage = totalPages;
       }
     });
+  }
+
+  getSelectedCandidateIds(): void {
+    const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
+    this.candidateIds = selectedCandidates.map((candidate: { serviceId: any; }) => candidate?.serviceId);
+    console.log('Selected Candidate IDs:', this.candidateIds);
+    // this.selectedItem = this.candidateIds; // Save the selected IDs
   }
 
   dateChange(event: any, range: string): void {
@@ -269,9 +286,9 @@ export class TechnicalDetailComponent implements OnInit {
     }
   }
 
-  selectCandidate(id: any): void {
-    this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
-  }
 
+  selectCandidate(id: any): void {
+    this.router.navigate([`candidate-details`, id], { relativeTo: this.route });
+  }
 
 }

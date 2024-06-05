@@ -87,7 +87,7 @@
                     <ng-container *ngFor="let innerArray of candidateList">
                     <ng-container *ngFor="let item of innerArray">
                         <tr class="candidate c-pointer" (dblclick)="selectCandidate(item['candidate.candidateId'])">
-                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()"></td>
                             <td>{{ item['candidate.candidateId'] }}</td>
                             <td>{{item?.serviceDate | date : 'dd/MM/YYY'}}</td>
                             <td class="text-wrap" [title]="item['candidate.candidateFirstName'] +' '+ item['candidate.candidateLastName']">

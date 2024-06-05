@@ -17,16 +17,20 @@ export class CandidateDetailsComponent implements OnInit {
   CandidateData: any;
   candidateFeedback: any;
   constructor(private apiService: ApiService, private route: ActivatedRoute, private datePipe: DatePipe, private dialog: MatDialog,private http:HttpClient) {
-    this.route.params.subscribe(params => {
-      this.candidateId = params['id'];
-      this.fetchCandidateDetails();
-    });
+    // this.route.params.subscribe(params => {
+    //   this.candidateId = params['id'];
+    // });
   }
+
 
   ngOnInit(): void {
-
+    this.route.paramMap.subscribe(params => {
+      this.candidateId = params.get('id');
+      console.log('Candidate ID:', this.candidateId);
+      this.fetchCandidateDetails();
+      // Now you can use the candidateId to fetch candidate details
+    });
   }
-
   fetchCandidateDetails(): void {
     this.apiService.get(`/candidate/list/${this.candidateId}`).subscribe((res: any) => {
       if (res?.data) {

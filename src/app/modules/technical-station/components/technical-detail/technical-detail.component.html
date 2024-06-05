@@ -21,7 +21,7 @@
                 <div class="p-relative">
                     <input class="p-l-5 date-input c-pointer p-5" placeholder="29/02/11" matInput [matDatepicker]="pickerToDate"
                         (dateChange)="dateChange($event, 'endDate')" [ngModel]="endDate" (click)="pickerToDate.open()"
-                        [value]="endDate | date:'yyyy-MM-dd'" id="endDate" [min]="startDate" [max]="today">
+                        [value]="endDate | date:'yyyy-MM-dd'" id="endDate" [min]="startDate" >
                     <mat-datepicker #pickerToDate></mat-datepicker>
                     <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"
                         (click)="pickerToDate.open()"></i>
@@ -57,7 +57,7 @@
                 <span (click)="filterStatus = !filterStatus"><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
             </span>    
             <div class="dropdown c-pointer no-close'" *ngIf="filterStatus" >
-                <span class="d-flex p-0" *ngFor="let type of Status" (click)="selectStatusFilter(type?.status);filterStatus = !filterStatus">
+                <span class="d-flex p-0" *ngFor="let type of status" (click)="selectStatusFilter(type?.status);filterStatus = !filterStatus">
                    <span class="p-l-20 p-5">{{type?.status | titlecase}}</span> 
                 </span>
             </div>
@@ -89,7 +89,7 @@
                     <ng-container *ngFor="let innerArray of candidateList">
                         <ng-container  *ngFor="let item of innerArray">
                             <tr class="candidate c-pointer" (dblclick)="selectCandidate(item['candidate.candidateId'])">
-                                <td><input type="checkbox"></td>
+                                <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()"></td>
                                 <td>{{ item['candidate.candidateId'] }}</td>
                                 <td>{{item?.serviceDate | date : 'dd/MM/YYY'}}</td>
                                 <td class="text-wrap" [title]="item['candidate.candidateFirstName'] +' '+ item['candidate.candidateLastName']">

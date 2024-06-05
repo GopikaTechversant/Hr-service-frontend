@@ -1,9 +1,11 @@
 import { DatePipe } from '@angular/common';
 import { Component, ElementRef, Inject, Input, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
+import { S3Service } from 'src/app/services/s3.service';
 import { ToastrServices } from 'src/app/services/toastr.service';
-import { environment } from 'src/environments/environments';
+import { environment } from "src/environments/environments";
 @Component({
   selector: 'app-hr-candidate-detail',
   templateUrl: './hr-candidate-detail.component.html',
@@ -12,6 +14,7 @@ import { environment } from 'src/environments/environments';
 })
 export class HrCandidateDetailComponent {
   @ViewChild('template', { static: false }) templateRef!: ElementRef;
+  private keySubscription?: Subscription;
   descriptionValue: any;
   showDescription: boolean = false;
   serviceId: number = 0;
@@ -31,13 +34,14 @@ export class HrCandidateDetailComponent {
   content: any;
   htmlString: any;
   mailTemplateData: any;
+  uploadedFileKey: string = '';
   constructor(public dialogRef: MatDialogRef<HrCandidateDetailComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
-    private apiService: ApiService, private datePipe: DatePipe, private tostr: ToastrServices) {
+    private apiService: ApiService, private datePipe: DatePipe, private tostr: ToastrServices,private s3Service : S3Service) {
     if (data) {
       this.candidateDetails = data?.candidateDetails?.candidate;
       this.hrReview = data?.candidateDetails?.reqHrReview;
       this.serviceId = this.data?.candidateDetails?.serviceId;
-      this.feedback = data?.candidateDetails?.reqCandidateComment?.commentComment;
+      this.feedback = data?.candidateDetails?.reqCandidateComment?.commentComment;      
     }
     this.dialogRef.updateSize('60%', '85%')
   }
@@ -64,14 +68,6 @@ export class HrCandidateDetailComponent {
     };
   }
 
-  onFileSelected(event: any): void {
-    const file: File = event.target.files[0];
-    if (file) {
-      this.file = file;
-      this.fileName = file.name;
-    }
-  }
-
   onSubmitData(event: any): void {
     if (event?.clickType === 'cancel') this.cancelClick();
     if (event?.messageType === 'offer') this.addOffer(event);
@@ -88,6 +84,10 @@ export class HrCandidateDetailComponent {
       offerMailSubject: data?.mailSubject,
       offerMailBackCc: data?.mailCc,
       offerMailBackBcc: data?.mailBcc,
+      attachmentArray : [ {   
+        filename:  data?.file ,
+        path: `${environment.s3_url}${data?.file}`
+    }]
     };
 
     this.apiService.post(`/hr-station/candidateOffer`, payload).subscribe({

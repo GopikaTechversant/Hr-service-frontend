@@ -1,6 +1,10 @@
 <div class="main p-t-10">
-    <div class="menu d-flex c-pointer" (click)="navigate('/hr')" [class.active]="isActive('/hr')">
+    <div class="menu d-flex c-pointer" (click)="navigate('/management',false)" [class.active]="isActive('/hr')">
         <img src="assets/images/gg_list.png" alt="" height="19px" width="19px" top="4px" left="4px">
         <span class="menu-text">Requirements List</span>
     </div>
+    <div *ngIf="id && candidateDetailUrl && isActive(candidateDetailUrl)" class="menu d-flex c-pointer" (click)="navigate(candidateDetailUrl, false)" [class.active]="isActive(candidateDetailUrl)">
+        <img src="assets/images/Group.png" alt="" height="19px" width="19px" top="4px" left="4px">
+        <span class="menu-text">Candidate Detail</span>
+      </div>
 </div>

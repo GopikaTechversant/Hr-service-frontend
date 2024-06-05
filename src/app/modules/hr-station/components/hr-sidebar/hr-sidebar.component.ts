@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-hr-sidebar',
@@ -9,9 +10,22 @@ import { Router } from '@angular/router';
   providers: [DatePipe],
 })
 export class HrSidebarComponent implements OnInit {
-  constructor(private router: Router) { }
+  constructor(private router: Router, private route: ActivatedRoute) {
+    this.routerEventsSubscription = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.id = this.route.snapshot.firstChild?.params['id'];
+      if (this.id) {
+        this.candidateDetailUrl = `/hr/candidate-details/${this.id}`;
+      }
+    });
+  }
+  id: string | null = null;
+  candidateDetailUrl: string = '';
+  routerEventsSubscription: any;
 
   ngOnInit(): void { }
+
 
   navigate(path: string, queryParam: any): void {
     if (queryParam) {

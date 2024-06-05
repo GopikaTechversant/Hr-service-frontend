@@ -6,7 +6,7 @@ import { StationSwitchComponent } from 'src/app/components/station-switch/statio
 import { WarningBoxComponent } from 'src/app/components/warning-box/warning-box.component';
 import { DatePipe } from '@angular/common';
 import { environment } from 'src/environments/environments';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-hr-candidate-list',
@@ -38,13 +38,14 @@ export class HrCandidateListComponent implements OnInit {
   displayPosition: string = '';
   positionId: any;
   requestList: any;
-  initialLoader:boolean = false
+  initialLoader: boolean = false
   experience: string = '';
   isExport: boolean = false;
   today: Date = new Date();
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 15 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(Date.now() + 15 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
-  constructor(private dialog: MatDialog, private apiService: ApiService , private datePipe: DatePipe ,private router: Router) { }
+  candidateIds: any;
+  constructor(private dialog: MatDialog, private apiService: ApiService, private datePipe: DatePipe, private router: Router, private route: ActivatedRoute) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
@@ -80,9 +81,9 @@ export class HrCandidateListComponent implements OnInit {
   }
 
   fetchList(): void {
-    if(!this.initialLoader) this.loader = true;
-   const url =`/hr-station/list`
-    const params = [
+    if (!this.initialLoader) this.loader = true;
+    const url = `/hr-station/list`
+    let params = [
       `search=${this.searchKeyword}`,
       `page=${this.currentPage}`,
       `limit=${this.limit}`,
@@ -95,7 +96,13 @@ export class HrCandidateListComponent implements OnInit {
     ].join('&');
 
     if (this.isExport) {
+      if (this.candidateIds) {
+        const idsParams = this.candidateIds.map((id: string) => `ids=${id}`).join('&');
+        params += `&${idsParams}`;
+      }
       const exportUrl = `${environment.api_url}${url}?${params}`;
+      console.log(exportUrl);
+
       window.open(exportUrl, '_blank');
       this.isExport = false;
       if (this.isExport === false) this.fetchList();
@@ -114,6 +121,13 @@ export class HrCandidateListComponent implements OnInit {
         if (this.currentPage > totalPages) this.currentPage = totalPages;
       }
     });
+  }
+
+  getSelectedCandidateIds(): void {
+    const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
+    this.candidateIds = selectedCandidates.map((candidate: { serviceId: any; }) => candidate?.serviceId);
+    console.log('Selected Candidate IDs:', this.candidateIds);
+    // this.selectedItem = this.candidateIds;
   }
 
   generatePageNumbers() {
@@ -135,8 +149,6 @@ export class HrCandidateListComponent implements OnInit {
     return pages;
   }
 
-
-
   dateChange(event: any, range: string): void {
     let date = new Date(event?.value);
     if (range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
@@ -150,7 +162,6 @@ export class HrCandidateListComponent implements OnInit {
     this.isExport = true;
     this.fetchList();
   }
-
 
   searchCandidate(searchTerm: string): void {
     this.searchKeyword = searchTerm;
@@ -244,7 +255,7 @@ export class HrCandidateListComponent implements OnInit {
   }
 
   selectCandidate(id: any): void {
-    this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
+    this.router.navigate([`candidate-details`, id], { relativeTo: this.route });
   }
 
 }

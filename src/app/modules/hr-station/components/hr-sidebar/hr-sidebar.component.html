@@ -12,6 +12,11 @@
         <img src="assets/images/gg_list.png" alt="" height="19px" width="19px" top="4px" left="4px">
         <span class="menu-text">Selected Candidate List</span>
     </div>
+    <div *ngIf="id && candidateDetailUrl && isActive(candidateDetailUrl)" class="menu d-flex c-pointer" (click)="navigate(candidateDetailUrl, false)" [class.active]="isActive(candidateDetailUrl)">
+        <img src="assets/images/Group.png" alt="" height="19px" width="19px" top="4px" left="4px">
+        <span class="menu-text">Candidate Detail</span>
+      </div>
+
     <!-- <div class="menu d-flex c-pointer" (click)="navigate('/dashboard/interview-details')">
         <img src="/assets/images/line-md_computer-1.png" alt="" height="19px" width="19px" top="4px" left="4px">
         <span class="menu-text">Interview Details</span>

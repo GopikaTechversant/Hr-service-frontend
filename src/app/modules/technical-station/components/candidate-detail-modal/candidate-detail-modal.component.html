@@ -78,11 +78,11 @@
             </span>
         </div>
     </div>
-    <div *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done' && candidateDetails?.serviceStatus !== 'moved'  && buttonType.trim() === ''"
+    <div *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done' && candidateDetails?.serviceStatus !== 'moved'  "
         class="details p-10 d-flex j-end w-97">
-        <button class="select-btn" (click)="selectButton('reschedule')" >Reschedule Inteview</button>
-        <button class="select-btn" (click)="selectButton('rejection')">Rejection</button>
-        <button class="select-btn" (click)="selectButton('add')">Add Progress</button>
+        <button class="select-btn" (click)="selectButton('reschedule');showMail('re-schedule')" [ngClass]="{'offer-select-btn': buttonType === 'reschedule'}"  >Reschedule Inteview</button>
+        <button class="select-btn" (click)="selectButton('rejection')"  [ngClass]="{'offer-select-btn': buttonType === 'rejection'}" >Rejection</button>
+        <button class="select-btn" (click)="selectButton('add')"  [ngClass]="{'offer-select-btn': buttonType === 'add'}" >Add Progress</button>
     </div>
    
     <div class="progress" *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done' && candidateDetails?.serviceStatus !== 'moved' && buttonType.trim() === 'add'">
@@ -137,6 +137,10 @@
         <div *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done' && candidateDetails?.serviceStatus !== 'moved'" class="details p-10 d-flex j-end w-97">
             <button class="btn c-pointer" >Submit</button>
         </div>
+    </div>
+    <div *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done' && candidateDetails?.serviceStatus !== 'moved' && buttonType.trim() === 'reschedule'">
+        <app-mail-template [candidate]="mailTemplateData" (submitData)="onSubmitData($event)"></app-mail-template>
+
     </div>
     <div class="d-flex p-10 progress" *ngIf="data?.progressStatus > 0 || candidateDetails?.serviceStatus === 'moved'">
         <div class="sub-head f-w-500 f-s-14 d-flex">
