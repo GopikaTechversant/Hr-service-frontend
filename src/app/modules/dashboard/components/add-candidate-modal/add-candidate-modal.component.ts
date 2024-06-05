@@ -63,7 +63,10 @@ export class AddCandidateModalComponent implements OnInit {
       candidateLastName: [null, Validators.required],
       candidateDoB: [null, Validators.required],
       candidateGender: [null, Validators.required],
-      candidateExperience: [null, Validators.required],
+      // candidateExperience: [null, Validators.required],
+      candidateRevlentExperience: [null, Validators.required],
+      candidateTotalExperience: [null, Validators.required],
+      candidatePreferlocation: [null, Validators.required],
       candidatePreviousOrg: [null, Validators.required],
       candidatePreviousDesignation: [null, Validators.required],
       candidateEducation: [null, Validators.required],
@@ -74,7 +77,8 @@ export class AddCandidateModalComponent implements OnInit {
       candidateState: [null, Validators.required],
       candidateEmail: [null, Validators.required],
       candidateMobileNo: [null, Validators.required],
-      resumeSourceId: [null, Validators.required]
+      resumeSourceId: [null, Validators.required],
+
     })
   }
 
@@ -335,7 +339,10 @@ export class AddCandidateModalComponent implements OnInit {
         candidateEmail: this.candidateForm?.value?.candidateEmail,
         candidateMobileNo: this.candidateForm?.value?.candidateMobileNo,
         candidateDoB: this.candidateForm?.value?.candidateDoB,
-        candidateExperience: this.candidateForm?.value?.candidateExperience,
+        // candidateExperience: this.candidateForm?.value?.candidateExperience,
+        candidateRevlentExperience:this.candidateForm?.value?.candidateRevlentExperience,
+        candidateTotalExperience:this.candidateForm?.value?.candidateTotalExperience,
+        candidatePreferlocation:this.candidateForm?.value?.candidatePreferlocation,
         candidatePreviousOrg: this.candidateForm?.value?.candidatePreviousOrg,
         candidatePreviousDesignation: this.candidateForm?.value?.candidatePreviousDesignation,
         candidateEducation: this.candidateForm?.value?.candidateEducation,

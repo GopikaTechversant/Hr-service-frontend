@@ -5,7 +5,7 @@
             <img src="assets/gif/loader.gif">
         </div>
         <div class="d-flex parent p-t-10">
-            <div class="child d-flex m-b-10">
+            <div class="child d-flex">
                 <div class="m-t-20 m-b-10">
                     <span class="sub-head">Job Title<span class="required">*</span></span>
                     <div>
@@ -13,7 +13,7 @@
                     </div>
                 </div>
             </div>
-            <div class="child d-flex m-b-10">
+            <div class="child d-flex">
                 <div class="m-t-20 m-b-10">
                     <span class="sub-head">Job Code<span class="required">*</span></span>
                     <div>
@@ -21,67 +21,76 @@
                     </div>
                 </div>
             </div>
-            <div class="child d-flex m-b-10">
+            <div class="child d-flex">
                 <div class="m-t-20 m-b-10">
                     <span class="sub-head">Job Posting Date<span class="required">*</span></span>
-                    <div>
-                        <input type="text" class="input-box" #jobtitle max="20">
+                    <div class="p-relative w-100">
+                        <input class="p-l-5  input-box" placeholder="DD/MM/YYYY" matInput [matDatepicker]="pickerdate"
+                            (dateChange)="dateChange($event,'postdate')" (click)="pickerdate?.open()"
+                            [(ngModel)]="postDate">
+                        <span> <mat-datepicker #pickerdate class=""></mat-datepicker>
+                            <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
+                                (click)="pickerdate?.open()"></i>
+                        </span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="d-flex parent p-t-10">
-            <div class="child d-flex m-b-10">
+            <div class="child d-flex ">
                 <div class="m-t-20 m-b-10">
-                    <span class="sub-head">Job Title<span class="required">*</span></span>
-                    <div>
-                        <input type="text" class="input-box" #jobtitle max="20">
+                    <span class="sub-head">Job Closing Date<span class="required">*</span></span>
+                    <div class="p-relative w-100">
+                        <input class="p-l-5  input-box" placeholder="MM/DD/YYYY" matInput [matDatepicker]="pickerClosedate"
+                            (dateChange)="dateChange($event,'closeDate')" (click)="pickerClosedate?.open()"
+                            [(ngModel)]="closeDateObj">
+                        <span> <mat-datepicker #pickerClosedate class=""></mat-datepicker>
+                            <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
+                                (click)="pickerClosedate?.open()"></i>
+                        </span>
                     </div>
                 </div>
             </div>
-            <div class="child d-flex m-b-10">
+            <div class="child d-flex">
                 <div class="m-t-20 m-b-10">
-                    <span class="sub-head">Job Code<span class="required">*</span></span>
-                    <div>
-                        <input type="text" class="input-box" #jobCode max="20">
+                    <span class="sub-head">Department Name<span class="required">*</span></span>
+                    <div class="no-close col-md-3 s-list d-flex input-box j-space m-text p-relative">
+                        <span (click)="teamListOpen = !teamListOpen" class="w-100 d-flex">
+                            <span class="align-center m-t-6 c-pointer">
+                                {{selectedTeam.trim() !== '' ? selectedTeam : 'Select Department'}}</span>
+                            <span class="no-close s-list c-pointer align-center m-b-2 flex-1 sub j-end"><i
+                                    class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
+                            </span>
+                        </span>
+                        <div class=" m-b-2 drop-list no-close" *ngIf="teamListOpen">
+                            <div (click)="selectTeam(team?.teamId,team?.teamName)" *ngFor="let team of list_team"
+                                class=" p-t-5 p-b-5 p-l-8 c-pointer">{{team?.teamName}}</div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="child d-flex m-b-10">
+            <div class="child d-flex">
                 <div class="m-t-20 m-b-10">
-                    <span class="sub-head">Job Posting Date<span class="required">*</span></span>
-                    <div>
-                        <input type="text" class="input-box" #jobtitle max="20">
+                    <span class="sub-head">Designation<span class="required">*</span></span>
+                    <div class="no-close col-md-3 s-list d-flex input-box j-space m-text p-relative">
+                        <span (click)="openDesignation = !openDesignation" class="w-100 d-flex">
+                            <span class="align-center m-t-6 c-pointer">
+                                {{selectedDesignation.trim() !== '' ? selectedDesignation : 'Select Designation'}}</span>
+                            <span class="no-close s-list c-pointer align-center m-b-2 flex-1 sub j-end"><i
+                                    class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
+                            </span>
+                        </span>
+                        <div class=" m-b-2 drop-list no-close" *ngIf="openDesignation">
+                            <div (click)="selectDesignation(designation?.designationId,designation?.designationName);!openDesignation"
+                                *ngFor="let designation of designationList" class=" p-t-5 p-b-5 p-l-8 c-pointer">
+                                {{designation?.designationName}}</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- <div class="main">
-    <div class="d-flex p-t-20 align-center p-b-10 ">
-        <span class="header">Create Requirement</span>
-    </div>
-    <div *ngIf="loader" class="loader-parent">
-        <img src="assets/gif/loader.gif">
-    </div>
-    <div class="scroller-box">
         <div class="d-flex parent">
-            <div class="m-t-20 m-b-10 child">
-                <span class="sub-head">Job Title<span class="required">*</span></span>
-                <div>
-                    <input type="text" class="input" #jobtitle max="20">
-                </div>
-            </div>
-            <div class="m-t-20 m-b-10 p-l-10 m-l-10 child">
-                <span class="sub-head">Job Code</span>
-                <div>
-                    <input type="text" class="input" #jobCode max="20">
-                </div>
-            </div>
-        </div>
-        <div class="d-flex parent">
-            <div class="m-t-20 m-b-10 child">
+            <div class="m-t-20 m-b-10 child-interview">
                 <span class="sub-head">Interview Rounds<span class="required">*</span></span>
                 <div class="d-flex input-interview-rounds p-relative">
                     <div *ngFor="let item of selectedStations; let i = index">
@@ -96,7 +105,8 @@
                             <ng-container *ngIf="i !== 0 && i !== selectedStations.length - 1"
                                 class="d-flex align-center">
                                 <span class="station-pill"><span>{{item?.stationName}} </span>
-                                    <div (click)="deleteStation(item?.stationId, item?.stationName)" class="circle c-pointer">
+                                    <div (click)="deleteStation(item?.stationId, item?.stationName)"
+                                        class="circle c-pointer">
                                         <div class="minus"></div>
                                     </div>
                                 </span>
@@ -125,82 +135,62 @@
             </div>
 
         </div>
-        <div class="d-flex parent">
-            <div class="m-t-20 m-b-10 child">
-                <span class="sub-head">Designation<span class="required">*</span></span>
-                <div class="no-close col-md-3 s-list d-flex input j-space m-text p-relative">
-                    <span (click)="openDesignation = !openDesignation" class="w-100 d-flex">
-                        <span class="align-center m-t-6 c-pointer">
-                            {{selectedDesignation.trim() !== '' ? selectedDesignation : 'Select Designation'}}</span>
-                        <span class="no-close s-list c-pointer align-center m-b-2 flex-1 sub j-end"><i
-                                class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
-                        </span>
-                    </span>
-                    <div class=" m-b-2 drop-list no-close" *ngIf="openDesignation">
-                        <div (click)="selectDesignation(designation?.designationId,designation?.designationName);!openDesignation"
-                            *ngFor="let designation of designationList" class=" p-t-5 p-b-5 p-l-8 c-pointer">
-                            {{designation?.designationName}}</div>
+        <div class="d-flex parent p-t-10">
+            <div class="child d-flex">
+                <div class="m-t-20 m-b-10">
+                    <span class="sub-head">Base salary<span class="required">*</span></span>
+                    <div>
+                        <input type="text" class="input-box" #jobtitle max="20" #baseSalaryInput
+                            (keypress)="onKeypress($event)" (paste)="onPaste($event)" maxlength="10">
                     </div>
                 </div>
             </div>
-            <div class="m-t-20 m-b-10 p-l-10 m-l-10 child">
-                <span class="sub-head">Department Name<span class="required">*</span></span>
-                <div class="no-close col-md-3 s-list d-flex input j-space m-text p-relative">
-                    <span (click)="teamListOpen = !teamListOpen" class="w-100 d-flex">
-                        <span class="align-center m-t-6 c-pointer">
-                            {{selectedTeam.trim() !== '' ? selectedTeam : 'Select Department'}}</span>
-                        <span class="no-close s-list c-pointer align-center m-b-2 flex-1 sub j-end"><i
-                                class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
-                        </span>
-                    </span>
-                    <div class=" m-b-2 drop-list no-close" *ngIf="teamListOpen">
-                        <div (click)="selectTeam(team?.teamId,team?.teamName)" *ngFor="let team of list_team"
-                            class=" p-t-5 p-b-5 p-l-8 c-pointer">{{team?.teamName}}</div>
+            <div class="child d-flex">
+                <div class="m-t-20 m-b-10">
+                    <span class="sub-head">Maximum salary<span class="required">*</span></span>
+                    <div>
+                        <input type="text" class="input-box" #maxSalaryInput (keypress)="onKeypress($event)"
+                            (paste)="onPaste($event)" maxlength="10">
                     </div>
                 </div>
             </div>
-
-        </div>
-        <div class="d-flex parent">
-            <div class="m-t-20 m-b-10 child">
-                <span class="sub-head">Base salary</span>
-                <div>
-                    <input type="text" class="input" #baseSalaryInput (keypress)="onKeypress($event)"
-                        (paste)="onPaste($event)" maxlength="10">
-                </div>
-            </div>
-            <div class="m-t-20 m-b-10 p-l-10 m-l-10 child">
-                <span class="sub-head">Maximum salary</span>
-                <div>
-                    <input type="text" class="input" #maxSalaryInput (keypress)="onKeypress($event)"
-                        (paste)="onPaste($event)" maxlength="10">
+            <div class="child d-flex">
+                <div class="m-t-20 m-b-10">
+                    <span class="sub-head">Experience<span class="required">*</span></span>
+                    <div>
+                        <input type="text" class="input-box" #experienceInput (keydown)="experienceValidation($event)">
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="d-flex parent">
-            <div class="m-t-20 m-b-10 child">
-                <span class="sub-head">Experience</span>
-                <div>
-                    <input type="text" class="input" #experienceInput (keydown)="experienceValidation($event)">
-                </div>
-            </div>
-            <div class="m-t-20 m-b-10 p-l-10 m-l-10 child">
-                <span class="sub-head">Vacancy</span>
-                <div>
-                    <input type="text" class="input" #vacancy max="4" (keypress)="onKeypress($event)">
+        <div class="d-flex parent p-t-10">
+            <div class="coment-child d-flex ">
+                <div class="m-t-20 m-b-10">
+                    <span class="sub-head">Job Description<span class="required">*</span></span>
+                    <div>
+                        <textarea class="comments p-l-9 p-t-6" id="comments" #comment></textarea>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="d-flex parent">
-            <div class="m-t-20 m-b-10 child">
+        <div class="d-flex parent p-t-10">
+            <div class="child d-flex">
+                <div class="m-t-20 m-b-10">
+                    <span class="sub-head">Vacancy<span class="required">*</span></span>
+                    <div>
+                        <input type="text" class="input-box" #vacancy max="4" (keypress)="onKeypress($event)">
+                    </div>
+                </div>
+            </div>
+            <div class="m-t-20 m-b-10 child-skill">
                 <span class="sub-head">Skills</span>
                 <div>
                     <span class="p-relative">
                         <input type="text" class="input-interview-rounds-skill" placeholder="Search Skills"
                             (input)="getSkillSuggestions($event)" id="skillSearch" [(ngModel)]="searchvalue">
-                        <span *ngIf="searchvalue.trim() !== ''" (click)="clearFilter()" 
-                            class="clear-filter c-pointer m-l-10 p-absolute m-t-20"><img
-                                src="assets/images/skill-close-icon.png" alt="" class="m-t-0 p-r-13" width="17px"
+                        <span *ngIf="searchvalue.trim() !== ''" (click)="clearFilter()"
+                            class="clear-filter c-pointer m-l-10 p-absolute"><img
+                                src="assets/images/skill-close-icon.png" alt="" class="m-t-0" width="17px"
                                 height="17px">
                         </span>
                         <div class="m-t-8 drop-list-skill" *ngIf="showSearchBar">
@@ -226,15 +216,16 @@
                     </span>
                 </div>
             </div>
-
         </div>
-        <div class="p-29">
-            <div class="d-flex j-end p-t-10 m-t-10">
-                <div class="mat-ripple m-r-10 button c-pointer d-flex align-center c-pointer"><button
+        <div class="p-29 m-b-26" >
+            <div class="d-flex button">
+                <div class="mat-ripple m-r-10 c-pointer d-flex align-center c-pointer"><button
                         class="btn-submit c-pointer" (click)="submitClick()">Submit</button></div>
                 <div class="mat-ripple c-pointer d-flex align-center c-pointer"><button class="btn-cancel c-pointer"
                         (click)="cancel()">Cancel</button></div>
             </div>
         </div>
     </div>
-</div> -->
+    
+</div>
+    
