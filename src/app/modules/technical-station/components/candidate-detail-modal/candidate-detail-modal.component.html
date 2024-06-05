@@ -5,12 +5,9 @@
     </div>
     <div class="modal-close">
         <span class="p-10" [ngClass]="{'blue': candidateDetails?.serviceStatus === 'pending','green': candidateDetails?.serviceStatus === 'done',
-            'red': candidateDetails?.serviceStatus === 'rejected'}">
-            {{candidateDetails?.serviceStatus | titlecase}}
+            'red': candidateDetails?.serviceStatus === 'rejected'}">{{candidateDetails?.serviceStatus | titlecase}}
         </span>
-        <button class="c-pointer" (click)="closeDialog()">
-            <mat-icon>close</mat-icon>
-        </button>
+        <button class="c-pointer" (click)="closeDialog()"><mat-icon>close</mat-icon></button>
     </div>
 </div>
 <div class="modal-content">
