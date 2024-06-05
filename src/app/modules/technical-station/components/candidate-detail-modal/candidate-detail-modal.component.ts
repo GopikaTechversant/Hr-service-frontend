@@ -46,7 +46,9 @@ export class CandidateDetailModalComponent implements OnInit {
   content: any;
   buttonType: string = '';
   mailTemplateData: any;
-
+  status: any;
+  filteredStatus : string = '';
+  filterStatus: boolean = false;
   constructor(public dialogRef: MatDialogRef<CandidateDetailModalComponent>, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data) {
@@ -69,7 +71,17 @@ export class CandidateDetailModalComponent implements OnInit {
 
   selectButton(type: any): void {
     this.buttonType = type;
+    if(type === 'rejection') this.fetchStatus();
+  }
 
+  fetchStatus(): void {
+    this.apiService.get(`/user/filter-status`).subscribe(res => {
+      this.status = res?.data.slice(4);
+    });
+  }
+
+  selectStatusFilter(status: string) {
+    this.filteredStatus = status;
   }
 
   onFileSelected(event: any): void {
@@ -213,16 +225,21 @@ export class CandidateDetailModalComponent implements OnInit {
 
 
   rejectClick(data: any): void {
-    const payload = {
-      serviceId: this.serviceId,
-      stationId: this.stationId,
-      userId: this.userId,
-      status: "rejected",
-      rejectCc: data?.mailCc,
-      rejectMailTemp: data?.mailTemp,
-      rejectSubject: data?.mailSubject,
-      rejectBcc: data?.mailBcc,
-    };
+    const feedback = document.getElementById('feedback') as HTMLInputElement;
+    if (feedback) this.feedback = feedback?.value;
+    if ((this.feedback.trim() !== '' && this.filteredStatus) || data) {
+      const payload = {
+        serviceId: this.serviceId,
+        stationId: this.candidateDetails?.candidateStation,
+        userId: this.userId,
+        status: this.filteredStatus ? this.filteredStatus : "rejected",
+        rejectCc: data?.mailCc ?? '',
+        rejectMailTemp: data?.mailTemp ?? '',
+        rejectSubject: data?.mailSubject ?? '',
+        rejectBcc: data?.mailBcc ?? '',
+        feedBack: this.feedback,
+      };
+    console.log(payload);
 
     this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
       next: (res: any) => {
@@ -232,6 +249,7 @@ export class CandidateDetailModalComponent implements OnInit {
         this.tostr.error('Error adding progress');
       }
     });
+    }
   }
 
   viewResume(resume: any) {

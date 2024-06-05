@@ -26,9 +26,7 @@ export class CandidateDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.candidateId = params.get('id');
-      console.log('Candidate ID:', this.candidateId);
       this.fetchCandidateDetails();
-      // Now you can use the candidateId to fetch candidate details
     });
   }
   fetchCandidateDetails(): void {
