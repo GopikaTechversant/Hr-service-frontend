@@ -124,6 +124,7 @@ export class HrCandidateDetailComponent {
         rejectMailTemp: data?.mailTemp ?? '',
         rejectSubject: data?.mailSubject ?? '',
         rejectBcc: data?.mailBcc ?? '',
+        feedBack: this.feedback,
       };
 
       this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
