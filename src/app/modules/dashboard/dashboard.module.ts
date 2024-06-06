@@ -44,7 +44,8 @@ const routes: Routes = [
       { path: 'report-details', component: ReportDetailsComponent },
       { path: 'candidate-details/:id', component: CandidateDetailsComponent },
       { path: 'series', component: SeriesComponent },
-      { path: 'requisition-detail/:id', component: RequisitionDetailsComponent }
+      { path: 'requisition-detail/:id', component: RequisitionDetailsComponent },
+      { path: 'candidate-details/:id', component: CandidateDetailsComponent },
     ]
   },
   { path: 'series', component: SeriesComponent },

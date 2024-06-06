@@ -26,6 +26,10 @@ export class DetailedRecruitmentComponent implements OnInit {
   totalCount: any;
   report: boolean = false;
   url:any;
+  candidateIds: any;
+  initialLoader: boolean = false
+  loader: boolean = true;
+
   constructor(private apiService: ApiService, private router: Router) {
   }
 
@@ -42,17 +46,47 @@ export class DetailedRecruitmentComponent implements OnInit {
     this.fetchRecruitersList();
   }
 
+  // fetchCandidateList(): void {
+  //   this.url = `/dashboard/requirement-report?recuriter=${this.selectedRecruiterId}&page=${this.currentPage}&limit=${this.pageSize}&report=${this.report}`;
+  //   this.apiService.get(this.url).subscribe((res: any) => {
+  //     this.candidateList = res?.userRequirementReport;
+  //     this.totalCount = res?.requirementCount;
+  //     const totalPages = Math.ceil(this.totalCount / this.pageSize);
+  //     this.lastPage = totalPages;
+  //     if (this.currentPage > totalPages) this.currentPage = totalPages;
+  //   })
+  // }
+
   fetchCandidateList(): void {
-    this.url = `/dashboard/requirement-report?recuriter=${this.selectedRecruiterId}&page=${this.currentPage}&limit=${this.pageSize}&report=${this.report}`;
-    this.apiService.get(this.url).subscribe((res: any) => {
+    if (!this.initialLoader) this.loader = true;
+    const url = `/dashboard/requirement-report`
+    let params = [
+      `recuriter=${this.selectedRecruiterId}`,
+      `page=${this.currentPage}`,
+      `limit=${this.pageSize}`,
+      `report=${this.report}`
+    ].join('&');
+
+    if (this.report) {
+      if (this.candidateIds) {
+        const idsParams = this.candidateIds.map((id: string) => `ids=${id}`).join('&');
+        params += `&${idsParams}`;
+      }
+      const exportUrl = `${environment.api_url}${url}?${params}`;
+      console.log("exportUrl",exportUrl);
+      window.open(exportUrl, '_blank');
+      this.report = false;
+      if (this.report === false) this.fetchCandidateList();
+      return;
+  }
+  this.apiService.get(`${url}?${params}`).subscribe((res: any) => {
       this.candidateList = res?.userRequirementReport;
       this.totalCount = res?.requirementCount;
       const totalPages = Math.ceil(this.totalCount / this.pageSize);
       this.lastPage = totalPages;
       if (this.currentPage > totalPages) this.currentPage = totalPages;
     })
-  }
-
+}
   generatePageNumbers() {
     let pages = [];
     if (this.lastPage <= 5) {
@@ -102,14 +136,17 @@ export class DetailedRecruitmentComponent implements OnInit {
     this.fetchCandidateList();
   }
 
-  exportList(): void {
+  exportData(): void {
     this.report = true;
     this.fetchCandidateList();
-    if( this.report = true) {
-      window.open(`${environment.api_url}${this.url}`,'_blank')
-    }
   }
 
+  getSelectedCandidateIds(): void {
+    const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
+    this.candidateIds = selectedCandidates.map((candidate: { serviceId: any; }) => candidate?.serviceId);
+    console.log('Selected Candidate IDs:', this.candidateIds);
+    // this.selectedItem = this.candidateIds;
+  }
   selectCandidate(id: any): void {
     this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
   }
