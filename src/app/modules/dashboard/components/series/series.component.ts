@@ -37,6 +37,9 @@ export class SeriesComponent implements OnInit {
   deleteRequirementId: any;
   flows: any[] = [];
   roundNames: any;
+  initialLoader:boolean = false;
+  currentPage: number = 1;
+  lastPage: any;
   constructor(private apiService: ApiService, private http: HttpClient, private router: Router, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private renderer: Renderer2) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -159,5 +162,28 @@ export class SeriesComponent implements OnInit {
     this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
   }
   
+  onPageChange(pageNumber: number): void {
+    this.currentPage = Math.max(1, pageNumber);
+    this.fetchcandidates();
+  }
+
+  generatePageNumbers() {
+    let pages = [];
+    if (this.lastPage <= 5) {
+      for (let i = 1; i <= this.lastPage; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      let start = Math.max(2, this.currentPage - 1);
+      let end = Math.min(this.lastPage - 1, this.currentPage + 1);
+
+      if (this.currentPage <= 3) end = 4;
+      else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
+      if (start > 2) pages.push('...');
+      for (let i = start; i <= end; i++) pages.push(i);
+      if (end < this.lastPage - 1) pages.push('...');
+      pages.push(this.lastPage);
+    }
+    return pages;
+  }
 
 }
