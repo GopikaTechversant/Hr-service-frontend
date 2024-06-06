@@ -48,13 +48,15 @@ export class CandidateDetailModalComponent implements OnInit {
   mailTemplateData: any;
   status: any;
   filteredStatus : string = '';
-  filterStatus: boolean = false;
+  filterStatus: boolean = false; 
   constructor(public dialogRef: MatDialogRef<CandidateDetailModalComponent>, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data) {
       this.candidateDetails = data?.candidateDetails;
       this.stationId = data?.stationId;
       this.serviceId = this.candidateDetails?.serviceId;
+      console.log(this.candidateDetails);
+      
       if (data?.progressStatus > 0) this.progessAdded = true;
     }
     this.dialogRef.updateSize('60vw', '90vh');
@@ -178,14 +180,17 @@ export class CandidateDetailModalComponent implements OnInit {
   // }
 
   showMail(item: string): void {
-    this.showSelection = item === 'approve';
-    this.showRejection = item !== 'approve';
+    if(item === 'approve')  this.showSelection = true;
+    if(item === 'rejection')  this.showRejection = true;
     this.messageType = item;
+    console.log(this.messageType);
+    
     this.mailTemplateData = {
       firstName: this.candidateDetails['candidate.candidateFirstName'],
       lastName: this.candidateDetails['candidate.candidateLastName'],
       id: this.candidateDetails['candidate.candidateId'],
-      messageType: item
+      messageType: this.messageType,
+      stationId : this.stationId,
     };
   }
 
@@ -230,7 +235,7 @@ export class CandidateDetailModalComponent implements OnInit {
     if ((this.feedback.trim() !== '' && this.filteredStatus) || data) {
       const payload = {
         serviceId: this.serviceId,
-        stationId: this.candidateDetails?.candidateStation,
+        stationId: this.stationId,
         userId: this.userId,
         status: this.filteredStatus ? this.filteredStatus : "rejected",
         rejectCc: data?.mailCc ?? '',
@@ -256,9 +261,8 @@ export class CandidateDetailModalComponent implements OnInit {
     this.resumePath = resume;
     console.log("this.resumePath", this.resumePath);
     window.open(`${environment.s3_url}${this.resumePath}`, '_blank');
-    console.log("`${environment.s3_url}${this.resumePath}`", typeof (`${environment.s3_url}${this.resumePath}`));
+    console.log("`${environment.s3_url}${this.resumePath}`",typeof(`${environment.s3_url}${this.resumePath}`));
   }
-
 
   ngOnDestroy(): void {
     if (this.keySubscription) {

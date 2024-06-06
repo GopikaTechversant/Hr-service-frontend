@@ -12,10 +12,10 @@ import { ApiService } from 'src/app/services/api.service';
 })
 
 export class InterviewDetailsComponent implements OnInit {
-  @ViewChild('recruiterNameDiv') recruiterNameDiv!: ElementRef;
-  @ViewChild('positionDiv') positionDiv!: ElementRef;
+  // @ViewChild('recruiterNameDiv') recruiterNameDiv!: ElementRef;
+  // @ViewChild('positionDiv') positionDiv!: ElementRef;
   @ViewChild('candidatenameDiv') candidatenameDiv!: ElementRef;
-  @ViewChild('panelDiv') panelDiv!: ElementRef;
+  // @ViewChild('panelDiv') panelDiv!: ElementRef;
   showDropdown: boolean = false;
   showRecruiters: boolean = false;
   showcandidate: boolean = false;
@@ -45,7 +45,7 @@ export class InterviewDetailsComponent implements OnInit {
   selectedCandidate: any[] = [];
   location: any;
   interviewStatus: string = '';
-  candidateDetails: any[] = [];
+  candidateDetails: any;
   candidateStatus: any[] = [];
   noticeperiodvalue: any = '';
   serviceId: any;
@@ -83,7 +83,7 @@ export class InterviewDetailsComponent implements OnInit {
       this.fetchUsers();
       this.fetchCandidates();
       this.fetchPanel();
-      // this.showMail();
+      this.showMail('screening');
     }
   }
   @HostListener('window:beforeunload', ['$event'])
@@ -91,14 +91,14 @@ export class InterviewDetailsComponent implements OnInit {
     $event.returnValue = true;
   }
 
-  @HostListener('document:click', ['$event'])
-  onBodyClick(event: Event): void {
-    const clickedElement = event.target as HTMLElement;
-    if (!this.recruiterNameDiv.nativeElement.contains(clickedElement)) this.showRecruiters = false;
-    if (!this.positionDiv.nativeElement.contains(clickedElement)) this.showDropdown = false;
-    if (!this.candidatenameDiv.nativeElement.contains(clickedElement)) this.showcandidate = false;
-    if (!this.panelDiv.nativeElement.contains(clickedElement)) this.showPanel = false;
-  }
+  // @HostListener('document:click', ['$event'])
+  // onBodyClick(event: Event): void {
+  //   const clickedElement = event.target as HTMLElement;
+  //   if (!this.recruiterNameDiv.nativeElement.contains(clickedElement)) this.showRecruiters = false;
+  //   if (!this.positionDiv.nativeElement.contains(clickedElement)) this.showDropdown = false;
+  //   if (!this.candidatenameDiv.nativeElement.contains(clickedElement)) this.showcandidate = false;
+  //   if (!this.panelDiv.nativeElement.contains(clickedElement)) this.showPanel = false;
+  // }
 
   fetchPosition(): void {
     this.apiService.get(`/service-request/list`).subscribe((res: any) => {
@@ -106,17 +106,37 @@ export class InterviewDetailsComponent implements OnInit {
     })
   }
 
-  showMail(): void {
-    this.messageType = 'approve';
-    this.mailTemplateData = {
-      firstName:this.candidate?.candidateFirstName,
-      lastName: this.candidate?.candidateLastName,
-      id: this.candidate?.candidateId,
-      messageType: 'screening'
-    };
+  showMail(type : string): void {
+    this.messageType = type;
+    if(type === 'screening'){
+      this.mailTemplateData = {
+        firstName:this.candidate?.candidateFirstName,
+        lastName: this.candidate?.candidateLastName,
+        id: this.candidate?.candidateId ? this.candidate?.candidateId : this.candidateId,
+        messageType: this.messageType,
+        // ...(this.messageType === "re-schedule" && {
+        //   additionalData: {
+        //     candidateDetails : this.candidateDetails,
+        //     candidateStatus : this.candidateStatus
+        //   }
+        // })
+      };
+    }else{
+      this.mailTemplateData = {
+        firstName:this.candidateDetails?.candidateName,
+        // lastName: this.candidateDetails?.candidateName,
+        id: this.candidate?.candidateId ? this.candidate?.candidateId : this.candidateId,
+        messageType: this.messageType,
+    
+      };
+    }
+    
   }
 
-  onSubmitData(event: any): void {}
+  onSubmitData(event: any): void {
+    console.log(event);
+    
+  }
 
   fetchCandidates() {
     if (this.positionId) {
@@ -159,6 +179,7 @@ export class InterviewDetailsComponent implements OnInit {
     this.apiService.get(`/screening-station/interview-details/candidate-detail?candidateId=${this.candidateId}`).subscribe((res: any) => {
       this.candidateDetails = res?.candidate;
       this.candidateStatus = res?.candidateStatus;
+      this.showMail('re-schedule');
       this.candidateDetails.forEach((candidate: any) => {
         this.candidateExperience = candidate?.candidateExperience;
         this.currentCompany = candidate?.candidatePreviousOrg;

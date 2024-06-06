@@ -67,14 +67,15 @@
             </span>
         </div>
     </div>
-    <div *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done' && candidateDetails?.serviceStatus !== 'moved'  "
+    <!-- Initial buttons -->
+    <div *ngIf="!progessAdded && candidateDetails?.serviceStatus === 'pending' && !progessAdded"
         class="details p-10 d-flex j-end w-97">
-        <button class="select-btn" (click)="selectButton('reschedule');showMail('re-schedule')" [ngClass]="{'offer-select-btn': buttonType === 'reschedule'}"  >Reschedule Inteview</button>
-        <button class="select-btn" (click)="selectButton('rejection')"  [ngClass]="{'offer-select-btn': buttonType === 'rejection'}" >Rejection</button>
-        <button class="select-btn" (click)="selectButton('add')"  [ngClass]="{'offer-select-btn': buttonType === 'add'}" >Add Progress</button>
+        <button class="select-btn" (click)="selectButton('reschedule');showMail('re-schedule')" [ngClass]="{'offer-reject-btn': buttonType === 'reschedule'}">Reschedule Inteview</button>
+        <button class="select-btn" (click)="selectButton('rejection')"  [ngClass]="{'offer-reject-btn': buttonType === 'rejection'}" >Rejection</button>
+        <button class="select-btn" (click)="selectButton('add')"  [ngClass]="{'offer-reject-btn': buttonType === 'add'}" >Add Progress</button>
     </div>
     <!-- Add progress -->
-    <div class="progress" *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done' && candidateDetails?.serviceStatus !== 'moved' && buttonType.trim() === 'add'">
+    <div class="progress" *ngIf="!progessAdded && candidateDetails?.serviceStatus === 'pending' && !progessAdded && buttonType.trim() === 'add'">
         <div class="heading p-10">
             <span>Add Progress</span>
         </div>
@@ -110,36 +111,33 @@
         </div>
     </div>
     <!-- Back-off Or Panel Rejection -->
-    <div class="progress"
-        *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done' && candidateDetails?.serviceStatus !== 'moved' && buttonType.trim() === 'rejection'">
-        <div>
-            <div  class=" p-10 d-flex j-space m-r-20">
-                <span class="f-w-500 f-s-20">Reason For Rejection</span>
-                <span class="input-rejection c-pointer no-close p-relative p-t-8">
-                        <span class="no-close p-l-10 f-s-14 f-w-400" (click)="filterStatus = !filterStatus">{{filteredStatus.trim() === '' ? 'Select Reason for Rejection' : filteredStatus | titlecase}}</span>
-                        <span class="f-right">
-                            <!-- <span *ngIf="filteredStatus && filteredStatus.trim() !== ''" (click)="clearFilter('status')" class="clear-filter">x</span> -->
-                            <span (click)="filterStatus = !filterStatus"><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
-                        </span>    
-                        <div class="dropdown c-pointer no-close'" *ngIf="filterStatus" >
-                            <span class="d-flex p-0" *ngFor="let type of status" (click)="selectStatusFilter(type?.status);filterStatus = !filterStatus">
-                               <span class="p-l-20 p-5 f-s-14 f-w-400">{{type?.status | titlecase}}</span> 
-                            </span>
-                        </div>
+    <div class="progress" *ngIf="!progessAdded && candidateDetails?.serviceStatus === 'pending' && !progessAdded && buttonType.trim() === 'rejection'">
+        <div class=" p-10 d-flex j-space m-r-20">
+            <span class="f-w-500 f-s-20">Reason For Rejection</span>
+            <span class="input-rejection c-pointer no-close p-relative p-t-8">
+                <span class="no-close p-l-10 f-s-14 f-w-400" (click)="filterStatus = !filterStatus">{{filteredStatus.trim()
+                    === '' ? 'Select Reason for Rejection' : filteredStatus | titlecase}}</span>
+                <span class="f-right">
+                    <!-- <span *ngIf="filteredStatus && filteredStatus.trim() !== ''" (click)="clearFilter('status')" class="clear-filter">x</span> -->
+                    <span (click)="filterStatus = !filterStatus"><i
+                            class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
                 </span>
-            </div>
-            <div class="m-10">
-                <span class="p-10 sub-head">Add Description</span>
-                <textarea class="text-area p-5" id="" id="feedback" ></textarea>
-            </div>
-            <div *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done' && candidateDetails?.serviceStatus !== 'moved'"
-                class="details p-10 d-flex j-end w-97">
-                <button class="btn c-pointer" (click)="rejectClick('')" >Submit</button>
-            </div>
+                <div class="dropdown c-pointer no-close'" *ngIf="filterStatus">
+                    <span class="d-flex p-0" *ngFor="let type of status"
+                        (click)="selectStatusFilter(type?.status);filterStatus = !filterStatus">
+                        <span class="p-l-20 p-5 f-s-14 f-w-400">{{type?.status | titlecase}}</span>
+                    </span>
+                </div>
+            </span>
         </div>
-    <!-- Reschedule Interview -->
-    <div *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done' && candidateDetails?.serviceStatus !== 'moved' && buttonType.trim() === 'reschedule'">
-        <app-mail-template [candidate]="mailTemplateData" (submitData)="onSubmitData($event)"></app-mail-template>
+        <div class="m-10">
+            <span class="p-10 sub-head">Add Description</span>
+            <textarea class="text-area p-5" id="" id="feedback"></textarea>
+        </div>
+        <div *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done' && candidateDetails?.serviceStatus !== 'moved'"
+            class="details p-10 d-flex j-end w-97">
+            <button class="btn c-pointer" (click)="rejectClick('')">Submit</button>
+        </div>
     </div>
     <!-- Added Progress -->
     <div class="d-flex p-10 progress" *ngIf="data?.progressStatus > 0 || candidateDetails?.serviceStatus === 'moved'">
@@ -160,16 +158,19 @@
         </div>
     </div>  
         <!-- Next Round Approval or Rejection After Adding Progress -->
-    <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'pending' && progessAdded">
+    <div *ngIf="candidateDetails?.serviceStatus === 'pending' && candidateDetails['progress.progressId'] !== null">
         <button class="select-btn" [ngClass]="{'offer-select-btn': messageType === 'approve'}"
             (click)="showMail('approve')">Interview Invitation Mail
         </button>
         <button class="reject-btn" [ngClass]="{'offer-reject-btn': messageType === 'rejection'}"
             (click)="showMail('rejection')">Rejection Notification Mail
         </button>
-        <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'pending' && candidateDetails?.serviceStatus !== 'moved' && progessAdded && messageType.trim() !== ''">
+    </div>
+        <!-- Reschedule Interview / send Approval mail for next round / Rejection mail -->
+        <div *ngIf="candidateDetails?.serviceStatus === 'pending' && messageType.trim() !== ''">
             <app-mail-template [candidate]="mailTemplateData" (submitData)="onSubmitData($event)"></app-mail-template>
         </div>
+    
     <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'done' || this.data?.candidateDetails?.serviceStatus === 'rejected'">
         <div class="heading p-10">
             <span>Feedback</span>

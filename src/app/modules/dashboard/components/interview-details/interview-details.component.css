@@ -1,7 +1,7 @@
 .main {
     margin: 15px 20px 10px 10px;
-    background: #FFFFFF;
-    border: 1px solid #D9D9D9
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 8px 0px #0000001A;
 }
 
 .heading {
@@ -25,14 +25,16 @@
 }
 
 .input-box {
-    width: 95%;
-    height: 34px;
+    outline: none !important;
+    border-radius: 2px;
+    height: 30px;
+    width: 97%;
+    padding-left: 5px;
+    padding-top: 9px;
+    padding-bottom: 2px;
     border-radius: 5px;
     background: #FAFAFA;
-    outline: none;
     border: 1px solid #E9E9E9;
-    padding-left: 6px;
-    padding-top: 10px;
 }
 
 .child {
@@ -130,19 +132,20 @@
     background: white;
     box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
     max-height: 150px;
-    overflow-y: scroll;
+    overflow-y: auto;
     font-size: 14px;
-    margin-left: 3px;
-    width: 90%;
-    padding-left: 10px;
-    padding-top: 10px;
+    font-weight: 400;
+    width: 100%;
+    border-radius: 4px;
     position: absolute;
-    z-index: 1;
+    z-index: 999;
+    margin-top: 5px;
+    top: 100%;
+    left: 0;
 }
 
 .dropdown :hover {
-    background-color: rgb(240, 235, 235);
-
+    background-color: #eceaea;
 }
 
 .candidate-list {
