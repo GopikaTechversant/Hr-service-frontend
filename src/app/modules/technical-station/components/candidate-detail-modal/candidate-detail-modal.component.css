@@ -54,7 +54,7 @@
 
 .modal-content {
     overflow-y: auto;
-    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .file {

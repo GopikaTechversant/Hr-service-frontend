@@ -1,4 +1,4 @@
-<div *ngIf="candidate">
+<div *ngIf="candidate" class="main">
     <div class="heading p-10">
         <span>Email Details</span>
     </div>
@@ -71,14 +71,14 @@
             </div>
         </div>
     </div>
-    <div class="attachment m-10 p-8">
+    <div class="m-10 p-8">
         <div class="d-flex m-10 w-100" *ngIf="candidate?.messageType.trim() === 'offer'">
             <div class="input-1">
-                <span class="p-10 sub-head">Offer Salary</span>
+                <span class="p-10 sub-head p-l-0">Offer Salary</span>
                 <span class="p-5 m-r-5"><input class="offer-input" type="text" id="salary"></span>
             </div>
             <div class="input-1">
-                <span class="p-10 sub-head">Joining Date</span>
+                <span class="p-10 sub-head p-l-0">Joining Date</span>
                 <div class="p-relative w-100 m-l-10">
                     <input class="p-l-5 offer-input p-r-10" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate"
                         (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate"
@@ -90,52 +90,85 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="candidate?.messageType.trim() === 'approve'">
+        <div *ngIf="candidate?.messageType.trim() === 'approve' || candidate?.messageType.trim() === 'screening' || candidate?.messageType.trim() === 're-schedule'">
             <div class="d-flex m-10 w-100">
                 <div class="input-1">
-                    <span class="p-10 sub-head">Interview Panel</span>
-                    <span class="p-5 m-r-5"><input class="offer-input" type="text" id="panel"></span>
+                    <span class="p-10 sub-head p-l-0">Interview Panel</span>
+                        <div class="offer-input c-pointer p-relative" (click)="showPanel = !showPanel">
+                            <span *ngIf="!panelName">Select Name</span>
+                            <span *ngIf="panelName">{{panelName}}</span>
+                            <span><i class="f-right m-5 m-r-10 fa fa-chevron-down s-text"></i></span>
+                            <div class="no-close dropdown c-pointer" *ngIf="showPanel">
+                                <div class="p-5" *ngFor="let panel of panel_list "
+                                    (click)="selectPanel(panel?.userId,panel?.userfirstName,panel?.userlastName);showPanel = !showPanel">
+                                    {{panel?.userfirstName}} {{panel?.userlastName}}
+                                </div>
+                            </div>
+                        </div>
                 </div>
                 <div class="input-1">
-                    <span class="p-10 sub-head">Interview Date and time</span>
-                    <div class="p-relative w-100 m-l-10">
-                        <input class="p-l-5 offer-input p-r-10" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate"
-                            (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate" [min]="today">
-                        <span> <mat-datepicker #pickerdate class=""></mat-datepicker>
-                            <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
-                                (click)="pickerdate?.open()"></i>
-                        </span>
-                    </div>
+                    <span class="p-10 sub-head p-l-0">Interview Mode</span>
+                        <div class="offer-input c-pointer p-relative" (click)="showModeList = !showModeList">
+                            <span *ngIf="!selectedModeName">Select Mode</span>
+                            <span *ngIf="selectedModeName">{{selectedModeName}}</span>
+                            <span><i class="f-right m-5 m-r-10 fa fa-chevron-down s-text"></i></span>
+                            <div class="no-close dropdown c-pointer" *ngIf="showModeList">
+                                <div class="p-5" *ngFor="let mode of modeList " (click)="selectMode(mode.id,mode.modeName)">
+                                    {{mode?.modeName}}
+                                </div>
+                            </div>
+                        </div>
                 </div>
             </div>
             <div class="d-flex m-10 w-100">
                 <div class="input-1">
-                    <span class="p-10 sub-head">Interview Mode</span>
-                    <span class="p-5 m-r-5"><input class="offer-input" type="text" id="mode"></span>
+                    <span class="p-10 sub-head p-l-0">Interview Date and Time</span>
+                    <div class="p-relative">
+                        <div class="offer-input c-pointer">
+                            <input class="date-input" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerInterview"
+                                (dateChange)="dateChange($event)" (click)="pickerInterview?.open()" [value]="scheduledDate"
+                                [min]="today">
+                                <span *ngIf="candidate?.candidateFirstName"> {{scheduledDate}}</span>
+                            {{displayTime}}
+                            <div class="p-l-10 d-flex j-end p-r-10">
+                                <span class="p-l-20 d-flex j-end c-pointer"><mat-datepicker #pickerInterview
+                                        class=""></mat-datepicker>
+                                    <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
+                                        (click)="pickerInterview?.open()"></i>
+                                </span>
+                            <span class=" d-flex j-end"><img class="p-absolute clock-icon"
+                                    src="assets/images/clock.svg" alt="" height="14px" width="14px"
+                                    [ngxTimepicker]="pickerTime" [format]="12" (timeSet)="timeChange($event)">
+                                <ngx-material-timepicker #pickerTime
+                                    (timeSet)="timeChange($event)"></ngx-material-timepicker>
+                            </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="input-1">
-                    <span class="p-10 sub-head">Interview status</span>
-                    <div class="p-relative w-100 m-l-10">
-                        <span class="p-5 m-r-5"><input class="offer-input" type="text" id="interview-status"></span>
+                    <span class="p-10 sub-head p-l-0">Interview status</span>
+                    <div>
+                        <input class="offer-input" type="text" id="interviewStatus" [value]="interviewStatus | titlecase">
                     </div>
                 </div>
             </div>
         </div>
        
         <div class="m-10">
-            <span class="p-10 sub-head">Email Subject</span>
+            <span class="p-10 sub-head p-l-0">Email Subject</span>
             <span class="p-5"><input class="input w-97" type="text" id="subject"></span>
         </div>
         <div class="m-10">
-            <span class="p-10 sub-head">Email Cc</span>
+            <span class="p-10 sub-head p-l-0">Email Cc</span>
             <span class="p-5"><input class="input w-97" type="text" id="cc"></span>
         </div>
         <div class="m-10">
-            <span class="p-10 sub-head">Email Bcc</span>
+            <span class="p-10 sub-head p-l-0">Email Bcc</span>
             <span class="p-5"><input class="input w-97" type="text" id="bcc"></span>
         </div>
         <div class="m-10 w-100" *ngIf="candidate?.messageType.trim() === 'offer'">
-            <span class="p-10 sub-head">Add Attachment</span>
+            <span class="p-10 sub-head p-l-0">Add Attachment</span>
             <span class="c-pointer attach m-l-5 p-r-5 p-b-5 d-flex file" title="Attach File" (click)="fileInput.click()">
                 <img class="p-5" src="/assets/images/paperclip.svg" alt="" height="20" width="20">
                 <span class="m-b-10 p-5" *ngIf="fileName"> {{fileName}}</span>
@@ -144,7 +177,7 @@
             </span>
         </div>
         <div class="m-10">
-            <span class="p-10 sub-head">Add Feedback</span>
+            <span class="p-10 sub-head p-l-0">Add Feedback</span>
             <textarea class="text-area" id="feedback"></textarea>
         </div>
         <div class="m-15">

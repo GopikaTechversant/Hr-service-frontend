@@ -1,9 +1,11 @@
 import { DatePipe } from '@angular/common';
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { S3Service } from 'src/app/services/s3.service';
+import { environment } from 'src/environments/environments';
 
 @Component({
   selector: 'app-mail-template',
@@ -14,7 +16,9 @@ export class MailTemplateComponent implements OnInit {
   @Input() candidate: any;
   @Output() submitData: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('template', { static: false }) templateRef!: ElementRef;
-
+  @ViewChild('recruiterNameDiv') recruiterNameDiv!: ElementRef;
+  @ViewChild('positionDiv') positionDiv!: ElementRef;
+  @ViewChild('panelDiv') panelDiv!: ElementRef;
   isEditable: boolean = false;
   templateData: any = {};
   content: string = '';
@@ -35,15 +39,114 @@ export class MailTemplateComponent implements OnInit {
   messageSaved: boolean = false;
   offerSalary: any;
   private keySubscription?: Subscription;
+  showPanel: boolean = false;
+  showRecruiters: boolean = false;
+  showDropdown: boolean = false;
+  showcandidate: boolean = false;
+  panelName: any;
+  panel_list: any;
+  interviewStatus: string = "";
+  displayTime:any;
+  panelId: any;
+  showModeList:boolean = false;
+  modeList: any;
+  selectedModeName: string = "";
+  selectedModeId: any;
+  candidateDetails: any;
+  scheduledDate: any;
+  candidateExperience: any;
+  currentCompany: any;
+  candidateStatus: any;
+  noticeperiodvalue: any;
+  id: any;
+  serviceId: any;
+  interviewMode: any;
+  comment: any;
+  Interviewlocation: any;
 
-  constructor(private apiService: ApiService, private tostr: ToastrService, private datePipe: DatePipe, private s3Service: S3Service) { }
+  constructor(private apiService: ApiService, private tostr: ToastrService, private datePipe: DatePipe, private s3Service: S3Service,  private http: HttpClient) { }
   ngOnInit(): void {
+    this.fetchMode();
+    this.fetchPanel();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.candidate?.messageType) {
       this.fetchTemplates();
+      console.log(this.candidate);
+      
     }
+  }
+  // @HostListener('document:click', ['$event'])
+  // onBodyClick(event: Event): void {
+  //   const clickedElement = event.target as HTMLElement;
+  //   if (!this.recruiterNameDiv.nativeElement.contains(clickedElement)) this.showRecruiters = false;
+  //   if (!this.positionDiv.nativeElement.contains(clickedElement)) this.showDropdown = false;
+  //   if (this.candidate?.candidateFirstName) this.showcandidate = false;
+  //   if (!this.panelDiv.nativeElement.contains(clickedElement)) this.showPanel = false;
+  // }
+
+  fetchPanel(): void {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50',
+      'ngrok-skip-browser-warning': 'true'
+    });
+    this.http.get(`${environment.api_url}/user/lists?userRole=2`, { headers }).subscribe((res: any) => {
+      if (res?.users) this.panel_list = res?.users;
+    })
+  }
+
+  selectPanel(panelid: any, firstname: any, secondName: any): void {
+    this.showPanel = false;
+    this.panelId = panelid;
+    this.panelName = `${firstname} ${secondName}`;
+  }
+
+ 
+
+  changeInterviewStatus(): void {
+    if (this.displayDate && this.displayTime) {
+      if (!this.interviewStatus) this.interviewStatus = 'Scheduled';
+      if (this.interviewStatus === 'Not yet Schedule') this.interviewStatus = 'scheduled';
+    }
+  }
+
+  timeChange(event: any): void {
+    this.displayTime = event;
+    if (this.interviewStatus === 'scheduled') this.interviewStatus = 'Rescheduled'
+    this.changeInterviewStatus();
+  }
+
+  fetchMode(): void {
+    this.apiService.get(`/screening-station/interview-mode/list`).subscribe((res: any) => {
+      if (res?.data) this.modeList = res?.data;
+    })
+  }
+
+  selectMode(id: any, name: any): void {
+    this.selectedModeId = id;
+    this.selectedModeName = name;
+  }
+
+  fetchCandidatesDetails(): void {
+    this.apiService.get(`/screening-station/interview-details/candidate-detail?candidateId=${this.candidateId}`).subscribe((res: any) => {
+      this.candidateDetails = res?.candidate;
+      this.candidateStatus = res?.candidateStatus;
+      this.candidateDetails.forEach((candidate: any) => {
+        this.candidateExperience = candidate?.candidateExperience;
+        this.currentCompany = candidate?.candidatePreviousOrg;
+        this.id = candidate?.candidateId;
+        if (candidate?.candidateNoticePeriodByDays) this.noticeperiodvalue = candidate?.candidateNoticePeriodByDays;
+      })
+      this.candidateStatus.forEach((status: any) => {
+        this.serviceId = this.candidate?.serviceId;
+        if (status?.interviewMode) this.interviewMode = status?.interviewMode;
+        if (status?.comment) this.comment = status?.comment;
+        if (status?.interviewStatus) this.interviewStatus = status?.interviewStatus;
+        if (status?.interviewLocation) this.Interviewlocation = status?.interviewLocation;
+        this.scheduledDate = status?.serviceDate;
+      })
+    })
   }
 
   fetchTemplates(): void {
@@ -82,6 +185,8 @@ export class MailTemplateComponent implements OnInit {
   dateChange(event: any): void {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    if (this.interviewStatus === 'scheduled') this.interviewStatus = 'Rescheduled';
+    this.changeInterviewStatus();
   }
 
   editClick() {
