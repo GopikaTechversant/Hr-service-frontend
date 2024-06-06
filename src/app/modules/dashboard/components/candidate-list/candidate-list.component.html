@@ -16,7 +16,7 @@
                 <span class="c-pointer">Add Candidate</span>
             </div>
             <div class="export-btn c-pointer">
-                <span (click)="exportList()">Export</span>
+                <span (click)="exportData()">Export</span>
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@
             </tr>
             <ng-container *ngIf="candidateList?.length > 0">
                 <tr class="c-pointer details" *ngFor="let item of candidateList">
-                    <td><input type="checkbox"></td>
+                    <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()"></td>
                     <td class="text-wrap" [title]="(item?.candidateFirstName | titlecase) + (item?.candidateLastName | titlecase)">
                         {{item?.candidateFirstName | titlecase}} {{item?.candidateLastName | titlecase}}
                     </td>
