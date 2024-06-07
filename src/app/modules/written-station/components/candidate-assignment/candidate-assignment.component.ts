@@ -94,7 +94,7 @@ export class CandidateAssignmentComponent implements OnInit{
   
   selectStatusFilter(item: string): void {
     this.filteredStatus = item;
-    sessionStorage.setItem('status', this.filteredStatus);
+    sessionStorage.setItem('status_written', this.filteredStatus);
     // this.currentPage = 1;
     // this.limit = 10;
     this.fetchCandidates();
@@ -104,12 +104,12 @@ export class CandidateAssignmentComponent implements OnInit{
   clearFilter(item: any): void {
     if (item === 'status') {
       this.filteredStatus = '';
-      sessionStorage.setItem('status', this.filteredStatus);
+      sessionStorage.setItem('status_written', this.filteredStatus);
     }
     if (item === 'position') {
       this.displayPosition = '';
       this.positionId = '';
-      sessionStorage.setItem(`requirement`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
+      sessionStorage.setItem(`position`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
     }
     if (item === 'search') this.searchKeyword = '';
     if (item === 'question') {
@@ -131,7 +131,7 @@ export class CandidateAssignmentComponent implements OnInit{
     this.requestList_open = false;
     this.displayPosition = name;
     this.positionId = id;
-    sessionStorage.setItem(`requirement`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
+    sessionStorage.setItem(`position`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
     this.fetchCandidates();
     this.fetchCandidatesWithQuestionBox();
   }
