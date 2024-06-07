@@ -40,6 +40,9 @@ export class SeriesComponent implements OnInit {
   initialLoader:boolean = false;
   currentPage: number = 1;
   lastPage: any;
+  pageSize = 10;
+  searchKeyword: string = '';
+
   constructor(private apiService: ApiService, private http: HttpClient, private router: Router, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private renderer: Renderer2) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -72,6 +75,10 @@ export class SeriesComponent implements OnInit {
         this.candidates_list = [...this.candidates_list, ...res?.candidates];
         this.candidates_list.forEach((candidate: any) => {
           if (candidate.serviceId) this.serviceIds.push(candidate?.serviceId);
+          // this.totalCount = data?.totalCount;
+          // const totalPages = Math.ceil(this.totalCount / this.limit);
+          // this.lastPage = totalPages;
+          // if (this.currentPage > totalPages) this.currentPage = totalPages;
         });
       }
     })
@@ -184,6 +191,20 @@ export class SeriesComponent implements OnInit {
       pages.push(this.lastPage);
     }
     return pages;
+  }
+
+searchCandidate(search: string): void {
+    this.searchKeyword = search;
+    this.currentPage = 1;
+    this.pageSize = 10;
+    this.fetchcandidates();
+  }
+
+  clearFilter(): void {
+    this.searchKeyword = '';
+    this.currentPage = 1;
+    this.pageSize = 10;
+    this.fetchcandidates();
   }
 
 }

@@ -1,9 +1,8 @@
 .main {
-    overflow: scroll;
+    /* overflow: scroll; */
     background-color: #FFFFFF;
     padding: 20px;
-    height: calc(100vh - 202px);
-
+    /* height: calc(100vh - 202px); */
 }
 
 .title {
@@ -41,7 +40,7 @@
     font-weight: 500;
     border-radius: 3px;
     color: black;
-    font-size: 19px;
+    font-size: 21px;
 
 }
 
@@ -85,11 +84,11 @@
     display: inline-block;
     background-color: white;
     color: #575F6E;
-    width: 90px;
+    width: 98px;
     border: 1px solid #E6E6E6;
     border-radius: 3px;
-    padding-left: 3px;
-    text-align: center;
+    padding-left: 6px;
+    text-align: left;
     outline: none;
 }
 
@@ -99,11 +98,10 @@
     background-color: white;
     border: 1px solid #E6E6E6;
     color: #575F6E;
-    width: 90px;
-    /* border: none; */
-    padding-left: 3px;
-    text-align: center;
-    height:28px;
+    width: 106px;
+    padding-left: 2px;
+    text-align: left;
+    height: 28px;
 }
 
 .title-candidate {
@@ -190,8 +188,8 @@
     display: flex;
     flex-direction: column;
     background-color: #FFFFFF;
-    box-shadow: 0px 4px 8px 0px #0000001A;
-    width: 100%;
+    box-shadow: 0px 4px 8px 0px #0000001a;
+    width: 96.5%;
     height: 100%;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -251,10 +249,10 @@ table {
     line-height: 18.96px;
     color: #4F4F4F;
 }
-
+/* 
 .head {
     padding: 10px;
-}
+} */
 
 
 
@@ -377,4 +375,40 @@ table {
     font-weight: 500;
     line-height: 35px;
     text-align: center;
+}
+
+input[type="text"] {
+    border: none;
+    outline: none;
+    width: 75%;
+}
+
+.input {
+    border: 1px solid #E9E9E9;
+    outline: none;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    width: 330px;
+    height: 35px;
+    margin-right: -21px;
+}
+
+.search {
+    background-color: #005EC9;
+    /* position: relative; */
+    padding: 9px;
+    top: 724px;
+    right: 258px;
+    width: 25px;
+    height: 19px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    cursor: pointer;
+}
+
+.fa-search {
+    color: #FFFFFF;
+    padding-left: 3px;
+    font-size: 20px;
+    cursor: pointer;
 }

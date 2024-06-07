@@ -54,11 +54,11 @@
 </div>
 
 <div class="main">
-    <div class="d-flex head m-b-10">
-        <div>
-            <span class="heading">Candidate Lists</span>
-        </div>
-        <!-- <div class="d-flex j-space">
+    <div class="d-flex head m-b-10 j-space m-t-14" >
+        <!-- <div> -->
+            <span class="heading p-t-17">Candidate Lists</span>
+        <!-- </div> -->
+        <div class="d-flex j-space">
             <span class="input">
                 <input type="text" class="p-10" placeholder="Search Candidates" [(ngModel)]="searchKeyword" (keydown.enter)="searchCandidate(searchKeyword)">
                 <span *ngIf="searchKeyword !== ''" (click)="clearFilter()"
@@ -67,12 +67,12 @@
             <span class="search d-flex j-end">
                 <i class="fa fa-search" aria-hidden="true" (click)="searchCandidate(searchKeyword)"></i>
             </span>
-            <div class="export-btn c-pointer">
+            <!-- <div class="export-btn c-pointer">
                 <span (click)="exportList()">Export</span>
-            </div>
-        </div> -->
+            </div> -->
+        </div>
     </div>
-    <div class="table-container m-b-0">
+    <div class="table-container m-b-0 m-t-15">
         <table class="table">
             <tr class="table-header p-b-10">
                 <td>Name</td>
@@ -100,8 +100,8 @@
                     <option class="name select p-t-2 c-pointer f-w-500" value="select">Select</option>
                     <option class="name select p-t-2 c-pointer f-w-500" value="reject">Reject</option>
                 </select></td>
-                  <td>4</td>
-                  <td>Scheduled</td>
+                <td class="text-wrap">{{item?.rescheduledCount}}</td>
+                  <td class="text-wrap" [title]="item?.interviewStatus">{{item?.interviewStatus}}</td>
                 </tr>
             </ng-container>
         </ng-container>
