@@ -17,7 +17,7 @@
 }
 
 .candidate-card {
-  width: 400px;
+  width: 500px; /* Increased width */
   height: 139px;
   border-radius: 4px;
   background-color: #FFFFFF;
@@ -71,14 +71,12 @@
 
 .scrollable,
 .main {
-  scrollbar-width: none;
-  /* For Firefox */
+  scrollbar-width: none; /* For Firefox */
 }
 
 .scrollable,
 .main {
-  -ms-overflow-style: none;
-  /* For Internet Explorer and Edge */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
 }
 
 .w-45 {
@@ -89,7 +87,7 @@
   width: 55%;
 }
 
-.clear-filter{
+.clear-filter {
   padding: 0px 6px;
   border: 1px solid #3c40434d;
   border-radius: 50%;
@@ -103,7 +101,6 @@
   font-size: 14px;
   font-weight: 400;
   width: 98%;
-  /* padding: 5px; */
   border-radius: 4px;
   position: absolute;
   z-index: 999;

@@ -1,14 +1,17 @@
 <div *ngIf="candidate" class="main">
+    <!-- <div *ngIf="loader" class="loader-parent">
+        <img src="assets/gif/loader.gif">
+    </div> -->
     <div class="heading p-10">
         <span>Email Details</span>
     </div>
     <div *ngIf="!isEditable" class="f-right m-10 p-10 c-pointer" (click)="editClick()" title="Edit">
         <span><img src="/assets/images/candidate-detail/edit.svg" alt="" height="12" width="12"></span>
-        <span class="c-blue p-l-5">Edit</span>
+        <span class="c-blue p-l-5 p-r-5">Edit</span>
     </div>
     <div *ngIf="isEditable" class="f-right m-10 p-10 c-pointer" (click)="saveClick($event)" title="Save">
         <span><img src="/assets/images/candidate-detail/save.svg" alt="" height="12" width="12"></span>
-        <span class="c-blue p-l-5">Save</span>
+        <span class="c-blue p-l-5 p-r-5">Save</span>
     </div>
     <div style="margin: 10px;">
         <div class="template" #template style="
@@ -119,7 +122,7 @@
                             </div>
                         </div>
                 </div>
-            </div>
+            </div> 
             <div class="d-flex m-10 w-100">
                 <div class="input-1">
                     <span class="p-10 sub-head p-l-0">Interview Date and Time</span>
@@ -128,8 +131,7 @@
                             <input class="date-input" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerInterview"
                                 (dateChange)="dateChange($event)" (click)="pickerInterview?.open()" [value]="scheduledDate"
                                 [min]="today">
-                                <span *ngIf="candidate?.candidateFirstName"> {{scheduledDate}}</span>
-                            {{displayTime}}
+                                <span *ngIf="candidate?.messageType === 're-schedule'"> {{displayTime ? displayTime : scheduledDate  | date: 'hh:mm a'}}</span>
                             <div class="p-l-10 d-flex j-end p-r-10">
                                 <span class="p-l-20 d-flex j-end c-pointer"><mat-datepicker #pickerInterview
                                         class=""></mat-datepicker>
@@ -157,15 +159,15 @@
        
         <div class="m-10">
             <span class="p-10 sub-head p-l-0">Email Subject</span>
-            <span class="p-5"><input class="input w-97" type="text" id="subject"></span>
+            <span class="p-5 p-l-0"><input class="input w-97" type="text" id="subject"></span>
         </div>
         <div class="m-10">
             <span class="p-10 sub-head p-l-0">Email Cc</span>
-            <span class="p-5"><input class="input w-97" type="text" id="cc"></span>
+            <span class="p-5 p-l-0"><input class="input w-97" type="text" id="cc"></span>
         </div>
         <div class="m-10">
             <span class="p-10 sub-head p-l-0">Email Bcc</span>
-            <span class="p-5"><input class="input w-97" type="text" id="bcc"></span>
+            <span class="p-5 p-l-0"><input class="input w-97" type="text" id="bcc"></span>
         </div>
         <div class="m-10 w-100" *ngIf="candidate?.messageType.trim() === 'offer'">
             <span class="p-10 sub-head p-l-0">Add Attachment</span>
