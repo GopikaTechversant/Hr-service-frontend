@@ -24,8 +24,8 @@
                             {{item?.userFullName}}</div>
                     </div>
                 </div>
-                <div class="export-btn">
-                    <span (click)="exportList()">Export</span>
+                <div class="export-btn" (click)="exportData()">
+                    <span>Export</span>
                 </div>
             </span>
         </div>
@@ -50,8 +50,8 @@
             </div> -->
             <ng-container>
                 <ng-container *ngFor="let item of  candidateList">
-                    <tr class="c-pointer" (click)="selectCandidate(item['candidate.candidateId'])">
-                        <td><input type="checkbox"></td>
+                    <tr class="c-pointer" (dblclick)="selectCandidate(item['candidate.candidateId'])">
+                        <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()"></td>
                         <td  class="text-wrap" >
                             {{item['candidate.createdBy.userfirstName'] ? item['candidate.createdBy.userfirstName'] : ' '}}
                             {{item['candidate.createdBy.userlastName'] ? item['candidate.createdBy.userlastName'] : ' '}}

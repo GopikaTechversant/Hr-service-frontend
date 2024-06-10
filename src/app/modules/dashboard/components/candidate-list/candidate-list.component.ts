@@ -29,7 +29,10 @@ export class CandidateListComponent {
   requestId: any;
   initialLoader: boolean = false;
   report: boolean = false;
-  url:any;
+  url: any;
+  candidateIds: any;
+  loader: boolean = true;
+
   constructor(private apiService: ApiService, private router: Router, private dialog: MatDialog, private toastr: ToastrService) { }
 
   ngOnInit(): void {
@@ -46,19 +49,49 @@ export class CandidateListComponent {
   }
 
   fetchCandidates(): void {
-    this.url = `/candidate/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.pageSize}&serviceRequestId=${this.requestId}&report=${this.report}`
-    this.apiService.get(this.url).subscribe((data: any) => {
+    if (!this.initialLoader) this.loader = true;
+    const url = `/candidate/list`
+    let params = [
+      `search=${this.searchKeyword}`,
+      `page=${this.currentPage}`,
+      `limit=${this.pageSize}`,
+      `serviceRequestId=${this.requestId}`,
+      `report=${this.report}`
+    ].join('&');
+
+    if (this.report) {
+      if (this.candidateIds) {
+        const idsParams = this.candidateIds.map((id: string) => `ids=${id}`).join('&');
+        params += `&${idsParams}`;
+      }
+      const exportUrl = `${environment.api_url}${url}?${params}`;
+      console.log("exportUrl", exportUrl);
+      window.open(exportUrl, '_blank');
+      this.report = false;
+      if (this.report === false) this.fetchCandidates();
+      return;
+    }
+    this.apiService.get(`${url}?${params}`).subscribe((res: any) => {
       this.initialLoader = false;
-      this.data = data;
+      this.data = res;
       this.candidateList = [];
-      this.candidateList = data?.candidates;
-      this.totalCount = data?.candidateCount;
+      this.candidateList = res?.candidates;
+      this.totalCount = res?.candidateCount;
       const totalPages = Math.ceil(this.totalCount / this.pageSize);
       this.lastPage = totalPages;
       if (this.currentPage > totalPages) this.currentPage = totalPages;
-    });
+    })
   }
 
+  exportData(): void {
+    this.report = true;
+    this.fetchCandidates();
+  }
+
+  getSelectedCandidateIds(): void {
+    const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
+    this.candidateIds = selectedCandidates.map((candidate: { candidateId: any; }) => candidate?.candidateId);
+  }
   generatePageNumbers() {
     let pages = [];
     if (this.lastPage <= 5) {
@@ -142,11 +175,4 @@ export class CandidateListComponent {
     this.fetchCandidates();
   }
 
-  exportList(): void {
-    this.report = true;
-    this.fetchCandidates();
-    if( this.report = true) {
-      window.open(`${environment.api_url}${this.url}`,'_blank')
-    }
-  }
 }
