@@ -46,9 +46,9 @@ export class MailTemplateComponent implements OnInit {
   panelName: any;
   panel_list: any;
   interviewStatus: string = "";
-  displayTime:any;
+  displayTime: any;
   panelId: any;
-  showModeList:boolean = false;
+  showModeList: boolean = false;
   modeList: any;
   selectedModeName: string = "";
   selectedModeId: any;
@@ -63,18 +63,21 @@ export class MailTemplateComponent implements OnInit {
   interviewMode: any;
   comment: any;
   Interviewlocation: any;
-
-  constructor(private apiService: ApiService, private tostr: ToastrService, private datePipe: DatePipe, private s3Service: S3Service,  private http: HttpClient) { }
+  displaydateTime: any;
+  loader: boolean = false;
+  constructor(private apiService: ApiService, private tostr: ToastrService, private datePipe: DatePipe, private s3Service: S3Service, private http: HttpClient) { }
   ngOnInit(): void {
-    this.fetchMode();
-    this.fetchPanel();
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.candidate?.messageType) {
       this.fetchTemplates();
       console.log(this.candidate);
-      
+      if (this.candidate?.messageType === 're-schedule') this.fetchCandidatesDetails();
+
+      this.fetchMode();
+      this.fetchPanel();
     }
   }
   // @HostListener('document:click', ['$event'])
@@ -102,8 +105,6 @@ export class MailTemplateComponent implements OnInit {
     this.panelName = `${firstname} ${secondName}`;
   }
 
- 
-
   changeInterviewStatus(): void {
     if (this.displayDate && this.displayTime) {
       if (!this.interviewStatus) this.interviewStatus = 'Scheduled';
@@ -129,7 +130,7 @@ export class MailTemplateComponent implements OnInit {
   }
 
   fetchCandidatesDetails(): void {
-    this.apiService.get(`/screening-station/interview-details/candidate-detail?candidateId=${this.candidateId}`).subscribe((res: any) => {
+    this.apiService.get(`/screening-station/interview-details/candidate-detail?candidateId=${this.candidate?.id}`).subscribe((res: any) => {
       this.candidateDetails = res?.candidate;
       this.candidateStatus = res?.candidateStatus;
       this.candidateDetails.forEach((candidate: any) => {
@@ -181,7 +182,7 @@ export class MailTemplateComponent implements OnInit {
       this.uploadedFileKey = key;
     });
   }
-  
+
   dateChange(event: any): void {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
@@ -215,12 +216,7 @@ export class MailTemplateComponent implements OnInit {
   }
 
   submitClick(): void {
-    console.log("xcvbn", this.uploadedFileKey);
-    // if (!this.uploadedFileKey && this.candidate?.messageType === 'offer') {
-    //   this.tostr.warning('File upload is in progress, please wait.');
-    //   return;
-    // }
-
+    console.log("File Key:", this.uploadedFileKey);
     if (!this.messageSaved) {
       this.tostr.warning(this.isEditable ? 'Please Save Template before submitting' : 'Please Edit and Save Mail before submitting');
       return;
@@ -232,17 +228,20 @@ export class MailTemplateComponent implements OnInit {
     this.mailSubject = (document.getElementById('subject') as HTMLInputElement)?.value || '';
     this.offerSalary = (document.getElementById('salary') as HTMLInputElement)?.value || '';
 
+    if (this.displayDate && this.displayDate) this.displaydateTime = `${this.displayDate} ${this.displayTime}`;
+    if (this.scheduledDate) this.displaydateTime = this.scheduledDate;
+
     if (this.isEditable) {
       this.tostr.warning('Please Save Changes in Mail');
       return;
     }
-
+    // Validate confirmation checkbox and message type
     const confirmationCheckbox = document.getElementById('confirmDetails') as HTMLInputElement;
     if (!confirmationCheckbox?.checked || !this.candidate?.messageType.trim()) {
       this.tostr.warning('Please confirm all details before submitting');
       return;
     }
-
+    // Process the template content
     if (this.templateRef) {
       const templateElement = this.templateRef.nativeElement;
       const textarea = templateElement.querySelector('textarea');
@@ -256,28 +255,61 @@ export class MailTemplateComponent implements OnInit {
         div.innerText = this.content;
         textarea.replaceWith(div);
       }
-
       this.htmlString = templateElement.outerHTML.replace(textarea, '<div>');
-
-      if (this.htmlString && this.feedback.trim() && this.mailSubject.trim()) {
-        const data = {
-          feedback: this.feedback,
-          offerSalary: this.offerSalary,
-          joiningdate: this.displayDate,
-          mailCc: this.mailCc,
-          mailBcc: this.mailBcc,
-          mailSubject: this.mailSubject,
-          messageType: this.candidate?.messageType,
-          mailTemp: this.htmlString,
-          file: this.uploadedFileKey,
-        };
-        this.submitData.emit(data);
-        console.log(data);
-      } else {
-        if (!this.feedback.trim()) this.tostr.warning('Please Add a feedback');
-        if (!this.mailSubject.trim()) this.tostr.warning('Please Add a Subject');
-      }
     }
+
+    // Validate feedback and subject fields
+    if (!this.feedback.trim() || !this.mailSubject.trim()) {
+      if (!this.feedback.trim()) this.tostr.warning('Please Add a feedback');
+      if (!this.mailSubject.trim()) this.tostr.warning('Please Add a Subject');
+      return;
+    }
+
+    const commonData = {
+      feedback: this.feedback,
+      mailCc: this.mailCc,
+      mailBcc: this.mailBcc,
+      mailSubject: this.mailSubject,
+      messageType: this.candidate?.messageType,
+      mailTemp: this.htmlString,
+    };
+
+    let data;
+    if (this.candidate?.messageType === 'offer') {
+      if (!this.uploadedFileKey || !this.offerSalary || !this.displayDate) {
+        if (!this.uploadedFileKey) this.tostr.warning('Please Wait file to be uploaded');
+        if (!this.offerSalary) this.tostr.warning('Please Add Offer Salary');
+        if (!this.displayDate) this.tostr.warning('Please Select Joining Date');
+        return;
+      }
+      data = {
+        ...commonData,
+        file: this.uploadedFileKey,
+        offerSalary: this.offerSalary,
+        joiningdate: this.displayDate,
+      };
+    } else if (this.candidate?.messageType === 'rejection') {
+      data = commonData;
+    } else {
+      // Validate interview details
+      if (!this.panelId || !this.selectedModeId || !this.interviewStatus || !this.displaydateTime) {
+        if (!this.panelId) this.tostr.warning('Please Select an Interview Panel');
+        if (!this.selectedModeId) this.tostr.warning('Please Select an Interview Mode');
+        if (!this.interviewStatus) this.tostr.warning('Please Select an Interview Status');
+        if (!this.displaydateTime) this.tostr.warning('Please Enter an Interview Time');
+        return;
+      }
+  
+      data = {
+        ...commonData,
+        interviewPanel: this.panelId,
+        interviewMode: this.selectedModeId,
+        interviewStatus: this.interviewStatus,
+        interviewTime: this.displaydateTime
+      };
+    }
+    this.submitData.emit(data);
+    console.log(data);
   }
 
   // submitClickTest() {

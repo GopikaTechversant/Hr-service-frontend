@@ -36,8 +36,6 @@ export class InterviewDetailsComponent implements OnInit {
   currentCompany: any;
   locationValue: string = '';
   panelId: any;
-  panelName: any;
-  panel_list: any;
   modeValue: any;
   interviewStatusValue: any;
   rescheduledStatusValue: any;
@@ -59,13 +57,14 @@ export class InterviewDetailsComponent implements OnInit {
   candidatesList: any;
   candidate: any;
   modeList: any[] = [];
-  selectedModeName: string = '';
   selectedModeId: any;
   showModeList: boolean = false;
   scheduleStatus: boolean = false;
   loader: boolean = false;
   messageType: string = '';
-  mailTemplateData:any;
+  mailTemplateData: any;
+  candidateRevlentExperience: any;
+  candidateTotalExperience: any;
   constructor(private datePipe: DatePipe, private http: HttpClient, private tostr: ToastrServices, private apiService: ApiService) { }
 
   ngOnInit(): void {
@@ -82,7 +81,7 @@ export class InterviewDetailsComponent implements OnInit {
       this.currentCompany = this.candidate?.candidatePreviousOrg;
       this.fetchUsers();
       this.fetchCandidates();
-      this.fetchPanel();
+      // this.fetchPanel();
       this.showMail('screening');
     }
   }
@@ -101,51 +100,41 @@ export class InterviewDetailsComponent implements OnInit {
   // }
 
   fetchPosition(): void {
-    this.apiService.get(`/service-request/list`).subscribe((res: any) => {
-      if (res?.data) this.positionList = res?.data;
-    })
+    this.apiService.get(`/service-request/list`).subscribe({
+      next: (res: any) => {
+        if (res?.data) this.positionList = res?.data;
+      },
+      error: (err) => {
+        console.error("Error fetching position:", err);
+        this.tostr.error("Error fetching position.");
+      }
+    });
   }
 
-  showMail(type : string): void {
+  showMail(type: string): void {
     this.messageType = type;
-    if(type === 'screening'){
-      this.mailTemplateData = {
-        firstName:this.candidate?.candidateFirstName,
-        lastName: this.candidate?.candidateLastName,
-        id: this.candidate?.candidateId ? this.candidate?.candidateId : this.candidateId,
-        messageType: this.messageType,
-        // ...(this.messageType === "re-schedule" && {
-        //   additionalData: {
-        //     candidateDetails : this.candidateDetails,
-        //     candidateStatus : this.candidateStatus
-        //   }
-        // })
-      };
-    }else{
-      this.mailTemplateData = {
-        firstName:this.candidateDetails?.candidateName,
-        // lastName: this.candidateDetails?.candidateName,
-        id: this.candidate?.candidateId ? this.candidate?.candidateId : this.candidateId,
-        messageType: this.messageType,
-    
-      };
-    }
-    
-  }
-
-  onSubmitData(event: any): void {
-    console.log(event);
-    
+    this.mailTemplateData = {
+      firstName: this.candidate?.candidateFirstName ? this.candidate.candidateFirstName : this.candidateDetails[0]?.candidateFirstName,
+      lastName: this.candidate?.candidateLastName ? this.candidate.candidateLastName : this.candidateDetails[0]?.candidateLastName,
+      id: this.candidate?.candidateId ? this.candidate?.candidateId : this.candidateId,
+      messageType: this.messageType,
+    };
   }
 
   fetchCandidates() {
     if (this.positionId) {
-      this.apiService.get(`/screening-station/interview-details/candidates-list?serviceRequestId=${this.positionId}&scheduleStatus=${this.scheduleStatus}`).subscribe((res: any) => {
-        if (res?.candidates) {
-          this.candidate_list = res?.candidates;
-          this.candidatesList = res?.candidates;
+      this.apiService.get(`/screening-station/interview-details/candidates-list?serviceRequestId=${this.positionId}&scheduleStatus=${this.scheduleStatus}`).subscribe({
+        next: (res: any) => {
+          if (res?.candidates) {
+            this.candidate_list = res?.candidates;
+            this.candidatesList = res?.candidates;
+          }
+        },
+        error: (err) => {
+          console.error("Error fetching candidates:", err);
+          this.tostr.error("Error fetching candidates.");
         }
-      })
+      });
     } else {
       this.tostr.warning("Make sure to select the position dropdown first");
     }
@@ -153,7 +142,7 @@ export class InterviewDetailsComponent implements OnInit {
 
   fetchUsers(): void {
     console.log("fetch");
-    
+
     const headers = new HttpHeaders({
       'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50',
       'ngrok-skip-browser-warning': 'true'
@@ -161,19 +150,19 @@ export class InterviewDetailsComponent implements OnInit {
     this.http.get(`${environment.api_url}/user/lists?userRole=1`, { headers }).subscribe((res: any) => {
       if (res?.users) this.users_list = res?.users;
       console.log(" res?.users;", res?.users);
-      
+
     })
   }
 
-  fetchPanel(): void {
-    const headers = new HttpHeaders({
-      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50',
-      'ngrok-skip-browser-warning': 'true'
-    });
-    this.http.get(`${environment.api_url}/user/lists?userRole=2`, { headers }).subscribe((res: any) => {
-      if (res?.users) this.panel_list = res?.users;
-    })
-  }
+  // fetchPanel(): void {
+  //   const headers = new HttpHeaders({
+  //     'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50',
+  //     'ngrok-skip-browser-warning': 'true'
+  //   });
+  //   this.http.get(`${environment.api_url}/user/lists?userRole=2`, { headers }).subscribe((res: any) => {
+  //     if (res?.users) this.panel_list = res?.users;
+  //   })
+  // }
 
   fetchCandidatesDetails(): void {
     this.apiService.get(`/screening-station/interview-details/candidate-detail?candidateId=${this.candidateId}`).subscribe((res: any) => {
@@ -181,7 +170,8 @@ export class InterviewDetailsComponent implements OnInit {
       this.candidateStatus = res?.candidateStatus;
       this.showMail('re-schedule');
       this.candidateDetails.forEach((candidate: any) => {
-        this.candidateExperience = candidate?.candidateExperience;
+        this.candidateRevlentExperience = candidate?.candidateRevlentExperience;
+        this.candidateTotalExperience = candidate?.candidateTotalExperience;
         this.currentCompany = candidate?.candidatePreviousOrg;
         this.id = candidate?.candidateId;
         if (candidate?.candidateNoticePeriodByDays) this.noticeperiodvalue = candidate?.candidateNoticePeriodByDays;
@@ -192,7 +182,7 @@ export class InterviewDetailsComponent implements OnInit {
         if (status?.comment) this.comment = status?.comment;
         if (status?.interviewStatus) this.interviewStatus = status?.interviewStatus;
         if (status?.interviewLocation) this.Interviewlocation = status?.interviewLocation;
-        this.scheduledDate = status?.serviceDate;
+        // this.scheduledDate = status?.serviceDate;
       })
     })
   }
@@ -213,11 +203,6 @@ export class InterviewDetailsComponent implements OnInit {
     })
   }
 
-  selectMode(id: any, name: any): void {
-    this.selectedModeId = id;
-    this.selectedModeName = name;
-  }
-
   selectRecruiter(recruiterid: any, firstname: any, secondName: any): void {
     this.showRecruiters = false;
     this.recruiterId = recruiterid;
@@ -230,7 +215,7 @@ export class InterviewDetailsComponent implements OnInit {
     this.positionName = name;
     this.fetchUsers();
     this.fetchCandidates();
-    this.fetchPanel();
+    // this.fetchPanel();
   }
 
   selectCandidate(candidateId: any, candidateFirstName: any, candidateLastName: any, candidate: any): void {
@@ -261,12 +246,6 @@ export class InterviewDetailsComponent implements OnInit {
     }
   }
 
-  selectPanel(panelid: any, firstname: any, secondName: any): void {
-    this.showPanel = false;
-    this.panelId = panelid;
-    this.panelName = `${firstname} ${secondName}`;
-  }
-
   dateChange(event: any): void {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
@@ -287,32 +266,46 @@ export class InterviewDetailsComponent implements OnInit {
     this.changeInterviewStatus();
   }
 
-  submit(): void {
-    this.loader =true;
+  onSubmitData(event: any): void {
+    if (event?.clickType === 'cancel') this.cancelClick();
+    else this.submitClick(event);
+    console.log(event);
+
+  }
+
+  submitClick(data: any): void {
+    this.loader = true;
     const noticeperiod = document.getElementById('noticePeriod') as HTMLInputElement;
     this.noticeperiodvalue = noticeperiod?.value ? noticeperiod?.value : this.noticeperiodvalue;
-    const comments = document.getElementById('comments') as HTMLInputElement;
-    this.commentValue = comments.value ? comments.value : this.comment;
+    // const comments = document.getElementById('comments') as HTMLInputElement;
+    // this.commentValue = comments.value ? comments.value : this.comment;
     const location = document.getElementById('location') as HTMLInputElement;
     this.locationValue = location.value ? location.value : this.Interviewlocation;
-    if (this.displayDate && this.displayDate) this.displaydateTime = `${this.displayDate} ${this.displayTime}`;
-    if (this.scheduledDate) this.displaydateTime = this.scheduledDate;
+    // if (this.displayDate && this.displayDate) this.displaydateTime = `${this.displayDate} ${this.displayTime}`;
+    // if (this.scheduledDate) this.displaydateTime = this.scheduledDate;
+
     const payload = {
       recruiterId: this.recruiterId,
       candidateId: this.candidateId,
       noticePeriod: this.noticeperiodvalue,
       position: this.positionId,
       location: this.locationValue,
-      interviewTime: this.displaydateTime,
-      interViewPanel: this.panelId,
-      interviewMode: this.selectedModeName,
-      serviceId: this.serviceId ? this.serviceId : '',
-      interviewStatus: this.interviewStatus,
-      rescheduleStatus: this.rescheduledStatusValue,
-      comments: this.commentValue
+      interviewTime: data?.interviewTime,
+      interViewPanel: data?.interviewPanel,
+      interviewMode: data?.interviewMode,
+      serviceId: this.serviceId ?? '',
+      interviewStatus: data?.interviewStatus,
+      comments: data?.feedback,
+      workMode: 1,
+      revelantWorkExperience: "",
+      totalWorkExperience: "",
+      interviewCc: data?.interviewCc,
+      interviewMailTemp: data?.mailTemp,
+      interviewSubject: data?.mailSubject,
+      interviewBcc: data?.mailBcc,
     }
-    console.log("payload",payload);
-    if (this.noticeperiodvalue && this.commentValue && this.locationValue && this.recruiterId && this.candidateId && this.positionId && this.displaydateTime && this.panelId && this.selectedModeName  && this.interviewStatus  && this.commentValue) {
+
+    if (this.noticeperiodvalue && this.locationValue && this.recruiterId && this.candidateId && this.positionId && data) {
       this.apiService.post(`/screening-station/interview-details`, payload).subscribe({
         next: (res: any) => {
           this.loader = false;
@@ -321,12 +314,16 @@ export class InterviewDetailsComponent implements OnInit {
         },
         error: (error) => {
           this.loader = false;
+          console.error("Error submitting data:", error);
           if (error?.status === 500) this.tostr.error("Internal Server Error");
           else this.tostr.warning("Unable to update");
         }
-      })
-    } else this.tostr.warning('Please check all the fields are valid');
-    
+      });
+    } else {
+      this.loader = false;
+      this.tostr.warning('Please fill all fields');
+    }
+    this.showMail('');
   }
 
   clearInputvalue(id: string) {
@@ -335,23 +332,17 @@ export class InterviewDetailsComponent implements OnInit {
   }
 
   resetFormAndState(): void {
-    this.panelName = null;
     this.recruiterName = null;
     this.positionName = null;
     this.displayDate = null;
-    this.panelName = null;
     this.candidateExperience = null;
     this.currentCompany = null;
     this.showRecruiters = false;
     this.showDropdown = false;
-    this.showPanel = false;
     this.candidateName = null;
     this.scheduledDate = null;
-    this.modeValue = null;
     this.locationValue = '';
     this.noticeperiodvalue = '';
-    this.commentValue = null;
-    this.comment = '';
     this.displayTime = '';
 
     this.clearInputvalue('location');
@@ -363,7 +354,7 @@ export class InterviewDetailsComponent implements OnInit {
     this.candidate_list = [];
   }
 
-  cancel(): void {
+  cancelClick(): void {
     this.resetFormAndState();
   }
 

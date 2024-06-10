@@ -46,7 +46,10 @@ const routes: Routes = [
       { path: 'series', component: SeriesComponent },
       { path: 'requisition-detail/:id', component: RequisitionDetailsComponent },
       { path: 'candidate-details/:id', component: CandidateDetailsComponent },
+      { path: 'candidate-pool', component: CandidateListComponent },
+
     ]
+    
   },
   { path: 'series', component: SeriesComponent },
 

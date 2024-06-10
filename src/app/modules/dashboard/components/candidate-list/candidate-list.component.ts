@@ -13,9 +13,8 @@ import { environment } from 'src/environments/environments';
 })
 export class CandidateListComponent {
   @Input() positionId: any
-  pageSize = 10;
+  pageSize = 14;
   pageIndex = 1;
-  pageSizeOptions = [10, 25, 30];
   showFirstLastButtons = true;
   candidateList: any;
   searchKeyword: string = '';
@@ -114,14 +113,14 @@ export class CandidateListComponent {
   searchCandidate(search: string): void {
     this.searchKeyword = search;
     this.currentPage = 1;
-    this.pageSize = 10;
+    this.pageSize = 14;
     this.fetchCandidates();
   }
 
   clearFilter(): void {
     this.searchKeyword = '';
     this.currentPage = 1;
-    this.pageSize = 10;
+    this.pageSize = 14;
     this.fetchCandidates();
   }
 
@@ -146,7 +145,7 @@ export class CandidateListComponent {
       this.apiService.post(`/candidate/remove-candidate`, { candidateId: this.deleteCandidateId }).subscribe({
         next: (res: any) => {
           this.currentPage = 1;
-          this.pageSize = 10;
+          this.pageSize = 14;
           this.fetchCandidates();
         },
         error: (error) => {
@@ -164,14 +163,14 @@ export class CandidateListComponent {
     })
     dialogRef.componentInstance.onEditSuccess.subscribe(() => {
       this.currentPage = 1;
-      this.pageSize = 10;
+      this.pageSize = 14;
       this.fetchCandidates();
     })
   }
 
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);
-    this.pageSize = 10;
+    this.pageSize = 14;
     this.fetchCandidates();
   }
 

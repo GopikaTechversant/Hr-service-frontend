@@ -58,16 +58,16 @@
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Relevant Experience</span>
             <div class="input-box">
-                <span *ngIf="candidate?.candidateExperience"> {{candidate?.candidateExperience}}</span>
-                <span>{{candidateExperience || ''}}</span>
+                <span *ngIf="candidate?.candidateRevlentExperience"> {{candidate?.candidateExperience}}</span>
+                <span>{{candidateRevlentExperience || ''}}</span>
                 <!-- <input type="text"  [value]="candidateExperience || ''"> -->
             </div>
         </div>
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Total Experience</span>
             <div class="input-box">
-                <span *ngIf="candidate?.candidateExperience"> {{candidate?.candidateExperience}}</span>
-                <span>{{candidateExperience || ''}}</span>
+                <span *ngIf="candidate?.candidateTotalExperience"> {{candidate?.candidateTotalExperience}}</span>
+                <span>{{candidateTotalExperience || ''}}</span>
                 <!-- <input type="text"  [value]="candidateExperience || ''"> -->
             </div>
         </div>

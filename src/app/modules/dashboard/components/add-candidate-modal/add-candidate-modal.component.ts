@@ -254,8 +254,8 @@ export class AddCandidateModalComponent implements OnInit {
         message: 'Please Enter Gender'
       },
       {
-        condition: !this.candidateForm?.value?.candidateMobileNo,
-        message: 'Please Enter Mobile No'
+        condition: !/^\d+$/.test(this.candidateForm?.value?.candidateMobileNo),
+        message: 'Please Enter a Valid Mobile No'
       },
       {
         condition: !this.sourceId,
