@@ -250,17 +250,8 @@ body {
   color: #F57C02;
 }
 
-.cdk-overlay-container {
+/* .cdk-overlay-container {
   z-index: 40 !important;
   margin-top: 1.5%;
-}
-
-/* .timepicker-backdrop-overlay[_ngcontent-upu-c77] , .ng-tns-c77-0 {
-  position: absolute !important;
-  pointer-events: auto !important;
-  box-sizing: border-box !important;
-  z-index: 1000!important;
-  display: flex!important;
-  max-width: 100%!important;
-  max-height: 100%!important;
 } */
+

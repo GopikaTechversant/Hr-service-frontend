@@ -6,7 +6,7 @@
 
 
 .attachment {
-    width: 97%;
+    width: 100%;
     background-color: #F4F2F2;
 }
 
@@ -15,7 +15,6 @@
     font-weight: 400;
     display: flex;
     flex-direction: column;
-
 }
 
 .template {
@@ -37,7 +36,7 @@
     outline: none !important;
     border-radius: 2px;
     height: 30px;
-    width: 97%;
+    width: 100%;
     padding-left: 5px;
     padding-top: 9px;
     padding-bottom: 2px;
@@ -53,7 +52,7 @@
 .date-input {
     outline: none !important;
     border: none !important;
-    width: 40%;
+    width: 100%;
     background-color: #FAFAFA;
     height: 27px;
 }
@@ -61,7 +60,7 @@
 .offer-input {
     outline: none !important;
     height: 30px;
-    width: 92%;
+    width: 97%;
     padding-left: 5px;
     padding-top: 9px;
     padding-bottom: 2px;
@@ -71,12 +70,11 @@
 }
 
 .calendar-icon {
-    width: 100px;
+    /* width: 100px; */
     position: absolute;
     top: 14px;
-    right: 5px;
+    right: 51%;
     color: gray;
-
 }
 
 .clock-icon {
@@ -86,7 +84,7 @@
 }
 
 .text-area {
-    width: 97%;
+    width: 100%;
     height: 100px;
     outline: none !important;
     padding-left: 5px;
@@ -131,7 +129,7 @@
     border-radius: 2px;
     height: 30px;
     background-color: #FFFF;
-    width: 97%;
+    width: 100%;
 }
 
 .file {

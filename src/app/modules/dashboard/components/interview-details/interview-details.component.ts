@@ -9,13 +9,12 @@ import { ApiService } from 'src/app/services/api.service';
   templateUrl: './interview-details.component.html',
   styleUrls: ['./interview-details.component.css'],
   providers: [DatePipe],
+  host: {
+    '(document:click)': 'onBodyClick($event)'
+  }
 })
 
 export class InterviewDetailsComponent implements OnInit {
-  // @ViewChild('recruiterNameDiv') recruiterNameDiv!: ElementRef;
-  // @ViewChild('positionDiv') positionDiv!: ElementRef;
-  @ViewChild('candidatenameDiv') candidatenameDiv!: ElementRef;
-  // @ViewChild('panelDiv') panelDiv!: ElementRef;
   showDropdown: boolean = false;
   showRecruiters: boolean = false;
   showcandidate: boolean = false;
@@ -26,12 +25,12 @@ export class InterviewDetailsComponent implements OnInit {
   candidate_list: any;
   users_list: any;
   recruiterId: any;
-  recruiterName: any;
+  recruiterName: string = '';
   positionList: any;
   positionId: any;
-  positionName: any;
+  positionName: string = '';
   candidateId: any;
-  candidateName: any;
+  candidateName: string = '';
   candidateExperience: any;
   currentCompany: any;
   locationValue: string = '';
@@ -65,12 +64,29 @@ export class InterviewDetailsComponent implements OnInit {
   mailTemplateData: any;
   candidateRevlentExperience: any;
   candidateTotalExperience: any;
+  workModeList: any;
+  showWorkMode: boolean = false;
+  selectedModeName: string = "";
+  candidateCount: any;
   constructor(private datePipe: DatePipe, private http: HttpClient, private tostr: ToastrServices, private apiService: ApiService) { }
+
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any) {
+    $event.returnValue = true;
+  }
+  onBodyClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.no-close')) {
+      this.showDropdown = false;
+      this.showcandidate = false;
+      this.showRecruiters = false;
+      this.showWorkMode = false;
+    }
+  }
 
   ngOnInit(): void {
     this.today = new Date();
     this.fetchPosition();
-    this.fetchMode();
     if (history?.state?.candidate) {
       this.candidate = history?.state?.candidate;
       this.positionName = this.candidate['reqServiceRequest.requestName'];
@@ -79,46 +95,48 @@ export class InterviewDetailsComponent implements OnInit {
       this.serviceId = '';
       this.candidateId = this.candidate?.candidateId;
       this.currentCompany = this.candidate?.candidatePreviousOrg;
+      this.candidateRevlentExperience = this.candidate?.candidateRevlentExperience;
+      this.candidateTotalExperience = this.candidate?.candidateTotalExperience;
+      this.candidateName = this.candidate?.candidateFirstName + ' ' + this.candidate?.candidateLastName;
       this.fetchUsers();
-      this.fetchCandidates();
-      // this.fetchPanel();
+      // this.fetchCandidates();
+      this.fetchWorkMode();
+      this.fetchMode();
       this.showMail('screening');
     }
   }
-  @HostListener('window:beforeunload', ['$event'])
-  unloadNotification($event: any) {
-    $event.returnValue = true;
-  }
-
-  // @HostListener('document:click', ['$event'])
-  // onBodyClick(event: Event): void {
-  //   const clickedElement = event.target as HTMLElement;
-  //   if (!this.recruiterNameDiv.nativeElement.contains(clickedElement)) this.showRecruiters = false;
-  //   if (!this.positionDiv.nativeElement.contains(clickedElement)) this.showDropdown = false;
-  //   if (!this.candidatenameDiv.nativeElement.contains(clickedElement)) this.showcandidate = false;
-  //   if (!this.panelDiv.nativeElement.contains(clickedElement)) this.showPanel = false;
-  // }
-
   fetchPosition(): void {
     this.apiService.get(`/service-request/list`).subscribe({
       next: (res: any) => {
         if (res?.data) this.positionList = res?.data;
       },
       error: (err) => {
-        console.error("Error fetching position:", err);
         this.tostr.error("Error fetching position.");
       }
     });
   }
 
-  showMail(type: string): void {
-    this.messageType = type;
-    this.mailTemplateData = {
-      firstName: this.candidate?.candidateFirstName ? this.candidate.candidateFirstName : this.candidateDetails[0]?.candidateFirstName,
-      lastName: this.candidate?.candidateLastName ? this.candidate.candidateLastName : this.candidateDetails[0]?.candidateLastName,
-      id: this.candidate?.candidateId ? this.candidate?.candidateId : this.candidateId,
-      messageType: this.messageType,
-    };
+  fetchUsers(): void {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50',
+      'ngrok-skip-browser-warning': 'true'
+    });
+    this.http.get(`${environment.api_url}/user/lists?userRole=1`, { headers }).subscribe((res: any) => {
+      if (res?.users) this.users_list = res?.users;
+      console.log(" res?.users;", res?.users);
+
+    })
+  }
+
+  fetchWorkMode(): void {
+    this.apiService.get(`/user/work-modes`).subscribe({
+      next: (res: any) => {
+        if (res?.data) this.workModeList = res?.data;
+      },
+      error: (err) => {
+        this.tostr.error("Error fetching Work Mode.");
+      }
+    });
   }
 
   fetchCandidates() {
@@ -127,7 +145,7 @@ export class InterviewDetailsComponent implements OnInit {
         next: (res: any) => {
           if (res?.candidates) {
             this.candidate_list = res?.candidates;
-            this.candidatesList = res?.candidates;
+            this.candidateCount = res?.candidateCount
           }
         },
         error: (err) => {
@@ -140,29 +158,45 @@ export class InterviewDetailsComponent implements OnInit {
     }
   }
 
-  fetchUsers(): void {
-    console.log("fetch");
-
-    const headers = new HttpHeaders({
-      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50',
-      'ngrok-skip-browser-warning': 'true'
-    });
-    this.http.get(`${environment.api_url}/user/lists?userRole=1`, { headers }).subscribe((res: any) => {
-      if (res?.users) this.users_list = res?.users;
-      console.log(" res?.users;", res?.users);
-
-    })
+  candidateClick(): void {
+    if (this.positionName.trim() !== '') {
+      if (this.candidateCount === 0) {
+        this.showcandidate = false;
+        this.tostr.warning('Selected Requirement Has no Candidate');
+      } else this.showcandidate = !this.showcandidate;
+    } else this.tostr.warning('Please Select a Requirement First')
   }
 
-  // fetchPanel(): void {
-  //   const headers = new HttpHeaders({
-  //     'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50',
-  //     'ngrok-skip-browser-warning': 'true'
-  //   });
-  //   this.http.get(`${environment.api_url}/user/lists?userRole=2`, { headers }).subscribe((res: any) => {
-  //     if (res?.users) this.panel_list = res?.users;
-  //   })
-  // }
+  selectPosition(id: any, name: any): void {
+    this.showDropdown = false;
+    this.positionId = id;
+    this.positionName = name;
+    this.fetchUsers();
+    this.fetchCandidates();
+    this.fetchWorkMode();
+    this.fetchMode();
+  }
+
+  selectRecruiter(recruiterid: any, firstname: any, secondName: any): void {
+    this.showRecruiters = false;
+    this.recruiterId = recruiterid;
+    this.recruiterName = `${firstname} ${secondName}`;
+  }
+
+  selectMode(mode: any): void {
+    this.selectedModeName = mode;
+  }
+
+  showMail(type: string): void {
+    this.messageType = type;
+    this.mailTemplateData = {
+      firstName: this.candidate?.candidateFirstName ? this.candidate.candidateFirstName : this.candidateDetails[0]?.candidateFirstName,
+      lastName: this.candidate?.candidateLastName ? this.candidate.candidateLastName : this.candidateDetails[0]?.candidateLastName,
+      id: this.candidate?.candidateId ? this.candidate?.candidateId : this.candidateId,
+      messageType: this.messageType,
+    };
+  }
+
 
   fetchCandidatesDetails(): void {
     this.apiService.get(`/screening-station/interview-details/candidate-detail?candidateId=${this.candidateId}`).subscribe((res: any) => {
@@ -203,20 +237,6 @@ export class InterviewDetailsComponent implements OnInit {
     })
   }
 
-  selectRecruiter(recruiterid: any, firstname: any, secondName: any): void {
-    this.showRecruiters = false;
-    this.recruiterId = recruiterid;
-    this.recruiterName = `${firstname} ${secondName}`;
-  }
-
-  selectPosition(id: any, name: any): void {
-    this.showDropdown = false;
-    this.positionId = id;
-    this.positionName = name;
-    this.fetchUsers();
-    this.fetchCandidates();
-    // this.fetchPanel();
-  }
 
   selectCandidate(candidateId: any, candidateFirstName: any, candidateLastName: any, candidate: any): void {
     this.showcandidate = false;
@@ -296,10 +316,10 @@ export class InterviewDetailsComponent implements OnInit {
       serviceId: this.serviceId ?? '',
       interviewStatus: data?.interviewStatus,
       comments: data?.feedback,
-      workMode: 1,
-      revelantWorkExperience: "",
-      totalWorkExperience: "",
-      interviewCc: data?.interviewCc,
+      workMode: this.selectedModeName ?? '',
+      revelantWorkExperience: this.candidateRevlentExperience,
+      totalWorkExperience: this.candidateTotalExperience,
+      interviewCc: data?.mailCc,
       interviewMailTemp: data?.mailTemp,
       interviewSubject: data?.mailSubject,
       interviewBcc: data?.mailBcc,
@@ -332,14 +352,14 @@ export class InterviewDetailsComponent implements OnInit {
   }
 
   resetFormAndState(): void {
-    this.recruiterName = null;
-    this.positionName = null;
+    this.recruiterName = '';
+    this.positionName = '';
     this.displayDate = null;
     this.candidateExperience = null;
     this.currentCompany = null;
     this.showRecruiters = false;
     this.showDropdown = false;
-    this.candidateName = null;
+    this.candidateName = '';
     this.scheduledDate = null;
     this.locationValue = '';
     this.noticeperiodvalue = '';

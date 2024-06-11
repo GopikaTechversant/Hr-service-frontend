@@ -124,30 +124,28 @@
                 </div>
             </div> 
             <div class="d-flex m-10 w-100">
-                <div class="input-1">
+                <div class="input-1 ">
                     <span class="p-10 sub-head p-l-0">Interview Date and Time</span>
-                    <div class="p-relative">
-                        <div class="offer-input c-pointer">
-                            <input class="date-input" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerInterview"
-                                (dateChange)="dateChange($event)" (click)="pickerInterview?.open()" [value]="scheduledDate"
-                                [min]="today">
-                                <span *ngIf="candidate?.messageType === 're-schedule'"> {{displayTime ? displayTime : scheduledDate  | date: 'hh:mm a'}}</span>
-                            <div class="p-l-10 d-flex j-end p-r-10">
-                                <span class="p-l-20 d-flex j-end c-pointer"><mat-datepicker #pickerInterview
-                                        class=""></mat-datepicker>
-                                    <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
-                                        (click)="pickerInterview?.open()"></i>
-                                </span>
-                            <span class=" d-flex j-end"><img class="p-absolute clock-icon"
-                                    src="assets/images/clock.svg" alt="" height="14px" width="14px"
-                                    [ngxTimepicker]="pickerTime" [format]="12" (timeSet)="timeChange($event)">
-                                <ngx-material-timepicker #pickerTime
-                                    (timeSet)="timeChange($event)"></ngx-material-timepicker>
-                            </span>
-                            </div>
+                    <div class="p-relative d-flex offer-input ">
+                        <div class="c-pointer flex-1">
+                            <!-- Date Input -->
+                            <input class="date-input c-pointer" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerInterview"
+                                (dateChange)="dateChange($event)" (click)="pickerInterview?.open()" [value]="scheduledDate" [min]="today">
+                            <mat-datepicker #pickerInterview></mat-datepicker>
+                            <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
+                                (click)="pickerInterview?.open()"></i>
                         </div>
+                
+                        <!-- Time Input -->
+                        <div class="c-pointer flex-1 m-r-10">
+                            <input  class="date-input c-pointer" type="time" id="appt" name="appt" required [value]="displayTime " [(ngModel)]="displayTime"
+                                (change)="onTimeChange($event)" 
+                            />
+                        </div>
+                        
                     </div>
                 </div>
+                
                 <div class="input-1">
                     <span class="p-10 sub-head p-l-0">Interview status</span>
                     <div>

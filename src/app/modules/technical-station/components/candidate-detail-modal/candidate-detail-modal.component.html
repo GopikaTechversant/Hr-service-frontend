@@ -71,8 +71,8 @@
     <div *ngIf="!progessAdded && candidateDetails?.serviceStatus === 'pending' && !progessAdded"
         class="details p-10 d-flex j-end w-97">
         <button class="select-btn" (click)="selectButton('reschedule');showMail('re-schedule')" [ngClass]="{'offer-reject-btn': buttonType === 'reschedule'}">Reschedule Inteview</button>
-        <button class="select-btn" (click)="selectButton('rejection')"  [ngClass]="{'offer-reject-btn': buttonType === 'rejection'}" >Rejection</button>
-        <button class="select-btn" (click)="selectButton('add')"  [ngClass]="{'offer-reject-btn': buttonType === 'add'}" >Add Progress</button>
+        <button class="select-btn" (click)="selectButton('rejection');showMail('')"  [ngClass]="{'offer-reject-btn': buttonType === 'rejection'}" >Rejection</button>
+        <button class="select-btn" (click)="selectButton('add');showMail('')"  [ngClass]="{'offer-reject-btn': buttonType === 'add'}" >Add Progress</button>
     </div>
     <!-- Add progress -->
     <div class="progress" *ngIf="!progessAdded && candidateDetails?.serviceStatus === 'pending' && !progessAdded && buttonType.trim() === 'add'">
