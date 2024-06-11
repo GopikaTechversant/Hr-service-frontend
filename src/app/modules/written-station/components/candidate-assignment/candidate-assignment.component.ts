@@ -195,7 +195,10 @@ export class CandidateAssignmentComponent implements OnInit{
       }
       this.fetchCandidatesWithQuestionBox();
     });
+}
 
-  }
+exportData():void{
+  
+}
 
 }

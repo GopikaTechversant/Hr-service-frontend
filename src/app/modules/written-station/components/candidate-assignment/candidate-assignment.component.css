@@ -92,8 +92,8 @@
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
-    width: 230px;
-    height: 30px;
+    width: 200px;
+    height: 25px;
 }
 
 .input-1 {
@@ -102,7 +102,7 @@
     background-color: #FFFFFF;
     border-radius: 3px;
     width: 200px;
-    height: 30px;
+    height: 25px;
 }
 
 input[type="text"] {
@@ -111,7 +111,25 @@ input[type="text"] {
     background-color: #FFFFFF;
     border-radius: 3px;
     /* width: 270px; */
-    height: 28px;
+    height: 25px;
+}
+
+.input-approve{
+    border: 1px solid #E9E9E9;
+    outline: none;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    width: 220px;
+    height: 25px;
+}
+
+.input-search{
+    width: 200px;
+    border: 1px solid #E9E9E9;
+    outline: none;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    height: 25px;
 }
 
 table {
@@ -263,7 +281,7 @@ tr {
 .approve-btn{
     right: 0px;
     bottom: 1%;
-    height: 40px;
+    height: 35px;
     width: 85px;
     border: none;
     background-color: #575F6E;
@@ -271,10 +289,24 @@ tr {
 }
 
 .previous{
-    margin-top: 11px;
+    margin-top: 6px;
     right: 0;
+    color: #005EC9;
 }
 
+.export-btn{
+    height: 34px;
+    width: 79px;
+    border-radius: 3px;
+    height: 35px;
+    width: 81px;
+    background-color: #4F4F4F;
+    color: white;
+    font-weight: 500;
+    line-height: 35px;
+    text-align: center;
+    margin-top: 2px;
+}
 /* .average-score{
     border: none;
     outline: none;

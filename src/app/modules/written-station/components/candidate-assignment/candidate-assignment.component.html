@@ -1,7 +1,7 @@
 <div class="m-10">
     <span class="f-s-20 f-w-500 p-t-5">Written Round</span>
-    <div class="d-flex j-space  m-b-20 m-t-20">
-        <span class="input p-5 d-flex j-space align-center">
+    <div class="d-flex j-space  m-b-29 m-t-20">
+        <span class="input-search p-5 d-flex j-space align-center">
             <input type="text" class="p-l-5" placeholder="Search by name" [(ngModel)]="searchKeyword"
                 (keydown)="searchCandidate(searchKeyword)">
             <span *ngIf="searchKeyword.trim() !== ''" (click)="clearFilter('search')"
@@ -45,7 +45,7 @@
                 </div>
             </div>
         </div>
-        <span class="input p-5 d-flex j-space align-center">
+        <span class="input-search p-5 d-flex j-space align-center">
             <input type="text" class="p-l-5" placeholder="Search by Experience" [(ngModel)]="searchKeyword"
                 (keydown)="searchCandidate(searchKeyword)">
             <span *ngIf="searchKeyword.trim() !== ''" (click)="clearFilter('search')"
@@ -67,7 +67,10 @@
                 </span>
             </div>
         </div>
-        <span class="input p-5 j-space align-center p-relative">
+        <div class="export-btn c-pointer">
+            <span (click)="exportData()">Export</span>
+        </div>
+        <span class="input-approve p-5 j-space align-center p-relative">
             <div> <input type="text" class="p-l-5 average-score" placeholder="Enter Average Score" [(ngModel)]="searchKeyword"
                 (keydown)="searchCandidate(searchKeyword)">
             <span *ngIf="searchKeyword.trim() !== ''" (click)="clearFilter('search')"
