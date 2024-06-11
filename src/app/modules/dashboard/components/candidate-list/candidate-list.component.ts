@@ -6,6 +6,7 @@ import { EditComponent } from 'src/app/components/edit/edit.component';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environments';
+import { AssignRequirementComponent } from '../assign-requirement/assign-requirement.component';
 @Component({
   selector: 'app-candidate-list',
   templateUrl: './candidate-list.component.html',
@@ -30,6 +31,7 @@ export class CandidateListComponent {
   report: boolean = false;
   url: any;
   candidateIds: any;
+  candidateIdsRequirement:any;
   loader: boolean = true;
 
   constructor(private apiService: ApiService, private router: Router, private dialog: MatDialog, private toastr: ToastrService) { }
@@ -90,7 +92,10 @@ export class CandidateListComponent {
   getSelectedCandidateIds(): void {
     const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
     this.candidateIds = selectedCandidates.map((candidate: { candidateId: any; }) => candidate?.candidateId);
+    const selectedcandidatesrequirement = this.candidateList.flat().filter((candidate: { isSelected: any; candidatesAddingAgainst: any }) => candidate.isSelected && candidate.candidatesAddingAgainst === null);
+    this.candidateIdsRequirement = selectedcandidatesrequirement.map((candidate: { candidateId: any; }) => candidate?.candidateId);
   }
+
   generatePageNumbers() {
     let pages = [];
     if (this.lastPage <= 5) {
@@ -174,4 +179,18 @@ export class CandidateListComponent {
     this.fetchCandidates();
   }
 
+  openRequisition(): void {
+    if (this.candidateIds) {
+      const dialogRef = this.dialog.open(AssignRequirementComponent, {
+        height: '265px',
+        width: '477px',
+        data: { candidateIds: this.candidateIdsRequirement }
+      });
+      dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+        this.currentPage = 1;
+        this.pageSize = 14;
+        this.fetchCandidates();
+      })
+    } else this.toastr.warning('You have not selected candidates to assign');
+  }
 }

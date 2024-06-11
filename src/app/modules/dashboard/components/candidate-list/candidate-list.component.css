@@ -15,7 +15,7 @@
     justify-content: space-between;
 }
 
-.text-wrap{
+.text-wrap {
     max-width: 120px !important;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -207,7 +207,7 @@ tr {
     font-weight: 500;
 }
 
-.export-btn{
+.export-btn {
     height: 34px;
     width: 79px;
     border-radius: 3px;
@@ -220,7 +220,15 @@ tr {
     text-align: center;
 }
 
-.search{
+.search {
     height: 19px;
-    
+}
+
+.disabled-icon-color {
+    color: #dfdfd7;
+    pointer-events: none;
+}
+
+.action-disabled {
+    pointer-events: none !important;
 }
