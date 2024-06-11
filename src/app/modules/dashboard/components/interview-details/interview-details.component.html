@@ -9,10 +9,9 @@
 
         <div class="child d-flex m-b-10" #positionDiv>
             <span class="label m-b-4">Requirement</span>
-            <div class="input-box c-pointer p-relative" (click)="showDropdown = !showDropdown">
-                <span *ngIf="!positionName">Select Requirement</span>
-                <span *ngIf="positionName">{{positionName}}</span>
-                <span *ngIf="!positionName"><i class="f-right m-5 m-r-10 fa fa-chevron-down s-text"></i></span>
+            <div class="input-box c-pointer p-relative no-close" (click)="showDropdown = !showDropdown">
+                <span>{{positionName.trim() !== '' ? positionName : 'Select Requirement'}}</span>
+                <span *ngIf="!positionName"><i class="f-right m-5 m-r-10 fa fa-chevron-down s-text no-close"></i></span>
                 <div class="no-close dropdown c-pointer" *ngIf="showDropdown">
                     <div class="p-5" *ngFor="let position of positionList"
                         (click)="selectPosition(position?.requestId,position?.requestName);showDropdown = !showDropdown">
@@ -21,14 +20,12 @@
                 </div>
             </div>
         </div>
-        <div class="child d-flex m-b-10" #candidatenameDiv>
+        <div class="child d-flex m-b-10">
             <span class="label m-b-4">Candidate Name</span>
-            <div class="input-box c-pointer p-relative" (click)="showcandidate = !showcandidate">
-                <span *ngIf="!candidateName && !candidate?.candidateFirstName">Select Name</span>
-                <span *ngIf="candidate?.candidateFirstName"> {{candidate?.candidateFirstName}}</span>
-                <span *ngIf="candidateName" class="c-pointer">{{candidateName}}</span>
+            <div class="input-box c-pointer p-relative no-close" (click)="candidateClick()">
+                <span  class="c-pointer">{{candidateName.trim() !== '' ? candidateName : 'Select Candidate Name'}}</span>
                 <span *ngIf="!candidate?.candidateFirstName">
-                    <i class="f-right m-5 m-r-10 fa fa-chevron-down s-text"></i>
+                    <i class="f-right m-5 m-r-10 fa fa-chevron-down s-text no-close"></i>
                 </span>
                 <div class="no-close dropdown c-pointer" *ngIf="showcandidate && positionId">
                     <div class="p-5" *ngFor="let candidate of candidate_list"
@@ -40,10 +37,9 @@
         </div>
         <div class="child d-flex m-b-10" #recruiterNameDiv>
             <span class="label m-b-4">Recruiter Name</span>
-            <div class="input-box c-pointer p-relative" (click)="showRecruiters = !showRecruiters">
-                <span *ngIf="!recruiterName">Select Name</span>
-                <span *ngIf="recruiterName">{{recruiterName}}</span>
-                <span> <i class="f-right m-5 m-r-10 fa fa-chevron-down s-text"></i></span>
+            <div class="input-box c-pointer p-relative no-close" (click)="showRecruiters = !showRecruiters">
+                <span>{{recruiterName.trim() !== '' ? recruiterName : 'Select Recruiter Name'}}</span>
+                <span> <i class="f-right m-5 m-r-10 fa fa-chevron-down s-text no-close"></i></span>
                 <div class="no-close dropdown c-pointer" *ngIf="showRecruiters">
                     <div class="p-5" *ngFor="let recruiter of users_list"
                         (click)="selectRecruiter(recruiter.userId,recruiter.userfirstName,recruiter.userlastName);showRecruiters = !showRecruiters">
@@ -58,17 +54,13 @@
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Relevant Experience</span>
             <div class="input-box">
-                <span *ngIf="candidate?.candidateRevlentExperience"> {{candidate?.candidateExperience}}</span>
                 <span>{{candidateRevlentExperience || ''}}</span>
-                <!-- <input type="text"  [value]="candidateExperience || ''"> -->
             </div>
         </div>
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Total Experience</span>
             <div class="input-box">
-                <span *ngIf="candidate?.candidateTotalExperience"> {{candidate?.candidateTotalExperience}}</span>
                 <span>{{candidateTotalExperience || ''}}</span>
-                <!-- <input type="text"  [value]="candidateExperience || ''"> -->
             </div>
         </div>
         <div class="child d-flex m-b-10">
@@ -79,7 +71,16 @@
     <div class="d-flex j-space parent">
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Mode of Work</span>
-            <input type="text" class="input-box">
+            <div class="input-box c-pointer p-relative no-close" (click)="showWorkMode = !showWorkMode">
+                <span >{{selectedModeName.trim() !== '' ? selectedModeName : "Select Work Mode"}}</span>
+                <span> <i class="f-right m-5 m-r-10 fa fa-chevron-down s-text"></i></span>
+                <div class="no-close dropdown c-pointer" *ngIf="showWorkMode">
+                    <div class="p-5" *ngFor="let mode of workModeList"
+                        (click)="selectMode(mode?.workMode);showWorkMode = !showWorkMode">
+                        {{mode?.workMode}} 
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Current Company</span>

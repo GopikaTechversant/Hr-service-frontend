@@ -71,7 +71,9 @@ export class MailTemplateComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.candidate?.messageType) {
+    if (this.candidate?.messageType && this.candidate?.messageType.trim() !=='') {
+      console.log(this.candidate?.messageType.trim());
+      
       this.fetchTemplates();
       console.log(this.candidate);
       if (this.candidate?.messageType === 're-schedule') this.fetchCandidatesDetails();
@@ -112,11 +114,6 @@ export class MailTemplateComponent implements OnInit {
     }
   }
 
-  timeChange(event: any): void {
-    this.displayTime = event;
-    if (this.interviewStatus === 'scheduled') this.interviewStatus = 'Rescheduled'
-    this.changeInterviewStatus();
-  }
 
   fetchMode(): void {
     this.apiService.get(`/screening-station/interview-mode/list`).subscribe((res: any) => {
@@ -146,6 +143,12 @@ export class MailTemplateComponent implements OnInit {
         if (status?.interviewStatus) this.interviewStatus = status?.interviewStatus;
         if (status?.interviewLocation) this.Interviewlocation = status?.interviewLocation;
         this.scheduledDate = status?.serviceDate;
+        if (this.scheduledDate) {
+          this.displayDate = this.datePipe.transform(this.scheduledDate, 'MM/dd/yyyy');
+          this.displayTime = this.datePipe.transform(this.scheduledDate, 'hh:mm');
+          console.log(this.displayTime , "rtyuioptions" , this.displayDate);
+          
+        }
       })
     })
   }
@@ -176,7 +179,18 @@ export class MailTemplateComponent implements OnInit {
   //   }
   // }
 
+  onTimeChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.displayTime = input.value;
+    if (this.interviewStatus === 'scheduled') this.interviewStatus = 'Rescheduled'
+    this.changeInterviewStatus();
+  }
 
+
+  timeChange(event: any): void {
+    this.displayTime = event;
+
+  }
   getKeyFroms3(): void {
     this.keySubscription = this.s3Service.key.subscribe((key: string) => {
       this.uploadedFileKey = key;
@@ -229,7 +243,7 @@ export class MailTemplateComponent implements OnInit {
     this.offerSalary = (document.getElementById('salary') as HTMLInputElement)?.value || '';
 
     if (this.displayDate && this.displayDate) this.displaydateTime = `${this.displayDate} ${this.displayTime}`;
-    if (this.scheduledDate) this.displaydateTime = this.scheduledDate;
+    // if (this.scheduledDate) this.displaydateTime = this.scheduledDate;
 
     if (this.isEditable) {
       this.tostr.warning('Please Save Changes in Mail');
@@ -299,7 +313,7 @@ export class MailTemplateComponent implements OnInit {
         if (!this.displaydateTime) this.tostr.warning('Please Enter an Interview Time');
         return;
       }
-  
+
       data = {
         ...commonData,
         interviewPanel: this.panelId,

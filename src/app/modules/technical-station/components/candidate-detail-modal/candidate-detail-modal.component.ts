@@ -184,14 +184,16 @@ export class CandidateDetailModalComponent implements OnInit {
     if(item === 'rejection')  this.showRejection = true;
     this.messageType = item;
     console.log(this.messageType);
-    
-    this.mailTemplateData = {
-      firstName: this.candidateDetails['candidate.candidateFirstName'],
-      lastName: this.candidateDetails['candidate.candidateLastName'],
-      id: this.candidateDetails['candidate.candidateId'],
-      messageType: this.messageType,
-      stationId : this.stationId,
-    };
+    if(item.trim() !== '') {
+      this.mailTemplateData = {
+        firstName: this.candidateDetails['candidate.candidateFirstName'],
+        lastName: this.candidateDetails['candidate.candidateLastName'],
+        id: this.candidateDetails['candidate.candidateId'],
+        messageType: this.messageType,
+        stationId : this.stationId,
+      };
+    }
+   
   }
 
   onSubmitData(event: any): void {
@@ -215,6 +217,8 @@ export class CandidateDetailModalComponent implements OnInit {
         feedBackMailTemp: data?.mailTemp || '',
         feedBackSubject: data?.mailSubject,
         feedBcc: data?.mailBcc,
+        date : data?.interviewTime,
+        pannelUser: data?.interviewPanel
       };
       this.apiService.post(`${baseUrl}/approve`, payload).subscribe({
         next: () => {
