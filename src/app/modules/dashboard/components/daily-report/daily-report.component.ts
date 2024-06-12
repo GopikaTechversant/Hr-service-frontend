@@ -121,4 +121,8 @@ export class DailyReportComponent implements OnInit {
     this.currentPage = Math.max(1, pageNumber);
     this.fetchDetails();
   }
+
+  exportData():void{
+    
+  }
 }

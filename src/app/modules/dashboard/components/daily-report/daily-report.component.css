@@ -20,6 +20,11 @@
     font-weight: 500;
     line-height: 26.07px;
     font-size: 22px;
+    width: 24%;
+}
+
+.daily-report{
+    width: 24%;
 }
 
 .filter {
@@ -34,7 +39,7 @@
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
-    width: 50%;
+    width: 53%;
     height: 30px;
     margin-right: -10px;
 }
@@ -76,7 +81,7 @@
 }
 
 .table {
-    width: auto;
+    width: 98%;
     border-collapse: collapse;
 }
 
@@ -241,4 +246,45 @@ tr {
     font-size: 20px;
     color: black;
     font-weight: 500;
+}
+
+.export-btn{
+    height: 34px;
+    width: 79px;
+    border-radius: 3px;
+    height: 35px;
+    width: 81px;
+    background-color: #4F4F4F;
+    color: white;
+    font-weight: 500;
+    line-height: 35px;
+    text-align: center;
+}
+
+.date-input{
+    width: 68%;
+}
+
+.date-input-box{
+    border: 1px solid #E9E9E9;
+    outline: none;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    width: 78%;
+    height: 30px;
+    margin-right: -10px;
+}
+
+.to-date-input{
+    border: 1px solid #E9E9E9;
+    outline: none;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    width: 78%;
+    height: 30px;
+    margin-right: -10px;
+}
+
+.to-date{
+    width: 68%;
 }
