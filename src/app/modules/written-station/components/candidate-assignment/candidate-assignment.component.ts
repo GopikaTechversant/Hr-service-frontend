@@ -14,14 +14,14 @@ import { S3Service } from 'src/app/services/s3.service';
   templateUrl: './candidate-assignment.component.html',
   styleUrls: ['./candidate-assignment.component.css']
 })
-export class CandidateAssignmentComponent implements OnInit{
+export class CandidateAssignmentComponent implements OnInit {
   requestId: any;
   candidateList: any[] = [];
   searchKeyword: string = '';
   created_Box: any[] = [];
   showQuestions: boolean = false;
   questions_list: any = [];
-  initialLoader:boolean = false
+  initialLoader: boolean = false
   loader: boolean = true;
   filterStatus: boolean = false;
   filteredStatus: any = '';
@@ -31,6 +31,7 @@ export class CandidateAssignmentComponent implements OnInit{
   selectedCandidate: any;
   selectedCandidateIds: any[] = [];
   candidateMarkDetail: any;
+  candidateIds: any;
   Status: any = [
     { status: 'pending' },
     { status: 'rejected' },
@@ -38,9 +39,9 @@ export class CandidateAssignmentComponent implements OnInit{
     { status: 'moved' }
   ]
   requestList_open: any;
-  displayQuestion_open:any;
-  displayQuestion:string = '';
-  questionId:any;
+  displayQuestion_open: any;
+  displayQuestion: string = '';
+  questionId: any;
   constructor(private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService, private s3Service: S3Service) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -50,11 +51,11 @@ export class CandidateAssignmentComponent implements OnInit{
   ngOnInit(): void {
     this.initialLoader = true;
     this.fetchCandidates();
-    this. fetchCandidatesWithQuestionBox();
+    this.fetchCandidatesWithQuestionBox();
   }
 
   fetchCandidates(): void {
-    if(!this.initialLoader) this.loader = true;
+    if (!this.initialLoader) this.loader = true;
     this.apiService.get(`/screening-station/list-batch/${this.requestId}?station=2&experience=${this.searchKeyword}`).subscribe((res: any) => {
       this.initialLoader = false;
       this.loader = false;
@@ -64,7 +65,7 @@ export class CandidateAssignmentComponent implements OnInit{
   }
 
   fetchCandidatesWithQuestionBox(): void {
-    if(!this.initialLoader) this.loader = true;
+    if (!this.initialLoader) this.loader = true;
     this.apiService.get(`/written-station/questionBatchList/${this.requestId}`).subscribe((res: any) => {
       this.initialLoader = false;
       this.loader = false;
@@ -91,7 +92,7 @@ export class CandidateAssignmentComponent implements OnInit{
     this.searchKeyword = searchTerm;
     this.fetchCandidates();
   }
-  
+
   selectStatusFilter(item: string): void {
     this.filteredStatus = item;
     sessionStorage.setItem('status_written', this.filteredStatus);
@@ -127,7 +128,7 @@ export class CandidateAssignmentComponent implements OnInit{
   //   this.fetchCandidates();
   // }
 
-  selectPosition(name: string, id: string): void {
+  selectQuestion(name: string, id: string): void {
     this.requestList_open = false;
     this.displayPosition = name;
     this.positionId = id;
@@ -136,13 +137,27 @@ export class CandidateAssignmentComponent implements OnInit{
     this.fetchCandidatesWithQuestionBox();
   }
 
-  filterQuestion(name: string, id: string):void{
+  filterQuestion(name: string, id: string): void {
     this.displayQuestion_open = false;
     this.displayQuestion = name;
     this.questionId = id;
     sessionStorage.setItem(`question`, JSON.stringify({ name: this.displayQuestion, id: this.questionId }));
     this.fetchCandidates();
     this.fetchCandidatesWithQuestionBox();
+  }
+
+  questionAssign():void{
+    if(this.candidateIds){
+      const payload = {}
+      console.log("question assigned api");
+      this.apiService.post(`gfdfytfytd`,payload).subscribe({
+        next:(res:any) => {
+          this.tostr.success('Question assigned successfully');
+          this.fetchCandidatesWithQuestionBox();
+        },
+        error:(error) => this.tostr.error('error?.error?.message ? error?.error?.message : Unable to assign question')
+      })
+    }
   }
 
   onSwitchStation(candidate: any): void {
@@ -195,10 +210,15 @@ export class CandidateAssignmentComponent implements OnInit{
       }
       this.fetchCandidatesWithQuestionBox();
     });
-}
+  }
 
-exportData():void{
-  
-}
+  getSelectedCandidateIds(): void {
+    const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
+    this.candidateIds = selectedCandidates.map((candidate: { candidateId: any; }) => candidate?.candidateId);
+  }
+
+  exportData(): void {
+
+  }
 
 }

@@ -39,7 +39,7 @@
             <span class="c-pointer" (click)="requestList_open = !requestList_open">{{displayPosition.trim() === '' ?
                 'Assign Question' : displayPosition}}</span>
             <div class="no-close dropdown c-pointer no-close" *ngIf="requestList_open">
-                <div (click)='selectPosition(name?.questionName,name?.questionId); !requestList_open'
+                <div (click)='selectQuestion(name?.questionName,name?.questionId); !requestList_open'
                     *ngFor="let name of questions_list" class="p-10">
                     {{name?.questionName}}
                 </div>
@@ -108,7 +108,7 @@
                         <ng-container  *ngFor="let item of innerArray.candidates">
                             <tr class="candidate c-pointer">
                                 <!-- <td>{{ item.candidateId }}</td> -->
-                                <td><input type="checkbox"></td>
+                                <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()"></td>
                                 <td class="text-wrap" [title]="item.candidateFirstName + item.candidateLastName">
                                     {{ item.candidateFirstName }} {{ item.candidateLastName }}
                                 </td>
