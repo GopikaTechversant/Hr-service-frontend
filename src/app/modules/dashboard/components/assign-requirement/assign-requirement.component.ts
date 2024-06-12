@@ -50,7 +50,7 @@ export class AssignRequirementComponent implements OnInit {
           this.dialogRef.close();
         },
         error: (error) => {
-          this.toastr.error(error?.error?.message ? error?.error?.message : 'Unable to Assign candidates');
+          this.toastr.error(error?.error?.message ? error?.error?.message : 'Candidates already assigned');
         }
       }
       )
