@@ -1,8 +1,8 @@
 <div class="main">
     <div class="d-flex m-10 m-l-17">
         <div class="daily-report"><span class="heading">Daily Report</span></div>
-        <div class="d-flex flex-1 m-r-9 j-end">
-            <div class="d-flex c-pointer flex-1  j-end">
+        <div class="d-flex  m-r-9 j-end header">
+            <div class="d-flex c-pointer  filter">
                 <span class="filter-head">Filter Recruiter</span>
                 <span class="c-pointer input p-relative no-close" (click)="showRecruiters = !showRecruiters">
                     <div class=" d-flex j-space p-5 p-b-0">
@@ -17,7 +17,7 @@
                     </div>
                 </span>
             </div>
-            <div class="d-flex c-pointer flex-1  j-end">
+            <div class="d-flex c-pointer  filter">
                 <span class="filter-head">From Date</span>
                 <div class="p-relative date-input">
                     <input class="p-l-5 date-input-box c-pointer" placeholder="29/02/11" matInput [matDatepicker]="pickerFromDate"
@@ -31,7 +31,7 @@
                     </span>
                 </div>
             </div>
-            <div class="d-flex c-pointer flex-1  j-end m-r-20">
+            <div class="d-flex c-pointer filter">
                 <span class="filter-head">To Date</span>
                 <div class="p-relative to-date">
                     <input class="p-l-5 to-date-input c-pointer" placeholder="dd/MM/yyyy" matInput [matDatepicker]="pickerToDate"
