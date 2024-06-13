@@ -46,13 +46,17 @@ export class CandidateDetailModalComponent implements OnInit {
   content: any;
   buttonType: string = '';
   mailTemplateData: any;
-
+  status: any;
+  filteredStatus : string = '';
+  filterStatus: boolean = false; 
   constructor(public dialogRef: MatDialogRef<CandidateDetailModalComponent>, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data) {
       this.candidateDetails = data?.candidateDetails;
       this.stationId = data?.stationId;
       this.serviceId = this.candidateDetails?.serviceId;
+      console.log(this.candidateDetails);
+      
       if (data?.progressStatus > 0) this.progessAdded = true;
     }
     this.dialogRef.updateSize('60vw', '90vh');
@@ -69,7 +73,17 @@ export class CandidateDetailModalComponent implements OnInit {
 
   selectButton(type: any): void {
     this.buttonType = type;
+    if(type === 'rejection') this.fetchStatus();
+  }
 
+  fetchStatus(): void {
+    this.apiService.get(`/user/filter-status`).subscribe(res => {
+      this.status = res?.data.slice(4);
+    });
+  }
+
+  selectStatusFilter(status: string) {
+    this.filteredStatus = status;
   }
 
   onFileSelected(event: any): void {
@@ -166,15 +180,20 @@ export class CandidateDetailModalComponent implements OnInit {
   // }
 
   showMail(item: string): void {
-    this.showSelection = item === 'approve';
-    this.showRejection = item !== 'approve';
+    if(item === 'approve')  this.showSelection = true;
+    if(item === 'rejection')  this.showRejection = true;
     this.messageType = item;
-    this.mailTemplateData = {
-      firstName: this.candidateDetails['candidate.candidateFirstName'],
-      lastName: this.candidateDetails['candidate.candidateLastName'],
-      id: this.candidateDetails['candidate.candidateId'],
-      messageType: item
-    };
+    console.log(this.messageType);
+    if(item.trim() !== '') {
+      this.mailTemplateData = {
+        firstName: this.candidateDetails['candidate.candidateFirstName'],
+        lastName: this.candidateDetails['candidate.candidateLastName'],
+        id: this.candidateDetails['candidate.candidateId'],
+        messageType: this.messageType,
+        stationId : this.stationId,
+      };
+    }
+   
   }
 
   onSubmitData(event: any): void {
@@ -198,6 +217,8 @@ export class CandidateDetailModalComponent implements OnInit {
         feedBackMailTemp: data?.mailTemp || '',
         feedBackSubject: data?.mailSubject,
         feedBcc: data?.mailBcc,
+        date : data?.interviewTime,
+        pannelUser: data?.interviewPanel
       };
       this.apiService.post(`${baseUrl}/approve`, payload).subscribe({
         next: () => {
@@ -213,16 +234,21 @@ export class CandidateDetailModalComponent implements OnInit {
 
 
   rejectClick(data: any): void {
-    const payload = {
-      serviceId: this.serviceId,
-      stationId: this.stationId,
-      userId: this.userId,
-      status: "rejected",
-      rejectCc: data?.mailCc,
-      rejectMailTemp: data?.mailTemp,
-      rejectSubject: data?.mailSubject,
-      rejectBcc: data?.mailBcc,
-    };
+    const feedback = document.getElementById('feedback') as HTMLInputElement;
+    if (feedback) this.feedback = feedback?.value;
+    if ((this.feedback.trim() !== '' && this.filteredStatus) || data) {
+      const payload = {
+        serviceId: this.serviceId,
+        stationId: this.stationId,
+        userId: this.userId,
+        status: this.filteredStatus ? this.filteredStatus : "rejected",
+        rejectCc: data?.mailCc ?? '',
+        rejectMailTemp: data?.mailTemp ?? '',
+        rejectSubject: data?.mailSubject ?? '',
+        rejectBcc: data?.mailBcc ?? '',
+        feedBack: this.feedback,
+      };
+    console.log(payload);
 
     this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
       next: (res: any) => {
@@ -232,15 +258,15 @@ export class CandidateDetailModalComponent implements OnInit {
         this.tostr.error('Error adding progress');
       }
     });
+    }
   }
 
   viewResume(resume: any) {
     this.resumePath = resume;
     console.log("this.resumePath", this.resumePath);
     window.open(`${environment.s3_url}${this.resumePath}`, '_blank');
-    console.log("`${environment.s3_url}${this.resumePath}`", typeof (`${environment.s3_url}${this.resumePath}`));
+    console.log("`${environment.s3_url}${this.resumePath}`",typeof(`${environment.s3_url}${this.resumePath}`));
   }
-
 
   ngOnDestroy(): void {
     if (this.keySubscription) {

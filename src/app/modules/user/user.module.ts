@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
@@ -10,11 +10,15 @@ import { MaterialModule } from '../material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { EditComponent } from './components/edit/edit.component';
+import { CandidateDetailsComponent } from 'src/app/components/candidate-details/candidate-details.component';
+import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 const routes: Routes = [
   { path:'',component:HomeComponent,
   children: [
     {path:'',component: UserListComponent},
-    {path:'addUser', component:AddUserComponent}
+    {path:'addUser', component:AddUserComponent},
+    { path: 'candidate-details/:id', component: CandidateDetailsComponent },
+
   ]
  }
 ]
@@ -32,8 +36,11 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     SharedModule,
     MaterialModule,
-    ReactiveFormsModule,
-    FormsModule
-  ]
+    FormsModule,
+  ],
+  providers: [
+    DatePipe,
+    { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
+  ],
 })
 export class UserModule { }

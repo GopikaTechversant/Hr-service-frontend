@@ -1,9 +1,11 @@
 import { DatePipe } from '@angular/common';
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { S3Service } from 'src/app/services/s3.service';
+import { environment } from 'src/environments/environments';
 
 @Component({
   selector: 'app-mail-template',
@@ -14,7 +16,9 @@ export class MailTemplateComponent implements OnInit {
   @Input() candidate: any;
   @Output() submitData: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('template', { static: false }) templateRef!: ElementRef;
-
+  @ViewChild('recruiterNameDiv') recruiterNameDiv!: ElementRef;
+  @ViewChild('positionDiv') positionDiv!: ElementRef;
+  @ViewChild('panelDiv') panelDiv!: ElementRef;
   isEditable: boolean = false;
   templateData: any = {};
   content: string = '';
@@ -35,15 +39,118 @@ export class MailTemplateComponent implements OnInit {
   messageSaved: boolean = false;
   offerSalary: any;
   private keySubscription?: Subscription;
-
-  constructor(private apiService: ApiService, private tostr: ToastrService, private datePipe: DatePipe, private s3Service: S3Service) { }
+  showPanel: boolean = false;
+  showRecruiters: boolean = false;
+  showDropdown: boolean = false;
+  showcandidate: boolean = false;
+  panelName: any;
+  panel_list: any;
+  interviewStatus: string = "";
+  displayTime: any;
+  panelId: any;
+  showModeList: boolean = false;
+  modeList: any;
+  selectedModeName: string = "";
+  selectedModeId: any;
+  candidateDetails: any;
+  scheduledDate: any;
+  candidateExperience: any;
+  currentCompany: any;
+  candidateStatus: any;
+  noticeperiodvalue: any;
+  id: any;
+  serviceId: any;
+  interviewMode: any;
+  comment: any;
+  Interviewlocation: any;
+  displaydateTime: any;
+  loader: boolean = false;
+  constructor(private apiService: ApiService, private tostr: ToastrService, private datePipe: DatePipe, private s3Service: S3Service, private http: HttpClient) { }
   ngOnInit(): void {
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.candidate?.messageType) {
+    if (this.candidate?.messageType && this.candidate?.messageType.trim() !=='') {
+      console.log(this.candidate?.messageType.trim());
+      
       this.fetchTemplates();
+      console.log(this.candidate);
+      if (this.candidate?.messageType === 're-schedule') this.fetchCandidatesDetails();
+
+      this.fetchMode();
+      this.fetchPanel();
     }
+  }
+  // @HostListener('document:click', ['$event'])
+  // onBodyClick(event: Event): void {
+  //   const clickedElement = event.target as HTMLElement;
+  //   if (!this.recruiterNameDiv.nativeElement.contains(clickedElement)) this.showRecruiters = false;
+  //   if (!this.positionDiv.nativeElement.contains(clickedElement)) this.showDropdown = false;
+  //   if (this.candidate?.candidateFirstName) this.showcandidate = false;
+  //   if (!this.panelDiv.nativeElement.contains(clickedElement)) this.showPanel = false;
+  // }
+
+  fetchPanel(): void {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50',
+      'ngrok-skip-browser-warning': 'true'
+    });
+    this.http.get(`${environment.api_url}/user/lists?userRole=2`, { headers }).subscribe((res: any) => {
+      if (res?.users) this.panel_list = res?.users;
+    })
+  }
+
+  selectPanel(panelid: any, firstname: any, secondName: any): void {
+    this.showPanel = false;
+    this.panelId = panelid;
+    this.panelName = `${firstname} ${secondName}`;
+  }
+
+  changeInterviewStatus(): void {
+    if (this.displayDate && this.displayTime) {
+      if (!this.interviewStatus) this.interviewStatus = 'Scheduled';
+      if (this.interviewStatus === 'Not yet Schedule') this.interviewStatus = 'scheduled';
+    }
+  }
+
+
+  fetchMode(): void {
+    this.apiService.get(`/screening-station/interview-mode/list`).subscribe((res: any) => {
+      if (res?.data) this.modeList = res?.data;
+    })
+  }
+
+  selectMode(id: any, name: any): void {
+    this.selectedModeId = id;
+    this.selectedModeName = name;
+  }
+
+  fetchCandidatesDetails(): void {
+    this.apiService.get(`/screening-station/interview-details/candidate-detail?candidateId=${this.candidate?.id}`).subscribe((res: any) => {
+      this.candidateDetails = res?.candidate;
+      this.candidateStatus = res?.candidateStatus;
+      this.candidateDetails.forEach((candidate: any) => {
+        this.candidateExperience = candidate?.candidateExperience;
+        this.currentCompany = candidate?.candidatePreviousOrg;
+        this.id = candidate?.candidateId;
+        if (candidate?.candidateNoticePeriodByDays) this.noticeperiodvalue = candidate?.candidateNoticePeriodByDays;
+      })
+      this.candidateStatus.forEach((status: any) => {
+        this.serviceId = this.candidate?.serviceId;
+        if (status?.interviewMode) this.interviewMode = status?.interviewMode;
+        if (status?.comment) this.comment = status?.comment;
+        if (status?.interviewStatus) this.interviewStatus = status?.interviewStatus;
+        if (status?.interviewLocation) this.Interviewlocation = status?.interviewLocation;
+        this.scheduledDate = status?.serviceDate;
+        if (this.scheduledDate) {
+          this.displayDate = this.datePipe.transform(this.scheduledDate, 'MM/dd/yyyy');
+          this.displayTime = this.datePipe.transform(this.scheduledDate, 'hh:mm');
+          console.log(this.displayTime , "rtyuioptions" , this.displayDate);
+          
+        }
+      })
+    })
   }
 
   fetchTemplates(): void {
@@ -72,16 +179,29 @@ export class MailTemplateComponent implements OnInit {
   //   }
   // }
 
+  onTimeChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.displayTime = input.value;
+    if (this.interviewStatus === 'scheduled') this.interviewStatus = 'Rescheduled'
+    this.changeInterviewStatus();
+  }
 
+
+  timeChange(event: any): void {
+    this.displayTime = event;
+
+  }
   getKeyFroms3(): void {
     this.keySubscription = this.s3Service.key.subscribe((key: string) => {
       this.uploadedFileKey = key;
     });
   }
-  
+
   dateChange(event: any): void {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    if (this.interviewStatus === 'scheduled') this.interviewStatus = 'Rescheduled';
+    this.changeInterviewStatus();
   }
 
   editClick() {
@@ -110,12 +230,7 @@ export class MailTemplateComponent implements OnInit {
   }
 
   submitClick(): void {
-    console.log("xcvbn", this.uploadedFileKey);
-    // if (!this.uploadedFileKey && this.candidate?.messageType === 'offer') {
-    //   this.tostr.warning('File upload is in progress, please wait.');
-    //   return;
-    // }
-
+    console.log("File Key:", this.uploadedFileKey);
     if (!this.messageSaved) {
       this.tostr.warning(this.isEditable ? 'Please Save Template before submitting' : 'Please Edit and Save Mail before submitting');
       return;
@@ -127,17 +242,20 @@ export class MailTemplateComponent implements OnInit {
     this.mailSubject = (document.getElementById('subject') as HTMLInputElement)?.value || '';
     this.offerSalary = (document.getElementById('salary') as HTMLInputElement)?.value || '';
 
+    if (this.displayDate && this.displayDate) this.displaydateTime = `${this.displayDate} ${this.displayTime}`;
+    // if (this.scheduledDate) this.displaydateTime = this.scheduledDate;
+
     if (this.isEditable) {
       this.tostr.warning('Please Save Changes in Mail');
       return;
     }
-
+    // Validate confirmation checkbox and message type
     const confirmationCheckbox = document.getElementById('confirmDetails') as HTMLInputElement;
     if (!confirmationCheckbox?.checked || !this.candidate?.messageType.trim()) {
       this.tostr.warning('Please confirm all details before submitting');
       return;
     }
-
+    // Process the template content
     if (this.templateRef) {
       const templateElement = this.templateRef.nativeElement;
       const textarea = templateElement.querySelector('textarea');
@@ -151,28 +269,61 @@ export class MailTemplateComponent implements OnInit {
         div.innerText = this.content;
         textarea.replaceWith(div);
       }
-
       this.htmlString = templateElement.outerHTML.replace(textarea, '<div>');
-
-      if (this.htmlString && this.feedback.trim() && this.mailSubject.trim()) {
-        const data = {
-          feedback: this.feedback,
-          offerSalary: this.offerSalary,
-          joiningdate: this.displayDate,
-          mailCc: this.mailCc,
-          mailBcc: this.mailBcc,
-          mailSubject: this.mailSubject,
-          messageType: this.candidate?.messageType,
-          mailTemp: this.htmlString,
-          file: this.uploadedFileKey,
-        };
-        this.submitData.emit(data);
-        console.log(data);
-      } else {
-        if (!this.feedback.trim()) this.tostr.warning('Please Add a feedback');
-        if (!this.mailSubject.trim()) this.tostr.warning('Please Add a Subject');
-      }
     }
+
+    // Validate feedback and subject fields
+    if (!this.feedback.trim() || !this.mailSubject.trim()) {
+      if (!this.feedback.trim()) this.tostr.warning('Please Add a feedback');
+      if (!this.mailSubject.trim()) this.tostr.warning('Please Add a Subject');
+      return;
+    }
+
+    const commonData = {
+      feedback: this.feedback,
+      mailCc: this.mailCc,
+      mailBcc: this.mailBcc,
+      mailSubject: this.mailSubject,
+      messageType: this.candidate?.messageType,
+      mailTemp: this.htmlString,
+    };
+
+    let data;
+    if (this.candidate?.messageType === 'offer') {
+      if (!this.uploadedFileKey || !this.offerSalary || !this.displayDate) {
+        if (!this.uploadedFileKey) this.tostr.warning('Please Wait file to be uploaded');
+        if (!this.offerSalary) this.tostr.warning('Please Add Offer Salary');
+        if (!this.displayDate) this.tostr.warning('Please Select Joining Date');
+        return;
+      }
+      data = {
+        ...commonData,
+        file: this.uploadedFileKey,
+        offerSalary: this.offerSalary,
+        joiningdate: this.displayDate,
+      };
+    } else if (this.candidate?.messageType === 'rejection') {
+      data = commonData;
+    } else {
+      // Validate interview details
+      if (!this.panelId || !this.selectedModeId || !this.interviewStatus || !this.displaydateTime) {
+        if (!this.panelId) this.tostr.warning('Please Select an Interview Panel');
+        if (!this.selectedModeId) this.tostr.warning('Please Select an Interview Mode');
+        if (!this.interviewStatus) this.tostr.warning('Please Select an Interview Status');
+        if (!this.displaydateTime) this.tostr.warning('Please Enter an Interview Time');
+        return;
+      }
+
+      data = {
+        ...commonData,
+        interviewPanel: this.panelId,
+        interviewMode: this.selectedModeId,
+        interviewStatus: this.interviewStatus,
+        interviewTime: this.displaydateTime
+      };
+    }
+    this.submitData.emit(data);
+    console.log(data);
   }
 
   // submitClickTest() {

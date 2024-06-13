@@ -254,8 +254,8 @@ export class AddCandidateModalComponent implements OnInit {
         message: 'Please Enter Gender'
       },
       {
-        condition: !this.candidateForm?.value?.candidateMobileNo,
-        message: 'Please Enter Mobile No'
+        condition: !/^\d+$/.test(this.candidateForm?.value?.candidateMobileNo),
+        message: 'Please Enter a Valid Mobile No'
       },
       {
         condition: !this.sourceId,
@@ -269,10 +269,10 @@ export class AddCandidateModalComponent implements OnInit {
       //   condition: !this.selectedFile,
       //   message: 'Please Upload Candidate Resume'
       // },
-      {
-        condition: !this.selectedRequirementId,
-        message: 'Please Select a Requirement'
-      }
+      // {
+      //   condition: !this.selectedRequirementId,
+      //   message: 'Please Select a Requirement'
+      // }
     ];
     this.validationSuccess = true;
     validations.forEach(({ condition, message }) => {

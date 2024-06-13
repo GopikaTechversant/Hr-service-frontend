@@ -64,7 +64,8 @@ export class HrCandidateDetailComponent {
       firstName: candidateFirstName,
       lastName: candidateLastName,
       id: candidateId,
-      messageType: item
+      messageType: item,
+      staionId : '5',
     };
   }
 
@@ -117,13 +118,14 @@ export class HrCandidateDetailComponent {
     if (this.feedback.trim() !== '' || data) {
       const payload = {
         serviceId: this.serviceId,
-        stationId: this.candidateDetails?.candidateStation,
+        stationId:'5',
         userId: this.userId,
         status: "rejected",
         rejectCc: data?.mailCc ?? '',
         rejectMailTemp: data?.mailTemp ?? '',
         rejectSubject: data?.mailSubject ?? '',
         rejectBcc: data?.mailBcc ?? '',
+        feedBack: this.feedback,
       };
 
       this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({

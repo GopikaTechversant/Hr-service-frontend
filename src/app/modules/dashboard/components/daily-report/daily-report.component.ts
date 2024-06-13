@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
+import { environment } from 'src/environments/environments';
 
 @Component({
   selector: 'app-daily-report',
@@ -32,6 +33,8 @@ export class DailyReportComponent implements OnInit {
   today: any;
   initialLoader: boolean = false;
   loader: boolean = false;
+  report: boolean = false;
+  url:any;
   constructor(private apiService: ApiService, private datePipe: DatePipe) { }
 
   onBodyClick(event: MouseEvent): void {
@@ -42,7 +45,7 @@ export class DailyReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initialLoader = true;
+    // this.initialLoader = true;
     this.reportUserId = localStorage.getItem('userId');
     this.fetchDetails();
     this.today = new Date();
@@ -53,7 +56,8 @@ export class DailyReportComponent implements OnInit {
     const totalPages = Math.ceil(this.userCount / this.pageSize);
     this.lastPage = totalPages;
     if (this.currentPage > totalPages) this.currentPage = totalPages;
-    this.apiService.get(`/report/report-list?reportUserId=${this.reportUserId}&reportFromDate=${this.startDate}&reportToDate=${this.endDate}&reportPageNo=${this.currentPage}&reportPageLimit=${this.pageSize}`)
+    this.url = `/report/report-list?reportUserId=${this.reportUserId}&reportFromDate=${this.startDate}&reportToDate=${this.endDate}&reportPageNo=${this.currentPage}&reportPageLimit=${this.pageSize}&report=${this.report}`
+    this.apiService.get(this.url)
       .subscribe((res: any) => {
         if (res?.data) {
           this.initialLoader = false;
@@ -120,5 +124,15 @@ export class DailyReportComponent implements OnInit {
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);
     this.fetchDetails();
+  }
+
+  exportData(): void {
+    this.report = true;
+    this.fetchDetails();
+    if( this.report = true) {
+      window.open(`${environment.api_url}${this.url}`,'_blank')
+      this.initialLoader = false;
+      this.loader = false;
+    }
   }
 }

@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-management-sidebar',
   templateUrl: './management-sidebar.component.html',
-  styleUrls: ['./management-sidebar.component.css']
+  styleUrls: ['./management-sidebar.component.css'],
+  providers: [DatePipe],
+
 })
 export class ManagementSidebarComponent implements OnInit{
-  
   constructor(private router: Router, private route: ActivatedRoute) {
     this.routerEventsSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
@@ -37,4 +39,5 @@ export class ManagementSidebarComponent implements OnInit{
   isActive(route: string): boolean {
     return this.router.url === route;
   }
+
 }

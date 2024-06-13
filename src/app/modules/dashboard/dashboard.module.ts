@@ -30,6 +30,7 @@ import { MaterialModule } from '../material/material.module';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { SharedModule } from '../shared/shared.module';
+import { AssignRequirementComponent } from './components/assign-requirement/assign-requirement.component';
 
 const routes: Routes = [
   {
@@ -46,7 +47,10 @@ const routes: Routes = [
       { path: 'series', component: SeriesComponent },
       { path: 'requisition-detail/:id', component: RequisitionDetailsComponent },
       { path: 'candidate-details/:id', component: CandidateDetailsComponent },
+      { path: 'candidate-pool', component: CandidateListComponent },
+
     ]
+    
   },
   { path: 'series', component: SeriesComponent },
 
@@ -72,7 +76,8 @@ const routes: Routes = [
     RequisitionDetailsComponent,
     InterviewCountsBarComponent,
     EditRequirementComponent,
-    InterviewDetailsComponent
+    InterviewDetailsComponent,
+    AssignRequirementComponent
   ],
   imports: [
     CommonModule,
