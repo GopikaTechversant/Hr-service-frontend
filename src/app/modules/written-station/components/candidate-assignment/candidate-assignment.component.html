@@ -103,9 +103,9 @@
                 <div *ngIf="loader && !initialLoader" class="loader-parent">
                     <img src="assets/gif/loader.gif">
                 </div>
-                <ng-container *ngIf="created_Box.length > 0">
+                <ng-container *ngIf="candidateList.length > 0">
                     <ng-container *ngFor="let innerArray of created_Box">
-                        <ng-container  *ngFor="let item of innerArray.candidates">
+                        <ng-container  *ngFor="let item of candidateList">
                             <tr class="candidate c-pointer">
                                 <!-- <td>{{ item.candidateId }}</td> -->
                                 <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()"></td>

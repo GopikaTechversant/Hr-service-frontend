@@ -18,7 +18,8 @@ const routes: Routes = [
   children: [
     {path:'',component: CandidateListComponent},
     {path:'series',component: SeriesComponent},
-    {path:'candidates',component: CandidateAssignmentComponent}
+    {path:'candidates',component: CandidateAssignmentComponent},
+    { path: 'candidate-details/:id', component: CandidateDetailsComponent },
   ]
  }
 ]
