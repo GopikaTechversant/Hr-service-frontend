@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteComponent } from 'src/app/components/delete/delete.component';
 import { EditComponent } from '../edit/edit.component';
+import { ApiService } from 'src/app/services/api.service';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
@@ -23,10 +24,10 @@ export class UserListComponent implements OnInit {
   totalCount: any;
   limit = 9;
   initialLoader : boolean = false;
-  headers = new HttpHeaders({
-    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
-  });
-  constructor(private http: HttpClient, private router: Router, private dialog: MatDialog) {
+  // headers = new HttpHeaders({
+  //   'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
+  // });
+  constructor(private http: HttpClient, private router: Router, private dialog: MatDialog,private apiService:ApiService) {
 
   }
 
@@ -36,10 +37,10 @@ export class UserListComponent implements OnInit {
   }
 
   fetchUserList(): void {
-    const headers = new HttpHeaders({
-      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
-    });
-    this.http.get(`${environment.api_url}/user/lists?limit=${this.pageSize}&page=${this.currentPage}`, { headers }).subscribe((data: any) => {
+    // const headers = new HttpHeaders({
+    //   'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
+    // });
+    this.apiService.get(`/user/lists?limit=${this.pageSize}&page=${this.currentPage}`).subscribe((data: any) => {
       this.userList = data.users;
       this.userCount = data.userCount;
       if (data) {
@@ -68,16 +69,16 @@ export class UserListComponent implements OnInit {
   }
   delete(id: any): void {
     this.candidateId = id;
-    const headers = new HttpHeaders({
-      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
-    });
+    // const headers = new HttpHeaders({
+    //   'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
+    // });
     const dialogRef = this.dialog.open(DeleteComponent, {
       data: id,
       width: '500px',
       height: '250px'
     })
     dialogRef.componentInstance.onDeleteSuccess.subscribe(() => {
-      this.http.post(`${environment.api_url}/user/delete`, { userId: this.candidateId }, { headers }).subscribe((res: any) => {
+      this.http.post(`${environment.api_url}/user/delete`, { userId: this.candidateId }).subscribe((res: any) => {
         this.fetchUserList();
       })
     })
