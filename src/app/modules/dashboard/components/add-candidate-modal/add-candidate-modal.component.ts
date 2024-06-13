@@ -269,10 +269,10 @@ export class AddCandidateModalComponent implements OnInit {
       //   condition: !this.selectedFile,
       //   message: 'Please Upload Candidate Resume'
       // },
-      {
-        condition: !this.selectedRequirementId,
-        message: 'Please Select a Requirement'
-      }
+      // {
+      //   condition: !this.selectedRequirementId,
+      //   message: 'Please Select a Requirement'
+      // }
     ];
     this.validationSuccess = true;
     validations.forEach(({ condition, message }) => {

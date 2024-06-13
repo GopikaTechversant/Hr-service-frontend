@@ -8,7 +8,16 @@ import { environment } from 'src/environments/environments';
 })
 export class ApiService {
   authToken: any;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,) {
+    const headers = this.createHeaders();
+   }
+
+  private createHeaders():HttpHeaders{
+    const token = localStorage.getItem('userToken') || '';
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+  }
 
   getToken() {
     if (this.authToken) return this.authToken;
@@ -20,22 +29,22 @@ export class ApiService {
   }
 
   get(url: string): Observable<any> {
-    return this.http.get(`${environment.api_url}${url}`);
+    return this.http.get(`${environment.api_url}${url}`,{ headers: this.createHeaders() });
   }
 
   // Generic POST method
   post(url: string, data: any): Observable<any> {
-    return this.http.post(`${environment.api_url}${url}`, data);
+    return this.http.post(`${environment.api_url}${url}`, data,{ headers: this.createHeaders() });
   }
 
   // Generic PUT method
   update(url: string, data: any): Observable<any> {
-    return this.http.put(`${environment.api_url}${url}`, data);
+    return this.http.put(`${environment.api_url}${url}`, data,{ headers: this.createHeaders() });
   }
 
   // Generic DELETE method
   delete(url: string): Observable<any> {
-    return this.http.delete(`${environment.api_url}${url}`);
+    return this.http.delete(`${environment.api_url}${url}`,{ headers: this.createHeaders() });
   }
 
   // private getHeaders(): HttpHeaders {
