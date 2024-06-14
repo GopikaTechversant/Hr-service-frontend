@@ -1,6 +1,6 @@
 .header {
-    min-height: 70px;
-    max-height: 70px;
+    min-height: 130px;
+    max-height: 130px;
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -37,7 +37,7 @@
 
 .main {
     width: 100%;
-    height: calc(100vh - 70px);
+    height: calc(100vh - 130px);
     overflow-y: hidden;
     display: flex;
 }

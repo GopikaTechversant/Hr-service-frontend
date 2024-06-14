@@ -1,43 +1,59 @@
-<div class="header w-100 d-flex j-space align-center">
-  <div class="logo p-l-15  ">
-    <span class="logo-text p-t-10 m-t-10 p-l-5 f-w-500 f-s-20 ">LOGO</span>
-  </div>
-  <div>
-    <input type="text" class="input p-l-5" placeholder="Search Candidate Detail" [(ngModel)]="searchKeyword"
-      (keydown)="searchCandidate(searchKeyword)">
-    <span class="search c-pointer" (click)="searchCandidate(searchKeyword)">
-      <i class="fa fa-search" aria-hidden="true"></i>
-    </span>
-    <div *ngIf="showCandidates" class="p-absolute candidate-dropdown no-close">
-      <div class="candidate-column" *ngFor="let item of candidateList"
-        (click)="selectCandidate(item.candidateId);showCandidates = !showCandidates">
-        <div *ngIf="!candidateList || candidateList?.length ===0"> No Candidate Found</div>
-        <div class="d-flex candidate">
-          <div class="m-5">
-            <span class="user-profile">{{item?.candidateFirstName.charAt(0) ? (item?.candidateFirstName.charAt(0) | uppercase) : 'U'}}</span>
+<div class="main-header">
+  <div class="header w-100 d-flex j-space align-center">
+    <div class="logo p-l-15  ">
+      <span class="logo-text p-t-10 m-t-10 p-l-5 f-w-500 f-s-20 ">
+        <img src="/assets/images/techversant/techversant-logo.svg" alt="" width="155px" height="27px">
+      </span>
+    </div>
+    <div class="search-div">
+      <input type="text" class="input p-l-5" placeholder="Search Candidate Detail" [(ngModel)]="searchKeyword"
+        (keydown)="searchCandidate(searchKeyword)">
+      <span class="search c-pointer" (click)="searchCandidate(searchKeyword)">
+        <i class="fa fa-search" aria-hidden="true"></i>
+      </span>
+      <div *ngIf="showCandidates" class="p-absolute candidate-dropdown no-close">
+        <div class="candidate-column" *ngFor="let item of candidateList"
+          (click)="selectCandidate(item.candidateId);showCandidates = !showCandidates">
+          <div *ngIf="!candidateList || candidateList?.length ===0"> No Candidate Found</div>
+          <div class="d-flex candidate">
+            <div class="m-5">
+              <span class="user-profile">{{item?.candidateFirstName.charAt(0) ? (item?.candidateFirstName.charAt(0) |
+                uppercase) : 'U'}}</span>
+            </div>
+            <div class="p-l-5">
+              <span>{{item?.candidateFirstName}} {{item?.candidateLastName}}</span><br>
+              <span class="detail">{{item?.candidateEmail}} | {{item?.candidateMobileNo}}</span>
+              <span></span>
+            </div>
           </div>
-          <div class="p-l-5">
-            <span>{{item?.candidateFirstName}} {{item?.candidateLastName}}</span><br>
-            <span class="detail">{{item?.candidateEmail}} | {{item?.candidateMobileNo}}</span>
-            <span></span>
+        </div>
+      </div>
+    </div>
+    <div class="profile d-flex p-r-17 j-end">
+      <div class="user-name p-t-10 p-r-6">
+        <span class="f-w-500 user-name t-dark-blue-color"> {{ currentRole?.charAt(0) ? (currentRole?.charAt(0) | uppercase) + currentRole?.slice(1) : '' }}</span>
+      </div>
+      <div class="user-profile c-pointer p-relative" (click)="dropDown = !dropDown">
+        <span class="f-w-500 user-name t-dark-blue-color"> {{ currentRole?.charAt(0) ? (currentRole?.charAt(0) | uppercase): '' }}</span>
+        <div *ngIf="dropDown" class="drop-down d-flex p-absolute">
+          <div class="profile-drop" *ngFor="let station of profileDropDown">
+            <div class="c-pointer p-10 p-l-20" (click)="navigate(station)">{{station?.stationName}}</div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="profile d-flex p-r-17">
-    <div class="user-name p-t-10 p-r-6">
-      <span class="f-w-500 user-name t-dark-blue-color"> {{ currentUser?.charAt(0) ? (currentUser?.charAt(0) |
-        uppercase) + currentUser?.slice(1) : '' }}</span>
+  <div class="second-header w-100 d-flex j-space align-center">
+    <div class="p-10 d-flex">
+        <img src="/assets/images/techversant/toggle.svg" class="c-pointer" alt="" width="27px" height="27px"  (click)="toggleSidebar()">
+        <span class="welcome">Welcome {{currentUser.split(' ')[0] | titlecase}} </span>
     </div>
-    <div class="user-profile c-pointer p-relative" (click)="dropDown = !dropDown">
-      <span class="f-w-500 user-name t-dark-blue-color"> {{ currentUser?.charAt(0) ? (currentUser?.charAt(0) |
-        uppercase): '' }}</span>
-         <div *ngIf="dropDown" class="drop-down d-flex p-absolute">
-          <div class="station" *ngFor="let station of stationsList">
-            <div class="c-pointer p-10 p-l-20" (click)="navigate(station)">{{station?.stationName}}</div>
-          </div>
+    <div>
+      <span *ngFor="let station of stationsList">
+        <span class="c-pointer p-10 p-l-20" [ngClass]="{'active-station': station?.stationName == activeStation}" (click)="navigate(station)">
+          {{station?.stationName}}
+        </span>
+      </span>
     </div>
-   
   </div>
 </div>
