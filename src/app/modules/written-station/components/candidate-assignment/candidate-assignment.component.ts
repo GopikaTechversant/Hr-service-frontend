@@ -32,6 +32,9 @@ export class CandidateAssignmentComponent implements OnInit {
   selectedCandidateIds: any[] = [];
   candidateMarkDetail: any;
   candidateIds: any;
+  resumePath: any;
+  averageScore: string | null = null;
+
   Status: any = [
     { status: 'pending' },
     { status: 'rejected' },
@@ -51,15 +54,17 @@ export class CandidateAssignmentComponent implements OnInit {
   ngOnInit(): void {
     this.initialLoader = true;
     this.fetchCandidates();
-    this.fetchCandidatesWithQuestionBox();
+    this.fetchQuestions();
   }
 
   fetchCandidates(): void {
     if (!this.initialLoader) this.loader = true;
-    this.apiService.get(`/screening-station/list-batch/${this.requestId}?station=2&experience=${this.searchKeyword}`).subscribe((res: any) => {
+    this.apiService.get(`/written-station/list-batch/${this.requestId}?experience=${this.searchKeyword}&status_filter=${this.filteredStatus}`).subscribe((res: any) => {
       this.initialLoader = false;
       this.loader = false;
       if (res && res?.candidates) this.candidateList = res?.candidates;
+      console.log("this.candidateList", this.candidateList);
+
       // this.showAverageScoreInput = this.candidates_list.some((candidate: any) => candidate.serviceStatus === 'pending');
     });
   }
@@ -79,11 +84,7 @@ export class CandidateAssignmentComponent implements OnInit {
     this.showQuestions = true;
     this.apiService.get(`/written-station/questions`).subscribe((data: any) => {
       this.questions_list = data?.data;
-      if (this.created_Box) {
-        this.created_Box.forEach((data: any) => {
-          this.questions_list = this.questions_list.filter((question: { questionId: any; }) => question.questionId !== data.questionId);
-        })
-      }
+      console.log("his.questions_list ", this.questions_list);
     });
   }
 
@@ -113,11 +114,11 @@ export class CandidateAssignmentComponent implements OnInit {
       sessionStorage.setItem(`position`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
     }
     if (item === 'search') this.searchKeyword = '';
-    if (item === 'question') {
-      this.displayQuestion = '';
-      this.questionId = '';
-      sessionStorage.setItem(`question`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
-    }
+    // if (item === 'question') {
+    //   this.displayQuestion = '';
+    //   this.questionId = '';
+    //   sessionStorage.setItem(`question`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
+    // }
     // this.currentPage = 1;
     // this.limit = 10;
     this.fetchCandidates();
@@ -132,9 +133,10 @@ export class CandidateAssignmentComponent implements OnInit {
     this.requestList_open = false;
     this.displayPosition = name;
     this.positionId = id;
+    this.questionAssign()
     sessionStorage.setItem(`position`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
     this.fetchCandidates();
-    this.fetchCandidatesWithQuestionBox();
+    // this.fetchCandidatesWithQuestionBox();
   }
 
   filterQuestion(name: string, id: string): void {
@@ -143,19 +145,22 @@ export class CandidateAssignmentComponent implements OnInit {
     this.questionId = id;
     sessionStorage.setItem(`question`, JSON.stringify({ name: this.displayQuestion, id: this.questionId }));
     this.fetchCandidates();
-    this.fetchCandidatesWithQuestionBox();
+    // this.fetchCandidatesWithQuestionBox();
   }
 
-  questionAssign():void{
-    if(this.candidateIds){
-      const payload = {}
+  questionAssign(): void {
+    if (this.candidateIds) {
+      const payload = {
+        questionId: this.positionId,
+        questionServiceId: this.candidateIds
+      }
       console.log("question assigned api");
-      this.apiService.post(`gfdfytfytd`,payload).subscribe({
-        next:(res:any) => {
+      this.apiService.post(`/written-station/assign-question`, payload).subscribe({
+        next: (res: any) => {
           this.tostr.success('Question assigned successfully');
-          this.fetchCandidatesWithQuestionBox();
+          this.fetchCandidates();
         },
-        error:(error) => this.tostr.error('error?.error?.message ? error?.error?.message : Unable to assign question')
+        error: (error) => this.tostr.error('error?.error?.message ? error?.error?.message : Unable to assign question')
       })
     }
   }
@@ -208,13 +213,47 @@ export class CandidateAssignmentComponent implements OnInit {
         candidate: this.selectedCandidate,
         score: this.selectedCandidate.examScore
       }
-      this.fetchCandidatesWithQuestionBox();
+      this.fetchCandidates();
     });
   }
 
-  getSelectedCandidateIds(): void {
+  getSelectedCandidateServiceIds(): void {
     const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
-    this.candidateIds = selectedCandidates.map((candidate: { candidateId: any; }) => candidate?.candidateId);
+    this.candidateIds = selectedCandidates.map((candidate: { serviceSequence: { serviceId: any; }; }) => candidate.serviceSequence?.serviceId);
+    console.log("this.serviceIds", this.candidateIds);
+  }
+
+  viewResume(resume: any) {
+    this.resumePath = resume;
+    console.log("this.resumePath", this.resumePath);
+    window.open(`${environment.s3_url}${this.resumePath}`, '_blank');
+    console.log("`${environment.s3_url}${this.resumePath}`", typeof (`${environment.s3_url}${this.resumePath}`));
+  }
+
+  approve(): void {
+    const averageScoreInput = document.getElementById('averageScore') as HTMLInputElement;
+    const averageScore = averageScoreInput.value;
+    const isScoreAdded = this.candidateList.some((candidate: any) => {
+      (candidate?.serviceSequence?.progress?.progressScore !== null || candidate?.serviceSequence?.progress?.progressScore) && candidate?.serviceSequence?.serviceStatus === 'pending';
+    });
+    const payload = {
+      serviceId: this.requestId,
+      averageScore: averageScore
+    };
+    if (!isScoreAdded && averageScore) {
+      this.apiService.post(`/written-station/approve`, payload).subscribe({
+        next: (res: any) => {
+          this.tostr.success('Approved');
+          this.averageScore = averageScore;
+          this.fetchCandidates();
+        },
+        error: (error) => {
+          if (error?.status === 500) this.tostr.error("Internal Server Error");
+          else this.tostr.warning("Rejected due to a below-average score");
+        }
+      })
+    }
+
   }
 
   exportData(): void {
