@@ -92,6 +92,7 @@ export class CandidateDetailModalComponent implements OnInit {
     if (file) {
       this.file = file;
       this.fileName = file?.name;
+      this.loader = true;
       if (this.fileName) this.s3Service.uploadImage(this.file, 'hr-service-images', this.file);
       this.getKeyFroms3();
     }
@@ -109,10 +110,17 @@ export class CandidateDetailModalComponent implements OnInit {
   getKeyFroms3(): void {
     this.keySubscription = this.s3Service.key.subscribe((key: string) => {
       this.uploadedFileKey = key;
+      if (!this.uploadedFileKey) {
+        this.loader = true;
+        this.tostr.warning('File upload is in progress, please wait.');
+      } else {
+        this.loader = false;
+      }
     });
   }
 
   addProgress(): void {
+    this.loader = true;
     // this.submitForm = true;
     const formData = new FormData();
     const skillElement = document.getElementById('skill') as HTMLInputElement;
@@ -120,10 +128,7 @@ export class CandidateDetailModalComponent implements OnInit {
     const descriptionElement = document.getElementById('description') as HTMLInputElement;
     const fileInput = document.getElementById('fileInput') as HTMLInputElement;
     const file = fileInput.files ? fileInput.files[0] : null;
-    if (!this.uploadedFileKey) {
-      this.tostr.warning('File upload is in progress, please wait.');
-      return;
-    }
+ 
     const payload = {
       progressAssignee: this.progressAssignee ? this.progressAssignee : this.userId,
       progressSkill: skillElement.value,
@@ -132,20 +137,26 @@ export class CandidateDetailModalComponent implements OnInit {
       progressDescription: descriptionElement.value,
       file: this.uploadedFileKey,
     }
-    let baseUrl = this.stationId === '3' ? `/technical-station` : this.stationId === '4' ? `/technical-station-two` : '';
-    if (baseUrl) {
-      this.apiService.post(`${baseUrl}/add-progress/v1`, payload).subscribe({
-        next: (res: any) => {
-          this.tostr.success('Progress added successfully');
-          this.closeDialog();
-        },
-        error: (error) => {
-          this.tostr.warning('Unable to Update Progress');
-        }
-      });
-    } else {
-      this.tostr.error('Invalid operation');
+    if(this.uploadedFileKey){
+      let baseUrl = this.stationId === '3' ? `/technical-station` : this.stationId === '4' ? `/technical-station-two` : '';
+      if (baseUrl) {
+        this.apiService.post(`${baseUrl}/add-progress/v1`, payload).subscribe({
+          next: (res: any) => {
+            this.loader = false;
+            this.tostr.success('Progress added successfully');
+            this.closeDialog();
+          },
+          error: (error) => {
+            this.loader = false;
+            this.tostr.warning('Unable to Update Progress');
+          }
+        });
+      } else {
+        this.loader = false;
+        this.tostr.error('Invalid operation');
+      }
     }
+   
   }
 
   // addProgress(): void {
@@ -212,20 +223,15 @@ export class CandidateDetailModalComponent implements OnInit {
   rescheduleClick(data: any): void {
     this.loader = true;
     const payload = {
-      // recruiterId: this.recruiterId,
       candidateId: this.candidateDetails['candidate.candidateId'],
-      // noticePeriod: this.noticeperiodvalue,
       position: this.candidateDetails['serviceRequest.requestId'],
-      // location: this.locationValue,
       interviewTime: data?.interviewTime,
       interViewPanel: data?.interviewPanel,
       interviewMode: data?.interviewMode,
-      serviceId: this.serviceId ?? '',
+      serviceId: this.candidateDetails?.serviceId,
+      stationId: this.stationId,
       interviewStatus: data?.interviewStatus,
       comments: data?.feedback,
-      // workMode: this.selectedModeName ?? '',
-      // revelantWorkExperience: this.candidateRevlentExperience,
-      // totalWorkExperience: this.candidateTotalExperience,
       interviewCc: data?.mailCc,
       interviewMailTemp: data?.mailTemp,
       interviewSubject: data?.mailSubject,
@@ -260,7 +266,8 @@ export class CandidateDetailModalComponent implements OnInit {
         feedBackSubject: data?.mailSubject,
         feedBcc: data?.mailBcc,
         date: data?.interviewTime,
-        pannelUser: data?.interviewPanel
+        pannelUser: data?.interviewPanel,
+        interviewMode: data?.interviewMode,
       };
       this.apiService.post(`${baseUrl}/approve`, payload).subscribe({
         next: () => {

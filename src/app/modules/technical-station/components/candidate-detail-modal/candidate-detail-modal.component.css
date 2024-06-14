@@ -205,7 +205,8 @@
 
 .loader-parent {
     position: absolute;
-    left: 53%;
+    left: 50%;
+    top: 600%;
     z-index: 9;
 }
 

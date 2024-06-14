@@ -65,22 +65,21 @@ export class MailTemplateComponent implements OnInit {
   Interviewlocation: any;
   displaydateTime: any;
   loader: boolean = false;
+  showTemplate:boolean = false;
   constructor(private apiService: ApiService, private tostr: ToastrService, private datePipe: DatePipe, private s3Service: S3Service, private http: HttpClient) { }
   ngOnInit(): void {
 
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.candidate?.messageType && this.candidate?.messageType.trim() !=='') {
-      console.log(this.candidate?.messageType.trim());
-      
+    if (this.candidate?.messageType && this.candidate?.messageType !== '') {
+      this.showTemplate = true;
       this.fetchTemplates();
-      console.log(this.candidate);
       if (this.candidate?.messageType === 're-schedule') this.fetchCandidatesDetails();
-
       this.fetchMode();
       this.fetchPanel();
-    }
+    }else this.showTemplate = false;
+
   }
   // @HostListener('document:click', ['$event'])
   // onBodyClick(event: Event): void {
@@ -145,9 +144,7 @@ export class MailTemplateComponent implements OnInit {
         this.scheduledDate = status?.serviceDate;
         if (this.scheduledDate) {
           this.displayDate = this.datePipe.transform(this.scheduledDate, 'MM/dd/yyyy');
-          this.displayTime = this.datePipe.transform(this.scheduledDate, 'hh:mm');
-          console.log(this.displayTime , "rtyuioptions" , this.displayDate);
-          
+          this.displayTime = this.datePipe.transform(this.scheduledDate, 'hh:mm');          
         }
       })
     })
@@ -191,11 +188,19 @@ export class MailTemplateComponent implements OnInit {
     this.displayTime = event;
 
   }
+  
   getKeyFroms3(): void {
     this.keySubscription = this.s3Service.key.subscribe((key: string) => {
       this.uploadedFileKey = key;
+      if (!this.uploadedFileKey) {
+        this.loader = true;
+        this.tostr.warning('File upload is in progress, please wait.');
+      } else {
+        this.loader = false;
+      }
     });
   }
+
 
   dateChange(event: any): void {
     let date = new Date(event?.value);
@@ -220,17 +225,12 @@ export class MailTemplateComponent implements OnInit {
 
   updateHtmlContent(event: any): void {
     this.content = event?.target?.value ? event?.target?.value : '';
-    console.log("bghfhbn", this.content);
-
     this.templateData.message = this.content;
     const templateElement = this.templateRef.nativeElement;
     this.htmlString = templateElement.innerHTML;
-    console.log(templateElement, "event.666666666666pppp", this.htmlString);
-
   }
 
   submitClick(): void {
-    console.log("File Key:", this.uploadedFileKey);
     if (!this.messageSaved) {
       this.tostr.warning(this.isEditable ? 'Please Save Template before submitting' : 'Please Edit and Save Mail before submitting');
       return;
@@ -323,7 +323,6 @@ export class MailTemplateComponent implements OnInit {
       };
     }
     this.submitData.emit(data);
-    console.log(data);
   }
 
   // submitClickTest() {

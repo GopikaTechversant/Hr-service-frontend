@@ -32,7 +32,7 @@ export class InterviewDetailsComponent implements OnInit {
   candidateId: any;
   candidateName: string = '';
   candidateExperience: any;
-  currentCompany: any;
+  currentCompany: string = '';
   locationValue: string = '';
   panelId: any;
   modeValue: any;
@@ -44,7 +44,7 @@ export class InterviewDetailsComponent implements OnInit {
   interviewStatus: string = '';
   candidateDetails: any;
   candidateStatus: any[] = [];
-  noticeperiodvalue: any = '';
+  noticeperiodvalue: string = '';
   serviceId: any;
   interviewMode: string = '';
   Interviewlocation: string = '';
@@ -68,6 +68,8 @@ export class InterviewDetailsComponent implements OnInit {
   showWorkMode: boolean = false;
   selectedModeName: string = "";
   candidateCount: any;
+  candidateFirstName: any;
+  candidateLastName: any;
   constructor(private datePipe: DatePipe, private http: HttpClient, private tostr: ToastrServices, private apiService: ApiService) { }
 
   @HostListener('window:beforeunload', ['$event'])
@@ -175,6 +177,7 @@ export class InterviewDetailsComponent implements OnInit {
     this.fetchCandidates();
     this.fetchWorkMode();
     this.fetchMode();
+    this.resetFormAndState('position');
   }
 
   selectRecruiter(recruiterid: any, firstname: any, secondName: any): void {
@@ -185,18 +188,19 @@ export class InterviewDetailsComponent implements OnInit {
 
   selectMode(mode: any): void {
     this.selectedModeName = mode;
+    this.showWorkMode = false;
   }
 
   showMail(type: string): void {
     this.messageType = type;
     this.mailTemplateData = {
-      firstName: this.candidate?.candidateFirstName ? this.candidate.candidateFirstName : this.candidateDetails[0]?.candidateFirstName,
-      lastName: this.candidate?.candidateLastName ? this.candidate.candidateLastName : this.candidateDetails[0]?.candidateLastName,
+      firstName: this.candidate?.candidateFirstName ? this.candidate.candidateFirstName : this.candidateFirstName,
+      lastName: this.candidate?.candidateLastName ? this.candidate.candidateLastName : this.candidateLastName,
       id: this.candidate?.candidateId ? this.candidate?.candidateId : this.candidateId,
       messageType: this.messageType,
     };
-  }
 
+  }
 
   fetchCandidatesDetails(): void {
     this.apiService.get(`/screening-station/interview-details/candidate-detail?candidateId=${this.candidateId}`).subscribe((res: any) => {
@@ -237,10 +241,11 @@ export class InterviewDetailsComponent implements OnInit {
     })
   }
 
-
   selectCandidate(candidateId: any, candidateFirstName: any, candidateLastName: any, candidate: any): void {
     this.showcandidate = false;
     this.candidateId = candidateId;
+    this.candidateFirstName = candidateFirstName;
+    this.candidateLastName = candidateLastName
     this.candidateName = `${candidateFirstName} ${candidateLastName}`;
     this.selectedCandidate = candidate;
     if (this.selectedCandidate) {
@@ -289,20 +294,15 @@ export class InterviewDetailsComponent implements OnInit {
   onSubmitData(event: any): void {
     if (event?.clickType === 'cancel') this.cancelClick();
     else this.submitClick(event);
-    console.log(event);
-
   }
 
   submitClick(data: any): void {
     this.loader = true;
     const noticeperiod = document.getElementById('noticePeriod') as HTMLInputElement;
     this.noticeperiodvalue = noticeperiod?.value ? noticeperiod?.value : this.noticeperiodvalue;
-    // const comments = document.getElementById('comments') as HTMLInputElement;
-    // this.commentValue = comments.value ? comments.value : this.comment;
+
     const location = document.getElementById('location') as HTMLInputElement;
-    this.locationValue = location.value ? location.value : this.Interviewlocation;
-    // if (this.displayDate && this.displayDate) this.displaydateTime = `${this.displayDate} ${this.displayTime}`;
-    // if (this.scheduledDate) this.displaydateTime = this.scheduledDate;
+    this.Interviewlocation = location.value ? location.value : this.Interviewlocation;
 
     const payload = {
       recruiterId: this.recruiterId,
@@ -314,6 +314,7 @@ export class InterviewDetailsComponent implements OnInit {
       interViewPanel: data?.interviewPanel,
       interviewMode: data?.interviewMode,
       serviceId: this.serviceId ?? '',
+      stationId: this.candidate_list?.candidateStatus[0]['reqStation.stationId'],
       interviewStatus: data?.interviewStatus,
       comments: data?.feedback,
       workMode: this.selectedModeName ?? '',
@@ -325,12 +326,12 @@ export class InterviewDetailsComponent implements OnInit {
       interviewBcc: data?.mailBcc,
     }
 
-    if (this.noticeperiodvalue && this.locationValue && this.recruiterId && this.candidateId && this.positionId && data) {
+    if (this.noticeperiodvalue && this.Interviewlocation && this.recruiterId && data) {
       this.apiService.post(`/screening-station/interview-details`, payload).subscribe({
         next: (res: any) => {
           this.loader = false;
           this.tostr.success('Interview Scheduled Successfully');
-          this.resetFormAndState();
+          this.resetFormAndState('');
         },
         error: (error) => {
           this.loader = false;
@@ -341,9 +342,10 @@ export class InterviewDetailsComponent implements OnInit {
       });
     } else {
       this.loader = false;
-      this.tostr.warning('Please fill all fields');
+      if (!this.noticeperiodvalue) this.tostr.warning('Please Add Notice period');
+      if (!this.Interviewlocation) this.tostr.warning('Please Add Interview location');
+      if (!this.recruiterId) this.tostr.warning('Please Select Recruiter');
     }
-    this.showMail('');
   }
 
   clearInputvalue(id: string) {
@@ -351,31 +353,37 @@ export class InterviewDetailsComponent implements OnInit {
     if (inputElement) inputElement.value = '';
   }
 
-  resetFormAndState(): void {
+  resetFormAndState(item: any): void {
     this.recruiterName = '';
-    this.positionName = '';
-    this.displayDate = null;
-    this.candidateExperience = null;
-    this.currentCompany = null;
+    this.currentCompany = '';
+    this.selectedModeName = '';
     this.showRecruiters = false;
     this.showDropdown = false;
     this.candidateName = '';
-    this.scheduledDate = null;
     this.locationValue = '';
     this.noticeperiodvalue = '';
-    this.displayTime = '';
+    this.Interviewlocation = '';
+    this.candidateRevlentExperience = '';
+    this.candidateTotalExperience = '';
 
     this.clearInputvalue('location');
     this.clearInputvalue('mode');
     this.clearInputvalue('interviewStatus');
     this.clearInputvalue('candidateStatus');
     this.clearInputvalue('rescheduledStatus');
-    this.clearInputvalue('comments');
+    this.clearInputvalue('noticePeriod');
+    this.showMail('');
+
     this.candidate_list = [];
+
+    if (item !== 'position') {
+      this.positionName = '';
+    }
   }
 
+
   cancelClick(): void {
-    this.resetFormAndState();
+    this.resetFormAndState('');
   }
 
 }
