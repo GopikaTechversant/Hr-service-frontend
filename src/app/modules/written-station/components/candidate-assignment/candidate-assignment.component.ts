@@ -45,6 +45,7 @@ export class CandidateAssignmentComponent implements OnInit {
   displayQuestion_open: any;
   displayQuestion: string = '';
   questionId: any;
+  candidateIdsQuestion:any;
   constructor(private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService, private s3Service: S3Service) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -149,10 +150,11 @@ export class CandidateAssignmentComponent implements OnInit {
   }
 
   questionAssign(): void {
-    if (this.candidateIds) {
+    if (this.candidateIdsQuestion && this.candidateIdsQuestion.length > 0) {
+      console.log("this.candidateIdsQuestion",this.candidateIdsQuestion);
       const payload = {
         questionId: this.positionId,
-        questionServiceId: this.candidateIds
+        questionServiceId: this.candidateIdsQuestion
       }
       console.log("question assigned api");
       this.apiService.post(`/written-station/assign-question`, payload).subscribe({
@@ -162,18 +164,19 @@ export class CandidateAssignmentComponent implements OnInit {
         },
         error: (error) => this.tostr.error('error?.error?.message ? error?.error?.message : Unable to assign question')
       })
-    }
+    }else if(!this.candidateIds) this.tostr.warning('Please select candidates before assign question');
+    else this.tostr.warning('Already Assigned');
   }
 
   onSwitchStation(candidate: any): void {
     console.log("candidate", candidate)
-    if (candidate?.serviceStatus === 'pending' || candidate?.serviceStatus === 'rejected') {
+    if (candidate?.serviceSequence?.serviceStatus === 'pending' || candidate?.serviceSequence?.serviceStatus === 'rejected') {
       const userId = localStorage.getItem('userId');
       const dialogRef = this.dialog.open(StationSwitchComponent, {
         data: {
           userId: userId,
           name: candidate['candidate.candidateFirstName'] + ' ' + candidate['candidate.candidateLastName'],
-          serviceId: candidate?.serviceId,
+          serviceId: candidate?.serviceSequence?.serviceId,
           currentStation: 'Written',
           currentStationId: '2',
           requirement: candidate['reqServiceRequest.requestName']
@@ -183,13 +186,11 @@ export class CandidateAssignmentComponent implements OnInit {
       })
       dialogRef.afterClosed().subscribe(() => {
         this.fetchCandidates();
-        // this.fetchCandidatesWithQuestionBox();
       });
     } else {
       const dialogRef = this.dialog.open(WarningBoxComponent, {})
       dialogRef.afterClosed().subscribe(() => {
         this.fetchCandidates();
-        // this.fetchCandidatesWithQuestionBox();
       });
     }
   }
@@ -220,7 +221,8 @@ export class CandidateAssignmentComponent implements OnInit {
   getSelectedCandidateServiceIds(): void {
     const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
     this.candidateIds = selectedCandidates.map((candidate: { serviceSequence: { serviceId: any; }; }) => candidate.serviceSequence?.serviceId);
-    console.log("this.serviceIds", this.candidateIds);
+    const candidatesWithoutQuertionName = this.candidateList.filter((candidate: { isSelected: any;serviceSequence: { progress: { quertionName: any; }; }; }) => candidate.isSelected && !candidate.serviceSequence?.progress?.quertionName);
+    this.candidateIdsQuestion = candidatesWithoutQuertionName.map((candidate: { serviceSequence: { serviceId: any; }; }) => candidate.serviceSequence?.serviceId);
   }
 
   viewResume(resume: any) {
