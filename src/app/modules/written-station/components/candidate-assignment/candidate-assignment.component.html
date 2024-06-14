@@ -1,0 +1,188 @@
+<div class="m-10">
+    <span class="f-s-20 f-w-500 p-t-5">Written Round</span>
+    <div class="d-flex j-space  m-b-29 m-t-20">
+        <span class="input-search p-5 d-flex j-space align-center">
+            <input type="text" class="p-l-5" placeholder="Search by name" [(ngModel)]="searchKeyword"
+                (keydown)="searchCandidate(searchKeyword)">
+            <span *ngIf="searchKeyword.trim() !== ''" (click)="clearFilter('search')"
+                class="clear-search c-pointer m-l-10">x</span>
+        </span>
+
+        <div class="input p-t-10 p-l-6  no-close p-relative m-l-10">
+            <span class="f-right d-flex">
+                <span *ngIf="displayQuestion && displayQuestion !== ''" (click)="clearFilter('question')"
+                    class="clear-filter c-pointer">x</span>
+                <div (click)="displayQuestion_open = !displayQuestion_open" class="c-pointer">
+                    <i [ngClass]="displayQuestion_open ? ' fa fa-chevron-up' : ' fa fa-chevron-down'"
+                        class="m-l-5 p-r-10 s-text no-close"></i>
+                </div>
+            </span>
+            <span class="c-pointer" (click)="displayQuestion_open = !displayQuestion_open">{{displayQuestion.trim() ===
+                '' ?
+                'Filter by Question' : displayQuestion}}</span>
+            <div class="no-close dropdown c-pointer no-close" *ngIf="displayQuestion_open">
+                <div (click)='filterQuestion(name?.questionName,name?.questionId); !displayQuestion_open'
+                    *ngFor="let name of questions_list" class="p-10">
+                    {{name?.questionName}}
+                </div>
+            </div>
+        </div>
+
+        <div class="input p-t-10 p-l-6  no-close p-relative m-l-10">
+            <span class="f-right d-flex">
+                <span *ngIf="displayPosition && displayPosition !== ''" (click)="clearFilter('position')"
+                    class="clear-filter c-pointer">x</span>
+                <div (click)="requestList_open = !requestList_open" class="c-pointer">
+                    <i [ngClass]="requestList_open ? ' fa fa-chevron-up' : ' fa fa-chevron-down'"
+                        class="m-l-5 p-r-10 s-text no-close"></i>
+                </div>
+            </span>
+            <span class="c-pointer" (click)="requestList_open = !requestList_open">{{displayPosition.trim() === '' ?
+                'Assign Question' : displayPosition}}</span>
+            <div class="no-close dropdown c-pointer no-close" *ngIf="requestList_open">
+                <div (click)='selectQuestion(name?.questionName,name?.questionId); !requestList_open'
+                    *ngFor="let name of questions_list" class="p-10">
+                    {{name?.questionName}}
+                </div>
+            </div>
+        </div>
+        <span class="input-search p-5 d-flex j-space align-center">
+            <input type="text" class="p-l-5" placeholder="Search by Experience" [(ngModel)]="searchKeyword"
+                (keydown)="searchCandidate(searchKeyword)">
+            <span *ngIf="searchKeyword.trim() !== ''" (click)="clearFilter('search')"
+                class="clear-search c-pointer">x</span>
+        </span>
+        <div class="input-1 c-pointer p-t-10 no-close p-relative">
+            <span class="no-close p-l-10" (click)="filterStatus = !filterStatus">{{filteredStatus.trim() === '' ?
+                'Filter by Status' : filteredStatus | titlecase}}</span>
+            <span class="f-right">
+                <span *ngIf="filteredStatus && filteredStatus.trim() !== ''" (click)="clearFilter('status')"
+                    class="clear-filter">x</span>
+                <span (click)="filterStatus = !filterStatus"><i
+                        class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
+            </span>
+            <div class="dropdown c-pointer no-close'" *ngIf="filterStatus">
+                <span class="d-flex p-0" *ngFor="let type of Status"
+                    (click)="selectStatusFilter(type?.status);filterStatus = !filterStatus">
+                    <span class="p-l-20 p-5">{{type?.status | titlecase}}</span>
+                </span>
+            </div>
+        </div>
+        <div class="export-btn c-pointer">
+            <span (click)="exportData()">Export</span>
+        </div>
+        <span class="input-approve p-5 j-space align-center p-relative">
+            <div> <input type="text" class="p-l-5 average-score" placeholder="Enter Average Score"
+                id="averageScore">
+                <!-- <span *ngIf="searchKeyword.trim() !== ''" (click)="clearFilter('search')"
+                    class="clear-search c-pointer">x</span> -->
+            </div>
+            <button class="p-absolute approve-btn" (click)="approve()">Approve</button>
+            <div class="previous p-absolute ">Previous Average Score:10</div>
+        </span>
+    </div>
+    <div class="main">
+        <div class="table-container m-b-0 w-100">
+            <table class="table">
+                <tr class="table-header f-w-500 p-b-10">
+                    <td>Select</td>
+                    <td>Name</td>
+                    <td>Email</td>
+                    <td>Assigned Questions</td>
+                    <td>Score</td>
+                    <td>Attachement</td>
+                    <td>Move Candidates</td>
+                    <td>Candidate Station</td>
+                    <td>Status</td>
+                </tr>
+                <div *ngIf="loader && !initialLoader" class="loader-parent">
+                    <img src="assets/gif/loader.gif">
+                </div>
+                <ng-container *ngIf="candidateList.length > 0">
+                    <ng-container *ngFor="let item of candidateList">
+                        <tr class="candidate c-pointer">
+                            <td><input type="checkbox" [(ngModel)]="item.isSelected"
+                                    (change)="getSelectedCandidateServiceIds()"></td>
+                            <td class="text-wrap" [title]="item.candidateFirstName + item.candidateLastName">
+                                {{ item.candidateFirstName }} {{ item.candidateLastName }}
+                            </td>
+                            <td class="text-wrap" [title]="item.candidateEmail">{{ item.candidateEmail }}</td>
+                            <td class="text-wrap">{{item.serviceSequence.progress?.quertionName || 'Not assigned'}}</td>
+                            <td class="text-wrap"><button class="result c-pointer"
+                                    *ngIf="item?.serviceSequence?.progress?.progressScore === null && item?.serviceSequence?.progress?.quertionName"
+                                    (click)="resultClick(item, item?.serviceSequence?.serviceId)">Add Result</button>
+                                <button class="disabled-button"
+                                    *ngIf="item?.serviceSequence?.progress?.progressScore === null && !item?.serviceSequence?.progress?.quertionName"
+                                    [disabled]="!item?.serviceSequence?.progress?.quertionName">
+                                    Add Result
+                                </button>
+                                <span
+                                    *ngIf="item?.serviceSequence?.progress?.progressScore">{{item.serviceSequence.progress.progressScore}}</span>
+                            </td>
+                            <td class="text-wrap">
+                                <span class="c-pointer"
+                                    *ngIf="item?.serviceSequence?.progress?.progressScore  && item?.serviceSequence?.progress?.progressScore !== null"><img
+                                        class="p-l-9" src="/assets/images/view-file.png" alt="" height="29" width="29"
+                                        (click)="viewResume(item.serviceSequence.progress.progressFile)"></span>
+                            </td>
+                            <td class="p-t-15">
+                                <img src="/assets/images/move.png" alt="" height="24px" width="24px"
+                                    (click)="onSwitchStation(item)">
+                            </td>
+                            <td class="text-wrap" [title]="item?.currentStation | titlecase">{{item?.currentStation |
+                                titlecase}}</td>
+                                <td class="f-w-500" [ngClass]="{'blue': item?.serviceSequence?.serviceStatus === 'pending','green': item?.serviceSequence?.serviceStatus === 'done',
+                                'red': item?.serviceSequence?.serviceStatus === 'rejected'}"
+                            [title]="item?.serviceSequence?.serviceStatus | titlecase">
+                            {{ item?.serviceSequence?.serviceStatus | titlecase}}
+                        </td> 
+                        </tr>
+                    </ng-container>
+                </ng-container>
+                <div *ngIf="(candidateList[0]?.length === 0 || !candidateList[0]) && !loader && !initialLoader "
+                    class="data">
+                    No Data Found
+                </div>
+                <div *ngIf="initialLoader" class="row m-l-20 initial-loader">
+                    <div *ngFor="let item of [0,1,2,3,4,5]" class="col-md-6 m-t-10 m-b-10">
+                        <div class="gravatar-title">
+                            <div><ngx-skeleton-loader [theme]="{
+                                width: '900px',
+                                'border-radius': '0',
+                                height: '15px',
+                                'margin-bottom': '10px'
+                                }"></ngx-skeleton-loader>
+                            </div>
+                            <div>
+                                <ngx-skeleton-loader
+                                    [theme]="{ width: '1300px', 'border-radius': '0', height: '15px' }">
+                                </ngx-skeleton-loader>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </table>
+        </div>
+        <!-- <div class="page d-flex j-end p-10">
+            <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(1)">
+                <img src="assets/images/double-arrow-left-icon.svg" alt="" height="14px" width="14px">
+            </button>
+            <button *ngIf="currentPage === 1" class="box p-r-20 m-r-10">
+                <img src="assets/images/inactive-double-arrow-left.svg" alt="" height="23px" width="23px">
+            </button>
+            <ng-container *ngFor="let page of generatePageNumbers()">
+                <button *ngIf="page === '...'" class="box dot" disabled>...</button>
+                <button *ngIf="page !== '...' && page === currentPage" class="box current-page c-pointer">{{ page
+                    }}</button>
+                <button *ngIf="page !== '...' && page !== currentPage" class="box c-pointer"
+                    (click)="onPageChange(page)">{{ page }}</button>
+            </ng-container>
+            <button *ngIf="currentPage < lastPage" class="box c-pointer" (click)="onPageChange(lastPage)">
+                <img src="assets/images/double-arrow-right-icon.svg" alt="" height="14px" width="14px">
+            </button>
+            <button *ngIf="currentPage === lastPage" class="box">
+                <img src="assets/images/inactive-double-arrow-right.svg" alt="" height="23px" width="23px">
+            </button>
+        </div> -->
+    </div>
+</div>

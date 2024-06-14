@@ -12,15 +12,16 @@ import { FormsModule } from '@angular/forms';
 import { CandidateDetailsComponent } from 'src/app/components/candidate-details/candidate-details.component';
 import { MaterialModule } from '../material/material.module';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
+import { CandidateAssignmentComponent } from './components/candidate-assignment/candidate-assignment.component';
 const routes: Routes = [
-  {
-    path: '', component: HomeComponent,
-    children: [
-      { path: '', component: CandidateListComponent },
-      { path: 'series', component: SeriesComponent },
-      { path: 'candidate-details/:id', component: CandidateDetailsComponent },
-    ]
-  }
+  { path:'',component:HomeComponent,
+  children: [
+    {path:'',component: CandidateListComponent},
+    {path:'series',component: SeriesComponent},
+    {path:'candidates',component: CandidateAssignmentComponent},
+    { path: 'candidate-details/:id', component: CandidateDetailsComponent },
+  ]
+ }
 ]
 
 @NgModule({
@@ -30,7 +31,8 @@ const routes: Routes = [
     SeriesComponent,
     ResultComponent,
     LeftSidebarComponent,
-    AssignSeriesComponent
+    AssignSeriesComponent,
+    CandidateAssignmentComponent
   ],
   imports: [
     CommonModule,
