@@ -1,4 +1,7 @@
 <div class="modal-header heading p-10 p-t-20 d-flex j-space">
+    <div *ngIf="loader" class="loader-parent">
+        <img src="assets/gif/loader.gif">
+    </div>
     <div>
         <span>{{candidateDetails['candidate.candidateFirstName']}} {{candidateDetails['candidate.candidateLastName']}}- </span>
         <span class="blue">( {{candidateDetails['candidate.candidateId']}} )</span>

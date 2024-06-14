@@ -47,8 +47,9 @@ export class CandidateDetailModalComponent implements OnInit {
   buttonType: string = '';
   mailTemplateData: any;
   status: any;
-  filteredStatus : string = '';
-  filterStatus: boolean = false; 
+  filteredStatus: string = '';
+  filterStatus: boolean = false;
+  loader: boolean = false;
   constructor(public dialogRef: MatDialogRef<CandidateDetailModalComponent>, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data) {
@@ -56,7 +57,7 @@ export class CandidateDetailModalComponent implements OnInit {
       this.stationId = data?.stationId;
       this.serviceId = this.candidateDetails?.serviceId;
       console.log(this.candidateDetails);
-      
+
       if (data?.progressStatus > 0) this.progessAdded = true;
     }
     this.dialogRef.updateSize('60vw', '90vh');
@@ -73,7 +74,7 @@ export class CandidateDetailModalComponent implements OnInit {
 
   selectButton(type: any): void {
     this.buttonType = type;
-    if(type === 'rejection') this.fetchStatus();
+    if (type === 'rejection') this.fetchStatus();
   }
 
   fetchStatus(): void {
@@ -180,33 +181,74 @@ export class CandidateDetailModalComponent implements OnInit {
   // }
 
   showMail(item: string): void {
-    if(item === 'approve')  this.showSelection = true;
-    if(item === 'rejection')  this.showRejection = true;
+    if (item === 'approve') this.showSelection = true;
+    if (item === 'rejection') this.showRejection = true;
     this.messageType = item;
     console.log(this.messageType);
-    if(item.trim() !== '') {
+    if (item.trim() !== '') {
       this.mailTemplateData = {
         firstName: this.candidateDetails['candidate.candidateFirstName'],
         lastName: this.candidateDetails['candidate.candidateLastName'],
         id: this.candidateDetails['candidate.candidateId'],
         messageType: this.messageType,
-        stationId : this.stationId,
+        stationId: this.stationId,
       };
     }
-   
+
   }
 
   onSubmitData(event: any): void {
     if (event?.clickType === 'cancel') this.cancelClick();
     if (event?.messageType === 'approve') this.approveClick(event);
     if (event?.messageType === 'rejection') this.rejectClick(event);
+    if (event?.messageType === 're-schedule') this.rescheduleClick(event);
   }
 
   cancelClick(): void {
     this.closeDialog();
   }
 
+
+  rescheduleClick(data: any): void {
+    this.loader = true;
+    const payload = {
+      // recruiterId: this.recruiterId,
+      candidateId: this.candidateDetails['candidate.candidateId'],
+      // noticePeriod: this.noticeperiodvalue,
+      position: this.candidateDetails['serviceRequest.requestId'],
+      // location: this.locationValue,
+      interviewTime: data?.interviewTime,
+      interViewPanel: data?.interviewPanel,
+      interviewMode: data?.interviewMode,
+      serviceId: this.serviceId ?? '',
+      interviewStatus: data?.interviewStatus,
+      comments: data?.feedback,
+      // workMode: this.selectedModeName ?? '',
+      // revelantWorkExperience: this.candidateRevlentExperience,
+      // totalWorkExperience: this.candidateTotalExperience,
+      interviewCc: data?.mailCc,
+      interviewMailTemp: data?.mailTemp,
+      interviewSubject: data?.mailSubject,
+      interviewBcc: data?.mailBcc,
+    }
+
+    this.apiService.post(`/screening-station/interview-details`, payload).subscribe({
+      next: (res: any) => {
+        this.loader = false;
+        this.tostr.success('Interview Re-Scheduled Successfully');
+        this.closeDialog();
+      },
+      error: (error) => {
+        this.loader = false;
+        if (error?.status === 500) this.tostr.error("Internal Server Error");
+        else this.tostr.warning("Unable to update");
+      }
+    });
+    this.showMail('');
+  }
+
   approveClick(data: any): void {
+    this.loader = true;
     const baseUrl = this.stationId === '3' ? '/technical-station' : this.stationId === '4' ? '/technical-station-two' : '';
     if (baseUrl) {
       const payload = {
@@ -217,23 +259,30 @@ export class CandidateDetailModalComponent implements OnInit {
         feedBackMailTemp: data?.mailTemp || '',
         feedBackSubject: data?.mailSubject,
         feedBcc: data?.mailBcc,
-        date : data?.interviewTime,
+        date: data?.interviewTime,
         pannelUser: data?.interviewPanel
       };
       this.apiService.post(`${baseUrl}/approve`, payload).subscribe({
         next: () => {
           this.tostr.success('Candidate Selected to Next Round');
           this.closeDialog();
+          this.loader = false;
+
         },
-        error: () => this.tostr.error('Error during approval')
+        error: () => {
+          this.tostr.error('Error during approval');
+          this.loader = false;
+        }
       });
     } else {
       this.tostr.error('Invalid operation');
+      this.loader = false;
     }
   }
 
 
   rejectClick(data: any): void {
+    this.loader = true;
     const feedback = document.getElementById('feedback') as HTMLInputElement;
     if (feedback) this.feedback = feedback?.value;
     if ((this.feedback.trim() !== '' && this.filteredStatus) || data) {
@@ -248,16 +297,16 @@ export class CandidateDetailModalComponent implements OnInit {
         rejectBcc: data?.mailBcc ?? '',
         feedBack: this.feedback,
       };
-    console.log(payload);
-
-    this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
-      next: (res: any) => {
-        this.closeDialog();
-      },
-      error: (error) => {
-        this.tostr.error('Error adding progress');
-      }
-    });
+      this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
+        next: (res: any) => {
+          this.loader = false;
+          this.closeDialog();
+        },
+        error: (error) => {
+          this.loader = false;
+          this.tostr.error('Error adding progress');
+        }
+      });
     }
   }
 
@@ -265,7 +314,7 @@ export class CandidateDetailModalComponent implements OnInit {
     this.resumePath = resume;
     console.log("this.resumePath", this.resumePath);
     window.open(`${environment.s3_url}${this.resumePath}`, '_blank');
-    console.log("`${environment.s3_url}${this.resumePath}`",typeof(`${environment.s3_url}${this.resumePath}`));
+    console.log("`${environment.s3_url}${this.resumePath}`", typeof (`${environment.s3_url}${this.resumePath}`));
   }
 
   ngOnDestroy(): void {
