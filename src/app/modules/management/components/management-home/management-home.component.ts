@@ -6,12 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./management-home.component.css']
 })
 export class ManagementHomeComponent {
-  isSidebarHidden: boolean = true;
+  isSidebarHidden: boolean = false;
 
   ngOnInit(): void {
   }
 
-  toggleSidebar() {
-    this.isSidebarHidden = !this.isSidebarHidden;
+  onToggleSidebarData(event: any): void {
+    this.isSidebarHidden = event;
   }
 }

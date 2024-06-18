@@ -1,9 +1,13 @@
-.header {
-    min-height: 70px !important;
-    max-height: 70px !important;
+.main-header{
+    /* height: 70px !important; */
     position: sticky !important;
     max-width: 100%;
-    box-shadow: 0 3px 8px -6px #0009;
+}
+.header {
+    height: 70px !important;
+    /* position: sticky !important; */
+    max-width: 100%;
+    background: #ABABAB26;
     border-right: none;
     /* overflow: hidden; */
 }
@@ -31,11 +35,12 @@
     border-radius: 4px;
     max-height: 190px;
     overflow-y: auto;
-    width: 310px;
+    width: 65%;
     text-overflow: ellipsis;
     white-space: nowrap;
     cursor: pointer;
-    text-align: left;
+    text-align: center;
+    margin-top: 42px;
 }
 
 .candidate-column {
@@ -66,7 +71,7 @@
 
 .drop-down {
     width: 170px;
-    z-index: 1;
+    z-index: 999;
     right: 0px;
     background: #fff;
     top: 40px;
@@ -75,14 +80,21 @@
     flex-direction: column;
     color: black;
     height: fit-content;
+    position: absolute;
 }
 
-.station {
+.profile-drop {
     font-size: 16px;
 }
 
-.station:hover {
+.profile-drop:hover {
     background-color: #f0f0f0;
+}
+
+.search-div {
+    width: 80%;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .input {
@@ -90,8 +102,8 @@
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
-    width: 330px;
-    height: 30px;
+    width: 80%;
+    height: 37px;
     margin-right: -21px;
 }
 
@@ -111,3 +123,29 @@
     padding-left: 3px;
     font-size: 20px;
 }
+
+.second-header {
+    height: 60px !important;
+    /* position: sticky !important; */
+    max-width: 100%;
+    background: #FFFFFF;
+    border-right: none;
+    box-shadow: 0px 4px 8px 0px #00000017;
+}
+
+.welcome {
+    font-size: 20px;
+    font-weight: 500;
+    text-align: left;
+    color: #575F6E;
+    padding-left: 10px;
+    /* padding-bottom: 20px; */
+}
+
+.active-station {
+    color: black;
+    border-radius: 4px;
+    border-bottom: 1px solid blue;
+    box-shadow: 0px 4px 8px 0px #00000017;
+}
+  

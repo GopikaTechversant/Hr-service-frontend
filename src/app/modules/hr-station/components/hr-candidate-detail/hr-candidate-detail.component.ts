@@ -35,6 +35,7 @@ export class HrCandidateDetailComponent {
   htmlString: any;
   mailTemplateData: any;
   uploadedFileKey: string = '';
+  loader:boolean = false;
   constructor(public dialogRef: MatDialogRef<HrCandidateDetailComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
     private apiService: ApiService, private datePipe: DatePipe, private tostr: ToastrServices,private s3Service : S3Service) {
     if (data) {
@@ -76,6 +77,7 @@ export class HrCandidateDetailComponent {
   }
 
   addOffer(data: any): void {
+    this.loader = true;
     const payload = {
       offerServiceSeqId: this.serviceId,
       offerSalary: data?.offerSalary,
@@ -93,11 +95,13 @@ export class HrCandidateDetailComponent {
 
     this.apiService.post(`/hr-station/candidateOffer`, payload).subscribe({
       next: (res: any) => {
+        this.loader = false;
         this.tostr.success('Offer Added Successfully');
         this.closeDialog();
       },
       error: (error) => {
-        console.error('Error adding progress', error);
+        this.loader = false;
+        this.tostr.error('Error adding progress');
       }
     });
   }
@@ -116,6 +120,7 @@ export class HrCandidateDetailComponent {
     const feedback = document.getElementById('feedback') as HTMLInputElement;
     if (feedback) this.feedback = feedback?.value;
     if (this.feedback.trim() !== '' || data) {
+      this.loader = true;
       const payload = {
         serviceId: this.serviceId,
         stationId:'5',
@@ -130,9 +135,11 @@ export class HrCandidateDetailComponent {
 
       this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
         next: (res: any) => {
+          this.loader = false;
           this.closeDialog();
         },
         error: (error) => {
+          this.loader = false;
           this.tostr.error('Error adding progress');
         }
       });
@@ -144,6 +151,7 @@ export class HrCandidateDetailComponent {
     const feedbackElement = document.getElementById('feedback') as HTMLInputElement;
     const feedback = feedbackElement?.value.trim();
     if (feedback) {
+      this.loader = true;
       this.feedback = feedback;
       const payload = {
         serviceSeqId: this.serviceId,
@@ -153,10 +161,14 @@ export class HrCandidateDetailComponent {
 
       this.apiService.post(`/hr-station/candidateToUser`, payload).subscribe({
         next: (res: any) => {
+          this.loader = false;
           this.tostr.success('Approval successful');
           this.closeDialog();
         },
-        error: (error) => this.tostr.error('Error during approval')
+        error: (error) => {
+          this.loader = false;
+          this.tostr.error('Error during approval')
+        }
       });
     } else {
       this.tostr.warning('Please Add Feedback');

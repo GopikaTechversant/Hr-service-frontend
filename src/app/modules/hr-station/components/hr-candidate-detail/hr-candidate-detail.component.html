@@ -1,4 +1,7 @@
 <div class="modal-header heading p-10 p-t-20 d-flex j-space" style="position: sticky; top: 0; z-index: 2;">
+    <div *ngIf="loader" class="loader-parent">
+        <img src="assets/gif/loader.gif">
+    </div>
     <div>
         <span>{{candidateDetails?.candidateFirstName}} {{candidateDetails?.candidateLastName}}</span>
     </div>

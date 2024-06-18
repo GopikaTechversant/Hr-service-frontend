@@ -5,12 +5,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./hr-home.component.css']
 })
 export class HrHomeComponent implements OnInit {
-  isSidebarHidden: boolean = true;
+  isSidebarHidden: boolean = false;
 
   ngOnInit(): void {
   }
 
-  toggleSidebar() {
-    this.isSidebarHidden = !this.isSidebarHidden;
+  onToggleSidebarData(event: any): void {
+    this.isSidebarHidden = event;
   }
 }

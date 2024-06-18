@@ -10,12 +10,12 @@ import { environment } from 'src/environments/environments';
   styleUrls: ['./technical-home.component.css']
 })
 export class TechnicalHomeComponent {
-  isSidebarHidden: boolean = true;
+  isSidebarHidden: boolean = false;
 
   ngOnInit(): void {
   }
 
-  toggleSidebar() {
-    this.isSidebarHidden = !this.isSidebarHidden;
+  onToggleSidebarData(event: any): void {
+    this.isSidebarHidden = event;
   }
 }

@@ -18,13 +18,14 @@
                     </div>
                 </div>
                 <div class="col-1">
-                    <span class="f-w-500">Position</span>
+                    <span class="f-w-500">Requirement</span>
                     <span class="text-color p-5 p-l-0" class="text-wrap" [title]="candidateDetails?.position">{{candidateDetails?.position}}</span>
                 </div>
             </div>
-            <div class=" w-90 m-b-20">
-                <div class="basic-head">
-                    <span class="f-w-500 f-s-16">Basic Info & Professional Info </span>
+            <div class="m-b-20 d-flex">
+                <div class="basic-info">
+                    <div class="basic-head">
+                        <span class="f-w-500 f-s-16">Basic Info & Professional Info </span>
                     <span>Click to view resume :
                         <i class="fa fa-file-text-o" aria-hidden="true" title="View resume"
                             (click)="viewResume(candidateDetails?.candidateResume)"></i>
@@ -215,6 +216,25 @@
                     </div> -->
                 </div>
             </div>
+            <div class="history">
+                <div class="basic-head">
+                    <span class="f-w-500 f-s-16">Candidate History</span>
+                </div>
+                <div class="candidateDetailsContainer">
+                    <div class="details">
+                        <div class="details">
+                            <span class="f-w-500">
+                                <img src="assets/images/candidate-detail/calendar.svg" class="p-r-10" alt=""> Previoulsly Applied Requirement
+                            </span>
+                        </div>
+                        <div class="details">
+                            <span class="text-wrap">: Requirement Name</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
         </ng-container>
     </div>
     <div *ngIf="!CandidateData || CandidateData?.length === 0" class="no-data">

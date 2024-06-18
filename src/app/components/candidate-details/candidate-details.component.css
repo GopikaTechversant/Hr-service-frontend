@@ -8,16 +8,29 @@
 }
 
 .basic-head {
-    background: #F4F2F2;
+    background: #575F6E;
     padding: 15px;
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
+    color: white;
 }
 
 .fa-file-text-o {
     color: rgb(37, 150, 190);
     cursor: pointer;
+}
+
+.basic-info{
+    /* flex: 1; */
+    width: 60%;
+    margin-right: 20px;
+}
+
+.history{
+    /* flex: 1; */
+    width: 40%;
+    margin-right: 10px;
 }
 
 .candidateDetailsContainer {
