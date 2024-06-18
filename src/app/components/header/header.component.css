@@ -35,11 +35,12 @@
     border-radius: 4px;
     max-height: 190px;
     overflow-y: auto;
-    width: 310px;
+    width: 65%;
     text-overflow: ellipsis;
     white-space: nowrap;
     cursor: pointer;
-    text-align: left;
+    text-align: center;
+    margin-top: 42px;
 }
 
 .candidate-column {
@@ -142,8 +143,9 @@
 }
 
 .active-station {
-    background-color: blue;
-    color: white;
+    color: black;
     border-radius: 4px;
+    border-bottom: 1px solid blue;
+    box-shadow: 0px 4px 8px 0px #00000017;
 }
   

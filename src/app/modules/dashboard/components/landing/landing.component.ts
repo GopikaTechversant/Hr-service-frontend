@@ -12,8 +12,6 @@ export class LandingComponent implements OnInit {
   }
 
   onToggleSidebarData(event: any): void {
-    console.log(event);
-    
     this.isSidebarHidden = event;
   }
 }
