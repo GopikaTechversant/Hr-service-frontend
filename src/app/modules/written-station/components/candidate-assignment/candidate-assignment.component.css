@@ -71,9 +71,12 @@
 
 .data {
     position: absolute;
-    left: 52%;
+    left: 45%;
     top: 34%;
     z-index: 9;
+    font-size: 17px;
+    color: #C10A0A;
+    font-weight: 500;
 }
 
 .candidate:hover {
@@ -205,8 +208,8 @@ tr {
     /* padding: 0px 4px; */
     border: 1px solid #3c40434d;
     border-radius: 53%;
-    height: 10px;
-    width: 8px;
+    height: 10px !important;
+    width: 8px !important;
     line-height: 8px;
     text-align: center;
 }

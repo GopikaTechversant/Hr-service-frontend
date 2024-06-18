@@ -34,7 +34,11 @@ export class CandidateAssignmentComponent implements OnInit {
   candidateIds: any;
   resumePath: any;
   averageScore: string | null = null;
-
+  experience: string = '';
+  currentPage: number = 1;
+  limit: number = 10
+  totalCount: any;
+  lastPage: any;
   Status: any = [
     { status: 'pending' },
     { status: 'rejected' },
@@ -46,6 +50,8 @@ export class CandidateAssignmentComponent implements OnInit {
   displayQuestion: string = '';
   questionId: any;
   candidateIdsQuestion:any;
+  isExport: boolean = false;
+
   constructor(private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService, private s3Service: S3Service) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -60,25 +66,52 @@ export class CandidateAssignmentComponent implements OnInit {
 
   fetchCandidates(): void {
     if (!this.initialLoader) this.loader = true;
-    this.apiService.get(`/written-station/list-batch/${this.requestId}?experience=${this.searchKeyword}&status_filter=${this.filteredStatus}`).subscribe((res: any) => {
+    this.apiService.get(`/written-station/list-batch/${this.requestId}?experience=${this.experience.trim()}&status_filter=${this.filteredStatus}`).subscribe((res: any) => {
       this.initialLoader = false;
       this.loader = false;
       if (res && res?.candidates) this.candidateList = res?.candidates;
       console.log("this.candidateList", this.candidateList);
-
-      // this.showAverageScoreInput = this.candidates_list.some((candidate: any) => candidate.serviceStatus === 'pending');
     });
   }
 
-  fetchCandidatesWithQuestionBox(): void {
+  fetchList(): void {
     if (!this.initialLoader) this.loader = true;
-    this.apiService.get(`/written-station/questionBatchList/${this.requestId}`).subscribe((res: any) => {
-      this.initialLoader = false;
+    const url = `/written-station/list-batch//${this.requestId}`
+    let params = [
+      `search=${this.searchKeyword}`,
+      `page=${this.currentPage}`,
+      `limit=${this.limit}`,
+      `experience=${this.experience.trim()}`,
+      `status_filter=${this.filteredStatus}`,
+      `report=${this.isExport}`
+    ].join('&');
+
+    if (this.isExport) {
+      if (this.candidateIds) {
+        const idsParams = this.candidateIds.map((id: string) => `ids=${id}`).join('&');
+        params += `&${idsParams}`;
+      }
+      const exportUrl = `${environment.api_url}${url}?${params}`;
+      console.log(exportUrl);
+
+      window.open(exportUrl, '_blank');
+      this.isExport = false;
+      if (this.isExport === false) this.fetchList();
+      return;
+    }
+
+    this.apiService.get(`${url}?${params}`).subscribe((data: any) => {
       this.loader = false;
-      if (res?.data) this.created_Box = res?.data;
-      // console.log("this.candidatesWithQuestionBox", this.candidatesWithQuestionBox);
-      this.fetchQuestions();
-    })
+      this.initialLoader = false;
+      this.candidateList = [];
+      if (data?.candidates) {
+        this.candidateList.push(data?.candidates);
+        this.totalCount = data?.totalCount;
+        const totalPages = Math.ceil(this.totalCount / this.limit);
+        this.lastPage = totalPages;
+        if (this.currentPage > totalPages) this.currentPage = totalPages;
+      }
+    });
   }
 
   fetchQuestions(): void {
@@ -95,13 +128,19 @@ export class CandidateAssignmentComponent implements OnInit {
     this.fetchCandidates();
   }
 
+  searchByExperience(experience: string): void {
+    this.experience = experience;
+    // this.currentPage = 1;
+    // this.limit = 10;
+    this.fetchCandidates();
+  }
+
   selectStatusFilter(item: string): void {
     this.filteredStatus = item;
     sessionStorage.setItem('status_written', this.filteredStatus);
     // this.currentPage = 1;
     // this.limit = 10;
     this.fetchCandidates();
-    this.fetchCandidatesWithQuestionBox();
   }
 
   clearFilter(item: any): void {
@@ -115,15 +154,16 @@ export class CandidateAssignmentComponent implements OnInit {
       sessionStorage.setItem(`position`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
     }
     if (item === 'search') this.searchKeyword = '';
-    // if (item === 'question') {
-    //   this.displayQuestion = '';
-    //   this.questionId = '';
-    //   sessionStorage.setItem(`question`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
-    // }
+    if (item === 'experience') this.experience = '';
+
+    if (item === 'question') {
+      this.displayQuestion = '';
+      this.questionId = '';
+      sessionStorage.setItem(`question`, JSON.stringify({ name: this.displayQuestion, id: this.questionId }));
+    }
     // this.currentPage = 1;
     // this.limit = 10;
     this.fetchCandidates();
-    this.fetchCandidatesWithQuestionBox();
   }
   // clearFilter(item: any): void {
   //   if (item === 'search') this.searchKeyword = '';
@@ -134,10 +174,9 @@ export class CandidateAssignmentComponent implements OnInit {
     this.requestList_open = false;
     this.displayPosition = name;
     this.positionId = id;
-    this.questionAssign()
+    this.questionAssign();
     sessionStorage.setItem(`position`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
     this.fetchCandidates();
-    // this.fetchCandidatesWithQuestionBox();
   }
 
   filterQuestion(name: string, id: string): void {
@@ -146,7 +185,6 @@ export class CandidateAssignmentComponent implements OnInit {
     this.questionId = id;
     sessionStorage.setItem(`question`, JSON.stringify({ name: this.displayQuestion, id: this.questionId }));
     this.fetchCandidates();
-    // this.fetchCandidatesWithQuestionBox();
   }
 
   questionAssign(): void {
@@ -259,7 +297,8 @@ export class CandidateAssignmentComponent implements OnInit {
   }
 
   exportData(): void {
-
+    this.isExport = true;
+    this.fetchList();
   }
 
 }

@@ -47,9 +47,8 @@
             </div>
         </div>
         <span class="input-search p-5 d-flex j-space align-center">
-            <input type="text" class="p-l-5" placeholder="Search by Experience" [(ngModel)]="searchKeyword"
-                (keydown)="searchCandidate(searchKeyword)">
-            <span *ngIf="searchKeyword.trim() !== ''" (click)="clearFilter('search')"
+            <input type="text" class="p-l-5" placeholder="Search by Experience" [(ngModel)]="experience" (ngModelChange)="searchByExperience(experience)"  maxlength="2">
+            <span *ngIf="experience.trim() !== ''" (click)="clearFilter('experience')"
                 class="clear-search c-pointer">x</span>
         </span>
         <div class="input-1 c-pointer p-t-10 no-close p-relative">
@@ -57,7 +56,7 @@
                 'Filter by Status' : filteredStatus | titlecase}}</span>
             <span class="f-right">
                 <span *ngIf="filteredStatus && filteredStatus.trim() !== ''" (click)="clearFilter('status')"
-                    class="clear-filter">x</span>
+                    class="clear-filter  c-pointer">x</span>
                 <span (click)="filterStatus = !filterStatus"><i
                         class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
             </span>
