@@ -6,12 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./landing.component.css']
 })
 export class LandingComponent implements OnInit {
-  isSidebarHidden: boolean = true;
+  isSidebarHidden: boolean = false;
 
   ngOnInit(): void {
   }
 
-  toggleSidebar() {
-    this.isSidebarHidden = !this.isSidebarHidden;
+  onToggleSidebarData(event: any): void {
+    console.log(event);
+    
+    this.isSidebarHidden = event;
   }
 }

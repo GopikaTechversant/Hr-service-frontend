@@ -50,7 +50,7 @@
     </div>
     <div>
       <span *ngFor="let station of stationsList">
-        <span class="c-pointer p-10 p-l-20" [ngClass]="{'active-station': station?.stationName == activeStation}" (click)="navigate(station)">
+        <span class="c-pointer p-10 p-l-20" [ngClass]="{'active-station': station?.stationName === activeStation}" (click)="navigate(station)">
           {{station?.stationName}}
         </span>
       </span>

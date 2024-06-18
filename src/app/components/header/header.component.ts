@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, ElementRef, HostListener, Output, EventEmitter } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,6 +14,7 @@ import { environment } from 'src/environments/environments';
   }
 })
 export class HeaderComponent implements OnInit {
+  @Output() toggleSidebarData: EventEmitter<any> = new EventEmitter<any>();
   currentUser: any;
   dropDown: boolean = false;
   showDropDown: boolean = false;
@@ -45,12 +46,12 @@ export class HeaderComponent implements OnInit {
       this.stationId = params['id'];
       this.url = `/technical/${this.stationId}`;
     });
-    if(currentStation === 'dashboard') this.activeStation = 'Screening';
-    if(currentStation === 'written') this.activeStation = 'Written';
-    if(currentStation === 'technical' && this.stationId === '3') this.activeStation = 'Technical 1';
-    if(currentStation === 'technical' && this.stationId === '4') this.activeStation = 'Technical 2';
-    if(currentStation === 'hr') this.activeStation = 'Hr Manager';
-    if(currentStation === 'management') this.activeStation = 'Management';
+    if (currentStation === 'dashboard') this.activeStation = 'Screening';
+    if (currentStation === 'written') this.activeStation = 'Written';
+    if (currentStation === 'technical' && this.stationId === '3') this.activeStation = 'Technical 1';
+    if (currentStation === 'technical' && this.stationId === '4') this.activeStation = 'Technical 2';
+    if (currentStation === 'hr') this.activeStation = 'Hr Manager';
+    if (currentStation === 'management') this.activeStation = 'Management';
 
     this.currentRole = localStorage.getItem('userRole');
     this.currentUser = localStorage.getItem('userFullName');
@@ -64,11 +65,13 @@ export class HeaderComponent implements OnInit {
   }
 
   navigate(station: any): void {
-    console.log(this.activeStation == station?.stationName);
-
-    if (station?.stationName === 'Technical 1') this.router.navigate([`/technical/${station?.stationId}`]);
-    else if (station?.stationName === 'Technical 2') this.router.navigate([`/technical/${station?.stationId}`]);
-    else if (station?.stationName === 'Hr Manager') this.router.navigate(['/hr']);
+    if (station?.stationName === 'Technical 1') {
+      this.router.navigate([`/technical/${station?.stationId}`]);
+      this.activeStation = 'Technical 1';
+    }else if (station?.stationName === 'Technical 2') {
+      this.router.navigate([`/technical/${station?.stationId}`]);
+      this.activeStation = 'Technical 2';
+    }else if (station?.stationName === 'Hr Manager') this.router.navigate(['/hr']);
     else if (station?.stationName === 'Screening') this.router.navigate(['/dashboard']);
     else if (station?.stationName === 'Written') this.router.navigate(['/written']);
     else if (station?.stationName === 'Management') this.router.navigate(['/management']);
@@ -95,6 +98,7 @@ export class HeaderComponent implements OnInit {
 
   toggleSidebar() {
     this.isSidebarHidden = !this.isSidebarHidden;
+    this.toggleSidebarData.emit(this.isSidebarHidden);
   }
 
   profileClick() {
