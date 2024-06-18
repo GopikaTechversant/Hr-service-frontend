@@ -91,7 +91,7 @@
                     <td>Score</td>
                     <td>Attachement</td>
                     <td>Move Candidates</td>
-                    <td>Candidate Station</td>
+                    <!-- <td>Candidate Station</td> -->
                     <td>Status</td>
                 </tr>
                 <div *ngIf="loader && !initialLoader" class="loader-parent">
@@ -128,8 +128,8 @@
                                 <img src="/assets/images/move.png" alt="" height="24px" width="24px"
                                     (click)="onSwitchStation(item)">
                             </td>
-                            <td class="text-wrap" [title]="item?.currentStation | titlecase">{{item?.currentStation |
-                                titlecase}}</td>
+                            <!-- <td class="text-wrap" [title]="item?.currentStation | titlecase">{{item?.currentStation |
+                                titlecase}}</td> -->
                                 <td class="f-w-500" [ngClass]="{'blue': item?.serviceSequence?.serviceStatus === 'pending','green': item?.serviceSequence?.serviceStatus === 'done',
                                 'red': item?.serviceSequence?.serviceStatus === 'rejected'}"
                             [title]="item?.serviceSequence?.serviceStatus | titlecase">

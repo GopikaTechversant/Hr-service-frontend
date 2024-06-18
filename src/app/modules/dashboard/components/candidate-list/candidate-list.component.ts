@@ -41,10 +41,9 @@ export class CandidateListComponent {
     this.requestId = this.positionId ? this.positionId : '';
     this.fetchCandidates();
   }
-
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.positionId) {
-      this.requestId = this.positionId;
+    if (changes['positionId'] && !changes['positionId'].isFirstChange()) {
+      this.requestId = changes['positionId'].currentValue;
       this.fetchCandidates();
     }
   }
@@ -192,5 +191,9 @@ export class CandidateListComponent {
         this.fetchCandidates();
       })
     } else this.toastr.warning('You have not selected candidates to assign');
+  }
+
+  selectCandidate(id: any): void {
+    this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
   }
 }

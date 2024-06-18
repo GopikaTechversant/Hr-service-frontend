@@ -105,7 +105,7 @@ export class CandidateAssignmentComponent implements OnInit {
       if (data?.candidates) {
         this.candidateList = data?.candidates;
         console.log(" this.candidateList", data)
-        this.totalCount = data?.totalCount;
+        this.totalCount = data?.total;
         const totalPages = Math.ceil(this.totalCount / this.limit);
         this.lastPage = totalPages;
         if (this.currentPage > totalPages) this.currentPage = totalPages;

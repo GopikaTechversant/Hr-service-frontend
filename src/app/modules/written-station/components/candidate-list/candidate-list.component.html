@@ -18,13 +18,10 @@
         <app-skeleton-loader *ngFor="let item of [1,2,1]" [loaderDatas]="[9]" [higherWidth]="1000" [lowerWidth]="800"
             [gridColumn]="9"></app-skeleton-loader>
     </div>
-    <!-- <div *ngIf="loader && !initialLoader" class="loader-parent">
-        <img src="assets/gif/loader.gif">
-    </div> -->
     <div *ngIf="(candidates_list?.length === 0 || !candidates_list) && !loader && !initialLoader " class="data">
         No Data Found
     </div>
-  <div class="main-table m-t-27">
+    <div class="main-table m-t-27">
         <div class="table-container m-b-0">
             <table class="table">
                 <tr class="table-header f-w-500 p-b-10">
@@ -35,7 +32,6 @@
                     <td>Skills</td>
                     <td>Status</td>
                     <td>Add Candidate</td>
-                    <!-- <td>Actions</td> -->
                 </tr>
                 <div *ngIf="loader && !initialLoader" class="loader-parent">
                     <img src="assets/gif/loader.gif">
@@ -43,25 +39,22 @@
                 <ng-container *ngIf="candidates_list?.length > 0">
 
                     <ng-container *ngFor="let candidate of candidates_list">
-                        <tr class="candidate c-pointer">
-                            <td class="text-wrap" (click)="navigate('/written/candidates/',candidate.requestId)">{{candidate?.requestDate | date:'yyyy-MM-dd'}}</td>
-                            <td class="text-wrap" [title]="candidate?.candidatesCount" (click)="navigate('/written/candidates/',candidate.requestId)">{{candidate?.candidatesCount}}</td>
-                            <td class="text-wrap" [title]="candidate?.requestName" (click)="navigate('/written/candidates/',candidate.requestId)">{{candidate?.requestName | titlecase}}</td>
-                            <td class="text-wrap" [title]="candidate?.teamName" (click)="navigate('/written/candidates/',candidate.requestId)">{{candidate?.teamName | titlecase}}</td>
-                            <td class="text-wrap" [title]="candidate?.requestSkills"  (click)="navigate('/written/candidates/',candidate.requestId)">{{candidate?.requestSkills | titlecase}}</td>
+                        <tr class="candidate c-pointer"
+                            (dblclick)="navigate('/written/candidates/',candidate.requestId)">
+                            <td class="text-wrap">{{candidate?.requestDate | date:'yyyy-MM-dd'}}</td>
+                            <td class="text-wrap" [title]="candidate?.candidatesCount">{{candidate?.candidatesCount}}
+                            </td>
+                            <td class="text-wrap" [title]="candidate?.requestName">{{candidate?.requestName |
+                                titlecase}}</td>
+                            <td class="text-wrap" [title]="candidate?.teamName">{{candidate?.teamName | titlecase}}</td>
+                            <td class="text-wrap" [title]="candidate?.requestSkills">{{candidate?.requestSkills |
+                                titlecase}}</td>
                             <td class="text-wrap"
-                                [ngStyle]="{'color': candidate.status === 'progress' ? '#F57C02' : '#08E179'}" (click)="navigate('/dashboard/series/',candidate?.requestId)">
+                                [ngStyle]="{'color': candidate.status === 'progress' ? '#F57C02' : '#08E179'}">
                                 {{candidate.status | titlecase}}
                             </td>
-                            <td (click)="onStatusChange(candidate)"><img src="assets/images/user-add.png" alt="" class="icon"></td>
-                            <!-- <td>
-                                <div class="d-flex j-center">
-                                    <img src="assets/images/candidate-detail/edit.svg" class="icon" alt=""
-                                        (click)="update()">
-                                    <img src="assets/images/candidate-detail/delete.svg" class="icon" alt=""
-                                        (click)="delete()">
-                                </div>
-                            </td> -->
+                            <td><img src="assets/images/user-add.png" alt="" class="icon"
+                                    (click)="onStatusChange(candidate)"></td>
                         </tr>
                     </ng-container>
                 </ng-container>
@@ -113,12 +106,3 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-

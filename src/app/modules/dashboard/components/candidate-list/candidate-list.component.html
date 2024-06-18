@@ -37,7 +37,7 @@
                 <td>Actions</td>
             </tr>
             <ng-container *ngIf="candidateList?.length > 0">
-                <tr class="c-pointer details" *ngFor="let item of candidateList">
+                <tr class="c-pointer details" *ngFor="let item of candidateList" (dblclick)="selectCandidate(item['candidate.candidateId'])">
                     <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()"></td>
                     <td class="text-wrap"
                         [title]="(item?.candidateFirstName | titlecase) + (item?.candidateLastName | titlecase)">
