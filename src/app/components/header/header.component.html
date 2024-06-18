@@ -1,11 +1,11 @@
 <div class="main-header">
   <div class="header w-100 d-flex j-space align-center">
-    <div class="logo p-l-15  ">
+    <div class="logo p-l-15">
       <span class="logo-text p-t-10 m-t-10 p-l-5 f-w-500 f-s-20 ">
         <img src="/assets/images/techversant/techversant-logo.svg" alt="" width="155px" height="27px">
       </span>
     </div>
-    <div class="search-div">
+    <div class="search-div p-relative">
       <input type="text" class="input p-l-5" placeholder="Search Candidate Detail" [(ngModel)]="searchKeyword"
         (keydown)="searchCandidate(searchKeyword)">
       <span class="search c-pointer" (click)="searchCandidate(searchKeyword)">
