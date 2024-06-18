@@ -68,10 +68,10 @@ export class HeaderComponent implements OnInit {
     if (station?.stationName === 'Technical 1') {
       this.router.navigate([`/technical/${station?.stationId}`]);
       this.activeStation = 'Technical 1';
-    }else if (station?.stationName === 'Technical 2') {
+    } else if (station?.stationName === 'Technical 2') {
       this.router.navigate([`/technical/${station?.stationId}`]);
       this.activeStation = 'Technical 2';
-    }else if (station?.stationName === 'Hr Manager') this.router.navigate(['/hr']);
+    } else if (station?.stationName === 'Hr Manager') this.router.navigate(['/hr']);
     else if (station?.stationName === 'Screening') this.router.navigate(['/dashboard']);
     else if (station?.stationName === 'Written') this.router.navigate(['/written']);
     else if (station?.stationName === 'Management') this.router.navigate(['/management']);
