@@ -27,6 +27,7 @@ export class CandidateDetailsComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.candidateId = params.get('id');
       this.fetchCandidateDetails();
+      this.fetchCandidateHistory();
     });
   }
   fetchCandidateDetails(): void {
@@ -39,6 +40,15 @@ export class CandidateDetailsComponent implements OnInit {
     });
   }
 
+  fetchCandidateHistory(): void {
+    this.apiService.get(`/candidate/list/jeromjack@gmail.com`).subscribe((res: any) => {
+      if (res?.data) {
+        this.CandidateData = res?.data
+        this.candidateDetails = res?.data[0];
+        this.candidateFeedback = res?.comments
+      }
+    });
+  }
   viewResume(resume: any) {
     this.resumePath = resume;
     console.log("this.resumePath", this.resumePath);

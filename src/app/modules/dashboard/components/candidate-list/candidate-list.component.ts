@@ -43,8 +43,8 @@ export class CandidateListComponent {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.positionId) {
-      this.requestId = this.positionId;
+    if (changes['positionId'] && !changes['positionId'].isFirstChange()) {
+      this.requestId = changes['positionId'].currentValue;
       this.fetchCandidates();
     }
   }
