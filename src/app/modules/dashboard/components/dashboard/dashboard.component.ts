@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
@@ -11,6 +11,7 @@ import { ApiService } from 'src/app/services/api.service';
   }
 })
 export class DashboardComponent implements OnInit {
+  @Output() positionIdChange: EventEmitter<string> = new EventEmitter<string>();
   candidates: any;
   lists: any[] = [];
   requestList: any;
@@ -75,14 +76,14 @@ export class DashboardComponent implements OnInit {
     this.requestList_open = false;
     this.displayPosition = name;
     this.positionId = id;
-    sessionStorage.setItem(`position`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
+    sessionStorage.setItem(`requirement`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
+    this.positionIdChange.emit(this.positionId);
     this.fetchcount();
   }
 
   clearFilter(): void {
-    this.displayPosition = '';
-    this.positionId = '';
-    sessionStorage.setItem(`position`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
+    this.selectPosition('', '');
   }
+
 
 }

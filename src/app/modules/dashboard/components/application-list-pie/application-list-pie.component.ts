@@ -10,7 +10,7 @@ import { ApiService } from 'src/app/services/api.service';
   providers: [DatePipe],
 })
 export class ApplicationListPieComponent implements OnInit, AfterViewInit {
-  @Input() positionId: string = '';
+  @Input() positionId: any;
   chart: any;
   sourceList: any[] = [];
   sourceLabels: any[] = [];
@@ -29,10 +29,9 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     Chart.register(ChartDataLabels);
   }
-
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.positionId) {
-      this.requestId = this.positionId;
+    if (changes['positionId'] && !changes['positionId'].isFirstChange()) {
+      this.requestId = changes['positionId'].currentValue;
       this.fetchResumeSource();
     }
   }

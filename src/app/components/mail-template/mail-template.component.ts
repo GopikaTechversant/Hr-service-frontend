@@ -306,9 +306,9 @@ export class MailTemplateComponent implements OnInit {
       data = commonData;
     } else {
       // Validate interview details
-      if (!this.panelId || !this.selectedModeId || !this.interviewStatus || !this.displaydateTime) {
+      if (!this.panelId || !this.selectedModeName || !this.interviewStatus || !this.displaydateTime) {
         if (!this.panelId) this.tostr.warning('Please Select an Interview Panel');
-        if (!this.selectedModeId) this.tostr.warning('Please Select an Interview Mode');
+        if (!this.selectedModeName) this.tostr.warning('Please Select an Interview Mode');
         if (!this.interviewStatus) this.tostr.warning('Please Select an Interview Status');
         if (!this.displaydateTime) this.tostr.warning('Please Enter an Interview Time');
         return;
@@ -317,7 +317,7 @@ export class MailTemplateComponent implements OnInit {
       data = {
         ...commonData,
         interviewPanel: this.panelId,
-        interviewMode: this.selectedModeId,
+        interviewMode: this.selectedModeName,
         interviewStatus: this.interviewStatus,
         interviewTime: this.displaydateTime
       };

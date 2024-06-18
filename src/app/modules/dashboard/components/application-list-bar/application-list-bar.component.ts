@@ -36,8 +36,8 @@ export class ApplicationListBarComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.positionId) {
-      this.requestId = this.positionId;
+    if (changes['positionId'] && !changes['positionId'].isFirstChange()) {
+      this.requestId = changes['positionId'].currentValue;
       this.limit = 10;
       this.currentPage = 1;
       this.fetchApplicationList();
