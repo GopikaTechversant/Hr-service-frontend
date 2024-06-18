@@ -1,6 +1,6 @@
 <div class="m-10">
     <span class="f-s-20 f-w-500 p-t-5">Written Round</span>
-    <div class="d-flex j-space  m-b-29 m-t-20">
+    <div class="d-flex j-space m-t-20 search-header">
         <span class="input-search p-5 d-flex j-space align-center">
             <input type="text" class="p-l-5" placeholder="Search by name" [(ngModel)]="searchKeyword"
                 (keydown)="searchCandidate(searchKeyword)">
@@ -103,10 +103,10 @@
                             <td><input type="checkbox" [(ngModel)]="item.isSelected"
                                     (change)="getSelectedCandidateServiceIds()"></td>
                             <td class="text-wrap" [title]="item.candidateFirstName + item.candidateLastName">
-                                {{ item.candidateFirstName }} {{ item.candidateLastName }}
+                                {{ item?.candidateFirstName }} {{ item?.candidateLastName }}
                             </td>
-                            <td class="text-wrap" [title]="item.candidateEmail">{{ item.candidateEmail }}</td>
-                            <td class="text-wrap">{{item.serviceSequence.progress?.quertionName || 'Not assigned'}}</td>
+                            <td class="text-wrap" [title]="item.candidateEmail">{{ item?.candidateEmail }}</td>
+                            <td class="text-wrap">{{item?.serviceSequence?.progress?.quertionName || 'Not assigned'}}</td>
                             <td class="text-wrap"><button class="result c-pointer"
                                     *ngIf="item?.serviceSequence?.progress?.progressScore === null && item?.serviceSequence?.progress?.quertionName"
                                     (click)="resultClick(item, item?.serviceSequence?.serviceId)">Add Result</button>
@@ -116,7 +116,7 @@
                                     Add Result
                                 </button>
                                 <span
-                                    *ngIf="item?.serviceSequence?.progress?.progressScore">{{item.serviceSequence.progress.progressScore}}</span>
+                                    *ngIf="item?.serviceSequence?.progress?.progressScore">{{item?.serviceSequence?.progress?.progressScore}}</span>
                             </td>
                             <td class="text-wrap">
                                 <span class="c-pointer"

@@ -49,7 +49,7 @@ export class CandidateAssignmentComponent implements OnInit {
   displayQuestion_open: any;
   displayQuestion: string = '';
   questionId: any;
-  candidateIdsQuestion:any;
+  candidateIdsQuestion: any;
   isExport: boolean = false;
 
   constructor(private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService, private s3Service: S3Service) {
@@ -64,19 +64,19 @@ export class CandidateAssignmentComponent implements OnInit {
     this.fetchQuestions();
   }
 
+  // fetchCandidates(): void {
+  //   if (!this.initialLoader) this.loader = true;
+  //   this.apiService.get(`/written-station/list-batch/${this.requestId}?experience=${this.experience.trim()}&status_filter=${this.filteredStatus}`).subscribe((res: any) => {
+  //     this.initialLoader = false;
+  //     this.loader = false;
+  //     if (res && res?.candidates) this.candidateList = res?.candidates;
+  //     console.log("this.candidateList", this.candidateList);
+  //   });
+  // }
+
   fetchCandidates(): void {
     if (!this.initialLoader) this.loader = true;
-    this.apiService.get(`/written-station/list-batch/${this.requestId}?experience=${this.experience.trim()}&status_filter=${this.filteredStatus}`).subscribe((res: any) => {
-      this.initialLoader = false;
-      this.loader = false;
-      if (res && res?.candidates) this.candidateList = res?.candidates;
-      console.log("this.candidateList", this.candidateList);
-    });
-  }
-
-  fetchList(): void {
-    if (!this.initialLoader) this.loader = true;
-    const url = `/written-station/list-batch//${this.requestId}`
+    const url = `/written-station/list-batch/${this.requestId}`
     let params = [
       `search=${this.searchKeyword}`,
       `page=${this.currentPage}`,
@@ -88,24 +88,23 @@ export class CandidateAssignmentComponent implements OnInit {
 
     if (this.isExport) {
       if (this.candidateIds) {
-        const idsParams = this.candidateIds.map((id: string) => `ids=${id}`).join('&');
+        const idsParams = this.candidateIds.map((id: string) => `filterByIds=${id}`).join('&');
         params += `&${idsParams}`;
       }
       const exportUrl = `${environment.api_url}${url}?${params}`;
       console.log(exportUrl);
-
       window.open(exportUrl, '_blank');
       this.isExport = false;
-      if (this.isExport === false) this.fetchList();
+      if (this.isExport === false) this.fetchCandidates();
       return;
     }
-
+  
     this.apiService.get(`${url}?${params}`).subscribe((data: any) => {
       this.loader = false;
       this.initialLoader = false;
-      this.candidateList = [];
       if (data?.candidates) {
-        this.candidateList.push(data?.candidates);
+        this.candidateList = data?.candidates;
+        console.log(" this.candidateList", data)
         this.totalCount = data?.totalCount;
         const totalPages = Math.ceil(this.totalCount / this.limit);
         this.lastPage = totalPages;
@@ -189,7 +188,7 @@ export class CandidateAssignmentComponent implements OnInit {
 
   questionAssign(): void {
     if (this.candidateIdsQuestion && this.candidateIdsQuestion.length > 0) {
-      console.log("this.candidateIdsQuestion",this.candidateIdsQuestion);
+      console.log("this.candidateIdsQuestion", this.candidateIdsQuestion);
       const payload = {
         questionId: this.positionId,
         questionServiceId: this.candidateIdsQuestion
@@ -202,7 +201,7 @@ export class CandidateAssignmentComponent implements OnInit {
         },
         error: (error) => this.tostr.error('error?.error?.message ? error?.error?.message : Unable to assign question')
       })
-    }else if(!this.candidateIds) this.tostr.warning('Please select candidates before assign question');
+    } else if (!this.candidateIds) this.tostr.warning('Please select candidates before assign question');
     else this.tostr.warning('Already Assigned');
   }
 
@@ -259,7 +258,7 @@ export class CandidateAssignmentComponent implements OnInit {
   getSelectedCandidateServiceIds(): void {
     const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
     this.candidateIds = selectedCandidates.map((candidate: { serviceSequence: { serviceId: any; }; }) => candidate.serviceSequence?.serviceId);
-    const candidatesWithoutQuertionName = this.candidateList.filter((candidate: { isSelected: any;serviceSequence: { progress: { quertionName: any; }; }; }) => candidate.isSelected && !candidate.serviceSequence?.progress?.quertionName);
+    const candidatesWithoutQuertionName = this.candidateList.filter((candidate: { isSelected: any; serviceSequence: { progress: { quertionName: any; }; }; }) => candidate.isSelected && !candidate.serviceSequence?.progress?.quertionName);
     this.candidateIdsQuestion = candidatesWithoutQuertionName.map((candidate: { serviceSequence: { serviceId: any; }; }) => candidate.serviceSequence?.serviceId);
   }
 
@@ -298,7 +297,7 @@ export class CandidateAssignmentComponent implements OnInit {
 
   exportData(): void {
     this.isExport = true;
-    this.fetchList();
+    this.fetchCandidates();
   }
 
 
@@ -323,7 +322,7 @@ export class CandidateAssignmentComponent implements OnInit {
 
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);
-    this.fetchList();
+    this.fetchCandidates();
   }
 
 }
