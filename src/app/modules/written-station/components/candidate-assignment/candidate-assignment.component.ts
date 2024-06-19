@@ -51,7 +51,7 @@ export class CandidateAssignmentComponent implements OnInit {
   questionId: any;
   candidateIdsQuestion: any;
   isExport: boolean = false;
-
+  recruiterId:any;
   constructor(private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService, private s3Service: S3Service) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -60,6 +60,7 @@ export class CandidateAssignmentComponent implements OnInit {
 
   ngOnInit(): void {
     this.initialLoader = true;
+    this.recruiterId = localStorage.getItem('userId');
     this.fetchCandidates();
     this.fetchQuestions();
   }
@@ -272,12 +273,15 @@ export class CandidateAssignmentComponent implements OnInit {
   approve(): void {
     const averageScoreInput = document.getElementById('averageScore') as HTMLInputElement;
     const averageScore = averageScoreInput.value;
+    console.log("this.candidateList",this.candidateList);
+    localStorage.getItem('userId');
     const isScoreAdded = this.candidateList.some((candidate: any) => {
       (candidate?.serviceSequence?.progress?.progressScore !== null || candidate?.serviceSequence?.progress?.progressScore) && candidate?.serviceSequence?.serviceStatus === 'pending';
     });
     const payload = {
       serviceId: this.requestId,
-      averageScore: averageScore
+      averageScore: averageScore,
+      recruiterId:this.recruiterId
     };
     if (!isScoreAdded && averageScore) {
       this.apiService.post(`/written-station/approve`, payload).subscribe({
