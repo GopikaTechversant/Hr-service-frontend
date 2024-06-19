@@ -128,7 +128,7 @@ export class CandidateDetailModalComponent implements OnInit {
     const descriptionElement = document.getElementById('description') as HTMLInputElement;
     const fileInput = document.getElementById('fileInput') as HTMLInputElement;
     const file = fileInput.files ? fileInput.files[0] : null;
- 
+
     const payload = {
       progressAssignee: this.progressAssignee ? this.progressAssignee : this.userId,
       progressSkill: skillElement.value,
@@ -137,7 +137,7 @@ export class CandidateDetailModalComponent implements OnInit {
       progressDescription: descriptionElement.value,
       file: this.uploadedFileKey,
     }
-    if(this.uploadedFileKey){
+    if (this.uploadedFileKey) {
       let baseUrl = this.stationId === '3' ? `/technical-station` : this.stationId === '4' ? `/technical-station-two` : '';
       if (baseUrl) {
         this.apiService.post(`${baseUrl}/add-progress/v1`, payload).subscribe({
@@ -156,7 +156,7 @@ export class CandidateDetailModalComponent implements OnInit {
         this.tostr.error('Invalid operation');
       }
     }
-   
+
   }
 
   // addProgress(): void {
@@ -259,7 +259,7 @@ export class CandidateDetailModalComponent implements OnInit {
     if (baseUrl) {
       const payload = {
         serviceSeqId: this.serviceId,
-        feedBack: this.feedback,
+        feedBack: data?.feedback,
         feedBackBy: this.userId,
         feedBackCc: data?.mailCc,
         feedBackMailTemp: data?.mailTemp || '',
@@ -302,7 +302,7 @@ export class CandidateDetailModalComponent implements OnInit {
         rejectMailTemp: data?.mailTemp ?? '',
         rejectSubject: data?.mailSubject ?? '',
         rejectBcc: data?.mailBcc ?? '',
-        feedBack: this.feedback,
+        feedBack: data?.feedback ? data?.feedback : this.feedback,
       };
       this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
         next: (res: any) => {

@@ -19,7 +19,8 @@
                 </div>
                 <div class="col-1">
                     <span class="f-w-500">Requirement</span>
-                    <span class="text-color p-5 p-l-0" class="text-wrap" [title]="candidateDetails?.position">{{currentRequiremnt}}     <b> <-</b>  <b>-></b></span> 
+                    <span class="text-color p-5 p-l-0" class="text-wrap" [title]="candidateDetails?.position">{{currentRequirement}}  
+                          <span (click)="requirementSwitch('R')"><b> R</b> &nbsp;</span> <span  (click)="requirementSwitch('L')">&nbsp;<b>L</b></span>   </span> 
                 </div>
             </div>
             <div class="tab">

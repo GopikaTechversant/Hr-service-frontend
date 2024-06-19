@@ -22,7 +22,8 @@
     <div class="d-flex p-10">
         <div class="sub-head f-w-500 f-s-14 d-flex">
             <span class="p-8">Date of Birth</span>
-            <span class="p-8">Experince</span>
+            <span class="p-8">Total Experience</span>
+            <span class="p-8">Relevant </span>
             <span class="p-8">Previous Organisation</span>
             <span class="p-8">Previous Designation</span>
             <span class="p-8">Education</span>
@@ -34,7 +35,10 @@
                 : {{candidateDetails?.candidateDoB ?(candidateDetails?.candidateDoB | date: 'dd/MM/YYY' ): 'NIL' }}
             </span>
             <span class="p-8">
-                : {{candidateDetails?.candidateExperience ? candidateDetails?.candidateExperience : 'NIL'}}
+                : {{candidateDetails?.candidateTotalExperience ? candidateDetails?.candidateTotalExperience : '0'}}
+            </span>
+            <span class="p-8">
+                : {{candidateDetails?.candidateRevlentExperience ? candidateDetails?.candidateRevlentExperience : '0'}}
             </span>
             <span class="p-8">
                 : {{candidateDetails?.candidatePreviousOrg ? candidateDetails?.candidatePreviousOrg : 'NIL'}}
