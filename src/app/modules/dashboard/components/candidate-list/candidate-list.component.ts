@@ -99,10 +99,6 @@ export class CandidateListComponent {
     this.userId = selectedCandidates.map((candidate: { createdBy: { userId: any; }; }) => candidate?.createdBy?.userId);
     console.log("this.resumeSourceIds",this.resumeSourceIds);
     console.log("this.userId",this.userId);
-    
-    
-    
-
   }
 
   generatePageNumbers() {

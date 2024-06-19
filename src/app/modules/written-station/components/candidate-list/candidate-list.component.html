@@ -1,17 +1,14 @@
 <div class="main m-r-11">
     <div class="heading d-flex j-space">
-        <div class="title-left p-l-12"><span>Requirement List</span></div>
+        <div class="title-left"><span>Requirement List</span></div>
         <div class="d-flex  title-right">
-            <span class="m-r-15">
+            <span class="">
                 <input type="text" class="input p-l-5" placeholder="Search Requirement"
                     (keydown.enter)="candidateSearch(searchKeyword)" autocomplete="off" [(ngModel)]="searchKeyword">
                 <span class="search" (click)="candidateSearch(searchKeyword)">
                     <i class="fa fa-search" aria-hidden="true"></i>
                 </span>
             </span>
-            <div class="create-btn c-pointer" (click)="navigate('/dashboard/service-requirement',false)">
-                <span class="">Create Requirement</span>
-            </div>
         </div>
     </div>
     <div *ngIf="initialLoader">
@@ -31,13 +28,11 @@
                     <td>Team</td>
                     <td>Skills</td>
                     <td>Status</td>
-                    <td>Add Candidate</td>
                 </tr>
                 <div *ngIf="loader && !initialLoader" class="loader-parent">
                     <img src="assets/gif/loader.gif">
                 </div>
                 <ng-container *ngIf="candidates_list?.length > 0">
-
                     <ng-container *ngFor="let candidate of candidates_list">
                         <tr class="candidate c-pointer"
                             (dblclick)="navigate('/written/candidates/',candidate.requestId)">
@@ -53,8 +48,6 @@
                                 [ngStyle]="{'color': candidate.status === 'progress' ? '#F57C02' : '#08E179'}">
                                 {{candidate.status | titlecase}}
                             </td>
-                            <td><img src="assets/images/user-add.png" alt="" class="icon"
-                                    (click)="onStatusChange(candidate)"></td>
                         </tr>
                     </ng-container>
                 </ng-container>

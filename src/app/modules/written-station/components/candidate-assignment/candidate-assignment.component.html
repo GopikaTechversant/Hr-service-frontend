@@ -99,7 +99,7 @@
                 </div>
                 <ng-container *ngIf="candidateList.length > 0">
                     <ng-container *ngFor="let item of candidateList">
-                        <tr class="candidate c-pointer">
+                        <tr class="candidate c-pointer" (dblclick)="selectCandidate(item?.candidateId)">
                             <td><input type="checkbox" [(ngModel)]="item.isSelected"
                                     (change)="getSelectedCandidateServiceIds()"></td>
                             <td class="text-wrap" [title]="item.candidateFirstName + item.candidateLastName">

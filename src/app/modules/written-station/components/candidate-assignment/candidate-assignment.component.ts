@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ResultComponent } from '../result/result.component';
 import { AssignSeriesComponent } from '../assign-series/assign-series.component';
@@ -12,7 +12,10 @@ import { S3Service } from 'src/app/services/s3.service';
 @Component({
   selector: 'app-candidate-assignment',
   templateUrl: './candidate-assignment.component.html',
-  styleUrls: ['./candidate-assignment.component.css']
+  styleUrls: ['./candidate-assignment.component.css'],
+  host: {
+    '(document:click)': 'onBodyClick($event)'
+  }
 })
 export class CandidateAssignmentComponent implements OnInit {
   requestId: any;
@@ -52,10 +55,20 @@ export class CandidateAssignmentComponent implements OnInit {
   candidateIdsQuestion: any;
   isExport: boolean = false;
   recruiterId:any;
-  constructor(private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService, private s3Service: S3Service) {
+  constructor(private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService, private s3Service: S3Service,private router: Router) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
     });
+  }
+
+  onBodyClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.no-close')) {
+      this.showQuestions = false;
+      this.filterStatus = false;
+      this.requestList_open = false;
+      this.displayQuestion_open   = false;
+    }
   }
 
   ngOnInit(): void {
@@ -327,6 +340,10 @@ export class CandidateAssignmentComponent implements OnInit {
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);
     this.fetchCandidates();
+  }
+
+  selectCandidate(id: any): void {
+    this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
   }
 
 }
