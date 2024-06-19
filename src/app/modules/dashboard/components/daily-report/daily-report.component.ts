@@ -46,7 +46,7 @@ export class DailyReportComponent implements OnInit {
 
   ngOnInit(): void {
     // this.initialLoader = true;
-    this.reportUserId = localStorage.getItem('userId');
+    // this.reportUserId = localStorage.getItem('userId');
     this.fetchDetails();
     this.today = new Date();
   }
