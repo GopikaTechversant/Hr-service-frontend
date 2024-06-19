@@ -110,7 +110,7 @@ export class TechnicalDetailComponent implements OnInit {
       `search=${this.searchKeyword}`,
       `page=${this.currentPage}`,
       `limit=${this.limit}`,
-      `position=${this.positionId.trim()}`,
+      `position=${this.positionId}`,
       `experience=${this.experience.trim()}`,
       `fromDate=${this.startDate}`,
       `toDate=${this.endDate}`,
