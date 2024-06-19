@@ -1,4 +1,4 @@
-<div class="modal-header heading p-10 p-t-20 d-flex j-space">
+<div class="modal-header heading p-10 p-t-20 d-flex j-space" style="position: sticky; top: 0; z-index: 2;">
     <div *ngIf="loader" class="loader-parent">
         <img src="assets/gif/loader.gif">
     </div>
@@ -14,62 +14,100 @@
     </div>
 </div>
 <div class="modal-content">
-    <div class="d-flex p-10">
-        <div class="sub-head f-w-500 f-s-14 d-flex">
-            <span class="p-8">Skills</span>
-            <span class="p-8">Experience</span>
-            <span class="p-8">Base Salary</span>
-            <span class="p-8">Max Salary</span>
+    <div class="d-flex flex-1">
+        <div class="w-40">
+            <div class="heading p-10 d-flex j-space">
+                <span>Requirement Details</span>
+            </div>
+            <div class="d-flex p-10">
+                <div class="sub-head">
+                    <span class="f-w-500 p-8  f-s-14">Requirement Name</span>
+                    <span class="f-w-500 p-8  f-s-14">Skills</span>
+                    <span class="f-w-500 p-8  f-s-14">Experience</span>
+                    <span class="f-w-500 p-8  f-s-14">Base Salary</span>
+                    <span class="f-w-500 p-8  f-s-14">Max Salary</span>
+                    <span class="f-w-500 p-8  f-s-14">Requirement Status</span>
+                    <span class="f-w-500 p-8  f-s-14">Requirement Vacancy</span>
+                    <span class="f-w-500 p-8  f-s-14">Posting Date</span>
+                    <span class="f-w-500 p-8  f-s-14">Posting Date</span>
+                    <span class="f-w-500 p-8  f-s-14">Job Description</span>
+                </div>
+                <div class="sub-head">
+                    <span class="p-8"> : {{candidateDetails['serviceRequest.requestName'] | titlecase}}</span>
+                    <span class="p-8"> : {{candidateDetails['serviceRequest.requestSkills'] | titlecase}}</span>
+                    <span class="p-8"> : {{candidateDetails['serviceRequest.requestExperience']}}</span>
+                    <span class="p-8"> : {{candidateDetails['serviceRequest.requestBaseSalary']}}</span>
+                    <span class="p-8"> : {{candidateDetails['serviceRequest.requestMaxSalary']}}</span>
+                    <span class="p-8"> : {{candidateDetails['serviceRequest.requestStatus']}}</span>
+                    <span class="p-8"> : {{candidateDetails['serviceRequest.requestVacancy']}}</span>
+                    <span class="p-8"> : {{candidateDetails['serviceRequest.requestPostingDate']  | date: 'dd/MM/YYY' }}</span>
+                    <span class="p-8"> : {{candidateDetails['serviceRequest.requestClosingDate']  | date: 'dd/MM/YYY' }}</span>
+                    <span class="p-8"> : {{candidateDetails['serviceRequest.requestDescription'] }}</span>
+                </div>
+            </div>
         </div>
-        <div class="sub-head d-flex">
-            <span class="p-8"> : {{candidateDetails['serviceRequest.requestSkills']}}</span>
-            <span class="p-8"> : {{candidateDetails['serviceRequest.requestExperience']}}</span>
-            <span class="p-8"> : {{candidateDetails['serviceRequest.requestBaseSalary']}}</span>
-            <span class="p-8"> : {{candidateDetails['serviceRequest.requestMaxSalary']}}</span>
+        <div class="w-50 border">
+            <div class="heading p-10 d-flex j-space">
+                <span>Candidate Details</span>
+                <span class="c-pointer"><span class="f-s-14 f-w-400">Candidate Resume : </span>
+                <i class="fa fa-file-text-o p-l-5 blue" aria-hidden="true" title="View resume" (click)="viewResume(candidateDetails['candidate.candidateResume'])"></i>
+            </span>
+            </div>
+            <div class="d-flex p-10">
+                <div class="sub-head f-w-500 f-s-14 d-flex">
+                    <div class="p-8">Date of Birth</div>
+                    <div class="p-8">Skills</div>
+                    <div class="p-8">Previous Organisation</div>
+                    <div class="p-8">Previous Designation</div>
+                    <div class="p-8">Education</div>
+                    <div class="p-8">Expected Salary</div>
+                    <div class="p-8">Relevant Experience</div>
+                    <div class="p-8">Total Experience</div>
+                    <div class="p-8">City</div>
+                    <div class="p-8">District</div>
+                    <div class="p-8">State</div>
+                </div>
+                <div class="sub-head d-flex">
+                    <div class="p-8">
+                        : {{candidateDetails['candidate.candidateDoB'] ?(candidateDetails['candidate.candidateDoB'] | date: 'dd/MM/YYY' ): 'NIL' }}
+                    </div>
+                    <div class="p-8 d-flex">
+                        : <span class="p-l-3" *ngFor="let item of candidateDetails?.skills; let last = last">
+                            {{item?.skillName ? (item?.skillName | titlecase ): 'NIL'}} <span *ngIf="!last">,</span>
+                        </span>
+                    </div>
+                    <div class="p-8">
+                        : {{candidateDetails['candidate.candidatePreviousOrg'] ? candidateDetails['candidate.candidatePreviousOrg'] : 'NIL'}}
+                    </div>
+                    <div class="p-8">
+                        : {{candidateDetails['candidate.candidatePreviousDesignation'] ? candidateDetails['candidate.candidatePreviousDesignation'] : 'NIL'}}
+                    </div>
+                    <div class="p-8">
+                        : {{candidateDetails['candidate.candidateEducation'] ? candidateDetails['candidate.candidateEducation']: 'NIL'}}
+                    </div>
+                    <div class="p-8">
+                        : {{candidateDetails['candidate.candidateExpectedSalary'] ? candidateDetails['candidate.candidateExpectedSalary'] : 'NIL'}}
+                    </div>
+                    <div class="p-8">
+                        : {{candidateDetails['candidate.candidateRevlentExperience'] ? candidateDetails['candidate.candidateRevlentExperience'] : '0'}}
+                    </div> <div class="p-8">
+                        : {{candidateDetails['candidate.candidateTotalExperience'] ? candidateDetails['candidate.candidateTotalExperience'] : 'NIL'}}
+                    </div>
+                    <div class="p-8">
+                        : {{candidateDetails['candidate.candidateCity'] ? candidateDetails['candidate.candidateCity'] :'City'}}
+                    </div>
+                    <div class="p-8">
+                        : {{candidateDetails['candidate.candidateDistrict'] ? candidateDetails['candidate.candidateDistrict']:'District '}}
+                    </div>
+                    <div class="p-8">
+                        :{{candidateDetails['candidate.candidateState'] ? candidateDetails['candidate.candidateState'] :'State'}}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="heading p-10 d-flex j-space">
-        <span>Candidate Details</span>
-        <span class="c-pointer"><span class="f-s-14 f-w-400">Resume : </span>
-        <i class="fa fa-file-text-o p-l-5 blue" aria-hidden="true" title="View resume" (click)="viewResume(candidateDetails['candidate.candidateResume'])"></i>
-    </span>
-    </div>
-    <div class="d-flex p-10">
-        <div class="sub-head f-w-500 f-s-14 d-flex">
-            <span class="p-8">Date of Birth</span>
-            <span class="p-8">Skills</span>
-            <span class="p-8">Previous Organisation</span>
-            <span class="p-8">Previous Designation</span>
-            <span class="p-8">Education</span>
-            <span class="p-8">Expected Salary</span>
-            <span class="p-8">Address</span>
-        </div>
-        <div class="sub-head d-flex">
-            <span class="p-8">
-                : {{candidateDetails['candidate.candidateDoB'] ?(candidateDetails['candidate.candidateDoB'] | date: 'dd/MM/YYY' ): 'NIL' }}
-            </span>
-            <span class="p-8">
-                : {{candidateDetails['serviceRequest.requestSkills'] ? candidateDetails['serviceRequest.requestSkills']: 'NIL'}}
-            </span>
-            <span class="p-8">
-                : {{candidateDetails['candidate.candidatePreviousOrg'] ? candidateDetails['candidate.candidatePreviousOrg'] : 'NIL'}}
-            </span>
-            <span class="p-8">
-                : {{candidateDetails['candidate.candidatePreviousDesignation'] ? candidateDetails['candidate.candidatePreviousDesignation'] : 'NIL'}}
-            </span>
-            <span class="p-8">
-                : {{candidateDetails['candidate.candidateEducation'] ? candidateDetails['candidate.candidateEducation']: 'NIL'}}
-            </span>
-            <span class="p-8">
-                : {{candidateDetails['candidate.candidateExpectedSalar'] ? candidateDetails['candidate.candidateExpectedSalar'] : 'NIL'}}
-            </span>
-            <span class="p-8">
-                : {{candidateDetails['candidate.candidateCity'] ? candidateDetails['candidate.candidateCity'] :'City'}},
-                {{candidateDetails['candidate.candidateDistrict'] ? candidateDetails['candidate.candidateDistrict']:'District '}},
-                {{candidateDetails['candidate.candidateState'] ? candidateDetails['candidate.candidateState'] :'State'}}
-            </span>
-        </div>
-    </div>
+    
+   
     <!-- Initial buttons -->
     <div *ngIf="!progessAdded && candidateDetails?.serviceStatus === 'pending' && !progessAdded"
         class="details p-10 d-flex j-end w-97">
@@ -143,7 +181,7 @@
         </div>
     </div>
     <!-- Added Progress -->
-    <div class="heading p-10 d-flex j-space" *ngIf="data?.progressStatus > 0 || candidateDetails?.serviceStatus === 'moved'">
+    <div class="head p-10 d-flex j-space" *ngIf="data?.progressStatus > 0 || candidateDetails?.serviceStatus === 'moved'">
         <span>Added Progress</span>
     </div>
     <div class="d-flex p-10 progress" *ngIf="data?.progressStatus > 0 || candidateDetails?.serviceStatus === 'moved'">   
@@ -178,7 +216,7 @@
         </div>
     
     <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'done' || this.data?.candidateDetails?.serviceStatus === 'rejected'">
-        <div class="heading p-10">
+        <div class="head p-10">
             <span>Feedback</span>
         </div>
         <div class="sub-head d-flex">

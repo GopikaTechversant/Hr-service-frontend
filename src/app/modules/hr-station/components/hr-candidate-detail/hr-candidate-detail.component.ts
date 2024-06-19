@@ -81,7 +81,7 @@ export class HrCandidateDetailComponent {
     const payload = {
       offerServiceSeqId: this.serviceId,
       offerSalary: data?.offerSalary,
-      offerDescription: this.feedback,
+      offerDescription: data?.feedback,
       offerJoinDate: data?.joiningdate,
       offerMailTemp: data?.mailTemp,
       offerMailSubject: data?.mailSubject,
