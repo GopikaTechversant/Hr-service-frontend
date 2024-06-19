@@ -14,11 +14,15 @@ export class AssignRequirementComponent implements OnInit {
   selectedRequirement: string = '';
   selectedRequirementId: any;
   candidatesid: any[] = [];
+  userId:any;
+  resumeSourceid:any;
   constructor(public dialogRef: MatDialogRef<AssignRequirementComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private apiService: ApiService,
     private toastr: ToastrService) { }
   ngOnInit(): void {
     this.fetchRequirements();
     this.candidatesid = this.data.candidateIds;
+    this.userId = this.data.userId;
+    this.resumeSourceid = this.data.resumeSourceIds;
   }
 
   fetchRequirements(): void {
@@ -41,7 +45,9 @@ export class AssignRequirementComponent implements OnInit {
   save(): void {
     const payload = {
       candidatesId: this.candidatesid,
-      requirementId: this.selectedRequirementId
+      requirementId: this.selectedRequirementId,
+      userId:this.userId,
+      resumeSource:this.resumeSourceid
     }
     if(this.candidatesid && this.selectedRequirementId){
       this.apiService.post(`/screening-station/map-candidates`, payload).subscribe({
