@@ -143,16 +143,19 @@
         </div>
     </div>
     <!-- Added Progress -->
-    <div class="d-flex p-10 progress" *ngIf="data?.progressStatus > 0 || candidateDetails?.serviceStatus === 'moved'">
+    <div class="heading p-10 d-flex j-space" *ngIf="data?.progressStatus > 0 || candidateDetails?.serviceStatus === 'moved'">
+        <span>Added Progress</span>
+    </div>
+    <div class="d-flex p-10 progress" *ngIf="data?.progressStatus > 0 || candidateDetails?.serviceStatus === 'moved'">   
         <div class="sub-head f-w-500 f-s-14 d-flex">
-            <span class="p-8">Skill</span>
-            <span class="p-8">Score</span>
+            <span class="p-8" *ngIf="candidateDetails['progress.progressSkills'] ">Skill</span>
+            <span class="p-8" *ngIf="candidateDetails['progress.progressScore']">Score</span>
             <span class="p-8">Attached File</span>
             <span class="p-8">Description</span>
         </div>
         <div class="sub-head d-flex">
-            <span class="p-8"> : {{candidateDetails['progress.progressSkills'] ? candidateDetails['progress.progressSkills'] : 'NIL'}}</span>
-            <span class="p-8"> : {{candidateDetails['progress.progressScore'] ? candidateDetails['progress.progressScore'] : 'NIL'}}</span>
+            <span class="p-8" *ngIf="candidateDetails['progress.progressSkills']"> : {{candidateDetails['progress.progressSkills'] ? candidateDetails['progress.progressSkills'] : 'NIL'}}</span>
+            <span class="p-8" *ngIf="candidateDetails['progress.progressScore']"> : {{candidateDetails['progress.progressScore'] ? candidateDetails['progress.progressScore'] : 'NIL'}}</span>
             <span class="p-8"> : <i class="fa fa-file-text-o p-l-5 blue f-s-22" aria-hidden="true" title="View Attachment"
                 (click)="viewResume(candidateDetails['progress.progressFile'])"></i>
                 <span class="p-l-5">{{candidateDetails['progress.progressFile']}}</span>

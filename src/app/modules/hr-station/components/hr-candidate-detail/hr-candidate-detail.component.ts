@@ -87,6 +87,7 @@ export class HrCandidateDetailComponent {
       offerMailSubject: data?.mailSubject,
       offerMailBackCc: data?.mailCc,
       offerMailBackBcc: data?.mailBcc,
+      offerRleasedBy: this.userId,
       attachmentArray : [ {   
         filename:  data?.file ,
         path: `${environment.s3_url}${data?.file}`
