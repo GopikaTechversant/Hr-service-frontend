@@ -19,9 +19,18 @@
                 </div>
                 <div class="col-1">
                     <span class="f-w-500">Requirement</span>
-                    <span class="text-color p-5 p-l-0" class="text-wrap" [title]="candidateDetails?.position">{{candidateDetails?.position}}</span>
+                    <span class="text-color p-5 p-l-0" class="text-wrap" [title]="candidateDetails?.position">{{currentRequiremnt}}     <b> <-</b>  <b>-></b></span> 
                 </div>
             </div>
+            <div class="tab">
+                <button class="tablinks" onclick="openCity(event, 'London')">Basic Deatils</button>
+                <button class="tablinks" onclick="openCity(event, 'Paris')">Interviews</button>
+                <button class="tablinks" onclick="openCity(event, 'Tokyo')">Attachment</button>
+                <button class="tablinks" onclick="openCity(event, 'Tokyo')">Feedback</button>
+                <button class="tablinks" onclick="openCity(event, 'Tokyo')">History</button>
+
+
+              </div>
             <div class="m-b-20 d-flex">
                 <div class="basic-info">
                     <div class="basic-head">
@@ -214,23 +223,6 @@
                         <button class="btn-cancel c-pointer">Cancel</button>
                         <button class="btn-submit c-pointer">Submit</button>
                     </div> -->
-                </div>
-            </div>
-            <div class="history">
-                <div class="basic-head">
-                    <span class="f-w-500 f-s-16">Candidate History</span>
-                </div>
-                <div class="candidateDetailsContainer">
-                    <div class="details">
-                        <div class="details">
-                            <span class="f-w-500">
-                                <img src="assets/images/candidate-detail/calendar.svg" class="p-r-10" alt=""> Previoulsly Applied Requirement
-                            </span>
-                        </div>
-                        <div class="details">
-                            <span class="text-wrap">: Requirement Name</span>
-                        </div>
-                    </div>
                 </div>
             </div>
 
