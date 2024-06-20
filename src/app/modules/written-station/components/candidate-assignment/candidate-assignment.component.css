@@ -127,7 +127,7 @@ input[type="text"] {
 }
 
 .input-search {
-    width: 200px;
+    width: 211px;
     border: 1px solid #E9E9E9;
     outline: none;
     background-color: #FFFFFF;
@@ -205,12 +205,12 @@ tr {
 }
 
 .clear-filter {
-    /* padding: 0px 4px; */
+    display: inline-block;
     border: 1px solid #3c40434d;
     border-radius: 53%;
     height: 10px !important;
-    width: 8px !important;
-    line-height: 8px;
+    width: 10px !important;
+    line-height: 9px;
     text-align: center;
 }
 

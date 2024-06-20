@@ -5,7 +5,7 @@
             <input type="text" class="p-l-5" placeholder="Search by name" [(ngModel)]="searchKeyword"
                 (keydown)="searchCandidate(searchKeyword)">
             <span *ngIf="searchKeyword.trim() !== ''" (click)="clearFilter('search')"
-                class="clear-search c-pointer m-l-10">x</span>
+                class="clear-filter c-pointer">x</span>
         </span>
 
         <div class="input p-t-10 p-l-6  no-close p-relative m-l-10">
@@ -47,7 +47,8 @@
             </div>
         </div>
         <span class="input-search p-5 d-flex j-space align-center">
-            <input type="text" class="p-l-5" placeholder="Search by Experience" [(ngModel)]="experience" (ngModelChange)="searchByExperience(experience)"  maxlength="2">
+            <input type="text" class="p-l-5" placeholder="Search by Experience" [(ngModel)]="experience"
+                (ngModelChange)="searchByExperience(experience)" maxlength="2">
             <span *ngIf="experience.trim() !== ''" (click)="clearFilter('experience')"
                 class="clear-search c-pointer">x</span>
         </span>
@@ -71,8 +72,7 @@
             <span (click)="exportData()">Export</span>
         </div>
         <span class="input-approve p-5 j-space align-center p-relative">
-            <div> <input type="text" class="p-l-5 average-score" placeholder="Enter Average Score"
-                id="averageScore">
+            <div> <input type="text" class="p-l-5 average-score" placeholder="Enter Average Score" id="averageScore">
                 <!-- <span *ngIf="searchKeyword.trim() !== ''" (click)="clearFilter('search')"
                     class="clear-search c-pointer">x</span> -->
             </div>
@@ -106,7 +106,8 @@
                                 {{ item?.candidateFirstName }} {{ item?.candidateLastName }}
                             </td>
                             <td class="text-wrap" [title]="item.candidateEmail">{{ item?.candidateEmail }}</td>
-                            <td class="text-wrap">{{item?.serviceSequence?.progress?.quertionName || 'Not assigned'}}</td>
+                            <td class="text-wrap">{{item?.serviceSequence?.progress?.quertionName || 'Not assigned'}}
+                            </td>
                             <td class="text-wrap"><button class="result c-pointer"
                                     *ngIf="item?.serviceSequence?.progress?.progressScore === null && item?.serviceSequence?.progress?.quertionName"
                                     (click)="resultClick(item, item?.serviceSequence?.serviceId)">Add Result</button>
@@ -122,7 +123,9 @@
                                 <span class="c-pointer"
                                     *ngIf="item?.serviceSequence?.progress?.progressScore  && item?.serviceSequence?.progress?.progressScore !== null"><img
                                         class="p-l-9" src="/assets/images/view-file.png" alt="" height="29" width="29"
-                                        (click)="viewResume(item.serviceSequence.progress.progressFile)"></span>
+                                        (click)="viewResume(item.serviceSequence.progress.progressFile)">
+                                </span>
+                                <span *ngIf="!item?.serviceSequence?.progress?.progressScore  && item?.serviceSequence?.progress?.progressScore === null">Not added</span>
                             </td>
                             <td class="p-t-15">
                                 <img src="/assets/images/move.png" alt="" height="24px" width="24px"
@@ -130,11 +133,11 @@
                             </td>
                             <!-- <td class="text-wrap" [title]="item?.currentStation | titlecase">{{item?.currentStation |
                                 titlecase}}</td> -->
-                                <td class="f-w-500" [ngClass]="{'blue': item?.serviceSequence?.serviceStatus === 'pending','green': item?.serviceSequence?.serviceStatus === 'done',
+                            <td class="f-w-500" [ngClass]="{'blue': item?.serviceSequence?.serviceStatus === 'pending','green': item?.serviceSequence?.serviceStatus === 'done',
                                 'red': item?.serviceSequence?.serviceStatus === 'rejected'}"
-                            [title]="item?.serviceSequence?.serviceStatus | titlecase">
-                            {{ item?.serviceSequence?.serviceStatus | titlecase}}
-                        </td> 
+                                [title]="item?.serviceSequence?.serviceStatus | titlecase">
+                                {{ item?.serviceSequence?.serviceStatus | titlecase}}
+                            </td>
                         </tr>
                     </ng-container>
                 </ng-container>

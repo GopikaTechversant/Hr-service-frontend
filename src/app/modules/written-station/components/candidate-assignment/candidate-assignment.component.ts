@@ -51,7 +51,7 @@ export class CandidateAssignmentComponent implements OnInit {
   requestList_open: any;
   displayQuestion_open: any;
   displayQuestion: string = '';
-  questionId: any;
+  questionId: string = '';
   candidateIdsQuestion: any;
   isExport: boolean = false;
   recruiterId:any;
@@ -97,7 +97,8 @@ export class CandidateAssignmentComponent implements OnInit {
       `limit=${this.limit}`,
       `experience=${this.experience.trim()}`,
       `status_filter=${this.filteredStatus}`,
-      `report=${this.isExport}`
+      `report=${this.isExport}`,
+      `questionFilter=${this.questionId}`
     ].join('&');
 
     if (this.isExport) {
@@ -135,6 +136,13 @@ export class CandidateAssignmentComponent implements OnInit {
     });
   }
 
+  experienceValidation(event: any): void {
+    const intermediateAllowedCharacters = /^-?(\d{0,1}\d?)?(\.\d{0,2})?$/;
+    let enteredValue = event?.target?.value + event.key;
+    if (event.key === "Backspace" || event.key === "Delete" || event.key.includes("Arrow")) return;
+    if (!intermediateAllowedCharacters.test(enteredValue)) event.preventDefault();
+  }
+
   searchCandidate(searchTerm: string): void {
     console.log("searchTerm", searchTerm);
     this.searchKeyword = searchTerm;
@@ -143,16 +151,25 @@ export class CandidateAssignmentComponent implements OnInit {
 
   searchByExperience(experience: string): void {
     this.experience = experience;
-    // this.currentPage = 1;
-    // this.limit = 10;
+    this.currentPage = 1;
+    this.limit = 10;
     this.fetchCandidates();
   }
 
   selectStatusFilter(item: string): void {
     this.filteredStatus = item;
     sessionStorage.setItem('status_written', this.filteredStatus);
-    // this.currentPage = 1;
-    // this.limit = 10;
+    this.currentPage = 1;
+    this.limit = 10;
+    this.fetchCandidates();
+  }
+
+  filterQuestion(name: string, id: string): void {
+    this.displayQuestion_open = false;
+    this.displayQuestion = name;
+    this.questionId = id;
+    console.log("this.questionId",  this.questionId)
+    sessionStorage.setItem(`question`, JSON.stringify({ name: this.displayQuestion, id: this.questionId }));
     this.fetchCandidates();
   }
 
@@ -168,14 +185,13 @@ export class CandidateAssignmentComponent implements OnInit {
     }
     if (item === 'search') this.searchKeyword = '';
     if (item === 'experience') this.experience = '';
-
     if (item === 'question') {
       this.displayQuestion = '';
       this.questionId = '';
       sessionStorage.setItem(`question`, JSON.stringify({ name: this.displayQuestion, id: this.questionId }));
     }
-    // this.currentPage = 1;
-    // this.limit = 10;
+    this.currentPage = 1;
+    this.limit = 10;
     this.fetchCandidates();
   }
   // clearFilter(item: any): void {
@@ -189,14 +205,6 @@ export class CandidateAssignmentComponent implements OnInit {
     this.positionId = id;
     this.questionAssign();
     sessionStorage.setItem(`position`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
-    this.fetchCandidates();
-  }
-
-  filterQuestion(name: string, id: string): void {
-    this.displayQuestion_open = false;
-    this.displayQuestion = name;
-    this.questionId = id;
-    sessionStorage.setItem(`question`, JSON.stringify({ name: this.displayQuestion, id: this.questionId }));
     this.fetchCandidates();
   }
 
