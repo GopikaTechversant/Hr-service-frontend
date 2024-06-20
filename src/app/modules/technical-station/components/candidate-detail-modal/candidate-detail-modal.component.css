@@ -15,14 +15,38 @@
     padding-left: 18px !important;
 }
 
-.w-40{
-    width: 40%;
+.job-description {
+    width: 310px;
+    overflow: hidden;
+    /* height: 100px; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
-.border{
+.job-description:hover{
+    overflow: visible; 
+    white-space: normal;
+    height:auto;  /* just added this line */
+}
+
+.w-40 {
+    width: 47%;
+}
+
+.border {
     border-left: 1px solid #E3E0E0;
     padding-left: 20px;
 
+}
+
+.key{
+    width: 170px;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 .sub-head {

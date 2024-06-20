@@ -50,6 +50,7 @@ export class CandidateDetailModalComponent implements OnInit {
   filteredStatus: string = '';
   filterStatus: boolean = false;
   loader: boolean = false;
+  env_url: string ='';
   constructor(public dialogRef: MatDialogRef<CandidateDetailModalComponent>, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data) {
@@ -66,6 +67,7 @@ export class CandidateDetailModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = localStorage.getItem('userId');
+    this.env_url = window.location.origin;
   }
 
   closeDialog(): void {
