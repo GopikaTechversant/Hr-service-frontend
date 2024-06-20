@@ -106,13 +106,14 @@
                                 {{ item?.candidateFirstName }} {{ item?.candidateLastName }}
                             </td>
                             <td class="text-wrap" [title]="item.candidateEmail">{{ item?.candidateEmail }}</td>
-                            <td class="text-wrap">{{item?.serviceSequence?.progress?.quertionName || 'Not assigned'}}
+                            <td class="text-wrap"><span *ngIf="item?.serviceSequence?.progress?.questionName"></span>{{item?.serviceSequence?.progress?.questionName || 'Not assigned'}}
                             </td>
+                            <!-- <td>{{item?.serviceSequence?.progress?.questionName}}</td> -->
                             <td class="text-wrap"><button class="result c-pointer"
-                                    *ngIf="item?.serviceSequence?.progress?.progressScore === null && item?.serviceSequence?.progress?.quertionName"
+                                    *ngIf="item?.serviceSequence?.progress?.progressScore === null && item?.serviceSequence?.progress?.questionName"
                                     (click)="resultClick(item, item?.serviceSequence?.serviceId)">Add Result</button>
                                 <button class="disabled-button"
-                                    *ngIf="item?.serviceSequence?.progress?.progressScore === null && !item?.serviceSequence?.progress?.quertionName"
+                                    *ngIf="item?.serviceSequence?.progress?.progressScore === null && !item?.serviceSequence?.progress?.questionName"
                                     [disabled]="!item?.serviceSequence?.progress?.quertionName">
                                     Add Result
                                 </button>
