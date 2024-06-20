@@ -3,8 +3,12 @@
         <img src="assets/gif/loader.gif">
     </div>
     <div>
-        <span>{{candidateDetails['candidate.candidateFirstName']}} {{candidateDetails['candidate.candidateLastName']}}- </span>
-        <span class="blue">( {{candidateDetails['candidate.candidateId']}} )</span>
+        <span>{{candidateDetails['candidate.candidateFirstName']}} {{candidateDetails['candidate.candidateLastName']}} &nbsp;- </span>
+        <span class="blue">( 
+            <a [href]="env_url + '/dashboard/candidate-details/' + candidateDetails['candidate.candidateId']">
+                {{candidateDetails['candidate.candidateId']}}
+            </a>)
+        </span>
     </div>
     <div class="modal-close">
         <span class="p-10" [ngClass]="{'blue': candidateDetails?.serviceStatus === 'pending','green': candidateDetails?.serviceStatus === 'done',
@@ -15,34 +19,61 @@
 </div>
 <div class="modal-content">
     <div class="d-flex flex-1">
-        <div class="w-40">
+        <div class="w-50">
             <div class="heading p-10 d-flex j-space">
                 <span>Requirement Details</span>
             </div>
             <div class="d-flex p-10">
                 <div class="sub-head">
-                    <span class="f-w-500 p-8  f-s-14">Requirement Name</span>
-                    <span class="f-w-500 p-8  f-s-14">Skills</span>
-                    <span class="f-w-500 p-8  f-s-14">Experience</span>
-                    <span class="f-w-500 p-8  f-s-14">Base Salary</span>
-                    <span class="f-w-500 p-8  f-s-14">Max Salary</span>
-                    <span class="f-w-500 p-8  f-s-14">Requirement Status</span>
-                    <span class="f-w-500 p-8  f-s-14">Requirement Vacancy</span>
-                    <span class="f-w-500 p-8  f-s-14">Posting Date</span>
-                    <span class="f-w-500 p-8  f-s-14">Posting Date</span>
-                    <span class="f-w-500 p-8  f-s-14">Job Description</span>
+                    <span class="key p-8">Requirement Name</span>
+                    <span class="key p-8">Skills</span>
+                    <span class="key p-8">Experience</span>
+                    <!-- <span class="key p-8">Base Salary</span>
+                    <span class="key p-8">Max Salary</span> -->
+                    <span class="key p-8">Requirement Status</span>
+                    <span class="key p-8">Requirement Vacancy</span>
+                    <!-- <span class="key p-8">Posting Date</span>
+                    <span class="key p-8">Closing Date</span> -->
+                    <!-- <span class="key p-8">Job Description</span> -->
                 </div>
                 <div class="sub-head">
-                    <span class="p-8"> : {{candidateDetails['serviceRequest.requestName'] | titlecase}}</span>
-                    <span class="p-8"> : {{candidateDetails['serviceRequest.requestSkills'] | titlecase}}</span>
-                    <span class="p-8"> : {{candidateDetails['serviceRequest.requestExperience']}}</span>
-                    <span class="p-8"> : {{candidateDetails['serviceRequest.requestBaseSalary']}}</span>
-                    <span class="p-8"> : {{candidateDetails['serviceRequest.requestMaxSalary']}}</span>
-                    <span class="p-8"> : {{candidateDetails['serviceRequest.requestStatus']}}</span>
-                    <span class="p-8"> : {{candidateDetails['serviceRequest.requestVacancy']}}</span>
-                    <span class="p-8"> : {{candidateDetails['serviceRequest.requestPostingDate']  | date: 'dd/MM/YYY' }}</span>
-                    <span class="p-8"> : {{candidateDetails['serviceRequest.requestClosingDate']  | date: 'dd/MM/YYY' }}</span>
-                    <span class="p-8"> : {{candidateDetails['serviceRequest.requestDescription'] }}</span>
+                    <span class="p-8 job-description"> : 
+                        <a [href]="env_url + '/dashboard/series?requestId=' + candidateDetails['serviceRequest.requestId']">
+                          {{ candidateDetails['serviceRequest.requestName'] | titlecase }}
+                        </a>
+                      </span>
+                    <span class="p-8 job-description"> : {{candidateDetails['serviceRequest.requestSkills'] | titlecase}}</span>
+                    <span class="p-8 job-description"> : {{candidateDetails['serviceRequest.requestExperience']}}</span>
+                    <!-- <span class="p-8 job-description"> : {{candidateDetails['serviceRequest.requestBaseSalary']}}</span>
+                    <span class="p-8 job-description"> : {{candidateDetails['serviceRequest.requestMaxSalary']}}</span> -->
+                    <span class="p-8 job-description"> : {{candidateDetails['serviceRequest.requestStatus']}}</span>
+                    <span class="p-8 job-description"> : {{candidateDetails['serviceRequest.requestVacancy']}}</span>
+                    <!-- <span class="p-8 job-description"> : {{candidateDetails['serviceRequest.requestPostingDate']  | date: 'dd/MM/YYY' }}</span>
+                    <span class="p-8 job-description"> : {{candidateDetails['serviceRequest.requestClosingDate']  | date: 'dd/MM/YYY' }}</span> -->
+                    <!-- <span class="p-8 job-description"> : {{candidateDetails['serviceRequest.requestDescription'] }}</span> -->
+                </div>
+            </div>
+            <div class="w-40">
+                <div class="heading p-10 d-flex j-space">
+                    <span>Interview Details</span>
+                </div>
+                <div class="d-flex p-10">
+                    <div class="sub-head f-w-500 f-s-14 d-flex">
+                        <div class="p-8 key">Scheduled Date</div>
+                        <div class="p-8 key">Scheduled time</div>
+                        <div class="p-8 key">Panel</div>
+                        <div class="p-8 key">Inteview Satus</div>
+                        <div class="p-8 key">Inteview Mode</div>
+                        <!-- <div class="p-8 key">Feedback</div> -->
+                    </div>
+                    <div class="sub-head">
+                        <span class="p-8 job-description"> : {{candidateDetails?.interviewTime  | date: 'dd/MM/YYY'}}</span>
+                        <span class="p-8 job-description"> : {{candidateDetails?.interviewTime  | date: 'hh:mm a'}}</span>
+                        <span class="p-8 job-description"> : {{candidateDetails?.pannelName | titlecase}}</span>
+                        <span class="p-8 job-description"> : {{candidateDetails?.interviewstatus}}</span>
+                        <span class="p-8 job-description"> : {{candidateDetails?.interviewMode ? candidateDetails?.interviewMode : 'Not Updated'}}</span>
+                        <!-- <span class="p-8 job-description"> : {{candidateDetails['serviceRequest.requestBaseSalary']}}</span> -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -55,12 +86,13 @@
             </div>
             <div class="d-flex p-10">
                 <div class="sub-head f-w-500 f-s-14 d-flex">
+                    <div class="p-8">Contact Number</div>
+                    <div class="p-8">Mail</div>
                     <div class="p-8">Date of Birth</div>
                     <div class="p-8">Skills</div>
                     <div class="p-8">Previous Organisation</div>
                     <div class="p-8">Previous Designation</div>
                     <div class="p-8">Education</div>
-                    <div class="p-8">Expected Salary</div>
                     <div class="p-8">Relevant Experience</div>
                     <div class="p-8">Total Experience</div>
                     <div class="p-8">City</div>
@@ -68,6 +100,12 @@
                     <div class="p-8">State</div>
                 </div>
                 <div class="sub-head d-flex">
+                    <div class="p-8">
+                        : {{candidateDetails['candidate.candidateMobileNo'] ?(candidateDetails['candidate.candidateMobileNo']): '0000000000' }}
+                    </div>
+                    <div class="p-8">
+                        : {{candidateDetails['candidate.candidateEmail'] ? candidateDetails['candidate.candidateEmail'] : 'NIL'}}
+                    </div>
                     <div class="p-8">
                         : {{candidateDetails['candidate.candidateDoB'] ?(candidateDetails['candidate.candidateDoB'] | date: 'dd/MM/YYY' ): 'NIL' }}
                     </div>
@@ -86,9 +124,6 @@
                         : {{candidateDetails['candidate.candidateEducation'] ? candidateDetails['candidate.candidateEducation']: 'NIL'}}
                     </div>
                     <div class="p-8">
-                        : {{candidateDetails['candidate.candidateExpectedSalary'] ? candidateDetails['candidate.candidateExpectedSalary'] : 'NIL'}}
-                    </div>
-                    <div class="p-8">
                         : {{candidateDetails['candidate.candidateRevlentExperience'] ? candidateDetails['candidate.candidateRevlentExperience'] : '0'}}
                     </div> <div class="p-8">
                         : {{candidateDetails['candidate.candidateTotalExperience'] ? candidateDetails['candidate.candidateTotalExperience'] : 'NIL'}}
@@ -100,14 +135,13 @@
                         : {{candidateDetails['candidate.candidateDistrict'] ? candidateDetails['candidate.candidateDistrict']:'District '}}
                     </div>
                     <div class="p-8">
-                        :{{candidateDetails['candidate.candidateState'] ? candidateDetails['candidate.candidateState'] :'State'}}
+                        : {{candidateDetails['candidate.candidateState'] ? candidateDetails['candidate.candidateState'] :'State'}}
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
-   
+
     <!-- Initial buttons -->
     <div *ngIf="!progessAdded && candidateDetails?.serviceStatus === 'pending' && !progessAdded"
         class="details p-10 d-flex j-end w-97">
