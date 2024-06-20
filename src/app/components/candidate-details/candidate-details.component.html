@@ -19,19 +19,22 @@
                 </div>
                 <div class="col-1">
                     <span class="f-w-500">Requirement</span>
-                    <span class="text-color p-5 p-l-0" class="text-wrap" [title]="candidateDetails?.position">{{currentRequirement}}  
-                          <span (click)="requirementSwitch('R')"><b> R</b> &nbsp;</span> <span  (click)="requirementSwitch('L')">&nbsp;<b>L</b></span>   </span> 
+                    <span class="text-color p-5 p-l-0 text-wrap">
+                        <a [href]="env_url + '/dashboard/series?requestId=' + candidateDetails?.position[currentRequirementIndex]?.reqServiceRequest?.requestId">
+                            {{ candidateDetails?.position[currentRequirementIndex]?.reqServiceRequest?.requestName | titlecase }}
+                        </a>
+                    </span>
+                    <span (click)="requirementSwitch('R')"><button class="c-pointer"> Change requirement</button> &nbsp;</span>
+                    <!-- <span (click)="requirementSwitch('L')">&nbsp;<b>L</b></span> -->
                 </div>
             </div>
-            <div class="tab">
+            <!-- <div class="tab">
                 <button class="tablinks" onclick="openCity(event, 'London')">Basic Deatils</button>
                 <button class="tablinks" onclick="openCity(event, 'Paris')">Interviews</button>
                 <button class="tablinks" onclick="openCity(event, 'Tokyo')">Attachment</button>
                 <button class="tablinks" onclick="openCity(event, 'Tokyo')">Feedback</button>
-                <button class="tablinks" onclick="openCity(event, 'Tokyo')">History</button>
-
-
-              </div>
+                <button class="tablinks" onclick="openCity(event, 'Tokyo')">History</button
+              </div> -->
             <div class="m-b-20 d-flex">
                 <div class="basic-info">
                     <div class="basic-head">

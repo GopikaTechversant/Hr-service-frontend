@@ -17,6 +17,8 @@ export class CandidateDetailsComponent implements OnInit {
   CandidateData: any;
   candidateFeedback: any;
   currentRequirement: any;
+  env_url:string = '';
+  currentRequirementIndex: number = 0;
   constructor(private apiService: ApiService, private route: ActivatedRoute, private datePipe: DatePipe, private dialog: MatDialog,private http:HttpClient) {
     // this.route.params.subscribe(params => {
     //   this.candidateId = params['id'];
@@ -29,6 +31,7 @@ export class CandidateDetailsComponent implements OnInit {
       this.candidateId = params.get('id');
       this.fetchCandidateDetails();
     });
+    this.env_url = window.location.origin;
   }
   fetchCandidateDetails(): void {
     this.apiService.get(`/candidate/list/${this.candidateId}`).subscribe((res: any) => {
@@ -43,13 +46,12 @@ export class CandidateDetailsComponent implements OnInit {
     });
   }
 
-  requirementSwitch(item: any): void {
-    if (item === 'R'){
-      for(let requirement of this.candidateDetails?.position){
-        this.currentRequirement = requirement?.reqServiceRequest?.requestName
-        console.log(this.currentRequirement);
-        
-      }
+  requirementSwitch(direction: string): void {
+    const positions = this.candidateDetails?.position;
+    if (direction === 'L') {
+      this.currentRequirementIndex = (this.currentRequirementIndex + 1) % positions.length;
+    } else if (direction === 'R') {
+      this.currentRequirementIndex = (this.currentRequirementIndex - 1 + positions.length) % positions.length;
     }
   }
 
