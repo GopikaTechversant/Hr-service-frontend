@@ -16,6 +16,7 @@ export class CandidateDetailsComponent implements OnInit {
   resumePath: any;
   CandidateData: any;
   candidateFeedback: any;
+  currentRequirement: any;
   constructor(private apiService: ApiService, private route: ActivatedRoute, private datePipe: DatePipe, private dialog: MatDialog,private http:HttpClient) {
     // this.route.params.subscribe(params => {
     //   this.candidateId = params['id'];
@@ -27,7 +28,6 @@ export class CandidateDetailsComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.candidateId = params.get('id');
       this.fetchCandidateDetails();
-      this.fetchCandidateHistory();
     });
   }
   fetchCandidateDetails(): void {
@@ -35,17 +35,30 @@ export class CandidateDetailsComponent implements OnInit {
       if (res?.data) {
         this.CandidateData = res?.data
         this.candidateDetails = res?.data[0];
-        this.candidateFeedback = res?.comments
+        this.candidateFeedback = res?.comments;
+        this.currentRequirement = this.candidateDetails?.position[0].reqServiceRequest?.requestName
+      
+        this.fetchCandidateHistory();
       }
     });
   }
 
+  requirementSwitch(item: any): void {
+    if (item === 'R'){
+      for(let requirement of this.candidateDetails?.position){
+        this.currentRequirement = requirement?.reqServiceRequest?.requestName
+        console.log(this.currentRequirement);
+        
+      }
+    }
+  }
+
   fetchCandidateHistory(): void {
-    this.apiService.get(`/candidate/list/jeromjack@gmail.com`).subscribe((res: any) => {
+    this.apiService.get(`/candidate/candidate-history?email=${this.candidateDetails?.candidateEmail}&requestId=${this.candidateDetails?.position[0].reqServiceRequest.requestId}`).subscribe((res: any) => {
       if (res?.data) {
-        this.CandidateData = res?.data
-        this.candidateDetails = res?.data[0];
-        this.candidateFeedback = res?.comments
+        // this.CandidateData = res?.data
+        // this.candidateDetails = res?.data[0];
+        // this.candidateFeedback = res?.comments
       }
     });
   }

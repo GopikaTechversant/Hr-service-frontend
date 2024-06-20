@@ -57,7 +57,7 @@ export class HrCandidateListComponent implements OnInit {
   ngOnInit(): void {
     this.initialLoader = true;
     this.filteredStatus = sessionStorage.getItem('status') ? sessionStorage.getItem('status') : '';
-    const requirementData = sessionStorage.getItem(`requirement`);
+    const requirementData = sessionStorage.getItem(`requirement_5`);
     if (requirementData) {
       let requirement = JSON.parse(requirementData);
       if (requirement) {
@@ -87,7 +87,7 @@ export class HrCandidateListComponent implements OnInit {
       `search=${this.searchKeyword}`,
       `page=${this.currentPage}`,
       `limit=${this.limit}`,
-      `position=${this.positionId.trim()}`,
+      `position=${this.positionId}`,
       `experience=${this.experience.trim()}`,
       `fromDate=${this.startDate}`,
       `toDate=${this.endDate}`,
@@ -181,7 +181,9 @@ export class HrCandidateListComponent implements OnInit {
     this.requestList_open = false;
     this.displayPosition = name;
     this.positionId = id;
-    sessionStorage.setItem(`requirement`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
+    sessionStorage.setItem(`requirement_5`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
+    this.currentPage = 1;
+    this.limit = 10;
     this.fetchList();
   }
 
@@ -201,7 +203,7 @@ export class HrCandidateListComponent implements OnInit {
     if (item === 'position') {
       this.displayPosition = '';
       this.positionId = '';
-      sessionStorage.setItem(`requirement`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
+      sessionStorage.setItem(`requirement_5`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
     }
     if (item === 'search') this.searchKeyword = '';
     if (item === 'experience') this.experience = '';

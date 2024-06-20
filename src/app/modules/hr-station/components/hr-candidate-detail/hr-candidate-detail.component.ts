@@ -81,12 +81,13 @@ export class HrCandidateDetailComponent {
     const payload = {
       offerServiceSeqId: this.serviceId,
       offerSalary: data?.offerSalary,
-      offerDescription: this.feedback,
+      offerDescription: data?.feedback,
       offerJoinDate: data?.joiningdate,
       offerMailTemp: data?.mailTemp,
       offerMailSubject: data?.mailSubject,
       offerMailBackCc: data?.mailCc,
       offerMailBackBcc: data?.mailBcc,
+      offerRleasedBy: this.userId,
       attachmentArray : [ {   
         filename:  data?.file ,
         path: `${environment.s3_url}${data?.file}`

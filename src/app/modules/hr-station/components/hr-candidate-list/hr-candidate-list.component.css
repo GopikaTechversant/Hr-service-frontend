@@ -32,6 +32,7 @@
     overflow: hidden;
     background-color: whitesmoke;
 }
+
 .date-filters {
     display: flex;
     align-items: center;
@@ -65,6 +66,9 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    cursor: pointer;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 .input {
@@ -85,7 +89,7 @@
     height: 30px;
 }
 
-.date-input{
+.date-input {
     border: 1px solid #E9E9E9;
     outline: none;
     background-color: #FFFFFF;
