@@ -54,8 +54,8 @@ export class CandidateAssignmentComponent implements OnInit {
   questionId: string = '';
   candidateIdsQuestion: any;
   isExport: boolean = false;
-  recruiterId:any;
-  constructor(private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService, private s3Service: S3Service,private router: Router) {
+  recruiterId: any;
+  constructor(private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService, private s3Service: S3Service, private router: Router) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
     });
@@ -67,7 +67,7 @@ export class CandidateAssignmentComponent implements OnInit {
       this.showQuestions = false;
       this.filterStatus = false;
       this.requestList_open = false;
-      this.displayQuestion_open   = false;
+      this.displayQuestion_open = false;
     }
   }
 
@@ -113,7 +113,7 @@ export class CandidateAssignmentComponent implements OnInit {
       if (this.isExport === false) this.fetchCandidates();
       return;
     }
-  
+
     this.apiService.get(`${url}?${params}`).subscribe((data: any) => {
       this.loader = false;
       this.initialLoader = false;
@@ -168,7 +168,7 @@ export class CandidateAssignmentComponent implements OnInit {
     this.displayQuestion_open = false;
     this.displayQuestion = name;
     this.questionId = id;
-    console.log("this.questionId",  this.questionId)
+    console.log("this.questionId", this.questionId)
     sessionStorage.setItem(`question`, JSON.stringify({ name: this.displayQuestion, id: this.questionId }));
     this.fetchCandidates();
   }
@@ -208,12 +208,22 @@ export class CandidateAssignmentComponent implements OnInit {
     this.fetchCandidates();
   }
 
+  getSelectedCandidateServiceIds(): void {
+    const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
+    this.candidateIds = selectedCandidates.map((candidate: { serviceSequence: { serviceId: any; }; }) => candidate.serviceSequence?.serviceId);
+    const candidatesWithoutQuestionName = selectedCandidates.filter(
+      (candidate: { serviceSequence: { progress: { questionName: any; }; }; }) => !candidate.serviceSequence?.progress?.questionName
+    );
+    this.candidateIdsQuestion = candidatesWithoutQuestionName.map((candidate: { serviceSequence: { serviceId: any; }; }) => candidate.serviceSequence?.serviceId);
+  }
+
   questionAssign(): void {
     if (this.candidateIdsQuestion && this.candidateIdsQuestion.length > 0) {
       console.log("this.candidateIdsQuestion", this.candidateIdsQuestion);
       const payload = {
         questionId: this.positionId,
-        questionServiceId: this.candidateIdsQuestion
+        questionServiceId: this.candidateIdsQuestion,
+        questionAssignee: this.recruiterId
       }
       console.log("question assigned api");
       this.apiService.post(`/written-station/assign-question`, payload).subscribe({
@@ -277,12 +287,8 @@ export class CandidateAssignmentComponent implements OnInit {
     });
   }
 
-  getSelectedCandidateServiceIds(): void {
-    const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
-    this.candidateIds = selectedCandidates.map((candidate: { serviceSequence: { serviceId: any; }; }) => candidate.serviceSequence?.serviceId);
-    const candidatesWithoutQuertionName = this.candidateList.filter((candidate: { isSelected: any; serviceSequence: { progress: { quertionName: any; }; }; }) => candidate.isSelected && !candidate.serviceSequence?.progress?.quertionName);
-    this.candidateIdsQuestion = candidatesWithoutQuertionName.map((candidate: { serviceSequence: { serviceId: any; }; }) => candidate.serviceSequence?.serviceId);
-  }
+
+
 
   viewResume(resume: any) {
     this.resumePath = resume;
@@ -294,7 +300,7 @@ export class CandidateAssignmentComponent implements OnInit {
   approve(): void {
     const averageScoreInput = document.getElementById('averageScore') as HTMLInputElement;
     const averageScore = averageScoreInput.value;
-    console.log("this.candidateList",this.candidateList);
+    console.log("this.candidateList", this.candidateList);
     localStorage.getItem('userId');
     const isScoreAdded = this.candidateList.some((candidate: any) => {
       (candidate?.serviceSequence?.progress?.progressScore !== null || candidate?.serviceSequence?.progress?.progressScore) && candidate?.serviceSequence?.serviceStatus === 'pending';
@@ -302,7 +308,7 @@ export class CandidateAssignmentComponent implements OnInit {
     const payload = {
       serviceId: this.requestId,
       averageScore: averageScore,
-      recruiterId:this.recruiterId
+      recruiterId: this.recruiterId
     };
     if (!isScoreAdded && averageScore) {
       this.apiService.post(`/written-station/approve`, payload).subscribe({
@@ -324,7 +330,6 @@ export class CandidateAssignmentComponent implements OnInit {
     this.isExport = true;
     this.fetchCandidates();
   }
-
 
   generatePageNumbers() {
     let pages = [];
