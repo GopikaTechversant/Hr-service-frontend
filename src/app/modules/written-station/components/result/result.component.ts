@@ -13,6 +13,8 @@ import { Subscription } from 'rxjs';
 })
 export class ResultComponent {
   @Output() scoreSubmitted = new EventEmitter<number>();
+  @Output() serviceIdPassed = new EventEmitter<number>();
+  @Output() resultData = new EventEmitter<{ score: number, serviceId: number }>();
   examServiceId;
   scoreValue: string = '';
   descriptionValue: string = '';
@@ -23,16 +25,22 @@ export class ResultComponent {
   private keySubscription?: Subscription;
   uploadedFileKey: string = '';
   loader: boolean = false;
-
+  serviceId:any;
   constructor(private http: HttpClient,
     @Inject(MAT_DIALOG_DATA) public data: any, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
     private dialogRef: MatDialogRef<ResultComponent>) {
     if (data) {
       this.examServiceId = data.candidateIds
+      this.serviceId = data.candidate?.serviceSequence.serviceId
+      console.log("this.serviceId",this.serviceId);
+      
     }
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    console.log("data.candidates",this.data.candidate);
+    
+  }
 
   onFileSelected(event: any) {
     this.fileInputClicked = true;
@@ -110,7 +118,9 @@ export class ResultComponent {
           
           console.log("payload api", payload);
           this.dialogRef.close(true);
-          this.scoreSubmitted.emit(parseInt(this.scoreValue, 10));
+          // this.scoreSubmitted.emit(parseInt(this.scoreValue, 10));
+          // this.serviceIdPassed.emit(this.examServiceId); 
+          this.resultData.emit({ score: parseInt(this.scoreValue, 10), serviceId: this.examServiceId });
           this.tostr.success('Progress added successfully');
         },
         error: (err) => {
