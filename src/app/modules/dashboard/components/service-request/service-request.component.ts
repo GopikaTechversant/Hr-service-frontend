@@ -3,6 +3,7 @@ import { ViewChild, ElementRef } from '@angular/core';
 import { ToastrServices } from 'src/app/services/toastr.service';
 import { ApiService } from 'src/app/services/api.service';
 import { DatePipe } from '@angular/common';
+import { environment } from 'src/environments/environments';
 
 @Component({
   selector: 'app-service-request',
@@ -59,6 +60,8 @@ export class ServiceRequestComponent implements OnInit {
   closeDate: string | null = null;
   postDate: Date | null = null; // actual date object for post date
   closeDateObj: Date | null = null; // actual date object for close date
+  panel_list: any[]=[];
+
   constructor(private toastr: ToastrServices, private apiService: ApiService, private datePipe: DatePipe) { }
 
   @HostListener('window:beforeunload', ['$event'])
@@ -73,6 +76,7 @@ export class ServiceRequestComponent implements OnInit {
     this.fetchStations();
     this.fetchServiceTeam();
     this.fetchDesignation();
+    this. fetchPanel();
   }
 
   onBodyClick(event: MouseEvent): void {
@@ -162,6 +166,13 @@ export class ServiceRequestComponent implements OnInit {
           { "stationName": "Technical", "stationId": 6 }
         ];
       }
+    })
+  }
+
+  fetchPanel(): void {
+    this.apiService.get(`/user/lists?userRole=2`).subscribe((res: any) => {
+      if (res?.users) this.panel_list = res?.users;
+      console.log("this.panel_list",this.panel_list);
     })
   }
 
