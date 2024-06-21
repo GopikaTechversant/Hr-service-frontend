@@ -139,9 +139,9 @@
                             <span *ngIf="locationName">{{locationName}}</span>
                             <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
                             <div class="no-close dropdown c-pointer" *ngIf="showPreferredLocation">
-                                <p *ngFor="let location of preferredLocation"
-                                    (click)="selectPreferredLocation(location?.id, location?.name)">
-                                    {{location?.name}}</p>
+                                <p *ngFor="let item of preferredLocation"
+                                    (click)="selectPreferredLocation(item?.location)">
+                                    {{item?.location}}</p>
                             </div>
                         </div>
                     </div>
