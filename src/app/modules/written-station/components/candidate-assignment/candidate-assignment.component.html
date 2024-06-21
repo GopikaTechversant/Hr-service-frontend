@@ -7,7 +7,6 @@
             <span *ngIf="searchKeyword.trim() !== ''" (click)="clearFilter('search')"
                 class="clear-filter c-pointer">x</span>
         </span>
-
         <div class="input p-t-10 p-l-6  no-close p-relative m-l-10">
             <span class="f-right d-flex">
                 <span *ngIf="displayQuestion && displayQuestion !== ''" (click)="clearFilter('question')"
@@ -27,7 +26,6 @@
                 </div>
             </div>
         </div>
-
         <div class="input p-t-10 p-l-6  no-close p-relative m-l-10">
             <span class="f-right d-flex">
                 <span *ngIf="displayPosition && displayPosition !== ''" (click)="clearFilter('position')"
@@ -73,11 +71,10 @@
         </div>
         <span class="input-approve p-5 j-space align-center p-relative">
             <div> <input type="text" class="p-l-5 average-score" placeholder="Enter Average Score" id="averageScore">
-                <!-- <span *ngIf="searchKeyword.trim() !== ''" (click)="clearFilter('search')"
-                    class="clear-search c-pointer">x</span> -->
             </div>
             <button class="p-absolute approve-btn" (click)="approve()">Approve</button>
-            <div class="previous p-absolute ">Previous Average Score:10</div>
+            <div class="previous p-absolute " *ngIf="previousAverageScore">Previous Average Score :
+                {{previousAverageScore}}</div>
         </span>
     </div>
     <div class="main">
@@ -91,7 +88,6 @@
                     <td>Score</td>
                     <td>Attachement</td>
                     <td>Move Candidates</td>
-                    <!-- <td>Candidate Station</td> -->
                     <td>Status</td>
                 </tr>
                 <div *ngIf="loader && !initialLoader" class="loader-parent">
@@ -106,7 +102,9 @@
                                 {{ item?.candidateFirstName }} {{ item?.candidateLastName }}
                             </td>
                             <td class="text-wrap" [title]="item.candidateEmail">{{ item?.candidateEmail }}</td>
-                            <td class="text-wrap"><span *ngIf="item?.serviceSequence?.progress?.questionName"></span>{{item?.serviceSequence?.progress?.questionName || 'Not assigned'}}
+                            <td class="text-wrap"><span
+                                    *ngIf="item?.serviceSequence?.progress?.questionName"></span>{{item?.serviceSequence?.progress?.questionName
+                                || 'Not assigned'}}
                             </td>
                             <!-- <td>{{item?.serviceSequence?.progress?.questionName}}</td> -->
                             <td class="text-wrap"><button class="result c-pointer"
@@ -126,7 +124,9 @@
                                         class="p-l-9" src="/assets/images/view-file.png" alt="" height="29" width="29"
                                         (click)="viewResume(item.serviceSequence.progress.progressFile)">
                                 </span>
-                                <span *ngIf="!item?.serviceSequence?.progress?.progressScore  && item?.serviceSequence?.progress?.progressScore === null">Not added</span>
+                                <span
+                                    *ngIf="!item?.serviceSequence?.progress?.progressScore  && item?.serviceSequence?.progress?.progressScore === null">Not
+                                    added</span>
                             </td>
                             <td class="p-t-15">
                                 <img src="/assets/images/move.png" alt="" height="24px" width="24px"

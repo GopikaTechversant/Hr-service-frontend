@@ -58,13 +58,7 @@ export class AddCandidateModalComponent implements OnInit {
   requirement: any;
   private keySubscription?: Subscription;
   uploadedFileKey: string = '';
-  preferredLocation: any[] = [{
-    name: 'Kochi',
-    id: 1
-  }, {
-    name: 'Trivandrum',
-    id: 2
-  }];
+  preferredLocation: any[] = [];
   locationName: any;
   locationId: any;
   constructor(private apiService: ApiService, private tostr: ToastrServices, private formBuilder: UntypedFormBuilder, private datePipe: DatePipe, private s3Service: S3Service) {
@@ -102,6 +96,7 @@ export class AddCandidateModalComponent implements OnInit {
     this.maxDate.setFullYear(this.currentYear - 18);
     this.fetchRequerements();
     this.fetchSource();
+    this.fetchLocation();
     if (history?.state?.candidate) {
       this.requirementFromList()
     }
@@ -135,6 +130,13 @@ export class AddCandidateModalComponent implements OnInit {
     })
   }
 
+  fetchLocation():void{
+    this.apiService.get(`/user/preffer-location`).subscribe((res:any) => {
+      console.log("res",res)
+      this.preferredLocation = res?.data;
+    })
+  }
+
   nameValidation(event: any): void {
     const allowedCharacters = /^[A-Za-z\s]+$/;
     let enteredValue = event?.target?.value;
@@ -163,9 +165,8 @@ export class AddCandidateModalComponent implements OnInit {
     }
   }
 
-  selectPreferredLocation(id: any, name: any): void {
+  selectPreferredLocation(name: any): void {
     this.locationName = name;
-    this.locationId = id;
   }
 
   onKeypress(event: any): void {
