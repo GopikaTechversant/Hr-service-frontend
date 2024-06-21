@@ -32,10 +32,11 @@
     <div class="table-container m-b-0 w-100">
         <table class="table">
             <tr class="table-header f-w-500 p-b-10">
+                <td>Date</td>
                 <td>Recruiter Name</td>
-                <td>Interview Schedule Count</td>
-                <td>Interviews Conducted</td>
-                <td>Interview Update</td>
+                <td>Scheduled</td>
+                <td>Conducted</td>
+                <td>Rejected</td>
             </tr>
             <!-- <div class="loader-parent">
                     <img src="assets/gif/loader.gif">
@@ -43,10 +44,11 @@
             <ng-container *ngIf="countArray.length > 0">
                 <ng-container *ngFor="let item of countArray">
                     <tr class="c-pointer">
+                        <td>{{item?.date | date :'dd/MM/YYY'}}</td>
                         <td>{{item?.userFullName}}</td>
                         <td>{{item?.interviewScheduled}}</td>
                         <td>{{item?.interviewConducted}}</td>
-                        <td>1 st round scheduled</td>
+                        <td>{{item?.interviewRejectedcted}}</td>
                     </tr>
                 </ng-container>
             </ng-container>

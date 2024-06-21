@@ -20,7 +20,7 @@ export class LeftSidebarComponent implements OnInit {
       this.id = this.route.snapshot.firstChild?.params['id'];
       if (this.id) {
         this.candidateDetailUrl = `/dashboard/candidate-details/${this.id}`;
-        this.requisitionUrl = `/dashboard/requisition-detail/${this.id}`;
+        this.requisitionUrl = `/dashboard/requisition-detail/${this.id}` || `/dashboard/series?requestId=${this.id}`;
       }
     });
     this.updateUrls();
