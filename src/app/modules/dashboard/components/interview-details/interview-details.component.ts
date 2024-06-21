@@ -33,8 +33,6 @@ export class InterviewDetailsComponent implements OnInit {
   candidateName: string = '';
   candidateExperience: any;
   currentCompany: string = '';
-  locationValue: string = '';
-  panelId: any;
   modeValue: any;
   interviewStatusValue: any;
   rescheduledStatusValue: any;
@@ -70,6 +68,9 @@ export class InterviewDetailsComponent implements OnInit {
   candidateCount: any;
   candidateFirstName: any;
   candidateLastName: any;
+  locationName: string = '';
+  locationList: any;
+  showJobLocation: boolean = false;
   constructor(private datePipe: DatePipe, private http: HttpClient, private tostr: ToastrServices, private apiService: ApiService) { }
 
   @HostListener('window:beforeunload', ['$event'])
@@ -83,6 +84,7 @@ export class InterviewDetailsComponent implements OnInit {
       this.showcandidate = false;
       this.showRecruiters = false;
       this.showWorkMode = false;
+      this.showJobLocation = false;
     }
   }
 
@@ -177,6 +179,7 @@ export class InterviewDetailsComponent implements OnInit {
     this.fetchCandidates();
     this.fetchWorkMode();
     this.fetchMode();
+    this.fetchLocation();
     this.resetFormAndState('position');
   }
 
@@ -241,6 +244,14 @@ export class InterviewDetailsComponent implements OnInit {
     })
   }
 
+  fetchLocation(): void {
+    this.apiService.get(`/user/preffer-location`).subscribe((res: any) => {
+      if (res?.data) this.locationList = res?.data;
+      console.log(this.locationList);
+
+    })
+  }
+
   selectCandidate(candidateId: any, candidateFirstName: any, candidateLastName: any, candidate: any): void {
     this.showcandidate = false;
     this.candidateId = candidateId;
@@ -301,15 +312,12 @@ export class InterviewDetailsComponent implements OnInit {
     const noticeperiod = document.getElementById('noticePeriod') as HTMLInputElement;
     this.noticeperiodvalue = noticeperiod?.value ? noticeperiod?.value : this.noticeperiodvalue;
 
-    const location = document.getElementById('location') as HTMLInputElement;
-    this.Interviewlocation = location.value ? location.value : this.Interviewlocation;
-
     const payload = {
       recruiterId: this.recruiterId,
       candidateId: this.candidateId,
       noticePeriod: this.noticeperiodvalue,
       position: this.positionId,
-      location:this.Interviewlocation,
+      location: this.locationName,
       interviewTime: data?.interviewTime,
       interViewPanel: data?.interviewPanel,
       interviewMode: data?.interviewMode,
@@ -350,6 +358,12 @@ export class InterviewDetailsComponent implements OnInit {
     }
   }
 
+  selectLocation(name: any): void {
+    this.locationName = name;
+    this.showJobLocation = false;
+  }
+
+
   clearInputvalue(id: string) {
     const inputElement = document.getElementById(id) as HTMLInputElement;
     if (inputElement) inputElement.value = '';
@@ -362,7 +376,7 @@ export class InterviewDetailsComponent implements OnInit {
     this.showRecruiters = false;
     this.showDropdown = false;
     this.candidateName = '';
-    this.locationValue = '';
+    this.locationName = '';
     this.noticeperiodvalue = '';
     this.Interviewlocation = '';
     this.candidateRevlentExperience = '';

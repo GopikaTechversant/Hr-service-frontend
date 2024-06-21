@@ -88,7 +88,16 @@
         </div>
         <div class="child d-flex m-b-10">
             <span class="label m-b-4">Job Location</span>
-            <input type="text" class="input-box" id="location" [value]="Interviewlocation.trim() !== '' ? Interviewlocation : ''">
+            <div class="input-box c-pointer p-relative no-close" (click)="showJobLocation = !showJobLocation">
+                <span >{{locationName.trim() !== '' ? locationName : "Select Job Location"}}</span>
+                <span> <i class="f-right m-5 m-r-10 fa fa-chevron-down s-text"></i></span>
+                <div class="no-close dropdown c-pointer" *ngIf="showJobLocation">
+                    <div class="p-5" *ngFor="let item of locationList"
+                        (click)="selectLocation(item?.location);showJobLocation = !showJobLocation">
+                        {{item?.location}} 
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>

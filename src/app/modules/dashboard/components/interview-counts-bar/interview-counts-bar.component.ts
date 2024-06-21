@@ -76,11 +76,11 @@ export class InterviewCountsBarComponent implements OnInit {
           label: 'Counts',
           data: this.dataSet,
           backgroundColor: 'rgba(98, 138, 252)',
-                  borderColor: 'rgba(98, 138, 252)',
-                  borderWidth: 1,
-                  barThickness: 40,  
-                  barPercentage: 1, 
-                  categoryPercentage: 0.9, 
+          borderColor: 'rgba(98, 138, 252)',
+          borderWidth: 1,
+          barThickness: 40,
+          barPercentage: 1,
+          categoryPercentage: 0.9,
         }]
       },
       options: {

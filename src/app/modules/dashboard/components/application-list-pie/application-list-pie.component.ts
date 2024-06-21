@@ -3,6 +3,7 @@ import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { DatePipe } from '@angular/common';
 import { ApiService } from 'src/app/services/api.service';
+
 @Component({
   selector: 'app-application-list-pie',
   templateUrl: './application-list-pie.component.html',
@@ -16,19 +17,21 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
   sourceLabels: any[] = [];
   sourceCount: any[] = [];
   requestId: any;
-  today : Date = new Date();
+  today: Date = new Date();
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+
   constructor(private apiService: ApiService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.requestId = this.positionId ? this.positionId : '';
-    this.fetchResumeSource()
+    this.fetchResumeSource();
   }
 
   ngAfterViewInit(): void {
     Chart.register(ChartDataLabels);
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['positionId'] && !changes['positionId'].isFirstChange()) {
       this.requestId = changes['positionId'].currentValue;
@@ -41,10 +44,10 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
       if (res?.data) {
         this.sourceList = res?.data;
         this.sourceCount = this.sourceList.map((item: any) => Number(item.sourcecount));
-        this.sourceLabels = this.sourceList.map((item: any) => item.sourceName)
+        this.sourceLabels = this.sourceList.map((item: any) => item.sourceName);
         this.createChart();
       }
-    })
+    });
   }
 
   dateChange(event: any, range: string): void {
@@ -66,55 +69,75 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
         datasets: [{
           data: this.sourceCount,
           backgroundColor: ['#628afc', '#005ec9', '#047892', '#224462', '#0094d4'],
+          borderColor: ['#628afc', '#005ec9', '#047892', '#224462', '#0094d4'],
           fill: false
         }],
       },
       options: {
-        aspectRatio: 1.9,
-        layout: {
-          padding: {
-            top: 30,
-            right: 10,
-            bottom: 30,
-            left: 10
-          }
+        responsive: true,
+        aspectRatio: 1.6,
+         layout: {
+          padding: 30,
         },
         plugins: {
           legend: {
-            display: false
+            display: false,
           },
           tooltip: {
             enabled: false
           },
           datalabels: {
-            color: (context) => {
-              const backgroundColor = context.chart.data.datasets[0].backgroundColor;
-              if (Array.isArray(backgroundColor)) {
-                return backgroundColor[context.dataIndex] || '#000';
-              }
-              return '#000';
-            },
-            padding: 4,
-            anchor: 'end',
-            align: 'end',
-            offset: 10,
-            font: {
-              size: 14,
-              weight: 'bold',
-            },
-            formatter: (value, context) => {
-              const square = '▮ ';
-              if (context.chart.data.labels && typeof context.dataIndex === 'number') {
-                return `${square}${context.chart.data.labels[context.dataIndex]}: ${value}`;
-              }
-              return `${square}Unknown ${value}`;
-            },
-          },
+            display: false
+          }
         },
       },
-      plugins: [ChartDataLabels],
+      plugins: [this.doughnutLabelsLinePlugin, ChartDataLabels],
     });
   }
 
+  doughnutLabelsLinePlugin = {
+    id: 'doughnutLabelsLine',
+    afterDraw(chart: any, args: any, option: any) {
+      const {ctx, chartArea: {top, bottom, left, right, width, height},} = chart;
+      const labelPositions: any[] = [];
+      chart.data.datasets.forEach((dataset: any, i: any) => {
+        chart.getDatasetMeta(i).data.forEach((datapoint: { tooltipPosition: () => { x: any; y: any; }; }, index: string | number) => {
+          const { x, y } = datapoint.tooltipPosition();                
+          const halfwidth = width / 2;
+          const halfheight = height / 2;
+          const xLine = x >= halfwidth ? x + 50 : x - 50;
+          const yLine = y >= halfheight ? y + 50 : y - 50;
+          const extraLine = x >= halfwidth ? 50 : -50;
+          let finalYLine = yLine;
+          for (const pos of labelPositions) {
+            if (Math.abs(finalYLine - pos) < 20) {
+              finalYLine += 20 * (yLine > pos ? 1 : -1);
+            }
+          }
+          labelPositions.push(finalYLine);
 
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+          ctx.arc(x, y, 2, 0, 2 * Math.PI, true);
+          ctx.fill();
+          ctx.moveTo(x, y);
+          ctx.lineTo(xLine, finalYLine);
+          ctx.lineTo(xLine + extraLine, finalYLine);
+          ctx.strokeStyle = dataset.borderColor[index];
+          ctx.stroke();
+
+          ctx.font = '14px Roboto';
+          ctx.fontWeight = 'bold';
+          const textXPosition = x ? x >= halfwidth ? 'left' : 'right' : y >= halfheight ? 'top' : 'bottom';
+          const plusFivePx = x >= halfwidth ? 5 : -5;
+
+          ctx.textAlign = textXPosition;
+          ctx.textBaseline = 'middle';
+          ctx.fillStyle = dataset.borderColor[index];
+
+          ctx.fillText(((chart.data.labels[index]) + ' ' + (chart.data.datasets[0].data[index])), xLine + extraLine + plusFivePx, finalYLine);
+        });
+      });
+    },
+  };
 }
