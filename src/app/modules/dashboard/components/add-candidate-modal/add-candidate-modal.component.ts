@@ -20,6 +20,7 @@ export class AddCandidateModalComponent implements OnInit {
   displayDate: any;
   showDropdown: boolean = false;
   showSource: boolean = false;
+  showPreferredLocation: boolean = false;
   matcher: ErrorStateMatcher = new ShowOnDirtyErrorStateMatcher();
   candidateForm!: UntypedFormGroup;
   submitted: boolean = false;
@@ -57,13 +58,21 @@ export class AddCandidateModalComponent implements OnInit {
   requirement: any;
   private keySubscription?: Subscription;
   uploadedFileKey: string = '';
+  preferredLocation: any[] = [{
+    name: 'Kochi',
+    id: 1
+  }, {
+    name: 'Trivandrum',
+    id: 2
+  }];
+  locationName: any;
+  locationId: any;
   constructor(private apiService: ApiService, private tostr: ToastrServices, private formBuilder: UntypedFormBuilder, private datePipe: DatePipe, private s3Service: S3Service) {
     this.candidateForm = this.formBuilder.group({
       candidateFirstName: [null, Validators.required],
       candidateLastName: [null, Validators.required],
       candidateDoB: [null, Validators.required],
       candidateGender: [null, Validators.required],
-      // candidateExperience: [null, Validators.required],
       candidateRevlentExperience: [null, Validators.required],
       candidateTotalExperience: [null, Validators.required],
       candidatePreferlocation: [null, Validators.required],
@@ -78,7 +87,6 @@ export class AddCandidateModalComponent implements OnInit {
       candidateEmail: [null, Validators.required],
       candidateMobileNo: [null, Validators.required],
       resumeSourceId: [null, Validators.required],
-
     })
   }
 
@@ -86,7 +94,6 @@ export class AddCandidateModalComponent implements OnInit {
   unloadNotification($event: any) {
     $event.returnValue = true;
   }
-
 
   ngOnInit(): void {
     this.candidateCreatedby = localStorage.getItem('userId');
@@ -147,7 +154,6 @@ export class AddCandidateModalComponent implements OnInit {
   selectRequirement(requirement: any): void {
     if (this.selectedRequirementName !== requirement?.requestName && this.selectedRequirementId !== requirement?.requestId) {
       this.selectedRequirementName = requirement?.requestName;
-      // if(this.fromRequirementName) this.fromRequirementName ==
       this.selectedRequirementId = requirement?.requestId;
       this.maxSalary = requirement?.requestMaxSalary
       this.minSalary = requirement?.requestBaseSalary
@@ -155,6 +161,11 @@ export class AddCandidateModalComponent implements OnInit {
         candidateExpectedSalary: null
       });
     }
+  }
+
+  selectPreferredLocation(id: any, name: any): void {
+    this.locationName = name;
+    this.locationId = id;
   }
 
   onKeypress(event: any): void {
@@ -215,13 +226,9 @@ export class AddCandidateModalComponent implements OnInit {
   onFileSelected(event: any) {
     this.fileInputClicked = true;
     this.selectedFile = event.target.files[0];
-    console.log("this.selectedFile in add ", this.selectedFile);
     if (event.target.files.length > 0) this.resumeUploadSuccess = true;
     if (this.selectedFile) this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', this.selectedFile);
-    console.log("this.selectedFile", typeof (this.selectedFile));
-
     this.getKeyFroms3();
-    // if(this.selectedFile) this.s3Service.uploadedFile.emit(this.selectedFile)
   }
 
   getKeyFroms3(): void {
@@ -322,8 +329,6 @@ export class AddCandidateModalComponent implements OnInit {
   //     this.submitted = true;
   //   }
   // }
-
-
   submitClick(): void {
     this.submitForm = true;
     this.loader = true;
@@ -339,16 +344,14 @@ export class AddCandidateModalComponent implements OnInit {
         candidateEmail: this.candidateForm?.value?.candidateEmail,
         candidateMobileNo: this.candidateForm?.value?.candidateMobileNo,
         candidateDoB: this.candidateForm?.value?.candidateDoB,
-        // candidateExperience: this.candidateForm?.value?.candidateExperience,
-        candidateRevlentExperience:this.candidateForm?.value?.candidateRevlentExperience,
-        candidateTotalExperience:this.candidateForm?.value?.candidateTotalExperience,
-        candidatePreferlocation:this.candidateForm?.value?.candidatePreferlocation,
+        candidateRevlentExperience: this.candidateForm?.value?.candidateRevlentExperience,
+        candidateTotalExperience: this.candidateForm?.value?.candidateTotalExperience,
+        candidatePreferlocation: this.locationName,
         candidatePreviousOrg: this.candidateForm?.value?.candidatePreviousOrg,
         candidatePreviousDesignation: this.candidateForm?.value?.candidatePreviousDesignation,
         candidateEducation: this.candidateForm?.value?.candidateEducation,
         candidateCurrentSalary: this.candidateForm?.value?.candidateCurrentSalary,
         candidateExpectedSalary: this.candidateForm?.value?.candidateExpectedSalary,
-        // candidateAddress: this.candidateForm?.value?.candidateFirstName,
         candidateCreatedby: this.candidateCreatedby,
         candidatePrimarySkills: this.primaryskills,
         candidateSecondarySkills: this.secondaryskills,
@@ -382,8 +385,6 @@ export class AddCandidateModalComponent implements OnInit {
       this.submitted = true;
     }
   }
-
-
 
   triggerFileInput(): void {
     const fileInput = document.querySelector('input[type="file"]') as HTMLElement;
@@ -443,14 +444,14 @@ export class AddCandidateModalComponent implements OnInit {
     this.skillSuggestions = [];
   }
 
-  addExtraSkills(): void {
-    let skill = document.getElementById('addskill') as HTMLInputElement;
-    let skillValue = skill.value;
-    this.apiService.post(`/candidate/add/skill?skillName=${skillValue}`, skillValue).subscribe((res: any) => {
-      const extraSkill = res?.data;
-      this.selectSkill(extraSkill);
-    })
-  }
+  // addExtraSkills(): void {
+  //   let skill = document.getElementById('addskill') as HTMLInputElement;
+  //   let skillValue = skill.value;
+  //   this.apiService.post(`/candidate/add/skill?skillName=${skillValue}`, skillValue).subscribe((res: any) => {
+  //     const extraSkill = res?.data;
+  //     this.selectSkill(extraSkill);
+  //   })
+  // }
 
   ngOnDestroy(): void {
     if (this.keySubscription) {

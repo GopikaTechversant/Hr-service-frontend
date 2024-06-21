@@ -83,24 +83,6 @@
                 </div>
             </div>
             <div class="d-flex parent">
-                <!-- <div class="child d-flex m-b-10">
-                    <span class="label m-b-4">Requirement<span class="required">*</span></span>
-                    <div class="input-box p-t-5 p-l-5 c-pointer p-relative no-close"
-                        (click)="requirementListOpen = !requirementListOpen">
-                        <div class="p-t-5" *ngIf="!fromRequirementName">
-                            <span *ngIf="!selectedRequirementName" class="no-close">Select Requirement</span>
-                            <span *ngIf="selectedRequirementName" class="no-close">{{selectedRequirementName}}</span>
-                            <span><i class="f-right p-r-10 fa fa-chevron-down s-text no-close"></i></span>
-                            <div class="no-close dropdown c-pointer no-close" *ngIf="requirementListOpen">
-                                <p *ngFor="let requirement of requirementList" (click)="selectRequirement(requirement)">
-                                    {{requirement?.requestName}}</p>
-                            </div>
-                        </div>
-                        <div class="p-t-5" *ngIf="fromRequirementName">
-                            <span class="no-close">{{fromRequirementName}}</span>
-                        </div>
-                    </div>
-                </div> -->
                 <div class="child d-flex m-b-10">
                     <span class="label m-b-4">Application Source<span class="required">*</span></span>
                     <div class="input-box p-t-5 p-l-5 c-pointer p-relative no-close" (click)="showSource = !showSource">
@@ -128,7 +110,7 @@
                 </div>
             </div>
             <div class="d-flex parent">
-               
+
                 <div class="child d-flex m-b-10">
                     <span class="label m-b-4">Previous Organization</span>
                     <input type="text" class="input-box" formControlName="candidatePreviousOrg" maxlength="40"
@@ -148,8 +130,21 @@
             <div class="d-flex parent">
                 <div class="child d-flex m-b-10">
                     <span class="label m-b-4">Preferred Location</span>
-                    <input type="text" class="input-box" formControlName="candidatePreferlocation" maxlength="40"
-                        (keydown)="nameValidation($event)">
+                    <!-- <input type="text" class="input-box" formControlName="candidatePreferlocation" maxlength="40"
+                        (keydown)="nameValidation($event)"> -->
+                    <div class="input-box p-t-5 p-l-5 c-pointer p-relative no-close"
+                        (click)="showPreferredLocation = !showPreferredLocation">
+                        <div class="p-t-5">
+                            <span *ngIf="!locationName">Select Location</span>
+                            <span *ngIf="locationName">{{locationName}}</span>
+                            <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
+                            <div class="no-close dropdown c-pointer" *ngIf="showPreferredLocation">
+                                <p *ngFor="let location of preferredLocation"
+                                    (click)="selectPreferredLocation(location?.id, location?.name)">
+                                    {{location?.name}}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="child d-flex m-b-10">
                     <span class="label m-b-4">City</span>
@@ -174,7 +169,7 @@
                         formControlName="candidateCurrentSalary" [maxlength]="maxSalary?.length ? maxSalary?.length : 7"
                         (keydown)="budgetCheck($event)" (paste)="onPaste($event)">
                 </div>
-                <div class="child d-flex m-b-10">                    
+                <div class="child d-flex m-b-10">
                     <span class="label m-b-4">Expected Salary</span>
                     <input type="text" class="input-box" (keydown)="budgetCheck($event)" (paste)="onPaste($event)"
                         formControlName="candidateExpectedSalary">
@@ -233,10 +228,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-flex j-end">
+                <!-- <div class="d-flex j-end">
                     <span *ngIf="selectedSkillType" class="add-btn c-pointer "
                         (click)="$event.preventDefault();addExtraSkills()">Add</span>
-                </div>
+                </div> -->
             </div>
             <div class="child-skill d-flex m-b-10">
                 <div *ngIf="selectedPrimarySkills.length > 0">
