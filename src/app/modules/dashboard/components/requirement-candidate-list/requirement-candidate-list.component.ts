@@ -53,7 +53,6 @@ export class RequirementCandidateListComponent implements OnInit {
       pages.push(1);
       let start = Math.max(2, this.currentPage - 1);
       let end = Math.min(this.lastPage - 1, this.currentPage + 1);
-
       if (this.currentPage <= 3) end = 4;
       else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
       if (start > 2) pages.push('...');
@@ -64,7 +63,7 @@ export class RequirementCandidateListComponent implements OnInit {
     return pages;
   }
 
-  candidateSearch(search: any): void {
+  requirementSearch(search: any): void {
     this.searchKeyword = search
     this.currentPage = 1;
     this.limit = 9;
@@ -119,6 +118,13 @@ export class RequirementCandidateListComponent implements OnInit {
         }
       })
     })
+  }
+
+  clearFilter(): void {
+    this.searchKeyword = '';
+    this.currentPage = 1;
+    this.limit = 14;
+    this.fetchcandidates('');
   }
 
 }
