@@ -17,9 +17,14 @@ export class CandidateDetailsComponent implements OnInit {
   CandidateData: any;
   candidateFeedback: any;
   currentRequirement: any;
-  env_url:string = '';
+  env_url: string = '';
+  activeTab: string = 'basic';
+  positionId: any;
+
   currentRequirementIndex: number = 0;
-  constructor(private apiService: ApiService, private route: ActivatedRoute, private datePipe: DatePipe, private dialog: MatDialog,private http:HttpClient) {
+  viewResumeFile: any;
+  CandidateHistory: any;
+  constructor(private apiService: ApiService, private route: ActivatedRoute, private datePipe: DatePipe, private dialog: MatDialog, private http: HttpClient) {
     // this.route.params.subscribe(params => {
     //   this.candidateId = params['id'];
     // });
@@ -32,15 +37,19 @@ export class CandidateDetailsComponent implements OnInit {
       this.fetchCandidateDetails();
     });
     this.env_url = window.location.origin;
+   
   }
+
   fetchCandidateDetails(): void {
     this.apiService.get(`/candidate/list/${this.candidateId}`).subscribe((res: any) => {
       if (res?.data) {
         this.CandidateData = res?.data
         this.candidateDetails = res?.data[0];
         this.candidateFeedback = res?.comments;
-        this.currentRequirement = this.candidateDetails?.position[0].reqServiceRequest?.requestName
-      
+        this.currentRequirement = this.candidateDetails?.position[0].reqServiceRequest?.requestName;
+        this.positionId = this.candidateDetails?.position[0].reqServiceRequest.requestId;
+        this.resumePath =this.candidateDetails?.candidateResume;
+        this.viewResumeFile = environment.s3_url ;
         this.fetchCandidateHistory();
       }
     });
@@ -53,22 +62,34 @@ export class CandidateDetailsComponent implements OnInit {
     } else if (direction === 'R') {
       this.currentRequirementIndex = (this.currentRequirementIndex - 1 + positions.length) % positions.length;
     }
+    this.positionId = this.candidateDetails?.position[this.currentRequirementIndex]?.reqServiceRequest?.requestId
+    this.fetchCandidateHistory();
   }
 
   fetchCandidateHistory(): void {
-    this.apiService.get(`/candidate/candidate-history?email=${this.candidateDetails?.candidateEmail}&requestId=${this.candidateDetails?.position[0].reqServiceRequest.requestId}`).subscribe((res: any) => {
-      if (res?.data) {
-        // this.CandidateData = res?.data
+    this.apiService.get(`/candidate/candidate-history?email=${this.candidateDetails?.candidateEmail}&requestId=${this.positionId}`).subscribe((res: any) => {
+      if (res) {
+        this.CandidateHistory = res?.history
+        console.log(this.CandidateHistory[0]?.candidatesDetail);
+        
         // this.candidateDetails = res?.data[0];
         // this.candidateFeedback = res?.comments
       }
     });
   }
+
+  selectedTab(event: any, tabName: string): void {
+    this.activeTab = tabName;
+  }
+
   viewResume(resume: any) {
     this.resumePath = resume;
     console.log("this.resumePath", this.resumePath);
     window.open(`${environment.s3_url}${this.resumePath}`, '_blank');
-    console.log("`${environment.s3_url}${this.resumePath}`",typeof(`${environment.s3_url}${this.resumePath}`));
+    this.viewResumeFile = environment.s3_url ;
+    console.log(this.viewResumeFile);
+    
+    console.log("`${environment.s3_url}${this.resumePath}`", typeof (`${environment.s3_url}${this.resumePath}`));
   }
-  
+
 }
