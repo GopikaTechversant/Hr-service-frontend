@@ -32,6 +32,7 @@
     font-size: 16px;
     line-height: 18.96px;
     color: #4F4F4F;
+    width: 53%;
 }
 
 .input {
@@ -39,9 +40,10 @@
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
-    width: 53%;
+    width: 73%;
     height: 30px;
     margin-right: -10px;
+    line-height: 26px;
 }
 
 .search {
@@ -180,7 +182,7 @@ tr {
     overflow-y: auto;
     font-size: 14px;
     font-weight: 400;
-    width: 98%;
+    width: 73%;
     padding: 5px;
     border-radius: 4px;
     position: absolute;
@@ -251,7 +253,7 @@ tr {
 .export-btn {
     border-radius: 3px;
     height: 31px;
-    width: 81px;
+    width: 141px;
     background-color: #4F4F4F;
     color: white;
     font-weight: 500;
@@ -259,10 +261,6 @@ tr {
     text-align: center;
     margin-top: 2px;
 }
-
-/* .date-input {
-    width: 68%;
-} */
 
 .date-input-box {
     border: 1px solid #E9E9E9;
@@ -284,14 +282,22 @@ tr {
     margin-right: -10px;
 }
 
-/* .to-date {
-    width: 68%;
-} */
-
 .header {
     width: 78%;
 }
 
-.filter {
-    width: 25%;
+.table-title {
+    position: sticky;
+    top: 0;
+    background-color: #F4F2F2 !important;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: center;
+}
+
+.input-filter {
+    width: 100%;
 }

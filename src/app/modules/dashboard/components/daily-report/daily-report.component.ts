@@ -34,7 +34,7 @@ export class DailyReportComponent implements OnInit {
   initialLoader: boolean = false;
   loader: boolean = false;
   report: boolean = false;
-  url:any;
+  url: any;
   constructor(private apiService: ApiService, private datePipe: DatePipe) { }
 
   onBodyClick(event: MouseEvent): void {
@@ -129,10 +129,18 @@ export class DailyReportComponent implements OnInit {
   exportData(): void {
     this.report = true;
     this.fetchDetails();
-    if( this.report = true) {
-      window.open(`${environment.api_url}${this.url}`,'_blank')
+    if (this.report = true) {
+      window.open(`${environment.api_url}${this.url}`, '_blank')
       this.initialLoader = false;
       this.loader = false;
     }
+  }
+
+  clearFilter(item: string): void {
+    if (item === 'recruiter') {
+      this.recruiterName = "";
+      this.reportUserId = "";
+    }
+    this.fetchDetails();
   }
 }
