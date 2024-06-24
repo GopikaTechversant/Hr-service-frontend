@@ -1,5 +1,5 @@
 <div class="main p-l-20">
-    <div class="heading p-t-10">
+    <div class="heading">
         <span>Interview Details</span>
     </div>
     <div *ngIf="loader" class="loader-parent">
@@ -8,7 +8,7 @@
     <div class="d-flex j-space parent">
 
         <div class="child d-flex m-b-10" #positionDiv>
-            <span class="label m-b-4">Requirement</span>
+            <span class="label m-b-8">Requirement</span>
             <div class="input-box c-pointer p-relative no-close" (click)="showDropdown = !showDropdown">
                 <span>{{positionName.trim() !== '' ? positionName : 'Select Requirement'}}</span>
                 <span *ngIf="!positionName"><i class="f-right m-5 m-r-10 fa fa-chevron-down s-text no-close"></i></span>
@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="child d-flex m-b-10">
-            <span class="label m-b-4">Candidate Name</span>
+            <span class="label m-b-8">Candidate Name</span>
             <div class="input-box c-pointer p-relative no-close" (click)="candidateClick()">
                 <span  class="c-pointer">{{candidateName.trim() !== '' ? candidateName : 'Select Candidate Name'}}</span>
                 <span *ngIf="!candidate?.candidateFirstName">
@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="child d-flex m-b-10" #recruiterNameDiv>
-            <span class="label m-b-4">Recruiter Name</span>
+            <span class="label m-b-8">Recruiter Name</span>
             <div class="input-box c-pointer p-relative no-close" (click)="showRecruiters = !showRecruiters">
                 <span>{{recruiterName.trim() !== '' ? recruiterName : 'Select Recruiter Name'}}</span>
                 <span> <i class="f-right m-5 m-r-10 fa fa-chevron-down s-text no-close"></i></span>
@@ -52,25 +52,25 @@
 
     <div class="d-flex j-space parent">
         <div class="child d-flex m-b-10">
-            <span class="label m-b-4">Relevant Experience</span>
+            <span class="label m-b-8">Relevant Experience</span>
             <div class="input-box">
                 <span>{{candidateRevlentExperience || ''}}</span>
             </div>
         </div>
         <div class="child d-flex m-b-10">
-            <span class="label m-b-4">Total Experience</span>
+            <span class="label m-b-8">Total Experience</span>
             <div class="input-box">
                 <span>{{candidateTotalExperience || ''}}</span>
             </div>
         </div>
         <div class="child d-flex m-b-10">
-            <span class="label m-b-4 ">Notice Period</span>
+            <span class="label m-b-8 ">Notice Period</span>
             <input type="text" class="input-box" [value]="noticeperiodvalue.trim() !== '' ? noticeperiodvalue : ''" id="noticePeriod">
         </div>
     </div>
     <div class="d-flex j-space parent">
         <div class="child d-flex m-b-10">
-            <span class="label m-b-4">Mode of Work</span>
+            <span class="label m-b-8">Mode of Work</span>
             <div class="input-box c-pointer p-relative no-close" (click)="showWorkMode = !showWorkMode">
                 <span >{{selectedModeName.trim() !== '' ? selectedModeName : "Select Work Mode"}}</span>
                 <span> <i class="f-right m-5 m-r-10 fa fa-chevron-down s-text"></i></span>
@@ -83,11 +83,11 @@
             </div>
         </div>
         <div class="child d-flex m-b-10">
-            <span class="label m-b-4">Current Company</span>
+            <span class="label m-b-8">Current Company</span>
             <input type="text" class="input-box" [value]="currentCompany.trim() !== '' ? currentCompany : ''">
         </div>
         <div class="child d-flex m-b-10">
-            <span class="label m-b-4">Job Location</span>
+            <span class="label m-b-8">Job Location</span>
             <div class="input-box c-pointer p-relative no-close" (click)="showJobLocation = !showJobLocation">
                 <span >{{locationName.trim() !== '' ? locationName : "Select Job Location"}}</span>
                 <span> <i class="f-right m-5 m-r-10 fa fa-chevron-down s-text"></i></span>
@@ -106,7 +106,7 @@
     <app-mail-template [candidate]="mailTemplateData" (submitData)="onSubmitData($event)"></app-mail-template>
 </div>
 <!-- <div class="child d-flex m-b-10">
-            <span class="label m-b-4">Interview Date & Time</span>
+            <span class="label m-b-8">Interview Date & Time</span>
             <div class="p-relative">
                 <div class="input-box c-pointer">
                     <input class="p-l-9 date-input" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerInterview"
@@ -130,7 +130,7 @@
             </div>
         </div> -->
 <!-- <div class="child d-flex m-b-10" #panelDiv>
-            <span class="label m-b-4">Interview Panel</span>
+            <span class="label m-b-8">Interview Panel</span>
             <div class="input-box p-t-10 p-l-6 c-pointer p-relative" (click)="showPanel = !showPanel">
                 <span *ngIf="!panelName">Select Name</span>
                 <span *ngIf="panelName" class="p-l-9">{{panelName}}</span>
@@ -145,7 +145,7 @@
         </div> -->
 <!-- <div class="d-flex j-space parent">
         <div class="child d-flex m-b-10">
-            <span class="label m-b-4">Mode</span>
+            <span class="label m-b-8">Mode</span>
             <div class="input-box p-t-10 p-l-6 c-pointer p-relative" (click)="showModeList = !showModeList">
                 <span *ngIf="!selectedModeName">Select Mode</span>
                 <span *ngIf="selectedModeName" class="p-l-9">{{selectedModeName}}</span>
@@ -158,12 +158,12 @@
             </div>
         </div>
         <div class="child d-flex m-b-10">
-            <span class="label m-b-4">Interview Status</span>
+            <span class="label m-b-8">Interview Status</span>
             <input type="text" class="input-box p-l-9 p-t-2 p-b-3" id="interviewStatus" [value]="interviewStatus | titlecase">
         </div>
     </div>
     <div class="child d-flex m-b-10">
-        <span class="label m-b-4">Comments</span>
+        <span class="label m-b-8">Comments</span>
         <textarea class="comments p-l-9 p-t-6" id="comments" [value]="comment|| commentValue"></textarea>
     </div> -->
 
