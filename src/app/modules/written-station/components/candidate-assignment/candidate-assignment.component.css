@@ -327,11 +327,17 @@ tr {
     margin-bottom: 35px;
 }
 
-/* .average-score{
-    border: none;
-    outline: none;
-    background-color: #FFFFFF;
+.assign-question{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 34px;
+    width: 150px;
     border-radius: 3px;
-    width: 260px !important;
-    height: 28px;
-} */
+    background-color: #575F6E;
+    color: white;
+    margin-left: 10px;
+    margin-top: 2px;
+    font-weight: 500;
+    margin-right: 11px;
+}

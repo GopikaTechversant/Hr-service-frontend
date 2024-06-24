@@ -13,6 +13,7 @@ import { CandidateDetailsComponent } from 'src/app/components/candidate-details/
 import { MaterialModule } from '../material/material.module';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { CandidateAssignmentComponent } from './components/candidate-assignment/candidate-assignment.component';
+import { AssignQuestionComponent } from './components/assign-question/assign-question.component';
 const routes: Routes = [
   { path:'',component:HomeComponent,
   children: [
@@ -32,7 +33,8 @@ const routes: Routes = [
     ResultComponent,
     LeftSidebarComponent,
     AssignSeriesComponent,
-    CandidateAssignmentComponent
+    CandidateAssignmentComponent,
+    AssignQuestionComponent
   ],
   imports: [
     CommonModule,

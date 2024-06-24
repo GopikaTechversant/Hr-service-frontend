@@ -7,6 +7,12 @@
             <span *ngIf="searchKeyword.trim() !== ''" (click)="clearFilter('search')"
                 class="clear-filter c-pointer">x</span>
         </span>
+        <span class="input-search p-5 d-flex j-space align-center">
+            <input type="text" class="p-l-5" placeholder="Search by Experience" [(ngModel)]="experience"
+                (ngModelChange)="searchByExperience(experience)" maxlength="2">
+            <span *ngIf="experience.trim() !== ''" (click)="clearFilter('experience')"
+                class="clear-search c-pointer">x</span>
+        </span>
         <div class="input p-t-10 p-l-6  no-close p-relative m-l-10">
             <span class="f-right d-flex">
                 <span *ngIf="displayQuestion && displayQuestion !== ''" (click)="clearFilter('question')"
@@ -26,7 +32,13 @@
                 </div>
             </div>
         </div>
-        <div class="input p-t-10 p-l-6  no-close p-relative m-l-10">
+        <!-- <span class="input-search p-5 d-flex j-space align-center">
+            <input type="text" class="p-l-5" placeholder="Search by Experience" [(ngModel)]="experience"
+                (ngModelChange)="searchByExperience(experience)" maxlength="2">
+            <span *ngIf="experience.trim() !== ''" (click)="clearFilter('experience')"
+                class="clear-search c-pointer">x</span>
+        </span> -->
+        <!-- <div class="input p-t-10 p-l-6  no-close p-relative m-l-10">
             <span class="f-right d-flex">
                 <span *ngIf="displayPosition && displayPosition !== ''" (click)="clearFilter('position')"
                     class="clear-filter c-pointer">x</span>
@@ -43,13 +55,13 @@
                     {{name?.questionName}}
                 </div>
             </div>
-        </div>
-        <span class="input-search p-5 d-flex j-space align-center">
+        </div> -->
+        <!-- <span class="input-search p-5 d-flex j-space align-center">
             <input type="text" class="p-l-5" placeholder="Search by Experience" [(ngModel)]="experience"
                 (ngModelChange)="searchByExperience(experience)" maxlength="2">
             <span *ngIf="experience.trim() !== ''" (click)="clearFilter('experience')"
                 class="clear-search c-pointer">x</span>
-        </span>
+        </span> -->
         <div class="input-1 c-pointer p-t-10 no-close p-relative">
             <span class="no-close p-l-10" (click)="filterStatus = !filterStatus">{{filteredStatus.trim() === '' ?
                 'Filter by Status' : filteredStatus | titlecase}}</span>
@@ -66,8 +78,11 @@
                 </span>
             </div>
         </div>
-        <div class="export-btn c-pointer">
+        <!-- <div class="export-btn c-pointer">
             <span (click)="exportData()">Export</span>
+        </div> -->
+        <div (click)="openQuestionAssign();">
+            <span class="c-pointer assign-question">Assign Question</span>
         </div>
         <span class="input-approve p-5 j-space align-center p-relative">
             <div> <input type="text" class="p-l-5 average-score" placeholder="Enter Average Score" id="averageScore">
@@ -76,6 +91,9 @@
             <div class="previous p-absolute " *ngIf="previousAverageScore">Previous Average Score :
                 {{previousAverageScore}}</div>
         </span>
+        <div class="export-btn c-pointer">
+            <span (click)="exportData()">Export</span>
+        </div>
     </div>
     <div class="main">
         <div class="table-container m-b-0 w-100">

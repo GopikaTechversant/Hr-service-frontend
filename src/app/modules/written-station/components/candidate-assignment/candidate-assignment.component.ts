@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environments';
 import { StationSwitchComponent } from 'src/app/components/station-switch/station-switch.component';
 import { WarningBoxComponent } from 'src/app/components/warning-box/warning-box.component';
 import { S3Service } from 'src/app/services/s3.service';
+import { AssignQuestionComponent } from '../assign-question/assign-question.component';
 @Component({
   selector: 'app-candidate-assignment',
   templateUrl: './candidate-assignment.component.html',
@@ -221,6 +222,16 @@ export class CandidateAssignmentComponent implements OnInit {
     else this.tostr.warning('The candidates already have assigned questions');
   }
 
+openQuestionAssign():void{
+  if (this.candidateIdsQuestion && this.candidateIdsQuestion.length > 0){
+    const dialogRef = this.dialog.open(AssignQuestionComponent,{
+      height: '265px',
+      width: '477px',
+      data:{candidateIds:this.candidateIdsQuestion}
+    })
+  }
+}
+
   onSwitchStation(candidate: any): void {
     if (candidate?.serviceSequence?.serviceStatus === 'pending' || candidate?.serviceSequence?.serviceStatus === 'rejected') {
       const userId = localStorage.getItem('userId');
@@ -336,5 +347,5 @@ export class CandidateAssignmentComponent implements OnInit {
   selectCandidate(id: any): void {
     this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
   }
-
+ 
 }
