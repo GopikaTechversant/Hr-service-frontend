@@ -301,3 +301,9 @@ tr {
 .input-filter {
     width: 100%;
 }
+
+.clear-filter {
+    padding: 0px 4px;
+    border: 1px solid #3c40434d;
+    border-radius: 50%;
+}
