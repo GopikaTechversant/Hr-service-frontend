@@ -230,3 +230,20 @@ tr {
     color: black;
     font-weight: 500;
 }
+
+.global-filter{
+    width: 98.8%;
+}
+
+.filter-month{
+    margin-right: 46px;
+}
+
+.error {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    color: #525455;
+    width: 100%;
+    margin-top: 30px;
+}

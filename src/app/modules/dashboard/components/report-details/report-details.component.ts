@@ -40,8 +40,8 @@ export class ReportDetailsComponent implements OnInit {
   today: any;
   lastPage: any;
   totalCount: any;
-  loader:boolean = false;
-  initialLoader:boolean = false;
+  loader: boolean = false;
+  initialLoader: boolean = false;
   constructor(private tostr: ToastrServices, private apiService: ApiService) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -77,7 +77,7 @@ export class ReportDetailsComponent implements OnInit {
   fetchInterviewStatus(): void {
     this.apiService.get(`/report/over-all-interview-status?page=${this.currentPage}&limit=${this.pageSize}`).subscribe((res: any) => {
       if (res?.data) {
-        this.initialLoader =false;
+        this.initialLoader = false;
         this.interviewDetails = res?.data;
         this.totalCount = res?.toatlCount;
         const totalPages = Math.ceil(this.totalCount / this.pageSize);
@@ -107,7 +107,6 @@ export class ReportDetailsComponent implements OnInit {
   }
 
   fetchDetails(): void {
-    this.reportUserId = localStorage.getItem('userId');
     this.apiService.get(`/report/month-report-data?month=${this.currentYear}-${this.reportMonth}&userId=${this.reportUserId}`).subscribe((res: any) => {
       if (res?.data) {
         this.userRequirement = [];
@@ -164,7 +163,7 @@ export class ReportDetailsComponent implements OnInit {
     }
     if (item === 'recruiter') {
       this.recruiterName = "";
-      this.reportUserId = "";
+      this.reportUserId = localStorage.getItem('userId');
     }
     this.fetchDetails();
   }
