@@ -25,7 +25,7 @@ export class DailyReportComponent implements OnInit {
   endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   reportUserId: any = '';
   showRecruiters: boolean = false;
-  recruiterName: string = 'Select';
+  recruiterName: string = '';
   recruiterKeys: any[] = [];
   currentPage: number = 1;
   lastPage: any;
@@ -46,7 +46,7 @@ export class DailyReportComponent implements OnInit {
 
   ngOnInit(): void {
     // this.initialLoader = true;
-    // this.reportUserId = localStorage.getItem('userId');
+    this.reportUserId = localStorage.getItem('userId');
     this.fetchDetails();
     this.today = new Date();
   }
