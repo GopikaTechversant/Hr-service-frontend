@@ -85,15 +85,15 @@ export class HrCandidateListComponent implements OnInit {
     const url = `/hr-station/list`
     let params = [
       `search=${this.searchKeyword}`,
-      `page=${this.currentPage}`,
-      `limit=${this.limit}`,
+      `page=${this.isExport ? '' : this.currentPage}`,
+      `limit=${this.isExport ? '' : this.limit}`,
       `position=${this.positionId}`,
       `experience=${this.experience.trim()}`,
       `fromDate=${this.startDate}`,
       `toDate=${this.endDate}`,
       `status_filter=${this.filteredStatus}`,
       `report=${this.isExport}`
-    ].join('&');
+    ].filter(param => param.split('=')[1] !== '').join('&');  
 
     if (this.isExport) {
       if (this.candidateIds) {

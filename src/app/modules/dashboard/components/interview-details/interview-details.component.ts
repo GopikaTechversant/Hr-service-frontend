@@ -106,6 +106,7 @@ export class InterviewDetailsComponent implements OnInit {
       // this.fetchCandidates();
       this.fetchWorkMode();
       this.fetchMode();
+      this.fetchLocation();
       this.showMail('screening');
     }
   }
