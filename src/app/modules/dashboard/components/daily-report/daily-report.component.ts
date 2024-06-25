@@ -94,7 +94,6 @@ export class DailyReportComponent implements OnInit {
     return pages;
   }
 
-
   selectRecruiter(recruiter: string, recruiterId: string): void {
     this.recruiterName = recruiter;
     this.reportUserId = recruiterId;
@@ -112,7 +111,6 @@ export class DailyReportComponent implements OnInit {
     this.pageSize = 10;
     this.fetchDetails();
   }
-
 
   dateSearch(start: any, end: any, name: any): void {
     this.startDate = start;

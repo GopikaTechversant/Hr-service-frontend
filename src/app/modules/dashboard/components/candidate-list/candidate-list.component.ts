@@ -31,10 +31,10 @@ export class CandidateListComponent {
   report: boolean = false;
   url: any;
   candidateIds: any;
-  candidateIdsRequirement:any;
-  userId:any;
+  candidateIdsRequirement: any;
+  userId: any;
   loader: boolean = true;
-  resumeSourceIds:any;
+  resumeSourceIds: any;
   constructor(private apiService: ApiService, private router: Router, private dialog: MatDialog, private toastr: ToastrService) { }
 
   ngOnInit(): void {
@@ -54,19 +54,17 @@ export class CandidateListComponent {
     const url = `/candidate/list`
     let params = [
       `search=${this.searchKeyword}`,
-      `page=${this.currentPage}`,
-      `limit=${this.pageSize}`,
+      `page=${this.report ? '' : this.currentPage}`,
+      `limit=${this.report ? '' : this.pageSize}`,
       `serviceRequestId=${this.requestId}`,
       `report=${this.report}`
-    ].join('&');
-
+    ].filter(param => param.split('=')[1] !== '').join('&');  // Filter out empty parameters
     if (this.report) {
       if (this.candidateIds) {
         const idsParams = this.candidateIds.map((id: string) => `ids=${id}`).join('&');
         params += `&${idsParams}`;
       }
       const exportUrl = `${environment.api_url}${url}?${params}`;
-      console.log("exportUrl", exportUrl);
       window.open(exportUrl, '_blank');
       this.report = false;
       if (this.report === false) this.fetchCandidates();
@@ -93,12 +91,9 @@ export class CandidateListComponent {
     const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
     this.candidateIds = selectedCandidates.map((candidate: { candidateId: any; }) => candidate?.candidateId);
     const selectedcandidatesrequirement = this.candidateList.flat().filter((candidate: { isSelected: any; candidatesAddingAgainst: any }) => candidate.isSelected && candidate.candidatesAddingAgainst === null);
-    console.log("selectedcandidatesrequirement",selectedcandidatesrequirement)
     this.candidateIdsRequirement = selectedcandidatesrequirement.map((candidate: { candidateId: any; }) => candidate?.candidateId);
     this.resumeSourceIds = selectedCandidates.map((candidate: { resumeSourceId: any; }) => candidate?.resumeSourceId);
     this.userId = selectedCandidates.map((candidate: { createdBy: { userId: any; }; }) => candidate?.createdBy?.userId);
-    console.log("this.resumeSourceIds",this.resumeSourceIds);
-    console.log("this.userId",this.userId);
   }
 
   generatePageNumbers() {
@@ -109,7 +104,6 @@ export class CandidateListComponent {
       pages.push(1);
       let start = Math.max(2, this.currentPage - 1);
       let end = Math.min(this.lastPage - 1, this.currentPage + 1);
-
       if (this.currentPage <= 3) end = 4;
       else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
       if (start > 2) pages.push('...');
@@ -133,7 +127,6 @@ export class CandidateListComponent {
     this.pageSize = 14;
     this.fetchCandidates();
   }
-
 
   navigate(path: any, queryParam: any): void {
     if (queryParam) this.router.navigate([path], { queryParams: { type: queryParam } });
@@ -189,7 +182,7 @@ export class CandidateListComponent {
       const dialogRef = this.dialog.open(AssignRequirementComponent, {
         height: '265px',
         width: '477px',
-        data: { candidateIds: this.candidateIdsRequirement ,resumeSourceIds:this.resumeSourceIds,userId:this.userId}
+        data: { candidateIds: this.candidateIdsRequirement, resumeSourceIds: this.resumeSourceIds, userId: this.userId }
       });
       dialogRef.afterClosed().subscribe((confirmed: boolean) => {
         this.currentPage = 1;

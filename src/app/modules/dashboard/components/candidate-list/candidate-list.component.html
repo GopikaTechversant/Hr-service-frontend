@@ -37,7 +37,8 @@
                 <td>Actions</td>
             </tr>
             <ng-container *ngIf="candidateList?.length > 0">
-                <tr class="c-pointer details" *ngFor="let item of candidateList" (dblclick)="selectCandidate(item?.candidateId)">
+                <tr class="c-pointer details" *ngFor="let item of candidateList"
+                    (dblclick)="selectCandidate(item?.candidateId)">
                     <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()"></td>
                     <td class="text-wrap"
                         [title]="(item?.candidateFirstName | titlecase) + (item?.candidateLastName | titlecase)">
@@ -73,7 +74,6 @@
             </ng-container>
             <div *ngIf="(candidateList?.length === 0 || !candidateList) && !initialLoader " class="no-data"> No Data
                 Found</div>
-
         </table>
         <div *ngIf="initialLoader" class="row m-l-20 initial-loader">
             <div *ngFor="let item of [0,1,2,3]" class="col-md-6 m-t-10 m-b-10">
