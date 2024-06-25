@@ -335,7 +335,7 @@ export class InterviewDetailsComponent implements OnInit {
       interviewBcc: data?.mailBcc,
     }
 
-    if (this.noticeperiodvalue && this.Interviewlocation && this.recruiterId && this.selectedModeName && data) {
+    if (this.noticeperiodvalue && this.locationName && this.recruiterId && this.selectedModeName && data) {
       this.apiService.post(`/screening-station/interview-details`, payload).subscribe({
         next: (res: any) => {
           this.loader = false;
@@ -352,7 +352,7 @@ export class InterviewDetailsComponent implements OnInit {
     } else {
       this.loader = false;
       if (!this.noticeperiodvalue) this.tostr.warning('Please Add Notice period');
-      if (!this.Interviewlocation) this.tostr.warning('Please Add Interview location');
+      if (!this.locationName) this.tostr.warning('Please Add Interview location');
       if (!this.recruiterId) this.tostr.warning('Please Select Recruiter');
       if (!this.selectedModeName) this.tostr.warning('Please Select Work Mode');
 
