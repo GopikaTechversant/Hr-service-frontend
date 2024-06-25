@@ -20,7 +20,7 @@ export class CandidateDetailsComponent implements OnInit {
   env_url: string = '';
   activeTab: string = 'basic';
   positionId: any;
-
+  showPrevious: boolean = false
   currentRequirementIndex: number = 0;
   viewResumeFile: any;
   CandidateHistory: any;
@@ -37,7 +37,7 @@ export class CandidateDetailsComponent implements OnInit {
       this.fetchCandidateDetails();
     });
     this.env_url = window.location.origin;
-   
+
   }
 
   fetchCandidateDetails(): void {
@@ -48,8 +48,10 @@ export class CandidateDetailsComponent implements OnInit {
         this.candidateFeedback = res?.comments;
         this.currentRequirement = this.candidateDetails?.position[0].reqServiceRequest?.requestName;
         this.positionId = this.candidateDetails?.position[0].reqServiceRequest.requestId;
-        this.resumePath =this.candidateDetails?.candidateResume;
-        this.viewResumeFile = environment.s3_url ;
+        this.resumePath = this.candidateDetails?.candidateResume;
+        this.viewResumeFile = environment.s3_url;
+        console.log("hii", this.candidateDetails?.position?.length === 1);
+
         this.fetchCandidateHistory();
       }
     });
@@ -69,9 +71,9 @@ export class CandidateDetailsComponent implements OnInit {
   fetchCandidateHistory(): void {
     this.apiService.get(`/candidate/candidate-history?email=${this.candidateDetails?.candidateEmail}&requestId=${this.positionId}`).subscribe((res: any) => {
       if (res) {
-        this.CandidateHistory = res?.history
-        console.log(this.CandidateHistory[0]?.candidatesDetail);
-        
+        this.CandidateHistory = res?.history;
+        // console.log(this.CandidateHistory[0]?.candidatesDetail);
+
         // this.candidateDetails = res?.data[0];
         // this.candidateFeedback = res?.comments
       }
@@ -86,9 +88,9 @@ export class CandidateDetailsComponent implements OnInit {
     this.resumePath = resume;
     console.log("this.resumePath", this.resumePath);
     window.open(`${environment.s3_url}${this.resumePath}`, '_blank');
-    this.viewResumeFile = environment.s3_url ;
+    this.viewResumeFile = environment.s3_url;
     console.log(this.viewResumeFile);
-    
+
     console.log("`${environment.s3_url}${this.resumePath}`", typeof (`${environment.s3_url}${this.resumePath}`));
   }
 
