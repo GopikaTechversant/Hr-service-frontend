@@ -35,7 +35,7 @@
 .input {
     outline: none !important;
     border-radius: 2px;
-    height: 30px;
+    height: 25px;
     width: 100%;
     padding-left: 5px;
     padding-top: 9px;
@@ -59,10 +59,10 @@
 
 .offer-input {
     outline: none !important;
-    height: 30px;
+    height: 27px;
     width: 97%;
     padding-left: 5px;
-    padding-top: 9px;
+    padding-top: 6px;
     padding-bottom: 2px;
     border-radius: 5px;
     background: #FAFAFA;
@@ -71,7 +71,7 @@
 
 .input-offer{
     outline: none !important;
-    height: 30px;
+    height: 25px;
     width: 97%;
     /* padding-left: 5px;
     padding-top: 9px;
@@ -146,12 +146,12 @@
 .attach {
     /* outline: none !important;
     border-radius: 2px;
-    height: 30px;
+    height: 25px;
     background-color: #FFFF;
     width: 100%; */
 
     outline: none !important;
-    height: 30px;
+    height: 25px;
     width: 98%;
     padding-left: 5px;
     padding-top: 9px;
