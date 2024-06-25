@@ -53,26 +53,37 @@ export class DailyReportComponent implements OnInit {
 
   fetchDetails(): void {
     if (!this.initialLoader) this.loader = true
-    const totalPages = Math.ceil(this.userCount / this.pageSize);
-    this.lastPage = totalPages;
-    if (this.currentPage > totalPages) this.currentPage = totalPages;
-    this.url = `/report/report-list?reportUserId=${this.reportUserId}&reportFromDate=${this.startDate}&reportToDate=${this.endDate}&reportPageNo=${this.currentPage}&reportPageLimit=${this.pageSize}&report=${this.report}`
-    this.apiService.get(this.url)
-      .subscribe((res: any) => {
-        if (res?.data) {
-          this.initialLoader = false;
-          this.loader = false;
-          this.userRequirement = [];
-          this.userRequirement = res?.data;
-          this.totalCount = res?.reportCount;
-          const totalPages = Math.ceil(this.totalCount / this.pageSize);
-          this.lastPage = totalPages;
-          if (this.currentPage > totalPages) this.currentPage = totalPages;
-          this.userRequirement.forEach((objectItem: any) => {
-            this.recruiterKeys = Object.keys(objectItem);
-          })
-        }
-      });
+    const url = `/report/report-list`
+    let params = [
+      `reportUserId=${this.reportUserId}`,
+      `reportFromDate=${this.startDate}`,
+      `reportToDate=${this.endDate}`,
+      `reportPageNo=${this.report ? '' : this.currentPage}`,
+      `reportPageLimit=${this.report ? '' : this.pageSize}`,
+      `report=${this.report}`
+    ].filter(param => param.split('=')[1] !== '').join('&');  // Filter out empty parameters
+    if (this.report) {
+      const exportUrl = `${environment.api_url}${url}?${params}`;
+      window.open(exportUrl, '_blank');
+      this.report = false;
+      if (this.report === false) this.fetchDetails();
+      return;
+    }
+    this.apiService.get(`${url}?${params}`).subscribe((res: any) => {
+      if (res?.data) {
+        this.initialLoader = false;
+        this.loader = false;
+        this.userRequirement = [];
+        this.userRequirement = res?.data;
+        this.totalCount = res?.reportCount;
+        const totalPages = Math.ceil(this.totalCount / this.pageSize);
+        this.lastPage = totalPages;
+        if (this.currentPage > totalPages) this.currentPage = totalPages;
+        this.userRequirement.forEach((objectItem: any) => {
+          this.recruiterKeys = Object.keys(objectItem);
+        })
+      }
+    });
   }
 
   generatePageNumbers() {
@@ -83,7 +94,6 @@ export class DailyReportComponent implements OnInit {
       pages.push(1);
       let start = Math.max(2, this.currentPage - 1);
       let end = Math.min(this.lastPage - 1, this.currentPage + 1);
-
       if (this.currentPage <= 3) end = 4;
       else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
       if (start > 2) pages.push('...');
@@ -93,7 +103,6 @@ export class DailyReportComponent implements OnInit {
     }
     return pages;
   }
-
 
   selectRecruiter(recruiter: string, recruiterId: string): void {
     this.recruiterName = recruiter;
@@ -112,7 +121,6 @@ export class DailyReportComponent implements OnInit {
     this.pageSize = 10;
     this.fetchDetails();
   }
-
 
   dateSearch(start: any, end: any, name: any): void {
     this.startDate = start;

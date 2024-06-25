@@ -51,11 +51,10 @@ export class DetailedRecruitmentComponent implements OnInit {
     const url = `/dashboard/requirement-report`
     let params = [
       `recuriter=${this.selectedRecruiterId}`,
-      `page=${this.currentPage}`,
-      `limit=${this.pageSize}`,
+      `page=${this.report ? '' : this.currentPage}`,
+      `limit=${this.report ? '' : this.pageSize}`,
       `report=${this.report}`
-    ].join('&');
-
+    ].filter(param => param.split('=')[1] !== '').join('&');  // Filter out empty parameters
     if (this.report) {
       if (this.candidateIds) {
         const idsParams = this.candidateIds.map((id: string) => `ids=${id}`).join('&');
@@ -133,7 +132,6 @@ export class DetailedRecruitmentComponent implements OnInit {
   getSelectedCandidateIds(): void {
     const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
     this.candidateIds = selectedCandidates.map((candidate: { serviceId: any; }) => candidate?.serviceId);
-    console.log('Selected Candidate IDs:', this.candidateIds);
   }
 
   selectCandidate(id: any): void {

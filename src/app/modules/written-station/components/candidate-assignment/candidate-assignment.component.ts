@@ -86,13 +86,13 @@ export class CandidateAssignmentComponent implements OnInit {
     const url = `/written-station/list-batch/${this.requestId}`
     let params = [
       `search=${this.searchKeyword}`,
-      `page=${this.currentPage}`,
-      `limit=${this.limit}`,
+      `page=${this.isExport ? '' : this.currentPage}`,
+      `limit=${this.isExport ? '' : this.limit}`,
       `experience=${this.experience.trim()}`,
       `status_filter=${this.filteredStatus}`,
       `report=${this.isExport}`,
       `questionFilter=${this.questionId}`
-    ].join('&');
+    ].filter(param => param.split('=')[1] !== '').join('&');  // Filter out empty parameters
 
     if (this.isExport) {
       if (this.candidateIds) {
