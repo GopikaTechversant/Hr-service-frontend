@@ -60,6 +60,6 @@ export class AssignQuestionComponent implements OnInit {
   }
 
   save(): void {
-
+    this.questionAssign();
   }
 }

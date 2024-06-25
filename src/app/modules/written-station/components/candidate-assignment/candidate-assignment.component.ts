@@ -93,7 +93,6 @@ export class CandidateAssignmentComponent implements OnInit {
       `report=${this.isExport}`,
       `questionFilter=${this.questionId}`
     ].filter(param => param.split('=')[1] !== '').join('&');  // Filter out empty parameters
-
     if (this.isExport) {
       if (this.candidateIds) {
         const idsParams = this.candidateIds.map((id: string) => `filterByIds=${id}`).join('&');
@@ -222,15 +221,20 @@ export class CandidateAssignmentComponent implements OnInit {
     else this.tostr.warning('The candidates already have assigned questions');
   }
 
-openQuestionAssign():void{
-  if (this.candidateIdsQuestion && this.candidateIdsQuestion.length > 0){
-    const dialogRef = this.dialog.open(AssignQuestionComponent,{
-      height: '265px',
-      width: '477px',
-      data:{candidateIds:this.candidateIdsQuestion}
-    })
+  openQuestionAssign(): void {
+    if (this.candidateIdsQuestion && this.candidateIdsQuestion.length > 0) {
+      const dialogRef = this.dialog.open(AssignQuestionComponent, {
+        height: '265px',
+        width: '477px',
+        data: { candidateIds: this.candidateIdsQuestion }
+      });
+      dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+        this.currentPage = 1;
+        this.limit = 14;
+        this.fetchCandidates();
+      })
+    }
   }
-}
 
   onSwitchStation(candidate: any): void {
     if (candidate?.serviceSequence?.serviceStatus === 'pending' || candidate?.serviceSequence?.serviceStatus === 'rejected') {
@@ -308,7 +312,10 @@ openQuestionAssign():void{
         },
         error: (error) => {
           if (error?.status === 500) this.tostr.error("Internal Server Error");
-          else if (!isScoreAdded) this.tostr.warning('Candidates meeting the average score were not found')
+          else if (!isScoreAdded) {
+            this.tostr.warning('Candidates meeting the average score were not found');
+            this.fetchCandidates();
+          }
           else this.tostr.error("Rejected due to a below-average score");
         }
       })
@@ -347,5 +354,5 @@ openQuestionAssign():void{
   selectCandidate(id: any): void {
     this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
   }
- 
+
 }
