@@ -108,16 +108,16 @@ export class TechnicalDetailComponent implements OnInit {
     const url = this.stationId === '3' ? `/technical-station/list` : `/technical-station-two/list`;
     let params = [
       `search=${this.searchKeyword}`,
-      `page=${this.currentPage}`,
-      `limit=${this.limit}`,
+      `page=${this.isExport ? '' : this.currentPage}`,
+      `limit=${this.isExport ? '' : this.limit}`,
       `position=${this.positionId}`,
       `experience=${this.experience.trim()}`,
       `fromDate=${this.startDate}`,
       `toDate=${this.endDate}`,
       `status_filter=${this.filteredStatus}`,
       `report=${this.isExport}`
-    ].join('&');
-
+    ].filter(param => param.split('=')[1] !== '').join('&');  // Filter out empty parameters
+    
     if (this.isExport) {
       if (this.candidateIds) {
         const idsParams = this.candidateIds.map((id: string) => `ids=${id}`).join('&');

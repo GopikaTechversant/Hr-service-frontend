@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import Chart from 'chart.js/auto';
+import Chart, { ChartConfiguration } from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { DatePipe } from '@angular/common';
 import { ApiService } from 'src/app/services/api.service';
@@ -62,7 +62,8 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
     if (this.chart) {
       this.chart.destroy();
     }
-    this.chart = new Chart("MyChart", {
+
+    const chartConfig: ChartConfiguration = {
       type: 'doughnut',
       data: {
         labels: this.sourceLabels,
@@ -70,13 +71,15 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
           data: this.sourceCount,
           backgroundColor: ['#628afc', '#005ec9', '#047892', '#224462', '#0094d4'],
           borderColor: ['#628afc', '#005ec9', '#047892', '#224462', '#0094d4'],
-          fill: false
+          fill: false,
+          barThickness: 30,  
         }],
       },
       options: {
         responsive: true,
         aspectRatio: 1.6,
-         layout: {
+        // cutout: '70%', // Adjust this value to change the thickness
+        layout: {
           padding: 30,
         },
         plugins: {
@@ -92,22 +95,24 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
         },
       },
       plugins: [this.doughnutLabelsLinePlugin, ChartDataLabels],
-    });
+    };
+
+    this.chart = new Chart("MyChart", chartConfig);
   }
 
   doughnutLabelsLinePlugin = {
     id: 'doughnutLabelsLine',
     afterDraw(chart: any, args: any, option: any) {
-      const {ctx, chartArea: {top, bottom, left, right, width, height},} = chart;
+      const { ctx, chartArea: { top, bottom, left, right, width, height }, } = chart;
       const labelPositions: any[] = [];
       chart.data.datasets.forEach((dataset: any, i: any) => {
         chart.getDatasetMeta(i).data.forEach((datapoint: { tooltipPosition: () => { x: any; y: any; }; }, index: string | number) => {
-          const { x, y } = datapoint.tooltipPosition();                
+          const { x, y } = datapoint.tooltipPosition();
           const halfwidth = width / 2;
           const halfheight = height / 2;
-          const xLine = x >= halfwidth ? x + 50 : x - 50;
-          const yLine = y >= halfheight ? y + 50 : y - 50;
-          const extraLine = x >= halfwidth ? 50 : -50;
+          const xLine = x >= halfwidth ? x + 45 : x - 45;
+          const yLine = y >= halfheight ? y + 45 : y - 45;
+          const extraLine = x >= halfwidth ? 20 : -20;
           let finalYLine = yLine;
           for (const pos of labelPositions) {
             if (Math.abs(finalYLine - pos) < 20) {
@@ -123,7 +128,7 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
           ctx.moveTo(x, y);
           ctx.lineTo(xLine, finalYLine);
           ctx.lineTo(xLine + extraLine, finalYLine);
-          ctx.strokeStyle = dataset.borderColor[index];
+          ctx.strokeStyle = "black";
           ctx.stroke();
 
           ctx.font = '14px Roboto';
