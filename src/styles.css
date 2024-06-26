@@ -222,6 +222,9 @@ body {
   /* Align items to the end */
 }
 
+.j-centre{
+  justify-content: center;
+}
 
 .p-absolute {
   position: absolute !important;

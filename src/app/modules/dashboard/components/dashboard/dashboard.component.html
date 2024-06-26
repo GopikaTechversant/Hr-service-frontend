@@ -24,8 +24,15 @@
             [gridColumn]="9"></app-skeleton-loader>
         </div>
         <div  *ngFor="let item of lists" class="candidate-card c-pointer" (click)="navigateToDetail(item?.position)">
-            <div class="d-flex p-t-5">
-                <div class="count"><span class="countsss">{{item?.count}}</span></div>
+            <div class="d-flex">
+                <div class="count">
+                    <span class="countsss">
+                        {{item?.count}}  /
+                        <span [title]="(item?.name.split(' ')[0] === 'Shorted' || item?.name.split(' ')[0] === 'Rejected') ? 
+                        ('Total Applicants ' + ' ' + item?.totalApplicant) :  ('Total Vacancy ' + ' ' + item?.vacancy)" class="c-pointer"
+                        >{{(item?.name.split(' ')[0] === 'Shorted' || item?.name.split(' ')[0] === 'Rejected') ? item?.totalApplicant : item?.vacancy}}</span>                      
+                    </span>
+                </div>
                 <div class="detail">
                     <div><span class="d-flex name">{{item?.name}}</span></div>
                     <div><span class="other">{{item?.position}}</span></div>

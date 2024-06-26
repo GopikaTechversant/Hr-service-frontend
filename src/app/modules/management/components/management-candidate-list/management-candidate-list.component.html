@@ -83,9 +83,8 @@
                                         (click)="onSwitchStation(item)">
                                 <td class="text-wrap">{{item?.currentStation}}</td>
                                 <td class="f-w-500 text-wrap " [ngClass]="{'blue': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
-                          'red': item?.serviceStatus === 'rejected'}"><span class="service-status">{{
-                                        item?.serviceStatus === 'done' ? 'Offer
-                                        Accepted' : item?.serviceStatus | titlecase}}</span>
+                                     'red': item?.serviceStatus === 'rejected'}">
+                                    <span class="service-status">{{item?.serviceStatus === 'done' ? 'OfferAccepted' : item?.serviceStatus | titlecase}}</span>
                                 </td>
                                 <!-- <td class="text-wrap" (click)="navigate('/dashboard/series/',candidate?.requestId)"
                                 [ngStyle]="{'color': candidate.status === 'progress' ? '#F57C02' : '#08E179'}">
@@ -93,10 +92,9 @@
                             </td> -->
                                 <td>
                                     <!-- <button class="btn" (click)="fetchDetails(item?.serviceId , item?.progressStatus)">View detail</button> -->
-                                    <div class="d-flex j-center f-w-500"
-                                        (click)="fetchDetails(item?.serviceId , item?.progressStatus)">
-                                        <img src="/assets/images/eye.png" alt="" height="24px" width="24px">
-                                        <span class="m-t-2 m-l-4 view-details text-wrap">View Details</span>
+                                    <div class="d-flex j-centre">
+                                        <img src="/assets/images/candidate-detail/eye.svg" alt="view" width="20" height="20">
+                                        <span class="blue p-l-5 f-w-500">View detail</span>
                                     </div>
                                 </td>
                             </tr>

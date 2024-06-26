@@ -24,6 +24,8 @@ export class CandidateDetailsComponent implements OnInit {
   currentRequirementIndex: number = 0;
   viewResumeFile: any;
   CandidateHistory: any;
+  initialLoader: boolean = false;
+  loader: boolean = false
   constructor(private apiService: ApiService, private route: ActivatedRoute, private datePipe: DatePipe, private dialog: MatDialog, private http: HttpClient) {
     // this.route.params.subscribe(params => {
     //   this.candidateId = params['id'];
@@ -32,6 +34,7 @@ export class CandidateDetailsComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.initialLoader = true
     this.route.paramMap.subscribe(params => {
       this.candidateId = params.get('id');
       this.fetchCandidateDetails();
@@ -41,21 +44,30 @@ export class CandidateDetailsComponent implements OnInit {
   }
 
   fetchCandidateDetails(): void {
-    this.apiService.get(`/candidate/list/${this.candidateId}`).subscribe((res: any) => {
-      if (res?.data) {
-        this.CandidateData = res?.data
-        this.candidateDetails = res?.data[0];
-        this.candidateFeedback = res?.comments;
-        this.currentRequirement = this.candidateDetails?.position[0].reqServiceRequest?.requestName;
-        this.positionId = this.candidateDetails?.position[0].reqServiceRequest.requestId;
-        this.resumePath = this.candidateDetails?.candidateResume;
-        this.viewResumeFile = environment.s3_url;
-        console.log("hii", this.candidateDetails?.position?.length === 1);
-
-        this.fetchCandidateHistory();
+    if (!this.initialLoader) this.loader = true;
+    this.apiService.get(`/candidate/list/${this.candidateId}`).subscribe({
+      next: (res: any) => {
+        if (res?.data) {
+          this.initialLoader = false;
+          this.loader = false;          
+          this.CandidateData = res.data;
+          this.candidateDetails = res.data[0];
+          this.candidateFeedback = res.comments;
+          this.currentRequirement = this.candidateDetails?.position[0]?.reqServiceRequest?.requestName;
+          this.positionId = this.candidateDetails?.position[0]?.reqServiceRequest?.requestId;
+          this.resumePath = this.candidateDetails?.candidateResume;
+          this.viewResumeFile = environment.s3_url;
+          this.fetchCandidateHistory();
+        } 
+      },
+      error: (err) => {
+        this.initialLoader = false;
+        this.loader = false;
       }
     });
-  }
+}
+
+
 
   requirementSwitch(direction: string): void {
     const positions = this.candidateDetails?.position;
@@ -69,13 +81,20 @@ export class CandidateDetailsComponent implements OnInit {
   }
 
   fetchCandidateHistory(): void {
-    this.apiService.get(`/candidate/candidate-history?email=${this.candidateDetails?.candidateEmail}&requestId=${this.positionId}`).subscribe((res: any) => {
-      if (res) {
-        this.CandidateHistory = res?.history;
-        // console.log(this.CandidateHistory[0]?.candidatesDetail);
-
-        // this.candidateDetails = res?.data[0];
-        // this.candidateFeedback = res?.comments
+    if (!this.initialLoader) this.loader = true;
+    this.CandidateHistory = [];
+    this.apiService.get(`/candidate/candidate-history?email=${this.candidateDetails?.candidateEmail}&requestId=${this.positionId}`).subscribe({
+      next: (res: any) => {
+        if (res) {
+          this.initialLoader = false;
+          this.loader = false;
+          this.CandidateHistory = res?.history;
+          console.log('CandidateHistory:', this.CandidateHistory); 
+        }
+      },
+      error: (err) => {
+        this.initialLoader = false;
+        this.loader = false;
       }
     });
   }

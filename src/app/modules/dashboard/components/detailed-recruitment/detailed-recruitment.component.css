@@ -45,7 +45,7 @@ tr {
 
 .table-container {
     overflow: auto !important;
-    height: calc(100vh - 250px);
+    height: calc(100vh - 372px);
 }
 
 .blue {

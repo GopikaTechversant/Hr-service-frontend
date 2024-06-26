@@ -9,6 +9,11 @@
     border-radius: 3px;
 }
 
+.sub-head{
+    width: 200px;
+    font-weight: 500;
+}
+
 .main {
     overflow-y: auto;
     height: calc(100vh - 100px);
@@ -199,6 +204,16 @@
     margin-top: 30px;
 }
 
+.loader-parent {
+    position: absolute;
+    left: 53%;
+    z-index: 9;
+    top: 37%;
+}
+
+.loader-parent img {
+    width: 10px;
+}
 
 table {
     width: 100%;

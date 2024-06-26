@@ -131,7 +131,7 @@ table {
 
 .table-container {
     overflow: auto !important;
-    height: calc(100vh - 285px);
+    height: calc(100vh - 360px);
 }
 
 tr:nth-child(odd) {
