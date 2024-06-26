@@ -162,7 +162,7 @@ export class CandidateListComponent {
     const dialogRef = this.dialog.open(EditComponent, {
       data: id,
       width: '950px',
-      height: '980px'
+      height: '700px'
     })
     dialogRef.componentInstance.onEditSuccess.subscribe(() => {
       this.currentPage = 1;
