@@ -14,7 +14,8 @@ import { DatePipe } from '@angular/common';
 })
 export class ServiceRequestComponent implements OnInit {
   @ViewChild('serviceInput') serviceInput!: ElementRef<HTMLInputElement>;
-  @ViewChild('experienceInput') experienceInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('maxExperienceInput') maxExperienceInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('minExperienceInput') minExperienceInput!: ElementRef<HTMLInputElement>;
   @ViewChild('baseSalaryInput') baseSalaryInput!: ElementRef<HTMLInputElement>;
   @ViewChild('jobtitle') jobtitle!: ElementRef<HTMLInputElement>;
   @ViewChild('jobCode') jobCode!: ElementRef<HTMLInputElement>;
@@ -45,20 +46,25 @@ export class ServiceRequestComponent implements OnInit {
   stationsLists: any;
   designationList: any;
   openDesignation: boolean = false;
+  openReporingManager: boolean = false;
   selectedDesignation: string = '';
   selectedDesignationId: any;
   loader: boolean = false;
+  panel_list: any[] = [];
   // displayDate: string | null = null;
   // closeDate: string | null = null;
   maxDate: any;
   currentYear: any;
-  minDate:any;
+  minDate: any;
   commentValue: any = '';
-  today : Date = new Date();
+  today: Date = new Date();
   displayDate: string | null = null;
   closeDate: string | null = null;
   postDate: Date | null = null; // actual date object for post date
   closeDateObj: Date | null = null; // actual date object for close date
+  managerName: string = '';
+  managerId: any;
+  jobDescription: any
   constructor(private toastr: ToastrServices, private apiService: ApiService, private datePipe: DatePipe) { }
 
   @HostListener('window:beforeunload', ['$event'])
@@ -73,6 +79,7 @@ export class ServiceRequestComponent implements OnInit {
     this.fetchStations();
     this.fetchServiceTeam();
     this.fetchDesignation();
+    this.fetchPanel();
   }
 
   onBodyClick(event: MouseEvent): void {
@@ -81,9 +88,10 @@ export class ServiceRequestComponent implements OnInit {
       this.teamListOpen = false;
       this.idListOpen = false;
       this.openDesignation = false;
+      this.openReporingManager = false;
     }
   }
-  
+
   fetchDesignation() {
     this.apiService.get(`/service-request/designation/list`).subscribe(((res: any) => {
       if (res?.data) this.designationList = res?.data;
@@ -102,6 +110,11 @@ export class ServiceRequestComponent implements OnInit {
     })
   }
 
+  fetchPanel(): void {
+    this.apiService.get(`/user/lists?userRole=2`).subscribe((res: any) => {
+      if (res?.users) this.panel_list = res?.users;
+    })
+  }
 
   onKeypress(event: any): void {
     let enteredValue: string;
@@ -137,10 +150,10 @@ export class ServiceRequestComponent implements OnInit {
 
   dateChange(event: any, range: string): void {
     let date = new Date(event?.value);
-    if (range == 'postdate') this.displayDate = this.datePipe.transform(date,'MM/dd/yyyy');
-    if (range == 'closeDate') this.closeDate = this.datePipe.transform(date,'MM/dd/yyyy');
+    if (range == 'postdate') this.displayDate = this.datePipe.transform(date, 'MM/dd/yyyy');
+    if (range == 'closeDate') this.closeDate = this.datePipe.transform(date, 'MM/dd/yyyy');
   }
-  
+
   selectTeam(teamId: any, teamName: any): void {
     this.teamListOpen = false;
     this.selectedTeam = teamName;
@@ -151,6 +164,12 @@ export class ServiceRequestComponent implements OnInit {
     this.openDesignation = false;
     this.selectedDesignation = name;
     this.selectedDesignationId = id;
+  }
+
+  selectReportingManager(id: any, name: any): void {
+    this.openReporingManager = false;
+    this.managerName = name;
+    this.managerId = id;
   }
 
   fetchStations(): void {
@@ -189,7 +208,6 @@ export class ServiceRequestComponent implements OnInit {
   getSkillSuggestions(event: any): void {
     this.showSearchBar = true;
     this.searchvalue = event?.target.value;
-    console.log(" this.searchvalue", this.searchvalue)
     this.apiService.get(`/candidate/skills/list?search=${this.searchvalue}`).subscribe((res: any) => {
       if (res?.data) this.skillSuggestions = res?.data.filter((suggestion: any) =>
         suggestion.skillName.toLowerCase().startsWith(this.searchvalue.toLowerCase())
@@ -208,6 +226,92 @@ export class ServiceRequestComponent implements OnInit {
     this.selectedSkills = this.selectedSkills?.filter(skill => skill !== skillToRemove);
   }
 
+  textAreaFormat(event: string): void {
+    const textarea = document.getElementById('comments') as HTMLTextAreaElement | null;
+    if (!textarea) {
+      return;
+    }
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    if (start === end) return; // No text selected
+    const selectedText = textarea.value.substring(start, end);
+    let replace: string;
+    if (event === 'upperCase') {
+      replace = selectedText.toUpperCase();
+    } else if (event === 'lowerCase') {
+      replace = selectedText.toLowerCase();
+    } else if (event === 'paragraph') {
+      replace = selectedText.replace(/(\r\n|\n|\r)/gm, " ");
+    } else if (event === 'sentencecase') {
+      replace = this.sentenceCase(selectedText);
+    } else if (event === 'titlecase') {
+      replace = this.titleCase(selectedText);
+    }
+    else if (event === 'bullets') {
+      replace = this.addBullets(selectedText);
+    }
+    else if (event === 'numbered') {
+      replace = this.addNumbered(selectedText);
+    } else {
+      return;
+    }
+    textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end);
+    this.jobDescription = textarea.value
+  }
+
+  addBullets(text: string): string {
+    const lines = text.split(/[\r\n]+/);
+    const bulletedLines = lines.map(line => {
+      if (line.trim().length > 0) {
+        return `• ${line}`;
+      } else {
+        return '';
+      }
+    }).join('\n');
+    return bulletedLines;
+  }
+
+  addNumbered(text: string): string {
+    const lines = text.split(/[\r\n]+/);
+    let numberedLines = '';
+    lines.forEach((line, index) => {
+      if (line.trim().length > 0) {
+        numberedLines += `${index + 1}. ${line}\n`;
+      }
+    });
+    return numberedLines;
+  }
+
+  sentenceCase(str: string): string {
+    let result = '';
+    let capitalizeNext = true;
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charAt(i);
+      if (capitalizeNext && /[a-zA-Z]/.test(char)) {
+        result += char.toUpperCase();
+        capitalizeNext = false;
+      } else {
+        result += char.toLowerCase();
+      }
+      if (char === '.' || char === '!' || char === '?') {
+        // Check if there is space after punctuation
+        let nextIndex = i + 1;
+        while (nextIndex < str.length && str.charAt(nextIndex) === ' ') {
+          nextIndex++;
+        }
+        capitalizeNext = true; // Capitalize next character after punctuation and optional space
+        i = nextIndex - 1; // Skip over extra spaces
+      }
+    }
+    return result;
+  }
+
+  titleCase(str: string): string {
+    return str.toLowerCase().split(' ').map(word => {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    }).join(' ');
+  }
+
   submitClick(): void {
     this.loader = true;
     const comments = document.getElementById('comments') as HTMLInputElement;
@@ -220,15 +324,17 @@ export class ServiceRequestComponent implements OnInit {
       requestSkills: this.selectedSkills.length > 0 ? this.selectedSkills : [this.skillNameValue],
       requestDesignation: this.selectedDesignationId,
       requestCode: this.jobCode.nativeElement.value,
-      requestExperience: this.experienceInput.nativeElement.value,
+      requestMinimumExperience: this.minExperienceInput.nativeElement.value,
+      requestMaximumExperience: this.maxExperienceInput.nativeElement.value,
       requestBaseSalary: this.baseSalaryInput.nativeElement.value,
       requestMaxSalary: this.maxSalaryInput.nativeElement.value,
       requestTeam: this.selectedTeamName,
       requestVacancy: this.vacancy.nativeElement.value,
       requestFlowStations: stationIds,
-      requestDescription:this.commentValue,
-      requestPostingDate:this.displayDate,
-      requestClosingDate:this.closeDate
+      requestDescription: this.jobDescription ? this.jobDescription : this.commentValue,
+      requestPostingDate: this.displayDate,
+      requestClosingDate: this.closeDate,
+      requestManager: this.managerId
     };
     this.apiService.post(`/service-request/create`, requestData).subscribe((res) => {
       this.loader = false;
@@ -253,7 +359,8 @@ export class ServiceRequestComponent implements OnInit {
     this.stationsList = [];
     this.selectedTeam = '';
     this.selectedDesignation = '';
-    this.clearInputvalue(this.experienceInput);
+    this.clearInputvalue(this.maxExperienceInput);
+    this.clearInputvalue(this.minExperienceInput)
     this.clearInputvalue(this.jobCode);
     this.clearInputvalue(this.jobtitle);
     this.clearInputvalue(this.baseSalaryInput);
