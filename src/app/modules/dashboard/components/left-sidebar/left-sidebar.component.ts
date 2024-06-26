@@ -10,17 +10,21 @@ export class LeftSidebarComponent implements OnInit {
   id: string | null = null;
   candidateDetailUrl: string = '';
   requisitionUrl: string = '';
+  requirementUrl: string = '';
   routerEventsSubscription: any;
-
+  requestId: string | null = null;
   constructor(private router: Router, private route: ActivatedRoute) { }
   ngOnInit(): void {
     this.routerEventsSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
       this.id = this.route.snapshot.firstChild?.params['id'];
+      this.requestId = this.route.snapshot.queryParams['requestId'];
       if (this.id) {
         this.candidateDetailUrl = `/dashboard/candidate-details/${this.id}`;
         this.requisitionUrl = `/dashboard/requisition-detail/${this.id}` || `/dashboard/series?requestId=${this.id}`;
+      } else if (this.requestId) {
+        this.requirementUrl = `/dashboard/series?requestId=${this.requestId}`;
       }
     });
     this.updateUrls();
@@ -31,6 +35,10 @@ export class LeftSidebarComponent implements OnInit {
     if (this.id) {
       this.candidateDetailUrl = `/dashboard/candidate-details/${this.id}`;
       this.requisitionUrl = `/dashboard/requisition-detail/${this.id}`;
+      this.requirementUrl = `/dashboard/series?requestId=${this.id}`;
+    }
+    else if (this.requestId) {
+      this.requirementUrl = `/dashboard/series?requestId=${this.requestId}`;
     }
   }
 
