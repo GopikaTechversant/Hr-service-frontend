@@ -151,7 +151,7 @@ table {
 }
 
 .table-container {
-    height: calc(100vh - 550px);
+    height: calc(100vh - 445px);
     overflow-y: auto !important;
     overflow-x: hidden;
 }
