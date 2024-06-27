@@ -65,6 +65,10 @@ export class ServiceRequestComponent implements OnInit {
   managerName: string = '';
   managerId: any;
   jobDescription: any
+  textFormats: any[] = ['Aa', 'AA', 'aa', 'Aa A'];
+  showFormats: boolean = false;
+  option: any;
+  isBold = false;
   constructor(private toastr: ToastrServices, private apiService: ApiService, private datePipe: DatePipe) { }
 
   @HostListener('window:beforeunload', ['$event'])
@@ -147,11 +151,24 @@ export class ServiceRequestComponent implements OnInit {
     this.idListOpen = true;
   }
 
-
   dateChange(event: any, range: string): void {
     let date = new Date(event?.value);
     if (range == 'postdate') this.displayDate = this.datePipe.transform(date, 'MM/dd/yyyy');
     if (range == 'closeDate') this.closeDate = this.datePipe.transform(date, 'MM/dd/yyyy');
+  }
+
+  select(option: string): void {
+    // this.showFormats = false;
+    this.option = option;
+    if (option === 'Aa') {
+      this.textAreaFormat('sentencecase');
+    } else if (option === 'AA') {
+      this.textAreaFormat('upperCase');
+    } else if (option === 'aa') {
+      this.textAreaFormat('lowerCase');
+    } else if (option === 'Aa A') {
+      this.textAreaFormat('titlecase');
+    }
   }
 
   selectTeam(teamId: any, teamName: any): void {
@@ -255,6 +272,7 @@ export class ServiceRequestComponent implements OnInit {
     } else {
       return;
     }
+
     textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end);
     this.jobDescription = textarea.value
   }
@@ -311,6 +329,9 @@ export class ServiceRequestComponent implements OnInit {
       return word.charAt(0).toUpperCase() + word.slice(1);
     }).join(' ');
   }
+  //   toggleBold() {
+  //     this.isBold = !this.isBold;
+  // }
 
   submitClick(): void {
     this.loader = true;
@@ -385,4 +406,68 @@ export class ServiceRequestComponent implements OnInit {
     this.showSearchBar = false;
     this.skillSuggestions = [];
   }
+  onPasteSalary(event: ClipboardEvent): void {
+    const clipboardData = event.clipboardData;
+    if (!clipboardData) {
+      event.preventDefault();
+      return;
+    }
+    let pastedData = clipboardData.getData('Text');
+    pastedData = pastedData.replace(/,/g, ''); // Remove existing commas
+
+    const allowedCharacters: RegExp = /^[0-9]*\.?[0-9]*$/;
+    if (!allowedCharacters.test(pastedData)) {
+      event.preventDefault();
+      return;
+    }
+
+    const parts = pastedData.split(".");
+    let integerPart = parts[0];
+    const decimalPart = parts[1];
+
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",").replace(/(\d+)(\d{2},)/, "$1,$2");
+
+    if (decimalPart !== undefined) pastedData = integerPart + "." + decimalPart.slice(0, 2);
+    else pastedData = integerPart;
+
+    const target = event.target as HTMLInputElement;
+    if (target) target.value = pastedData;
+
+    event.preventDefault();
+  }
+  onKeypressSalary(event: KeyboardEvent): void {
+    const target = event.target as HTMLInputElement;
+    if (!target) return;
+    const allowedKeys = /[0-9.,]/;
+    const controlKeys = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete', 'Tab'];
+    const key = event.key;
+
+    if (!allowedKeys.test(key) && !controlKeys.includes(key)) {
+      event.preventDefault();
+      return;
+    }
+    if (controlKeys.includes(key)) return;
+
+
+    let value = target.value.replace(/,/g, '');
+
+    // Only allow one dot
+    if (key === '.' && value.includes('.')) {
+      event.preventDefault();
+      return;
+    }
+
+    value = value.replace(/[^0-9.]/g, '');
+
+    const parts = value.split(".");
+    let integerPart = parts[0];
+    const decimalPart = parts[1];
+
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    integerPart = integerPart.replace(/(\d+)(\d{2},)/, "$1,$2");
+
+    if (decimalPart !== undefined) target.value = integerPart + "." + decimalPart.slice(0, 2);
+    else target.value = integerPart;
+  }
+
 }
