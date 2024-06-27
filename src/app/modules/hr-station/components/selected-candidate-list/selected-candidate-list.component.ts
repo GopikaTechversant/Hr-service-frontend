@@ -53,7 +53,7 @@ export class SelectedCandidateListComponent {
   ngOnInit(): void {
     this.initialLoader = true;
     this.filteredStatus = sessionStorage.getItem('status') ? sessionStorage.getItem('status') : '';
-    const requirementData = sessionStorage.getItem(`requirement`);
+    const requirementData = sessionStorage.getItem(`requirement_select`);
     if (requirementData) {
       let requirement = JSON.parse(requirementData);
       if (requirement) {
@@ -173,7 +173,7 @@ export class SelectedCandidateListComponent {
     this.requestList_open = false;
     this.displayPosition = name;
     this.positionId = id;
-    sessionStorage.setItem(`requirement`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
+    sessionStorage.setItem(`requirement_select`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
     this.fetchList();
   }
 
@@ -193,7 +193,7 @@ export class SelectedCandidateListComponent {
     if (item === 'position') {
       this.displayPosition = '';
       this.positionId = '';
-      sessionStorage.setItem(`requirement`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
+      sessionStorage.setItem(`requirement_select`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
     }
     if (item === 'search') this.searchKeyword = '';
     if (item === 'experience') this.experience = '';
