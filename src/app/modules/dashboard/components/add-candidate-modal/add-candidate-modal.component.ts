@@ -148,6 +148,44 @@ export class AddCandidateModalComponent implements OnInit {
     }
   }
 
+  pasteNameValidation(event: ClipboardEvent): void {
+    console.log(event);
+  
+    const clipboardData = event.clipboardData;
+    if (!clipboardData) {
+      event.preventDefault();
+      return;
+    }
+  
+    let pastedData = clipboardData.getData('Text');
+  
+    const allowedCharacters = /^[\.\&A-Za-z\s]+$/;
+    if (!allowedCharacters.test(pastedData)) {
+      event.preventDefault();
+      return;
+    }
+  
+    const target = event.target as HTMLInputElement;
+    if (target) {
+      // Get current input value and selected text
+      const currentValue = target.value;
+      const selectionStart = target.selectionStart ?? 0; // Default to 0 if null or undefined
+      const selectionEnd = target.selectionEnd ?? 0; // Default to 0 if null or undefined
+  
+      // Modify the current value with pasted data
+      const newValue =
+        currentValue.slice(0, selectionStart) +
+        pastedData +
+        currentValue.slice(selectionEnd);
+  
+      // Validate the new value
+      if (!allowedCharacters.test(newValue)) {
+        event.preventDefault();
+      }
+    }
+  }
+  
+
   selectsource(sourceid: any, sourceName: any): void {
     this.sourceId = sourceid;
     this.sourceName = sourceName;
@@ -169,7 +207,7 @@ export class AddCandidateModalComponent implements OnInit {
     this.locationName = name;
   }
 
-  onPasteSalary(event: ClipboardEvent): void {
+  onPasteSalary(event: any): void {
     const clipboardData = event.clipboardData;
     if (!clipboardData) {
       event.preventDefault();
@@ -198,27 +236,39 @@ export class AddCandidateModalComponent implements OnInit {
 
     event.preventDefault();
   }
-
   onKeypressSalary(event: KeyboardEvent): void {
     const target = event.target as HTMLInputElement;
     if (!target) return;
+    const allowedKeys = /[0-9.,]/;
+    const controlKeys = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete', 'Tab'];
+    const key = event.key;
 
-    let value = target.value.replace(/,/g, ''); // Remove existing commas
-    const allowedCharacters: RegExp = /^[0-9]*\.?[0-9]*$/;
-    if (!allowedCharacters.test(value)) {
-      target.value = '';
+    if (!allowedKeys.test(key) && !controlKeys.includes(key)) {
+      event.preventDefault();
       return;
     }
+    if (controlKeys.includes(key)) return;
+
+
+    let value = target.value.replace(/,/g, '');
+
+    // Only allow one dot
+    if (key === '.' && value.includes('.')) {
+      event.preventDefault();
+      return;
+    }
+
+    value = value.replace(/[^0-9.]/g, '');
 
     const parts = value.split(".");
     let integerPart = parts[0];
     const decimalPart = parts[1];
 
-    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",").replace(/(\d+)(\d{2},)/, "$1,$2");
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    integerPart = integerPart.replace(/(\d+)(\d{2},)/, "$1,$2");
 
     if (decimalPart !== undefined) target.value = integerPart + "." + decimalPart.slice(0, 2);
     else target.value = integerPart;
-
   }
 
   onKeypress(event: any): void {
@@ -232,7 +282,7 @@ export class AddCandidateModalComponent implements OnInit {
     }
   }
 
-  onPaste(event: any): void {
+  onPaste(event: ClipboardEvent): void {
     // event.preventDefault();
   }
 

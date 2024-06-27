@@ -10,7 +10,7 @@
                 <div class="child d-flex m-b-10">
                     <span class="label m-b-4">First Name<span class="required">*</span></span>
                     <input type="text" class="input-box" formControlName="candidateFirstName" placeholder="First Name"
-                        maxlength="20" (keydown)="nameValidation($event)">
+                        maxlength="20" (keydown)="nameValidation($event)" (paste)="pasteNameValidation($event)">
                     <div
                         *ngIf="candidateForm.get('candidateFirstName')?.hasError('required') && candidateForm.get('candidateFirstName')?.touched">
                         <mat-error>Please Enter First Name</mat-error>
@@ -19,7 +19,7 @@
                 <div class="child d-flex m-b-10">
                     <span class="label m-b-4">Last Name<span class="required">*</span></span>
                     <input type="text" class="input-box" formControlName="candidateLastName" placeholder="Last Name"
-                        maxlength="20" (keydown)="nameValidation($event)">
+                        maxlength="20" (keydown)="nameValidation($event)" (paste)="pasteNameValidation($event)">
                     <div
                         *ngIf="candidateForm.get('candidateLastName')?.hasError('required') && candidateForm.get('candidateLastName')?.touched">
                         <mat-error>Please Enter Last Name</mat-error>
