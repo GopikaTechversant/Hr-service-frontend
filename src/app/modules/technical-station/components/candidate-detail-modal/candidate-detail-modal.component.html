@@ -27,9 +27,9 @@
                 <div class="sub-head">
                     <span class="key p-8">Requirement Name</span>
                     <span class="key p-8">Skills</span>
-                    <span class="key p-8">Experience</span>
-                    <!-- <span class="key p-8">Base Salary</span>
-                    <span class="key p-8">Max Salary</span> -->
+                    <span class="key p-8">Minimum Experience</span>
+                    <span class="key p-8">Maximum Experience</span>
+              
                     <span class="key p-8">Requirement Status</span>
                     <span class="key p-8">Requirement Vacancy</span>
                     <!-- <span class="key p-8">Posting Date</span>
@@ -43,7 +43,9 @@
                         </a>
                       </span>
                     <span class="p-8 job-description"> : {{candidateDetails['serviceRequest.requestSkills'] | titlecase}}</span>
-                    <span class="p-8 job-description"> : {{candidateDetails['serviceRequest.requestExperience']}}</span>
+                    <span class="p-8 job-description"> : {{candidateDetails['serviceRequest.requestMinimumExperience']}}</span>
+                    <span class="p-8 job-description"> : {{candidateDetails['serviceRequest.requestMaximumExperience']}}</span>
+
                     <!-- <span class="p-8 job-description"> : {{candidateDetails['serviceRequest.requestBaseSalary']}}</span>
                     <span class="p-8 job-description"> : {{candidateDetails['serviceRequest.requestMaxSalary']}}</span> -->
                     <span class="p-8 job-description"> : {{candidateDetails['serviceRequest.requestStatus']}}</span>
