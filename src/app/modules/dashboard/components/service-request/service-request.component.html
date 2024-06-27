@@ -157,7 +157,8 @@
                 <div class="m-t-20 m-b-10">
                     <span class="sub-head">Minimum Experience<span class="required">*</span></span>
                     <div>
-                        <input type="text" class="input-box" #minExperienceInput (keydown)="experienceValidation($event)">
+                        <input type="text" class="input-box" #minExperienceInput
+                            (keydown)="experienceValidation($event)">
                     </div>
                 </div>
             </div>
@@ -167,96 +168,122 @@
                 <div class="m-t-20 m-b-10">
                     <span class="sub-head">Maximum Experience<span class="required">*</span></span>
                     <div>
-                        <input type="text" class="input-box" #maxExperienceInput (keydown)="experienceValidation($event)">
+                        <input type="text" class="input-box" #maxExperienceInput
+                            (keydown)="experienceValidation($event)">
                     </div>
                 </div>
             </div>
             <div class="child d-flex">
-            <div class="m-t-20 m-b-10">
-                <span class="sub-head">Reporting Manager<span class="required">*</span></span>
-                <div class="no-close col-md-3 s-list d-flex input-box j-space m-text p-relative">
-                    <span (click)="openReporingManager = !openReporingManager" class="w-100 d-flex">
-                        <span class="align-center m-t-6 c-pointer">
-                            {{managerName.trim() !== '' ? managerName : 'Select Reporting Manager'}}</span>
-                        <span class="no-close s-list c-pointer align-center m-b-2 flex-1 sub j-end"><i
-                                class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
+                <div class="m-t-20 m-b-10">
+                    <span class="sub-head">Reporting Manager<span class="required">*</span></span>
+                    <div class="no-close col-md-3 s-list d-flex input-box j-space m-text p-relative">
+                        <span (click)="openReporingManager = !openReporingManager" class="w-100 d-flex">
+                            <span class="align-center m-t-6 c-pointer">
+                                {{managerName.trim() !== '' ? managerName : 'Select Reporting Manager'}}</span>
+                            <span class="no-close s-list c-pointer align-center m-b-2 flex-1 sub j-end"><i
+                                    class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
+                            </span>
                         </span>
-                    </span>
-                    <div class=" m-b-2 drop-list no-close" *ngIf="openReporingManager">
-                        <div (click)="selectReportingManager(panel?.userId,panel?.userfirstName);!openReporingManager"
-                            *ngFor="let panel of panel_list" class=" p-t-5 p-b-5 p-l-8 c-pointer">
-                            {{panel?.userfirstName}}</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="child d-flex">
-            <div class="m-t-20 m-b-10">
-                <span class="sub-head">Vacancy<span class="required">*</span></span>
-                <div>
-                    <input type="text" class="input-box" #vacancy max="4" (keypress)="onKeypress($event)">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="m-t-20 m-b-10 child-skill">
-        <span class="sub-head">Skills</span>
-        <div>
-            <span class="p-relative">
-                <input type="text" class="input-interview-rounds-skill" placeholder="Search Skills"
-                    (input)="getSkillSuggestions($event)" id="skillSearch" [(ngModel)]="searchvalue">
-                <span *ngIf="searchvalue.trim() !== ''" (click)="clearFilter()"
-                    class="clear-filter c-pointer m-l-10 p-absolute"><img src="assets/images/skill-close-icon.png"
-                        alt="" class="m-t-0" width="17px" height="17px">
-                </span>
-                <div class="m-t-8 drop-list-skill" *ngIf="showSearchBar">
-                    <div *ngFor="let suggestion of skillSuggestions" (click)="selectSkill(suggestion)">
-                        <span class="p-t-7 "><img src="assets/images/akar-icons_check.png" alt="" class="m-t-0 p-r-4"
-                                width="13px" height="10px"></span>
-                        <span class="c-pointer ">{{suggestion?.skillName | titlecase}}</span>
-                    </div>
-                </div>
-                <div class="m-t-16 skills-main" *ngIf="selectedSkills.length > 0">
-                    <div class="m-t-10">
-                        <span class="title-added-skills">Added Skills</span>
-                        <div class="selectedSkills">
-                            <div *ngFor="let skill of selectedSkills" class=" skill-set d-flex j-space">
-                                <span>{{ skill | titlecase}}</span>
-                                <img src="assets/images/delete-skill.png" alt="" class="delete-skill p-t-6 p-r-6"
-                                    height="25px" width="25px" (click)="removeSkill(skill)">
-                            </div>
+                        <div class=" m-b-2 drop-list no-close" *ngIf="openReporingManager">
+                            <div (click)="selectReportingManager(panel?.userId,panel?.userfirstName);!openReporingManager"
+                                *ngFor="let panel of panel_list" class=" p-t-5 p-b-5 p-l-8 c-pointer">
+                                {{panel?.userfirstName}}</div>
                         </div>
                     </div>
                 </div>
-            </span>
-        </div>
-    </div>
-    <div class="d-flex parent-job p-t-10">
-        <div class="coment-child d-flex ">
-            <div class="m-t-20 m-b-10">
-                <span class="sub-head">Job Description<span class="required">*</span></span>
-                <div class="jd-parent">
-                    <div class="d-flex j-space f c-pointer formats">
-                        <span class="format-icon c-pointer" (click)="textAreaFormat('lowerCase');" title="Lower Case">a</span>
-                        <span class="format-icon c-pointer" (click)="textAreaFormat('upperCase');" title="Upper Case">TT</span>
-                        <span class="format-icon c-pointer" (click)="textAreaFormat('sentencecase')" title="Sentence Case">Aa</span>
-                        <span class="format-icon c-pointer" (click)="textAreaFormat('titlecase')" title="Title Case">Aa A</span>
-                        <span class="format-icon c-pointer" (click)="textAreaFormat('bullets')" title="Bullets"><span class="bullets"></span></span>
-                        <span class="format-icon c-pointer" (click)="textAreaFormat('numbered')" title="Numbers">1</span>
-                        <span class="format-icon c-pointer" (click)="textAreaFormat('paragraph');" title="Paragraph"><img src="/assets/images/techversant/align-justify.svg" class="c-pointer p-t-3" alt="" width="27px" height="27px"></span>
+            </div>
+            <div class="child d-flex">
+                <div class="m-t-20 m-b-10">
+                    <span class="sub-head">Vacancy<span class="required">*</span></span>
+                    <div>
+                        <input type="text" class="input-box" #vacancy max="4" (keypress)="onKeypress($event)">
                     </div>
                 </div>
-                <textarea class="comments p-t-6" id="comments" #comment></textarea>
+            </div>
+        </div>
+        <div class="m-t-20 m-b-10 child-skill">
+            <span class="sub-head">Skills</span>
+            <div>
+                <span class="p-relative">
+                    <input type="text" class="input-interview-rounds-skill" placeholder="Search Skills"
+                        (input)="getSkillSuggestions($event)" id="skillSearch" [(ngModel)]="searchvalue">
+                    <span *ngIf="searchvalue.trim() !== ''" (click)="clearFilter()"
+                        class="clear-filter c-pointer m-l-10 p-absolute"><img src="assets/images/skill-close-icon.png"
+                            alt="" class="m-t-0" width="17px" height="17px">
+                    </span>
+                    <div class="m-t-8 drop-list-skill" *ngIf="showSearchBar">
+                        <div *ngFor="let suggestion of skillSuggestions" (click)="selectSkill(suggestion)">
+                            <span class="p-t-7 "><img src="assets/images/akar-icons_check.png" alt=""
+                                    class="m-t-0 p-r-4" width="13px" height="10px"></span>
+                            <span class="c-pointer ">{{suggestion?.skillName | titlecase}}</span>
+                        </div>
+                    </div>
+                    <div class="m-t-16 skills-main" *ngIf="selectedSkills.length > 0">
+                        <div class="m-t-10">
+                            <span class="title-added-skills">Added Skills</span>
+                            <div class="selectedSkills">
+                                <div *ngFor="let skill of selectedSkills" class=" skill-set d-flex j-space">
+                                    <span>{{ skill | titlecase}}</span>
+                                    <img src="assets/images/delete-skill.png" alt="" class="delete-skill p-t-6 p-r-6"
+                                        height="25px" width="25px" (click)="removeSkill(skill)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+            </div>
+        </div>
+        <div class="d-flex parent-job p-t-10">
+            <div class="coment-child d-flex ">
+                <div class="m-t-20 m-b-10">
+                    <span class="sub-head">Job Description<span class="required">*</span></span>
+                    <div class="jd-parent">
+                        <div class="toolbar">
+                            <!-- <button class="toolbar-button" (click)="toggleBold()"><b>B</b></button>
+                            <button class="toolbar-button" (click)="textAreaFormat('italic')"><i>I</i></button>
+                            <button class="toolbar-button" (click)="textAreaFormat('underline')"><u>U</u></button> -->
+                            <button class="toolbar-button" (click)="textAreaFormat('bullets')"><img
+                                    src="/assets/images/techversant/list.svg" class="c-pointer" alt="" width="25px"
+                                    height="25px"></button>
+                            <button class="toolbar-button" (click)="textAreaFormat('numbered')"><img
+                                    src="/assets/images/techversant/image 12.svg" alt="Numbered List"></button>
+                            <button class="toolbar-button" (click)="textAreaFormat('paragraph');"><img
+                                    src="/assets/images/techversant/align-justify.svg"></button>
+                            <button class="toolbar-button d-flex j-space w-40">
+                                <div class="d-flex dropdown p-relative" (click)="showFormats = !showFormats">
+                                    <div class="j-space">
+                                        <div class="c-pointer p-t-5" *ngIf="!option">
+                                            <span>Aa</span>
+                                        </div>
+                                        <div *ngIf="option" class="p-t-5">{{option}}</div>
+                                    </div>
+                                    <div
+                                        class="no-close s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub p-r-17 m-t-9">
+                                        <i class="no-close s-list fa fa-chevron-down s-text"></i>
+                                    </div>
+                                    <div class="dropdown-list p-absolute" *ngIf="showFormats">
+                                        <div class="p-8" *ngFor="let option of textFormats"
+                                            (click)='select(option); !showFormats'>
+                                            <span class="p-l-10 c-pointer">{{option}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                    <textarea class="comments p-t-6" id="comments" #comment
+                        [ngClass]="{'text-type-bold': isBold}"></textarea>
+
+                </div>
+            </div>
+        </div>
+        <div class="p-29 m-b-26">
+            <div class="d-flex button">
+                <div class="mat-ripple m-r-10 c-pointer d-flex align-center c-pointer"><button
+                        class="btn-submit c-pointer" (click)="submitClick()">Submit</button></div>
+                <div class="mat-ripple c-pointer d-flex align-center c-pointer"><button class="btn-cancel c-pointer"
+                        (click)="cancel()">Cancel</button></div>
             </div>
         </div>
     </div>
-    <div class="p-29 m-b-26">
-        <div class="d-flex button">
-            <div class="mat-ripple m-r-10 c-pointer d-flex align-center c-pointer"><button class="btn-submit c-pointer"
-                    (click)="submitClick()">Submit</button></div>
-            <div class="mat-ripple c-pointer d-flex align-center c-pointer"><button class="btn-cancel c-pointer"
-                    (click)="cancel()">Cancel</button></div>
-        </div>
-    </div>
-</div>
 </div>
