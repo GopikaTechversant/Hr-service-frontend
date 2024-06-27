@@ -69,7 +69,7 @@ export class EditRequirementComponent implements OnInit {
   initializeDataValues(): void {
     this.jobTitle = this.requirement_details.requestName || '';
     this.jobCode = this.requirement_details.requestCode || '';
-    this.experience = this.requirement_details.requestExperience || '';
+    this.experience = this.requirement_details.requestMaximumExperience || '';
     this.baseSalary = this.requirement_details.requestBaseSalary || '';
     this.maxSalary = this.requirement_details.requestMaxSalary || '';
     this.vacancy = this.requirement_details.requestVacancy || '';
@@ -168,7 +168,7 @@ export class EditRequirementComponent implements OnInit {
     if (this.vacancy !== this.requirement_details.requestVacancy) payload.requestVacancy = this.vacancy;
     if (this.skills !== this.requirement_details.requestSkills) payload.requestSkills = this.selectedSkills;
     if (this.selectedStations !== this.flows) payload.requestFlowStations = this.selectedStations.map((station: any) => station.stationId);
-    if (this.experience !== this.requirement_details.requestExperience) payload.requestExperience = this.experience;
+    if (this.experience !== this.requirement_details.requestMaximumExperience) payload.requestMaximumExperience = this.experience;
     if (this.selectedDesignation !== this.requirement_details.designationName) payload.requestDesignation = this.selectedDesignationId;
     if (this.baseSalary !== this.requirement_details.requestBaseSalary) payload.requestBaseSalary = this.baseSalary;
     if (this.maxSalary !== this.requirement_details.requestMaxSalary) payload.requestMaxSalary = this.maxSalary;
