@@ -75,7 +75,7 @@
                 </div>
                 <div class="child d-flex m-b-10">
                     <span class="label m-b-4">Email<span class="required">*</span></span>
-                    <input type="text" class="input-box" formControlName="candidateEmail" max="56">
+                    <input type="text" class="input-box" formControlName="candidateEmail" maxlength="56">
                     <div
                         *ngIf="candidateForm.get('candidateEmail')?.hasError('required') && candidateForm.get('candidateEmail')?.touched">
                         <mat-error>Email ID is Mandatory</mat-error>
@@ -100,13 +100,11 @@
                 </div>
                 <div class="child d-flex m-b-10">
                     <span class="label m-b-4">Relevant Experience</span>
-                    <input type="text" class="input-box" formControlName="candidateRevlentExperience"
-                        (keydown)="experienceValidation($event)">
+                    <input type="text" class="input-box" formControlName="candidateRevlentExperience" maxlength="256">
                 </div>
                 <div class="child d-flex m-b-10">
-                    <span class="label m-b-4">Total Experience</span>
-                    <input type="text" class="input-box" formControlName="candidateTotalExperience"
-                        (keydown)="experienceValidation($event)">
+                    <span class="label m-b-4">Total Experience <span class="f-s-12">(in years)</span></span>
+                    <input type="text" class="input-box" formControlName="candidateTotalExperience" (keydown)="experienceValidation($event)">
                 </div>
             </div>
             <div class="d-flex parent">
@@ -129,7 +127,7 @@
             </div>
             <div class="d-flex parent">
                 <div class="child d-flex m-b-10">
-                    <span class="label m-b-4">Preferred Location</span>
+                    <span class="label m-b-4">Preferred Job Location</span>
                     <!-- <input type="text" class="input-box" formControlName="candidatePreferlocation" maxlength="40"
                         (keydown)="nameValidation($event)"> -->
                     <div class="input-box p-t-5 p-l-5 c-pointer p-relative no-close"
@@ -164,16 +162,16 @@
                         (keydown)="nameValidation($event)">
                 </div>
                 <div class="child d-flex m-b-10">
-                    <span class="label m-b-4">Current Salary</span>
-                    <input type="text" class="input-box" (keydown)="onKeypress($event)"
-                        formControlName="candidateCurrentSalary" [maxlength]="maxSalary?.length ? maxSalary?.length : 7"
-                        (keydown)="budgetCheck($event)" (paste)="onPaste($event)">
+                    <span class="label m-b-4">Current Salary<span class="f-s-12">(CTC)</span></span>
+                    <input type="text" class="input-box" (keydown)="onKeypress($event)" maxlength="20"
+                        formControlName="candidateCurrentSalary"
+                        (paste)="onPasteSalary($event)">
                 </div>
                 <div class="child d-flex m-b-10">
-                    <span class="label m-b-4">Expected Salary</span>
-                    <input type="text" class="input-box" (keydown)="budgetCheck($event)" (paste)="onPaste($event)"
+                    <span class="label m-b-4">Expected Salary <span class="f-s-12">(ECTC)</span></span>
+                    <input type="text" class="input-box"  (keydown)="onKeypress($event)"  (paste)="onPasteSalary($event)"  maxlength="20"
                         formControlName="candidateExpectedSalary">
-                </div>
+                </div>                
             </div>
             <div class="d-flex parent-last">
                 <div class="child-2 d-flex m-b-10 p-relative">

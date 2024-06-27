@@ -130,15 +130,15 @@ export class AddCandidateModalComponent implements OnInit {
     })
   }
 
-  fetchLocation():void{
-    this.apiService.get(`/user/preffer-location`).subscribe((res:any) => {
-      console.log("res",res)
+  fetchLocation(): void {
+    this.apiService.get(`/user/preffer-location`).subscribe((res: any) => {
+      console.log("res", res)
       this.preferredLocation = res?.data;
     })
   }
 
   nameValidation(event: any): void {
-    const allowedCharacters = /^[A-Za-z\s]+$/;
+    const allowedCharacters = /^[\.\&A-Za-z\s]+$/;
     let enteredValue = event?.target?.value;
     if (!event.ctrlKey && !event.metaKey && !event.altKey && event.key.length === 1) {
       enteredValue += event?.key;
@@ -169,15 +169,55 @@ export class AddCandidateModalComponent implements OnInit {
     this.locationName = name;
   }
 
-  onKeypress(event: any): void {
-    let enteredValue: string;
-    if (event.key === "Backspace") enteredValue = event?.target?.value.slice(0, -1);
-    else enteredValue = event.target.value + event.key;
-    const allowedCharacters: RegExp = /^[0-9]+$/;
-    if (event.key !== "Backspace" && !allowedCharacters.test(enteredValue)) {
+  onPasteSalary(event: ClipboardEvent): void {
+    const clipboardData = event.clipboardData;
+    if (!clipboardData) {
       event.preventDefault();
       return;
     }
+    let pastedData = clipboardData.getData('Text');
+    pastedData = pastedData.replace(/,/g, ''); // Remove existing commas
+
+    const allowedCharacters: RegExp = /^[0-9]*\.?[0-9]*$/;
+    if (!allowedCharacters.test(pastedData)) {
+      event.preventDefault();
+      return;
+    }
+
+    const parts = pastedData.split(".");
+    let integerPart = parts[0];
+    const decimalPart = parts[1];
+
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",").replace(/(\d+)(\d{2},)/, "$1,$2");
+
+    if (decimalPart !== undefined) pastedData = integerPart + "." + decimalPart.slice(0, 2);
+    else pastedData = integerPart;
+
+    const target = event.target as HTMLInputElement;
+    if (target) target.value = pastedData;
+
+    event.preventDefault();
+  }
+  onKeypress(event: KeyboardEvent): void {
+    const target = event.target as HTMLInputElement;
+    if (!target) return;
+
+    let value = target.value.replace(/,/g, ''); // Remove existing commas
+    const allowedCharacters: RegExp = /^[0-9]*\.?[0-9]*$/;
+    if (!allowedCharacters.test(value)) {
+      target.value = '';
+      return;
+    }
+
+    const parts = value.split(".");
+    let integerPart = parts[0];
+    const decimalPart = parts[1];
+
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",").replace(/(\d+)(\d{2},)/, "$1,$2");
+
+    if (decimalPart !== undefined) target.value = integerPart + "." + decimalPart.slice(0, 2);
+    else target.value = integerPart;
+
   }
 
   onPaste(event: any): void {
@@ -228,6 +268,7 @@ export class AddCandidateModalComponent implements OnInit {
     this.fileInputClicked = true;
     this.selectedFile = event.target.files[0];
     if (event.target.files.length > 0) this.resumeUploadSuccess = true;
+    this.loader = true;
     if (this.selectedFile) this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', this.selectedFile);
     this.getKeyFroms3();
   }
@@ -236,6 +277,8 @@ export class AddCandidateModalComponent implements OnInit {
     this.keySubscription = this.s3Service.key.subscribe((key: string) => {
       console.log("Uploaded file key:", key);
       this.uploadedFileKey = key;
+      this.loader = false;
+      this.tostr.success('Resume Uploaded Successfully')
     });
   }
 
