@@ -198,7 +198,8 @@ export class AddCandidateModalComponent implements OnInit {
 
     event.preventDefault();
   }
-  onKeypress(event: KeyboardEvent): void {
+
+  onKeypressSalary(event: KeyboardEvent): void {
     const target = event.target as HTMLInputElement;
     if (!target) return;
 
@@ -220,8 +221,19 @@ export class AddCandidateModalComponent implements OnInit {
 
   }
 
+  onKeypress(event: any): void {
+    let enteredValue: string;
+    if (event.key === "Backspace") enteredValue = event?.target?.value.slice(0, -1);
+    else enteredValue = event.target.value + event.key;
+    const allowedCharacters: RegExp = /^[0-9]+$/;
+    if (event.key !== "Backspace" && !allowedCharacters.test(enteredValue)) {
+      event.preventDefault();
+      return;
+    }
+  }
+
   onPaste(event: any): void {
-    event.preventDefault();
+    // event.preventDefault();
   }
 
   budgetCheck(event: any): void {
