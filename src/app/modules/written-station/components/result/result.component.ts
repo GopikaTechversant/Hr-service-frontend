@@ -100,11 +100,12 @@ export class ResultComponent {
     if (scoreElement) this.scoreValue = scoreElement.value;
     const descriptionElement = document.getElementById('description') as HTMLInputElement;
     if (descriptionElement) this.descriptionValue = descriptionElement.value;
-    // if (!this.uploadedFileKey) {
-    //   console.log("File upload is still in progress.");
-    //   this.tostr.warning('File upload is in progress, please wait.');
-    //   return;
-    // }
+    if (!this.uploadedFileKey) {
+      console.log("File upload is still in progress.");
+      this.tostr.warning('File upload is in progress, please wait.');
+      return;
+    }
+    console.log("this.uploadedFileKey",this.uploadedFileKey)
     let payload = {
       examScore: this.scoreValue,
       examServiceId: this.examServiceId,
@@ -112,7 +113,7 @@ export class ResultComponent {
       file: this.uploadedFileKey
     }
     console.log("payload", payload);
-    if (this.scoreValue && this.examServiceId && this.descriptionValue) {
+    if (this.scoreValue && this.examServiceId && this.descriptionValue && this.uploadedFileKey) {
       this.apiService.post(`/written-station/result`, payload).subscribe({
         next: (res: any) => {
           

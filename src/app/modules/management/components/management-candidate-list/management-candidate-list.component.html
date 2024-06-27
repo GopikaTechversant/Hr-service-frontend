@@ -50,11 +50,9 @@
                     <td>Name</td>
                     <td>Email</td>
                     <td>Requirement</td>
-                    <td>Offer Status</td>
                     <td>Move Candidate</td>
                     <td>Candidate Station</td>
                     <td>Service Status</td>
-                    <td>More Details</td>
                 </tr>
                 <div *ngIf="loader && !initialLoader" class="loader-parent">
                     <img src="assets/gif/loader.gif">
@@ -62,7 +60,7 @@
                 <ng-container *ngIf="candidateList.length > 0">
                     <ng-container *ngFor="let innerArray of candidateList">
                         <ng-container *ngFor="let item of innerArray">
-                            <tr class="candidate c-pointer">
+                            <tr class="candidate c-pointer" (dblclick)="selectCandidate(item['candidate.candidateId'])">
                                 <td>{{ item['candidate.candidateId'] }}</td>
                                 <td class="text-wrap"
                                     [title]="item['candidate.candidateFirstName'] + item['candidate.candidateLastName']">
@@ -72,31 +70,25 @@
                                     item['candidate.candidateEmail'] }}</td>
                                 <td class="text-wrap" [title]="item['serviceRequest.requestName']">{{
                                     item['serviceRequest.requestName'] }}</td>
-                                <td class="text-wrap f-w-500"
-                                    [title]="item?.progressStatus > 0 ? 'Offer Released' : 'Pending'"
-                                    [ngClass]="item?.progressStatus > 0  ? 'green' : 'blue'">
-                                    {{item?.progressStatus > 0 ? 'Offer Released' : 'Pending'}}
-                                </td>
                                 <td class="p-t-15">
-                                    <!-- <button class="move" (click)="onSwitchStation(item)">Move</button>   -->
                                     <img src="/assets/images/move.png" alt="" height="24px" width="24px"
                                         (click)="onSwitchStation(item)">
                                 <td class="text-wrap">{{item?.currentStation}}</td>
                                 <td class="f-w-500 text-wrap " [ngClass]="{'blue': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
                                      'red': item?.serviceStatus === 'rejected'}">
-                                    <span class="service-status">{{item?.serviceStatus === 'done' ? 'OfferAccepted' : item?.serviceStatus | titlecase}}</span>
+                                    <span class="service-status">{{item?.serviceStatus === 'done' ? 'OfferAccepted' :
+                                        item?.serviceStatus | titlecase}}</span>
                                 </td>
                                 <!-- <td class="text-wrap" (click)="navigate('/dashboard/series/',candidate?.requestId)"
                                 [ngStyle]="{'color': candidate.status === 'progress' ? '#F57C02' : '#08E179'}">
                                 {{candidate.status | titlecase}}
                             </td> -->
-                                <td>
-                                    <!-- <button class="btn" (click)="fetchDetails(item?.serviceId , item?.progressStatus)">View detail</button> -->
+                                <!-- <td>
                                     <div class="d-flex j-centre">
                                         <img src="/assets/images/candidate-detail/eye.svg" alt="view" width="20" height="20">
                                         <span class="blue p-l-5 f-w-500">View detail</span>
                                     </div>
-                                </td>
+                                </td> -->
                             </tr>
                         </ng-container>
                     </ng-container>

@@ -4,6 +4,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { StationSwitchComponent } from 'src/app/components/station-switch/station-switch.component';
 import { WarningBoxComponent } from 'src/app/components/warning-box/warning-box.component';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-management-candidate-list',
   templateUrl: './management-candidate-list.component.html',
@@ -30,7 +31,7 @@ export class ManagementCandidateListComponent implements OnInit {
     { status: 'done' },
     { status: 'moved' }
   ]
-  constructor(private apiService: ApiService, private dialog: MatDialog) {
+  constructor(private apiService: ApiService, private dialog: MatDialog,private router: Router, private route: ActivatedRoute) {
 
   }
 
@@ -164,5 +165,9 @@ export class ManagementCandidateListComponent implements OnInit {
       pages.push(this.lastPage);
     }
     return pages;
+  }
+
+  selectCandidate(id: any): void {
+    this.router.navigate([`candidate-details`, id], { relativeTo: this.route });
   }
 }
