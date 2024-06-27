@@ -53,15 +53,15 @@
   align-items: center;
   margin-top: 30px;
   margin-left: 10px;
-  width: 70px;
-  height: 68px;
+  width: 150px;
+  height: 79px;
   color: #005EC9;
   background-color: #EBF0FF;
 }
 
 .countsss {
   font-weight: 500;
-  font-size: 33px;
+  font-size: 30px;
 }
 
 .scrollable::-webkit-scrollbar,

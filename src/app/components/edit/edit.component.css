@@ -1,7 +1,7 @@
 .heading {
     text-align: left;
     padding-bottom: 10px;
-    font-size: 30px;
+    font-size: 20px;
     font-weight: 500;
     line-height: 36px;
     letter-spacing: 0em;
@@ -250,4 +250,14 @@ ul{
 .delete-color{
     color: #C10A0A;
     margin-left: 19px;
+}
+
+.input-box-last{
+    height: 34px;
+    border-radius: 5px;
+    outline: none;
+    background: #FAFAFA;
+    padding-left: 5px;
+    border: 1px solid #E9E9E9;
+    width: 59%;
 }

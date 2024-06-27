@@ -14,7 +14,7 @@ import { AssignRequirementComponent } from '../assign-requirement/assign-require
 })
 export class CandidateListComponent {
   @Input() positionId: any
-  pageSize = 14;
+  pageSize = 10;
   pageIndex = 1;
   showFirstLastButtons = true;
   candidateList: any;
@@ -162,7 +162,7 @@ export class CandidateListComponent {
     const dialogRef = this.dialog.open(EditComponent, {
       data: id,
       width: '950px',
-      height: '980px'
+      height: '700px'
     })
     dialogRef.componentInstance.onEditSuccess.subscribe(() => {
       this.currentPage = 1;

@@ -1,4 +1,4 @@
-<div class="main p-20 m-t-23 m-l-14">
+<div class="main p-20 m-l-14">
     <span class="heading  m-t-12">Edit Candidate Details</span>
     <form [formGroup]="candidateForm" (ngSubmit)="submitClick(); $event.preventDefault()" enctype="multipart/form-data"
         class="p-t-6">
@@ -40,9 +40,9 @@
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">DOB</span>
                 <div class="p-relative w-100">
-                    <input class="p-l-5  input-box c-pointer" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate"
-                        (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate"
-                        formControlName="candidateDoB">
+                    <input class="p-l-5  input-box c-pointer" placeholder="MM/DD/YY" matInput
+                        [matDatepicker]="pickerdate" (dateChange)="dateChange($event)" (click)="pickerdate?.open()"
+                        [value]="displayDate" formControlName="candidateDoB">
                     <span> <mat-datepicker #pickerdate class=""></mat-datepicker>
                         <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
                             (click)="pickerdate ?.open()"></i>
@@ -74,15 +74,19 @@
             </div>
 
             <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Experience</span>
-                <input type="text" class="input-box" formControlName="candidateExperience">
+                <span class="label m-b-4">Total Experience</span>
+                <input type="text" class="input-box" formControlName="candidateTotalExperience">
             </div>
+            <div class="child d-flex m-b-10">
+                <span class="label m-b-4">Relevant Experience</span>
+                <input type="text" class="input-box" formControlName="candidateRevlentExperience">
+            </div>
+        </div>
+        <div class="d-flex   parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Previous Organization</span>
                 <input type="text" class="input-box" formControlName="candidatePreviousOrg">
             </div>
-        </div>
-        <div class="d-flex   parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Previous Designation</span>
                 <input type="text" class="input-box" formControlName="candidatePreviousDesignation">
@@ -91,12 +95,12 @@
                 <span class="label m-b-4">Current Salary</span>
                 <input type="text" class="input-box" formControlName="candidateCurrentSalary">
             </div>
+        </div>
+        <div class="d-flex   parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Expected Salary</span>
                 <input type="text" class="input-box" formControlName="candidateExpectedSalary">
             </div>
-        </div>
-        <div class="d-flex   parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">City</span>
                 <input type="text" class="input-box" formControlName="candidateCurrentSalary">
@@ -105,23 +109,22 @@
                 <span class="label m-b-4">District</span>
                 <input type="text" class="input-box" formControlName="candidateExpectedSalary">
             </div>
+        </div>
+        <div class="d-flex parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">State</span>
                 <input type="text" class="input-box" formControlName="candidateExpectedSalary">
             </div>
-        </div>
-        <div class="d-flex parent">
             <div class="child d-flex m-b-10">
-                <span class="label m-b-4">Requirement</span>
+                <span class="label m-b-4">Preferred Location</span>
                 <div class="input-box c-pointer p-relative p-t-10 p-l-6 no-close"
-                    (click)="requirementListOpen = !requirementListOpen">
-                    <span *ngIf="!selectedRequirementName" class="no-close">{{candidateDetails?.position}}</span>
-                    <span *ngIf="selectedRequirementName" class="no-close">{{selectedRequirementName}}</span>
+                    (click)="locationListOpen = !locationListOpen">
+                    <span *ngIf="!locationname" class="no-close">{{candidateDetails?.candidatePreferlocation}}</span>
+                    <span *ngIf="locationname" class="no-close">{{locationname}}</span>
                     <span><i class="f-right p-r-10 fa fa-chevron-down s-text no-close"></i></span>
-                    <div class="no-close dropdown c-pointer no-close" *ngIf="requirementListOpen">
-                        <p *ngFor="let requirement of requirementList"
-                            (click)="selectRequirement(requirement.requestId,requirement.requestName)">
-                            {{requirement.requestName}}</p>
+                    <div class="no-close dropdown c-pointer no-close" *ngIf="locationListOpen">
+                        <p *ngFor="let item of preferredLocation" (click)="selectLocation(item.location)">
+                            {{item.location}}</p>
                     </div>
                 </div>
             </div>
@@ -138,20 +141,20 @@
                     </div>
                 </div>
             </div>
-            <div class="child d-flex m-b-10 p-relative">
-                <span class="label m-b-4">Uploaded Resume</span>
-                <div class="d-flex c-pointer">
-                    <img src="assets/images/file-uploaded.png" alt="" height="44px"
-                         (click)="viewResume(candidateDetails?.candidateResume)">
-                    <span *ngIf="!resumeUploadSuccess" class="upload-success-message" (click)="triggerFileInput();$event.stopPropagation();$event.preventDefault();" >
-                        Click to edit resume
-                    </span>
-                    <input type="file" #fileInput class="input-box" style="display:none"
-                        (change)="onFileSelected($event)">
-                    <span *ngIf="resumeUploadSuccess" class="upload-success-message">
-                        Resume uploaded successfully!
-                    </span>
-                </div>
+        </div>
+        <div class="child d-flex m-b-10 p-relative">
+            <span class="label m-b-4">Uploaded Resume</span>
+            <div class="d-flex c-pointer">
+                <img src="assets/images/file-uploaded.png" alt="" height="44px"
+                    (click)="viewResume(candidateDetails?.candidateResume)">
+                <span *ngIf="!resumeUploadSuccess" class="upload-success-message"
+                    (click)="triggerFileInput();$event.stopPropagation();$event.preventDefault();">
+                    Click to edit resume
+                </span>
+                <input type="file" #fileInput class="input-box" style="display:none" (change)="onFileSelected($event)">
+                <span *ngIf="resumeUploadSuccess" class="upload-success-message">
+                    Resume uploaded successfully!
+                </span>
             </div>
         </div>
         <div class="skills p-10">
@@ -184,7 +187,8 @@
                             <ul>
                                 <li *ngFor="let skill of selectedPrimarySkills" class="p-4">
                                     {{skill?.name | titlecase}}
-                                    <i class="fa fa-trash-o delete-color c-pointer" aria-hidden="true" (click)="removeSkill(skill, 'primary')"></i>
+                                    <i class="fa fa-trash-o delete-color c-pointer" aria-hidden="true"
+                                        (click)="removeSkill(skill, 'primary')"></i>
                                 </li>
                             </ul>
                         </div>
@@ -210,7 +214,8 @@
                             <ul>
                                 <li *ngFor="let skill of selectedSecondarySkills" class="p-4">
                                     {{skill?.name | titlecase}}
-                                    <i class="fa fa-trash-o delete-color c-pointer" aria-hidden="true" (click)="removeSkill(skill, 'secondary')"></i>
+                                    <i class="fa fa-trash-o delete-color c-pointer" aria-hidden="true"
+                                        (click)="removeSkill(skill, 'secondary')"></i>
                                 </li>
                             </ul>
                         </div>

@@ -40,6 +40,7 @@ export class SelectedCandidateListComponent {
   today: Date = new Date();
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+  candidateIds: any;
   constructor(private dialog: MatDialog, private apiService: ApiService , private datePipe: DatePipe) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -76,22 +77,28 @@ export class SelectedCandidateListComponent {
   }
 
   fetchList(): void {
-    if(!this.initialLoader) this.loader = true;
-   const url =`/hr-station/list`
-    const params = [
+    if (!this.initialLoader) this.loader = true;
+    const url = `/hr-station/list`
+    let params = [
       `search=${this.searchKeyword}`,
-      `page=${this.currentPage}`,
-      `limit=${this.limit}`,
-      `position=${this.positionId.trim()}`,
+      `page=${this.isExport ? '' : this.currentPage}`,
+      `limit=${this.isExport ? '' : this.limit}`,
+      `position=${this.positionId}`,
       `experience=${this.experience.trim()}`,
-      `fromDate=${this.startDate}`,
-      `toDate=${this.endDate}`,
-      `status_filter=pending`,
+      `fromDate=`,
+      `toDate=`,
+      `status_filter=done`,
       `report=${this.isExport}`
-    ].join('&');
+    ].filter(param => param.split('=')[1] !== '').join('&');  
 
     if (this.isExport) {
+      if (this.candidateIds) {
+        const idsParams = this.candidateIds.map((id: string) => `ids=${id}`).join('&');
+        params += `&${idsParams}`;
+      }
       const exportUrl = `${environment.api_url}${url}?${params}`;
+      console.log(exportUrl);
+
       window.open(exportUrl, '_blank');
       this.isExport = false;
       if (this.isExport === false) this.fetchList();
