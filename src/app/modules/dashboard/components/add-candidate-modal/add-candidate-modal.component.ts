@@ -140,7 +140,7 @@ export class AddCandidateModalComponent implements OnInit {
   nameValidation(event: any): void {
     const allowedCharacters = /^[\.\&A-Za-z\s]+$/;
     let enteredValue = event?.target?.value;
-    if (!event.ctrlKey && !event.metaKey && !event.altKey && event.key.length === 1) {
+    if (!event.ctrlKey && !event.metaKey && !event.altKey && event?.key?.length === 1) {
       enteredValue += event?.key;
     }
     if (!allowedCharacters.test(enteredValue)) {
@@ -148,42 +148,42 @@ export class AddCandidateModalComponent implements OnInit {
     }
   }
 
-  pasteNameValidation(event: ClipboardEvent): void {
-    console.log(event);
+  // pasteNameValidation(event: ClipboardEvent): void {
+  //   console.log(event);
   
-    const clipboardData = event.clipboardData;
-    if (!clipboardData) {
-      event.preventDefault();
-      return;
-    }
+  //   const clipboardData = event.clipboardData;
+  //   if (!clipboardData) {
+  //     event.preventDefault();
+  //     return;
+  //   }
   
-    let pastedData = clipboardData.getData('Text');
+  //   let pastedData = clipboardData.getData('Text');
   
-    const allowedCharacters = /^[\.\&A-Za-z\s]+$/;
-    if (!allowedCharacters.test(pastedData)) {
-      event.preventDefault();
-      return;
-    }
+  //   const allowedCharacters = /^[\.\&A-Za-z\s]+$/;
+  //   if (!allowedCharacters.test(pastedData)) {
+  //     event.preventDefault();
+  //     return;
+  //   }
   
-    const target = event.target as HTMLInputElement;
-    if (target) {
-      // Get current input value and selected text
-      const currentValue = target.value;
-      const selectionStart = target.selectionStart ?? 0; // Default to 0 if null or undefined
-      const selectionEnd = target.selectionEnd ?? 0; // Default to 0 if null or undefined
+  //   const target = event.target as HTMLInputElement;
+  //   if (target) {
+  //     // Get current input value and selected text
+  //     const currentValue = target.value;
+  //     const selectionStart = target.selectionStart ?? 0; // Default to 0 if null or undefined
+  //     const selectionEnd = target.selectionEnd ?? 0; // Default to 0 if null or undefined
   
-      // Modify the current value with pasted data
-      const newValue =
-        currentValue.slice(0, selectionStart) +
-        pastedData +
-        currentValue.slice(selectionEnd);
+  //     // Modify the current value with pasted data
+  //     const newValue =
+  //       currentValue.slice(0, selectionStart) +
+  //       pastedData +
+  //       currentValue.slice(selectionEnd);
   
-      // Validate the new value
-      if (!allowedCharacters.test(newValue)) {
-        event.preventDefault();
-      }
-    }
-  }
+  //     // Validate the new value
+  //     if (!allowedCharacters.test(newValue)) {
+  //       event.preventDefault();
+  //     }
+  //   }
+  // }
   
 
   selectsource(sourceid: any, sourceName: any): void {
@@ -236,40 +236,41 @@ export class AddCandidateModalComponent implements OnInit {
 
     event.preventDefault();
   }
-  onKeypressSalary(event: KeyboardEvent): void {
-    const target = event.target as HTMLInputElement;
-    if (!target) return;
-    const allowedKeys = /[0-9.,]/;
-    const controlKeys = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete', 'Tab'];
-    const key = event.key;
+  
+  // onKeypressSalary(event: KeyboardEvent): void {
+  //   const target = event.target as HTMLInputElement;
+  //   if (!target) return;
+  //   const allowedKeys = /[0-9.,]/;
+  //   const controlKeys = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete', 'Tab'];
+  //   const key = event.key;
 
-    if (!allowedKeys.test(key) && !controlKeys.includes(key)) {
-      event.preventDefault();
-      return;
-    }
-    if (controlKeys.includes(key)) return;
+  //   if (!allowedKeys.test(key) && !controlKeys.includes(key)) {
+  //     event.preventDefault();
+  //     return;
+  //   }
+  //   if (controlKeys.includes(key)) return;
 
 
-    let value = target.value.replace(/,/g, '');
+  //   let value = target.value.replace(/,/g, '');
 
-    // Only allow one dot
-    if (key === '.' && value.includes('.')) {
-      event.preventDefault();
-      return;
-    }
+  //   // Only allow one dot
+  //   if (key === '.' && value.includes('.')) {
+  //     event.preventDefault();
+  //     return;
+  //   }
 
-    value = value.replace(/[^0-9.]/g, '');
+  //   value = value.replace(/[^0-9.]/g, '');
 
-    const parts = value.split(".");
-    let integerPart = parts[0];
-    const decimalPart = parts[1];
+  //   const parts = value.split(".");
+  //   let integerPart = parts[0];
+  //   const decimalPart = parts[1];
 
-    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    integerPart = integerPart.replace(/(\d+)(\d{2},)/, "$1,$2");
+  //   integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  //   integerPart = integerPart.replace(/(\d+)(\d{2},)/, "$1,$2");
 
-    if (decimalPart !== undefined) target.value = integerPart + "." + decimalPart.slice(0, 2);
-    else target.value = integerPart;
-  }
+  //   if (decimalPart !== undefined) target.value = integerPart + "." + decimalPart.slice(0, 2);
+  //   else target.value = integerPart;
+  // }
 
   onKeypress(event: any): void {
     let enteredValue: string;
@@ -444,6 +445,7 @@ export class AddCandidateModalComponent implements OnInit {
       let candidateDetails = this.candidateForm.value;
       this.primaryskills = this.selectedPrimarySkills.map(skill => skill.id);
       this.secondaryskills = this.selectedSecondarySkills.map(skill => skill.id);
+      
       const payload = {
         candidateFirstName: this.candidateForm?.value?.candidateFirstName,
         candidateLastName: this.candidateForm?.value?.candidateLastName,
