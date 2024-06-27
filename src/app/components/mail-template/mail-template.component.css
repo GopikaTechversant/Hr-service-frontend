@@ -81,6 +81,17 @@
     border: none;
 }
 
+.loader-parent {
+    position: absolute;
+    left: 47%;
+    top: 190%;
+    z-index: 9;
+}
+
+.loader-parent img {
+    width: 100px;
+}
+
 .calendar-icon {
     /* width: 100px; */
     position: absolute;

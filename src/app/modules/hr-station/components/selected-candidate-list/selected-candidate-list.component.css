@@ -57,8 +57,11 @@
 .data {
     position: absolute;
     left: 52%;
-    top: 34%;
+    top: 50%;
     z-index: 9;
+    color: #C10A0A;
+    font-size: 16px;
+    font-weight: 500;
 }
 
 .text-wrap {

@@ -296,7 +296,9 @@
                                     <td>{{item?.uploadedDate | date : 'dd/MM/YYY'}}</td>
                                     <td class="text-wrap" [title]="item?.uploadedBy | titlecase ">{{ item?.uploadedBy | titlecase }}</td>
                                     <td class="text-wrap" [title]="item?.station | titlecase ">{{ item?.station | titlecase }}</td>
-                                    <td>View attachment</td>
+                                    <td (click)="viewResume(item?.uploadedFile)" class="c-pointer" title="View Attachment">
+                                        <img _ngcontent-rnn-c111="" src="/assets/images/view-file.png" alt="" height="29" width="29" class="p-l-9">
+                                    </td>
                                     <td class="text-wrap" [title]="item?.uploadType | titlecase ">{{ item?.uploadType | titlecase }}</td>
                                     <td class="text-wrap" [title]="item?.status ">{{ item?.status }}</td>
                                 </tr>

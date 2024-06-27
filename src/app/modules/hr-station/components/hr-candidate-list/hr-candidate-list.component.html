@@ -55,7 +55,7 @@
                 <span  (click)="filterStatus = !filterStatus"><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
             </span>    
             <div class="dropdown c-pointer no-close'" *ngIf="filterStatus" >
-                <span class="d-flex p-0" *ngFor="let type of Status" (click)="selectStatusFilter(type?.status);filterStatus = !filterStatus">
+                <span class="d-flex p-0" *ngFor="let type of status" (click)="selectStatusFilter(type?.status);filterStatus = !filterStatus">
                    <span class="p-l-10 p-5">{{type?.status | titlecase}}</span> 
                 </span>
             </div>

@@ -163,6 +163,7 @@ export class MailTemplateComponent implements OnInit {
     if (file) {
       this.file = file;
       this.fileName = file?.name;
+      this.loader = true;
       if (this.fileName) this.s3Service.uploadImage(this.file, 'hr-service-images', this.file);
       this.getKeyFroms3();
     }
@@ -197,6 +198,7 @@ export class MailTemplateComponent implements OnInit {
         this.tostr.warning('File upload is in progress, please wait.');
       } else {
         this.loader = false;
+        this.tostr.success('File upload Successfully');
       }
     });
   }

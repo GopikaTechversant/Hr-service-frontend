@@ -21,12 +21,6 @@ export class HrCandidateListComponent implements OnInit {
   candidateList: any = [];
   loader: boolean = true;
   selectedItem: any = [];
-  Status: any = [
-    { status: 'pending' },
-    { status: 'rejected' },
-    { status: 'done' },
-    { status: 'moved' }
-  ]
   filteredStatus: any = '';
   filterStatus: boolean = false;
   currentPage: number = 1;
@@ -45,6 +39,7 @@ export class HrCandidateListComponent implements OnInit {
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 15 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(Date.now() + 15 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   candidateIds: any;
+  status: any;
   constructor(private dialog: MatDialog, private apiService: ApiService, private datePipe: DatePipe, private router: Router, private route: ActivatedRoute) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -56,7 +51,7 @@ export class HrCandidateListComponent implements OnInit {
 
   ngOnInit(): void {
     this.initialLoader = true;
-    this.filteredStatus = sessionStorage.getItem('status') ? sessionStorage.getItem('status') : '';
+    this.filteredStatus = sessionStorage.getItem('status_5') ? sessionStorage.getItem('status_5') : '';
     const requirementData = sessionStorage.getItem(`requirement_5`);
     if (requirementData) {
       let requirement = JSON.parse(requirementData);
@@ -70,6 +65,7 @@ export class HrCandidateListComponent implements OnInit {
     }
     this.fetchList();
     this.fetchRequirements();
+    this.fetchStatus();
   }
 
   fetchRequirements(): void {
@@ -78,6 +74,12 @@ export class HrCandidateListComponent implements OnInit {
         this.requestList = res?.data;
       }
     })
+  }
+
+  fetchStatus(): void {
+    this.apiService.get(`/user/filter-status`).subscribe(res => {
+      this.status = res?.data;
+    });
   }
 
   fetchList(): void {
@@ -189,7 +191,7 @@ export class HrCandidateListComponent implements OnInit {
 
   selectStatusFilter(item: string): void {
     this.filteredStatus = item;
-    sessionStorage.setItem('status', this.filteredStatus);
+    sessionStorage.setItem('status_5', this.filteredStatus);
     this.currentPage = 1;
     this.limit = 10;
     this.fetchList();
@@ -198,7 +200,7 @@ export class HrCandidateListComponent implements OnInit {
   clearFilter(item: any): void {
     if (item === 'status') {
       this.filteredStatus = '';
-      sessionStorage.setItem('status', this.filteredStatus);
+      sessionStorage.setItem('status_5', this.filteredStatus);
     }
     if (item === 'position') {
       this.displayPosition = '';

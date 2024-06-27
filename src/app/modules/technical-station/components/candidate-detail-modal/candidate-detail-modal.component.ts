@@ -117,6 +117,7 @@ export class CandidateDetailModalComponent implements OnInit {
         this.tostr.warning('File upload is in progress, please wait.');
       } else {
         this.loader = false;
+        this.tostr.success('File upload Successfully');
       }
     });
   }
