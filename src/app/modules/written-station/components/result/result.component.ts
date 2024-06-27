@@ -25,27 +25,25 @@ export class ResultComponent {
   private keySubscription?: Subscription;
   uploadedFileKey: string = '';
   loader: boolean = false;
-  serviceId:any;
+  serviceId: any;
+  userId: any;
   constructor(private http: HttpClient,
     @Inject(MAT_DIALOG_DATA) public data: any, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
     private dialogRef: MatDialogRef<ResultComponent>) {
     if (data) {
       this.examServiceId = data.candidateIds
       this.serviceId = data.candidate?.serviceSequence.serviceId
-      console.log("this.serviceId",this.serviceId);
-      
     }
   }
 
-  ngOnInit(): void { 
-    console.log("data.candidates",this.data.candidate);
-    
+  ngOnInit(): void {
+    this.userId = localStorage.getItem('userId');
+
   }
 
   onFileSelected(event: any) {
     this.fileInputClicked = true;
     this.selectedFile = event.target.files[0];
-    console.log("this.selectedFile in add ", this.selectedFile);
     if (event.target.files.length > 0) this.resumeUploadSuccess = true;
     if (this.selectedFile) {
       this.loader = true;
@@ -54,17 +52,15 @@ export class ResultComponent {
     }
   }
 
-  // onFileSelected(event: any) {
-  //   this.fileInputClicked = true;
-  //   this.selectedFile = event.target.files[0];
-  //   if (event.target.files.length > 0) this.resumeUploadSuccess = true;
-  // }
-
   getKeyFroms3(): void {
     this.keySubscription = this.s3Service.key.subscribe((key: string) => {
-      console.log("Uploaded file key:", key);
-      this.loader = false;
       this.uploadedFileKey = key;
+      if (!this.uploadedFileKey) {
+        this.loader = true;
+        this.tostr.warning('File upload is in progress, please wait.');
+      } else {
+        this.loader = false;
+      }
     });
   }
 
@@ -78,7 +74,7 @@ export class ResultComponent {
   //   formdata.append('examServiceId',this.examServiceId);
   //   formdata.append('examDescription',this.descriptionValue);
   //   if(this.selectedFile) formdata.append('file',this.selectedFile);
-    
+
   //   let payload = {
   //     examScore: this.scoreValue,
   //     examServiceId: this.examServiceId,
@@ -101,31 +97,24 @@ export class ResultComponent {
     const descriptionElement = document.getElementById('description') as HTMLInputElement;
     if (descriptionElement) this.descriptionValue = descriptionElement.value;
     if (!this.uploadedFileKey) {
-      console.log("File upload is still in progress.");
       this.tostr.warning('File upload is in progress, please wait.');
       return;
     }
-    console.log("this.uploadedFileKey",this.uploadedFileKey)
     let payload = {
       examScore: this.scoreValue,
       examServiceId: this.examServiceId,
       examDescription: this.descriptionValue,
-      file: this.uploadedFileKey
+      file: this.uploadedFileKey,
+      userId: this.userId
     }
-    console.log("payload", payload);
     if (this.scoreValue && this.examServiceId && this.descriptionValue && this.uploadedFileKey) {
       this.apiService.post(`/written-station/result`, payload).subscribe({
         next: (res: any) => {
-          
-          console.log("payload api", payload);
           this.dialogRef.close(true);
-          // this.scoreSubmitted.emit(parseInt(this.scoreValue, 10));
-          // this.serviceIdPassed.emit(this.examServiceId); 
           this.resultData.emit({ score: parseInt(this.scoreValue, 10), serviceId: this.examServiceId });
           this.tostr.success('Progress added successfully');
         },
         error: (err) => {
-          console.error("Error in API call:", err);
           this.dialogRef.close();
           if (err?.status === 500) {
             this.tostr.error("Internal Server Error");

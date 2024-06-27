@@ -89,3 +89,14 @@ input[type="text"] {
 .change-file{
     color: #005EC9;
 }
+
+.loader-parent {
+    position: absolute;
+    left: 42%;
+    z-index: 9;
+    top: 37%;
+}
+
+.loader-parent img {
+    width: 120px;
+}

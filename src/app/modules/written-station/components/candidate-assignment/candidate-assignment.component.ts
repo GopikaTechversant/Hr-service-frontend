@@ -58,6 +58,7 @@ export class CandidateAssignmentComponent implements OnInit {
   recruiterId: any;
   serviceIds: any[] = [];
   previousAverageScore: any;
+  userId:any;
   constructor(private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService, private s3Service: S3Service, private router: Router) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
