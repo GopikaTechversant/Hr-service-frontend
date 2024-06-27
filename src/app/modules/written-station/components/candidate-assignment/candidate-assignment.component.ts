@@ -108,7 +108,9 @@ export class CandidateAssignmentComponent implements OnInit {
       this.loader = false;
       this.initialLoader = false;
       if (data?.candidates) {
-        if (data?.averageScore['progress.progressAverageScore']) this.previousAverageScore = data.averageScore['progress.progressAverageScore']
+        if (data.averageScore && data.averageScore['progress?.progressAverageScore'] !== null) {
+          this.previousAverageScore = data.averageScore['progress?.progressAverageScore'];
+        }
         this.candidateList = data?.candidates;
         this.totalCount = data?.total;
         const totalPages = Math.ceil(this.totalCount / this.limit);
