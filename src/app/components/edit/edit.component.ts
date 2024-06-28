@@ -53,6 +53,7 @@ export class EditComponent implements OnInit {
   preferredLocation: any[] = [];
   locationname: any;
   locationListOpen: boolean = false;
+  loader: boolean = false;
   constructor(public dialogRef: MatDialogRef<EditComponent>, private tostr: ToastrServices, private formBuilder: UntypedFormBuilder, private apiService: ApiService,
     private datePipe: DatePipe, @Inject(MAT_DIALOG_DATA) public data: any, private s3Service: S3Service) {
     this.candidateForm = this.formBuilder.group({
@@ -105,7 +106,6 @@ export class EditComponent implements OnInit {
 
   fetchLocation(): void {
     this.apiService.get(`/user/preffer-location`).subscribe((res: any) => {
-      console.log("res", res)
       this.preferredLocation = res?.data;
     })
   }
@@ -155,18 +155,25 @@ export class EditComponent implements OnInit {
   onFileSelected(event: any) {
     this.fileInputClicked = true;
     this.selectedFile = event.target.files[0];
-    console.log("this.selectedFile in add ", this.selectedFile);
     if (event.target.files.length > 0) this.resumeUploadSuccess = true;
+    this.loader = true;
     if (this.selectedFile) this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', this.selectedFile);
     this.getKeyFroms3();
   }
 
   getKeyFroms3(): void {
     this.keySubscription = this.s3Service.key.subscribe((key: string) => {
-      console.log("Uploaded file key:", key);
       this.uploadedFileKey = key;
+      if (!this.uploadedFileKey) {
+        this.loader = false;
+        this.tostr.error('Something Went Wrong Please Try Again');
+      } else {
+        this.loader = false;
+        this.tostr.success('File upload Successfully');
+      }
     });
   }
+  
   selectsource(sourceid: any, sourceName: any): void {
     this.sourceId = sourceid;
     this.sourceName = sourceName;
@@ -310,9 +317,7 @@ export class EditComponent implements OnInit {
 
   viewResume(resume: any) {
     this.resumePath = resume;
-    console.log("this.resumePath", this.resumePath);
     window.open(`${environment.s3_url}${this.resumePath}`, '_blank');
-    console.log("`${environment.s3_url}${this.resumePath}`", typeof (`${environment.s3_url}${this.resumePath}`));
   }
 
   ngOnDestroy(): void {

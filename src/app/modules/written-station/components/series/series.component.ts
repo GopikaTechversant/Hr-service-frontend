@@ -57,15 +57,12 @@ export class SeriesComponent implements OnInit {
 
   fetchCandidates(): void {
     this.apiService.get(`/screening-station/list-batch/${this.requestId}?station=2&experience=${this.searchKeyword}`).subscribe((res: any) => {
-      console.log("this.searchKeyworddff", this.searchKeyword);
-
       if (res && res?.candidates) this.candidates_list = res?.candidates;
       this.showAverageScoreInput = this.candidates_list.some((candidate: any) => candidate.serviceStatus === 'pending');
     });
   }
 
   searchCandidate(searchTerm: string): void {
-    console.log("searchTerm", searchTerm);
     this.searchKeyword = searchTerm;
     this.fetchCandidates();
   }
@@ -90,7 +87,6 @@ export class SeriesComponent implements OnInit {
   fetchCandidatesWithQuestionBox(): void {
     this.apiService.get(`/written-station/questionBatchList/${this.requestId}`).subscribe((res: any) => {
       if (res?.data) this.created_Box = res?.data;
-      console.log("this.candidatesWithQuestionBox", this.candidatesWithQuestionBox);
       this.fetchQuestions();
     })
   }
@@ -99,11 +95,9 @@ export class SeriesComponent implements OnInit {
     this.showQuestions = true;
     this.apiService.get(`/written-station/questions`).subscribe((data: any) => {
       this.questions_list = data?.data;
-      console.log("data qns", this.questions_list);
       if (this.created_Box) {
         this.created_Box.forEach((data: any) => {
           this.questions_list = this.questions_list.filter((question: { questionId: any; }) => question.questionId !== data.questionId);
-          console.log("data qns after", this.questions_list);
         })
       }
     });
@@ -115,8 +109,6 @@ export class SeriesComponent implements OnInit {
     const previousBoxContainsQuestions = previousBoxIndex >= 0 && this.created_Box[previousBoxIndex].questionName;
     if (this.candidates_list.length !== 0) {
       if (previousBoxContainsQuestions || this.created_Box.length === 0) {
-        console.log("this.candidates_list.length", this.candidates_list.length);
-
         this.apiService.post(`/written-station/create-question-box`, payload).subscribe((res: any) => {
           if (res?.data) {
             this.created_Box.push({
@@ -126,14 +118,12 @@ export class SeriesComponent implements OnInit {
             });
             this.isQuestionBoxCreated = true;
           }
-          console.log("created_Box.length", this.created_Box);
         })
       }
     }
   }
 
   openAssignModal(candidate: any): void {
-    console.log("candidate", candidate);
     if (this.created_Box.length == 0) {
       const dialogRef = this.dialog.open(AssignSeriesComponent, {
         height: '150px',
@@ -148,7 +138,6 @@ export class SeriesComponent implements OnInit {
       dialogRef.afterClosed().subscribe((selectedQuestionBox: any) => {
         if (selectedQuestionBox.series) {
           if (!selectedQuestionBox.series.questionName) {
-            console.log("selectedQuestionBox", selectedQuestionBox);
             // Find the selected question box by name
             this.selectedBox = this.created_Box.find((box: any) => box.name === selectedQuestionBox.series.name);
             if (this.selectedBox) {
@@ -161,8 +150,6 @@ export class SeriesComponent implements OnInit {
               if (!alreadyAssigned) {
                 // Push the candidate to the candidates array of the selected box
                 this.selectedBox.candidates.push(candidate);
-                console.log("selectedBox.candidates", this.selectedBox.candidates);
-
                 // Remove the candidate from the candidates_list
                 this.candidates_list = this.candidates_list.filter((item: any) => item.candidateId !== candidate.candidateId);
                 // Remove the candidate from other question boxes if already assigned
@@ -172,12 +159,8 @@ export class SeriesComponent implements OnInit {
                     s.candidates = s.candidates.filter((c: any) => c.candidateId !== candidate.candidateId);
                   }
                 });
-                console.log("Updated created_Box", this.created_Box);
-              } else {
-                console.log("Candidate already assigned to this box");
-              }
+              } 
             }
-            console.log("selectedQuestionBox.questionName", selectedQuestionBox.questionName);
           }
 
           else if (selectedQuestionBox.series.questionName) {
@@ -185,7 +168,6 @@ export class SeriesComponent implements OnInit {
             // if (!this.selectedBox.candidates) {
             //   this.selectedBox.candidates = []; // Initialize candidates array if not exists
             // }
-            console.log("selectedQuestionBox", selectedQuestionBox);
             this.selectedBox.candidates.push(selectedQuestionBox.candidate)
             const requestData = {
               questionBoxId: selectedQuestionBox.series.boxId,
@@ -194,7 +176,6 @@ export class SeriesComponent implements OnInit {
             };
             requestData.questionServiceId.push(selectedQuestionBox.candidate.serviceId);
             this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res: any) => {
-              console.log("resp", res);
               this.fetchCandidatesWithQuestionBox();
               this.fetchCandidates();
               this.fetchQuestions();
@@ -208,7 +189,6 @@ export class SeriesComponent implements OnInit {
   selectQuestion(questionBox: any, id: any, name: any): void {
     this.questions_list = this.questions_list.filter((question: { questionId: any; }) => question.questionId !== id);
     if (questionBox) {
-      console.log("questionBox", questionBox);
       this.selectedQuestion = name;
       this.selectedQuestionId = id;
       this.idListOpen = false;
@@ -218,7 +198,6 @@ export class SeriesComponent implements OnInit {
   }
 
   assignQuestion(questionId: any, questionBox: any): void {
-    console.log("questionBox", questionBox);
     const requestData = {
       questionBoxId: questionBox.id,
       questionId: questionId,
@@ -226,22 +205,17 @@ export class SeriesComponent implements OnInit {
     };
     // Get candidate service IDs for the current series
     if (questionBox.candidates && questionBox.candidates.length > 0) {
-      console.log("questionBox <<<<", questionBox);
       questionBox.candidates.forEach((candidate: { serviceId: string }) => {
         if (candidate.serviceId) requestData.questionServiceId.push(candidate.serviceId);
       });
-      console.log("requestData", requestData);
-
     }
     this.apiService.post(`/written-station/assign-question`, requestData).subscribe((res: any) => {
-      console.log("resp", res);
       this.fetchCandidatesWithQuestionBox();
       this.fetchQuestions();
     });
   }
 
   onSwitchStation(candidate: any): void {
-    console.log("candidate", candidate)
     if (candidate?.serviceStatus === 'pending' || candidate?.serviceStatus === 'rejected') {
       const userId = localStorage.getItem('userId');
       const dialogRef = this.dialog.open(StationSwitchComponent, {
@@ -300,16 +274,11 @@ export class SeriesComponent implements OnInit {
 
   viewResume(resume: any) {
     this.resumePath = resume;
-    console.log("this.resumePath", this.resumePath);
     window.open(`${environment.s3_url}${this.resumePath}`, '_blank');
-    console.log("`${environment.s3_url}${this.resumePath}`", typeof (`${environment.s3_url}${this.resumePath}`));
   }
 
   approve(): void {
-    console.log("inside approve");
     const ScoreAddedTrue = this.created_Box.some(candidate => candidate.serviceStatus !== 'done' && candidate.progressScore !== null);
-    console.log("ScoreAddedTrue ", ScoreAddedTrue);
-
     const ScoreAddedFalse = this.created_Box.some(candidate => candidate.serviceStatus !== 'done' && candidate.progressScore == null);
     const averageScoreInput = document.getElementById('averageScore') as HTMLInputElement;
     const averageScore = averageScoreInput.value;
@@ -318,8 +287,6 @@ export class SeriesComponent implements OnInit {
       averageScore: averageScore
     };
     if (ScoreAddedTrue) {
-      console.log("ScoreAddedTrue");
-
       this.apiService.post(`/written-station/approve`, payload).subscribe({
         next: (res: any) => {
           this.tostr.success('Approved');

@@ -86,7 +86,6 @@ export class SeriesComponent implements OnInit {
 
   fetchDetails(): void {
     this.apiService.get(`/service-request/view?requestId=${this.requestId}`).subscribe((res: any) => {
-      console.log("data fetch", res);
       if (res?.data) this.requirement_details = res?.data;
       if (res?.flows) this.flows = res?.flows;
       this.roundNames = this.flows.map(flow => flow.flowStationName).join(', ');

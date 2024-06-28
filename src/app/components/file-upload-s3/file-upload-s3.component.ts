@@ -11,12 +11,10 @@ export class FileUploadS3Component implements OnInit {
   @Input() selectedFile: any;
   constructor(private s3Service: S3Service) { }
   ngOnInit(): void {
-    console.log("dgsydgyadfg", this.selectedFile);
     if (this.selectedFile) this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', 'image');
   }
 
   ngOnchanges(changes: SimpleChanges) {
-    console.log(" this.selectedFile",this.selectedFile);
   }
 
   ngOnDestroy(): void {

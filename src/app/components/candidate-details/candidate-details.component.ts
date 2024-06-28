@@ -89,7 +89,6 @@ export class CandidateDetailsComponent implements OnInit {
           this.initialLoader = false;
           this.loader = false;
           this.CandidateHistory = res?.history;
-          console.log('CandidateHistory:', this.CandidateHistory); 
         }
       },
       error: (err) => {
@@ -105,12 +104,8 @@ export class CandidateDetailsComponent implements OnInit {
 
   viewResume(resume: any) {
     this.resumePath = resume;
-    console.log("this.resumePath", this.resumePath);
     window.open(`${environment.s3_url}${this.resumePath}`, '_blank');
     this.viewResumeFile = environment.s3_url;
-    console.log(this.viewResumeFile);
-
-    console.log("`${environment.s3_url}${this.resumePath}`", typeof (`${environment.s3_url}${this.resumePath}`));
   }
 
 }

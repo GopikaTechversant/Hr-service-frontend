@@ -194,8 +194,8 @@ export class MailTemplateComponent implements OnInit {
     this.keySubscription = this.s3Service.key.subscribe((key: string) => {
       this.uploadedFileKey = key;
       if (!this.uploadedFileKey) {
-        this.loader = true;
-        this.tostr.warning('File upload is in progress, please wait.');
+        this.loader = false;
+        this.tostr.error('Something Went Wrong Please Try Again');
       } else {
         this.loader = false;
         this.tostr.success('File upload Successfully');

@@ -47,7 +47,6 @@ export class ManagementCandidateListComponent implements OnInit {
       this.initialLoader = false;
       this.loader = false;
       if (data.candidates) {
-        console.log("data.candidates", data.candidates);
         this.candidateList.push(data.candidates);
         this.totalCount = data?.totalCount
         const totalPages = Math.ceil(this.totalCount / this.limit);

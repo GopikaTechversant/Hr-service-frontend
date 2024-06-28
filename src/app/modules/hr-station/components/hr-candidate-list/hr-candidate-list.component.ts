@@ -103,8 +103,6 @@ export class HrCandidateListComponent implements OnInit {
         params += `&${idsParams}`;
       }
       const exportUrl = `${environment.api_url}${url}?${params}`;
-      console.log(exportUrl);
-
       window.open(exportUrl, '_blank');
       this.isExport = false;
       if (this.isExport === false) this.fetchList();
@@ -128,7 +126,6 @@ export class HrCandidateListComponent implements OnInit {
   getSelectedCandidateIds(): void {
     const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
     this.candidateIds = selectedCandidates.map((candidate: { serviceId: any; }) => candidate?.serviceId);
-    console.log('Selected Candidate IDs:', this.candidateIds);
     // this.selectedItem = this.candidateIds;
   }
 

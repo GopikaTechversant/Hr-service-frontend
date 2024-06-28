@@ -57,8 +57,6 @@ export class CandidateDetailModalComponent implements OnInit {
       this.candidateDetails = data?.candidateDetails;
       this.stationId = data?.stationId;
       this.serviceId = this.candidateDetails?.serviceId;
-      console.log(this.candidateDetails);
-
       if (data?.progressStatus > 0) this.progessAdded = true;
     }
     this.dialogRef.updateSize('60vw', '90vh');
@@ -113,8 +111,8 @@ export class CandidateDetailModalComponent implements OnInit {
     this.keySubscription = this.s3Service.key.subscribe((key: string) => {
       this.uploadedFileKey = key;
       if (!this.uploadedFileKey) {
-        this.loader = true;
-        this.tostr.warning('File upload is in progress, please wait.');
+        this.loader = false;
+        this.tostr.error('Something Went Wrong Please Try Again');
       } else {
         this.loader = false;
         this.tostr.success('File upload Successfully');
@@ -198,7 +196,6 @@ export class CandidateDetailModalComponent implements OnInit {
     if (item === 'approve') this.showSelection = true;
     if (item === 'rejection') this.showRejection = true;
     this.messageType = item;
-    console.log(this.messageType);
     if (item.trim() !== '') {
       this.mailTemplateData = {
         firstName: this.candidateDetails['candidate.candidateFirstName'],
@@ -322,9 +319,7 @@ export class CandidateDetailModalComponent implements OnInit {
 
   viewResume(resume: any) {
     this.resumePath = resume;
-    console.log("this.resumePath", this.resumePath);
     window.open(`${environment.s3_url}${this.resumePath}`, '_blank');
-    console.log("`${environment.s3_url}${this.resumePath}`", typeof (`${environment.s3_url}${this.resumePath}`));
   }
 
   ngOnDestroy(): void {

@@ -97,8 +97,6 @@ export class SelectedCandidateListComponent {
         params += `&${idsParams}`;
       }
       const exportUrl = `${environment.api_url}${url}?${params}`;
-      console.log(exportUrl);
-
       window.open(exportUrl, '_blank');
       this.isExport = false;
       if (this.isExport === false) this.fetchList();

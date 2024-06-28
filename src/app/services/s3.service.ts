@@ -12,7 +12,6 @@ export class S3Service {
   @Output() key = new EventEmitter<any>();
   constructor(private apiService: ApiService) {
     this.fetchBucketName();
-    console.log("uploadedFile >>", this.uploadedFile);
     // Initialize AWS S3 client
     this.s3Client = new S3Client({
       region: 'us-east-2', // Specify your AWS region
@@ -25,19 +24,15 @@ export class S3Service {
 
   fetchBucketName(): void {
     this.apiService.get(`/user/s3-credential`).subscribe((res: any) => {
-      console.log("res", res);
     })
   }
 
   async uploadImage(file: File, bucketName: string, fileType: any): Promise<any> {
-    const mimeType = file.type;
-    console.log("mimeType",mimeType);
-    
+    const mimeType = file.type;    
     const fileExtension = file.name.split('.').pop(); // Get the file extension
     const fileNameWithoutExtension = fileType.name.split('.').slice(0, -1).join('.');
     const currentDate = new Date().toISOString().split('T')[0]; // Get the current date
     const key = `${fileNameWithoutExtension}.${fileExtension}`;
-    console.log("key",this.key);
     const params: PutObjectCommandInput = {
       Bucket: bucketName,
       Key: key,
@@ -48,11 +43,7 @@ export class S3Service {
       // ContentType: 'application/octet-stream'
       // ACL: 'public-read' // Set ACL to make the uploaded image publicly accessible
     };
-    console.log("params",params);
-    
-    const command = new PutObjectCommand(params);
-    console.log("command",command);
-    
+    const command = new PutObjectCommand(params);    
     // return await this.s3Client.send(command);
     const result = await this.s3Client.send(command);
     this.key.emit(key); // Emit the key

@@ -128,8 +128,6 @@ export class InterviewDetailsComponent implements OnInit {
     });
     this.http.get(`${environment.api_url}/user/lists?userRole=1`, { headers }).subscribe((res: any) => {
       if (res?.users) this.users_list = res?.users;
-      console.log(" res?.users;", res?.users);
-
     })
   }
 
@@ -248,8 +246,6 @@ export class InterviewDetailsComponent implements OnInit {
   fetchLocation(): void {
     this.apiService.get(`/user/preffer-location`).subscribe((res: any) => {
       if (res?.data) this.locationList = res?.data;
-      console.log(this.locationList);
-
     })
   }
 

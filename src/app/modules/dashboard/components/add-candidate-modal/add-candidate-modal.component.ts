@@ -103,7 +103,6 @@ export class AddCandidateModalComponent implements OnInit {
   }
 
   requirementFromList(): void {
-    console.log("inside", history?.state?.candidate);
     this.requirement = history?.state?.candidate;
     this.selectedRequirementId = this.requirement.requestId;
     this.fromRequirementName = this.requirement.requestName;
@@ -132,7 +131,6 @@ export class AddCandidateModalComponent implements OnInit {
 
   fetchLocation(): void {
     this.apiService.get(`/user/preffer-location`).subscribe((res: any) => {
-      console.log("res", res)
       this.preferredLocation = res?.data;
     })
   }
@@ -149,42 +147,41 @@ export class AddCandidateModalComponent implements OnInit {
   }
 
   // pasteNameValidation(event: ClipboardEvent): void {
-  //   console.log(event);
-  
+
   //   const clipboardData = event.clipboardData;
   //   if (!clipboardData) {
   //     event.preventDefault();
   //     return;
   //   }
-  
+
   //   let pastedData = clipboardData.getData('Text');
-  
+
   //   const allowedCharacters = /^[\.\&A-Za-z\s]+$/;
   //   if (!allowedCharacters.test(pastedData)) {
   //     event.preventDefault();
   //     return;
   //   }
-  
+
   //   const target = event.target as HTMLInputElement;
   //   if (target) {
   //     // Get current input value and selected text
   //     const currentValue = target.value;
   //     const selectionStart = target.selectionStart ?? 0; // Default to 0 if null or undefined
   //     const selectionEnd = target.selectionEnd ?? 0; // Default to 0 if null or undefined
-  
+
   //     // Modify the current value with pasted data
   //     const newValue =
   //       currentValue.slice(0, selectionStart) +
   //       pastedData +
   //       currentValue.slice(selectionEnd);
-  
+
   //     // Validate the new value
   //     if (!allowedCharacters.test(newValue)) {
   //       event.preventDefault();
   //     }
   //   }
   // }
-  
+
 
   selectsource(sourceid: any, sourceName: any): void {
     this.sourceId = sourceid;
@@ -236,7 +233,7 @@ export class AddCandidateModalComponent implements OnInit {
 
     event.preventDefault();
   }
-  
+
   // onKeypressSalary(event: KeyboardEvent): void {
   //   const target = event.target as HTMLInputElement;
   //   if (!target) return;
@@ -338,10 +335,14 @@ export class AddCandidateModalComponent implements OnInit {
 
   getKeyFroms3(): void {
     this.keySubscription = this.s3Service.key.subscribe((key: string) => {
-      console.log("Uploaded file key:", key);
       this.uploadedFileKey = key;
-      this.loader = false;
-      this.tostr.success('Resume Uploaded Successfully')
+      if (!this.uploadedFileKey) {
+        this.loader = false;
+        this.tostr.error('Something Went Wrong Please Try Again');
+      } else {
+        this.loader = false;
+        this.tostr.success('File upload Successfully');
+      }
     });
   }
 
@@ -445,7 +446,7 @@ export class AddCandidateModalComponent implements OnInit {
       let candidateDetails = this.candidateForm.value;
       this.primaryskills = this.selectedPrimarySkills.map(skill => skill.id);
       this.secondaryskills = this.selectedSecondarySkills.map(skill => skill.id);
-      
+
       const payload = {
         candidateFirstName: this.candidateForm?.value?.candidateFirstName,
         candidateLastName: this.candidateForm?.value?.candidateLastName,
@@ -471,7 +472,6 @@ export class AddCandidateModalComponent implements OnInit {
         candidateState: this.candidateForm?.value?.candidateState,
         candidateResume: this.uploadedFileKey
       }
-      console.log("payload", payload);
       this.apiService.post(`/candidate/create`, payload).subscribe({
         next: (response) => {
           this.loader = false;
