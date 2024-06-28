@@ -13,10 +13,6 @@
             </span>
         </div>
     </div>
-    <div *ngIf="initialLoader">
-        <app-skeleton-loader *ngFor="let item of [1,2,1]" [loaderDatas]="[9]" [higherWidth]="1000" [lowerWidth]="800"
-            [gridColumn]="9"></app-skeleton-loader>
-    </div>
     <div *ngIf="(candidates_list?.length === 0 || !candidates_list) && !loader && !initialLoader " class="data">
         No Data Found
     </div>

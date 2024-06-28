@@ -59,9 +59,7 @@
 
 <div class="main">
     <div class="d-flex head m-b-10 j-space m-t-14" >
-        <!-- <div> -->
             <span class="heading p-t-17">Candidate Lists</span>
-        <!-- </div> -->
         <div class="d-flex j-space">
             <span class="input">
                 <input type="text" class="p-10" placeholder="Search Candidates" [(ngModel)]="searchKeyword" (keydown.enter)="searchCandidate(searchKeyword)">
@@ -87,6 +85,9 @@
                 <td>Reschedule Count</td>
                 <td>Interview Status</td>
             </tr>
+            <div *ngIf="loader && !initialLoader" class="loader-parent">
+                <img src="assets/gif/loader.gif">
+            </div>
             <ng-container *ngIf="candidates_list?.length > 0">
             <ng-container *ngFor="let item of candidates_list">
                 <tr class="c-pointer details" (dblclick)="selectCandidate(item?.candidateId)">

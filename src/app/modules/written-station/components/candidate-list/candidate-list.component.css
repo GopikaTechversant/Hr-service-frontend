@@ -91,7 +91,7 @@ input[type="text"] {
 
 .main {
   background-color: #F7F7F7;
-  min-height: calc(100vh - 170px);
+  /* min-height: calc(100vh - 170px); */
 }
 
 .box {
@@ -196,7 +196,7 @@ table {
 
 .table-container {
   overflow: auto !important;
-  height: calc(100vh - 285px);
+  height: calc(100vh - 316px);
 }
 
 tr:nth-child(odd) {

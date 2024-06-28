@@ -37,7 +37,8 @@ export class SeriesComponent implements OnInit {
   deleteRequirementId: any;
   flows: any[] = [];
   roundNames: any;
-  initialLoader:boolean = false;
+  initialLoader: boolean = false;
+  loader: boolean = false;
   currentPage: number = 1;
   lastPage: any;
   pageSize = 10;
@@ -67,9 +68,11 @@ export class SeriesComponent implements OnInit {
   }
 
   fetchcandidates(): void {
+    if (!this.initialLoader) this.loader = true;
     this.apiService.get(`/screening-station/list-batch/${this.requestId}?limit=${this.limit}&page=1`).subscribe((res: any) => {
-      this.moreApiCalled = false;
       if (res?.candidates) {
+        this.initialLoader = false;
+        this.loader = false;
         this.candidates_list = res?.candidates
         this.candidates_list = [];
         this.candidates_list = [...this.candidates_list, ...res?.candidates];

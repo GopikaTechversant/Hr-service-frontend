@@ -377,9 +377,13 @@ export class ServiceRequestComponent implements OnInit {
   }
 
   resetFormAndState(): void {
+    const comments = document.getElementById('comments') as HTMLInputElement;
+    if (comments) comments.value = '';
+    this.commentValue = '';
     this.stationsList = [];
     this.selectedTeam = '';
     this.selectedDesignation = '';
+    this.commentValue = '';
     this.clearInputvalue(this.maxExperienceInput);
     this.clearInputvalue(this.minExperienceInput)
     this.clearInputvalue(this.jobCode);
@@ -387,10 +391,16 @@ export class ServiceRequestComponent implements OnInit {
     this.clearInputvalue(this.baseSalaryInput);
     this.clearInputvalue(this.maxSalaryInput);
     this.clearInputvalue(this.vacancy);
+    this.managerName = '';
+    this.displayDate = null;
+    this.closeDate = null;
+    this.postDate = null;
+    this.closeDateObj = null;
     this.idListOpen = false;
     this.teamListOpen = false;
     this.selectedSkills = [];
     this.searchvalue = '';
+    this.jobDescription = '';
     this.selectedStations = [
       { stationName: "Screening", stationId: 1 },
       { stationName: "HR", stationId: 5 }
