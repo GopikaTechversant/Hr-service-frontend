@@ -73,7 +73,7 @@
 
 .content {
     width: 83%;
-    padding-bottom: 10px;
+    /* padding-bottom: 10px; */
     overflow-y: auto !important;
     transition: width 0.3s ease;
     margin: 20px;

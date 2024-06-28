@@ -55,9 +55,9 @@ export class TechnicalDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initialLoader = true;
     this.route.params.subscribe(params => {
       this.stationId = params['id'];
+      this.initialLoader = true;
       this.filteredStatus = sessionStorage.getItem(`status_${this.stationId}`) ? sessionStorage.getItem(`status_${this.stationId}`) : '';
       const requirementData = sessionStorage.getItem(`requirement_${this.stationId}`);
       if (requirementData) {
@@ -104,7 +104,6 @@ export class TechnicalDetailComponent implements OnInit {
     if (!this.initialLoader) this.loader = true;
     this.candidateList = [];
     if (this.stationId !== '3' && this.stationId !== '4') return;
-
     const url = this.stationId === '3' ? `/technical-station/list` : `/technical-station-two/list`;
     let params = [
       `search=${this.searchKeyword}`,

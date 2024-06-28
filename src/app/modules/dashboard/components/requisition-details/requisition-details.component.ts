@@ -21,9 +21,11 @@ export class RequisitionDetailsComponent implements OnInit {
   department: any;
   filterStatus: Boolean = false;
   filteredStatus: string = "Total Applicants";
+  initialLoader: Boolean = false;
   constructor(private apiService: ApiService, private datePipe: DatePipe, private tostr: ToastrService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.initialLoader = true
     this.route.params.subscribe(params => {
       this.requestId = params['id'];
     });
@@ -37,6 +39,7 @@ export class RequisitionDetailsComponent implements OnInit {
   fetchcount(): void {
     this.apiService.get(`/dashboard/card-data?requestId=${this.requestId}`).subscribe((res: any) => {
       if (res?.data) {
+        this.initialLoader = false;
         this.lists = res?.data;
         this.requestName = this.lists[0]?.position;
         this.department = this.lists[0]?.team;
@@ -47,6 +50,7 @@ export class RequisitionDetailsComponent implements OnInit {
   fetchCandidates(): void {
     this.apiService.get(`/dashboard/candidate-by-status?positionId=${this.requestId}&page=${this.currentPage}&limit=${this.pageSize}&status=${this.filteredStatus.split(' ')[0].toLowerCase()}`).subscribe((data: any) => {
       this.candidateList = data?.candidates;
+      this.initialLoader = false;
       this.totalCount = data?.totalCount;
       const totalPages = Math.ceil(this.totalCount / this.pageSize);
       this.lastPage = totalPages;
