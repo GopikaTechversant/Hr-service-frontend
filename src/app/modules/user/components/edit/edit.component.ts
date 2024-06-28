@@ -36,6 +36,7 @@ export class EditComponent implements OnInit {
   }
   ngOnInit(): void {
     this.fetchUserDetails();
+    this.fetchStations();
   }
   fetchUserDetails(): void {
     const headers = new HttpHeaders({

@@ -12,7 +12,8 @@
 }
 
 .candidate-card {
-    width: 340px;
+    width: 500px;
+    /* Increased width */
     height: 139px;
     border-radius: 4px;
     background-color: #FFFFFF;
@@ -55,6 +56,7 @@
     background-color: #FFFFFF;
     box-shadow: 0px 4px 7px 0px #0000001F;
     padding: 10px 0px;
+    margin-right: 20px;
 }
 
 .input {

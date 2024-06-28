@@ -430,7 +430,7 @@
             </div>
         </ng-container>
     </div>
-    <div class="no-data" *ngIf="!CandidateData?.length || CandidateData?.length === 0 && !initialLoader && !loader">There is No Candidate Available for this Request</div>
+    <div class="no-data" *ngIf="(!CandidateData?.length || CandidateData?.length === 0) && (!initialLoader && !loader)">There is No Candidate Available for this Request</div>
     <div class="row m-l-20 initial-loader" *ngIf="initialLoader && !loader">
         <div *ngFor="let item of [0,1,2,3,4,5]" class="col-md-6 m-t-10 m-b-10">
             <div class="gravatar-title">

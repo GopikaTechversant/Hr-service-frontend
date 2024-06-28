@@ -14,10 +14,9 @@
 
 .initial-loader {
     position: absolute;
-    top: 31%;
-    left: 1%;
+    top: 35%;
+    left: 21%;
 }
-
 
 .w-75 {
     width: 75%;
@@ -56,12 +55,6 @@
 
 .loader-parent img {
     width: 100px;
-}
-
-.initial-loader {
-    position: absolute;
-    top: 31%;
-    left: 1%;
 }
 
 .data {

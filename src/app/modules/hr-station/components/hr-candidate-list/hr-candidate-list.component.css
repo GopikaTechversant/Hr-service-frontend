@@ -48,11 +48,6 @@
     width: 100px;
 }
 
-.initial-loader {
-    position: absolute;
-    top: 31%;
-    left: 1%;
-}
 
 .data {
     position: absolute;
@@ -211,7 +206,7 @@ tr {
 
 .initial-loader {
     position: absolute;
-    top: 31%;
+    top: 35%;
     left: 21%;
 }
 

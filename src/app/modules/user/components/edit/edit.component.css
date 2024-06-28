@@ -101,12 +101,10 @@
     background: #FFFFFF;
     box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
     max-height: 100px;
-    overflow-y: scroll;
+    overflow-y: auto;
     font-size: 15px;
     margin-left: 0px;
-    width: 46%;
-    padding-left: 10px;
-    padding-top: 10px;
+    width: 98%;
     position: absolute;
     z-index: 1;
     margin-top: 35px;
