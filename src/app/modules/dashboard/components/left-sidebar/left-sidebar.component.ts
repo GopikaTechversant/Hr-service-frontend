@@ -24,9 +24,9 @@ export class LeftSidebarComponent implements OnInit {
         this.candidateDetailUrl = `/dashboard/candidate-details/${this.id}`;
         this.requisitionUrl = `/dashboard/requisition-detail/${this.id}` || `/dashboard/series?requestId=${this.id}`;
       } 
-      // else if (this.requestId) {
-      //   this.requirementUrl = `/dashboard/series?requestId=${this.requestId}`;
-      // }
+      else if (this.requestId) {
+        this.requirementUrl = `/dashboard/series?requestId=${this.requestId}`;
+      }
     });
     this.updateUrls();
   }
@@ -38,9 +38,9 @@ export class LeftSidebarComponent implements OnInit {
       this.requisitionUrl = `/dashboard/requisition-detail/${this.id}`;
       this.requirementUrl = `/dashboard/series?requestId=${this.id}`;
     }
-    // else if (this.requestId) {
-    //   this.requirementUrl = `/dashboard/series?requestId=${this.requestId}`;
-    // }
+    else if (this.requestId) {
+      this.requirementUrl = `/dashboard/series?requestId=${this.requestId}`;
+    }
   }
 
   ngOnDestroy(): void {
