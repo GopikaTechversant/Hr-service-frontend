@@ -21,6 +21,8 @@ export class ServiceRequestComponent implements OnInit {
   @ViewChild('jobCode') jobCode!: ElementRef<HTMLInputElement>;
   @ViewChild('maxSalaryInput') maxSalaryInput!: ElementRef<HTMLInputElement>;
   @ViewChild('vacancy') vacancy!: ElementRef<HTMLInputElement>;
+  @ViewChild('comment') commentDiv!: ElementRef<HTMLDivElement>;
+
   list_id: any = [];
   list_team: any = [];
   idListOpen: boolean = false;
@@ -243,16 +245,20 @@ export class ServiceRequestComponent implements OnInit {
     this.selectedSkills = this.selectedSkills?.filter(skill => skill !== skillToRemove);
   }
 
+  execCommand(command: string): void {
+    document.execCommand(command, false, undefined);
+  }
+
   textAreaFormat(event: string): void {
-    const textarea = document.getElementById('comments') as HTMLTextAreaElement | null;
-    if (!textarea) {
+    const div = this.commentDiv.nativeElement;
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0) {
       return;
     }
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    if (start === end) return; // No text selected
-    const selectedText = textarea.value.substring(start, end);
-    let replace: string;
+    const range = selection.getRangeAt(0);
+    const selectedText = range.toString();
+    if (!selectedText) return; // No text selected
+    let replace: string = selectedText;
     if (event === 'upperCase') {
       replace = selectedText.toUpperCase();
     } else if (event === 'lowerCase') {
@@ -263,19 +269,50 @@ export class ServiceRequestComponent implements OnInit {
       replace = this.sentenceCase(selectedText);
     } else if (event === 'titlecase') {
       replace = this.titleCase(selectedText);
-    }
-    else if (event === 'bullets') {
-      replace = this.addBullets(selectedText);
-    }
-    else if (event === 'numbered') {
-      replace = this.addNumbered(selectedText);
     } else {
       return;
     }
-
-    textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end);
-    this.jobDescription = textarea.value
+    const newNode = document.createTextNode(replace);
+    range.deleteContents();
+    range.insertNode(newNode);
+    // Update the job description
+    this.jobDescription = div.innerHTML;
   }
+
+  // textAreaFormat(event: string): void {
+  //   const textarea = document.getElementById('comments') as HTMLTextAreaElement | null;
+  //   if (!textarea) {
+  //     return;
+  //   }
+  //   const start = textarea.selectionStart;
+  //   const end = textarea.selectionEnd;
+  //   if (start === end) return; // No text selected
+  //   const selectedText = textarea.value.substring(start, end);
+  //   let replace: string = selectedText;
+  //   if (event === 'upperCase') {
+  //     replace = selectedText.toUpperCase();
+  //   } else if (event === 'lowerCase') {
+  //     replace = selectedText.toLowerCase();
+  //   } else if (event === 'paragraph') {
+  //     replace = selectedText.replace(/(\r\n|\n|\r)/gm, " ");
+  //   } else if (event === 'sentencecase') {
+  //     replace = this.sentenceCase(selectedText);
+  //   } else if (event === 'titlecase') {
+  //     replace = this.titleCase(selectedText);
+  //   }
+  //   else if (event === 'bullets') {
+  //     replace = this.addBullets(selectedText);
+  //   }
+  //   else if (event === 'numbered') {
+  //     replace = this.addNumbered(selectedText);
+  //   } else {
+  //     return;
+  //   }
+
+  //   textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end);
+  //   this.jobDescription = textarea.value
+  // }
+
 
   addBullets(text: string): string {
     const lines = text.split(/[\r\n]+/);
@@ -288,6 +325,7 @@ export class ServiceRequestComponent implements OnInit {
     }).join('\n');
     return bulletedLines;
   }
+
 
   addNumbered(text: string): string {
     const lines = text.split(/[\r\n]+/);

@@ -239,13 +239,13 @@
                     <span class="sub-head">Job Description<span class="required">*</span></span>
                     <div class="jd-parent">
                         <div class="toolbar">
-                            <!-- <button class="toolbar-button" (click)="toggleBold()"><b>B</b></button>
-                            <button class="toolbar-button" (click)="textAreaFormat('italic')"><i>I</i></button>
-                            <button class="toolbar-button" (click)="textAreaFormat('underline')"><u>U</u></button> -->
-                            <button class="toolbar-button" (click)="textAreaFormat('bullets')"><img
+                            <button class="toolbar-button" (click)="execCommand('bold')"><b>B</b></button>
+                            <button class="toolbar-button" (click)="execCommand('italic')"><i>I</i></button>
+                            <button class="toolbar-button" (click)="execCommand('underline')"><u>U</u></button>
+                            <button class="toolbar-button" (click)="execCommand('insertUnorderedList')"><img
                                     src="/assets/images/techversant/list.svg" class="c-pointer" alt="" width="25px"
                                     height="25px"></button>
-                            <button class="toolbar-button" (click)="textAreaFormat('numbered')"><img
+                            <button class="toolbar-button" (click)="execCommand('insertOrderedList')"><img
                                     src="/assets/images/techversant/image 12.svg" alt="Numbered List"></button>
                             <button class="toolbar-button" (click)="textAreaFormat('paragraph');"><img
                                     src="/assets/images/techversant/align-justify.svg"></button>
@@ -271,8 +271,9 @@
                             </button>
                         </div>
                     </div>
-                    <textarea class="comments p-t-6" id="comments" #comment
-                        [ngClass]="{'text-type-bold': isBold}"></textarea>
+                    <!-- <textarea class="comments p-t-6" id="comments" #comment></textarea> -->
+                    <div class="comments p-t-6" id="comments" #comment contenteditable="true"></div>
+
 
                 </div>
             </div>
