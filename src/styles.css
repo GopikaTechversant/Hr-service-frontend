@@ -222,7 +222,7 @@ body {
   /* Align items to the end */
 }
 
-.j-centre{
+.j-centre {
   justify-content: center;
 }
 
@@ -253,8 +253,14 @@ body {
   color: #F57C02;
 }
 
-/* .cdk-overlay-container {
-  z-index: 40 !important;
-  margin-top: 1.5%;
-} */
-
+.input {
+  height: 30px;
+  border: 1px solid #EEEEEE;
+  padding: 4px 8px !important;
+  top: 439px;
+  left: 1107px;
+  gap: 0px;
+  border-radius: 3px;
+  opacity: 0px;
+  outline: none!important;
+}
