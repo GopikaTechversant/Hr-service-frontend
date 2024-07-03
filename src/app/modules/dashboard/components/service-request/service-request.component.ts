@@ -53,8 +53,6 @@ export class ServiceRequestComponent implements OnInit {
   selectedDesignationId: any;
   loader: boolean = false;
   panel_list: any[] = [];
-  // displayDate: string | null = null;
-  // closeDate: string | null = null;
   maxDate: any;
   currentYear: any;
   minDate: any;
@@ -62,8 +60,8 @@ export class ServiceRequestComponent implements OnInit {
   today: Date = new Date();
   displayDate: string | null = null;
   closeDate: string | null = null;
-  postDate: Date | null = null; // actual date object for post date
-  closeDateObj: Date | null = null; // actual date object for close date
+  postDate: Date | null = null;
+  closeDateObj: Date | null = null;
   managerName: string = '';
   managerId: any;
   jobDescription: any
@@ -161,7 +159,6 @@ export class ServiceRequestComponent implements OnInit {
   }
 
   select(option: string): void {
-    // this.showFormats = false;
     this.option = option;
     if (option === 'Aa') {
       this.textAreaFormat('sentencecase');
@@ -258,7 +255,7 @@ export class ServiceRequestComponent implements OnInit {
     }
     const range = selection.getRangeAt(0);
     const selectedText = range.toString();
-    if (!selectedText) return; // No text selected
+    if (!selectedText) return;
     let replace: string = selectedText;
     if (event === 'upperCase') {
       replace = selectedText.toUpperCase();
@@ -276,67 +273,7 @@ export class ServiceRequestComponent implements OnInit {
     const newNode = document.createTextNode(replace);
     range.deleteContents();
     range.insertNode(newNode);
-    // Update the job description
     this.jobDescription = div.innerHTML;
-  }
-
-  // textAreaFormat(event: string): void {
-  //   const textarea = document.getElementById('comments') as HTMLTextAreaElement | null;
-  //   if (!textarea) {
-  //     return;
-  //   }
-  //   const start = textarea.selectionStart;
-  //   const end = textarea.selectionEnd;
-  //   if (start === end) return; // No text selected
-  //   const selectedText = textarea.value.substring(start, end);
-  //   let replace: string = selectedText;
-  //   if (event === 'upperCase') {
-  //     replace = selectedText.toUpperCase();
-  //   } else if (event === 'lowerCase') {
-  //     replace = selectedText.toLowerCase();
-  //   } else if (event === 'paragraph') {
-  //     replace = selectedText.replace(/(\r\n|\n|\r)/gm, " ");
-  //   } else if (event === 'sentencecase') {
-  //     replace = this.sentenceCase(selectedText);
-  //   } else if (event === 'titlecase') {
-  //     replace = this.titleCase(selectedText);
-  //   }
-  //   else if (event === 'bullets') {
-  //     replace = this.addBullets(selectedText);
-  //   }
-  //   else if (event === 'numbered') {
-  //     replace = this.addNumbered(selectedText);
-  //   } else {
-  //     return;
-  //   }
-
-  //   textarea.value = textarea.value.substring(0, start) + replace + textarea.value.substring(end);
-  //   this.jobDescription = textarea.value
-  // }
-
-
-  addBullets(text: string): string {
-    const lines = text.split(/[\r\n]+/);
-    const bulletedLines = lines.map(line => {
-      if (line.trim().length > 0) {
-        return `• ${line}`;
-      } else {
-        return '';
-      }
-    }).join('\n');
-    return bulletedLines;
-  }
-
-
-  addNumbered(text: string): string {
-    const lines = text.split(/[\r\n]+/);
-    let numberedLines = '';
-    lines.forEach((line, index) => {
-      if (line.trim().length > 0) {
-        numberedLines += `${index + 1}. ${line}\n`;
-      }
-    });
-    return numberedLines;
   }
 
   sentenceCase(str: string): string {
@@ -351,13 +288,12 @@ export class ServiceRequestComponent implements OnInit {
         result += char.toLowerCase();
       }
       if (char === '.' || char === '!' || char === '?') {
-        // Check if there is space after punctuation
         let nextIndex = i + 1;
         while (nextIndex < str.length && str.charAt(nextIndex) === ' ') {
           nextIndex++;
         }
-        capitalizeNext = true; // Capitalize next character after punctuation and optional space
-        i = nextIndex - 1; // Skip over extra spaces
+        capitalizeNext = true;
+        i = nextIndex - 1;
       }
     }
     return result;
@@ -368,14 +304,11 @@ export class ServiceRequestComponent implements OnInit {
       return word.charAt(0).toUpperCase() + word.slice(1);
     }).join(' ');
   }
-  //   toggleBold() {
-  //     this.isBold = !this.isBold;
-  // }
 
   submitClick(): void {
     this.loader = true;
     const comments = document.getElementById('comments') as HTMLInputElement;
-    this.commentValue = comments.value;
+    this.commentValue = comments.innerText;
     const skillName = document.getElementById('skillSearch') as HTMLInputElement;
     this.skillNameValue = skillName.value;
     const stationIds = this.selectedStations.map((station: { stationId: any; }) => station.stationId);
@@ -408,7 +341,6 @@ export class ServiceRequestComponent implements OnInit {
         this.toastr.warning("Unable to create requirement Please try again");
       }
     })
-
   }
 
   clearInputvalue(inputElement: ElementRef<HTMLInputElement>) {
@@ -484,6 +416,7 @@ export class ServiceRequestComponent implements OnInit {
 
     event.preventDefault();
   }
+
   onKeypressSalary(event: KeyboardEvent): void {
     const target = event.target as HTMLInputElement;
     if (!target) return;
@@ -496,25 +429,18 @@ export class ServiceRequestComponent implements OnInit {
       return;
     }
     if (controlKeys.includes(key)) return;
-
-
     let value = target.value.replace(/,/g, '');
-
     // Only allow one dot
     if (key === '.' && value.includes('.')) {
       event.preventDefault();
       return;
     }
-
     value = value.replace(/[^0-9.]/g, '');
-
     const parts = value.split(".");
     let integerPart = parts[0];
     const decimalPart = parts[1];
-
     integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     integerPart = integerPart.replace(/(\d+)(\d{2},)/, "$1,$2");
-
     if (decimalPart !== undefined) target.value = integerPart + "." + decimalPart.slice(0, 2);
     else target.value = integerPart;
   }
