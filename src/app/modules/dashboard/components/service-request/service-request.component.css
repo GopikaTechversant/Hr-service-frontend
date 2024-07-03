@@ -118,28 +118,30 @@
     margin-right: 7px;
 }
 
-.child-interview{
+.child-interview {
     flex-direction: column;
     /* flex: 1; */
     width: 95%;
 }
 
-.comments{
-    width: 99.4%;
-    height: 193px;
+.comments {
+    width: 99.6%;
+    /* height: 193px; */
     border-radius: 5px;
     outline: none;
     background: #FAFAFA;
     padding-left: 5px;
     border: 1px solid #E9E9E9;
+    height: auto;
+    min-height: 193px;
 }
 
-.coment-child{
+.coment-child {
     width: 92.2%;
     flex-direction: column;
 }
 
-.sub-head{
+.sub-head {
     display: inline-block;
     margin-bottom: 9px;
 }
@@ -169,7 +171,7 @@
     overflow-x: hidden;
 }
 
-.input-interview-rounds-skill{
+.input-interview-rounds-skill {
     height: 34px;
     border-radius: 5px;
     outline: none;
@@ -180,7 +182,7 @@
     width: 97.4%;
 }
 
-.child-skill{
+.child-skill {
     width: 62.7%;
 }
 
@@ -220,7 +222,7 @@
     z-index: 1;
 }
 
-.clear-filter{
+.clear-filter {
     top: 1%;
     right: 22px;
 }
@@ -254,7 +256,7 @@
     font-size: 18px;
 }
 
-.button{
+.button {
     width: 28%;
     float: right;
 }
@@ -349,13 +351,6 @@
     cursor: pointer;
 }
 
-.text-format{
-    /* display: inline-block; */
-    height: 44px;
-    width: 100%;
-    background-color: #D9D9D9;
-}
-
 .jd-parent {
     width: 100%;
     height: 39px;
@@ -365,76 +360,14 @@
     border-bottom: none;
 }
 
-.parent-job{
+.parent-job {
     column-gap: 18px;
     width: 100%;
 }
 
-.formats{
-    width: 20%;
-    padding-left: 1px;
-    line-height: 41px;
-    /* align-items: center; */
-    height: 44px;
-    
-}
-
-.format-icon{
-    display: inline-block;
-    font-weight: 600 !important;
-    background-color: white;
-    width: 40px;
-    /* width: 40px;
-    height: 45px;
-    line-height: 43px; */
-    text-align: center;
-    background-color: #FFFFFF;
-    border: 1px solid #E6E6E6;
-    border-top: none;
-    border-left: none;
-    border-radius: 2px;
-    height: 40px;
-    /* line-height: 57px; */
-    /* box-shadow: 0px 4px 8px 0px #0000001A; */
-}
-
-.format-icon-font {
-    display: inline-block;
-    font-weight: 600 !important;
-    background-color: white;
-    width: 40px;
-    text-align: center;
-    background-color: #FFFFFF;
-    border: 1px solid #E6E6E6;
-    border-top: none;
-    border-left: none;
-    border-radius: 2px;
-    height: 38px;
-    
-}
-
-.formats img.img {
-    background-color: pink;
-    margin-top: 10px;
-    /* Your specific styles for the images */
-}
-
-.bullets{
-    display: inline-block;
-    height: 6px;
-    width: 6px;
-    background-color: black;
-    border-radius: 62%;
-}
-
-.text-area {
-    width: 100%;
-    border: 1px solid #E6E6E6;
-    padding: 20px;
-    background-color: #FFFFFF;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    font-family: Arial, sans-serif;
+.undo {
+    width: 19px !important;
+    height: 19px !important;
 }
 
 .toolbar {
@@ -456,9 +389,31 @@
     border-radius: 2px;
     width: 40px;
     height: 40px;
+    font-weight: bold;
 }
 
+/* 
 .toolbar-button img {
+    width: 26px;
+    height: 26px;
+} */
+
+.toolbar-button-option {
+    background: none;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    background-color: #FFFFFF;
+    border: 1px solid #E6E6E6;
+    border-top: none;
+    border-left: none;
+    border-radius: 2px;
+    width: 63px;
+    height: 40px;
+}
+
+.toolbar-button-option img {
     width: 26px;
     height: 26px;
 }
@@ -478,13 +433,17 @@
     margin-bottom: 5px;
 }
 
-.w-40{
+.w-40 {
     width: 40px;
 }
 
 
 
 .toolbar-button {
+    position: relative;
+}
+
+.toolbar-button-option {
     position: relative;
 }
 
@@ -495,11 +454,11 @@
 .dropdown-list {
     display: block;
     position: absolute;
-    top: 100%;
-    left: 0;
+    top: 34px;
+    left: -5px;
     z-index: 1000;
     float: left;
-    min-width: 160px;
+    min-width: 62px;
     padding: 5px 0;
     margin: 2px 0 0;
     font-size: 14px;
@@ -575,4 +534,18 @@
 
 .bold-text {
     font-weight: bold;
-  }
+}
+
+.option-text {
+    display: inline-block;
+    width: 38px;
+}
+
+.w-66 {
+    width: 66px;
+}
+
+.w-30 {
+    display: inline-block;
+    width: 30px !important;
+}

@@ -239,27 +239,38 @@
                     <span class="sub-head">Job Description<span class="required">*</span></span>
                     <div class="jd-parent">
                         <div class="toolbar">
-                            <button class="toolbar-button" (click)="execCommand('bold')"><b>B</b></button>
-                            <button class="toolbar-button" (click)="execCommand('italic')"><i>I</i></button>
-                            <button class="toolbar-button" (click)="execCommand('underline')"><u>U</u></button>
-                            <button class="toolbar-button" (click)="execCommand('insertUnorderedList')"><img
-                                    src="/assets/images/techversant/list.svg" class="c-pointer" alt="" width="25px"
-                                    height="25px"></button>
-                            <button class="toolbar-button" (click)="execCommand('insertOrderedList')"><img
-                                    src="/assets/images/techversant/image 12.svg" alt="Numbered List"></button>
-                            <button class="toolbar-button" (click)="textAreaFormat('paragraph');"><img
-                                    src="/assets/images/techversant/align-justify.svg"></button>
-                            <button class="toolbar-button d-flex j-space w-40">
+                            <button class="toolbar-button" (click)="execCommand('undo')" title="Undo"><img
+                                    src="/assets/images/techversant/undo.svg" alt="" height="15px" width="15px"
+                                    class="p-t-3"></button>
+                            <button class="toolbar-button" (click)="execCommand('redo')" title="Redo"><img
+                                    src="/assets/images/techversant/redo.svg" alt="" height="15px" width="15px"
+                                    class="p-t-3"></button>
+                            <button class="toolbar-button" (click)="execCommand('bold')" title="Bold">B</button>
+                            <button class="toolbar-button" (click)="execCommand('italic')" title="Italic"
+                                style="font-style: italic;">I</button>
+                            <button class="toolbar-button" (click)="execCommand('underline')" title="Underline"
+                                style=" text-decoration: underline;">U</button>
+                            <button class="toolbar-button" (click)="execCommand('insertUnorderedList')"
+                                title="Bullets"><img src="/assets/images/techversant/list.svg" class="c-pointer" alt=""
+                                    height="26px" width="26px"></button>
+                            <button class="toolbar-button" (click)="execCommand('insertOrderedList')"
+                                title="Number"><img src="/assets/images/techversant/image 12.svg" alt="Numbered List"
+                                    height="26px" width="26px"></button>
+                            <button class="toolbar-button" (click)="textAreaFormat('paragraph');" title="Paragraph"><img
+                                    src="/assets/images/techversant/align-justify.svg" height="26px"
+                                    width="26px"></button>
+                            <button class="toolbar-button-option d-flex j-space">
                                 <div class="d-flex dropdown p-relative" (click)="showFormats = !showFormats">
                                     <div class="j-space">
-                                        <div class="c-pointer p-t-5" *ngIf="!option">
-                                            <span>Aa</span>
+                                        <div class="c-pointer p-t-5" *ngIf="!option" title="Sentence case">
+                                            <span class="w-30"><b>Aa</b></span>
                                         </div>
-                                        <div *ngIf="option" class="p-t-5">{{option}}</div>
+                                        <div *ngIf="option" class="p-t-5 option-text"><b>{{option}}</b></div>
                                     </div>
                                     <div
-                                        class="no-close s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub p-r-17 m-t-9">
-                                        <i class="no-close s-list fa fa-chevron-down s-text"></i>
+                                        class="no-close s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub p-l-4 m-t-9">
+                                        <i [ngClass]="showFormats ? ' fa fa-chevron-up' : ' fa fa-chevron-down'"
+                                            class="s-text"></i>
                                     </div>
                                     <div class="dropdown-list p-absolute" *ngIf="showFormats">
                                         <div class="p-8" *ngFor="let option of textFormats"
@@ -273,8 +284,6 @@
                     </div>
                     <!-- <textarea class="comments p-t-6" id="comments" #comment></textarea> -->
                     <div class="comments p-t-6" id="comments" #comment contenteditable="true"></div>
-
-
                 </div>
             </div>
         </div>

@@ -95,6 +95,7 @@ export class ServiceRequestComponent implements OnInit {
       this.idListOpen = false;
       this.openDesignation = false;
       this.openReporingManager = false;
+      this.showFormats = false;
     }
   }
 
