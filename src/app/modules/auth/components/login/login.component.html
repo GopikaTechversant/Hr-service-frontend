@@ -12,7 +12,7 @@
                 <div class="info m-b-5"><img src="/assets/images/login/company.png" alt="" ></div>
                 <div class="form-field d-flex j-start m-b-14">
                     <span class="email m-b-5">Email Address</span>
-                    <input type="email" class="input" placeholder="Enter a valid email" formControlName="userName">
+                    <input type="email" class="input text-input" placeholder="Enter a valid email" formControlName="userName">
                 </div>
                 <div class="requiredField f-s-14">
                     <span class="error" *ngIf="userName?.errors?.['required'] && (userName?.touched || submitted)">
@@ -21,7 +21,7 @@
                 </div>
                 <div class="form-field d-flex j-start m-b-14 p-relative">
                     <span class="email m-b-5">Password</span>
-                    <input [type]="hide ? 'password' : 'text'" class="input" placeholder="Password"
+                    <input [type]="hide ? 'password' : 'text'" class="input text-input" placeholder="Password"
                         formControlName="userPassword">
                     <span class="eyeIcon c-black p-absolute" mat-icon-button matSuffix (click)="hide = !hide"
                         [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
