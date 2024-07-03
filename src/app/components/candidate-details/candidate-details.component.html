@@ -60,31 +60,37 @@
                 </div>
                 <div class="col-1 m-b-20">
                     <div *ngIf="candidateDetails?.position?.length > 1">
-                        <div class="d-flex">
-                            <div (click)="requirementSwitch('R')" title="Switch Requirement" class="c-pointer">
-                                <span class="f-w-500">Switch Requirements</span>
-                                <span>
+                        <div class="details" >
+                            <div (click)="requirementSwitch('R')" title="Switch Requirement" class="c-pointer sub-head">
+                                <span class="sub-head">Switch Requirements</span>
+                                <span >
                                     <img src="/assets/images/techversant/switch.svg" class="c-pointer p-t-7 p-l-5" alt=""
                                         height="14" width="14">
                                 </span>
                             </div>
-                        </div>
-                        <div class="d-flex">
-                            <div class="text-color p-5 p-l-0 text-wrap req">
-                                <a [href]="env_url + '/dashboard/series?requestId=' + candidateDetails?.position[currentRequirementIndex]?.reqServiceRequest?.requestId">
+                            <span class="text-color p-5 p-l-0 text-wrap req">:
+                                <a
+                                    [href]="env_url + '/dashboard/series?requestId=' + candidateDetails?.position[currentRequirementIndex]?.reqServiceRequest?.requestId">
                                     {{ candidateDetails?.position[currentRequirementIndex]?.reqServiceRequest?.requestName }}
-                                </a>
-                            </div>
+                                </a> </span>
                             <span class="text-color" *ngIf="candidateDetails?.position?.length === 1">
                                 No Other Requirement to switch
                             </span>
                         </div>
-                        <div class="f-w-500" *ngIf="candidateDetails?.position?.length > 1">
-                            Requirement Status :
-                            {{ candidateDetails?.position[currentRequirementIndex]?.reqServiceRequest?.requestStatus }}
+                        <div class="details">
+                            <span class="sub-head">Requirement Status</span>
+                            <span class="text-color p-5 p-l-0 text-wrap req">:
+                                {{ candidateDetails?.position[currentRequirementIndex]?.reqServiceRequest?.requestStatus }}
+                            </span>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="resume m-b-5">
+                <span class="f-w-500">Showing Deatils of Requirement :</span>
+                <span class="blue f-w-500">
+                    {{candidateDetails?.position[currentRequirementIndex]?.reqServiceRequest?.requestName}}
+                </span>
             </div>
             <div class="tab">
                 <button class="tablinks" [ngClass]="{'active': activeTab === 'basic'}" (click)="selectedTab($event, 'basic')">Basic Info</button>
@@ -284,8 +290,9 @@
                             <td>Uploaded By</td>
                             <td>Station</td>
                             <td>Attachment</td>
-                            <td>Type</td>
-                            <td>Status</td>        
+                            <td>Recruiter</td>
+                            <!-- <td>Type</td> -->
+                            <!-- <td>Status</td>         -->
                         </tr>
                         <div *ngIf="loader && !initialLoader" class="loader-parent">
                             <img src="assets/gif/loader.gif">
@@ -299,8 +306,8 @@
                                     <td (click)="viewResume(item?.uploadedFile)" class="c-pointer" title="View Attachment">
                                         <img _ngcontent-rnn-c111="" src="/assets/images/view-file.png" alt="" height="29" width="29" class="p-l-9">
                                     </td>
-                                    <td class="text-wrap" [title]="item?.uploadType | titlecase ">{{ item?.uploadType | titlecase }}</td>
-                                    <td class="text-wrap" [title]="item?.status ">{{ item?.status }}</td>
+                                    <td class="text-wrap" [title]="item?.scheduledByName | titlecase ">{{ item?.scheduledByName | titlecase }}</td>
+                                    <!-- <td class="text-wrap" [title]="item?.status ">{{ item?.status }}</td> -->
                                 </tr>
                             </ng-container>
                         </ng-container>
@@ -335,23 +342,23 @@
                         <tr class="table-header f-w-500 p-b-10">
                             <td>Date</td>
                             <td>Feedback By</td>
-                            <td>Feedback Type</td>
+                            <td>Feedback Message</td>
                             <td>Station</td>
-                            <td>Status</td>
+                            <!-- <td>Status</td> -->
                         </tr>
                         <ng-container *ngIf="CandidateHistory?.length > 0">
                             <div *ngIf="loader && !initialLoader" class="loader-parent">
                                 <img src="assets/gif/loader.gif">
                             </div>                            
-                            <ng-container *ngFor="let item of CandidateHistory[0]?.candidatesDetail">
+                            <ng-container *ngFor="let item of CandidateHistory[0]?.feedbackDetail">
                                 <tr class="candidate c-pointer">
-                                    <td>{{ item.interviewDate | date : 'dd/MM/yyyy' }}</td>
+                                    <td>{{ item?.feedbackDate | date : 'dd/MM/yyyy' }}</td>
                                     <td class="text-wrap" [title]="item?.feedbackBy">{{ item?.feedbackBy | titlecase }}
                                     </td>
-                                    <td class="text-wrap" [title]="item?.feedbackType">{{ item?.feedbackType | titlecase
+                                    <td class="text-wrap" [title]="item?.feedbackMessage">{{ item?.feedbackMessage | titlecase
                                         }}</td>
                                     <td class="text-wrap" [title]="item?.station">{{ item?.station }}</td>
-                                    <td class="text-wrap" [title]="item?.status">{{ item?.status }}</td>
+                                    <!-- <td class="text-wrap" [title]="item?.status">{{ item?.status }}</td> -->
                                 </tr>
                             </ng-container>
                         </ng-container>

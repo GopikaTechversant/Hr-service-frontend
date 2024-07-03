@@ -67,8 +67,8 @@ export class DetailedRecruitmentComponent implements OnInit {
       return;
     }
     this.apiService.get(`${url}?${params}`).subscribe((res: any) => {
-      this.candidateList = res?.userRequirementReport;
-      this.totalCount = res?.requirementCount;
+      this.candidateList = res;
+      this.totalCount = 6;
       const totalPages = Math.ceil(this.totalCount / this.pageSize);
       this.lastPage = totalPages;
       if (this.currentPage > totalPages) this.currentPage = totalPages;

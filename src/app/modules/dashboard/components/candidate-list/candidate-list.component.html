@@ -30,7 +30,8 @@
                 <td>Mobile</td>
                 <td>Previous Organization</td>
                 <td>Previous Designation</td>
-                <td>Experience</td>
+                <td>Relevent Experience</td>
+                <td>Total Experience</td>
                 <td>Current Salary</td>
                 <td>Education</td>
                 <td>Skills</td>
@@ -49,7 +50,10 @@
                     <td class="text-wrap" [title]="item?.candidatePreviousOrg">{{item?.candidatePreviousOrg}}</td>
                     <td class="text-wrap" [title]="item?.candidatePreviousDesignation">
                         {{item?.candidatePreviousDesignation}}</td>
-                    <td class="text-wrap" [title]="item?.candidateExperience">{{item?.candidateExperience}} years</td>
+                    <td class="text-wrap" [title]="item?.candidateRevlentExperience">{{item?.candidateRevlentExperience
+                        || 'Nil'}}</td>
+                    <td class="text-wrap" [title]="item?.candidateTotalExperience">{{item?.candidateTotalExperience ||
+                        'Nil'}}</td>
                     <td class="text-wrap" [title]="item?.candidateCurrentSalary">{{item?.candidateCurrentSalary}}</td>
                     <td class="text-wrap" [title]="item?.candidateEducation">{{item?.candidateEducation}}</td>
                     <td class="text-wrap"

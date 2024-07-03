@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   toggleSpinner: boolean = false;
   submitted: boolean = false;
   hide: boolean = true;
+  env_url: any;
 
   constructor(private tostr: ToastrServices, private formBuilder: UntypedFormBuilder, private router: Router, private apiService: ApiService, public auth: AuthService) {
     this.loginForm = this.formBuilder.group({
@@ -25,6 +26,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkRememberMe();
+    this.env_url = window.location.origin;
   }
 
   checkRememberMe() {

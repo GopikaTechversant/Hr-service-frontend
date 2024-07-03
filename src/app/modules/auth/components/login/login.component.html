@@ -1,15 +1,18 @@
-<section>
+<section class="d-flex main">
     <div class="spinner" *ngIf="toggleSpinner">
         <img src="assets/gif/loader.gif" alt="spinner">
     </div>
-    <div class="login-section">
+    <div class="w-50 img-container">
+        <img src="/assets/images/login/login_img.svg" alt="">
+    </div>
+    <div class="login-section w-50">
+        <span class="welcome">Welcome To Techversant Gateway</span>
         <div class="loginContainer">
             <form [formGroup]="loginForm" (ngSubmit)="submitClick()">
-                <div class="info m-b-5">Login</div>
-                <div class="content m-b-23">Access to our dashboard</div>
+                <div class="info m-b-5"><img src="/assets/images/login/company.png" alt="" ></div>
                 <div class="form-field d-flex j-start m-b-14">
-                    <span class="email">Email</span>
-                    <input type="email" class="input" placeholder="Enter a valid email" formControlName="userName">
+                    <span class="email m-b-5">Email Address</span>
+                    <input type="email" class="input text-input" placeholder="Enter a valid email" formControlName="userName">
                 </div>
                 <div class="requiredField f-s-14">
                     <span class="error" *ngIf="userName?.errors?.['required'] && (userName?.touched || submitted)">
@@ -17,15 +20,17 @@
                     </span>
                 </div>
                 <div class="form-field d-flex j-start m-b-14 p-relative">
-                    <span class="email">Password</span>
-                    <input [type]="hide ? 'password' : 'text'" class="input" placeholder="Password" formControlName="userPassword">
+                    <span class="email m-b-5">Password</span>
+                    <input [type]="hide ? 'password' : 'text'" class="input text-input" placeholder="Password"
+                        formControlName="userPassword">
                     <span class="eyeIcon c-black p-absolute" mat-icon-button matSuffix (click)="hide = !hide"
                         [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                         <mat-icon class="m-icon">{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
                     </span>
                 </div>
                 <div class="requiredField f-s-14">
-                    <span class="error" *ngIf="userPassword?.errors?.['required'] && (userPassword?.touched || submitted)">
+                    <span class="error"
+                        *ngIf="userPassword?.errors?.['required'] && (userPassword?.touched || submitted)">
                         Inavlid Password
                     </span>
                     <span *ngIf="loginForm.errors?.['invalidCredentials']" class="error">
@@ -39,9 +44,16 @@
                     </div>
                     <button class="login-btn m-t-14 c-pointer" type="submit">Login</button>
                 </div>
-                <!-- <div class="m-t-12 c-pointer" (click)="forgotPassword()">
-                    <span class="forgot-password">Forgot Password</span>
-                </div> -->
+
+                <div class="m-t-12 google">
+                    <div class="google-content c-pointer">
+                        <div class="p-t-3"><img src="/assets/images/login/google.svg" alt="" height="30"></div>
+                        <div>Sign In With Google</div>
+                    </div>
+                </div>
+                <div class="m-t-12 c-pointer" >
+                    <a class="forgot-password" [href]="env_url + '/forgot-password'">Forgot Password?</a>
+                </div>
             </form>
         </div>
     </div>
