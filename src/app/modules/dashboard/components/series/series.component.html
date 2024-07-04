@@ -62,9 +62,11 @@
                 </div>
             </div>
         </div>
-        <div class="description">
-            <span class="p-l-14">Job Description</span>
+        <div class="description m-t-15">
+            <span class="p-l-17 jd-title">Job Description</span>
+            <!-- <div class="description-text">{{requirement_details?.requestDescription}}</div> -->
+            <div [innerHTML]="formattedText"></div>
+
         </div>
     </div>
-    
 </div>

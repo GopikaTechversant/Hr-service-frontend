@@ -8,7 +8,7 @@
 .title {
     font-weight: 500;
     color: #000000;
-    font-size: 21px;
+    font-size: 20px;
 }
 
 .approve-btn {
@@ -40,7 +40,7 @@
     font-weight: 500;
     border-radius: 3px;
     color: black;
-    font-size: 21px;
+    font-size: 20px;
 
 }
 
@@ -57,7 +57,7 @@
 .value {
     margin: 5px;
     text-align: left;
-    font-size: 16px;
+    font-size: 14px;
     letter-spacing: 0em;
 }
 
@@ -109,7 +109,8 @@
 }
 
 .container{
-    height: 340px;
+    /* height: 340px; */
+    min-height: 490px;
     width: 99%;
     background-color: white;
 }
@@ -141,7 +142,7 @@
     /* flex: 1; */
     margin: 5px;
     text-align: left;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 400;
     letter-spacing: 0em;
     color: #575F6E;
@@ -415,4 +416,24 @@ input[type="text"] {
 
 .count{
     color: #005EC9;
+    font-weight: 500;
+}
+
+.description-text{
+    border: 1px solid #E9E9E9;
+    outline: none;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    width: 97.5%;
+    margin-left: 13px;
+    padding-left: 10px;
+    margin-top: 9px;
+    min-height: 73px;
+    padding-top: 10px;
+    /* color: #575F6E; */
+}
+
+.jd-title{
+    color: #4F4F4F;
+    font-weight: 500;
 }

@@ -8,6 +8,7 @@ import { ToastrServices } from 'src/app/services/toastr.service';
 import { ApiService } from 'src/app/services/api.service';
 import { EditRequirementComponent } from '../edit-requirement/edit-requirement.component';
 import { DeleteComponent } from 'src/app/components/delete/delete.component';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 @Component({
   selector: 'app-series',
   templateUrl: './series.component.html',
@@ -42,7 +43,9 @@ export class SeriesComponent implements OnInit {
   lastPage: any;
   pageSize = 10;
   searchKeyword: string = '';
-  constructor(private apiService: ApiService, private http: HttpClient, private router: Router, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private renderer: Renderer2) {
+  formattedText: SafeHtml | undefined;
+  constructor(private apiService: ApiService, private http: HttpClient, private router: Router, private route: ActivatedRoute, 
+    private dialog: MatDialog, private tostr: ToastrServices, private renderer: Renderer2,private sanitizer: DomSanitizer) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
     });
@@ -55,6 +58,8 @@ export class SeriesComponent implements OnInit {
   fetchDetails(): void {
     this.apiService.get(`/service-request/view?requestId=${this.requestId}`).subscribe((res: any) => {
       if (res?.data) this.requirement_details = res?.data;
+    const text = this.requirement_details?.requestDescription;
+      this.formattedText = this.sanitizer.bypassSecurityTrustHtml(text);
       if (res?.flows) this.flows = res?.flows;
       this.roundNames = this.flows.map(flow => flow.flowStationName).join(', ');
     })
