@@ -18,7 +18,6 @@ export class SeriesComponent implements OnInit {
   @Input() rejectedCandidates: string[] = [];
   @Input() selectedCandidatesIds: string[] = [];
   @ViewChild('scrollTop') private scrollTop: ElementRef | undefined;
-
   candidates_list: any;
   selectedCandidate: any;
   candidates: any = [];
@@ -43,7 +42,6 @@ export class SeriesComponent implements OnInit {
   lastPage: any;
   pageSize = 10;
   searchKeyword: string = '';
-
   constructor(private apiService: ApiService, private http: HttpClient, private router: Router, private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private renderer: Renderer2) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -52,39 +50,6 @@ export class SeriesComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchDetails();
-    this.fetchcandidates();
-  }
-
-  ngAfterViewInit() {
-    if (this.scrollTop) {
-      this.renderer.listen(this.scrollTop.nativeElement, 'scroll', (event) => {
-        let element = event.target;
-        const requiredHeight = element.scrollTop + element.clientHeight;
-        let calculatedHeight = element.scrollHeight / 4;
-        calculatedHeight = calculatedHeight * 3;
-        if (requiredHeight > calculatedHeight && !this.moreApiCalled) this.loadMore();
-      });
-    }
-  }
-
-  fetchcandidates(): void {
-    if (!this.initialLoader) this.loader = true;
-    this.apiService.get(`/screening-station/list-batch/${this.requestId}?limit=${this.limit}&page=1`).subscribe((res: any) => {
-      if (res?.candidates) {
-        this.initialLoader = false;
-        this.loader = false;
-        this.candidates_list = res?.candidates
-        this.candidates_list = [];
-        this.candidates_list = [...this.candidates_list, ...res?.candidates];
-        this.candidates_list.forEach((candidate: any) => {
-          if (candidate.serviceId) this.serviceIds.push(candidate?.serviceId);
-          // this.totalCount = data?.totalCount;
-          // const totalPages = Math.ceil(this.totalCount / this.limit);
-          // this.lastPage = totalPages;
-          // if (this.currentPage > totalPages) this.currentPage = totalPages;
-        });
-      }
-    })
   }
 
   fetchDetails(): void {
@@ -95,40 +60,14 @@ export class SeriesComponent implements OnInit {
     })
   }
 
-  loadMore(): void {
-    if (!this.moreApiCalled) {
-      this.moreApiCalled = true;
-      this.limit = this.limit + 3
-      this.fetchcandidates();
-    }
-  }
-
   toggleTaskDetails() {
     this.isTaskDetailsOpen = !this.isTaskDetailsOpen;
   }
 
-  onStatusChange(event: any, candidate: any): void {
-    const selectedStatus = event?.target?.value;
-    if (selectedStatus === 'reject') this.onCandidateSelectionChange(candidate);
-    if (selectedStatus === 'select') {
-      this.router.navigate(['dashboard/interview-details'], {
-        state: { candidate }
-      });
-    }
-  }
-
-  onCandidateSelectionChange(candidate: any): void {
-    this.candidateServiceId = candidate?.serviceId;
-    const userId = localStorage.getItem('userId');
-    const dialogRef = this.dialog.open(FeedbackComponent, {
-      data: { candidateId: candidate?.serviceId, stationId: 1, status: 'rejected', candidateDetails: candidate, userId: userId },
-      width: '600px',
-      height: '300px'
-    })
-
-    dialogRef.afterClosed().subscribe(() => {
-      this.fetchcandidates();
-    });
+  navigate(path: any, requestId?: any): void {
+    const queryParams = requestId ? { requestId: requestId } : undefined;
+    if (queryParams) this.router.navigate([path], { queryParams: queryParams });
+    else this.router.navigate([path]);
   }
 
   edit(requirement: any): void {
@@ -141,7 +80,6 @@ export class SeriesComponent implements OnInit {
     dialogRef.componentInstance.onEditSuccess.subscribe(() => {
       this.limit = 9;
       this.fetchDetails();
-      this.fetchcandidates()
     })
   }
 
@@ -157,7 +95,6 @@ export class SeriesComponent implements OnInit {
         next: (res: any) => {
           // this.generatePageNumbers();
           this.fetchDetails();
-          this.fetchcandidates()
 
         },
         error: (error) => {
@@ -165,48 +102,6 @@ export class SeriesComponent implements OnInit {
         }
       })
     })
-  }
-
-  selectCandidate(id: any): void {
-    this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
-  }
-  
-  onPageChange(pageNumber: number): void {
-    this.currentPage = Math.max(1, pageNumber);
-    this.fetchcandidates();
-  }
-
-  generatePageNumbers() {
-    let pages = [];
-    if (this.lastPage <= 5) {
-      for (let i = 1; i <= this.lastPage; i++) pages.push(i);
-    } else {
-      pages.push(1);
-      let start = Math.max(2, this.currentPage - 1);
-      let end = Math.min(this.lastPage - 1, this.currentPage + 1);
-
-      if (this.currentPage <= 3) end = 4;
-      else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
-      if (start > 2) pages.push('...');
-      for (let i = start; i <= end; i++) pages.push(i);
-      if (end < this.lastPage - 1) pages.push('...');
-      pages.push(this.lastPage);
-    }
-    return pages;
-  }
-
-searchCandidate(search: string): void {
-    this.searchKeyword = search;
-    this.currentPage = 1;
-    this.pageSize = 10;
-    this.fetchcandidates();
-  }
-
-  clearFilter(): void {
-    this.searchKeyword = '';
-    this.currentPage = 1;
-    this.pageSize = 10;
-    this.fetchcandidates();
   }
 
 }
