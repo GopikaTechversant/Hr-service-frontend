@@ -1,0 +1,123 @@
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FeedbackComponent } from 'src/app/components/feedback/feedback.component';
+import { ApiService } from 'src/app/services/api.service';
+
+@Component({
+  selector: 'app-candidate-schedule',
+  templateUrl: './candidate-schedule.component.html',
+  styleUrls: ['./candidate-schedule.component.css']
+})
+export class CandidateScheduleComponent implements OnInit {
+  requestId: any;
+  initialLoader: boolean = false;
+  loader: boolean = false;
+  currentPage: number = 1;
+  lastPage: any;
+  pageSize = 10;
+  limit: number = 12;
+  candidates_list: any;
+  serviceIds: any = [];
+  searchKeyword: string = '';
+  candidateServiceId: any;
+  totalCount: any;
+
+  constructor(private router: Router, private route: ActivatedRoute, private apiService: ApiService, private dialog: MatDialog) {
+    this.route.queryParams.subscribe(params => {
+      this.requestId = params['requestId'];
+    });
+
+  }
+  ngOnInit(): void {
+    this.initialLoader = true;
+    this.fetchcandidates('');
+
+  }
+  fetchcandidates(searchQuery: string): void {
+    if (!this.initialLoader) this.loader = true;
+    this.apiService.get(`/screening-station/list-batch/${this.requestId}?limit=${this.limit}&page=${this.currentPage}&search=${searchQuery.trim()}`).subscribe((res: any) => {
+      if (res?.candidates) {
+        this.initialLoader = false;
+        this.loader = false;
+        this.candidates_list = res?.candidates
+        this.candidates_list = [];
+        this.candidates_list = [...this.candidates_list, ...res?.candidates];
+        this.totalCount = res?.candidateCount;
+        const totalPages = Math.ceil(this.totalCount / this.limit);
+        this.lastPage = totalPages;
+        if (this.currentPage > totalPages) this.currentPage = totalPages;
+        this.candidates_list.forEach((candidate: any) => {
+          if (candidate.serviceId) this.serviceIds.push(candidate?.serviceId);
+
+        });
+      }
+    })
+  }
+
+  selectCandidate(id: any): void {
+    this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
+  }
+
+  onPageChange(pageNumber: number): void {
+    this.currentPage = Math.max(1, pageNumber);
+    this.fetchcandidates('');
+  }
+
+  generatePageNumbers() {
+    let pages = [];
+    if (this.lastPage <= 5) {
+      for (let i = 1; i <= this.lastPage; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      let start = Math.max(2, this.currentPage - 1);
+      let end = Math.min(this.lastPage - 1, this.currentPage + 1);
+
+      if (this.currentPage <= 3) end = 4;
+      else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
+      if (start > 2) pages.push('...');
+      for (let i = start; i <= end; i++) pages.push(i);
+      if (end < this.lastPage - 1) pages.push('...');
+      pages.push(this.lastPage);
+    }
+    return pages;
+  }
+
+  searchCandidate(search: string): void {
+    this.searchKeyword = search;
+    this.currentPage = 1;
+    this.pageSize = 10;
+    this.fetchcandidates(this.searchKeyword);
+  }
+
+  clearFilter(): void {
+    this.searchKeyword = '';
+    this.currentPage = 1;
+    this.pageSize = 10;
+    this.fetchcandidates('');
+  }
+
+  onStatusChange(event: any, candidate: any): void {
+    const selectedStatus = event?.target?.value;
+    if (selectedStatus === 'reject') this.onCandidateSelectionChange(candidate);
+    if (selectedStatus === 'select') {
+      this.router.navigate(['dashboard/interview-details'], {
+        state: { candidate }
+      });
+    }
+  }
+
+  onCandidateSelectionChange(candidate: any): void {
+    this.candidateServiceId = candidate?.serviceId;
+    const userId = localStorage.getItem('userId');
+    const dialogRef = this.dialog.open(FeedbackComponent, {
+      data: { candidateId: candidate?.serviceId, stationId: 1, status: 'rejected', candidateDetails: candidate, userId: userId },
+      width: '600px',
+      height: '300px'
+    })
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.fetchcandidates('');
+    });
+  }
+}
