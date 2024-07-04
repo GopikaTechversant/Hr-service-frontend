@@ -33,7 +33,7 @@
     <div class="table-container m-b-0">
         <table class="table">
             <tr class="table-header f-w-500 p-b-10">
-                <td>Select</td>
+                <!-- <td>Select</td>
                 <td>Recruiter Name</td>
                 <td>Requisition</td>
                 <td>Screening Rejected</td>
@@ -43,7 +43,18 @@
                 <td>Management Rejected</td>
                 <td>HR Rejected</td>
                 <td>Offer Released</td>
-                <td>Hired</td>
+                <td>Hired</td> -->
+                <td>Select</td>
+                <td>Recruiter Name</td>
+                <td>Name</td>
+                <td>Position</td>
+                <td>Experience</td>
+                <td>Current Company </td>
+                <td>Location</td>
+                <td>Notice Period</td>
+                <td>Interview Date & Time</td>
+                <td>Panel</td>
+                <td>Mode</td>
             </tr>
             <!-- <div class="loader-parent">
                 <img src="assets/gif/loader.gif">
@@ -53,8 +64,8 @@
                     <tr class="c-pointer" (dblclick)="selectCandidate(item['candidate.candidateId'])">
                         <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()"></td>
                         <td  class="text-wrap" >
-                            {{item.userFullName ? item.userFullName : ' '}}
-                            <!-- {{item['candidate.createdBy.userlastName'] ? item['candidate.createdBy.userlastName'] : ' '}} -->
+                            {{item['candidate.createdBy.userfirstName'] ? item['candidate.createdBy.userfirstName'] : ' '}}
+                            {{item['candidate.createdBy.userlastName'] ? item['candidate.createdBy.userlastName'] : ' '}}
                         </td>
                         <td  class="text-wrap" >
                             {{item['candidate.candidateFirstName'] ? item['candidate.candidateFirstName'] : ' '}}
