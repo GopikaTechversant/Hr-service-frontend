@@ -4,6 +4,10 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastrServices } from 'src/app/services/toastr.service';
 import { ApiService } from 'src/app/services/api.service';
+import { jwtDecode } from 'jwt-decode';
+
+declare const google: any;
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -15,6 +19,7 @@ export class LoginComponent implements OnInit {
   submitted: boolean = false;
   hide: boolean = true;
   env_url: any;
+  gmailLogin: boolean = false;
 
   constructor(private tostr: ToastrServices, private formBuilder: UntypedFormBuilder, private router: Router, private apiService: ApiService, public auth: AuthService) {
     this.loginForm = this.formBuilder.group({
@@ -27,6 +32,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.checkRememberMe();
     this.env_url = window.location.origin;
+    this.initializeGoogleSignIn();
   }
 
   checkRememberMe() {
@@ -90,4 +96,57 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['/forgot-password']);
   }
 
+  initializeGoogleSignIn(): void {
+    google.accounts.id.initialize({
+      client_id: '38101299340-8jasmtinc2npen1pdnd45tttpkglobqe.apps.googleusercontent.com',
+      callback: this.handleGoogleResponse.bind(this)
+    });
+    google.accounts.id.renderButton(
+      document.getElementById('google-signin-button'),
+      {
+        theme: 'outline',
+        size: 'large',
+        width: 406,
+        height: 50,
+        longtitle: true,
+      }
+    );
+
+  }
+
+  handleGoogleResponse(response: any): void {
+    // console.log(response);
+    // const decodedToken: any = jwtDecode(response.credential);
+    // const email = decodedToken.email;
+
+    // console.log(`User's email: ${email}`);
+    this.toggleSpinner = true;
+    if (response?.credential) {
+      this.apiService.post(`/user/login`, { gmail: response?.credential }).subscribe(
+        (response: any) => {
+          if (response?.token) {
+            this.tostr.success('Login Successfully');
+            localStorage.setItem('userToken', response?.token);
+            localStorage.setItem('userRole', response?.user?.userRole);
+            localStorage.setItem('userFullName', response?.user?.userFullName);
+            localStorage.setItem('userId', response?.user?.userId);
+            this.router.navigate(['/dashboard']);
+          }
+        },
+        (error) => {
+          if (error?.status === 500) {
+            this.tostr.error("Internal Server Error");
+          } else if (error?.status === 401) {
+            this.tostr.error("No User Found");
+            this.gmailLogin = true;
+          } else {
+            this.tostr.error("Unable to Login");
+          }
+          this.toggleSpinner = false;
+          this.submitted = false;
+        }
+      );
+    }
+
+  }
 }

@@ -42,15 +42,18 @@
                         <input type="checkbox" formControlName="rememberMe">
                         <span class="email p-l-5">Remember Me?</span>
                     </div>
-                    <button class="login-btn m-t-14 c-pointer" type="submit">Login</button>
+                    <button class="login-btn m-t-14 c-pointer" type="submit">Login</button>        
                 </div>
 
-                <div class="m-t-12 google">
-                    <div class="google-content c-pointer">
-                        <div class="p-t-3"><img src="/assets/images/login/google.svg" alt="" height="30"></div>
-                        <div>Sign In With Google</div>
+                <div class="m-t-12  form-field d-flex j-start m-b-14 p-relative c-pointer google-content">
+                    <div id="google-signin-button" class="">                        
+                        <!-- <div class="p-t-3"><img src="/assets/images/login/google.svg" alt="" height="30"></div>
+                        <div>Sign In With Google</div> -->
                     </div>
                 </div>
+                <span *ngIf="gmailLogin" class="error">
+                    No User Found
+                </span>
                 <div class="m-t-12 c-pointer" >
                     <a class="forgot-password" [href]="env_url + '/forgot-password'">Forgot Password?</a>
                 </div>

@@ -16,6 +16,7 @@ import { StationSwitchComponent } from './components/station-switch/station-swit
 import { WarningBoxComponent } from './components/warning-box/warning-box.component';
 import { RequirementEditComponent } from './components/requirement-edit/requirement-edit.component';
 import { RequirementDeleteComponent } from './components/requirement-delete/requirement-delete.component';
+import { GoogleLoginProvider, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,20 @@ import { RequirementDeleteComponent } from './components/requirement-delete/requ
       positionClass: 'toast-top-right',
       preventDuplicates: true
     }),],
-  providers: [],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider('Google-Client-ID-Goes-Here'),
+          },
+        ],
+      } as SocialAuthServiceConfig,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
