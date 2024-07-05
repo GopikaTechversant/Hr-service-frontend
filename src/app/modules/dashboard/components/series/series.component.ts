@@ -44,8 +44,8 @@ export class SeriesComponent implements OnInit {
   pageSize = 10;
   searchKeyword: string = '';
   formattedText: SafeHtml | undefined;
-  constructor(private apiService: ApiService, private http: HttpClient, private router: Router, private route: ActivatedRoute, 
-    private dialog: MatDialog, private tostr: ToastrServices, private renderer: Renderer2,private sanitizer: DomSanitizer) {
+  constructor(private apiService: ApiService, private http: HttpClient, private router: Router, private route: ActivatedRoute,
+    private dialog: MatDialog, private tostr: ToastrServices, private renderer: Renderer2, private sanitizer: DomSanitizer) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
     });
@@ -58,7 +58,7 @@ export class SeriesComponent implements OnInit {
   fetchDetails(): void {
     this.apiService.get(`/service-request/view?requestId=${this.requestId}`).subscribe((res: any) => {
       if (res?.data) this.requirement_details = res?.data;
-    const text = this.requirement_details?.requestDescription;
+      const text = this.requirement_details?.requestDescription;
       this.formattedText = this.sanitizer.bypassSecurityTrustHtml(text);
       if (res?.flows) this.flows = res?.flows;
       this.roundNames = this.flows.map(flow => flow.flowStationName).join(', ');
@@ -98,9 +98,7 @@ export class SeriesComponent implements OnInit {
     dialogRef.componentInstance.onDeleteSuccess.subscribe(() => {
       this.apiService.post(`/service-request/delete`, { requestId: this.deleteRequirementId }).subscribe({
         next: (res: any) => {
-          // this.generatePageNumbers();
           this.fetchDetails();
-
         },
         error: (error) => {
           this.tostr.error(error?.error?.message ? error?.error?.message : 'Unable to Delete candidates');

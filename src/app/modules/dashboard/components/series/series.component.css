@@ -110,7 +110,9 @@
 
 .container{
     /* height: 340px; */
-    min-height: 490px;
+    /* min-height: 490px; */
+    overflow-y: auto !important;
+    transition: width 0.3s ease;
     width: 99%;
     background-color: white;
 }
@@ -429,7 +431,7 @@ input[type="text"] {
     padding-left: 10px;
     margin-top: 9px;
     min-height: 73px;
-    padding-top: 10px;
+    padding-top: 8px;
     /* color: #575F6E; */
 }
 
