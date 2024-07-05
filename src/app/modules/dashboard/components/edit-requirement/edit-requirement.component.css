@@ -324,3 +324,14 @@
 body::-webkit-scrollbar-track {
     background: orange;        /* color of the tracking area */
   }
+
+/* .input-vacancy{
+    width: 55%;
+    height: 34px;
+    border-radius: 5px;
+    outline: none;
+    background: #FAFAFA;
+    padding-left: 10px;
+    border: 1px solid #E9E9E9;
+    margin-top: 10px;
+} */

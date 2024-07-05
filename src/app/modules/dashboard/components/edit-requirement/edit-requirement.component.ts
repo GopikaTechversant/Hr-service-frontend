@@ -26,6 +26,7 @@ export class EditRequirementComponent implements OnInit {
   loader: boolean = false;
   list_team: any[] = [];
   teamListOpen: boolean = false;
+  managerListOpen: boolean = false;
   openDesignation: boolean = false;
   designationList: any;
   // Initial values
@@ -44,6 +45,7 @@ export class EditRequirementComponent implements OnInit {
   jobTitle: string = '';
   jobCode: string = '';
   experience: string = '';
+  minExperience: string = '';
   baseSalary: string = '';
   maxSalary: string = '';
   vacancy: string = '';
@@ -51,10 +53,15 @@ export class EditRequirementComponent implements OnInit {
   selectedTeam: string = '';
   selectedTeamName: any;
   selectedDesignation: string = '';
+  reportingmanager: string = '';
   selectedDesignationId: any;
   initialValues: any = {};
   requirement_details: any = {};
   flows: any[] = [];
+  managerName: string = '';
+  managerId: any;
+  panel_list: any[] = [];
+
   constructor(public dialogRef: MatDialogRef<EditRequirementComponent>, private tostr: ToastrServices, private apiService: ApiService,
     private datePipe: DatePipe, @Inject(MAT_DIALOG_DATA) public data: any) {
   }
@@ -64,18 +71,23 @@ export class EditRequirementComponent implements OnInit {
     this.fetchStations();
     this.fetchServiceTeam();
     this.fetchDesignation();
+    this.fetchPanel();
   }
 
   initializeDataValues(): void {
     this.jobTitle = this.requirement_details.requestName || '';
     this.jobCode = this.requirement_details.requestCode || '';
     this.experience = this.requirement_details.requestMaximumExperience || '';
+    this.minExperience = this.requirement_details.requestMinimumExperience || '';
     this.baseSalary = this.requirement_details.requestBaseSalary || '';
     this.maxSalary = this.requirement_details.requestMaxSalary || '';
     this.vacancy = this.requirement_details.requestVacancy || '';
     this.selectedSkills = this.requirement_details.requestSkills ? this.requirement_details.requestSkills.split(',') : [];
     this.selectedTeam = this.requirement_details.team.teamName || '';
     this.selectedDesignation = this.requirement_details.designationName || '';
+    this.reportingmanager = this.requirement_details.reporting.userFullName || '';
+    console.log(" this.reportingmanager", this.reportingmanager);
+
     if (this.flows) {
       this.selectedStations = this.flows.map((flow: any) => ({
         stationId: flow.flowStationId,
@@ -114,6 +126,13 @@ export class EditRequirementComponent implements OnInit {
     this.apiService.get(`/service-request/designation/list`).subscribe(((res: any) => {
       if (res?.data) this.designationList = res?.data;
     }))
+  }
+  fetchPanel(): void {
+    this.apiService.get(`/user/lists?userRole=2`).subscribe((res: any) => {
+      if (res?.users) this.panel_list = res?.users;
+      console.log("this.panel_list", this.panel_list);
+
+    })
   }
 
   selectStation(id: any, stationName: any): void {
@@ -169,10 +188,12 @@ export class EditRequirementComponent implements OnInit {
     if (this.skills !== this.requirement_details.requestSkills) payload.requestSkills = this.selectedSkills;
     if (this.selectedStations !== this.flows) payload.requestFlowStations = this.selectedStations.map((station: any) => station.stationId);
     if (this.experience !== this.requirement_details.requestMaximumExperience) payload.requestMaximumExperience = this.experience;
+    if (this.minExperience !== this.requirement_details.requestMinimumExperience) payload.requestMinimumExperience = this.minExperience;
     if (this.selectedDesignation !== this.requirement_details.designationName) payload.requestDesignation = this.selectedDesignationId;
     if (this.baseSalary !== this.requirement_details.requestBaseSalary) payload.requestBaseSalary = this.baseSalary;
     if (this.maxSalary !== this.requirement_details.requestMaxSalary) payload.requestMaxSalary = this.maxSalary;
     if (this.selectedTeam !== this.requirement_details.team.teamName) payload.requestTeam = this.selectedTeamName;
+    if(this.reportingmanager !== this.requirement_details?.reporting.userFullName) payload.requestManager = this.managerId;
     if (this.jobTitle && this.jobCode && this.vacancy && this.skills && this.selectedStations && this.experience && this.selectedDesignation && this.baseSalary && this.maxSalary && this.selectedTeam) {
       this.apiService.post('/service-request/edit', payload).subscribe(response => {
         this.tostr.success('Requirement updated successfully');
@@ -220,6 +241,12 @@ export class EditRequirementComponent implements OnInit {
     this.openDesignation = false;
     this.selectedDesignation = name;
     this.selectedDesignationId = id;
+  }
+
+  selectmanager(id: any, fname: any, lname: any): void {
+    this.managerListOpen = false;
+    this.reportingmanager = `${fname} ${lname}`;
+    this.managerId = id;
   }
 
   clearFilter(): void {
