@@ -12,12 +12,46 @@
   outline: none;
   background-color: #FFFFFF;
   border-radius: 3px;
-  width: 24%;
-  height: 28px;
+  width: 250px;
+  height: 25px;
+}
+
+.date-filters {
+  display: flex;
+  align-items: center;
+}
+.text-wrap {
+  max-width: 190px !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+  cursor: pointer;
+}
+
+
+.break-word {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; 
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  max-width: 170px; 
+}
+
+.filter {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18.96px;
+  color: #4F4F4F;
+  margin-right: 5px;
 }
 
 .candidate-card {
-  width: 500px; /* Increased width */
+  width: 500px;
   height: 139px;
   border-radius: 4px;
   background-color: #FFFFFF;
@@ -53,8 +87,8 @@
   align-items: center;
   margin-top: 30px;
   margin-left: 10px;
-  width: 150px;
-  height: 79px;
+  width: 75px;
+  height: 75px;
   color: #005EC9;
   background-color: #EBF0FF;
 }
@@ -71,12 +105,12 @@
 
 .scrollable,
 .main {
-  scrollbar-width: none; /* For Firefox */
+  scrollbar-width: none;
 }
 
 .scrollable,
 .main {
-  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+  -ms-overflow-style: none;
 }
 
 .w-45 {
@@ -100,7 +134,7 @@
   overflow-y: auto;
   font-size: 14px;
   font-weight: 400;
-  width: 98%;
+  width: 100%;
   border-radius: 4px;
   position: absolute;
   z-index: 999;
@@ -111,4 +145,37 @@
 
 .dropdown :hover {
   background-color: #eceaea;
+}
+
+.date-input {
+  border: 1px solid #E9E9E9;
+  outline: none;
+  background-color: #FFFFFF;
+  border-radius: 3px;
+  width: 116px;
+  height: 30px;
+}
+
+.filter-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.flex-start {
+  justify-content: flex-start;
 }
