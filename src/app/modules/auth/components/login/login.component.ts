@@ -106,13 +106,13 @@ export class LoginComponent implements OnInit {
       {
         theme: 'outline',
         size: 'large',
-        width: 406,
-        height: 50,
+        width: '600px', // Example: Set an explicit pixel width
+        height: 50, // Adjust height as needed
         longtitle: true,
       }
     );
-
   }
+  
 
   handleGoogleResponse(response: any): void {
     // console.log(response);

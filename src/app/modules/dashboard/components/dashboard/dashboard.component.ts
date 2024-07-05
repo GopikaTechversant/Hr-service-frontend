@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -6,9 +7,10 @@ import { ApiService } from 'src/app/services/api.service';
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
+  providers: [DatePipe],
   host: {
     '(document:click)': 'onBodyClick($event)'
-  }
+  },
 })
 export class DashboardComponent implements OnInit {
   @Output() positionIdChange: EventEmitter<string> = new EventEmitter<string>();
@@ -19,8 +21,11 @@ export class DashboardComponent implements OnInit {
   displayPosition: string = '';
   positionId: any;
   initialLoader: boolean = false;
+  today: Date = new Date();
+  startDate: string | null = this.datePipe.transform(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
+  endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
 
-  constructor(private apiService: ApiService, public router: Router, private tostr: ToastrService) { }
+  constructor(private apiService: ApiService, public router: Router, private tostr: ToastrService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.initialLoader = true;
@@ -44,6 +49,14 @@ export class DashboardComponent implements OnInit {
     if (!target.closest('.no-close')) {
       this.requestList_open = false;
     }
+  }
+
+  dateChange(event: any, range: string): void {
+    let date = new Date(event?.value);
+    if (range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    if (range == 'endDate') this.endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    this.positionId = '';
+    // this.fetchResumeSource();
   }
 
   fetchcount(): void {

@@ -45,12 +45,20 @@
                     <button class="login-btn m-t-14 c-pointer" type="submit">Login</button>        
                 </div>
 
-                <div class="m-t-12  form-field d-flex j-start m-b-14 p-relative c-pointer google-content">
-                    <div id="google-signin-button" class="">                        
-                        <!-- <div class="p-t-3"><img src="/assets/images/login/google.svg" alt="" height="30"></div>
-                        <div>Sign In With Google</div> -->
-                    </div>
-                </div>
+                <div class="m-t-12 form-field d-flex j-start m-b-14 p-relative c-pointer google-content">
+                    <span id="google-signin-button" style="display:block">
+                        <span                    
+                          class="g-signin"
+                          data-callback="signinCallback"
+                          data-clientid="38101299340-8jasmtinc2npen1pdnd45tttpkglobqe.apps.googleusercontent.com"
+                          data-cookiepolicy="single_host_origin"                                        
+                          data-height="standard"
+                          data-width="400"
+                          data-scope="profile email">
+                        </span>
+                      </span>
+                  </div>
+                  
                 <span *ngIf="gmailLogin" class="error">
                     No User Found
                 </span>
