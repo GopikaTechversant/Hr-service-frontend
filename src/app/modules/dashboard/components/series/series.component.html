@@ -6,59 +6,69 @@
         <img src="assets/images/delete.png" class="icon" alt="" height="26px" width="26px"
             (click)="delete(requirement_details?.requestId)">
     </div>
-    <div class="d-flex container-requirement">
-        <div class="info-container-requirement m-t-25 m-l-12">
-            <div class="info-pair-requirement c-pointer"
-                (click)="navigate('/dashboard/candidate-schedule/',requirement_details?.requestId)"
-                title="Click here to see the candidates">
-                <div class="key-requirement count">Candidate Count</div>
-                <div class="value-requirement count">:
-                    {{requirement_details?.candidatesCount}}</div>
-            </div>
-            <div class="info-pair-requirement">
+    <div class="requirement">
+        <div class="d-flex container-requirement">
+            <div class="info-container-requirement m-t-25 m-l-12">
+                <div class="info-pair-requirement c-pointer"
+                    (click)="navigate('/dashboard/candidate-schedule/',requirement_details?.requestId)"
+                    title="Click here to see the candidates">
+                    <div class="key-requirement count">Candidate Count</div>
+                    <div class="value-requirement count">:
+                        {{requirement_details?.candidatesCount}}</div>
+                </div>
+                <div class="info-pair-requirement">
 
-                <div class="key-requirement">Job Code</div>
-                <div class="value-requirement">: {{requirement_details?.requestCode}}</div>
-            </div>
-            <div class="info-pair-requirement">
-                <div class="key-requirement">Interview Rounds</div>
-                <div class="value-requirement">: {{roundNames}}</div>
-            </div>
+                    <div class="key-requirement">Job Code</div>
+                    <div class="value-requirement">: {{requirement_details?.requestCode}}</div>
+                </div>
+                <div class="info-pair-requirement">
+                    <div class="key-requirement">Interview Rounds</div>
+                    <div class="value-requirement">: {{roundNames}}</div>
+                </div>
 
-            <div class="info-pair-requirement">
-                <div class="key-requirement">Minimum Experience</div>
-                <div class="value-requirement">: {{requirement_details?.requestMinimumExperience}}</div>
+                <div class="info-pair-requirement">
+                    <div class="key-requirement">Minimum Experience</div>
+                    <div class="value-requirement">: {{requirement_details?.requestMinimumExperience}}</div>
+                </div>
+                <div class="info-pair-requirement">
+                    <div class="key-requirement">Maximum Experience</div>
+                    <div class="value-requirement">: {{requirement_details?.requestMaximumExperience}}</div>
+                </div>
+                <div class="info-pair-requirement">
+                    <div class="key-requirement">Base Salary</div>
+                    <div class="value-requirement">: {{requirement_details?.requestBaseSalary}}</div>
+                </div>
             </div>
-            <div class="info-pair-requirement">
-                <div class="key-requirement">Maximum Experience</div>
-                <div class="value-requirement">: {{requirement_details?.requestMaximumExperience}}</div>
-            </div>
-            <div class="info-pair-requirement">
-                <div class="key-requirement">Base Salary</div>
-                <div class="value-requirement">: {{requirement_details?.requestBaseSalary}}</div>
+            <div class="info-container-requirement m-t-25 m-l-20">
+                <div class="info-pair-requirement">
+                    <div class="key-requirement">Maximum salary</div>
+                    <div class="value-requirement">: {{requirement_details?.requestMaxSalary}}</div>
+                </div>
+                <div class="info-pair-requirement">
+                    <div class="key-requirement">Designation</div>
+                    <div class="value-requirement">: {{requirement_details?.designationName}}</div>
+                </div>
+                <div class="info-pair-requirement">
+                    <div class="key-requirement">Department</div>
+                    <div class="value-requirement">: {{requirement_details?.team?.teamName}}</div>
+                </div>
+                <div class="info-pair-requirement">
+                    <div class="key-requirement">Skills</div>
+                    <div class="value-requirement">: {{requirement_details?.requestSkills}}</div>
+                </div>
+                <div class="info-pair-requirement">
+                    <div class="key-requirement">Vacancy</div>
+                    <div class="value-requirement">: {{requirement_details?.requestVacancy}}</div>
+                </div>
+                <div class="info-pair-requirement">
+                    <div class="key-requirement">Reporting Manager</div>
+                    <div class="value-requirement">: {{requirement_details?.reporting?.userFullName}}</div>
+                </div>
             </div>
         </div>
-        <div class="info-container-requirement m-t-25 m-l-20">
-            <div class="info-pair-requirement">
-                <div class="key-requirement">Maximum salary</div>
-                <div class="value-requirement">: {{requirement_details?.requestMaxSalary}}</div>
-            </div>
-            <div class="info-pair-requirement">
-                <div class="key-requirement">Designation</div>
-                <div class="value-requirement">: {{requirement_details?.designationName}}</div>
-            </div>
-            <div class="info-pair-requirement">
-                <div class="key-requirement">Department</div>
-                <div class="value-requirement">: {{requirement_details?.team?.teamName}}</div>
-            </div>
-            <div class="info-pair-requirement">
-                <div class="key-requirement">Skills</div>
-                <div class="value-requirement">: {{requirement_details?.requestSkills}}</div>
-            </div>
-            <div class="info-pair-requirement">
-                <div class="key-requirement">Vacancy</div>
-                <div class="value-requirement">: {{requirement_details?.requestVacancy}}</div>
-            </div>
+        <div class="description m-t-15 m-b-29">
+            <span class="p-l-17 jd-title">Job Description</span>
+            <div [innerHTML]="formattedText" class="description-text"></div>
         </div>
     </div>
 </div>
