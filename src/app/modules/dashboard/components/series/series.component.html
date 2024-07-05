@@ -2,7 +2,7 @@
     <div class="title-requirement"><span class="requirement-name">Candidate Requirement -
             {{requirement_details?.requestName}}</span></div>
     <div class="actions d-flex" *ngIf="requirement_details?.candidatesCount === '0'"><img src="assets/images/edit.png"
-            class="icon" alt="" height="28px" width="28px" (click)="edit(requirement_details?.requestId)">
+            class="icon" alt="" height="28px" width="28px" (click)="navigate('/dashboard/service-requirement',requirement_details?.requestId)">
         <img src="assets/images/delete.png" class="icon" alt="" height="26px" width="26px"
             (click)="delete(requirement_details?.requestId)">
     </div>

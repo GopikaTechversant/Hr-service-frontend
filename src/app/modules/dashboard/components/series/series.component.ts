@@ -75,17 +75,23 @@ export class SeriesComponent implements OnInit {
     else this.router.navigate([path]);
   }
 
-  edit(requirement: any): void {
-    this.editRequirement = requirement;
-    const dialogRef = this.dialog.open(EditRequirementComponent, {
-      data: this.editRequirement,
-      width: '50%',
-      height: '80%'
-    })
-    dialogRef.componentInstance.onEditSuccess.subscribe(() => {
-      this.limit = 9;
-      this.fetchDetails();
-    })
+  // edit(requirement: any): void {
+  //   this.editRequirement = requirement;
+  //   console.log("this.editRequirement",this.editRequirement);
+    
+  //   const dialogRef = this.dialog.open(EditRequirementComponent, {
+  //     data: this.editRequirement,
+  //     width: '50%',
+  //     height: '80%'
+  //   })
+  //   dialogRef.componentInstance.onEditSuccess.subscribe(() => {
+  //     this.limit = 9;
+  //     this.fetchDetails();
+  //   })
+  // }
+  edit(requirement:any):void{
+    
+
   }
 
   delete(id: any): void {

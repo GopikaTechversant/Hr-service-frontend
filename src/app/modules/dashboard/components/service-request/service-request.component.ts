@@ -3,6 +3,7 @@ import { ViewChild, ElementRef } from '@angular/core';
 import { ToastrServices } from 'src/app/services/toastr.service';
 import { ApiService } from 'src/app/services/api.service';
 import { DatePipe } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-service-request',
@@ -69,7 +70,11 @@ export class ServiceRequestComponent implements OnInit {
   showFormats: boolean = false;
   option: any;
   isBold = false;
-  constructor(private toastr: ToastrServices, private apiService: ApiService, private datePipe: DatePipe) { }
+  requestId:any;
+  requirement_details:any[]=[];
+  flows: any[] = [];
+
+  constructor(private toastr: ToastrServices, private apiService: ApiService, private datePipe: DatePipe,private route: ActivatedRoute) { }
 
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
@@ -77,9 +82,15 @@ export class ServiceRequestComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe((params:any) => {
+      this.requestId = params['requestId'];
+      console.log(" this.requestId ", this.requestId );
+      
+    });
     this.currentYear = new Date().getFullYear();
     this.maxDate = new Date();
     this.minDate = new Date();
+    this.fetchDetails();
     this.fetchStations();
     this.fetchServiceTeam();
     this.fetchDesignation();
@@ -95,6 +106,34 @@ export class ServiceRequestComponent implements OnInit {
       this.openReporingManager = false;
       this.showFormats = false;
     }
+  }
+  // initializeDataValues(): void {
+  //   this.jobTitle = this.requirement_details.requestName || '';
+  //   this.jobCode = this.requirement_details.requestCode || '';
+  //   this.experience = this.requirement_details.requestMaximumExperience || '';
+  //   this.baseSalary = this.requirement_details.requestBaseSalary || '';
+  //   this.maxSalary = this.requirement_details.requestMaxSalary || '';
+  //   this.vacancy = this.requirement_details.requestVacancy || '';
+  //   this.selectedSkills = this.requirement_details.requestSkills ? this.requirement_details.requestSkills.split(',') : [];
+  //   this.selectedTeam = this.requirement_details.team.teamName || '';
+  //   this.selectedDesignation = this.requirement_details.designationName || '';
+  //   if (this.flows) {
+  //     this.selectedStations = this.flows.map((flow: any) => ({
+  //       stationId: flow.flowStationId,
+  //       stationName: flow.flowStationName
+  //     }));
+  //   } else this.selectedStations = [];
+  // }
+
+
+  fetchDetails(): void {
+    this.apiService.get(`/service-request/view?requestId=${this.requestId}`).subscribe((res: any) => {
+      this.requirement_details = res?.data;
+      this.flows = res?.flows;
+      console.log("this.requiremnet details",this.requirement_details);
+      
+      // this.initializeDataValues();
+    })
   }
 
   fetchDesignation() {
