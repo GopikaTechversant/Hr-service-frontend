@@ -93,15 +93,15 @@ export class InterviewDetailsComponent implements OnInit {
     this.fetchPosition();
     if (history?.state?.candidate) {
       this.candidate = history?.state?.candidate;
-      this.positionName = this.candidate['reqServiceRequest.requestName'];
-      this.positionId = this.candidate?.candidatesAddingAgainst;
+      this.positionName = this.candidate['reqServiceRequest.requestName'] ?? '';
+      this.positionId = this.candidate?.candidatesAddingAgainst ?? '';
       this.scheduleStatus = true;
       this.serviceId = '';
-      this.candidateId = this.candidate?.candidateId;
-      this.currentCompany = this.candidate?.candidatePreviousOrg;
-      this.candidateRevlentExperience = this.candidate?.candidateRevlentExperience;
-      this.candidateTotalExperience = this.candidate?.candidateTotalExperience;
-      this.candidateName = this.candidate?.candidateFirstName + ' ' + this.candidate?.candidateLastName;
+      this.candidateId = this.candidate?.candidateId ?? '';
+      this.currentCompany = this.candidate?.candidatePreviousOrg ?? '';
+      this.candidateRevlentExperience = this.candidate?.candidateRevlentExperience ?? '';
+      this.candidateTotalExperience = this.candidate?.candidateTotalExperience ?? '';
+      this.candidateName = (this.candidate?.candidateFirstName ?? '') + ' ' + (this.candidate?.candidateLastName ?? '' );
       this.fetchUsers();
       // this.fetchCandidates();
       this.fetchWorkMode();
@@ -210,18 +210,18 @@ export class InterviewDetailsComponent implements OnInit {
       this.candidateStatus = res?.candidateStatus;
       this.showMail('re-schedule');
       this.candidateDetails.forEach((candidate: any) => {
-        this.candidateRevlentExperience = candidate?.candidateRevlentExperience;
-        this.candidateTotalExperience = candidate?.candidateTotalExperience;
-        this.currentCompany = candidate?.candidatePreviousOrg;
-        this.id = candidate?.candidateId;
-        if (candidate?.candidateNoticePeriodByDays) this.noticeperiodvalue = candidate?.candidateNoticePeriodByDays;
+        this.candidateRevlentExperience = candidate?.candidateRevlentExperience ?? '';
+        this.candidateTotalExperience = candidate?.candidateTotalExperience ?? '';
+        this.currentCompany = candidate?.candidatePreviousOrg ?? '';
+        this.id = candidate?.candidateId ?? '';
+        if (candidate?.candidateNoticePeriodByDays) this.noticeperiodvalue = candidate?.candidateNoticePeriodByDays ?? '';
       })
       this.candidateStatus.forEach((status: any) => {
         this.serviceId = status?.serviceId;
-        if (status?.interviewMode) this.interviewMode = status?.interviewMode;
-        if (status?.comment) this.comment = status?.comment;
-        if (status?.interviewStatus) this.interviewStatus = status?.interviewStatus;
-        if (status?.interviewLocation) this.Interviewlocation = status?.interviewLocation;
+        if (status?.interviewMode) this.interviewMode = status?.interviewMode ?? '';
+        if (status?.comment) this.comment = status?.comment ?? '';
+        if (status?.interviewStatus) this.interviewStatus = status?.interviewStatus ?? '';
+        if (status?.interviewLocation) this.Interviewlocation = status?.interviewLocation ?? '';
         // this.scheduledDate = status?.serviceDate;
       })
     })
@@ -331,7 +331,7 @@ export class InterviewDetailsComponent implements OnInit {
       interviewBcc: data?.mailBcc,
     }
 
-    if (this.noticeperiodvalue && this.locationName && this.recruiterId && this.selectedModeName && data) {
+    if (this.locationName && this.recruiterId && this.selectedModeName && data) {
       this.apiService.post(`/screening-station/interview-details`, payload).subscribe({
         next: (res: any) => {
           this.loader = false;
