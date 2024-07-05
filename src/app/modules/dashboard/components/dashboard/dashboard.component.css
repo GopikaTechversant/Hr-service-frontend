@@ -25,7 +25,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 1; /* Change this to the number of lines you want before showing ellipses */
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   word-break: break-all;
   cursor: pointer;
@@ -34,15 +34,13 @@
 
 .break-word {
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* Limits the number of lines before ellipsis */
+  -webkit-line-clamp: 2; 
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-word;
-  max-width: 170px; /* Limits the width to 170px */
+  max-width: 170px; 
 }
-
-
 
 .filter {
   font-weight: 400;

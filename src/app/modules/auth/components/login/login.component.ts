@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ToastrServices } from 'src/app/services/toastr.service';
 import { ApiService } from 'src/app/services/api.service';
 import { jwtDecode } from 'jwt-decode';
+import { environment } from 'src/environments/environments';
 
 declare const google: any;
 
@@ -98,7 +99,7 @@ export class LoginComponent implements OnInit {
 
   initializeGoogleSignIn(): void {
     google.accounts.id.initialize({
-      client_id: '38101299340-8jasmtinc2npen1pdnd45tttpkglobqe.apps.googleusercontent.com',
+      client_id: environment.client_id,
       callback: this.handleGoogleResponse.bind(this)
     });
     google.accounts.id.renderButton(
@@ -106,11 +107,13 @@ export class LoginComponent implements OnInit {
       {
         theme: 'outline',
         size: 'large',
-        width: '600px', // Example: Set an explicit pixel width
-        height: 50, // Adjust height as needed
+        width: '100%',
+        height: 50,
         longtitle: true,
+        text: 'Sign in With Google'
       }
     );
+    
   }
   
 

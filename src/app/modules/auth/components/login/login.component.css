@@ -110,6 +110,8 @@
 
 #google-signin-button {
   width: 99%;
+  display: flex;
+  justify-content: center;
 }
 
 .login-btn {
