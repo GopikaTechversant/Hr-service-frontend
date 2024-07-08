@@ -1,8 +1,9 @@
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Inject, OnInit } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastrServices } from 'src/app/services/toastr.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-edit-requirement',
@@ -11,6 +12,7 @@ import { ToastrServices } from 'src/app/services/toastr.service';
 })
 export class EditRequirementComponent implements OnInit {
   public onEditSuccess: EventEmitter<void> = new EventEmitter<void>();
+  @ViewChild('comment') commentDiv!: ElementRef<HTMLDivElement>;
 
   selectedStations: any = [
     { stationName: "Screening", stationId: 1 },
@@ -61,8 +63,13 @@ export class EditRequirementComponent implements OnInit {
   managerName: string = '';
   managerId: any;
   panel_list: any[] = [];
-
-  constructor(public dialogRef: MatDialogRef<EditRequirementComponent>, private tostr: ToastrServices, private apiService: ApiService,
+  formattedText: SafeHtml | undefined;
+  jobDescription: any
+  option: any;
+  showFormats: boolean = false;
+  textFormats: any[] = ['Aa', 'AA', 'aa', 'Aa A'];
+  description: any;
+  constructor(public dialogRef: MatDialogRef<EditRequirementComponent>, private tostr: ToastrServices, private apiService: ApiService, private sanitizer: DomSanitizer,
     private datePipe: DatePipe, @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
@@ -86,8 +93,7 @@ export class EditRequirementComponent implements OnInit {
     this.selectedTeam = this.requirement_details.team.teamName || '';
     this.selectedDesignation = this.requirement_details.designationName || '';
     this.reportingmanager = this.requirement_details.reporting.userFullName || '';
-    console.log(" this.reportingmanager", this.reportingmanager);
-
+    this.description = this.requirement_details.requestDescription || '';
     if (this.flows) {
       this.selectedStations = this.flows.map((flow: any) => ({
         stationId: flow.flowStationId,
@@ -99,6 +105,8 @@ export class EditRequirementComponent implements OnInit {
   fetchDetails(): void {
     this.apiService.get(`/service-request/view?requestId=${this.data}`).subscribe((res: any) => {
       this.requirement_details = res?.data;
+      const text = this.requirement_details?.requestDescription;
+      this.formattedText = this.sanitizer.bypassSecurityTrustHtml(text);
       this.flows = res?.flows;
       this.initializeDataValues();
     })
@@ -130,8 +138,6 @@ export class EditRequirementComponent implements OnInit {
   fetchPanel(): void {
     this.apiService.get(`/user/lists?userRole=2`).subscribe((res: any) => {
       if (res?.users) this.panel_list = res?.users;
-      console.log("this.panel_list", this.panel_list);
-
     })
   }
 
@@ -144,7 +150,6 @@ export class EditRequirementComponent implements OnInit {
         this.idListOpen = false;
       }
     }
-    // if (stationName === "Written" || stationName === "Technical") this.stationsList = this.stationsLists.slice(2, -1)
     if (stationName === "Written" || stationName === "Technical") this.stationsList = this.stationsLists.slice(2, -2)
     else if (stationName === "Technical 2") this.stationsList = this.stationsList.filter(station => station.stationName !== "Technical 1");
   }
@@ -173,9 +178,82 @@ export class EditRequirementComponent implements OnInit {
     this.showSearchBar = false;
     this.skillSuggestions = [];
   }
-
+  select(option: string): void {
+    this.option = option;
+    if (option === 'Aa') {
+      this.textAreaFormat('sentencecase');
+    } else if (option === 'AA') {
+      this.textAreaFormat('upperCase');
+    } else if (option === 'aa') {
+      this.textAreaFormat('lowerCase');
+    } else if (option === 'Aa A') {
+      this.textAreaFormat('titlecase');
+    }
+  }
   removeSkill(skillToRemove: any): void {
     this.selectedSkills = this.selectedSkills?.filter(skill => skill !== skillToRemove);
+  }
+
+  execCommand(command: string): void {
+    document.execCommand(command, false, undefined);
+  }
+
+  textAreaFormat(event: string): void {
+    const div = this.commentDiv.nativeElement;
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0) {
+      return;
+    }
+    const range = selection.getRangeAt(0);
+    const selectedText = range.toString();
+    if (!selectedText) return;
+    let replace: string = selectedText;
+    if (event === 'upperCase') {
+      replace = selectedText.toUpperCase();
+    } else if (event === 'lowerCase') {
+      replace = selectedText.toLowerCase();
+    } else if (event === 'paragraph') {
+      replace = selectedText.replace(/(\r\n|\n|\r)/gm, " ");
+    } else if (event === 'sentencecase') {
+      replace = this.sentenceCase(selectedText);
+    } else if (event === 'titlecase') {
+      replace = this.titleCase(selectedText);
+    } else {
+      return;
+    }
+    const newNode = document.createTextNode(replace);
+    range.deleteContents();
+    range.insertNode(newNode);
+    this.jobDescription = div.innerHTML;
+  }
+
+  sentenceCase(str: string): string {
+    let result = '';
+    let capitalizeNext = true;
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charAt(i);
+      if (capitalizeNext && /[a-zA-Z]/.test(char)) {
+        result += char.toUpperCase();
+        capitalizeNext = false;
+      } else {
+        result += char.toLowerCase();
+      }
+      if (char === '.' || char === '!' || char === '?') {
+        let nextIndex = i + 1;
+        while (nextIndex < str.length && str.charAt(nextIndex) === ' ') {
+          nextIndex++;
+        }
+        capitalizeNext = true;
+        i = nextIndex - 1;
+      }
+    }
+    return result;
+  }
+
+  titleCase(str: string): string {
+    return str.toLowerCase().split(' ').map(word => {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    }).join(' ');
   }
 
   submitClick(): void {
@@ -193,7 +271,9 @@ export class EditRequirementComponent implements OnInit {
     if (this.baseSalary !== this.requirement_details.requestBaseSalary) payload.requestBaseSalary = this.baseSalary;
     if (this.maxSalary !== this.requirement_details.requestMaxSalary) payload.requestMaxSalary = this.maxSalary;
     if (this.selectedTeam !== this.requirement_details.team.teamName) payload.requestTeam = this.selectedTeamName;
-    if(this.reportingmanager !== this.requirement_details?.reporting.userFullName) payload.requestManager = this.managerId;
+    if (this.reportingmanager !== this.requirement_details?.reporting.userFullName) payload.requestManager = this.managerId;
+    const currentDescription = this.commentDiv.nativeElement.innerHTML;
+    if (currentDescription !== this.requirement_details.requestDescription) payload.requestDescription = currentDescription;
     if (this.jobTitle && this.jobCode && this.vacancy && this.skills && this.selectedStations && this.experience && this.selectedDesignation && this.baseSalary && this.maxSalary && this.selectedTeam) {
       this.apiService.post('/service-request/edit', payload).subscribe(response => {
         this.tostr.success('Requirement updated successfully');
