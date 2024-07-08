@@ -17,6 +17,7 @@ import { WarningBoxComponent } from './components/warning-box/warning-box.compon
 import { RequirementEditComponent } from './components/requirement-edit/requirement-edit.component';
 import { RequirementDeleteComponent } from './components/requirement-delete/requirement-delete.component';
 import { GoogleLoginProvider, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
+import { environment } from 'src/environments/environments';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,7 @@ import { GoogleLoginProvider, SocialAuthServiceConfig } from '@abacritt/angularx
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider('Google-Client-ID-Goes-Here'),
+            provider: new GoogleLoginProvider(environment.client_id),
           },
         ],
       } as SocialAuthServiceConfig,

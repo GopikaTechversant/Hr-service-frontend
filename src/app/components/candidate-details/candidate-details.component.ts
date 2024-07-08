@@ -5,6 +5,7 @@ import { DatePipe } from '@angular/common';
 import { ApiService } from 'src/app/services/api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { EditComponent } from '../edit/edit.component';
 @Component({
   selector: 'app-candidate-details',
   templateUrl: './candidate-details.component.html',
@@ -107,5 +108,19 @@ export class CandidateDetailsComponent implements OnInit {
     window.open(`${environment.s3_url}${this.resumePath}`, '_blank');
     this.viewResumeFile = environment.s3_url;
   }
+
+  edit(id: any): void {
+    const dialogRef = this.dialog.open(EditComponent, {
+      data: id,
+      width: '950px',
+      height: '700px'
+    })
+    dialogRef.componentInstance.onEditSuccess.subscribe(() => {
+      // this.currentPage = 1;
+      // this.pageSize = 14;
+      // this.fetchCandidates();
+    })
+  }
+
 
 }

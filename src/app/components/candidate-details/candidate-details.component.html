@@ -101,6 +101,10 @@
             </div>
             <!-- Basic Info Content -->
             <div class="tabcontent" [ngClass]="{ 'active': activeTab === 'basic' }" id="basic">
+                <div class="d-flex j-end c-pointer m-r-20" (click)="edit(candidateDetails?.candidateId)">
+                    <span><img src="/assets/images/candidate-detail/edit.svg" alt="" height="12" width="12"></span>
+                    <span class="c-blue p-l-5 p-r-5">Edit</span>
+                </div>
                 <div class="candidateDetailsContainer d-flex">
                     <div class="col-1 bor">
                         <div class="details">
