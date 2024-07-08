@@ -9,12 +9,15 @@
     <div class="requirement">
         <div class="d-flex container-requirement">
             <div class="info-container-requirement m-t-25 m-l-12">
-                <div class="info-pair-requirement c-pointer"
-                    (click)="navigate('/dashboard/candidate-schedule/',requirement_details?.requestId)"
-                    title="Click here to see the candidates">
-                    <div class="key-requirement count">Candidate Count</div>
-                    <div class="value-requirement count">:
-                        {{requirement_details?.candidatesCount}}</div>
+                <div class="info-pair-requirement" title="Click here to see the candidates">
+                    <div class="key-requirement">Candidate Count</div>
+                    <div class="value-requirement">:
+                        {{requirement_details?.candidatesCount}}
+                        <span class="" *ngIf="requirement_details?.candidatesCount > 0"> <a
+                                [href]="env_url + '/dashboard/candidate-schedule?requestId=' + requirement_details?.requestId">
+                                (Click here to view)
+                            </a></span>
+                    </div>
                 </div>
                 <div class="info-pair-requirement">
 

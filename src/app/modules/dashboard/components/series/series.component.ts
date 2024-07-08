@@ -44,6 +44,7 @@ export class SeriesComponent implements OnInit {
   pageSize = 10;
   searchKeyword: string = '';
   formattedText: SafeHtml | undefined;
+  env_url: string = '';
   constructor(private apiService: ApiService, private http: HttpClient, private router: Router, private route: ActivatedRoute,
     private dialog: MatDialog, private tostr: ToastrServices, private renderer: Renderer2, private sanitizer: DomSanitizer) {
     this.route.queryParams.subscribe(params => {
@@ -53,6 +54,7 @@ export class SeriesComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchDetails();
+    this.env_url = window.location.origin;
   }
 
   fetchDetails(): void {
@@ -67,12 +69,6 @@ export class SeriesComponent implements OnInit {
 
   toggleTaskDetails() {
     this.isTaskDetailsOpen = !this.isTaskDetailsOpen;
-  }
-
-  navigate(path: any, requestId?: any): void {
-    const queryParams = requestId ? { requestId: requestId } : undefined;
-    if (queryParams) this.router.navigate([path], { queryParams: queryParams });
-    else this.router.navigate([path]);
   }
 
   edit(requirement: any): void {
