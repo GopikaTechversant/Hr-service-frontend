@@ -35,6 +35,10 @@
     <img src="assets/images/Group.png" alt="" height="19px" width="19px" top="4px" left="4px">
     <span class="menu-text">Requisition Detail</span>
   </div>
+  <div *ngIf="requestId && candidateScheduleurl && isActive(candidateScheduleurl)" class="menu d-flex c-pointer" [class.active]="isActive(candidateScheduleurl)">
+    <img src="assets/images/Group.png" alt="" height="19px" width="19px" top="4px" left="4px">
+    <span class="menu-text">Candidate Lists</span>
+  </div>
   <div class="menu d-flex c-pointer" (click)="navigate('/dashboard/candidate-pool',false)" [class.active]="isActive('/dashboard/candidate-pool')">
     <img src="assets/images/gg_list.png" alt="" height="19px" width="19px" top="4px" left="4px">
     <span class="menu-text">Candidate Pool</span>
