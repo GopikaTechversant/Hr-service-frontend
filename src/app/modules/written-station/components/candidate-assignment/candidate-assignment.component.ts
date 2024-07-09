@@ -300,6 +300,7 @@ export class CandidateAssignmentComponent implements OnInit {
     localStorage.getItem('userId');
     const isScoreAdded = this.candidateList.some((candidate: any) => {
       (candidate?.serviceSequence?.progress?.progressScore !== null || candidate?.serviceSequence?.progress?.progressScore) && candidate?.serviceSequence?.serviceStatus === 'pending';
+      this.serviceIds.push(candidate?.serviceSequence?.serviceId)
     });
     const payload = {
       serviceId: this.serviceIds,

@@ -113,7 +113,7 @@ export class ResultComponent {
         next: (res: any) => {
           this.dialogRef.close(true);
           this.resultData.emit({ score: parseInt(this.scoreValue, 10), serviceId: this.examServiceId });
-          this.tostr.success('Progress added successfully');
+          this.tostr.success('Result added successfully');
         },
         error: (err) => {
           this.dialogRef.close();
