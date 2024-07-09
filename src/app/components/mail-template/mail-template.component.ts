@@ -68,6 +68,7 @@ export class MailTemplateComponent implements OnInit {
   showTemplate:boolean = false;
   constructor(private apiService: ApiService, private tostr: ToastrService, private datePipe: DatePipe, private s3Service: S3Service, private http: HttpClient) { }
   ngOnInit(): void {
+    this.resetFormAndState();
 
   }
 
@@ -75,6 +76,7 @@ export class MailTemplateComponent implements OnInit {
     if (this.candidate?.messageType && this.candidate?.messageType !== '') {
       this.showTemplate = true;
       this.fetchTemplates();
+      this.resetFormAndState();
       if (this.candidate?.messageType === 're-schedule') this.fetchCandidatesDetails();
       this.fetchMode();
       this.fetchPanel();
@@ -346,6 +348,40 @@ export class MailTemplateComponent implements OnInit {
   //   });
 
   // }
+
+  clearInputvalue(id: string) {
+    const inputElement = document.getElementById(id) as HTMLInputElement;
+    if (inputElement) inputElement.value = '';
+  }
+
+  resetFormAndState(): void {
+    this.currentCompany = '';
+    this.selectedModeName = '';
+    this.showRecruiters = false;
+    this.showDropdown = false;
+    this.panelName = '';
+    this.selectedModeName = '';
+    this.noticeperiodvalue = '';
+    this.Interviewlocation = '';
+    this.scheduledDate = '';
+    this.displayTime = '';
+    this.fileName = '';
+    this.displayTime = '';
+    this.displayTime = '';
+    this.displayTime = '';
+
+
+    this.clearInputvalue('joining');
+    this.clearInputvalue('salary');
+    this.clearInputvalue('interviewStatus');
+    this.clearInputvalue('subject');
+    this.clearInputvalue('rescheduledStatus');
+    this.clearInputvalue('cc');
+    this.clearInputvalue('bcc');
+    this.clearInputvalue('feedback');
+
+   
+  }
 
   cancelClick() {
     const data = { clickType: 'cancel' };
