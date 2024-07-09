@@ -319,7 +319,7 @@ export class InterviewDetailsComponent implements OnInit {
       interViewPanel: data?.interviewPanel,
       interviewMode: data?.interviewMode,
       serviceId: this.serviceId ?? '',
-      stationId: this.candidate_list?.candidateStatus[0]['reqStation.stationId'] ?? '1',
+      stationId: this.candidateDetails?.candidateStation ?? '1',
       interviewStatus: data?.interviewStatus,
       comments: data?.feedback,
       workMode: this.selectedModeName ?? '',
