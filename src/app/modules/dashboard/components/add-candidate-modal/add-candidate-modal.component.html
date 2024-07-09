@@ -215,7 +215,7 @@
                 <div class="d-flex">
                     <div class="searchbar m-t-10 c-pointer p-t-10 no-close '" *ngIf="selectedSkillType">
                         <input type="search" class="input-search p-l-6" placeholder="Type to search skills..."
-                            (input)="getSkillSuggestions($event)" id="addskill">
+                            (input)="getSkillSuggestions($event)" id="addskill" [(ngModel)]="searchvalue">
                         <div class="drop-list" *ngIf="searchvalue.trim() !== ''">
                             <div *ngFor="let suggestion of skillSuggestions" (click)="selectSkill(suggestion)"
                                 class="p-5">
@@ -251,7 +251,7 @@
                                 class="m-t-0 p-r-4" width="15px" height="13px"></span>
                         <span>{{ skill?.name | titlecase}}</span>
                         <i class="fa fa-trash-o  delete-color" aria-hidden="true"
-                            (divck)="removeSkill(skill, 'secondary')"></i>
+                            (click)="removeSkill(skill, 'secondary')"></i>
                     </div>
                 </div>
             </div>

@@ -550,6 +550,7 @@ export class AddCandidateModalComponent implements OnInit {
     else if (this.selectedSkillType === 'Secondary Skills') this.selectedSecondarySkills.push(selectedSkill);
     this.showSearchBar = false;
     this.skillSuggestions = [];
+    this.searchvalue = '';
   }
 
   // addExtraSkills(): void {
