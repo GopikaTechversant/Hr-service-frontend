@@ -14,7 +14,7 @@ export class CandidateListComponent implements OnInit {
   currentPage: number = 1;
   lastPage: any;
   userCount: any;
-  pageSize = 10;
+  pageSize = 12;
   pageIndex = 1;
   totalCount: any;
   limit = 9;

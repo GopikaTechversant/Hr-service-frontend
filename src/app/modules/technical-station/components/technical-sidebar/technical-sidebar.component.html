@@ -1,24 +1,11 @@
 <div class="main p-t-10">
-    <!-- <div class="menu d-flex c-pointer" (click)="navigate('/dashboard')">
-        <img src="assets/images/material-symbols-light_dashboard-outline.png" alt="" height="19px" width="19px"
-            top="4px" left="4px" class="img">
-        <span class="menu-text">Dashboard</span>
-    </div> -->
     <div class="menu d-flex c-pointer" (click)="navigate(url,false)" [class.active]="isActive(url)">
-        <img src="assets/images/gg_list.png" alt="" height="19px" width="19px" top="4px" left="4px">
+        <span class="menu-text"><i class="fa fa-th-large" aria-hidden="true"></i></span>
         <span class="menu-text">Dashboard</span>
     </div>
-    <div *ngIf="id && candidateDetailUrl && isActive(candidateDetailUrl)" class="menu d-flex c-pointer" (click)="navigate(candidateDetailUrl, false)" [class.active]="isActive(candidateDetailUrl)">
-        <img src="assets/images/Group.png" alt="" height="19px" width="19px" top="4px" left="4px">
+    <div *ngIf="id && candidateDetailUrl && isActive(candidateDetailUrl)" class="menu d-flex c-pointer"
+        (click)="navigate(candidateDetailUrl, false)" [class.active]="isActive(candidateDetailUrl)">
+        <span class="menu-text"><i class="fa fa-table" aria-hidden="true"></i></span>
         <span class="menu-text">Candidate Detail</span>
-      </div>
-
-    <!-- <div class="menu d-flex c-pointer" (click)="navigate('/dashboard/interview-details')">
-        <img src="/assets/images/line-md_computer-1.png" alt="" height="19px" width="19px" top="4px" left="4px">
-        <span class="menu-text">Interview Details</span>
     </div>
-    <div class="menu d-flex c-pointer" (click)="navigate('/dashboard/report-details')">
-        <img src="assets/images/Group.png" alt="" height="19px" width="19px" top="4px" left="4px">
-        <span class="menu-text">Report</span>
-    </div> -->
 </div>

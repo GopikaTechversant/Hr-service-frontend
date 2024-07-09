@@ -14,7 +14,7 @@ import { AssignRequirementComponent } from '../assign-requirement/assign-require
 })
 export class CandidateListComponent {
   @Input() positionId: any
-  pageSize = 10;
+  pageSize = 11;
   pageIndex = 1;
   showFirstLastButtons = true;
   candidateList: any;

@@ -14,23 +14,26 @@
   line-height: 21.33px !important;
   border-radius: 0 37px 37px 0;
   padding-left: 21px;
+  margin-bottom: 21px;
+
 }
 
 .menu-text {
-  font-size: 15px;
-  font-weight: 400;
+  font-size: 16px;
   line-height: 21px;
   letter-spacing: 0em;
   text-align: left;
   color: #4F4F4F;
   padding-left: 6px;
+  font-weight: 500;
 }
 
 .menu:hover, .menu.active {
-  background-color: #005EC9;
+  color: #005EC9;
+  background-color: #005EC91F;
 }
 
 .menu:hover .menu-text, .menu.active .menu-text {
-  background-color: #005EC9;
-  color: white;
+  color: #005EC9;
+  font-weight: 500;
 }

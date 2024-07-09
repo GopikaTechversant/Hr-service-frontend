@@ -1,24 +1,39 @@
-.main-header{
-    /* height: 70px !important; */
-    position: sticky !important;
-    max-width: 100%;
-}
-.header {
-    height: 70px !important;
-    /* position: sticky !important; */
-    max-width: 100%;
-    background: #ABABAB26;
-    border-right: none;
-    /* overflow: hidden; */
+.main {
+    display: flex;
 }
 
-.logo-text {
-    color: black;
+.header {
+    height: 75px !important;
+    /* position: sticky !important; */
+    max-width: 100%;
+    background: #FFFFFF;
+    border-right: none;
+    box-shadow: 0px 4px 8px 0px #00000017;
+}
+
+.sidebar-container {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    transition: width 0.3s ease;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #00000012;
+    position: relative;
+    height: 75px !important;
+    border-right: 1px solid #E9E9E9;
+    align-items: center;
+    justify-content: center;
+}
+
+.side-head {
+    font-size: 25px;
+    font-weight: 500;
 }
 
 .detail {
     font-size: 12px;
     color: #575F6E;
+    display: flex;
 }
 
 .candidate {
@@ -35,12 +50,13 @@
     border-radius: 4px;
     max-height: 190px;
     overflow-y: auto;
-    width: 82%;
+    width: 100%;
     text-overflow: ellipsis;
     white-space: nowrap;
     cursor: pointer;
     text-align: center;
     margin-top: 42px;
+    overflow-x: hidden;
 }
 
 .candidate-column {
@@ -51,6 +67,25 @@
 
 .candidate-column:hover {
     background-color: #f0f0f0;
+}
+
+.text-wrap {
+    max-width: 215px !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; 
+    display: block; 
+    cursor: pointer;
+}
+
+.break-word {
+    display: block; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    white-space: nowrap; 
+    max-width: 170px;
+    cursor: pointer;
 }
 
 .user-profile {
@@ -92,45 +127,41 @@
 }
 
 .search-div {
-    width: 80%;
+    width: 100%;
     display: flex;
     justify-content: flex-end;
+    width: 338px;
+    height: 38px;
+    top: 5px;
+    left: 67px;
+    gap: 0px;
+    border-radius: 3px 0px 0px 0px;
+    border: 1px 0px 0px 0px;
+    opacity: 0px;
+    border: 1px solid #D8E2FF;
+    background: #FFFFFF;
+
+
 }
 
 .input {
-    border: 1px solid #E9E9E9;
-    outline: none;
     background-color: #FFFFFF;
-    border-radius: 3px;
-    width: 80%;
-    height: 37px;
-    margin-right: -21px;
-}
-
-.search {
-    background-color: #005EC9;
     padding: 9px;
     top: 724px;
     right: 258px;
-    width: 25px;
-    height: 22px;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
+    width: 92%;
+    height: 20px;
+    border: none !important;
+    outline: none !important;
+}
+
+.search {
+    padding: 8px;
 }
 
 .fa-search {
-    color: #FFFFFF;
-    padding-left: 3px;
-    font-size: 20px;
-}
-
-.second-header {
-    height: 60px !important;
-    /* position: sticky !important; */
-    max-width: 100%;
-    background: #FFFFFF;
-    border-right: none;
-    box-shadow: 0px 4px 8px 0px #00000017;
+    color: #575F6E;
+    font-size: 30px;
 }
 
 .welcome {
@@ -143,9 +174,9 @@
 }
 
 .active-station {
-    color: black;
-    /* border-radius: 4px; */
-    border-bottom: 2px solid blue;
+    color: white;
+    border-radius: 17px;
+    border-bottom: 2px solid #005EC9;
     box-shadow: 0px 4px 8px 0px #00000017;
+    background: #005EC9;
 }
-  
