@@ -75,6 +75,11 @@ export class ServiceRequestComponent implements OnInit {
   unloadNotification($event: any) {
     $event.returnValue = true;
   }
+  ngAfterViewInit(): void {
+    this.commentDiv.nativeElement.addEventListener('input', () => {
+      this.jobDescription = this.commentDiv.nativeElement.innerHTML;
+    });
+  }
 
   ngOnInit(): void {
     this.currentYear = new Date().getFullYear();
@@ -245,6 +250,7 @@ export class ServiceRequestComponent implements OnInit {
 
   execCommand(command: string): void {
     document.execCommand(command, false, undefined);
+    this.jobDescription = this.commentDiv.nativeElement.innerHTML;
   }
 
   textAreaFormat(event: string): void {
@@ -348,13 +354,15 @@ export class ServiceRequestComponent implements OnInit {
   }
 
   resetFormAndState(): void {
-    const comments = document.getElementById('comments') as HTMLInputElement;
-    if (comments) comments.value = '';
-    this.commentValue = '';
+    // const comments = document.getElementById('comments') as HTMLInputElement;
+    // if (comments) comments.value = '';
+    // this.commentValue = '';
     this.stationsList = [];
     this.selectedTeam = '';
     this.selectedDesignation = '';
-    this.commentValue = '';
+    // this.commentValue = '';
+    const commentsDiv = this.commentDiv.nativeElement;
+    if (commentsDiv) commentsDiv.innerHTML = '';
     this.clearInputvalue(this.maxExperienceInput);
     this.clearInputvalue(this.minExperienceInput)
     this.clearInputvalue(this.jobCode);
