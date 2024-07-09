@@ -97,9 +97,10 @@
         </button>
         <ng-container *ngFor="let page of generatePageNumbers()">
             <button *ngIf="page === '...'" class="box dot" disabled>...</button>
-            <button *ngIf="page !== '...' && page === currentPage" class="box current-page c-pointer">{{ page }}</button>
+            <button *ngIf="page !== '...' && page === currentPage" class="box current-page c-pointer">{{ page
+                }}</button>
             <button *ngIf="page !== '...' && page !== currentPage" class="box c-pointer" (click)="onPageChange(page)">
-            {{page}}</button>
+                {{page}}</button>
         </ng-container> <button *ngIf="currentPage < lastPage" class="box c-pointer" (click)="onPageChange(lastPage)">
             <img src="assets/images/double-arrow-right-icon.svg" alt="" height="14px" width="14px">
         </button>

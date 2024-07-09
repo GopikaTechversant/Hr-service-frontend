@@ -7,22 +7,46 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./left-sidebar.component.css']
 })
 export class LeftSidebarComponent implements OnInit{
-  constructor(private router: Router, private route: ActivatedRoute) {
+  id: string | null = null;
+  candidateDetailUrl: string = '';
+  requisitionUrl: string = '';
+  requirementUrl: string = '';
+  routerEventsSubscription: any;
+  requestId: string | null = null;
+  candidateScheduleurl: string = '';
+  constructor(private router: Router, private route: ActivatedRoute) { }
+  ngOnInit(): void {
     this.routerEventsSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
-      this.id = this.route.snapshot.firstChild?.params['id'];
-      if (this.id) {
-        this.candidateDetailUrl = `/written/candidate-details/${this.id}`;
+      // this.id = this.route.snapshot.firstChild?.params['id'];
+      this.requestId = this.route.snapshot.queryParams['requestId'];
+      // if (this.id) {
+      //   this.candidateDetailUrl = `/dashboard/candidate-details/${this.id}`;
+      //   this.requisitionUrl = `/dashboard/requisition-detail/${this.id}` || `/dashboard/series?requestId=${this.id}`;
+      // }
+      if (this.requestId) {
+        // this.requirementUrl = `/written/candidates?requestId=${this.requestId}`;
+        this.candidateScheduleurl = `/written/candidates?requestId=${this.requestId}`;
       }
     });
+    this.updateUrls();
   }
-  id: string | null = null;
-  candidateDetailUrl: string = '';
-  routerEventsSubscription: any;
 
-  ngOnInit(): void { }
+  updateUrls(): void {
+    this.id = this.route.snapshot.firstChild?.params['id'];
+    this.requestId = this.route.snapshot.queryParams['requestId'];
+    if (this.requestId) {
+      // this.requirementUrl = `/dashboard/series?requestId=${this.requestId}`;
+      this.candidateScheduleurl = `/written/candidates?requestId=${this.requestId}`;
+    }
+  }
 
+  ngOnDestroy(): void {
+    if (this.routerEventsSubscription) {
+      this.routerEventsSubscription.unsubscribe();
+    }
+  }
 
   navigate(path: string, queryParam: any): void {
     if (queryParam) {
@@ -35,4 +59,5 @@ export class LeftSidebarComponent implements OnInit{
   isActive(route: string): boolean {
     return this.router.url === route;
   }
+
 }

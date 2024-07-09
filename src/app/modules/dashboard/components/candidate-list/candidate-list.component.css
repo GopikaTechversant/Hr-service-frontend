@@ -95,7 +95,7 @@ table {
 
 .table-container {
     overflow: auto !important;
-    height: calc(100vh - 320px);
+    height: calc(100vh - 260px);
 }
 
 
