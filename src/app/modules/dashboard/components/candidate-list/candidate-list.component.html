@@ -24,18 +24,19 @@
     <div class="table-container m-b-0">
         <table class="table">
             <tr class="table-header p-b-10">
-                <td>Select</td>
-                <td>Name</td>
-                <td>Email</td>
-                <td>Mobile</td>
-                <td>Previous Organization</td>
-                <td>Previous Designation</td>
-                <td>Relevent Experience</td>
-                <td>Total Experience</td>
-                <td>Current Salary</td>
-                <td>Education</td>
-                <td>Skills</td>
-                <td>Actions</td>
+                <td class="text-wrap">Select</td>
+                <td class="text-wrap" title="Name">Name</td>
+                <td class="text-wrap" title="Email">Email</td>
+                <td class="text-wrap" title="Mobile">Mobile</td>
+                <td class="text-wrap" title="Previous Organization">Previous Organization</td>
+                <td class="text-wrap" title="Previous Designation">Previous Designation</td>
+                <td class="text-wrap" title="Relevent Experience">Relevent Experience</td>
+                <td class="text-wrap" title="Total Experience">Total Experience</td>
+                <td class="text-wrap" title="Current Salary">Current Salary</td>
+                <td class="text-wrap" title="Education">Education</td>
+                <td class="text-wrap" title="Skills">Skills</td>
+                <td class="text-wrap" title="Requirement">Requirement</td>
+                <td class="text-wrap" title="Actions">Actions</td>
             </tr>
             <ng-container *ngIf="candidateList?.length > 0">
                 <tr class="c-pointer details" *ngFor="let item of candidateList"
@@ -60,6 +61,7 @@
                         [title]="item?.candidateSkill.length > 0 ? (item?.candidateSkill[0]?.skills?.skillName | titlecase):'N/A'">
                         {{item?.candidateSkill.length > 0 ? (item?.candidateSkill[0]?.skills?.skillName |
                         titlecase):'N/A'}}</td>
+                        <td class="text-wrap"  [title]="item?.reqServiceRequest?.requestName">{{item?.reqServiceRequest?.requestName || 'Not Assigned'}}</td>
                     <td *ngIf="!item?.candidatesAddingAgainst">
                         <i class="fa fa-pencil-square-o p-r-5 icon-color" aria-hidden="true"
                             (click)="edit(item?.candidateId)"></i>
