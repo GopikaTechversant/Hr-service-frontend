@@ -247,7 +247,7 @@
                             <ng-container *ngFor="let item of CandidateHistory[0]?.interviewDetail">
                                 <tr class="candidate c-pointer">
                                     <td>{{ item?.interviewDate | date : 'dd/MM/yyyy' }}</td>
-                                    <td>{{ item?.interviewMailType | titlecase }}</td>
+                                    <td>{{ item?.interviewType === 0 ? 'Interview Scheduled' : 'Re-Scheduled' }}</td>
                                     <td class="text-wrap" [title]="item?.interviewBy">{{ item?.interviewBy | titlecase
                                         }}</td>
                                     <td class="text-wrap" [title]="item?.interviewScheduledBy">{{

@@ -12,14 +12,17 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class ApplicationListPieComponent implements OnInit, AfterViewInit {
   @Input() positionId: any;
+  @Input() startDate: any;
+  @Input() endDate: any;
+
   chart: any;
   sourceList: any[] = [];
   sourceLabels: any[] = [];
   sourceCount: any[] = [];
   requestId: any;
   today: Date = new Date();
-  startDate: string | null = this.datePipe.transform(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
-  endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+  // startDate: string | null = this.datePipe.transform(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
+  // endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
 
   constructor(private apiService: ApiService, private datePipe: DatePipe) { }
 
@@ -33,8 +36,14 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['positionId'] && !changes['positionId'].isFirstChange()) {
+    if ((changes['positionId'] && !changes['positionId'].isFirstChange())) {
       this.requestId = changes['positionId'].currentValue;
+      this.fetchResumeSource();
+    } else if (changes['startDate'] && !changes['startDate'].isFirstChange()) {
+      this.startDate = changes['startDate'].currentValue;
+      this.fetchResumeSource();
+    } else if (changes['endDate'] && !changes['endDate'].isFirstChange()) {
+      this.endDate = changes['endDate'].currentValue
       this.fetchResumeSource();
     }
   }
@@ -50,13 +59,13 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
     });
   }
 
-  dateChange(event: any, range: string): void {
-    let date = new Date(event?.value);
-    if (range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
-    if (range == 'endDate') this.endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
-    this.positionId = '';
-    this.fetchResumeSource();
-  }
+  // dateChange(event: any, range: string): void {
+  //   let date = new Date(event?.value);
+  //   if (range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+  //   if (range == 'endDate') this.endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+  //   this.positionId = '';
+  //   this.fetchResumeSource();
+  // }
 
   createChart() {
     if (this.chart) {
@@ -72,12 +81,12 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
           backgroundColor: ['#628afc', '#005ec9', '#047892', '#224462', '#0094d4'],
           borderColor: ['#628afc', '#005ec9', '#047892', '#224462', '#0094d4'],
           fill: false,
-          barThickness: 30,  
+          barThickness: 30,
         }],
       },
       options: {
         responsive: true,
-        aspectRatio: 1.6,
+        aspectRatio: 1.4,
         layout: {
           padding: 30,
         },
@@ -85,7 +94,7 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
           legend: {
             display: true,
             position: 'left',
-            align: 'end', 
+            align: 'end',
             labels: {
               usePointStyle: true,
               pointStyle: 'circle',
@@ -96,7 +105,7 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
             enabled: false
           },
           datalabels: {
-            display: true
+            display: false
           }
         },
       },
@@ -111,22 +120,44 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
     afterDraw(chart: any, args: any, option: any) {
       const { ctx, chartArea: { top, bottom, left, right, width, height }, } = chart;
       const labelPositions: any[] = [];
+      
       chart.data.datasets.forEach((dataset: any, i: any) => {
         chart.getDatasetMeta(i).data.forEach((datapoint: { tooltipPosition: () => { x: any; y: any; }; }, index: string | number) => {
           const { x, y } = datapoint.tooltipPosition();
           const halfwidth = width / 2;
-          const halfheight = height / 2;
-          const xLine = x >= halfwidth ? x + 45 : x - 45;
-          const yLine = y >= halfheight ? y + 45 : y - 45;
-          const extraLine = x >= halfwidth ? 20 : -20;
+          const halfheight = height / 2;    
+          let xLine, yLine, extraLine;      
+          if (index === 0) {
+            xLine = x;
+            yLine = bottom - 20; 
+            extraLine = 0;
+            if (yLine > bottom) {
+              yLine = bottom - 20;  
+            }
+          }else if (index === 5) {
+            xLine = x ;
+            yLine = top +100 ; 
+            extraLine = 160;
+          } else if (index === 3) {
+            xLine = x;
+            yLine = top + 100; 
+            extraLine = 60;
+          } else {
+            xLine = x + 90;
+            yLine = y;
+            extraLine = 30;
+          }
+          
           let finalYLine = yLine;
+          
+          // Avoid overlapping labels
           for (const pos of labelPositions) {
-            if (Math.abs(finalYLine - pos) < 20) {
-              finalYLine += 20 * (yLine > pos ? 1 : -1);
+            if (Math.abs(finalYLine - pos) < 30) {
+              finalYLine += 30 * (yLine > pos ? 1 : -1);
             }
           }
           labelPositions.push(finalYLine);
-
+  
           ctx.beginPath();
           ctx.moveTo(x, y);
           ctx.arc(x, y, 2, 0, 2 * Math.PI, true);
@@ -136,19 +167,23 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
           ctx.lineTo(xLine + extraLine, finalYLine);
           ctx.strokeStyle = "black";
           ctx.stroke();
-
+  
           ctx.font = '14px Roboto';
           ctx.fontWeight = 'bold';
-          const textXPosition = x ? x >= halfwidth ? 'left' : 'right' : y >= halfheight ? 'top' : 'bottom';
-          const plusFivePx = x >= halfwidth ? 5 : -5;
-
+          
+          const textXPosition = extraLine >= 0 ? 'left' : 'right';
+          const plusFivePx = extraLine >= 0 ? 18 : -18;
+  
           ctx.textAlign = textXPosition;
-          ctx.textBaseline = 'middle';
+          ctx.textBaseline = 'start';
           ctx.fillStyle = dataset.borderColor[index];
-
-          ctx.fillText(((chart.data.labels[index]) + ' ' + (chart.data.datasets[0].data[index])), xLine + extraLine + plusFivePx, finalYLine);
+          
+          ctx.fillText(`${chart.data.labels[index]} ${chart.data.datasets[0].data[index]}`, xLine + extraLine + plusFivePx, finalYLine);
         });
       });
     },
   };
+  
+  
+
 }

@@ -229,7 +229,7 @@ export class CandidateDetailModalComponent implements OnInit {
       interViewPanel: data?.interviewPanel,
       interviewMode: data?.interviewMode,
       serviceId: this.candidateDetails?.serviceId,
-      stationId: this.stationId,
+      station: this.stationId,
       interviewStatus: data?.interviewStatus,
       comments: data?.feedback,
       interviewCc: data?.mailCc,

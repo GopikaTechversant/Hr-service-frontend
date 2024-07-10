@@ -59,6 +59,7 @@
             [gridColumn]="9"></app-skeleton-loader>
     </div>
     <div *ngIf="lists" class="candidate w-100 d-flex">
+        <!-- <div *ngIf="lists" class="candidate w-100 d-flex" (click)="navigateToDetail(lists[0]?.position)" > -->
         <div class="candidate-card c-pointer">
             <div class="d-flex">
                 <div class="icon-div">
@@ -119,8 +120,8 @@
         <div class="w-60 p-t-10">
             <app-interview-counts-bar></app-interview-counts-bar>
         </div>
-        <div class="w-40 p-t-10 m-r-10">
-            <app-application-list-pie [positionId]="positionId"></app-application-list-pie>
+        <div class="w-40 p-t-10 ">
+            <app-application-list-pie [positionId]="positionId" [startDate]="startDate" [endDate]="endDate"></app-application-list-pie>
         </div>
     </div>
     <!-- <div class="w-100 m-t-20 m-b-20">

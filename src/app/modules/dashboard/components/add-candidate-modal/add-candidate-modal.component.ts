@@ -204,12 +204,48 @@ export class AddCandidateModalComponent implements OnInit {
     this.locationName = name;
   }
 
-  onPasteSalary(event: any): void {
+  onKeypressSalary(event: KeyboardEvent, inputElement: HTMLInputElement): void {
+    const target = inputElement;
+    if (!target) return;
+
+    const allowedKeys = /[0-9.,]/;
+    const controlKeys = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete', 'Tab'];
+    const key = event.key;
+
+    if (!allowedKeys.test(key) && !controlKeys.includes(key)) {
+      event.preventDefault();
+      return;
+    }
+
+    if (controlKeys.includes(key)) return;
+
+    let value = target.value.replace(/,/g, '');
+    // Only allow one dot
+    if (key === '.' && value.includes('.')) {
+      event.preventDefault();
+      return;
+    }
+
+    value = value.replace(/[^0-9.]/g, '');
+    const parts = value.split(".");
+    let integerPart = parts[0];
+    const decimalPart = parts[1];
+
+    integerPart = integerPart.replace(/\B(?=(\d{2})+(?!\d))/g, ",");
+    if (decimalPart !== undefined) {
+      target.value = integerPart + "." + decimalPart.slice(0, 2);
+    } else {
+      target.value = integerPart;
+    }
+  }
+
+  onPasteSalary(event: ClipboardEvent, inputElement: HTMLInputElement): void {
     const clipboardData = event.clipboardData;
     if (!clipboardData) {
       event.preventDefault();
       return;
     }
+
     let pastedData = clipboardData.getData('Text');
     pastedData = pastedData.replace(/,/g, ''); // Remove existing commas
 
@@ -223,51 +259,16 @@ export class AddCandidateModalComponent implements OnInit {
     let integerPart = parts[0];
     const decimalPart = parts[1];
 
-    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",").replace(/(\d+)(\d{2},)/, "$1,$2");
+    integerPart = integerPart.replace(/\B(?=(\d{2})+(?!\d))/g, ",");
+    if (decimalPart !== undefined) {
+      pastedData = integerPart + "." + decimalPart.slice(0, 2);
+    } else {
+      pastedData = integerPart;
+    }
 
-    if (decimalPart !== undefined) pastedData = integerPart + "." + decimalPart.slice(0, 2);
-    else pastedData = integerPart;
-
-    const target = event.target as HTMLInputElement;
-    if (target) target.value = pastedData;
-
+    inputElement.value = pastedData;
     event.preventDefault();
   }
-
-  // onKeypressSalary(event: KeyboardEvent): void {
-  //   const target = event.target as HTMLInputElement;
-  //   if (!target) return;
-  //   const allowedKeys = /[0-9.,]/;
-  //   const controlKeys = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete', 'Tab'];
-  //   const key = event.key;
-
-  //   if (!allowedKeys.test(key) && !controlKeys.includes(key)) {
-  //     event.preventDefault();
-  //     return;
-  //   }
-  //   if (controlKeys.includes(key)) return;
-
-
-  //   let value = target.value.replace(/,/g, '');
-
-  //   // Only allow one dot
-  //   if (key === '.' && value.includes('.')) {
-  //     event.preventDefault();
-  //     return;
-  //   }
-
-  //   value = value.replace(/[^0-9.]/g, '');
-
-  //   const parts = value.split(".");
-  //   let integerPart = parts[0];
-  //   const decimalPart = parts[1];
-
-  //   integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  //   integerPart = integerPart.replace(/(\d+)(\d{2},)/, "$1,$2");
-
-  //   if (decimalPart !== undefined) target.value = integerPart + "." + decimalPart.slice(0, 2);
-  //   else target.value = integerPart;
-  // }
 
   onKeypress(event: any): void {
     let enteredValue: string;

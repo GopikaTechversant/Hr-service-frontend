@@ -152,7 +152,6 @@ export class InterviewDetailsComponent implements OnInit {
           }
         },
         error: (err) => {
-          console.error("Error fetching candidates:", err);
           this.tostr.error("Error fetching candidates.");
         }
       });
@@ -319,7 +318,7 @@ export class InterviewDetailsComponent implements OnInit {
       interViewPanel: data?.interviewPanel,
       interviewMode: data?.interviewMode,
       serviceId: this.serviceId ?? '',
-      stationId: this.candidateDetails?.candidateStation ?? '1',
+      station: this.candidateDetails?.candidateStation ?? '1',
       interviewStatus: data?.interviewStatus,
       comments: data?.feedback,
       workMode: this.selectedModeName ?? '',
@@ -340,7 +339,6 @@ export class InterviewDetailsComponent implements OnInit {
         },
         error: (error) => {
           this.loader = false;
-          console.error("Error submitting data:", error);
           if (error?.status === 500) this.tostr.error("Internal Server Error");
           else this.tostr.warning("Unable to update");
         }

@@ -14,12 +14,15 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class DashboardComponent implements OnInit {
   @Output() positionIdChange: EventEmitter<string> = new EventEmitter<string>();
+  @Output() startDateChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output() endDateChange: EventEmitter<any> = new EventEmitter<any>();
+
   candidates: any;
   lists: any[] = [];
   requestList: any;
   requestList_open: boolean = false;
   displayPosition: string = '';
-  positionId: any;
+  positionId: string = '';
   initialLoader: boolean = false;
   today: Date = new Date();
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
@@ -55,12 +58,13 @@ export class DashboardComponent implements OnInit {
     let date = new Date(event?.value);
     if (range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
     if (range == 'endDate') this.endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
-    this.positionId = '';
-    // this.fetchResumeSource();
+    this.startDateChange.emit(this.startDate);
+    this.endDateChange.emit(this.endDate);    
+    this.fetchcount();
   }
 
   fetchcount(): void {
-    this.apiService.get(`/dashboard/card-data?requestId=${this.positionId}`).subscribe((res: any) => {
+    this.apiService.get(`/dashboard/card-data?requestId=${this.positionId}&fromDate=${this.startDate}&todate=${this.endDate}`).subscribe((res: any) => {
       if (res?.data) {
         this.initialLoader = false;
         this.lists = res?.data;
