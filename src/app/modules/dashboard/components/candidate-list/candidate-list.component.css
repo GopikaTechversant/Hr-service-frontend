@@ -9,7 +9,7 @@
 }
 
 .text-wrap {
-    max-width: 120px !important;
+    max-width: 90px !important;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

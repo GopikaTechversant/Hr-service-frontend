@@ -31,16 +31,20 @@ export class CandidateListComponent {
   report: boolean = false;
   url: any;
   candidateIds: any;
+  candidates: any;
   candidateIdsRequirement: any;
   userId: any;
   loader: boolean = true;
   resumeSourceIds: any;
+
   constructor(private apiService: ApiService, private router: Router, private dialog: MatDialog, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.initialLoader = true;
     this.requestId = this.positionId ? this.positionId : '';
     this.fetchCandidates();
+    this.userId = localStorage.getItem('userId');
+
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['positionId'] && !changes['positionId'].isFirstChange()) {
@@ -89,12 +93,14 @@ export class CandidateListComponent {
 
   getSelectedCandidateIds(): void {
     const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
-    this.candidateIds = selectedCandidates.map((candidate: { candidateId: any; }) => candidate?.candidateId);
-    const selectedcandidatesrequirement = this.candidateList.flat().filter((candidate: { isSelected: any; candidatesAddingAgainst: any }) => candidate.isSelected && candidate.candidatesAddingAgainst === null);
-    this.candidateIdsRequirement = selectedcandidatesrequirement.map((candidate: { candidateId: any; }) => candidate?.candidateId);
-    this.resumeSourceIds = selectedCandidates.map((candidate: { resumeSourceId: any; }) => candidate?.resumeSourceId);
-    this.userId = selectedCandidates.map((candidate: { createdBy: { userId: any; }; }) => candidate?.createdBy?.userId);
+    this.candidates = selectedCandidates.map((candidate: { candidateId: any; resumeSourceId: any; }) => ({
+      candidatesId: candidate?.candidateId,
+      resumeSource: candidate?.resumeSourceId
+    }));
+    this.candidateIdsRequirement = selectedCandidates.filter((candidate: { candidatesAddingAgainst: any; }) => candidate.candidatesAddingAgainst === null)
+      .map((candidate: { candidateId: any; }) => candidate?.candidateId);
   }
+
 
   generatePageNumbers() {
     let pages = [];
@@ -178,11 +184,11 @@ export class CandidateListComponent {
   }
 
   openRequisition(): void {
-    if (this.candidateIds) {
+    if (this.candidates) {
       const dialogRef = this.dialog.open(AssignRequirementComponent, {
         height: '265px',
         width: '477px',
-        data: { candidateIds: this.candidateIdsRequirement, resumeSourceIds: this.resumeSourceIds, userId: this.userId }
+        data: { candidates: this.candidates, userId: this.userId }
       });
       dialogRef.afterClosed().subscribe((confirmed: boolean) => {
         this.currentPage = 1;
