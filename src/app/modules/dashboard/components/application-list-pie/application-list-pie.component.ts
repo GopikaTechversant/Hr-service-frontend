@@ -78,19 +78,25 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
       options: {
         responsive: true,
         aspectRatio: 1.6,
-        // cutout: '70%', // Adjust this value to change the thickness
         layout: {
           padding: 30,
         },
         plugins: {
           legend: {
-            display: false,
+            display: true,
+            position: 'left',
+            align: 'end', 
+            labels: {
+              usePointStyle: true,
+              pointStyle: 'circle',
+              padding: 20,
+            }
           },
           tooltip: {
             enabled: false
           },
           datalabels: {
-            display: false
+            display: true
           }
         },
       },
