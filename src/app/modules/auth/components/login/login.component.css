@@ -44,7 +44,7 @@
   border-radius: 3px;
   border: none;
   opacity: 0.9;
-  height: 510px;
+  height: auto;
 }
 
 .input {
@@ -193,10 +193,10 @@
     width: 406px !important;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1550px) {
   .info img{
-    height: 75px;
-    width: 270px;
+    height: 70px;
+    width: 250px;
   }
 
   .welcome{

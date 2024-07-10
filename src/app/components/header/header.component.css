@@ -4,7 +4,6 @@
 
 .header {
     height: 75px !important;
-    /* position: sticky !important; */
     max-width: 100%;
     background: #FFFFFF;
     border-right: none;
@@ -46,7 +45,6 @@
     flex-direction: column;
     background-color: #fff;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    /* padding: 5px; */
     border-radius: 4px;
     max-height: 190px;
     overflow-y: auto;
@@ -60,7 +58,6 @@
 }
 
 .candidate-column {
-    /* padding: 5px 10px; */
     cursor: pointer;
     text-align: left;
 }
@@ -73,17 +70,17 @@
     max-width: 215px !important;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap; 
-    display: block; 
+    white-space: nowrap;
+    display: block;
     cursor: pointer;
 }
 
 .break-word {
-    display: block; 
+    display: block;
     overflow: hidden;
     text-overflow: ellipsis;
     word-break: break-word;
-    white-space: nowrap; 
+    white-space: nowrap;
     max-width: 170px;
     cursor: pointer;
 }
@@ -95,13 +92,13 @@
     max-height: 35px;
     min-width: 35px;
     min-height: 35px;
-    background-color: #476583e8 !important;
     color: white !important;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     pointer-events: all !important;
+    background: #575F6E;
 }
 
 .drop-down {
@@ -126,29 +123,27 @@
     background-color: #f0f0f0;
 }
 
+.search-container {
+    position: relative;
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
 .search-div {
-    width: 100%;
     display: flex;
     justify-content: flex-end;
     width: 338px;
     height: 38px;
-    top: 5px;
-    left: 67px;
     gap: 0px;
     border-radius: 3px 0px 0px 0px;
-    border: 1px 0px 0px 0px;
-    opacity: 0px;
     border: 1px solid #D8E2FF;
     background: #FFFFFF;
-
-
 }
 
 .input {
     background-color: #FFFFFF;
     padding: 9px;
-    top: 724px;
-    right: 258px;
     width: 92%;
     height: 20px;
     border: none !important;
@@ -170,7 +165,6 @@
     text-align: left;
     color: #575F6E;
     padding-left: 10px;
-    /* padding-bottom: 20px; */
 }
 
 .active-station {
