@@ -107,7 +107,7 @@ export class LoginComponent implements OnInit {
       {
         theme: 'outline',
         size: 'large',
-        width: '100%',
+        width: '600',
         height: 50,
         longtitle: true,
         text: 'Sign in With Google'

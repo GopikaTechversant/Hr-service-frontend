@@ -15,6 +15,7 @@ export class LogoutModalComponent implements OnInit {
     localStorage.removeItem('userToken');
     localStorage.removeItem('userRole');
     localStorage.removeItem('userId');
+    localStorage.removeItem('userFullName');
     this.router.navigate(['']);
     this.dialogRef.close();
   }

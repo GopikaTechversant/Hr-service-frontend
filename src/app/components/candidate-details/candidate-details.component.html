@@ -31,7 +31,13 @@
             <div class="d-flex p-10 top-card">
                 <div class="col-1 bor">
                     <div class="details" *ngIf="candidateDetails?.position?.length > 0">
-                        <span class="sub-head">Current Requirement</span>
+                        <span class="sub-head p-5">Candidate Latest Status</span>
+                        <span class="text-color p-5 p-l-0 text-wrap req">:
+                           {{candidateDetails?.candidateInterviewStatus | titlecase}}
+                        </span>
+                    </div>
+                    <div class="details" *ngIf="candidateDetails?.position?.length > 0">
+                        <span class="sub-head p-5">Latest Requirement</span>
                         <span class="text-color p-5 p-l-0 text-wrap req">:
                             <a
                                 [href]="env_url + '/dashboard/series?requestId=' + candidateDetails?.position[0]?.reqServiceRequest?.requestId">
@@ -40,20 +46,20 @@
                         </span>
                     </div>
                     <div class="details" *ngIf="candidateDetails?.position?.length > 0">
-                        <span class="sub-head">Requirement Status</span>
+                        <span class="sub-head p-5">Latest Requirement Status</span>
                         <span class="text-color p-5 p-l-0 text-wrap req">:
                             {{ candidateDetails?.position[0]?.reqServiceRequest?.requestStatus }}
                         </span>
                     </div>
                     <div class="details">
-                        <span class="sub-head">Previous Requirements</span>
+                        <span class="sub-head p-5">Previous Requirements</span>
                         <span class="text-color p-5 p-l-0 text-wrap req" *ngFor="let item of candidateDetails?.position.slice(1)">
                             :
                             <a [href]="env_url + '/dashboard/series?requestId=' + item?.reqServiceRequest?.requestId">
                                 {{ item?.reqServiceRequest?.requestName }}
                             </a>
                         </span>
-                        <span class="text-color" *ngIf="!candidateDetails?.position || candidateDetails?.position?.length === 1">
+                        <span class="text-color p-5 p-l-0 text-wrap req" *ngIf="!candidateDetails?.position || candidateDetails?.position?.length === 1">
                             : No previous Requirement
                         </span>
                     </div>
@@ -101,7 +107,7 @@
             </div>
             <!-- Basic Info Content -->
             <div class="tabcontent" [ngClass]="{ 'active': activeTab === 'basic' }" id="basic">
-                <div class="d-flex j-end c-pointer m-r-20" (click)="edit(candidateDetails?.candidateId)">
+                <div *ngIf="!candidateDetails?.position[0]?.reqServiceRequest?.requestName" class="d-flex j-end c-pointer m-r-20" (click)="edit(candidateDetails?.candidateId)">
                     <span><img src="/assets/images/candidate-detail/edit.svg" alt="" height="12" width="12"></span>
                     <span class="c-blue p-l-5 p-r-5">Edit</span>
                 </div>
@@ -257,7 +263,7 @@
                                 </tr>
                             </ng-container>
                         </ng-container>
-                        <div *ngIf="(!CandidateHistory[0]?.interviewDetail ) && !loader && !initialLoader " class="no-data">
+                        <div *ngIf="(!CandidateHistory[0]?.interviewDetail[0]) && !loader && !initialLoader " class="no-data">
                             No Data Found
                         </div>
                         <div *ngIf="initialLoader && !loader"  class="row m-l-20 initial-loader">
@@ -315,7 +321,7 @@
                                 </tr>
                             </ng-container>
                         </ng-container>
-                        <div *ngIf="(!CandidateHistory[0]?.attachedData ) && !loader && !initialLoader " class="no-data">
+                        <div *ngIf="(!CandidateHistory[0]?.attachedData[0] ) && !loader && !initialLoader " class="no-data">
                             No Data Found
                         </div>
                         <div *ngIf="initialLoader && !loader"  class="row m-l-20 initial-loader">
@@ -366,7 +372,7 @@
                                 </tr>
                             </ng-container>
                         </ng-container>
-                        <div *ngIf="(!CandidateHistory[0]?.attachedData ) && !loader && !initialLoader " class="no-data">
+                        <div *ngIf="(!CandidateHistory[0]?.feedbackDetail[0] ) && !loader && !initialLoader " class="no-data">
                             No Data Found
                         </div>
                         <div *ngIf="initialLoader && !loader"  class="row m-l-20 initial-loader">
@@ -416,7 +422,7 @@
                                 </tr>
                             </ng-container>
                         </ng-container>
-                        <div *ngIf="(!CandidateHistory[0]?.attachedData ) && !loader && !initialLoader " class="no-data">
+                        <div *ngIf="(!CandidateHistory[0]?.historyDetail[0] ) && !loader && !initialLoader " class="no-data">
                             No Data Found
                         </div>
                         <div *ngIf="initialLoader && !loader"  class="row m-l-20 initial-loader">
