@@ -100,7 +100,7 @@ table {
 
 
 tr:nth-child(odd) {
-    background: #F0F7FF;
+    background: #F4F2F2;
 }
 
 tr:nth-child(even) {
@@ -240,3 +240,7 @@ tr {
     height: 35px;
     margin-right: -21px;
 }
+
+.details:hover {
+    background-color: #D3E8FF;
+  }

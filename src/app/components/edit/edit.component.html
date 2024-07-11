@@ -21,7 +21,7 @@
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Gender<span class="required">*</span></span>
-                <div class="input-box c-pointer p-relative p-t-10 p-l-6 no-close" (click)="showGender = !showGender;">
+                <div class="input-box dropdown-height c-pointer p-relative p-t-10 p-l-6 no-close" (click)="showGender = !showGender;">
                     <span *ngIf="!genderName">{{candidateDetails?.candidateGender}}</span>
                     <span *ngIf="genderName">{{genderName }}</span>
                     <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
@@ -103,23 +103,23 @@
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">City</span>
-                <input type="text" class="input-box" formControlName="candidateCurrentSalary">
+                <input type="text" class="input-box" formControlName="candidateCity">
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">District</span>
-                <input type="text" class="input-box" formControlName="candidateExpectedSalary">
+                <input type="text" class="input-box" formControlName="candidateDistrict">
             </div>
         </div>
         <div class="d-flex parent">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">State</span>
-                <input type="text" class="input-box" formControlName="candidateExpectedSalary">
+                <input type="text" class="input-box" formControlName="candidateState">
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Preferred Location</span>
-                <div class="input-box c-pointer p-relative p-t-10 p-l-6 no-close"
+                <div class="input-box dropdown-height c-pointer p-relative p-t-10 p-l-6 no-close"
                     (click)="locationListOpen = !locationListOpen">
-                    <span *ngIf="!locationname" class="no-close">{{candidateDetails?.candidatePreferlocation}}</span>
+                    <span *ngIf="!locationname" class="no-close">{{candidateDetails?.candidatePreferlocation || 'Select location'}}</span>
                     <span *ngIf="locationname" class="no-close">{{locationname}}</span>
                     <span><i class="f-right p-r-10 fa fa-chevron-down s-text no-close"></i></span>
                     <div class="no-close dropdown c-pointer no-close" *ngIf="locationListOpen">
@@ -130,7 +130,7 @@
             </div>
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">Application Source</span>
-                <div class="input-box c-pointer p-relative p-t-10 p-l-6 no-close"
+                <div class="input-box dropdown-height c-pointer p-relative p-t-10 p-l-6 no-close"
                     (click)="showSource = !showSource;fetchSource()">
                     <span *ngIf="!sourceName">{{candidateDetails?.resumeSourecd}}</span>
                     <span *ngIf="sourceName">{{sourceName}}</span>
@@ -145,7 +145,7 @@
         <div class="child d-flex m-b-10 p-relative">
             <span class="label m-b-4">Uploaded Resume</span>
             <div class="d-flex c-pointer">
-                <img src="assets/images/file-uploaded.png" alt="" height="44px"
+                <img src="assets/images/file-uploaded.png" alt="" height="25px"
                     (click)="viewResume(candidateDetails?.candidateResume)">
                 <span *ngIf="!resumeUploadSuccess" class="upload-success-message"
                     (click)="triggerFileInput();$event.stopPropagation();$event.preventDefault();">

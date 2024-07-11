@@ -72,7 +72,10 @@ export class EditComponent implements OnInit {
       candidateemail: [null, Validators.required],
       candidateMobileNo: [null, Validators.required],
       resumeSourceId: [null, Validators.required],
-      candidateId: [null, Validators.required]
+      candidateId: [null, Validators.required],
+      candidateCity: [null, Validators.required],
+      candidateDistrict:[null, Validators.required],
+      candidateState:[null, Validators.required]
     })
   }
 
@@ -238,7 +241,11 @@ export class EditComponent implements OnInit {
       candidatePrimarySkills: this.primaryskills.length > 0 ? this.primaryskills : undefined,
       candidateSecondarySkills: this.secondaryskills.length > 0 ? this.secondaryskills : undefined,
       genderName: this.genderName,
-      candidatePreferlocation: this.locationname
+      candidatePreferlocation: this.locationname,
+      candidateCity:candidateDetails?.candidateCity !== this.candidateDetails?.candidateCity ? candidateDetails?.candidateCity : undefined,
+      candidateDistrict:candidateDetails?.candidateDistrict !== this.candidateDetails?.candidateDistrict ? candidateDetails?.candidateDistrict : undefined,
+      candidateState:candidateDetails?.candidateState !== this.candidateDetails?.candidateState ? candidateDetails?.candidateState : undefined,
+     
     };
 
     if (this.candidateForm.value.candidateFirstName && this.candidateForm.value.candidateLastName && this.candidateForm.value.candidateGender

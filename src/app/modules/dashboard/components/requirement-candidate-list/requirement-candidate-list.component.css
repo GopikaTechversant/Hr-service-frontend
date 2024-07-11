@@ -111,7 +111,6 @@
   margin: 5px;
   height: 27px;
   width: 27px;
-
 }
 
 
@@ -219,6 +218,7 @@ td {
   padding: 10px;
   text-align: center !important;
   border: 1px solid #EDEDED;
+  height: 30px;
 }
 
 tr {
@@ -347,4 +347,9 @@ tr {
   width: 330px;
   height: 35px;
   margin-right: -21px;
+}
+
+
+.fa-user-plus{
+  color: #005EC9;;
 }

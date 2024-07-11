@@ -41,7 +41,7 @@
                 </div> -->
             <ng-container *ngIf="applicationList.length > 0">
                 <ng-container *ngFor="let item of applicationList">
-                    <tr class="c-pointer">
+                    <tr class="c-pointer details">
                         <td>{{item?.requestName}}</td>
                         <td>{{item?.createdAt | date: 'dd/MM/YYY' }}</td>
                         <td>{{item?.totalEntries}}</td>
