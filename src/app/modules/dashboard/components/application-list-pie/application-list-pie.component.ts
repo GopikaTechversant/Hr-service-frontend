@@ -196,7 +196,7 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
   
           ctx.textAlign = textXPosition;
           ctx.textBaseline = 'start';
-          ctx.fillStyle = dataset.borderColor[index];
+          ctx.fillStyle = "#575F6E";
           
           ctx.fillText(`${chart.data.labels[index]} ${chart.data.datasets[0].data[index]}`, xLine + extraLine + plusFivePx, finalYLine);
         });
