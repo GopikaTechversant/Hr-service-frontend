@@ -14,7 +14,7 @@ export class RequirementCandidateListComponent implements OnInit {
   candidates_list: any = [];
   searchKeyword: string = '';
   length: any = 20;
-  limit = 9;
+  limit = 10;
   currentPage = 1;
   showFirstLastButtons = true;
   totalCount: any;
