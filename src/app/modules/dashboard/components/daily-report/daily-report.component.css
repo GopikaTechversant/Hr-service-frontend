@@ -90,7 +90,7 @@
 
 
 tr:nth-child(odd) {
-    background: #F0F7FF;
+    background: #F4F2F2;
 }
 
 tr:nth-child(even) {
@@ -108,7 +108,7 @@ tr {
 }
 
 .text-wrap {
-    max-width: 150px !important;
+    max-width: 90px !important;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -308,3 +308,7 @@ tr {
     border: 1px solid #3c40434d;
     border-radius: 50%;
 }
+
+.details:hover {
+    background-color: #D3E8FF;
+  }

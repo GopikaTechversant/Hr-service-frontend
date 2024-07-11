@@ -25,6 +25,13 @@ export class AssignRequirementComponent implements OnInit {
     this.userId = this.data.userId;
   }
 
+  onBodyClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.no-close')) {
+      this.showDropdown = false;
+    }
+  }
+
   fetchRequirements(): void {
     this.apiService.get(`/service-request/list`).subscribe((res: any) => {
       if (res?.data) {

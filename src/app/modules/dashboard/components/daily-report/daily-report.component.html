@@ -66,7 +66,7 @@
         <table class="table m-l-17" *ngIf="userRequirement?.length > 0">
             <tr class="table-header p-b-10">
                 <ng-container *ngFor="let key of  recruiterKeys">
-                    <td class="table-title">{{key}}</td>
+                    <td class="table-title text-wrap" [title]="key">{{key}}</td>
                 </ng-container>
             </tr>
             <div *ngIf="loader && !initialLoader" class="loader-parent">
@@ -75,7 +75,7 @@
             <ng-container *ngIf="userRequirement?.length > 0 ">
                 <tr class="c-pointer details" *ngFor="let item of userRequirement">
                     <ng-container *ngFor="let key of  recruiterKeys">
-                        <td class="text-wrap" [title]="item[key]"> {{ key === 'Date' ? (item[key] | date:'dd/MM/yyyy') :
+                        <td class="text-wrap details" [title]="item[key]"> {{ key === 'Date' ? (item[key] | date:'dd/MM/yyyy') :
                             item[key] }}</td>
                     </ng-container>
                 </tr>
