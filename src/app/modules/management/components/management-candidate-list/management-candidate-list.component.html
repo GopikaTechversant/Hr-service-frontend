@@ -71,7 +71,7 @@
                                 <td class="text-wrap" [title]="item['serviceRequest.requestName']">{{
                                     item['serviceRequest.requestName'] }}</td>
                                 <td class="p-t-15">
-                                    <img src="/assets/images/move.png" alt="" height="24px" width="24px"
+                                    <img src="/assets/images/candidate-detail/move.svg" alt="" height="24px" width="24px"
                                         (click)="onSwitchStation(item)">
                                 <td class="text-wrap">{{item?.currentStation}}</td>
                                 <td class="f-w-500 text-wrap " [ngClass]="{'blue': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
@@ -84,10 +84,10 @@
                                 {{candidate.status | titlecase}}
                             </td> -->
                                 <!-- <td>
-                                    <div class="d-flex j-centre">
-                                        <img src="/assets/images/candidate-detail/eye.svg" alt="view" width="20" height="20">
-                                        <span class="blue p-l-5 f-w-500">View detail</span>
-                                    </div>
+                                     <div class="d-flex j-centre">
+                                    <i class="fa fa-eye blue f-s-18 f-w-500" aria-hidden="true"></i>
+                                    <span class="blue f-w-500 p-l-5">View detail</span>
+                                </div>
                                 </td> -->
                             </tr>
                         </ng-container>

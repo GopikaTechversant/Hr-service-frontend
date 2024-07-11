@@ -111,9 +111,9 @@
                                 <td class="text-wrap" [title]="item?.currentStation | titlecase">{{item?.currentStation | titlecase}}</td>  
                                 <td (click)="fetchDetails(item?.serviceId , item?.progressStatus)" class="c-pointer">
                                     <div class="d-flex j-centre">
-                                        <img src="/assets/images/candidate-detail/eye.svg" alt="view" width="20" height="20">
-                                        <span class="blue p-l-5 f-w-500">View detail</span>
-                                    </div>                     
+                                        <i class="fa fa-eye blue f-s-18 f-w-500" aria-hidden="true"></i>
+                                        <span class="blue f-w-500 p-l-5">View detail</span>
+                                    </div>                 
                                 </td>
                             </tr>
                         </ng-container>
