@@ -133,7 +133,7 @@ table {
 }
 
 tr:nth-child(odd) {
-    background: #F0F7FF;
+    background: #C9C8C826;
 }
 
 tr:nth-child(even) {
@@ -171,7 +171,7 @@ tr {
 .table-header {
     position: sticky;
     top: 0;
-    background-color: #F4F2F2 !important;
+    background: #F4F2F2 !important;
     padding: 10px;
     font-size: 14px;
     font-weight: 500;

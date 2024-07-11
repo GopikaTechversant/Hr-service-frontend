@@ -222,7 +222,7 @@ table {
 
 .table-container {
     overflow: auto !important;
-    height: calc(100vh - 525px);
+    height: calc(100vh - 587px);
 }
 
 tr:nth-child(odd) {
