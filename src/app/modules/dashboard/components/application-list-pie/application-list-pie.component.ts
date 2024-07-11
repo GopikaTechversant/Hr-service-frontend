@@ -127,21 +127,41 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
           const halfwidth = width / 2;
           const halfheight = height / 2;    
           let xLine, yLine, extraLine;      
-          if (index === 0) {
+          if (index === 0 ) { //naukri
             xLine = x;
             yLine = bottom - 20; 
-            extraLine = 0;
+            extraLine = 20;
             if (yLine > bottom) {
               yLine = bottom - 20;  
             }
-          }else if (index === 5) {
-            xLine = x ;
-            yLine = top +100 ; 
-            extraLine = 160;
-          } else if (index === 3) {
+          }else if (index === 1 ) { //linkidin
             xLine = x;
-            yLine = top + 100; 
-            extraLine = 60;
+            yLine = bottom - 8; 
+            extraLine = 20;
+            if (yLine > bottom) {
+              yLine = bottom - 20;  
+            }
+          }else if (index === 2 ) { //indeed
+            xLine = left  +20;
+            yLine = bottom - 20; 
+            extraLine = 20;
+            if (xLine > top) {
+              yLine = top + 20;  
+            }
+          }else if (index === 3) {//candidate 
+            xLine = x;
+            yLine = bottom - 20; 
+            extraLine = 20;
+            if (xLine > top) {
+              yLine = top + 20;  
+            }
+          } else if (index === 4) {//reference
+            xLine = x;
+            yLine = bottom - 10; 
+            extraLine = 120;
+            if (xLine > top) {
+              yLine = top + 20;  
+            }
           } else {
             xLine = x + 90;
             yLine = y;

@@ -1,18 +1,96 @@
 <div class="main m-5">
-    <div class="m-t-10">
-        <div class="p-10 head" >{{requestName}}</div>
-        <span class="p-10 f-s-16">Department - <span class="blue">{{department}}</span></span>
+    <div class="d-flex j-space">
+        <div class="m-t-10">
+            <div class="p-10 head" >{{requestName | titlecase}}</div>
+            <span class="p-10 f-s-16">Department - <span class="blue">{{department}}</span></span>
+        </div>
+        <div class="date-filters d-flex p-r-10 j-end">
+            <div class="d-flex align-items-center">
+                <span class="filter p-r-10 p-t-10">From</span>
+                <div class="p-relative">
+                    <input class="p-l-5 date-input c-pointer" placeholder="29/02/11" matInput
+                        [matDatepicker]="pickerFromDate" [value]="startDate | date:'yyyy-MM-dd'" id="startDate"
+                        [max]="today" (dateChange)="dateChange($event, 'startDate')" [ngModel]="startDate"
+                        (click)="pickerFromDate.open()">
+                    <mat-datepicker #pickerFromDate></mat-datepicker>
+                    <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"
+                        (click)="pickerFromDate.open()"></i>
+                </div>
+            </div>
+            <div class="p-l-10 d-flex align-items-center">
+                <span class="filter p-l-10 p-r-10 p-t-10">To</span>
+                <div class="p-relative">
+                    <input class="p-l-5 date-input c-pointer" placeholder="29/02/11" matInput
+                        [matDatepicker]="pickerToDate" (dateChange)="dateChange($event, 'endDate')"
+                        [ngModel]="endDate" (click)="pickerToDate.open()" [value]="endDate | date:'yyyy-MM-dd'"
+                        id="endDate" [min]="startDate" [max]="today">
+                    <mat-datepicker #pickerToDate></mat-datepicker>
+                    <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"
+                        (click)="pickerToDate.open()"></i>
+                </div>
+            </div>
+        </div>
     </div>
+   
     <div class="candidate w-100 d-flex">
         <div *ngIf="initialLoader" >
             <app-skeleton-loader [loaderDatas]="[9]" [higherWidth]="1000" [lowerWidth]="800"
             [gridColumn]="9"></app-skeleton-loader>
         </div>
-        <div  class="candidate-card c-pointer"  *ngFor="let item of lists">
-            <div class="d-flex p-t-5">
-                <div class="count"><span class="countsss">{{item?.count}}</span></div>
-                <div class="detail">
-                    <span class="d-flex name">{{item?.name}}</span>
+        <div *ngIf="lists" class="candidate w-100 d-flex" >
+            <div class="candidate-card c-pointer">
+                <div class="d-flex">
+                    <div class="icon-div">
+                        <span class="icon"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="detail">
+                        <div><span class="d-flex name">Total Openings</span></div>
+                        <div><span class="count">{{lists[0]?.vacancy}}</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="candidate-card c-pointer">
+                <div class="d-flex">
+                    <div class="icon-div">
+                        <span class="icon"><i class="fa fa-users" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="detail">
+                        <div><span class="d-flex name">Total Applicants</span></div>
+                        <div><span class="count">{{lists[0]?.totalApplicant}}</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="candidate-card c-pointer">
+                <div class="d-flex">
+                    <div class="icon-div">
+                        <span class="icon"><i class="fa fa-users" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="detail">
+                        <div><span class="d-flex name">Shortlisted Candidates</span></div>
+                        <div><span class="count">{{lists[1]?.count}}</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="candidate-card c-pointer">
+                <div class="d-flex">
+                    <div class="icon-div">
+                        <span class="icon"><i class="fa fa-user-plus" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="detail">
+                        <div><span class="d-flex name">Hired Candidates</span></div>
+                        <div><span class="count">{{lists[2]?.count}}</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="candidate-card c-pointer">
+                <div class="d-flex">
+                    <div class="icon-div">
+                        <span class="icon"><i class="fa fa-user-times" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="detail">
+                        <div><span class="d-flex name">Rejected Candidates</span></div>
+                        <div><span class="count">{{lists[3]?.count}}</span></div>
+                    </div>
                 </div>
             </div>
         </div>

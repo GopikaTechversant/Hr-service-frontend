@@ -58,8 +58,8 @@
         <app-skeleton-loader [loaderDatas]="[9]" [higherWidth]="1000" [lowerWidth]="800"
             [gridColumn]="9"></app-skeleton-loader>
     </div>
-    <div *ngIf="lists" class="candidate w-100 d-flex">
-        <!-- <div *ngIf="lists" class="candidate w-100 d-flex" (click)="navigateToDetail(lists[0]?.position)" > -->
+    <!-- <div *ngIf="lists" class="candidate w-100 d-flex"> -->
+    <div *ngIf="lists" class="candidate w-100 d-flex" (click)="navigateToDetail(lists[0]?.position)" >
         <div class="candidate-card c-pointer">
             <div class="d-flex">
                 <div class="icon-div">
@@ -100,7 +100,7 @@
                 </div>
                 <div class="detail">
                     <div><span class="d-flex name">Hired Candidates</span></div>
-                    <div><span class="count">{{lists[2]?.vacancy}}</span></div>
+                    <div><span class="count">{{lists[2]?.count}}</span></div>
                 </div>
             </div>
         </div>
@@ -111,7 +111,7 @@
                 </div>
                 <div class="detail">
                     <div><span class="d-flex name">Rejected Candidates</span></div>
-                    <div><span class="count">{{lists[3]?.vacancy}}</span></div>
+                    <div><span class="count">{{lists[3]?.count}}</span></div>
                 </div>
             </div>
         </div>

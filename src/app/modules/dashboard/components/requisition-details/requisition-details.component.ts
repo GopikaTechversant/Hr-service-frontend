@@ -14,7 +14,7 @@ export class RequisitionDetailsComponent implements OnInit {
   lists: any;
   requestName: any;
   currentPage: number = 1;
-  pageSize: number = 10;
+  pageSize: number = 9;
   candidateList: any;
   totalCount: any;
   lastPage: any;
@@ -22,6 +22,9 @@ export class RequisitionDetailsComponent implements OnInit {
   filterStatus: Boolean = false;
   filteredStatus: string = "Total Applicants";
   initialLoader: Boolean = false;
+  today: Date = new Date();
+  startDate: string | null = this.datePipe.transform(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
+  endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   constructor(private apiService: ApiService, private datePipe: DatePipe, private tostr: ToastrService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -31,13 +34,21 @@ export class RequisitionDetailsComponent implements OnInit {
     });
     this.filteredStatus = sessionStorage.getItem('requirement_status') ?? 'Total Applicants';
     this.currentPage = 1;
-    this.pageSize = 10
+    this.pageSize = 9;
     this.fetchcount();
     this.fetchCandidates();
   }
 
+  dateChange(event: any, range: string): void {
+    let date = new Date(event?.value);
+    if (range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    if (range == 'endDate') this.endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    this.fetchcount();
+  }
+
+
   fetchcount(): void {
-    this.apiService.get(`/dashboard/card-data?requestId=${this.requestId}`).subscribe((res: any) => {
+    this.apiService.get(`/dashboard/card-data?requestId=${this.requestId}&fromDate=${this.startDate}&todate=${this.endDate}`).subscribe((res: any) => {
       if (res?.data) {
         this.initialLoader = false;
         this.lists = res?.data;
@@ -81,7 +92,7 @@ export class RequisitionDetailsComponent implements OnInit {
     this.filteredStatus = item;
     sessionStorage.setItem('requirement_status', this.filteredStatus);
     this.currentPage = 1;
-    this.pageSize = 10
+    this.pageSize = 9
     this.fetchCandidates();
   }
 
@@ -89,7 +100,7 @@ export class RequisitionDetailsComponent implements OnInit {
     this.filteredStatus = "Total Applicants";
     sessionStorage.setItem('requirement_status', this.filteredStatus);
     this.currentPage = 1;
-    this.pageSize = 10
+    this.pageSize = 9
     this.fetchCandidates();
   }
 
