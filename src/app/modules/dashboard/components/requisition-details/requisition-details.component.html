@@ -118,7 +118,7 @@
                 <tr class="table-header p-b-10">
                     <td>Name</td>
                     <td>Education</td>
-                    <td>Experience</td>
+                    <!-- <td>Experience</td> -->
                     <td>Previos Organization</td>
                     <td>Previous Designation</td>
                     <td>Location</td>
@@ -129,7 +129,7 @@
                     <tr class="c-pointer details">
                         <td class="text-wrap" [title]="item?.candidateFirstName + '' + item?.candidateLastName">{{item?.candidateFirstName}} {{item?.candidateLastName}}</td>
                         <td class="text-wrap" [title]="item?.candidateEducation">{{item?.candidateEducation}}</td>
-                        <td class="text-wrap" [title]="item?.candidateExperience ? item?.candidateExperience : 'Fresher'">{{item?.candidateExperience ? item?.candidateExperience + 'years': 'Fresher' }}</td>
+                        <!-- <td class="text-wrap" [title]="item?.candidateExperience ? item?.candidateExperience : 'Fresher'">{{item?.candidateExperience ? item?.candidateExperience + 'years': 'Fresher' }}</td> -->
                         <td class="text-wrap" [title]="item?.candidatePreviousOrg ? item?.candidatePreviousOrg : 'Nil'">{{item?.candidatePreviousOrg ? item?.candidatePreviousOrg : 'Nil'}}</td>
                         <td class="text-wrap" [title]="item?.candidatePreviousDesignation ? item?.candidatePreviousDesignation : 'Nil'">{{item?.candidatePreviousDesignation ? item?.candidatePreviousDesignation : 'Nil'}}</td>
                         <td class="text-wrap" [title]="item?.candidateCity ? item?.candidateCity : 'Nil'"> {{item?.candidateCity ? item?.candidateCity : 'Nil'}}</td>
