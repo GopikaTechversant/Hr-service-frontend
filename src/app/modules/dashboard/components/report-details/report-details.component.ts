@@ -110,6 +110,7 @@ export class ReportDetailsComponent implements OnInit {
     this.apiService.get(`/report/month-report-data?month=${this.currentYear}-${this.reportMonth}&userId=${this.reportUserId}`).subscribe((res: any) => {
       if (res?.data) {
         this.userRequirement = [];
+        this.totalReport = [];
         this.userRequirement = res?.data;
         this.totalReport = res?.totalReportMonth[0];
         for (let requirement of this.userRequirement) {
@@ -132,8 +133,9 @@ export class ReportDetailsComponent implements OnInit {
       if (error?.status === 500) {
         this.tostr.error("Internal Server Error");
       } else {
-        this.tostr.warning("No data found due to invalid request");
+        // this.tostr.warning("No data found due to invalid request");
         this.userRequirement = [];
+        this.totalReport = [];
         this.error = true;
       }
       if (this.chart) {

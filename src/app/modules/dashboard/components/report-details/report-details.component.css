@@ -159,7 +159,7 @@ table {
 }
 
 .table-container {
-    height: calc(100vh - 445px);
+    height: calc(100vh - 439px);
     overflow-y: auto !important;
     overflow-x: hidden;
 }

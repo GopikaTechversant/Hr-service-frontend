@@ -2,7 +2,7 @@
     <div>
         <span class="head">Report</span>
     </div>
-    <div class="source m-10">
+    <div class="source m-12">
         <div class="source-heading d-flex j-space">
             <div class="d-flex flex-start heading-calss" >
                 <span>Sourcing Overview - <span>{{selectedMonth ? selectedMonth : monthValue }} </span>
@@ -12,7 +12,7 @@
                     <div class="d-flex filter-month">
                         <span class="filter p-r-10 p-t-10">Filter Month</span>
                         <span class="c-pointer input-filter p-relative no-close m-t-5" (click)="showMonth = !showMonth">
-                            <div class="input d-flex j-space p-5 p-b-0 no-close">
+                            <div class="input d-flex j-space p-5 p-b-0 no-close f-s-14">
                                 {{selectedMonth ? selectedMonth : 'Select Month'}}
                                 <span class="f-right">
                                     <span *ngIf="selectedMonth && selectedMonth !== ''" (click)="clearFilter('month')"
@@ -33,7 +33,7 @@
                         <span class="filter p-r-10 p-t-10">Filter Recruiter</span>
                         <span class="c-pointer input-filter m-t-5 p-relative no-close c-pointer"
                             (click)="showRecruiters = !showRecruiters">
-                            <div class="input d-flex j-space p-5 p-b-0 no-close">
+                            <div class="input d-flex j-space p-5 p-b-0 no-close f-s-14">
                                 {{recruiterName ? recruiterName : 'Select Recruiter'}}
                                 <span class="f-right">
                                     <span *ngIf="recruiterName && recruiterName !== ''" (click)="clearFilter('recruiter')"
@@ -83,8 +83,7 @@
             <div class="d-flex-column ">
                 <span class="name">Offer Accepted</span>
                 <div class="d-flex p-l-10"><i class="fa fa-user card-icon" aria-hidden="true"></i>
-                    <span class="count">{{totalReport?.candidatesIntrested ? totalReport?.candidatesIntrested
-                        :'0'}}</span>
+                    <span class="count">{{totalReport?.candidatesIntrested ? totalReport?.candidatesIntrested :'0'}}</span>
                 </div>
             </div>
         </div>

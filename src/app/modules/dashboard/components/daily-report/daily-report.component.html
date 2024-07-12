@@ -6,7 +6,7 @@
                 <span class="filter p-r-10 p-t-10">Filter Recruiter</span>
                 <span class="c-pointer input-filter p-relative no-close c-pointer"
                     (click)="showRecruiters = !showRecruiters">
-                    <div class="input d-flex j-space p-5 p-b-0 no-close">
+                    <div class="input d-flex j-space p-5 p-b-0 no-close f-s-14">
                         {{recruiterName ? recruiterName : 'Select Recruiter'}}
                         <span class="f-right">
                             <span *ngIf="recruiterName && recruiterName !== ''" (click)="clearFilter('recruiter')"
