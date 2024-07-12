@@ -305,7 +305,8 @@ export class CandidateAssignmentComponent implements OnInit {
     const payload = {
       serviceId: this.serviceIds,
       averageScore: averageScore,
-      recruiterId: this.recruiterId
+      recruiterId: this.recruiterId,
+      requestionId: this.requestId
     };
     if (!isScoreAdded && averageScore) {
       this.apiService.post(`/written-station/approve`, payload).subscribe({
