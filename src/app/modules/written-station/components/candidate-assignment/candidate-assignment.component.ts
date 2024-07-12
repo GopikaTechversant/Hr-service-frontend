@@ -58,7 +58,8 @@ export class CandidateAssignmentComponent implements OnInit {
   recruiterId: any;
   serviceIds: any[] = [];
   previousAverageScore: any;
-  userId:any;
+  userId: any;
+  scoreAdded: any;
   constructor(private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService, private s3Service: S3Service, private router: Router) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -298,16 +299,20 @@ export class CandidateAssignmentComponent implements OnInit {
     const averageScoreInput = document.getElementById('averageScore') as HTMLInputElement;
     const averageScore = averageScoreInput.value;
     localStorage.getItem('userId');
+    // const isScoreAdded = this.candidateList.some((candidate: any) => {
+    //   (candidate?.serviceSequence?.progress?.progressScore !== null || candidate?.serviceSequence?.progress?.progressScore) && candidate?.serviceSequence?.serviceStatus === 'pending';
+    //   this.serviceIds.push(candidate?.serviceSequence?.serviceId)
+    // });
     const isScoreAdded = this.candidateList.some((candidate: any) => {
-      (candidate?.serviceSequence?.progress?.progressScore !== null || candidate?.serviceSequence?.progress?.progressScore) && candidate?.serviceSequence?.serviceStatus === 'pending';
-      this.serviceIds.push(candidate?.serviceSequence?.serviceId)
+      this.scoreAdded = (candidate?.serviceSequence?.progress?.progressScore !== null || candidate?.serviceSequence?.progress?.progressScore) && candidate?.serviceSequence?.serviceStatus === 'pending';
     });
+
     const payload = {
       serviceId: this.serviceIds,
       averageScore: averageScore,
       recruiterId: this.recruiterId
     };
-    if (!isScoreAdded && averageScore) {
+    if (!this.scoreAdded && averageScore) {
       this.apiService.post(`/written-station/approve`, payload).subscribe({
         next: (res: any) => {
           this.tostr.success('Approved');
@@ -316,7 +321,7 @@ export class CandidateAssignmentComponent implements OnInit {
         },
         error: (error) => {
           if (error?.status === 500) this.tostr.error("Internal Server Error");
-          else if (!isScoreAdded) {
+          else if (!this.scoreAdded) {
             this.tostr.warning('Candidates meeting the average score were not found');
             this.fetchCandidates();
           }
