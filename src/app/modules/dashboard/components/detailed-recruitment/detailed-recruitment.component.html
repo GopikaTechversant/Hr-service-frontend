@@ -7,8 +7,8 @@
                 {{selectedRecruitername}}</span>
         </div>
         <div>
-            <span class="c-pointer d-flex">
-                <span class="filter p-r-10 p-t-10 p-b-5">File Recruiter</span>
+
+            <!-- <span class="filter p-r-10 p-t-10 p-b-5">File Recruiter</span>
                 <div class="input no-close text col-md-3 p-l-8 d-flex recruiter-drop-down j-space m-text align-center p-relative text-color"
                     (click)="recruitersListOpen = !recruitersListOpen">
                     <div>{{selectedRecruitername ? selectedRecruitername : 'Choose Recruiter'}}</div>
@@ -23,7 +23,17 @@
                             *ngFor="let item of recruitersList" class=" p-t-5 p-b-5 p-l-8 c-pointer text-color">
                             {{item?.userFullName}}</div>
                     </div>
-                </div>
+                </div> -->
+            <span class="c-pointer d-flex">
+                <span class="p-8">
+                    <input type="radio" id="position" name="filter" value="position" [checked]="true"
+                        (change)="onRadioChange($event)">
+                    <label for="position" class="p-l-5">Requirement</label>
+                </span>
+                <span class="p-8">
+                    <input type="radio" id="user" name="filter" value="user" (change)="onRadioChange($event)">
+                    <label for="user" class="p-l-5">Recruiter</label>
+                </span>
                 <div class="export-btn" (click)="exportData()">
                     <span>Export</span>
                 </div>
@@ -33,28 +43,16 @@
     <div class="table-container m-b-0">
         <table class="table">
             <tr class="table-header f-w-500 p-b-10">
-                <!-- <td>Select</td>
-                <td>Recruiter Name</td>
-                <td>Requisition</td>
-                <td>Screening Rejected</td>
-                <td>Written Rejected</td>
-                <td>Technical 1 Rejected</td>
-                <td>Technical 2 Rejected</td>
-                <td>Management Rejected</td>
-                <td>HR Rejected</td>
-                <td>Offer Released</td>
-                <td>Hired</td> -->
-                <td>Select</td>
-                <td>Recruiter Name</td>
-                <td>Name</td>
-                <td>Position</td>
-                <td>Experience</td>
-                <td>Current Company </td>
-                <td>Location</td>
-                <td>Notice Period</td>
-                <td>Interview Date & Time</td>
-                <td>Panel</td>
-                <td>Mode</td>
+                <td class="text-wrap">Select</td>
+                <td class="text-wrap" [title]="selectedDataBy === 'user' ? 'Recruiter' : 'Requisition'">{{selectedDataBy === 'user' ? 'Recruiter' : 'Requisition'}}</td>
+                <td class="text-wrap" title="Total Applicants">Total Applicants</td>
+                <td class="text-wrap" title="Screening Rejected">Screening Rejected</td>
+                <td class="text-wrap" title="Technical 1 Rejected">Technical 1 Rejected</td>
+                <td class="text-wrap" title="technical 2 Rejected">Technical 2 Rejected</td>
+                <td class="text-wrap" title="Selected from technical round">Selected from technical round</td>
+                <td class="text-wrap" title="HR Rejected">HR Rejected</td>
+                <td class="text-wrap" title="Offer Released">Offer Released</td>
+                <td class="text-wrap" title="Hired">Hired</td>
             </tr>
             <!-- <div class="loader-parent">
                 <img src="assets/gif/loader.gif">
@@ -62,31 +60,22 @@
             <ng-container>
                 <ng-container *ngFor="let item of  candidateList">
                     <tr class="c-pointer details" (dblclick)="selectCandidate(item['candidate.candidateId'])">
-                        <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()"></td>
-                        <td  class="text-wrap" >
-                            {{item['candidate.createdBy.userfirstName'] ? item['candidate.createdBy.userfirstName'] : ' '}}
-                            {{item['candidate.createdBy.userlastName'] ? item['candidate.createdBy.userlastName'] : ' '}}
+                        <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()">
                         </td>
-                        <td  class="text-wrap" >
-                            {{item['candidate.candidateFirstName'] ? item['candidate.candidateFirstName'] : ' '}}
-                            {{item['candidate.candidateLastName'] ? item['candidate.candidateLastName'] : ' '}}
-                        </td>
-                        <td class="text-wrap" [title]="item['reqService.sericeName']">{{item['reqService.sericeName']}}</td>
-                        <td  class="text-wrap" [title]="item['candidate.candidateExperience'] ">{{item['candidate.candidateExperience'] ? item['candidate.candidateExperience'] : 'Fresher'}}</td>
-                        <td  class="text-wrap" [title]="item['candidate.candidatePreviousOrg']">{{item['candidate.candidatePreviousOrg']}}</td>
-                        <td  class="text-wrap" [title]="item?.interviewLocation">{{item?.interviewLocation ? item?.interviewLocation : 'NIL'}}</td>
-                        <td  class="text-wrap" >{{item['candidate.candidateNoticePeriodByDays'] ? item['candidate.candidateNoticePeriodByDays'] :'NIL'}}</td>
-                        <td  class="text-wrap" >
-                            <span [title]="item?.interviewTime | date: 'dd/MM/YYY'">{{item?.interviewTime | date: 'dd/MM/YYY'}}</span><br>
-                            <span class="blue p-l-4" [title]="item?.interviewTime | date: 'hh:mm a'">{{item?.interviewTime | date: 'hh:mm a'}}</span>
-                        </td>
-                        <td class="text-wrap" [title]="item['reqUser.userfirstName'] ? item['reqUser.userfirstName'] : 'NIL'">{{item['reqUser.userfirstName'] ? item['reqUser.userfirstName'] : 'NIL'}}</td>
-                        <td class="text-wrap">{{item?.interviewMode ? item?.interviewMode : 'NIL'}}</td>
+                        <td class="text-wrap">{{item?.userfirstName ? item?.userfirstName : item?.requestName}}</td>
+                        <td class="text-wrap"></td>
+                        <td class="text-wrap">{{item?.total_screenrejected ? item?.total_screenrejected : ' '}}</td>
+                        <td class="text-wrap">{{item?.total_screenrejected ? item?.total_screenrejected : ' '}}</td>
+                        <td class="text-wrap">{{item?.total_screenrejected ? item?.total_screenrejected : ' '}}</td>
+                        <td class="text-wrap">{{item?.total_technicalselected ? item?.total_technicalselected : ' '}}</td>
+                        <td class="text-wrap">{{item?.total_hrreject ? item?.total_hrreject : ' '}}</td>
+                        <td class="text-wrap">{{item?.total_offerreleased ? item?.total_offerreleased : ' '}}</td>
+                        <td class="text-wrap">{{item?.total_hired ? item?.total_hired : ' '}}</td>
                     </tr>
                 </ng-container>
             </ng-container>
             <div *ngIf="candidateList?.length === 0" class="no-data">No Data Found</div>
-        </table>    
+        </table>
     </div>
     <div class="page d-flex j-end p-10">
         <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(1)">
