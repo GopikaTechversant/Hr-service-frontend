@@ -63,10 +63,10 @@
                         <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()">
                         </td>
                         <td class="text-wrap">{{item?.userfirstName ? item?.userfirstName : item?.requestName}}</td>
-                        <td class="text-wrap"></td>
+                        <td class="text-wrap">{{item?.total_totalsourced ? item?.total_totalsourced : ' '}}</td>
                         <td class="text-wrap">{{item?.total_screenrejected ? item?.total_screenrejected : ' '}}</td>
-                        <td class="text-wrap">{{item?.total_screenrejected ? item?.total_screenrejected : ' '}}</td>
-                        <td class="text-wrap">{{item?.total_screenrejected ? item?.total_screenrejected : ' '}}</td>
+                        <td class="text-wrap">{{item?.total_techonereject ? item?.total_techonereject : ' '}}</td>
+                        <td class="text-wrap">{{item?.total_techtworeject ? item?.total_techtworeject : ' '}}</td>
                         <td class="text-wrap">{{item?.total_technicalselected ? item?.total_technicalselected : ' '}}</td>
                         <td class="text-wrap">{{item?.total_hrreject ? item?.total_hrreject : ' '}}</td>
                         <td class="text-wrap">{{item?.total_offerreleased ? item?.total_offerreleased : ' '}}</td>
