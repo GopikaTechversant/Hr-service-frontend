@@ -71,17 +71,12 @@ export class SeriesComponent implements OnInit {
     this.isTaskDetailsOpen = !this.isTaskDetailsOpen;
   }
 
-  edit(requirement: any): void {
-    this.editRequirement = requirement;
-    const dialogRef = this.dialog.open(EditRequirementComponent, {
-      data: this.editRequirement,
-      width: '50%',
-      height: '80%'
-    })
-    dialogRef.componentInstance.onEditSuccess.subscribe(() => {
-      this.limit = 9;
-      this.fetchDetails();
-    })
+  edit(path: any, requestId?: any): void {
+    const queryParams = requestId ? { requestId: requestId } : undefined;
+    console.log("queryParams",queryParams);
+    
+    if (queryParams) this.router.navigate([path], { queryParams: queryParams });
+    else this.router.navigate([path]);
   }
 
   delete(id: any): void {

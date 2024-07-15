@@ -3,6 +3,8 @@ import { ViewChild, ElementRef } from '@angular/core';
 import { ToastrServices } from 'src/app/services/toastr.service';
 import { ApiService } from 'src/app/services/api.service';
 import { DatePipe } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-service-request',
@@ -13,25 +15,14 @@ import { DatePipe } from '@angular/common';
   }
 })
 export class ServiceRequestComponent implements OnInit {
-  @ViewChild('serviceInput') serviceInput!: ElementRef<HTMLInputElement>;
-  @ViewChild('maxExperienceInput') maxExperienceInput!: ElementRef<HTMLInputElement>;
-  @ViewChild('minExperienceInput') minExperienceInput!: ElementRef<HTMLInputElement>;
-  @ViewChild('baseSalaryInput') baseSalaryInput!: ElementRef<HTMLInputElement>;
-  @ViewChild('jobtitle') jobtitle!: ElementRef<HTMLInputElement>;
-  @ViewChild('jobCode') jobCode!: ElementRef<HTMLInputElement>;
-  @ViewChild('maxSalaryInput') maxSalaryInput!: ElementRef<HTMLInputElement>;
-  @ViewChild('vacancy') vacancy!: ElementRef<HTMLInputElement>;
   @ViewChild('comment') commentDiv!: ElementRef<HTMLDivElement>;
-
   list_id: any = [];
   list_team: any = [];
   idListOpen: boolean = false;
   selectedId: any;
   selectedName: any;
-  selectedTeam: string = '';
-  selectedTeamName: any;
   teamListOpen: boolean = false;
-  skillsArray: any = [];
+  // skillsArray: any = [];
   requestVacancy: any;
   stationsList: any[] = [];
   stationId: any;
@@ -43,34 +34,55 @@ export class ServiceRequestComponent implements OnInit {
   skillSuggestions: any[] = [];
   showSearchBar: boolean = false;
   selectedSkills: any[] = [];
-  skillNameValue: string = '';
-  stationIdToRemove: any;
+  // skillNameValue: string = '';
+  // stationIdToRemove: any;
   stationsLists: any;
   designationList: any;
   openDesignation: boolean = false;
   openReporingManager: boolean = false;
-  selectedDesignation: string = '';
-  selectedDesignationId: any;
   loader: boolean = false;
-  panel_list: any[] = [];
   maxDate: any;
   currentYear: any;
   minDate: any;
-  commentValue: any = '';
+  // commentValue: any = '';
   today: Date = new Date();
   displayDate: string | null = null;
   closeDate: string | null = null;
   postDate: Date | null = null;
   closeDateObj: Date | null = null;
-  managerName: string = '';
-  managerId: any;
   jobDescription: any
   textFormats: any[] = ['Aa', 'AA', 'aa', 'Aa A'];
   showFormats: boolean = false;
   option: any;
   isBold = false;
-
-  constructor(private toastr: ToastrServices, private apiService: ApiService, private datePipe: DatePipe) { }
+  requestId: any;
+  requirement_details: any = {};
+  formattedText: SafeHtml | undefined;
+  jobTitle: string = '';
+  jobCode: string = '';
+  experience: string = '';
+  minExperience: string = '';
+  baseSalary: string = '';
+  maxSalary: string = '';
+  vacancy: string = '';
+  skills: string[] = [];
+  selectedTeam: string = '';
+  selectedTeamName: any;
+  selectedDesignation: string = '';
+  reportingmanager: string = '';
+  selectedDesignationId: any;
+  initialValues: any = {};
+  flows: any[] = [];
+  managerName: string = '';
+  managerId: any;
+  panel_list: any[] = [];
+  managerListOpen: boolean = false;
+  description: any;
+  constructor(private toastr: ToastrServices, private apiService: ApiService, private datePipe: DatePipe, private router: Router, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
+    this.route.queryParams.subscribe(params => {
+      this.requestId = params['requestId'];
+    });
+  }
 
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
@@ -87,6 +99,7 @@ export class ServiceRequestComponent implements OnInit {
     this.maxDate = new Date();
     this.minDate = new Date();
     this.fetchStations();
+    this.fetchDetails()
     this.fetchServiceTeam();
     this.fetchDesignation();
     this.fetchPanel();
@@ -102,22 +115,29 @@ export class ServiceRequestComponent implements OnInit {
       this.showFormats = false;
     }
   }
+  fetchDetails(): void {
+    this.apiService.get(`/service-request/view?requestId=${this.requestId}`).subscribe((res: any) => {
+      if (res?.data) this.requirement_details = res?.data;
+      const text = this.requirement_details?.requestDescription;
+      this.formattedText = this.sanitizer.bypassSecurityTrustHtml(text);
+      this.flows = res?.flows;
+      this.initializeDataValues();
+    })
+  }
 
   fetchDesignation() {
     this.apiService.get(`/service-request/designation/list`).subscribe(((res: any) => {
       if (res?.data) this.designationList = res?.data;
     }))
   }
-
-  fetchServiceId(): void {
-    this.apiService.get(`/service-request/services`).subscribe(((res: any) => {
-      if (res?.data) this.list_id = res?.data;
-    }))
-  }
-
+  // fetchServiceId(): void {
+  //   this.apiService.get(`/service-request/services`).subscribe(((res: any) => {
+  //     if (res?.data) this.list_id = res?.data;
+  //   }))
+  // }
   fetchServiceTeam(): void {
     this.apiService.get(`/service-request/team`).subscribe((res: any) => {
-      this.list_team = res.data;
+      if (res.data) this.list_team = res.data;
     })
   }
 
@@ -189,9 +209,9 @@ export class ServiceRequestComponent implements OnInit {
     this.selectedDesignationId = id;
   }
 
-  selectReportingManager(id: any, name: any): void {
-    this.openReporingManager = false;
-    this.managerName = name;
+  selectmanager(id: any, fname: any, lname: any): void {
+    this.managerListOpen = false;
+    this.reportingmanager = `${fname} ${lname}`;
     this.managerId = id;
   }
 
@@ -313,42 +333,64 @@ export class ServiceRequestComponent implements OnInit {
     }).join(' ');
   }
 
+  initializeDataValues(): void {
+    this.jobTitle = this.requirement_details.requestName || '';
+    this.jobCode = this.requirement_details.requestCode || '';
+    this.experience = this.requirement_details.requestMaximumExperience || '';
+    this.minExperience = this.requirement_details.requestMinimumExperience || '';
+    this.baseSalary = this.requirement_details.requestBaseSalary || '';
+    this.maxSalary = this.requirement_details.requestMaxSalary || '';
+    this.vacancy = this.requirement_details.requestVacancy || '';
+    this.selectedSkills = this.requirement_details.requestSkills ? this.requirement_details.requestSkills.split(',') : [];
+    this.selectedTeam = this.requirement_details?.team?.teamName || '';
+    this.selectedDesignation = this.requirement_details.designationName || '';
+    this.reportingmanager = this.requirement_details?.reporting?.userFullName || '';
+    this.description = this.requirement_details.requestDescription || '';
+    this.postDate = this.requirement_details.requestPostingDate || null;
+    this.closeDateObj = this.requirement_details.requestClosingDate || null;
+    if (this.flows) {
+      this.selectedStations = this.flows.map((flow: any) => ({
+        stationId: flow.flowStationId,
+        stationName: flow.flowStationName
+      }));
+    } else this.selectedStations = [];
+  }
+
   submitClick(): void {
-    this.loader = true;
-    const comments = document.getElementById('comments') as HTMLInputElement;
-    this.commentValue = comments.innerText;
-    const skillName = document.getElementById('skillSearch') as HTMLInputElement;
-    this.skillNameValue = skillName.value;
-    const stationIds = this.selectedStations.map((station: { stationId: any; }) => station.stationId);
-    const requestData = {
-      requestName: this.jobtitle.nativeElement.value,
-      requestSkills: this.selectedSkills.length > 0 ? this.selectedSkills : [this.skillNameValue],
-      requestDesignation: this.selectedDesignationId,
-      requestCode: this.jobCode.nativeElement.value,
-      requestMinimumExperience: this.minExperienceInput.nativeElement.value,
-      requestMaximumExperience: this.maxExperienceInput.nativeElement.value,
-      requestBaseSalary: this.baseSalaryInput.nativeElement.value,
-      requestMaxSalary: this.maxSalaryInput.nativeElement.value,
-      requestTeam: this.selectedTeamName,
-      requestVacancy: this.vacancy.nativeElement.value,
-      requestFlowStations: stationIds,
-      requestDescription: this.jobDescription ? this.jobDescription : this.commentValue,
-      requestPostingDate: this.displayDate,
-      requestClosingDate: this.closeDate,
-      requestManager: this.managerId
-    };
-    this.apiService.post(`/service-request/create`, requestData).subscribe((res) => {
-      this.loader = false;
-      this.toastr.success("Requirement created Successfully");
-      this.resetFormAndState();
-    }, (err) => {
-      this.loader = false;
-      if (err?.status === 500) this.toastr.error("Internal Server Error")
-      else {
-        this.loader = false;
-        this.toastr.warning("Unable to create requirement Please try again");
-      }
-    })
+    const payload: any = {};
+    if (this.jobTitle !== this.requirement_details.requestName) payload.requestName = this.jobTitle;
+    if (this.jobCode !== this.requirement_details.requestCode) payload.requestCode = this.jobCode;
+    if (this.vacancy !== this.requirement_details.requestVacancy) payload.requestVacancy = this.vacancy;
+    if (this.skills !== this.requirement_details.requestSkills) payload.requestSkills = this.selectedSkills;
+    if (this.selectedStations !== this.flows) payload.requestFlowStations = this.selectedStations.map((station: any) => station.stationId);
+    if (this.experience !== this.requirement_details.requestMaximumExperience) payload.requestMaximumExperience = this.experience;
+    if (this.minExperience !== this.requirement_details.requestMinimumExperience) payload.requestMinimumExperience = this.minExperience;
+    if (this.selectedDesignation !== this.requirement_details.designationName) payload.requestDesignation = this.selectedDesignationId;
+    if (this.baseSalary !== this.requirement_details.requestBaseSalary) payload.requestBaseSalary = this.baseSalary;
+    if (this.maxSalary !== this.requirement_details.requestMaxSalary) payload.requestMaxSalary = this.maxSalary;
+    if (this.selectedTeam !== this.requirement_details?.team?.teamName) payload.requestTeam = this.selectedTeamName;
+    if (this.reportingmanager !== this.requirement_details?.reporting?.userFullName) payload.requestManager = this.managerId;
+    if (this.displayDate !== this.requirement_details.requestPostingDate) payload.requestPostingDate = this.displayDate;
+    if (this.displayDate !== this.requirement_details.requestPostingDate) payload.requestClosingDate = this.closeDate;
+    const currentDescription = this.commentDiv.nativeElement.innerHTML;
+    if (currentDescription !== this.requirement_details.requestDescription) payload.requestDescription = currentDescription;
+    if (this.jobTitle && this.jobCode && this.vacancy && this.skills && this.selectedStations && this.experience && this.selectedDesignation && this.baseSalary && this.maxSalary && this.selectedTeam) {
+      if (this.requestId) {
+        payload.requestId = this.requestId
+        this.apiService.post('/service-request/edit', payload).subscribe(response => {
+          this.toastr.success('Requirement updated successfully');
+          this.resetFormAndState();
+        }, error => {
+          this.toastr.error('Failed to update requirement');
+        });
+      } else
+        this.apiService.post('/service-request/create', payload).subscribe(response => {
+          this.toastr.success('Requirement Created successfully');
+          this.resetFormAndState();
+        }, error => {
+          this.toastr.error('Failed to create requirement');
+        });
+    } else this.toastr.warning('Please fill all mandatory fields');
   }
 
   clearInputvalue(inputElement: ElementRef<HTMLInputElement>) {
@@ -356,29 +398,23 @@ export class ServiceRequestComponent implements OnInit {
   }
 
   resetFormAndState(): void {
-    // const comments = document.getElementById('comments') as HTMLInputElement;
-    // if (comments) comments.value = '';
-    // this.commentValue = '';
     this.stationsList = [];
     this.selectedTeam = '';
     this.selectedDesignation = '';
-    // this.commentValue = '';
+    this.jobTitle = '';
+    this.jobCode = '';
+    this.baseSalary = '';
+    this.maxSalary = '';
+    this.minExperience = '';
+    this.experience = '';
+    this.vacancy = '';
+    this.reportingmanager = '';
     const commentsDiv = this.commentDiv.nativeElement;
     if (commentsDiv) commentsDiv.innerHTML = '';
-    this.clearInputvalue(this.maxExperienceInput);
-    this.clearInputvalue(this.minExperienceInput)
-    this.clearInputvalue(this.jobCode);
-    this.clearInputvalue(this.jobtitle);
-    this.clearInputvalue(this.baseSalaryInput);
-    this.clearInputvalue(this.maxSalaryInput);
-    this.clearInputvalue(this.vacancy);
-    this.managerName = '';
     this.displayDate = null;
     this.closeDate = null;
     this.postDate = null;
     this.closeDateObj = null;
-    this.idListOpen = false;
-    this.teamListOpen = false;
     this.selectedSkills = [];
     this.searchvalue = '';
     this.jobDescription = '';
@@ -397,29 +433,24 @@ export class ServiceRequestComponent implements OnInit {
     this.showSearchBar = false;
     this.skillSuggestions = [];
   }
-  
+
   onKeypressSalary(event: KeyboardEvent, inputElement: HTMLInputElement): void {
     const target = inputElement;
     if (!target) return;
-
     const allowedKeys = /[0-9.,]/;
     const controlKeys = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete', 'Tab'];
     const key = event.key;
-
     if (!allowedKeys.test(key) && !controlKeys.includes(key)) {
       event.preventDefault();
       return;
     }
-
     if (controlKeys.includes(key)) return;
-
     let value = target.value.replace(/,/g, '');
     // Only allow one dot
     if (key === '.' && value.includes('.')) {
       event.preventDefault();
       return;
     }
-
     value = value.replace(/[^0-9.]/g, '');
     const parts = value.split(".");
     let integerPart = parts[0];
@@ -439,30 +470,24 @@ export class ServiceRequestComponent implements OnInit {
       event.preventDefault();
       return;
     }
-
     let pastedData = clipboardData.getData('Text');
     pastedData = pastedData.replace(/,/g, ''); // Remove existing commas
-
     const allowedCharacters: RegExp = /^[0-9]*\.?[0-9]*$/;
     if (!allowedCharacters.test(pastedData)) {
       event.preventDefault();
       return;
     }
-
     const parts = pastedData.split(".");
     let integerPart = parts[0];
     const decimalPart = parts[1];
-
     integerPart = integerPart.replace(/\B(?=(\d{2})+(?!\d))/g, ",");
     if (decimalPart !== undefined) {
       pastedData = integerPart + "." + decimalPart.slice(0, 2);
     } else {
       pastedData = integerPart;
     }
-
     inputElement.value = pastedData;
     event.preventDefault();
   }
-
 
 }
