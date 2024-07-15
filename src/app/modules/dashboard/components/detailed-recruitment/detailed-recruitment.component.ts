@@ -59,11 +59,11 @@ export class DetailedRecruitmentComponent implements OnInit {
       this.fetchCandidateList();
     }
   }
-
+  // http://localhost:3001/dashboard/recruiter-requirement-report?dataBy=user&start_date=2024-06-01&end_date=2024-06-10&limit=1&page=1
   fetchCandidateList(): void {
     console.log("selectedOption: string = 'requirement';", this.selectedDataBy);
     if (!this.initialLoader) this.loader = true;
-    const url = `/dashboard/requirement-report`
+    const url = `/dashboard/recruiter-requirement-report`
     let params = [
       `dataBy=${this.selectedDataBy}`,
       `page=${this.report ? '' : this.currentPage}`,
@@ -84,7 +84,8 @@ export class DetailedRecruitmentComponent implements OnInit {
       return;
     }
     this.apiService.get(`${url}?${params}`).subscribe((res: any) => {
-      this.candidateList = res?.userRequirementReport;
+      this.candidateList = res;
+      console.log(" this.candidateList", res);
       this.totalCount = res?.requirementCount;
       const totalPages = Math.ceil(this.totalCount / this.pageSize);
       this.lastPage = totalPages;
