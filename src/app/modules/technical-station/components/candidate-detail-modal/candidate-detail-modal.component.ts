@@ -268,6 +268,7 @@ export class CandidateDetailModalComponent implements OnInit {
         date: data?.interviewTime,
         pannelUser: data?.interviewPanel,
         interviewMode: data?.interviewMode,
+        requestionId: this.candidateDetails['serviceRequest.requestId']
       };
       this.apiService.post(`${baseUrl}/approve`, payload).subscribe({
         next: () => {

@@ -24,11 +24,13 @@ tr:nth-child(even) {
 td {
     padding: 10px;
     text-align: center;
-    border: 1px solid #E9E9E9
+    border: 1px solid #E9E9E9;
+    /* height: 53px; */
 }
 
 tr {
     text-align: center;
+    height: 53px;
 }
 
 .table-header {
