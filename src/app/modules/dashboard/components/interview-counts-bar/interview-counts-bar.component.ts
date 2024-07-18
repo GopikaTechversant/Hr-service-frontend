@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import Chart from 'chart.js/auto';
 import { ApiService } from 'src/app/services/api.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-interview-counts-bar',
   templateUrl: './interview-counts-bar.component.html',
   styleUrls: ['./interview-counts-bar.component.css'],
+  providers: [DatePipe],
   host: {
     '(document:click)': 'onBodyClick($event)'
   }
@@ -20,13 +22,35 @@ export class InterviewCountsBarComponent implements OnInit {
   showDepartment: boolean = false;
   teamId: any = '';
   teamName: string = '';
-
-  constructor(private apiService: ApiService) { }
+  barcounts: any[] = [];
+  @Input() startDate: any;
+  @Input() endDate: any;
+  label: any[] = [];
+  hiredData: any[] = [];
+  sourcedData: any[] = [];
+  offeredData: any[] = [];
+  recruiterCheck: boolean = false;
+  previousStartDate: any;
+  previousEndDate: any;
+  constructor(private apiService: ApiService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     Chart.register(ChartDataLabels);
     this.fetchBarchartDetails();
-    this.fetchDepartment();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['startDate'] && !changes['startDate'].isFirstChange()) {
+      this.startDate = changes['startDate'].currentValue;
+      this.fetchBarchartDetails();
+    } else if (changes['endDate'] && !changes['endDate'].isFirstChange()) {
+      this.endDate = changes['endDate'].currentValue
+      this.fetchBarchartDetails();
+    }
+  }
+
+  ngAfterViewInit(): void {
+    Chart.register(ChartDataLabels);
   }
 
   onBodyClick(event: MouseEvent): void {
@@ -36,45 +60,39 @@ export class InterviewCountsBarComponent implements OnInit {
     }
   }
 
+  onRadioChange(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    if (target.value === 'Last 6 Months') {
+      this.recruiterCheck = false;
+      const currentDate = new Date();
+      const sixMonthsAgo = new Date(currentDate);
+      sixMonthsAgo.setMonth(currentDate.getMonth() - 5);
+      this.previousStartDate = this.startDate;
+      this.previousEndDate = this.endDate;
+      this.endDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd');
+      this.startDate = this.datePipe.transform(sixMonthsAgo, 'yyyy-MM-dd');
+      this.fetchBarchartDetails();
+    } else if (target.value === 'recruiter') {
+      this.recruiterCheck = true;
+      if (this.previousStartDate && this.previousEndDate) {
+        this.startDate = this.previousStartDate;
+        this.endDate = this.previousEndDate;
+      }
+      this.fetchBarchartDetails();
+    }
+  }
+
   fetchBarchartDetails(): void {
-    this.apiService.get(`/dashboard/six-month-count?team=${this.teamId}`).subscribe((res: any) => {
+    this.apiService.get(`/dashboard/recruiter-chart?end_date=${this.endDate}&start_date=${this.startDate}&recruiter=${this.recruiterCheck}`).subscribe((res: any) => {
       if (res?.data) {
         this.sixMonthCount = res.data;
-        // http://localhost:3001/dashboard/recruiter-chart?end_date=2024-08-01&start_date=2024-06-01
-        //   this.labels = Object.keys(this.sixMonthCount[0]);
-        //   this.dataSets = this.sixMonthCount.map((item: any, index: number) => ({
-        //     label: `Series ${index + 1}`, // Adjust the label as needed
-        //     data: Object.values(item),
-        //     backgroundColor: `rgba(98, 138, 252, ${0.6 + index * 0.1})`,
-        //     borderColor: `rgba(98, 138, 252, ${0.6 + index * 0.1})`,
-        //     borderWidth: 1,
-        //     barThickness: 40,
-        //     barPercentage: 1,
-        //     categoryPercentage: 0.9,
-        //   }));
+        this.labels = this.sixMonthCount.map((item: any) => item.userfirstName);
+        this.hiredData = this.sixMonthCount.map((item: any) => +item.total_hired);
+        this.sourcedData = this.sixMonthCount.map((item: any) => +item.total_totalsourced);
+        this.offeredData = this.sixMonthCount.map((item: any) => +item.total_offerreleased);
         this.createBarChart();
       }
     });
-  }
-
-  fetchDepartment(): void {
-    this.apiService.get(`/service-request/team`).subscribe((res: any) => {
-      if (res?.data) {
-        this.teamDetails = res.data;
-      }
-    });
-  }
-
-  selectDepartment(team: string, teamId: string): void {
-    this.teamName = team;
-    this.teamId = teamId;
-    this.showDepartment = false;
-    this.fetchBarchartDetails();
-  }
-
-  clearFilter(): void {
-    this.teamName = '';
-    this.fetchBarchartDetails();
   }
 
   createBarChart(): void {
@@ -82,11 +100,11 @@ export class InterviewCountsBarComponent implements OnInit {
     this.chart = new Chart('barChartInterview', {
       type: 'bar',
       data: {
-        labels: ['Amritha', 'Jiji', 'Maloo', 'Parvathy'],
+        labels: this.labels,
         datasets: [
           {
             label: 'No. of Hired',
-            data: [4, 4, 2, 0], // Adjust data values accordingly
+            data: this.hiredData, // Adjust data values accordingly
             backgroundColor: '#047892',
             borderColor: '#047892',
             borderWidth: 1,
@@ -95,7 +113,7 @@ export class InterviewCountsBarComponent implements OnInit {
           },
           {
             label: 'No. of Sourced',
-            data: [12, 13, 11, 14], // Adjust data values accordingly
+            data: this.sourcedData, // Adjust data values accordingly
             backgroundColor: '#628AFC',
             borderColor: '#628AFC',
             borderWidth: 1,
@@ -104,7 +122,7 @@ export class InterviewCountsBarComponent implements OnInit {
           },
           {
             label: 'No. of Offered',
-            data: [5, 4, 3, 1], // Adjust data values accordingly
+            data: this.offeredData, // Adjust data values accordingly
             backgroundColor: '#005EC9',
             borderColor: '#005EC9',
             borderWidth: 1,
@@ -119,7 +137,7 @@ export class InterviewCountsBarComponent implements OnInit {
           y: {
             beginAtZero: true,
             ticks: {
-             
+
             }
           },
           x: {
@@ -174,5 +192,4 @@ export class InterviewCountsBarComponent implements OnInit {
       plugins: [ChartDataLabels],
     });
   }
-
 }

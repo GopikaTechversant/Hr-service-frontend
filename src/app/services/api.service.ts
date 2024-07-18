@@ -15,7 +15,8 @@ export class ApiService {
   private createHeaders():HttpHeaders{
     const token = localStorage.getItem('userToken') || '';
     return new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${token}`,
+      'ngrok-skip-browser-warning': 'true'
     })
   }
 

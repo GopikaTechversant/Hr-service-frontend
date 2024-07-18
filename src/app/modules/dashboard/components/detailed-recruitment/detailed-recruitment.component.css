@@ -180,7 +180,7 @@ table {
 }
 
 .text-wrap {
-    max-width: 150px !important;
+    max-width: 104px !important;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

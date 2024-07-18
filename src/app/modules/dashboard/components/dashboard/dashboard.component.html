@@ -118,7 +118,7 @@
     </div>
     <div class="d-flex w-100 m-t-10 m-b-10">
         <div class="w-60 p-t-10">
-            <app-interview-counts-bar></app-interview-counts-bar>
+            <app-interview-counts-bar [startDate]="startDate" [endDate]="endDate"></app-interview-counts-bar>
         </div>
         <div class="w-40 p-t-10 ">
             <app-application-list-pie [positionId]="positionId" [startDate]="startDate" [endDate]="endDate"></app-application-list-pie>
