@@ -107,21 +107,19 @@ export class LoginComponent implements OnInit {
       {
         theme: 'outline',
         size: 'large',
-        width: '600',
-        height: 50,
-        longtitle: true,
-        text: 'Sign in With Google'
+        text: 'Sign in with Google',
+        width: '100%'  // Adjust this to match the width of the login button
+
       }
     );
-    
   }
-  
+
+
 
   handleGoogleResponse(response: any): void {
     // console.log(response);
     // const decodedToken: any = jwtDecode(response.credential);
     // const email = decodedToken.email;
-
     // console.log(`User's email: ${email}`);
     this.toggleSpinner = true;
     if (response?.credential) {
@@ -150,6 +148,6 @@ export class LoginComponent implements OnInit {
         }
       );
     }
-
   }
+
 }

@@ -9,10 +9,11 @@
         <span class="welcome">Welcome To Techversant Gateway</span>
         <div class="loginContainer">
             <form [formGroup]="loginForm" (ngSubmit)="submitClick()">
-                <div class="info m-b-5"><img src="/assets/images/login/company.png" alt="" ></div>
+                <div class="info m-b-5"><img src="/assets/images/login/company.png" alt=""></div>
                 <div class="form-field d-flex j-start m-b-14">
                     <span class="email m-b-5">Email Address</span>
-                    <input type="email" class="input text-input" placeholder="Enter a valid email" formControlName="userName">
+                    <input type="email" class="input text-input" placeholder="Enter a valid email"
+                        formControlName="userName">
                 </div>
                 <div class="requiredField f-s-14">
                     <span class="error" *ngIf="userName?.errors?.['required'] && (userName?.touched || submitted)">
@@ -42,17 +43,18 @@
                         <input type="checkbox" formControlName="rememberMe">
                         <span class="email p-l-5">Remember Me?</span>
                     </div>
-                    <button class="login-btn m-t-14 c-pointer" type="submit">Login</button>        
+                    <button class="login-btn m-t-14 c-pointer" type="submit">Login</button>
                 </div>
 
                 <div class="m-t-12 form-field d-flex j-start m-b-14 p-relative c-pointer google-content">
-                    <span id="google-signin-button"  data-login_uri="http://localhost:8080"></span>
+                    <div id="google-signin-button">
+                    </div>
                 </div>
-                  
+
                 <span *ngIf="gmailLogin" class="error">
                     No User Found
                 </span>
-                <div class="m-t-12 c-pointer" >
+                <div class="m-t-12 c-pointer">
                     <a class="forgot-password" [href]="env_url + '/forgot-password'">Forgot Password?</a>
                 </div>
             </form>
