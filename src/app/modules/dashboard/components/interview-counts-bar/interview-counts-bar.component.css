@@ -140,3 +140,7 @@ tr {
 .flex-1 {
     flex: 1;
 }
+
+.filter-radio{
+    width: 209px;
+}

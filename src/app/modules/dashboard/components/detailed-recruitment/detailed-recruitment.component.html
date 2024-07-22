@@ -43,16 +43,17 @@
     <div class="table-container m-b-0">
         <table class="table">
             <tr class="table-header f-w-500 p-b-10">
-                <td class="text-wrap">Select</td>
-                <td class="text-wrap" [title]="selectedDataBy === 'user' ? 'Recruiter' : 'Requisition'">{{selectedDataBy === 'user' ? 'Recruiter' : 'Requisition'}}</td>
-                <td class="text-wrap" title="Total Applicants">Total Applicants</td>
-                <td class="text-wrap" title="Screening Rejected">Screening Rejected</td>
-                <td class="text-wrap" title="Technical 1 Rejected">Technical 1 Rejected</td>
-                <td class="text-wrap" title="technical 2 Rejected">Technical 2 Rejected</td>
-                <td class="text-wrap" title="Selected from technical round">Selected from technical round</td>
-                <td class="text-wrap" title="HR Rejected">HR Rejected</td>
-                <td class="text-wrap" title="Offer Released">Offer Released</td>
-                <td class="text-wrap" title="Hired">Hired</td>
+                <td class="text-wrp">Select</td>
+                <td class="text-wrp" [title]="selectedDataBy === 'user' ? 'Recruiter' : 'Requisition'">{{selectedDataBy
+                    === 'user' ? 'Recruiter' : 'Requisition'}}</td>
+                <td class="text-wrp" title="Total Applicants">Total Applicants</td>
+                <td class="text-wrp" title="Screening Rejected">Screening Rejected</td>
+                <td class="text-wrp" title="Technical 1 Rejected">Technical 1 Rejected</td>
+                <td class="text-wrp" title="technical 2 Rejected">Technical 2 Rejected</td>
+                <td class="text-wrp" title="Selected from technical round">Selected from technical round</td>
+                <td class="text-wrp" title="HR Rejected">HR Rejected</td>
+                <td class="text-wrp" title="Offer Released">Offer Released</td>
+                <td class="text-wrp" title="Hired">Hired</td>
             </tr>
             <!-- <div class="loader-parent">
                 <img src="assets/gif/loader.gif">
@@ -62,20 +63,22 @@
                     <tr class="c-pointer details" (dblclick)="selectCandidate(item['candidate.candidateId'])">
                         <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()">
                         </td>
-                        <td class="text-wrap">{{item?.userfirstName ? item?.userfirstName : item?.requestName}}</td>
-                        <td class="text-wrap">{{item?.total_totalsourced ? item?.total_totalsourced : ' '}}</td>
-                        <td class="text-wrap">{{item?.total_screenrejected ? item?.total_screenrejected : ' '}}</td>
-                        <td class="text-wrap">{{item?.total_techonereject ? item?.total_techonereject : ' '}}</td>
-                        <td class="text-wrap">{{item?.total_techtworeject ? item?.total_techtworeject : ' '}}</td>
-                        <td class="text-wrap">{{item?.total_technicalselected ? item?.total_technicalselected : ' '}}</td>
-                        <td class="text-wrap">{{item?.total_hrreject ? item?.total_hrreject : ' '}}</td>
-                        <td class="text-wrap">{{item?.total_offerreleased ? item?.total_offerreleased : ' '}}</td>
-                        <td class="text-wrap">{{item?.total_hired ? item?.total_hired : ' '}}</td>
+                        <td class="text-wrp">{{item?.userfirstName ? item?.userfirstName : item?.requestName}}</td>
+                        <td class="text-wrp">{{item?.total_totalsourced ? item?.total_totalsourced : ' '}}</td>
+                        <td class="text-wrp">{{item?.total_screenrejected ? item?.total_screenrejected : ' '}}</td>
+                        <td class="text-wrp">{{item?.total_techonereject ? item?.total_techonereject : ' '}}</td>
+                        <td class="text-wrp">{{item?.total_techtworeject ? item?.total_techtworeject : ' '}}</td>
+                        <td class="text-wrp">{{item?.total_technicalselected ? item?.total_technicalselected : ' '}}
+                        </td>
+                        <td class="text-wrp">{{item?.total_hrreject ? item?.total_hrreject : ' '}}</td>
+                        <td class="text-wrp">{{item?.total_offerreleased ? item?.total_offerreleased : ' '}}</td>
+                        <td class="text-wrp">{{item?.total_hired ? item?.total_hired : ' '}}</td>
                     </tr>
                 </ng-container>
             </ng-container>
-            <div *ngIf="candidateList?.length === 0" class="no-data">No Data Found</div>
+            <!-- <div *ngIf="candidateList?.length === 0" class="no-data">No Data Found</div> -->
         </table>
+        <div *ngIf="candidateList?.length === 0" class="no-data">No Data Found</div>
     </div>
     <div class="page d-flex j-end p-10">
         <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(1)">

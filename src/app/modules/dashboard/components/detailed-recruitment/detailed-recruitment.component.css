@@ -38,7 +38,7 @@ tr {
     top: 0;
     background: #F4F2F2 !important;
     padding: 10px;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 400;
     line-height: 18px;
     letter-spacing: 0em;
@@ -148,7 +148,8 @@ table {
     font-weight: 500;
     color: #525455;
     width: 100%;
-    padding: 50% 300%;
+    padding-top: 20px;
+    /* padding: 50% 300%; */
 }
 
 .fa-chevron-down {
@@ -179,8 +180,8 @@ table {
     font-weight: 500;
 }
 
-.text-wrap {
-    max-width: 104px !important;
+.text-wrp {
+    max-width: 107px !important;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

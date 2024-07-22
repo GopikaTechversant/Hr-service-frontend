@@ -2,29 +2,15 @@
     <div class="d-flex head">
         <div class="text"><span class="heading">Candidates By Recruiterwise</span></div>
         <div class="c-pointer">
-            <input type="radio" id="recruiter" name="radio" value="recruiter" [checked]="true" (change)="onRadioChange($event)">
-            <label for="recruiter" class="p-t-5 p-l-5 f-w-400 c-pointer">Recruiters</label>
-            <input type="radio" id="last6" name="radio" value="Last 6 Months" (change)="onRadioChange($event)">
-            <label for="last6" class="p-t-5 p-l-5 f-w-400 c-pointer">Last 6 Months</label>
+            <span class="d-flex j-space filter-radio">
+                <span> <input type="radio" id="recruiter" name="radio" value="recruiter" [checked]="true"
+                        (change)="onRadioChange($event)">
+                    <label for="recruiter" class="p-t-5 p-l-5 f-w-400 c-pointer">Recruiters</label></span>
+                <span><input type="radio" id="last6" name="radio" value="Last 6 Months" (change)="onRadioChange($event)"
+                        class="">
+                    <label for="last6" class="p-t-5 p-l-5 f-w-400 c-pointer">Last 6 Months</label></span>
+            </span>
         </div>
-        <!-- <div class="d-flex j-end m-r-10">
-            <div class="input p-t-10 p-l-6  no-close p-relative">
-                <span class="f-right d-flex">
-                    <span *ngIf="teamName && teamName.trim() !== ''" (click)="clearFilter()"
-                        class="clear-filter c-pointer">x</span>
-                    <div (click)="showDepartment = !showDepartment" class="c-pointer">
-                        <i [ngClass]="showDepartment ? ' fa fa-chevron-up' : ' fa fa-chevron-down'"
-                            class="m-l-5 p-r-10 s-text no-close"></i>
-                    </div>
-                </span>
-                <span class="c-pointer" (click)="showDepartment = !showDepartment">{{teamName.trim() === '' ? 'Select Department' : teamName}}</span>
-                <div class="no-close dropdown c-pointer no-close" *ngIf="showDepartment">
-                    <div class="p-6"  (click)="selectDepartment(item?.teamName, item?.teamId);!showDepartment" *ngFor="let item of teamDetails">
-                        <span class="p-l-10"> {{item?.teamName}}</span>
-                    </div>
-                </div>
-            </div>
-        </div> -->
     </div>
     <div>
         <div *ngIf="sixMonthCount?.length === 0 || !sixMonthCount" class="no-data"> No Data Found</div>

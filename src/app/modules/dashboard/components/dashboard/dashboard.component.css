@@ -13,7 +13,7 @@
   background-color: #FFFFFF;
   border-radius: 3px;
   width: 250px;
-  height: 25px;
+  height: 30px;
 }
 
 .date-filters {
@@ -54,8 +54,8 @@
 }
 
 .candidate-card {
-  width: 500px;
-  height: 139px;
+  width: 100%;
+  height: 121px;
   border-radius: 4px;
   background-color: #FFFFFF;
   box-shadow: 0px 4px 7px 0px #0000001F;
@@ -67,21 +67,22 @@
 .detail {
   display: flex;
   flex-direction: column;
-  margin-top: 30px;
-  margin-left: 12px;
+  margin-top: 14px;
+  margin-left: 6px;
+  width: 58%;
   justify-content: space-evenly;
 }
 
 .name {
   font-weight: 400;
-  font-size: 18px;
+  font-size: 15px;
   color: #575F6E;
   padding-bottom: 5px;
 }
 
 .count {
   font-weight: 500;
-  font-size: 22px;
+  font-size: 17px;
   color: #575F6E;
   padding-bottom: 10px;
   line-height: 26.07px;
@@ -91,19 +92,24 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
-  margin-left: 10px;
-  width: 74px;
-  height: 74px;
-  color: #005EC9;
-  border-radius: 50%;
-  border: 2px solid #005EC97A;
-  background: #EBF0FF;
+  margin-top: 24px;
+  margin-left: 4px;
+  width: 35% !important;
 }
 
 .icon {
-  font-weight: 500;
-  font-size: 25px;
+  display: inline-block;
+    height: 63px;
+    width: 63px;
+    font-weight: 500;
+    font-size: 20px;
+    color: #005EC9;
+    border-radius: 50%;
+    border: 2px solid #005EC97A;
+    background: #EBF0FF;
+    padding-top: 20px;
+    padding-left: 19px;
+ 
 }
 
 .scrollable::-webkit-scrollbar,
