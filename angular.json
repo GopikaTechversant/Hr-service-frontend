@@ -68,10 +68,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "hrService:build:production"
+              "browserTarget": "hrService:build:production"
             },
             "development": {
-              "buildTarget": "hrService:build:development"
+              "browserTarget": "hrService:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -79,7 +79,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "hrService:build"
+            "browserTarget": "hrService:build"
           }
         },
         "test": {
