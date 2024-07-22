@@ -59,9 +59,8 @@ export class DetailedRecruitmentComponent implements OnInit {
       this.fetchCandidateList();
     }
   }
-  // http://localhost:3001/dashboard/recruiter-requirement-report?dataBy=user&start_date=2024-06-01&end_date=2024-06-10&limit=1&page=1
+  
   fetchCandidateList(): void {
-    console.log("selectedOption: string = 'requirement';", this.selectedDataBy);
     if (!this.initialLoader) this.loader = true;
     const url = `/dashboard/recruiter-requirement-report`
     let params = [
@@ -85,7 +84,6 @@ export class DetailedRecruitmentComponent implements OnInit {
     }
     this.apiService.get(`${url}?${params}`).subscribe((res: any) => {
       this.candidateList = res?.data;
-      console.log(" this.candidateList", res);
       this.totalCount = res?.total;
       const totalPages = Math.ceil(this.totalCount / this.pageSize);
       this.lastPage = totalPages;

@@ -35,6 +35,7 @@ export class InterviewCountsBarComponent implements OnInit {
   constructor(private apiService: ApiService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
+    this.recruiterCheck = true;
     Chart.register(ChartDataLabels);
     this.fetchBarchartDetails();
   }
@@ -42,9 +43,11 @@ export class InterviewCountsBarComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['startDate'] && !changes['startDate'].isFirstChange()) {
       this.startDate = changes['startDate'].currentValue;
+      this.recruiterCheck = true;
       this.fetchBarchartDetails();
     } else if (changes['endDate'] && !changes['endDate'].isFirstChange()) {
-      this.endDate = changes['endDate'].currentValue
+      this.endDate = changes['endDate'].currentValue;
+      this.recruiterCheck = true;
       this.fetchBarchartDetails();
     }
   }
