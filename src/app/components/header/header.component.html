@@ -1,19 +1,19 @@
-<div class="main">
+<div class="main container-fluid">
   <div class="sidebar-container" [class.sidebar-hidden]="isSidebarHidden" *ngIf="!isSidebarHidden">
     <div class="sidebar" [class.hidden]="isSidebarHidden">
       <span class="side-head"> Techversant <span class="blue">Gateway</span></span>
     </div>
   </div>
-  <div class="header w-100 d-flex align-center j-space p-l-5">
-    <div class="p-10 d-flex">
+  <div class="header d-flex align-items-center justify-content-between navbar">
+    <div class="p-2 d-flex align-items-center">
       <div>
         <img src="/assets/images/techversant/toggle.svg" alt="" (click)="toggleSidebar()" class="c-pointer">
       </div>
-      <div class="search-container p-relative flex-start p-l-20">
-        <div class="search-div">
-          <input type="text" class="input p-l-5" placeholder="Search Candidate Detail" [(ngModel)]="searchKeyword"
+      <div class="search-container p-relative ms-3">
+        <div class="search-div d-flex align-items-center">
+          <input type="text" class="input" placeholder="Search Candidate Detail" [(ngModel)]="searchKeyword"
             (keydown)="searchCandidate(searchKeyword)">
-          <span class="search c-pointer" (click)="searchCandidate(searchKeyword)">
+          <span class="search c-pointer ms-2" (click)="searchCandidate(searchKeyword)">
             <img src="/assets/images/techversant/search.svg" alt="">
             <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
           </span>
@@ -21,17 +21,17 @@
         <div *ngIf="showCandidates" class="p-absolute candidate-dropdown no-close">
           <div class="candidate-column" *ngFor="let item of candidateList"
             (click)="selectCandidate(item.candidateId);showCandidates = !showCandidates">
-            <div *ngIf="!candidateList || candidateList?.length ===0"> No Candidate Found</div>
+            <div *ngIf="!candidateList || candidateList?.length === 0"> No Candidate Found</div>
             <div class="d-flex candidate">
-              <div class="m-5">
+              <div class="m-1">
                 <span class="user-profile">{{item?.candidateFirstName.charAt(0) ? (item?.candidateFirstName.charAt(0) |
                   uppercase) : 'U'}}</span>
               </div>
-              <div class="p-l-5">
+              <div class="ms-1">
                 <span class="text-wrap"
                   [title]="item?.candidateFirstName + ' ' + item?.candidateLastName">{{item?.candidateFirstName}}
                   {{item?.candidateLastName}}</span>
-                <span class="detail"><span class="break-word p-r-5"
+                <span class="detail"><span class="break-word me-2"
                     [title]="item?.candidateEmail">{{item?.candidateEmail}}</span> |
                   <span>{{item?.candidateMobileNo}}</span></span>
                 <span></span>
@@ -41,21 +41,21 @@
         </div>
       </div>
     </div>    
-    <div class="profile d-flex p-r-17 j-end">
-      <div class="d-flex  align-center p-r-17">
+    <div class="profile d-flex align-items-center justify-content-end p-t-8">
+      <div class="d-flex align-items-center me-2 justify-content-end">
         <span *ngFor="let station of stationsList">
-          <span class="c-pointer p-l-20 p-r-20 p-8" [ngClass]="{'active-station': station?.stationName === activeStation}"
+          <span class="c-pointer p-2" [ngClass]="{'active-station': station?.stationName === activeStation}"
             (click)="navigate(station)">
-            <span>{{station?.stationName}}</span>
+            <span class="station-name">{{station?.stationName}}</span>
           </span>
         </span>
       </div>
-      <div class="user-profile c-pointer p-relative" (click)="dropDown = !dropDown">
-        <span class="f-w-500 user-name t-dark-blue-color"> {{ currentRole?.charAt(0) ? (currentRole?.charAt(0) |
+      <div class="user-profile c-pointer position-relative" (click)="dropDown = !dropDown">
+        <span class="fw-bold user-name text-white"> {{ currentRole?.charAt(0) ? (currentRole?.charAt(0) |
           uppercase): '' }}</span>
-        <div *ngIf="dropDown" class="drop-down d-flex p-absolute">
+        <div *ngIf="dropDown" class="drop-down d-flex position-absolute">
           <div class="profile-drop" *ngFor="let station of profileDropDown">
-            <div class="c-pointer p-10 p-l-20" (click)="navigate(station)">{{station?.stationName}}</div>
+            <div class="c-pointer p-2 ps-3" (click)="navigate(station)">{{station?.stationName}}</div>
           </div>
         </div>
       </div>
