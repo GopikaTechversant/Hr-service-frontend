@@ -18,7 +18,7 @@
 .heading {
     color: #000000;
     font-weight: 500;
-    line-height: 26.07px;
+    line-height: 13.07px;
     font-size: 18px;
 }
 
@@ -45,7 +45,7 @@
 }
 
 .chart-container {
-    margin-top: 5px;
+    margin-top: 0px;
     padding-bottom: 20px;
     flex-grow: 1;
     display: flex;

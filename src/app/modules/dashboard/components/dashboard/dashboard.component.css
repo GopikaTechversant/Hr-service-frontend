@@ -25,17 +25,17 @@
   max-width: 190px !important;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap; 
-  display: block; 
+  white-space: nowrap;
+  display: block;
   cursor: pointer;
 }
 
 .break-word {
-  display: block; 
+  display: block;
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-word;
-  white-space: nowrap; 
+  white-space: nowrap;
   max-width: 170px;
   cursor: pointer;
 }
@@ -48,7 +48,7 @@
   margin-right: 5px;
 }
 
-.candidate{
+.candidate {
   display: flex;
   gap: 10px;
 }
@@ -67,24 +67,25 @@
 .detail {
   display: flex;
   flex-direction: column;
-  margin-top: 14px;
+  margin-top: 27px;
   margin-left: 6px;
   width: 58%;
-  justify-content: space-evenly;
+  gap: 2px;
+  /* justify-content: space-evenly; */
 }
 
 .name {
   font-weight: 400;
   font-size: 15px;
   color: #575F6E;
-  padding-bottom: 5px;
+  /* padding-bottom: 5px; */
 }
 
 .count {
   font-weight: 500;
   font-size: 17px;
   color: #575F6E;
-  padding-bottom: 10px;
+  /* padding-bottom: 10px; */
   line-height: 26.07px;
 }
 
@@ -99,17 +100,17 @@
 
 .icon {
   display: inline-block;
-    height: 63px;
-    width: 63px;
-    font-weight: 500;
-    font-size: 20px;
-    color: #005EC9;
-    border-radius: 50%;
-    border: 2px solid #005EC97A;
-    background: #EBF0FF;
-    padding-top: 20px;
-    padding-left: 19px;
- 
+  height: 69px;
+  width: 69px;
+  font-weight: 500;
+  font-size: 20px;
+  color: #005EC9;
+  border-radius: 50%;
+  border: 2px solid #005EC97A;
+  background: #EBF0FF;
+  padding-top: 20px;
+  padding-left: 20px;
+
 }
 
 .scrollable::-webkit-scrollbar,

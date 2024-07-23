@@ -181,7 +181,7 @@ table {
 }
 
 .text-wrp {
-    max-width: 107px !important;
+    max-width: 128px !important;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
