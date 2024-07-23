@@ -202,7 +202,7 @@
                 <div class="dropdown c-pointer no-close'" *ngIf="filterStatus">
                     <span class="d-flex p-0" *ngFor="let type of status"
                         (click)="selectStatusFilter(type?.status);filterStatus = !filterStatus">
-                        <span class="p-l-20 p-5 f-s-14 f-w-400">{{type?.status | titlecase}}</span>
+                        <span class="p-l-20 p-r-5 f-s-14 f-w-400">{{type?.status | titlecase}}</span>
                     </span>
                 </div>
             </span>

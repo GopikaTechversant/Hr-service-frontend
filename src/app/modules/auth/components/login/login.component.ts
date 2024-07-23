@@ -108,8 +108,7 @@ export class LoginComponent implements OnInit {
         theme: 'outline',
         size: 'large',
         text: 'Sign in with Google',
-        width: '100%'  // Adjust this to match the width of the login button
-
+        width: '100%'
       }
     );
   }
