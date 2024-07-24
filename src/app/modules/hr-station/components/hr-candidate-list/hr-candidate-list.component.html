@@ -67,10 +67,10 @@
     <div class="main m-t-10">
         <div class="table-container m-b-0">
             <table class="table">
-                <tr class="table-header f-w-500 p-b-10">
-                    <td>Select</td>
+                <tr class="table-header">
+                    <!-- <td>Select</td> -->
                     <td>Candidate ID</td>
-                    <td>Date</td>
+                    <!-- <td>Date</td> -->
                     <td>Name</td>
                     <td>Email</td>
                     <td>Requirement</td>
@@ -79,6 +79,7 @@
                     <td>Candidate Station</td>
                     <td>Service Status</td>
                     <td>More Details</td>
+                    <td>Date</td>
                 </tr>
                 <div *ngIf="loader && !initialLoader" class="loader-parent">
                     <img src="assets/gif/loader.gif">
@@ -87,23 +88,23 @@
                     <ng-container *ngFor="let innerArray of candidateList">
                     <ng-container *ngFor="let item of innerArray">
                         <tr class="candidate c-pointer" (dblclick)="selectCandidate(item['candidate.candidateId'])">
-                            <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()"></td>
+                            <!-- <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()"></td> -->
                             <td>{{ item['candidate.candidateId'] }}</td>
-                            <td>{{item?.serviceDate | date : 'dd/MM/YYY'}}</td>
-                            <td class="text-wrap" [title]="item['candidate.candidateFirstName'] +' '+ item['candidate.candidateLastName']">
+                            <!-- <td>{{item?.serviceDate | date : 'dd/MM/YYY'}}</td> -->
+                            <td class="" [title]="item['candidate.candidateFirstName'] +' '+ item['candidate.candidateLastName']">
                                 {{ item['candidate.candidateFirstName'] }} {{ item['candidate.candidateLastName'] }}
                             </td>
-                            <td class="text-wrap" [title]="item['candidate.candidateEmail']">{{ item['candidate.candidateEmail'] }}</td>
-                            <td class="text-wrap" [title]="item['serviceRequest.requestName']">{{ item['serviceRequest.requestName'] }}</td>
-                            <td class="text-wrap f-w-500" [title]="item?.progressStatus > 0 ? 'Offer Released' : 'Pending'"
+                            <td class="" [title]="item['candidate.candidateEmail']">{{ item['candidate.candidateEmail'] }}</td>
+                            <td class="" [title]="item['serviceRequest.requestName']">{{ item['serviceRequest.requestName'] }}</td>
+                            <td class=" f-w-500" [title]="item?.progressStatus > 0 ? 'Offer Released' : 'Pending'"
                                 [ngClass]="item?.progressStatus > 0  ? 'green' : 'orange'">
                                 {{item?.progressStatus > 0 ? 'Offer Released' : 'Pending'}}
                             </td>
                             <td>
                                 <img src="/assets/images/candidate-detail/move.svg" alt="move" *ngIf="item" (click)="onSwitchStation(item)">
                             </td>
-                            <td class="text-wrap">{{item?.currentStation}}</td>
-                            <td class="f-w-500 text-wrap" [ngClass]="{'orange': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
+                            <td class="">{{item?.currentStation}}</td>
+                            <td class="f-w-500" [ngClass]="{'orange': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
                             'red': item?.serviceStatus === 'rejected'}">
                             {{ item?.serviceStatus === 'done' ? 'Offer Accepted' : item?.serviceStatus | titlecase}}</td>
                             <td (click)="fetchDetails(item?.serviceId , item?.progressStatus)" class="c-pointer">
@@ -112,6 +113,7 @@
                                     <span class="blue f-w-500 p-l-5">View detail</span>
                                 </div>
                             </td>
+                            <td>{{item?.serviceDate | date : 'dd/MM/YYY'}}</td>
                         </tr>
                     </ng-container>
                     </ng-container>

@@ -24,44 +24,44 @@
     <div class="table-container m-b-0">
         <table class="table">
             <tr class="table-header p-b-10">
-                <td class="text-wrap">Select</td>
-                <td class="text-wrap" title="Name">Name</td>
-                <td class="text-wrap" title="Email">Email</td>
-                <td class="text-wrap" title="Mobile">Mobile</td>
-                <td class="text-wrap" title="Previous Organization">Previous Organization</td>
-                <td class="text-wrap" title="Previous Designation">Previous Designation</td>
-                <td class="text-wrap" title="Relevent Experience">Relevent Experience</td>
-                <td class="text-wrap" title="Total Experience">Total Experience</td>
-                <td class="text-wrap" title="Current Salary">Current Salary</td>
-                <td class="text-wrap" title="Education">Education</td>
-                <td class="text-wrap" title="Skills">Skills</td>
-                <td class="text-wrap" title="Requirement">Requirement</td>
-                <td class="text-wrap" title="Actions">Actions</td>
+                <td class="">Select</td>
+                <td class="" title="Name">Name</td>
+                <td class="" title="Email">Email</td>
+                <td class="" title="Mobile">Mobile</td>
+                <td class="" title="Previous Organization">Previous Organization</td>
+                <td class="" title="Previous Designation">Previous Designation</td>
+                <td class="" title="Relevent Experience">Relevent Experience</td>
+                <td class="" title="Total Experience">Total Experience</td>
+                <td class="" title="Current Salary">Current Salary</td>
+                <td class="" title="Education">Education</td>
+                <td class="" title="Skills">Skills</td>
+                <td class="" title="Requirement">Requirement</td>
+                <td class="" title="Actions">Actions</td>
             </tr>
             <ng-container *ngIf="candidateList?.length > 0">
                 <tr class="c-pointer details" *ngFor="let item of candidateList"
                     (dblclick)="selectCandidate(item?.candidateId)">
                     <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()"></td>
-                    <td class="text-wrap"
+                    <td class=""
                         [title]="(item?.candidateFirstName | titlecase) + (item?.candidateLastName | titlecase)">
                         {{item?.candidateFirstName | titlecase}} {{item?.candidateLastName | titlecase}}
                     </td>
-                    <td class="text-wrap" [title]="item?.candidateEmail">{{item?.candidateEmail}}</td>
-                    <td class="text-wrap" [title]="item?.candidateMobileNo">{{item?.candidateMobileNo}}</td>
-                    <td class="text-wrap" [title]="item?.candidatePreviousOrg">{{item?.candidatePreviousOrg}}</td>
-                    <td class="text-wrap" [title]="item?.candidatePreviousDesignation">
+                    <td class="" [title]="item?.candidateEmail">{{item?.candidateEmail}}</td>
+                    <td class="t-a-right" [title]="item?.candidateMobileNo">{{item?.candidateMobileNo}}</td>
+                    <td class="" [title]="item?.candidatePreviousOrg">{{item?.candidatePreviousOrg}}</td>
+                    <td class="" [title]="item?.candidatePreviousDesignation">
                         {{item?.candidatePreviousDesignation}}</td>
-                    <td class="text-wrap" [title]="item?.candidateRevlentExperience">{{item?.candidateRevlentExperience
+                    <td class="t-a-right" [title]="item?.candidateRevlentExperience">{{item?.candidateRevlentExperience
                         || 'Nil'}}</td>
-                    <td class="text-wrap" [title]="item?.candidateTotalExperience">{{item?.candidateTotalExperience ||
+                    <td class="t-a-right" [title]="item?.candidateTotalExperience">{{item?.candidateTotalExperience ||
                         'Nil'}}</td>
-                    <td class="text-wrap" [title]="item?.candidateCurrentSalary">{{item?.candidateCurrentSalary}}</td>
-                    <td class="text-wrap" [title]="item?.candidateEducation">{{item?.candidateEducation}}</td>
-                    <td class="text-wrap"
+                    <td class="t-a-right" [title]="item?.candidateCurrentSalary">{{item?.candidateCurrentSalary}}</td>
+                    <td class="" [title]="item?.candidateEducation">{{item?.candidateEducation}}</td>
+                    <td class=""
                         [title]="item?.candidateSkill.length > 0 ? (item?.candidateSkill[0]?.skills?.skillName | titlecase):'N/A'">
                         {{item?.candidateSkill.length > 0 ? (item?.candidateSkill[0]?.skills?.skillName |
                         titlecase):'N/A'}}</td>
-                        <td class="text-wrap"  [title]="item?.reqServiceRequest?.requestName">{{item?.reqServiceRequest?.requestName || 'Not Assigned'}}</td>
+                        <td class=""  [title]="item?.reqServiceRequest?.requestName">{{item?.reqServiceRequest?.requestName || 'Not Assigned'}}</td>
                     <td *ngIf="!item?.candidatesAddingAgainst">
                         <i class="fa fa-pencil-square-o p-r-5 icon-color" aria-hidden="true"
                             (click)="edit(item?.candidateId)"></i>

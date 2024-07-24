@@ -6,23 +6,6 @@
                 {{selectedRecruitername}}</span>
         </div>
         <div>
-
-            <!-- <span class="filter p-r-10 p-t-10 p-b-5">File Recruiter</span>
-                <div class="input no-close text col-md-3 p-l-8 d-flex recruiter-drop-down j-space m-text align-center p-relative text-color"
-                    (click)="recruitersListOpen = !recruitersListOpen">
-                    <div>{{selectedRecruitername ? selectedRecruitername : 'Choose Recruiter'}}</div>
-                    <div class="no-close s-list c-pointer m-b-2 flex-1 d-flex j-end sub p-r-10">
-                        <span class="f-right">
-                            <span *ngIf="selectedRecruitername && selectedRecruitername !== ''" (click)="clearFilter()" class="clear-filter">x</span>
-                            <span  (click)="recruitersListOpen = !recruitersListOpen"><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
-                        </span>  
-                    </div>
-                    <div class=" m-b-2 drop-list" *ngIf="recruitersListOpen">
-                        <div (click)="selectedRecruiter(item.userId,item.userFullName);recruitersListOpen = !recruitersListOpen"
-                            *ngFor="let item of recruitersList" class=" p-t-5 p-b-5 p-l-8 c-pointer text-color">
-                            {{item?.userFullName}}</div>
-                    </div>
-                </div> -->
             <span class="c-pointer d-flex">
                 <span class="p-8">
                     <input type="radio" id="position" name="filter" value="position" [checked]="true"
@@ -41,17 +24,18 @@
     </div>
     <div class="table-container m-b-0">
         <table class="table">
-            <tr class="table-header f-w-500 p-b-10">
-                <td class="text-wrap">Select</td>
-                <td class="text-wrap" [title]="selectedDataBy === 'user' ? 'Recruiter' : 'Requisition'">{{selectedDataBy === 'user' ? 'Recruiter' : 'Requisition'}}</td>
-                <td class="text-wrap" title="Total Applicants">Total Applicants</td>
-                <td class="text-wrap" title="Screening Rejected">Screening Rejected</td>
-                <td class="text-wrap" title="Technical 1 Rejected">Technical 1 Rejected</td>
-                <td class="text-wrap" title="technical 2 Rejected">Technical 2 Rejected</td>
-                <td class="text-wrap" title="Selected from technical round">Selected from technical round</td>
-                <td class="text-wrap" title="HR Rejected">HR Rejected</td>
-                <td class="text-wrap" title="Offer Released">Offer Released</td>
-                <td class="text-wrap" title="Hired">Hired</td>
+            <tr class="table-header">
+                <!-- <td class="text-wrap">Select</td> -->
+                <td class="requisition-col" [title]="selectedDataBy === 'user' ? 'Recruiter' : 'Requisition'">{{selectedDataBy
+                    === 'user' ? 'Recruiter' : 'Requisition'}}</td>
+                <td class="" title="Total Applicants">Total Applicants</td>
+                <td class="" title="Screening Rejected">Screening Rejected</td>
+                <td class="" title="Technical 1 Rejected">Technical 1 Rejected</td>
+                <td class="" title="technical 2 Rejected">Technical 2 Rejected</td>
+                <td class="" title="Selected from technical round">Selected from technical round</td>
+                <td class="" title="HR Rejected">HR Rejected</td>
+                <td class="" title="Offer Released">Offer Released</td>
+                <td class="" title="Hired">Hired</td>
             </tr>
             <!-- <div class="loader-parent">
                 <img src="assets/gif/loader.gif">
@@ -59,17 +43,18 @@
             <ng-container>
                 <ng-container *ngFor="let item of  candidateList">
                     <tr class="c-pointer details" (dblclick)="selectCandidate(item['candidate.candidateId'])">
-                        <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()">
+                        <!-- <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()">
+                        </td> -->
+                        <td class="t-a-left">{{item?.userfirstName ? item?.userfirstName : item?.requestName}}</td>
+                        <td class="t-a-right">{{item?.total_totalsourced ? item?.total_totalsourced : ' '}}</td>
+                        <td class="t-a-right">{{item?.total_screenrejected ? item?.total_screenrejected : ' '}}</td>
+                        <td class="t-a-right">{{item?.total_techonereject ? item?.total_techonereject : ' '}}</td>
+                        <td class="t-a-right">{{item?.total_techtworeject ? item?.total_techtworeject : ' '}}</td>
+                        <td class="t-a-right">{{item?.total_technicalselected ? item?.total_technicalselected : ' '}}
                         </td>
-                        <td class="text-wrap">{{item?.userfirstName ? item?.userfirstName : item?.requestName}}</td>
-                        <td class="text-wrap">{{item?.total_totalsourced ? item?.total_totalsourced : ' '}}</td>
-                        <td class="text-wrap">{{item?.total_screenrejected ? item?.total_screenrejected : ' '}}</td>
-                        <td class="text-wrap">{{item?.total_techonereject ? item?.total_techonereject : ' '}}</td>
-                        <td class="text-wrap">{{item?.total_techtworeject ? item?.total_techtworeject : ' '}}</td>
-                        <td class="text-wrap">{{item?.total_technicalselected ? item?.total_technicalselected : ' '}}</td>
-                        <td class="text-wrap">{{item?.total_hrreject ? item?.total_hrreject : ' '}}</td>
-                        <td class="text-wrap">{{item?.total_offerreleased ? item?.total_offerreleased : ' '}}</td>
-                        <td class="text-wrap">{{item?.total_hired ? item?.total_hired : ' '}}</td>
+                        <td class="t-a-right">{{item?.total_hrreject ? item?.total_hrreject : ' '}}</td>
+                        <td class="t-a-right">{{item?.total_offerreleased ? item?.total_offerreleased : ' '}}</td>
+                        <td class="t-a-right">{{item?.total_hired ? item?.total_hired : ' '}}</td>
                     </tr>
                 </ng-container>
             </ng-container>

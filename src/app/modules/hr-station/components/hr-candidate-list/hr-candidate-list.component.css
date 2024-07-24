@@ -147,12 +147,12 @@ tr:nth-child(even) {
 
 td {
     padding: 10px;
-    text-align: center !important;
+    /* text-align: center !important; */
     border: 1px solid #E9E9E9;
 }
 
 tr {
-    text-align: center;
+    /* text-align: center; */
 }
 
 .blue {
@@ -177,7 +177,7 @@ tr {
     font-weight: 500;
     line-height: 18px;
     letter-spacing: 0em;
-    text-align: center;
+    /* text-align: center; */
 }
 
 .btn {

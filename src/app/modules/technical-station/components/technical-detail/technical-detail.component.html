@@ -69,10 +69,10 @@
     <div class="main">
         <div class="table-container m-b-0 w-100">
             <table class="table">
-                <tr class="table-header f-w-500 p-b-10">
-                    <td>Select</td>
+                <tr class="table-header">
+                    <!-- <td>Select</td> -->
                     <td>Candidate ID</td>
-                    <td>Date</td>
+                    <!-- <td>Date</td> -->
                     <td>Name</td>
                     <td>Email</td>
                     <td>Requirement</td>        
@@ -81,6 +81,7 @@
                     <td>Service Status</td>
                     <td>Candidate Station</td>
                     <td>More Detail</td>
+                    <td>Date</td>
                 </tr>
                 <div *ngIf="loader && !initialLoader" class="loader-parent">
                     <img src="assets/gif/loader.gif">
@@ -89,32 +90,33 @@
                     <ng-container *ngFor="let innerArray of candidateList">
                         <ng-container  *ngFor="let item of innerArray">
                             <tr class="candidate c-pointer" (dblclick)="selectCandidate(item['candidate.candidateId'])">
-                                <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()"></td>
-                                <td>{{ item['candidate.candidateId'] }}</td>
-                                <td>{{item?.serviceDate | date : 'dd/MM/YYY'}}</td>
-                                <td class="text-wrap" [title]="item['candidate.candidateFirstName'] +' '+ item['candidate.candidateLastName']">
+                                <!-- <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()"></td> -->
+                                <td class="t-a-right">{{ item['candidate.candidateId'] }}</td>
+                                <!-- <td class="t-a-right">{{item?.serviceDate | date : 'dd/MM/YYY'}}</td> -->
+                                <td class="" [title]="item['candidate.candidateFirstName'] +' '+ item['candidate.candidateLastName']">
                                     {{ item['candidate.candidateFirstName'] }} {{ item['candidate.candidateLastName'] }}
                                 </td>
-                                <td class="text-wrap" [title]="item['candidate.candidateEmail'] ">{{ item['candidate.candidateEmail'] }}</td>
-                                <td class="text-wrap" [title]="item['serviceRequest.requestName']">{{ item['serviceRequest.requestName'] }}</td>
-                                <td class="text-wrap f-w-500" [title]="item?.progressStatus > 0 ? 'Progress Added' : 'Pending'"
+                                <td class="" [title]="item['candidate.candidateEmail'] ">{{ item['candidate.candidateEmail'] }}</td>
+                                <td class="" [title]="item['serviceRequest.requestName']">{{ item['serviceRequest.requestName'] }}</td>
+                                <td class=" f-w-500" [title]="item?.progressStatus > 0 ? 'Progress Added' : 'Pending'"
                                     [ngClass]="item?.progressStatus > 0  ? 'green' : 'orange'">
                                     {{item?.progressStatus > 0 ? 'Progress Added' : 'Pending'}}
                                 </td>
-                                <td>
+                                <td class="t-a-center">
                                     <img src="/assets/images/candidate-detail/move.svg" alt="move" *ngIf="item" (click)="onSwitchStation(item)">
                                 </td>
                                 <td>
                                     <span class="f-w-500 p-10" [ngClass]="{'orange': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
                                     'red': item?.serviceStatus === 'rejected'}" [title]="item?.serviceStatus | titlecase">{{ item?.serviceStatus | titlecase}}</span>
                                 </td>
-                                <td class="text-wrap" [title]="item?.currentStation | titlecase">{{item?.currentStation | titlecase}}</td>  
+                                <td class="" [title]="item?.currentStation | titlecase">{{item?.currentStation | titlecase}}</td>  
                                 <td (click)="fetchDetails(item?.serviceId , item?.progressStatus)" class="c-pointer">
                                     <div class="d-flex j-centre">
                                         <i class="fa fa-eye blue f-s-18 f-w-500" aria-hidden="true"></i>
                                         <span class="blue f-w-500 p-l-5">View detail</span>
                                     </div>                 
                                 </td>
+                                <td class="t-a-right">{{item?.serviceDate | date : 'dd/MM/YYY'}}</td>
                             </tr>
                         </ng-container>
                     </ng-container>

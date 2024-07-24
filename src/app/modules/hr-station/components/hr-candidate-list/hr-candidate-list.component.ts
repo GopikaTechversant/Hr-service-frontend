@@ -123,11 +123,11 @@ export class HrCandidateListComponent implements OnInit {
     });
   }
 
-  getSelectedCandidateIds(): void {
-    const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
-    this.candidateIds = selectedCandidates.map((candidate: { serviceId: any; }) => candidate?.serviceId);
-    // this.selectedItem = this.candidateIds;
-  }
+  // getSelectedCandidateIds(): void {
+  //   const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
+  //   this.candidateIds = selectedCandidates.map((candidate: { serviceId: any; }) => candidate?.serviceId);
+  //   // this.selectedItem = this.candidateIds;
+  // }
 
   generatePageNumbers() {
     let pages = [];

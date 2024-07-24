@@ -143,10 +143,10 @@ export class TechnicalDetailComponent implements OnInit {
     });
   }
 
-  getSelectedCandidateIds(): void {
-    const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
-    this.candidateIds = selectedCandidates.map((candidate: { serviceId: any; }) => candidate?.serviceId);
-  }
+  // getSelectedCandidateIds(): void {
+  //   const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
+  //   this.candidateIds = selectedCandidates.map((candidate: { serviceId: any; }) => candidate?.serviceId);
+  // }
 
   dateChange(event: any, range: string): void {
     let date = new Date(event?.value);

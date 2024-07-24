@@ -23,14 +23,16 @@ tr:nth-child(even) {
 
 td {
     padding: 10px;
-    text-align: center;
-    border: 1px solid #E9E9E9;
+    /* text-align: center; */
+    border-right: 1px solid #E9E9E9;
+    /* text-align: left; */
     /* height: 53px; */
 }
 
 tr {
-    text-align: center;
-    height: 53px;
+    /* text-align: center; */
+    /* height: 53px; */
+    border: 1px solid #E9E9E9;
 }
 
 .table-header {
@@ -38,11 +40,11 @@ tr {
     top: 0;
     background: #F4F2F2 !important;
     padding: 10px;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 400;
     line-height: 18px;
     letter-spacing: 0em;
-    text-align: center;
+    /* text-align: center; */
 }
 
 .table-container {
@@ -223,3 +225,7 @@ table {
 .details:hover {
     background-color: #D3E8FF;
   }
+
+.requisition-col{
+    width: 22%;
+}

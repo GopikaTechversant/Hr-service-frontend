@@ -109,13 +109,13 @@ tr:nth-child(even) {
 
 
 td {
-    padding: 15px;
-    text-align: center;
+    padding: 10px;
+    /* text-align: center; */
     border: 1px solid #E9E9E9
 }
 
 tr {
-    text-align: center;
+    /* text-align: center; */
 }
 
 .table-header {
@@ -124,10 +124,10 @@ tr {
     background-color: #F4F2F2 !important;
     padding: 10px;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 18px;
     letter-spacing: 0em;
-    text-align: center;
+    /* text-align: center; */
 }
 
 .details {
