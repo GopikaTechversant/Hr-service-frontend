@@ -42,17 +42,17 @@
                 <div class="child d-flex m-b-10">
                     <span class="label m-b-4">Gender<span class="required">*</span></span>
                     <span class="d-flex gender input-box c-pointer">
-                        <span class="p-8">
+                        <span class="padding">
                             <input type="radio" id="Male" name="candidateGender" value="Male"
                                 formControlName="candidateGender">
                             <label for="Male" class="p-t-5 p-l-5 ">Male</label>
                         </span>
-                        <span class="p-8">
+                        <span class="padding">
                             <input type="radio" id="Female" name="candidateGender" value="Female"
                                 formControlName="candidateGender">
                             <label for="Female" class="p-t-5 p-l-5">Female</label>
                         </span>
-                        <span class="p-8">
+                        <span class="padding">
                             <input type="radio" id="Others" name="candidateGender" value="Others"
                                 formControlName="candidateGender">
                             <label for="Others" class="p-t-5 p-l-5">Others</label>
@@ -86,10 +86,10 @@
                 <div class="child d-flex m-b-10">
                     <span class="label m-b-4">Application Source<span class="required">*</span></span>
                     <div class="input-box p-t-5 p-l-5 c-pointer p-relative no-close" (click)="showSource = !showSource">
-                        <div class="p-t-5">
+                        <div class="p-t-1">
                             <span *ngIf="!sourceName">Select source</span>
                             <span *ngIf="sourceName">{{sourceName}}</span>
-                            <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
+                            <span><i class="f-right p-r-10 p-t-3 fa fa-chevron-down s-text"></i></span>
                             <div class="no-close dropdown c-pointer" *ngIf="showSource">
                                 <p *ngFor="let source of sourceList"
                                     (click)="selectsource(source?.sourceId, source?.sourceName)">
@@ -132,10 +132,10 @@
                         (keydown)="nameValidation($event)"> -->
                     <div class="input-box p-t-5 p-l-5 c-pointer p-relative no-close"
                         (click)="showPreferredLocation = !showPreferredLocation">
-                        <div class="p-t-5">
+                        <div class="p-t-1">
                             <span *ngIf="!locationName">Select Location</span>
                             <span *ngIf="locationName">{{locationName}}</span>
-                            <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
+                            <span><i class="f-right p-r-10 p-t-3 fa fa-chevron-down s-text"></i></span>
                             <div class="no-close dropdown c-pointer" *ngIf="showPreferredLocation">
                                 <p *ngFor="let item of preferredLocation"
                                     (click)="selectPreferredLocation(item?.location)">
@@ -197,17 +197,17 @@
     </div>
     <div class="skills">
         <div class="skill-head">
-            <span class="flex-1 m-4 no-close">Skill Sets</span>
-            <span class="flex-1 m-4 no-close">Selected Skill Set</span>
+            <span class="flex-1 no-close">Skill Sets</span>
+            <span class="flex-1 no-close">Selected Skill Set</span>
         </div>
         <div class="d-flex parent p-10">
             <div class="child d-flex m-b-10">
                 <div class="d-flex skill-drop-down m-t-5 no-close w-100">
                     <div class="input-box p-t-5 p-l-5 c-pointer no-close p-relative"
                         (click)="showDropdown = !showDropdown">
-                        <div class="p-t-5">
+                        <div class="padding-skill">
                             <span class="no-close'">{{selectedSkillType || 'Skill Type'}}</span>
-                            <span><i class="f-right p-r-10 fa fa-chevron-down no-close'"></i></span>
+                            <span><i class="f-right p-r-10 p-t-1 fa fa-chevron-down no-close'"></i></span>
                             <div class="dropdown c-pointer no-close'" *ngIf="showDropdown">
                                 <p *ngFor="let type of skillTypes" (click)="selectSkillType(type);">{{type}}</p>
                             </div>
@@ -220,7 +220,7 @@
                             (input)="getSkillSuggestions($event)" id="addskill" [(ngModel)]="searchvalue">
                         <div class="drop-list" *ngIf="searchvalue.trim() !== ''">
                             <div *ngFor="let suggestion of skillSuggestions" (click)="selectSkill(suggestion)"
-                                class="p-5">
+                                class="p-t-8">
                                 <span class="p-7 "><img src="/assets/images/candidate-detail/checkMark.svg" alt=""
                                         class="m-t-0 p-r-4" width="15px" height="13px"></span>
                                 <span class="c-pointer ">{{suggestion?.skillName | titlecase}}</span>
@@ -236,10 +236,10 @@
             <div class="child-skill d-flex m-b-10">
                 <div *ngIf="selectedPrimarySkills.length > 0">
                     <span class="p-l-20">Selected Primary Skills</span>
-                    <div *ngFor="let skill of selectedPrimarySkills" class="m-20">
-                        <span class="p-4"><img src="/assets/images/candidate-detail/checkMark.svg" alt=""
+                    <div *ngFor="let skill of selectedPrimarySkills" class="m-l-18 m-t-6">
+                        <span class=""><img src="/assets/images/candidate-detail/checkMark.svg" alt=""
                                 class="m-t-0 p-r-4" width="15px" height="13px"></span>
-                        <span>{{ skill?.name | titlecase}}</span>
+                        <span class="p-l-3">{{ skill?.name | titlecase}}</span>
                         <i class="fa fa-trash-o  delete-color" aria-hidden="true"
                             (click)="removeSkill(skill, 'primary')"></i>
                     </div>
@@ -248,10 +248,10 @@
             <div class="child-skill d-flex m-b-10">
                 <div *ngIf="selectedSecondarySkills.length > 0">
                     <span class="p-l-20">Selected Secondary Skills</span>
-                    <div *ngFor="let skill of selectedSecondarySkills" class="m-20">
-                        <span class="p-4"><img src="/assets/images/candidate-detail/checkMark.svg" alt=""
+                    <div *ngFor="let skill of selectedSecondarySkills" class="m-l-18 m-t-6">
+                        <span class=""><img src="/assets/images/candidate-detail/checkMark.svg" alt=""
                                 class="m-t-0 p-r-4" width="15px" height="13px"></span>
-                        <span>{{ skill?.name | titlecase}}</span>
+                        <span class="p-l-3">{{ skill?.name | titlecase}}</span>
                         <i class="fa fa-trash-o  delete-color" aria-hidden="true"
                             (click)="removeSkill(skill, 'secondary')"></i>
                     </div>
