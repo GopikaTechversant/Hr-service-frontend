@@ -18,7 +18,6 @@
 }
 
 .clear-filter {
-
     background-color: #ffff;
     padding: 5px;
 }
@@ -32,7 +31,6 @@
     overflow: hidden;
     background-color: whitesmoke;
 }
-
 .date-filters {
     display: flex;
     align-items: center;
@@ -60,13 +58,11 @@
 }
 
 .text-wrap {
-    max-width: 120px !important;
+    max-width: 104px !important;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     cursor: pointer;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
 }
 
 .input {
@@ -74,8 +70,10 @@
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
-    width: 210px;
-    height: 30px;
+    width: 190px;
+    height: 40px;
+    padding: 5px;
+    padding-top: 10px;
 }
 
 .input-1 {
@@ -84,16 +82,16 @@
     background-color: #FFFFFF;
     border-radius: 3px;
     width: 200px;
-    height: 30px;
+    height: 40px;
 }
 
-.date-input {
+.date-input{
     border: 1px solid #E9E9E9;
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
     width: 105px;
-    height: 30px;
+    height: 33px;
 }
 
 .filter-icon {
@@ -118,8 +116,9 @@ input[type="text"] {
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
-    width: 170px;
-    height: 28px;
+    width: 155px;
+    height: 23px;
+    padding-bottom: 10px;
 }
 
 table {
@@ -155,18 +154,10 @@ tr {
     text-align: center;
 }
 
-.blue {
-    color: #005EC9;
-}
-
-.red {
-    color: #C10A0A;
-}
-
 .green {
-    color: #08E179;
+    color: #08BC66;
+   /* background-color:#08BC66 ;  */
 }
-
 
 .table-header {
     position: sticky;
@@ -180,16 +171,18 @@ tr {
     text-align: center;
 }
 
-.btn {
-    width: 100%;
-    height: 35px;
-    color: #FFFFFF;
-    background-color: #4F4F4F;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 500;
-
+.search-div {
+    display: flex;
+    justify-content: flex-end;
+    width: 200px;
+    height: 38px;
+    gap: 0px;
+    border-radius: 3px 0px 0px 0px;
+    border: 1px solid #D8E2FF;
+    background: #FFFFFF;
+    position: relative;
+    padding: 10px;
+    /* margin-left: 10px; */
 }
 
 .move {

@@ -1,10 +1,3 @@
-.header {
-    min-height: 70px !important;
-    max-height: 70px !important;
-    position: sticky;
-    max-width: 100%;
-}
-
 .main {
     background-color: #FFFFFF;
     box-shadow: 0px 4px 8px 0px #0000001A;
@@ -25,21 +18,8 @@
 }
 
 .clear-filter {
-
     background-color: #ffff;
     padding: 5px;
-}
-
-.blue {
-    color: #005EC9;
-}
-
-.red {
-    color: #C10A0A;
-}
-
-.green {
-    color: #08E179;
 }
 
 .search-head {
@@ -51,11 +31,9 @@
     overflow: hidden;
     background-color: whitesmoke;
 }
-
-.initial-loader {
-    position: absolute;
-    top: 31%;
-    left: 21%;
+.date-filters {
+    display: flex;
+    align-items: center;
 }
 
 .loader-parent {
@@ -79,15 +57,12 @@
     font-weight: 500;
 }
 
-.candidate:hover {
-    background-color: #D3E8FF;
-}
-
 .text-wrap {
-    max-width: 120px !important;
+    max-width: 104px !important;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    cursor: pointer;
 }
 
 .input {
@@ -95,8 +70,10 @@
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
-    width: 400px;
-    height: 30px;
+    width: 190px;
+    height: 40px;
+    padding: 5px;
+    padding-top: 10px;
 }
 
 .input-1 {
@@ -105,7 +82,33 @@
     background-color: #FFFFFF;
     border-radius: 3px;
     width: 200px;
-    height: 30px;
+    height: 40px;
+}
+
+.date-input{
+    border: 1px solid #E9E9E9;
+    outline: none;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    width: 105px;
+    height: 33px;
+}
+
+.filter-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.d-flex {
+    display: flex;
+    align-items: center;
+}
+
+.flex-1 {
+    flex: 1;
 }
 
 input[type="text"] {
@@ -113,8 +116,9 @@ input[type="text"] {
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
-    width: 360px;
-    height: 28px;
+    width: 155px;
+    height: 23px;
+    padding-bottom: 10px;
 }
 
 table {
@@ -135,6 +139,11 @@ tr:nth-child(even) {
     background: #FFFFFF;
 }
 
+.candidate:hover {
+    background-color: #D3E8FF;
+}
+
+
 td {
     padding: 10px;
     text-align: center !important;
@@ -143,6 +152,11 @@ td {
 
 tr {
     text-align: center;
+}
+
+.green {
+    color: #08BC66;
+   /* background-color:#08BC66 ;  */
 }
 
 .table-header {
@@ -157,21 +171,18 @@ tr {
     text-align: center;
 }
 
-.table-view {
-    height: calc(100vh - 200px);
-    overflow: auto;
-}
-
-.btn {
-    width: 100%;
-    height: 35px;
-    color: #FFFFFF;
-    background-color: #005EC9;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 500;
-
+.search-div {
+    display: flex;
+    justify-content: flex-end;
+    width: 200px;
+    height: 38px;
+    gap: 0px;
+    border-radius: 3px 0px 0px 0px;
+    border: 1px solid #D8E2FF;
+    background: #FFFFFF;
+    position: relative;
+    padding: 10px;
+    /* margin-left: 10px; */
 }
 
 .move {
@@ -184,6 +195,12 @@ tr {
     color: #005EC9;
     background-color: #FFFFFF;
     border: 1px solid #005EC9;
+}
+
+.initial-loader {
+    position: absolute;
+    top: 35%;
+    left: 21%;
 }
 
 .clear-filter {
@@ -245,8 +262,4 @@ tr {
     padding: 0px 4px;
     border: 1px solid #3c40434d;
     border-radius: 50%;
-}
-
-.view-details{
-    color: #005EC9;
 }

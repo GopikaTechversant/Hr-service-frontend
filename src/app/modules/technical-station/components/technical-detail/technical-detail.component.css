@@ -31,6 +31,7 @@
     overflow: hidden;
     background-color: whitesmoke;
 }
+
 .date-filters {
     display: flex;
     align-items: center;
@@ -85,7 +86,7 @@
     height: 40px;
 }
 
-.date-input{
+.date-input {
     border: 1px solid #E9E9E9;
     outline: none;
     background-color: #FFFFFF;
@@ -116,8 +117,9 @@ input[type="text"] {
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
-    width: 225px;
+    width: 155px;
     height: 23px;
+    padding-bottom: 10px;
 }
 
 table {
@@ -155,7 +157,7 @@ tr {
 
 .green {
     color: #08BC66;
-   /* background-color:#08BC66 ;  */
+    /* background-color:#08BC66 ;  */
 }
 
 .table-header {
@@ -173,7 +175,7 @@ tr {
 .search-div {
     display: flex;
     justify-content: flex-end;
-    width: 240px;
+    width: 200px;
     height: 38px;
     gap: 0px;
     border-radius: 3px 0px 0px 0px;
@@ -181,7 +183,7 @@ tr {
     background: #FFFFFF;
     position: relative;
     padding: 10px;
-    margin-left: 20px;
+    /* margin-left: 10px; */
 }
 
 .move {
