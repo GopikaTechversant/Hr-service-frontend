@@ -65,15 +65,15 @@
     <div class="main">
         <div class="table-container m-b-0 w-100">
             <table class="table">
-                <tr class="table-header f-w-500 p-b-10">
-                    <td>Select</td>
-                    <td>Name</td>
-                    <td>Email</td>
-                    <td>Assigned Questions</td>
-                    <td>Score</td>
-                    <td>Attachement</td>
-                    <td>Move Candidates</td>
-                    <td>Status</td>
+                <tr class="table-header">
+                    <td class="t-a-left">Select</td>
+                    <td class="t-a-left">Name</td>
+                    <td class="t-a-left">Email</td>
+                    <td class="t-a-left">Assigned Questions</td>
+                    <td class="t-a-left">Score</td>
+                    <td class="t-a-left">Attachement</td>
+                    <td class="t-a-left">Move Candidates</td>
+                    <td class="t-a-left">Status</td>
                 </tr>
                 <div *ngIf="loader && !initialLoader" class="loader-parent">
                     <img src="assets/gif/loader.gif">
@@ -81,45 +81,45 @@
                 <ng-container *ngIf="candidateList.length > 0">
                     <ng-container *ngFor="let item of candidateList">
                         <tr class="candidate c-pointer" (dblclick)="selectCandidate(item?.candidateId)">
-                            <td><input type="checkbox" [(ngModel)]="item.isSelected"
+                            <td class="t-a-left"><input type="checkbox" [(ngModel)]="item.isSelected"
                                     (change)="getSelectedCandidateServiceIds()"></td>
-                            <td class="text-wrap" [title]="item.candidateFirstName + item.candidateLastName">
+                            <td class="t-a-left" [title]="item.candidateFirstName + item.candidateLastName">
                                 {{ item?.candidateFirstName }} {{ item?.candidateLastName }}
                             </td>
-                            <td class="text-wrap" [title]="item.candidateEmail">{{ item?.candidateEmail }}</td>
-                            <td class="text-wrap"><span
+                            <td class="t-a-left" [title]="item.candidateEmail">{{ item?.candidateEmail }}</td>
+                            <td class="t-a-left"><span
                                     *ngIf="item?.serviceSequence?.progress?.questionName"></span>{{item?.serviceSequence?.progress?.questionName
                                 || 'Not assigned'}}
                             </td>
                             <!-- <td>{{item?.serviceSequence?.progress?.questionName}}</td> -->
-                            <td class="text-wrap"><button class="result c-pointer"
+                            <td class="t-a-left"><button class="result  c-pointer"
                                     *ngIf="item?.serviceSequence?.progress?.progressScore === null && item?.serviceSequence?.progress?.questionName"
                                     (click)="resultClick(item, item?.serviceSequence?.serviceId)">Add Result</button>
-                                <button class="disabled-button"
+                                <button class="disabled-button t-a-right"
                                     *ngIf="item?.serviceSequence?.progress?.progressScore === null && !item?.serviceSequence?.progress?.questionName"
                                     [disabled]="!item?.serviceSequence?.progress?.quertionName">
                                     Add Result
                                 </button>
                                 <span
-                                    *ngIf="item?.serviceSequence?.progress?.progressScore">{{item?.serviceSequence?.progress?.progressScore}}</span>
+                                    *ngIf="item?.serviceSequence?.progress?.progressScore" class="t-a-right">{{item?.serviceSequence?.progress?.progressScore}}</span>
                             </td>
-                            <td class="text-wrap">
-                                <span class="c-pointer"
+                            <td class="t-a-left">
+                                <span class="c-pointer t-a-left"
                                     *ngIf="item?.serviceSequence?.progress?.progressScore  && item?.serviceSequence?.progress?.progressScore !== null"><img
-                                        class="p-l-9" src="/assets/images/view-file.png" alt="" height="29" width="29"
+                                        class="" src="/assets/images/view-file.png" alt="" height="29" width="29"
                                         (click)="viewResume(item.serviceSequence.progress.progressFile)">
                                 </span>
                                 <span
                                     *ngIf="!item?.serviceSequence?.progress?.progressScore  && item?.serviceSequence?.progress?.progressScore === null">Not
                                     added</span>
                             </td>
-                            <td class="p-t-15">
+                            <td class="p-t-15 t-a-left">
                                 <img src="/assets/images/candidate-detail/move.svg" alt="" height="24px" width="24px"
                                     (click)="onSwitchStation(item)">
                             </td>
                             <!-- <td class="text-wrap" [title]="item?.currentStation | titlecase">{{item?.currentStation |
                                 titlecase}}</td> -->
-                            <td class="f-w-500" [ngClass]="{'blue': item?.serviceSequence?.serviceStatus === 'pending','green': item?.serviceSequence?.serviceStatus === 'done',
+                            <td class="f-w-500 t-a-left" [ngClass]="{'blue': item?.serviceSequence?.serviceStatus === 'pending','green': item?.serviceSequence?.serviceStatus === 'done',
                                 'red': item?.serviceSequence?.serviceStatus === 'rejected'}"
                                 [title]="item?.serviceSequence?.serviceStatus | titlecase">
                                 {{ item?.serviceSequence?.serviceStatus | titlecase}}
