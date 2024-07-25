@@ -19,13 +19,14 @@
     <div class="main-table m-t-27">
         <div class="table-container m-b-0">
             <table class="table">
-                <tr class="table-header f-w-500 p-b-10">
-                    <td>Date</td>
-                    <td>Candidate Count</td>
+                <tr class="table-header">
+                    <!-- <td>Date</td> -->
+                    <td class="count-col">Candidate Count</td>
                     <td>Requirement</td>
                     <td>Team</td>
                     <td>Skills</td>
                     <td>Status</td>
+                    <td class="count-col">Date</td>
                 </tr>
                 <div *ngIf="loader && !initialLoader" class="loader-parent">
                     <img src="assets/gif/loader.gif">
@@ -34,18 +35,19 @@
                     <ng-container *ngFor="let candidate of candidates_list">
                         <tr class="candidate c-pointer"
                             (dblclick)="navigate('/written/candidates/',candidate.requestId)">
-                            <td class="text-wrap">{{candidate?.requestDate | date:'yyyy-MM-dd'}}</td>
-                            <td class="text-wrap" [title]="candidate?.candidatesCount">{{candidate?.candidatesCount}}
+                            <!-- <td class="text-wrap">{{candidate?.requestDate | date:'yyyy-MM-dd'}}</td> -->
+                            <td class="t-a-right count-col" [title]="candidate?.candidatesCount">{{candidate?.candidatesCount}}
                             </td>
-                            <td class="text-wrap" [title]="candidate?.requestName">{{candidate?.requestName |
+                            <td class="" [title]="candidate?.requestName">{{candidate?.requestName |
                                 titlecase}}</td>
-                            <td class="text-wrap" [title]="candidate?.teamName">{{candidate?.teamName | titlecase}}</td>
-                            <td class="text-wrap" [title]="candidate?.requestSkills">{{candidate?.requestSkills |
+                            <td class="" [title]="candidate?.teamName">{{candidate?.teamName | titlecase}}</td>
+                            <td class="" [title]="candidate?.requestSkills">{{candidate?.requestSkills |
                                 titlecase}}</td>
-                            <td class="text-wrap f-w-500"
+                            <td class="f-w-500"
                                 [ngStyle]="{'color': candidate.status === 'progress' ? '#F57C02' : '#08BC66'}">
                                 {{candidate.status | titlecase}}
                             </td>
+                            <td class="t-a-right date-col">{{candidate?.requestDate | date:'yyyy-MM-dd'}}</td>
                         </tr>
                     </ng-container>
                 </ng-container>

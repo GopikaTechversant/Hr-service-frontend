@@ -89,31 +89,31 @@
                     <ng-container *ngFor="let item of innerArray">
                         <tr class="candidate c-pointer" (dblclick)="selectCandidate(item['candidate.candidateId'])">
                             <!-- <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()"></td> -->
-                            <td>{{ item['candidate.candidateId'] }}</td>
+                            <td class="t-a-right">{{ item['candidate.candidateId'] }}</td>
                             <!-- <td>{{item?.serviceDate | date : 'dd/MM/YYY'}}</td> -->
                             <td class="" [title]="item['candidate.candidateFirstName'] +' '+ item['candidate.candidateLastName']">
                                 {{ item['candidate.candidateFirstName'] }} {{ item['candidate.candidateLastName'] }}
                             </td>
                             <td class="" [title]="item['candidate.candidateEmail']">{{ item['candidate.candidateEmail'] }}</td>
                             <td class="" [title]="item['serviceRequest.requestName']">{{ item['serviceRequest.requestName'] }}</td>
-                            <td class=" f-w-500" [title]="item?.progressStatus > 0 ? 'Offer Released' : 'Pending'"
+                            <td class="f-w-500" [title]="item?.progressStatus > 0 ? 'Offer Released' : 'Pending'"
                                 [ngClass]="item?.progressStatus > 0  ? 'green' : 'orange'">
                                 {{item?.progressStatus > 0 ? 'Offer Released' : 'Pending'}}
                             </td>
-                            <td>
+                            <td class="t-a-center">
                                 <img src="/assets/images/candidate-detail/move.svg" alt="move" *ngIf="item" (click)="onSwitchStation(item)">
                             </td>
                             <td class="">{{item?.currentStation}}</td>
                             <td class="f-w-500" [ngClass]="{'orange': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
                             'red': item?.serviceStatus === 'rejected'}">
                             {{ item?.serviceStatus === 'done' ? 'Offer Accepted' : item?.serviceStatus | titlecase}}</td>
-                            <td (click)="fetchDetails(item?.serviceId , item?.progressStatus)" class="c-pointer">
+                            <td (click)="fetchDetails(item?.serviceId , item?.progressStatus)" class="c-pointer t-a-left">
                                 <div class="d-flex j-centre">
                                     <i class="fa fa-eye blue f-s-18 f-w-500" aria-hidden="true"></i>
                                     <span class="blue f-w-500 p-l-5">View detail</span>
                                 </div>
                             </td>
-                            <td>{{item?.serviceDate | date : 'dd/MM/YYY'}}</td>
+                            <td class="t-a-right">{{item?.serviceDate | date : 'dd/MM/YYY'}}</td>
                         </tr>
                     </ng-container>
                     </ng-container>
