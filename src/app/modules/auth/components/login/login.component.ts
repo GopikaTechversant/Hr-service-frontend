@@ -102,16 +102,38 @@ export class LoginComponent implements OnInit {
       client_id: environment.client_id,
       callback: this.handleGoogleResponse.bind(this)
     });
+  
+    this.renderGoogleButton();
+    
+    // Optionally, you can listen for window resize events to adjust the button size dynamically
+    window.addEventListener('resize', () => this.renderGoogleButton());
+  }
+  
+  renderGoogleButton(): void {
+    let buttonWidth = '600';
+    
+    if (window.innerWidth < 1300) {
+      buttonWidth = '350';
+    } 
+    if (window.innerWidth < 768) {
+      buttonWidth = '200';
+    } 
+    if (window.innerWidth < 480) {
+      buttonWidth = '250';
+    }
+    
     google.accounts.id.renderButton(
       document.getElementById('google-signin-button'),
       {
         theme: 'outline',
         size: 'large',
-        text: 'Sign in with Google',
-        width: '100%'
+        text: 'Sign In With',
+        shape: 'rectangular',
+        width: buttonWidth,
       }
     );
   }
+  
 
 
 

@@ -77,18 +77,6 @@
   color: #4F4F4F;
 }
 
-.google-content {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#google-signin-button {
-  width: 99%;
-  display: flex;
-  justify-content: center;
-}
 
 .login-btn {
   width: 99%;
@@ -184,9 +172,6 @@
     line-height: 45.29px;
   }
 
-  #google-signin-button {
-    width: 400;
-  }
 }
 
 @media screen and (max-width: 1024px) {
@@ -199,9 +184,6 @@
     line-height: 40px;
   }
 
-  #google-signin-button {
-    width: 100%;
-  }
 }
 
 @media screen and (max-width: 768px) {
@@ -214,9 +196,7 @@
     line-height: 35px;
   }
 
-  #google-signin-button {
-    width: 100%;
-  }
+
 }
 
 @media screen and (max-width: 480px) {
@@ -229,7 +209,33 @@
     line-height: 30px;
   }
 
+}
+
+.google-content {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 14px;
+}
+
+#google-signin-button {
+  width: 100%;
+  max-width: 400px;
+  /* Set a maximum width for the button */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 768px) {
   #google-signin-button {
-    width: 100%;
+    max-width: 90%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #google-signin-button {
+    max-width: 80%;
   }
 }

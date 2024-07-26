@@ -71,7 +71,7 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
     if (this.chart) {
       this.chart.destroy();
     }
-
+  
     const chartConfig: ChartConfiguration = {
       type: 'doughnut',
       data: {
@@ -105,15 +105,39 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
             enabled: false
           },
           datalabels: {
-            display: false
-          }
+            display: false, // Disable default data labels
+          },
         },
       },
-      plugins: [this.doughnutLabelsLinePlugin, ChartDataLabels],
+      plugins: [
+        ChartDataLabels,
+        {
+          id: 'customDatalabels',
+          afterDraw(chart: any) {
+            const { ctx, chartArea: { top, bottom, left, right } } = chart;
+            chart.data.datasets.forEach((dataset: any, datasetIndex: number) => {
+              chart.getDatasetMeta(datasetIndex).data.forEach((dataPoint: any, index: number) => {
+                const { x, y } = dataPoint.tooltipPosition();
+                const sourceLabel = chart.data.labels[index];
+                const value = dataset.data[index];
+  
+                ctx.font = '10px Arial'; // Font size for sourceLabel
+                ctx.fillStyle = '#FFFFFF'; // Label color
+                ctx.textAlign = 'center';
+                ctx.fillText(sourceLabel, x, y - 10); // Adjust y position for label
+  
+                ctx.font = '16px Arial'; // Font size for value
+                ctx.fillText(value.toString(), x + 30, y - 10); // Adjust y position for value
+              });
+            });
+          }
+        }
+      ],
     };
-
+  
     this.chart = new Chart("MyChart", chartConfig);
   }
+  
 
   doughnutLabelsLinePlugin = {
     id: 'doughnutLabelsLine',
