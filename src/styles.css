@@ -309,7 +309,7 @@ td {
   text-align: center;
 }
 
-.table-container {
+.container-table {
   overflow: auto !important;
   height: calc(100vh - 372px);
 }

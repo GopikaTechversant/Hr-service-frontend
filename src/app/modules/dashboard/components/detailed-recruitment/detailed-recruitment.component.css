@@ -162,3 +162,19 @@
 .requisition-col{
     width: 19%;
 }
+
+.applicants-col{
+    background-color: #E4F6FF;
+}
+
+.technical-col{
+    background-color: #DFFFF0;
+}
+
+.offer-col{
+    background-color: #FFEBEB;
+}
+
+.hired-col{
+    background-color: #E4F6FF;
+}
