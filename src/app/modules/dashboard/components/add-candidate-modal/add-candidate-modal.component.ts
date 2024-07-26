@@ -6,7 +6,7 @@ import { ToastrServices } from 'src/app/services/toastr.service';
 import { ApiService } from 'src/app/services/api.service';
 import { S3Service } from 'src/app/services/s3.service';
 import { Subscription } from 'rxjs';
-
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-add-candidate-modal',
   templateUrl: './add-candidate-modal.component.html',
@@ -61,7 +61,11 @@ export class AddCandidateModalComponent implements OnInit {
   preferredLocation: any[] = [];
   locationName: any;
   locationId: any;
-  constructor(private apiService: ApiService, private tostr: ToastrServices, private formBuilder: UntypedFormBuilder, private datePipe: DatePipe, private s3Service: S3Service) {
+  searchKeyword: string = '';
+  candidateList: any[] = [];
+  showCandidates: boolean = false;
+  constructor(private apiService: ApiService, private tostr: ToastrServices, private formBuilder: UntypedFormBuilder,
+    private datePipe: DatePipe, private s3Service: S3Service, private router: Router, private route: ActivatedRoute) {
     this.candidateForm = this.formBuilder.group({
       candidateFirstName: [null, Validators.required],
       candidateLastName: [null, Validators.required],
@@ -87,6 +91,7 @@ export class AddCandidateModalComponent implements OnInit {
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
     $event.returnValue = true;
+
   }
 
   ngOnInit(): void {
@@ -102,19 +107,21 @@ export class AddCandidateModalComponent implements OnInit {
     }
   }
 
-  requirementFromList(): void {
-    this.requirement = history?.state?.candidate;
-    this.selectedRequirementId = this.requirement.requestId;
-    this.fromRequirementName = this.requirement.requestName;
-  }
-
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
       this.showDropdown = false;
       this.showSource = false;
       this.requirementListOpen = false;
+      this.showCandidates = false;
+      this.searchKeyword = '';
     }
+  }
+
+  requirementFromList(): void {
+    this.requirement = history?.state?.candidate;
+    this.selectedRequirementId = this.requirement.requestId;
+    this.fromRequirementName = this.requirement.requestName;
   }
 
   fetchSource(): void {
@@ -552,6 +559,26 @@ export class AddCandidateModalComponent implements OnInit {
     this.showSearchBar = false;
     this.skillSuggestions = [];
     this.searchvalue = '';
+  }
+
+  searchCandidate(searchKeyword: string): void {
+    if (searchKeyword.trim() !== '') {
+      this.apiService.get(`/candidate/search/list?search=${searchKeyword}`).subscribe((res: any) => {
+        if (res?.data) {
+          this.candidateList = res.data;
+          this.showCandidates = this.candidateList.length > 0;
+        } else {
+          this.showCandidates = false;
+        }
+      });
+    } else {
+      this.showCandidates = false;
+    }
+  }
+
+  selectCandidate(id: any): void {
+    this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
+    this.searchKeyword = '';
   }
 
   // addExtraSkills(): void {

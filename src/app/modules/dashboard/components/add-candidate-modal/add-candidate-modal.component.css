@@ -287,3 +287,59 @@
 .padding-skill{
     padding: 2px 5px 5px 0;
 }
+
+.detail {
+    font-size: 12px;
+    color: #575F6E;
+    display: flex;
+}
+
+.candidate {
+    border-bottom: 1px solid #EDEDED;
+    padding: 8px 10px;
+}
+
+.candidate-dropdown {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    max-height: 190px;
+    overflow-y: auto;
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    text-align: center;
+    overflow-x: hidden;
+    z-index: 1;
+}
+
+.candidate-column {
+    cursor: pointer;
+    text-align: left;
+}
+
+.candidate-column:hover {
+    background-color: #f0f0f0;
+}
+
+.user-profile {
+    width: 35px;
+    height: 35px;
+    max-width: 35px;
+    max-height: 35px;
+    min-width: 35px;
+    min-height: 35px;
+    color: white !important;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: all !important;
+    background: #575F6E;
+}

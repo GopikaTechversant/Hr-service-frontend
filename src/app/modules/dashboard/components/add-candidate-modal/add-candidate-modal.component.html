@@ -7,23 +7,48 @@
         <form [formGroup]="candidateForm" (ngSubmit)="submitClick(); $event.preventDefault()"
             enctype="multipart/form-data">
             <div class="d-flex parent p-t-10">
-                <div class="child d-flex m-b-10">
+                <div class="child d-flex m-b-10 position-relative">
                     <span class="label m-b-4">First Name<span class="required">*</span></span>
                     <input type="text" class="input-box" formControlName="candidateFirstName" placeholder="First Name"
-                        maxlength="20" (keydown)="nameValidation($event)">
+                        maxlength="20" (keydown)="nameValidation($event);"
+                        (input)="searchCandidate(candidateForm.get('candidateFirstName')?.value)">
                     <div
                         *ngIf="candidateForm.get('candidateFirstName')?.hasError('required') && candidateForm.get('candidateFirstName')?.touched">
                         <mat-error>Please Enter First Name</mat-error>
+                    </div>
+                    <div *ngIf="showCandidates" class="p-absolute candidate-dropdown no-close">
+                        <div class="candidate-column" *ngFor="let item of candidateList"
+                            (click)="selectCandidate(item.candidateId);showCandidates = !showCandidates">
+                            <!-- <div *ngIf="!candidateList || candidateList?.length === 0"> No Candidate Found</div> -->
+                            <div class="d-flex candidate">
+                                <div class="m-1">
+                                    <span class="user-profile">{{item?.candidateFirstName.charAt(0) ?
+                                        (item?.candidateFirstName.charAt(0) |
+                                        uppercase) : 'U'}}</span>
+                                </div>
+                                <div class="ms-1">
+                                    <span class="text-wrap"
+                                        [title]="item?.candidateFirstName + ' ' + item?.candidateLastName">{{item?.candidateFirstName}}
+                                        {{item?.candidateLastName}}</span>
+                                    <span class="detail"><span class="break-word me-2"
+                                            [title]="item?.candidateEmail">{{item?.candidateEmail}}</span> |
+                                        <span>{{item?.candidateMobileNo}}</span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="child d-flex m-b-10">
                     <span class="label m-b-4">Last Name<span class="required">*</span></span>
                     <input type="text" class="input-box" formControlName="candidateLastName" placeholder="Last Name"
-                        maxlength="20" (keydown)="nameValidation($event)">
+                        maxlength="20" (keydown)="nameValidation($event)"
+                        (input)="searchCandidate(candidateForm.get('candidateLastName')?.value)">
                     <div
                         *ngIf="candidateForm.get('candidateLastName')?.hasError('required') && candidateForm.get('candidateLastName')?.touched">
                         <mat-error>Please Enter Last Name</mat-error>
                     </div>
+
                 </div>
                 <div class="child d-flex m-b-10">
                     <span class="label m-b-4">DOB</span>
@@ -37,6 +62,7 @@
                         </span>
                     </div>
                 </div>
+
             </div>
             <div class="d-flex  parent">
                 <div class="child d-flex m-b-10">
@@ -66,8 +92,8 @@
                 <div class="child d-flex m-b-10">
                     <span class="label m-b-4">Mobile Number<span class="required">*</span></span>
                     <input type="text" class="input-box" formControlName="candidateMobileNo" maxlength="10"
-                        title="Enter a 10 digit Mobile number" (keypress)="onKeypress($event)"
-                        (paste)="onPaste($event)">
+                        title="Enter a 10 digit Mobile number" (keypress)="onKeypress($event)" (paste)="onPaste($event)"
+                        (input)="searchCandidate(candidateForm.get('candidateMobileNo')?.value)">
                     <div
                         *ngIf="candidateForm.get('candidateMobileNo')?.hasError('required') && candidateForm.get('candidateMobileNo')?.touched">
                         <mat-error>Mobile Number is mandatory</mat-error>
@@ -75,7 +101,8 @@
                 </div>
                 <div class="child d-flex m-b-10">
                     <span class="label m-b-4">Email<span class="required">*</span></span>
-                    <input type="text" class="input-box" formControlName="candidateEmail" maxlength="56">
+                    <input type="text" class="input-box" formControlName="candidateEmail" maxlength="56"
+                        (input)="searchCandidate(candidateForm.get('candidateEmail')?.value)">
                     <div
                         *ngIf="candidateForm.get('candidateEmail')?.hasError('required') && candidateForm.get('candidateEmail')?.touched">
                         <mat-error>Email ID is Mandatory</mat-error>
@@ -104,7 +131,8 @@
                 </div>
                 <div class="child d-flex m-b-10">
                     <span class="label m-b-4">Total Experience <span class="f-s-12">(in years)</span></span>
-                    <input type="text" class="input-box" formControlName="candidateTotalExperience" (keydown)="experienceValidation($event)">
+                    <input type="text" class="input-box" formControlName="candidateTotalExperience"
+                        (keydown)="experienceValidation($event)">
                 </div>
             </div>
             <div class="d-flex parent">
@@ -163,17 +191,18 @@
                 </div>
                 <div class="child d-flex m-b-10">
                     <span class="label m-b-4">Current Salary<span class="f-s-12">(CTC)</span></span>
-                    <input type="text" class="input-box" #baseSalaryInput  (keypress)="onKeypressSalary($event, baseSalaryInput)" 
-                    (paste)="onPasteSalary($event, baseSalaryInput)" 
-                    maxlength="10" formControlName="candidateCurrentSalary">
+                    <input type="text" class="input-box" #baseSalaryInput
+                        (keypress)="onKeypressSalary($event, baseSalaryInput)"
+                        (paste)="onPasteSalary($event, baseSalaryInput)" maxlength="10"
+                        formControlName="candidateCurrentSalary">
                 </div>
                 <div class="child d-flex m-b-10">
                     <span class="label m-b-4">Expected Salary <span class="f-s-12">(ECTC)</span></span>
-                    <input type="text" class="input-box"  #maxSalaryInput 
-                    (keypress)="onKeypressSalary($event, maxSalaryInput)" 
-                    (paste)="onPasteSalary($event, maxSalaryInput)" 
-                    maxlength="10" formControlName="candidateExpectedSalary">
-                </div>                
+                    <input type="text" class="input-box" #maxSalaryInput
+                        (keypress)="onKeypressSalary($event, maxSalaryInput)"
+                        (paste)="onPasteSalary($event, maxSalaryInput)" maxlength="10"
+                        formControlName="candidateExpectedSalary">
+                </div>
             </div>
             <div class="d-flex parent-last">
                 <div class="child-2 d-flex m-b-10 p-relative">
