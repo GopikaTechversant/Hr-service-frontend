@@ -1,6 +1,6 @@
 <div class="main m-r-11">
     <div class="heading d-flex j-space">
-        <div class="title-left p-l-12"><span>Requirement List</span></div>
+        <div class="title-left p-l-12"><span>Requisition List</span></div>
         <div class="d-flex  title-right">
             <span class="input d-flex j-space">
                 <input type="text" class="p-10" placeholder="Search Requirement" [(ngModel)]="searchKeyword"
@@ -23,8 +23,10 @@
         <div class="container-table m-b-0">
             <table class="">
                 <tr class="table-header p-b-10">
+                    <td>Requisition</td>
+                    <td>No.of Openings</td>
                     <td class="count-col">Candidate Count</td>
-                    <td>Requirement</td>
+                    <td>Hired</td>
                     <td>Team</td>
                     <td>Skills</td>
                     <td>Status</td>
@@ -38,10 +40,12 @@
                     <ng-container *ngFor="let candidate of candidates_list">
                         <tr class="c-pointer"
                             (dblclick)="navigate('/dashboard/series/',candidate?.requestId)">
-                            <td class="text-end" [title]="candidate?.candidatesCount">{{candidate?.candidatesCount}}
-                            </td>
                             <td class="text-start" [title]="candidate?.requestName">{{candidate?.requestName |
                                 titlecase}}</td>
+                                <td class="text-end">10</td>
+                            <td class="text-end" [title]="candidate?.candidatesCount">{{candidate?.candidatesCount}}
+                            </td>
+                            <td class="text-end">5</td>
                             <td class="text-start" [title]="candidate?.teamName">{{candidate?.teamName | titlecase}}</td>
                             <td class="text-start" [title]="candidate?.requestSkills">{{candidate?.requestSkills |
                                 titlecase}}</td>
