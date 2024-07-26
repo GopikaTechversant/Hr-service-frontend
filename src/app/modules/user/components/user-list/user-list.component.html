@@ -3,9 +3,9 @@
         <span class="f-s-18 f-w-500 detail-head p-t-5">Users</span>
     </div>
     <div class="main">
-        <div class="table-container m-b-0 w-97">
-            <table class="table">
-                <tr class="table-header f-w-500 p-b-10">
+        <div class="w-97">
+            <table class="">
+                <tr class="table-header">
                     <td>User ID</td>
                     <td>Name</td>
                     <td>Email</td>
@@ -20,12 +20,12 @@
                     <ng-container *ngFor="let user of userList">
                         <tr (click)="onSelect(user)" class="candidate c-pointer"
                             [class.selected]="selectedItem === user">
-                            <td>{{user.userId}}</td>
-                            <td>{{user.userfirstName}} {{user.userlastName}}</td>
-                            <td>{{user.userEmail}}</td>
-                            <td>{{user.userRole}}</td>
-                            <td>{{user.userStatus}}</td>
-                            <td>
+                            <td class="text-end">{{user.userId}}</td>
+                            <td class="text-start">{{user.userfirstName}} {{user.userlastName}}</td>
+                            <td class="text-start">{{user.userEmail}}</td>
+                            <td class="text-start">{{user.userRole}}</td>
+                            <td class="text-start">{{user.userStatus}}</td>
+                            <td class="text-center">
                                 <div class="d-flex j-center">
                                     <img src="assets/images/candidate-detail/edit.svg" class="icon" alt="" (click)="update(user.userId)">
                                     <img src="assets/images/candidate-detail/delete.svg" class="icon" alt="" (click)="delete(user.userId)">

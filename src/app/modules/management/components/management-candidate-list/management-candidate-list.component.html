@@ -1,13 +1,15 @@
 <div class="m-10">
     <span class="f-s-20 f-w-500 detail-head p-5 p-l-0">Management Station</span>
     <div class="p-l-5 d-flex j-end p-b-10">
-        <span class="input p-5 m-r-10">
-            <input type="text" class="p-l-5" placeholder="Search Candidates" [(ngModel)]="searchKeyword"
+        <div class="search-div d-flex align-items-center">
+            <input type="text" class="input align-items-start" placeholder="Search By Name" [(ngModel)]="searchKeyword"
                 (keydown)="searchCandidate(searchKeyword)">
-            <span *ngIf="searchKeyword.trim() !== ''" (click)="clearFilter('search')"
-                class="clear-search c-pointer m-l-10">x</span>
-        </span>
-        <div class="input p-t-10 p-l-6  no-close p-relative m-r-10">
+            <span class="search c-pointer ms-2" (click)="searchCandidate(searchKeyword)">
+                <img src="/assets/images/techversant/search.svg" alt="">
+                <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
+            </span>
+        </div>
+        <div class="input p-t-10 p-l-6  no-close p-relative m-r-10 m-l-10">
             <span class="f-right d-flex">
                 <span *ngIf="displayPosition && displayPosition !== ' '" (click)="clearFilter('position')"
                     class="clear-filter c-pointer">x</span>
@@ -43,9 +45,9 @@
         </div>
     </div>
     <div class="main">
-        <div class="table-container m-b-0">
-            <table class="table">
-                <tr class="table-header f-w-500 p-b-10">
+        <div class="">
+            <table class="">
+                <tr class="table-header">
                     <td>Candidate ID</td>
                     <td>Name</td>
                     <td>Email</td>
@@ -61,20 +63,20 @@
                     <ng-container *ngFor="let innerArray of candidateList">
                         <ng-container *ngFor="let item of innerArray">
                             <tr class="candidate c-pointer" (dblclick)="selectCandidate(item['candidate.candidateId'])">
-                                <td>{{ item['candidate.candidateId'] }}</td>
-                                <td class="text-wrap"
+                                <td class="text-end">{{ item['candidate.candidateId'] }}</td>
+                                <td class="text-start"
                                     [title]="item['candidate.candidateFirstName'] + item['candidate.candidateLastName']">
                                     {{ item['candidate.candidateFirstName'] }} {{ item['candidate.candidateLastName'] }}
                                 </td>
-                                <td class="text-wrap" [title]="item['candidate.candidateEmail']">{{
+                                <td class="text-start" [title]="item['candidate.candidateEmail']">{{
                                     item['candidate.candidateEmail'] }}</td>
-                                <td class="text-wrap" [title]="item['serviceRequest.requestName']">{{
+                                <td class="text-start" [title]="item['serviceRequest.requestName']">{{
                                     item['serviceRequest.requestName'] }}</td>
-                                <td class="p-t-15">
-                                    <img src="/assets/images/candidate-detail/move.svg" alt="" height="24px" width="24px"
-                                        (click)="onSwitchStation(item)">
-                                <td class="text-wrap">{{item?.currentStation}}</td>
-                                <td class="f-w-500 text-wrap " [ngClass]="{'blue': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
+                                    <td class="text-center">
+                                        <img src="/assets/images/candidate-detail/move.svg" alt="move" *ngIf="item" (click)="onSwitchStation(item)">
+                                    </td>
+                                <td class="text-start">{{item?.currentStation}}</td>
+                                <td class="f-w-500 text-start" [ngClass]="{'orange': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
                                      'red': item?.serviceStatus === 'rejected'}">
                                     <span class="service-status">{{item?.serviceStatus === 'done' ? 'OfferAccepted' :
                                         item?.serviceStatus | titlecase}}</span>

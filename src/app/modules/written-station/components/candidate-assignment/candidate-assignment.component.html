@@ -1,19 +1,19 @@
 <div class="">
     <span class="f-s-20 f-w-500 p-t-5">Written Round</span>
     <div class="d-flex j-space m-t-20 search-header">
-        <span class="input-search p-5 d-flex j-space align-center">
+        <span class="input-search d-flex j-space align-center">
             <input type="text" class="p-l-5" placeholder="Search by name" [(ngModel)]="searchKeyword"
                 (keydown)="searchCandidate(searchKeyword)">
             <span *ngIf="searchKeyword.trim() !== ''" (click)="clearFilter('search')"
                 class="clear-filter c-pointer">x</span>
         </span>
-        <span class="input-search p-5 d-flex j-space align-center">
+        <span class="input-search  d-flex j-space align-center">
             <input type="text" class="p-l-5" placeholder="Search by Experience" [(ngModel)]="experience"
                 (ngModelChange)="searchByExperience(experience)" maxlength="2">
             <span *ngIf="experience.trim() !== ''" (click)="clearFilter('experience')"
                 class="clear-search c-pointer">x</span>
         </span>
-        <div class="input p-t-10 p-l-6  no-close p-relative m-l-10">
+        <div class="input  p-l-6  no-close p-relative m-l-10">
             <span class="f-right d-flex">
                 <span *ngIf="displayQuestion && displayQuestion !== ''" (click)="clearFilter('question')"
                     class="clear-filter c-pointer">x</span>
@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div>
-        <div class="input-1 c-pointer p-t-10 no-close p-relative">
+        <div class="input-1 c-pointer no-close p-relative">
             <span class="no-close p-l-10" (click)="filterStatus = !filterStatus">{{filteredStatus.trim() === '' ?
                 'Filter by Status' : filteredStatus | titlecase}}</span>
             <span class="f-right">
@@ -44,14 +44,14 @@
             <div class="dropdown c-pointer no-close'" *ngIf="filterStatus">
                 <span class="d-flex p-0" *ngFor="let type of Status"
                     (click)="selectStatusFilter(type?.status);filterStatus = !filterStatus">
-                    <span class="p-l-20 p-5">{{type?.status | titlecase}}</span>
+                    <span class="p-l-20">{{type?.status | titlecase}}</span>
                 </span>
             </div>
         </div>
         <div (click)="openQuestionAssign();">
             <span class="c-pointer assign-question">Assign Question</span>
         </div>
-        <span class="input-approve p-5 j-space align-center p-relative">
+        <span class="input-approve  j-space align-center p-relative">
             <div> <input type="number" class="p-l-5 average-score" placeholder="Enter Average Score" id="averageScore">
             </div>
             <button class="p-absolute approve-btn c-pointer" (click)="approve()">Approve</button>
@@ -63,17 +63,17 @@
         </div>
     </div>
     <div class="main">
-        <div class="table-container m-b-0 w-100">
-            <table class="table">
+        <div class="w-100">
+            <table class="">
                 <tr class="table-header">
-                    <td class="t-a-left">Select</td>
-                    <td class="t-a-left">Name</td>
-                    <td class="t-a-left">Email</td>
-                    <td class="t-a-left">Assigned Questions</td>
-                    <td class="t-a-left">Score</td>
-                    <td class="t-a-left">Attachement</td>
-                    <td class="t-a-left">Move Candidates</td>
-                    <td class="t-a-left">Status</td>
+                    <td class="">Select</td>
+                    <td class="">Name</td>
+                    <td class="">Email</td>
+                    <td class="">Assigned Questions</td>
+                    <td class="">Score</td>
+                    <td class="">Attachement</td>
+                    <td class="">Move Candidates</td>
+                    <td class="">Status</td>
                 </tr>
                 <div *ngIf="loader && !initialLoader" class="loader-parent">
                     <img src="assets/gif/loader.gif">
@@ -81,45 +81,45 @@
                 <ng-container *ngIf="candidateList.length > 0">
                     <ng-container *ngFor="let item of candidateList">
                         <tr class="candidate c-pointer" (dblclick)="selectCandidate(item?.candidateId)">
-                            <td class="t-a-left"><input type="checkbox" [(ngModel)]="item.isSelected"
+                            <td class="text-start"><input type="checkbox" [(ngModel)]="item.isSelected"
                                     (change)="getSelectedCandidateServiceIds()"></td>
                             <td class="t-a-left" [title]="item.candidateFirstName + item.candidateLastName">
                                 {{ item?.candidateFirstName }} {{ item?.candidateLastName }}
                             </td>
-                            <td class="t-a-left" [title]="item.candidateEmail">{{ item?.candidateEmail }}</td>
-                            <td class="t-a-left"><span
+                            <td class="text-start" [title]="item.candidateEmail">{{ item?.candidateEmail }}</td>
+                            <td class="text-start"><span
                                     *ngIf="item?.serviceSequence?.progress?.questionName"></span>{{item?.serviceSequence?.progress?.questionName
                                 || 'Not assigned'}}
                             </td>
                             <!-- <td>{{item?.serviceSequence?.progress?.questionName}}</td> -->
-                            <td class="t-a-left"><button class="result  c-pointer"
+                            <td class="text-start"><button class="result text-center  c-pointer"
                                     *ngIf="item?.serviceSequence?.progress?.progressScore === null && item?.serviceSequence?.progress?.questionName"
                                     (click)="resultClick(item, item?.serviceSequence?.serviceId)">Add Result</button>
-                                <button class="disabled-button t-a-right"
+                                <button class="disabled-button text-center"
                                     *ngIf="item?.serviceSequence?.progress?.progressScore === null && !item?.serviceSequence?.progress?.questionName"
                                     [disabled]="!item?.serviceSequence?.progress?.quertionName">
                                     Add Result
                                 </button>
-                                <span
+                                <span class="text-end"
                                     *ngIf="item?.serviceSequence?.progress?.progressScore" class="t-a-right">{{item?.serviceSequence?.progress?.progressScore}}</span>
                             </td>
-                            <td class="t-a-left">
-                                <span class="c-pointer t-a-left"
+                            <td class="">
+                                <span class="c-pointer text-center"
                                     *ngIf="item?.serviceSequence?.progress?.progressScore  && item?.serviceSequence?.progress?.progressScore !== null"><img
                                         class="" src="/assets/images/view-file.png" alt="" height="29" width="29"
                                         (click)="viewResume(item.serviceSequence.progress.progressFile)">
                                 </span>
-                                <span
+                                <span class="text-start"
                                     *ngIf="!item?.serviceSequence?.progress?.progressScore  && item?.serviceSequence?.progress?.progressScore === null">Not
                                     added</span>
                             </td>
-                            <td class="p-t-15 t-a-left">
+                            <td class="p-t-15 text-center">
                                 <img src="/assets/images/candidate-detail/move.svg" alt="" height="24px" width="24px"
-                                    (click)="onSwitchStation(item)">
+                                    (click)="onSwitchStation(item)" class="text-center">
                             </td>
                             <!-- <td class="text-wrap" [title]="item?.currentStation | titlecase">{{item?.currentStation |
                                 titlecase}}</td> -->
-                            <td class="f-w-500 t-a-left" [ngClass]="{'blue': item?.serviceSequence?.serviceStatus === 'pending','green': item?.serviceSequence?.serviceStatus === 'done',
+                            <td class="f-w-500 text-start" [ngClass]="{'blue': item?.serviceSequence?.serviceStatus === 'pending','green': item?.serviceSequence?.serviceStatus === 'done',
                                 'red': item?.serviceSequence?.serviceStatus === 'rejected'}"
                                 [title]="item?.serviceSequence?.serviceStatus | titlecase">
                                 {{ item?.serviceSequence?.serviceStatus | titlecase}}

@@ -31,6 +31,7 @@
     overflow: hidden;
     background-color: whitesmoke;
 }
+
 .date-filters {
     display: flex;
     align-items: center;
@@ -85,7 +86,7 @@
     height: 40px;
 }
 
-.date-input{
+.date-input {
     border: 1px solid #E9E9E9;
     outline: none;
     background-color: #FFFFFF;
@@ -116,64 +117,17 @@ input[type="text"] {
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
-    width: 225px;
+    width: 155px;
     height: 23px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.table-container {
-    overflow: auto !important;
-    height: calc(100vh - 285px);
-}
-
-tr:nth-child(odd) {
-    background: #C9C8C826;
-}
-
-tr:nth-child(even) {
-    background: #FFFFFF;
-}
-
-.candidate:hover {
-    background-color: #D3E8FF;
+    padding-bottom: 10px;
 }
 
 
-td {
-    padding: 10px;
-    text-align: center !important;
-    border: 1px solid #E9E9E9;
-}
-
-tr {
-    text-align: center;
-}
-
-.green {
-    color: #08BC66;
-   /* background-color:#08BC66 ;  */
-}
-
-.table-header {
-    position: sticky;
-    top: 0;
-    background: #F4F2F2 !important;
-    padding: 10px;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 18px;
-    letter-spacing: 0em;
-    text-align: center;
-}
 
 .search-div {
     display: flex;
     justify-content: flex-end;
-    width: 240px;
+    width: 200px;
     height: 38px;
     gap: 0px;
     border-radius: 3px 0px 0px 0px;
@@ -181,7 +135,7 @@ tr {
     background: #FFFFFF;
     position: relative;
     padding: 10px;
-    margin-left: 20px;
+    /* margin-left: 10px; */
 }
 
 .move {
@@ -262,3 +216,28 @@ tr {
     border: 1px solid #3c40434d;
     border-radius: 50%;
 }
+
+.id-col{
+    width: 7%;
+}
+
+.name-col{
+    width: 10%;
+}
+
+.green {
+    color: #08BC66;
+   /* background-color:#08BC66 ;  */
+}
+
+@media (max-width: 1250px){
+    tr td{
+        font-size: 12px;
+        padding: 9px;
+    }
+
+    .move-icon{
+        width: 23px;
+        height: 23px;
+    }
+  }

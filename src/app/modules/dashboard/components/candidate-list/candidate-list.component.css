@@ -88,52 +88,6 @@ input[type="text"] {
     margin-right: 11px;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.table-container {
-    overflow: auto !important;
-    height: calc(100vh - 260px);
-}
-
-
-tr:nth-child(odd) {
-    background: #F4F2F2;
-}
-
-tr:nth-child(even) {
-    background: #FFFFFF;
-}
-
-
-td {
-    padding: 15px;
-    text-align: center;
-    border: 1px solid #E9E9E9
-}
-
-tr {
-    text-align: center;
-}
-
-.table-header {
-    position: sticky;
-    top: 0;
-    background-color: #F4F2F2 !important;
-    padding: 10px;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 18px;
-    letter-spacing: 0em;
-    text-align: center;
-}
-
-.details {
-    font-size: 13px;
-}
-
 .icon-color {
     color: #575F6E;
 }
@@ -241,6 +195,9 @@ tr {
     margin-right: -21px;
 }
 
-.details:hover {
-    background-color: #D3E8FF;
+  @media (max-width: 1400px){
+    tr td{
+        font-size: 12px;
+        padding: 7px;
+    }
   }

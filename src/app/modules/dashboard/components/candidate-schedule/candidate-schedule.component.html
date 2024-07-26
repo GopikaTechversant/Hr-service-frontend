@@ -15,16 +15,16 @@
     </div>
 </div>
 <div class="main">
-    <div class="table-container m-b-0">
+    <div class="m-b-0">
         <table class="table">
             <tr class="table-header p-b-10">
                 <td>Name</td>
                 <td>Email</td>
                 <td>Experience</td>
                 <td>Education</td>
-                <td>Status</td>
-                <td>Reschedule Count</td>
-                <td>Interview Status</td>
+                <td class="status-col">Status</td>
+                <td class="count-col">Reschedule Count</td>
+                <td class="interview-status-col">Interview Status</td>
             </tr>
             <div *ngIf="loader && !initialLoader" class="loader-parent">
                 <img src="assets/gif/loader.gif">
@@ -32,19 +32,19 @@
             <ng-container *ngIf="candidates_list?.length > 0">
                 <ng-container *ngFor="let item of candidates_list">
                     <tr class="c-pointer details" (dblclick)="selectCandidate(item?.candidateId)">
-                        <td class="text-wrap"
+                        <td class="text-start"
                             [title]="(item?.candidateFirstName | titlecase) + (item?.candidateLastName | titlecase)">
                             {{item?.candidateFirstName | titlecase}} {{item?.candidateLastName | titlecase}}
                         </td>
-                        <td class="text-wrap" [title]="item?.candidateEmail">{{item?.candidateEmail}}</td>
-                        <td class="text-wrap" [title]="item?.candidateExperience">{{item?.candidateExperience}} years
+                        <td class="text-start" [title]="item?.candidateEmail">{{item?.candidateEmail}}</td>
+                        <td class="text-start" [title]="item?.candidateExperience">{{item?.candidateExperience}} years
                         </td>
-                        <td class="text-wrap" [title]="item?.candidateEducation">{{item?.candidateEducation}}</td>
-                        <td>
+                        <td class="text-start" [title]="item?.candidateEducation">{{item?.candidateEducation}}</td>
+                        <td class="">
                             <span *ngIf="item?.serviceStatus && item?.serviceStatus !== 'pending'"
-                                class="name done p-t-2">
+                                class="name done">
                                 {{item?.serviceStatus | titlecase}}
-                            </span><select *ngIf="item?.serviceStatus === 'pending'" class="name select p-t-2 c-pointer"
+                            </span><select *ngIf="item?.serviceStatus === 'pending'" class="name select c-pointer"
                                 (change)="onStatusChange($event, item)">
                                 <option class="name select p-t-2 c-pointer f-w-500" value="" disabled selected>
                                     {{item?.serviceStatus | titlecase}}</option>
@@ -52,8 +52,8 @@
                                 <option class="name select p-t-2 c-pointer f-w-500" value="reject">Reject</option>
                             </select>
                         </td>
-                        <td class="text-wrap">{{item?.rescheduledCount}}</td>
-                        <td class="text-wrap" [title]="item?.interviewStatus">{{item?.interviewStatus}}</td>
+                        <td class="text-end">{{item?.rescheduledCount}}</td>
+                        <td class="text-start" [title]="item?.interviewStatus">{{item?.interviewStatus}}</td>
                     </tr>
                 </ng-container>
             </ng-container>
