@@ -45,9 +45,9 @@
         </div>
     </div>
     <div class="main">
-        <div class="table-container m-b-0">
-            <table class="table">
-                <tr class="table-header f-w-500 p-b-10">
+        <div class="">
+            <table class="">
+                <tr class="table-header">
                     <td>Candidate ID</td>
                     <td>Name</td>
                     <td>Email</td>
@@ -63,20 +63,20 @@
                     <ng-container *ngFor="let innerArray of candidateList">
                         <ng-container *ngFor="let item of innerArray">
                             <tr class="candidate c-pointer" (dblclick)="selectCandidate(item['candidate.candidateId'])">
-                                <td>{{ item['candidate.candidateId'] }}</td>
-                                <td class="text-wrap"
+                                <td class="text-end">{{ item['candidate.candidateId'] }}</td>
+                                <td class="text-start"
                                     [title]="item['candidate.candidateFirstName'] + item['candidate.candidateLastName']">
                                     {{ item['candidate.candidateFirstName'] }} {{ item['candidate.candidateLastName'] }}
                                 </td>
-                                <td class="text-wrap" [title]="item['candidate.candidateEmail']">{{
+                                <td class="text-start" [title]="item['candidate.candidateEmail']">{{
                                     item['candidate.candidateEmail'] }}</td>
-                                <td class="text-wrap" [title]="item['serviceRequest.requestName']">{{
+                                <td class="text-start" [title]="item['serviceRequest.requestName']">{{
                                     item['serviceRequest.requestName'] }}</td>
-                                    <td>
+                                    <td class="text-center">
                                         <img src="/assets/images/candidate-detail/move.svg" alt="move" *ngIf="item" (click)="onSwitchStation(item)">
                                     </td>
-                                <td class="text-wrap">{{item?.currentStation}}</td>
-                                <td class="f-w-500 text-wrap " [ngClass]="{'blue': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
+                                <td class="text-start">{{item?.currentStation}}</td>
+                                <td class="f-w-500 text-start" [ngClass]="{'orange': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
                                      'red': item?.serviceStatus === 'rejected'}">
                                     <span class="service-status">{{item?.serviceStatus === 'done' ? 'OfferAccepted' :
                                         item?.serviceStatus | titlecase}}</span>

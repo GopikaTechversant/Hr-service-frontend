@@ -3,7 +3,7 @@
     <span class="menu-text"><i class="fa fa-th-large" aria-hidden="true"></i></span>
     <span class="menu-text">Dashboard</span>
   </div>
-  <div class="menu d-flex c-pointer" (click)="navigate('/dashboard/service-requirement',false)"
+  <!-- <div class="menu d-flex c-pointer" (click)="navigate('/dashboard/service-requirement',false)"
     [class.active]="isActive('/dashboard/service-requirement')">
     <span class="menu-text"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
     <span class="menu-text">Create Requisition</span>
@@ -12,35 +12,35 @@
     [class.active]="isActive('/dashboard/add-candidate')">
     <span class="menu-text"><i class="fa fa-user-o" aria-hidden="true"></i></span>
     <span class="menu-text">Add Candidates</span>
-  </div>
+  </div> -->
   <div class="menu d-flex c-pointer" (click)="navigate('/dashboard/requirement-candidate-list',false)"
     [class.active]="isActive('/dashboard/requirement-candidate-list')">
-    <span class="menu-text"><i class="fa fa-list" aria-hidden="true"></i></span> 
-    <span class="menu-text">Requirements List</span>
+    <span class="menu-text"><i class="fa fa-list" aria-hidden="true"></i></span>
+    <span class="menu-text">Requisitions</span>
   </div>
   <div class="menu d-flex c-pointer" (click)="navigate('/dashboard/interview-details',false)"
     [class.active]="isActive('/dashboard/interview-details')">
-    <span class="menu-text"><i class="fa fa-laptop" aria-hidden="true"></i></span> 
+    <span class="menu-text"><i class="fa fa-laptop" aria-hidden="true"></i></span>
     <span class="menu-text">Interview Details</span>
   </div>
   <div class="menu d-flex c-pointer" (click)="navigate('/dashboard/report-details',false)"
     [class.active]="isActive('/dashboard/report-details')">
-    <span class="menu-text"><i class="fa fa-file-text" aria-hidden="true"></i></span> 
+    <span class="menu-text"><i class="fa fa-file-text" aria-hidden="true"></i></span>
     <span class="menu-text">Report</span>
   </div>
   <div *ngIf="id && candidateDetailUrl && isActive(candidateDetailUrl)" class="menu d-flex c-pointer"
     (click)="navigate(candidateDetailUrl, false)" [class.active]="isActive(candidateDetailUrl)">
-    <span class="menu-text"><i class="fa fa-user-circle" aria-hidden="true"></i></span> 
+    <span class="menu-text"><i class="fa fa-user-circle" aria-hidden="true"></i></span>
     <span class="menu-text">Candidate Detail</span>
   </div>
   <div *ngIf="id && requisitionUrl && isActive(requisitionUrl)" class="menu d-flex c-pointer"
     (click)="navigate(requisitionUrl, false)" [class.active]="isActive(requisitionUrl)">
-    <span class="menu-text"><i class="fa fa-table" aria-hidden="true"></i></span> 
+    <span class="menu-text"><i class="fa fa-table" aria-hidden="true"></i></span>
     <span class="menu-text">Requisition Detail</span>
   </div>
   <div *ngIf="requestId && requirementUrl && isActive(requirementUrl)" class="menu d-flex c-pointer"
     [class.active]="isActive(requirementUrl)">
-    <span class="menu-text"><i class="fa fa-table" aria-hidden="true"></i></span> 
+    <span class="menu-text"><i class="fa fa-table" aria-hidden="true"></i></span>
     <span class="menu-text">Requisition Detail</span>
   </div>
   <div *ngIf="requestId && candidateScheduleurl && isActive(candidateScheduleurl)" class="menu d-flex c-pointer"
@@ -50,7 +50,17 @@
   </div>
   <div class="menu d-flex c-pointer" (click)="navigate('/dashboard/candidate-pool',false)"
     [class.active]="isActive('/dashboard/candidate-pool')">
-    <span class="menu-text"><i class="fa fa-users" aria-hidden="true"></i></span> 
+    <span class="menu-text"><i class="fa fa-users" aria-hidden="true"></i></span>
     <span class="menu-text">Candidate Pool</span>
+  </div>
+  <div *ngIf="currentUrl === '/user'" class="menu d-flex c-pointer" (click)="navigate('/user/addUser', false)"
+    [class.active]="isActive('/user/addUser')">
+    <span class="menu-text"><i class="fa fa-user-plus" aria-hidden="true"></i></span>
+    <span class="menu-text">Add User</span>
+  </div>
+  <div *ngIf="currentUrl === '/hr'" class="menu d-flex c-pointer" (click)="navigate('/hr/selected-candidates',false)"
+    [class.active]="isActive('/hr/selected-candidates')">
+    <span class="menu-text"><i class="fa fa-list" aria-hidden="true"></i></span>
+    <span class="menu-text">Selected Candidate List</span>
   </div>
 </div>

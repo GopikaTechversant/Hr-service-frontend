@@ -256,7 +256,7 @@ export class HrCandidateListComponent implements OnInit {
   }
 
   selectCandidate(id: any): void {
-    this.router.navigate([`candidate-details`, id], { relativeTo: this.route });
+    this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
   }
 
 }

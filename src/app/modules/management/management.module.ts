@@ -16,7 +16,6 @@ const routes: Routes = [
     path: '', component: ManagementHomeComponent,
     children: [
       { path: '', component:  ManagementCandidateListComponent},   
-      { path: 'candidate-details/:id', component: CandidateDetailsComponent },
     ]
   },
 ]

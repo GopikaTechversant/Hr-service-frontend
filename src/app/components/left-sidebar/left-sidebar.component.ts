@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+
 @Component({
   selector: 'app-left-sidebar',
   templateUrl: './left-sidebar.component.html',
   styleUrls: ['./left-sidebar.component.css']
 })
-export class LeftSidebarComponent implements OnInit {
+export class LeftSidebarComponent implements OnInit, OnDestroy {
   id: string | null = null;
   candidateDetailUrl: string = '';
   requisitionUrl: string = '';
@@ -14,37 +15,41 @@ export class LeftSidebarComponent implements OnInit {
   routerEventsSubscription: any;
   requestId: string | null = null;
   candidateScheduleurl: string = '';
+
   constructor(private router: Router, private route: ActivatedRoute) { }
+
   ngOnInit(): void {
     this.routerEventsSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
-      this.id = this.route.snapshot.firstChild?.params['id'];
-      this.requestId = this.route.snapshot.queryParams['requestId'];
-      if (this.id) {
-        this.candidateDetailUrl = `/dashboard/candidate-details/${this.id}`;
-        this.requisitionUrl = `/dashboard/requisition-detail/${this.id}` || `/dashboard/series?requestId=${this.id}`;
-      }
-      else if (this.requestId) {
-        this.requirementUrl = `/dashboard/series?requestId=${this.requestId}`;
-        this.candidateScheduleurl = `/dashboard/candidate-schedule?requestId=${this.requestId}`;
-      }
+      this.updateUrls();
     });
     this.updateUrls();
+
+    console.log('Current URL:', this.router.url); // Log the current URL
+  }
+
+  get currentUrl(): string {
+    return this.router.url;
   }
 
   updateUrls(): void {
-    this.id = this.route.snapshot.firstChild?.params['id'];
-    this.requestId = this.route.snapshot.queryParams['requestId'];
+    const snapshot = this.route.snapshot;
+    this.id = snapshot.firstChild?.params['id'] || null;
+    this.requestId = snapshot.queryParams['requestId'] || null;
     if (this.id) {
       this.candidateDetailUrl = `/dashboard/candidate-details/${this.id}`;
       this.requisitionUrl = `/dashboard/requisition-detail/${this.id}`;
-      this.requirementUrl = `/dashboard/series?requestId=${this.id}`;
     }
-    else if (this.requestId) {
+    if (this.requestId) {
       this.requirementUrl = `/dashboard/series?requestId=${this.requestId}`;
       this.candidateScheduleurl = `/dashboard/candidate-schedule?requestId=${this.requestId}`;
     }
+
+    // Log additional details for debugging
+    console.log('Snapshot:', snapshot);
+    console.log('ID:', this.id);
+    console.log('Request ID:', this.requestId);
   }
 
   ngOnDestroy(): void {
@@ -64,5 +69,4 @@ export class LeftSidebarComponent implements OnInit {
   isActive(route: string): boolean {
     return this.router.url === route;
   }
-
 }

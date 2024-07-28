@@ -95,13 +95,13 @@
                 <span class="sub-head">Interview Rounds<span class="required">*</span></span>
                 <div class="d-flex input-interview-rounds p-relative">
                     <div *ngFor="let item of selectedStations; let i = index">
-                        <div *ngIf="item?.stationName" class="m-t-4 m-l-5 d-flex align-center">
+                        <div *ngIf="item?.stationName" class="m-t-2 m-l-5 d-flex align-center">
                             <!-- First station (Screening) -->
                             <ng-container *ngIf="i === 0">
-                                <span class="m-t-4">{{item?.stationName}}</span>
+                                <span class="m-t-2">{{item?.stationName}}</span>
                                 <ng-container *ngIf="selectedStations.length > 1">
                                     <img src="assets/images/forward-arrow.png" alt="arrow"
-                                        style="vertical-align: middle;" class="m-t-5 m-l-5">
+                                        style="vertical-align: middle;" class="m-t-3 m-l-5">
                                 </ng-container>
                             </ng-container>
                             <!-- Middle stations (dynamically added) -->
@@ -118,7 +118,7 @@
                             </ng-container>
                             <!-- Last station (HR) -->
                             <ng-container *ngIf="i === selectedStations.length - 1 && selectedStations.length > 1">
-                                <span class="m-t-4">{{item?.stationName}}</span>
+                                <span class="m-t-2">{{item?.stationName}}</span>
                             </ng-container>
                             <!-- Handle case where only one station is present -->
                             <ng-container *ngIf="i === selectedStations.length - 1 && selectedStations.length === 1">
@@ -131,7 +131,7 @@
                     </div>
                     <div class="drop-list no-close" *ngIf="idListOpen && (selectedStations?.length < 5)">
                         <div (click)="selectStation(station?.stationId, station?.stationName)"
-                            *ngFor="let station of stationsList" class="c-pointer p-4 p-l-15 no-close">
+                            *ngFor="let station of stationsList" class="c-pointer drop-menu 4 p-l-15 no-close">
                             {{station?.stationName}}
                         </div>
                     </div>
@@ -184,7 +184,7 @@
                     <span class="sub-head">Reporting Manager<span class="required">*</span></span>
                     <div class="no-close col-md-3 s-list d-flex input-box j-space m-text p-relative">
                         <span (click)="managerListOpen = !managerListOpen" class="w-100 d-flex">
-                            <span class="align-center m-t-10 c-pointer">
+                            <span class="align-center p-t-5 c-pointer">
                                 {{reportingmanager.trim() !== '' ? reportingmanager : 'Select Reporting
                                 manager'}}</span>
                             <span class="no-close s-list c-pointer align-center m-b-2 flex-1 sub j-end"><i

@@ -12,53 +12,6 @@
 
 }
 
-tr:nth-child(odd) {
-    background: #F4F2F2;
-}
-
-tr:nth-child(even) {
-    background: #FFFFFF;
-}
-
-
-td {
-    padding: 10px;
-    text-align: center;
-    border: 1px solid #E9E9E9;
-    /* height: 53px; */
-}
-
-tr {
-    text-align: center;
-    height: 53px;
-}
-
-.table-header {
-    position: sticky;
-    top: 0;
-    background: #F4F2F2 !important;
-    padding: 10px;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 18px;
-    letter-spacing: 0em;
-    text-align: center;
-}
-
-.table-container {
-    overflow: auto !important;
-    height: calc(100vh - 372px);
-}
-
-.blue {
-    color: #0034C4;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
 .filter {
     font-weight: 400;
     font-size: 16px;
@@ -180,25 +133,6 @@ table {
     font-weight: 500;
 }
 
-.text-wrp {
-    max-width: 128px !important;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    cursor: pointer;
-}
-
-.export-btn {
-    border-radius: 3px;
-    height: 34px;
-    width: 81px;
-    background-color: #4F4F4F;
-    color: white;
-    font-weight: 500;
-    line-height: 35px;
-    text-align: center;
-}
-
 .scrollable::-webkit-scrollbar,
 .table-container::-webkit-scrollbar {
     display: none;
@@ -224,3 +158,7 @@ table {
 .details:hover {
     background-color: #D3E8FF;
   }
+
+.requisition-col{
+    width: 19%;
+}

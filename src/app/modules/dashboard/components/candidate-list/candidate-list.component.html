@@ -16,59 +16,63 @@
             <div class="add c-pointer m-r-11" (click)="openRequisition()">
                 <span class="c-pointer">Add Requirement</span>
             </div>
+            <div class="add bg-primary c-pointer m-r-11" (click)="navigate('/dashboard/add-candidate',false)">
+                <span class="c-pointer">Add Candidate</span>
+            </div>
             <div class="export-btn c-pointer">
                 <span (click)="exportData()">Export</span>
             </div>
         </div>
     </div>
-    <div class="table-container m-b-0">
-        <table class="table">
-            <tr class="table-header p-b-10">
-                <td class="text-wrap">Select</td>
-                <td class="text-wrap" title="Name">Name</td>
-                <td class="text-wrap" title="Email">Email</td>
-                <td class="text-wrap" title="Mobile">Mobile</td>
-                <td class="text-wrap" title="Previous Organization">Previous Organization</td>
-                <td class="text-wrap" title="Previous Designation">Previous Designation</td>
-                <td class="text-wrap" title="Relevent Experience">Relevent Experience</td>
-                <td class="text-wrap" title="Total Experience">Total Experience</td>
-                <td class="text-wrap" title="Current Salary">Current Salary</td>
-                <td class="text-wrap" title="Education">Education</td>
-                <td class="text-wrap" title="Skills">Skills</td>
-                <td class="text-wrap" title="Requirement">Requirement</td>
-                <td class="text-wrap" title="Actions">Actions</td>
+    <div class=" m-b-0">
+        <table class="">
+            <tr class="table-header">
+                <td class="text-center">Select</td>
+                <td class="text-center" title="Name">Name</td>
+                <td class="text-center" title="Email">Email</td>
+                <td class="text-center" title="Mobile">Mobile</td>
+                <td class="text-center" title="Previous Organization">Previous Organization</td>
+                <td class="text-center" title="Previous Designation">Previous Designation</td>
+                <td class="text-center" title="Relevent Experience">Relevent Experience</td>
+                <td class="text-center" title="Total Experience">Total Experience</td>
+                <td class="text-center" title="Current Salary">Current Salary</td>
+                <td class="text-center" title="Education">Education</td>
+                <td class="text-center" title="Skills">Skills</td>
+                <td class="text-center" title="Requirement">Requirement</td>
+                <td class="text-center actions" title="Actions">Actions</td>
             </tr>
             <ng-container *ngIf="candidateList?.length > 0">
-                <tr class="c-pointer details" *ngFor="let item of candidateList"
+                <tr class="c-pointer details-table" *ngFor="let item of candidateList"
                     (dblclick)="selectCandidate(item?.candidateId)">
                     <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()"></td>
-                    <td class="text-wrap"
+                    <td class="text-start"
                         [title]="(item?.candidateFirstName | titlecase) + (item?.candidateLastName | titlecase)">
                         {{item?.candidateFirstName | titlecase}} {{item?.candidateLastName | titlecase}}
                     </td>
-                    <td class="text-wrap" [title]="item?.candidateEmail">{{item?.candidateEmail}}</td>
-                    <td class="text-wrap" [title]="item?.candidateMobileNo">{{item?.candidateMobileNo}}</td>
-                    <td class="text-wrap" [title]="item?.candidatePreviousOrg">{{item?.candidatePreviousOrg}}</td>
-                    <td class="text-wrap" [title]="item?.candidatePreviousDesignation">
+                    <td class="text-start" [title]="item?.candidateEmail">{{item?.candidateEmail}}</td>
+                    <td class="text-end" [title]="item?.candidateMobileNo">{{item?.candidateMobileNo}}</td>
+                    <td class="text-start" [title]="item?.candidatePreviousOrg">{{item?.candidatePreviousOrg}}</td>
+                    <td class="text-start" [title]="item?.candidatePreviousDesignation">
                         {{item?.candidatePreviousDesignation}}</td>
-                    <td class="text-wrap" [title]="item?.candidateRevlentExperience">{{item?.candidateRevlentExperience
+                    <td class="text-end" [title]="item?.candidateRevlentExperience">{{item?.candidateRevlentExperience
                         || 'Nil'}}</td>
-                    <td class="text-wrap" [title]="item?.candidateTotalExperience">{{item?.candidateTotalExperience ||
+                    <td class="text-end" [title]="item?.candidateTotalExperience">{{item?.candidateTotalExperience ||
                         'Nil'}}</td>
-                    <td class="text-wrap" [title]="item?.candidateCurrentSalary">{{item?.candidateCurrentSalary}}</td>
-                    <td class="text-wrap" [title]="item?.candidateEducation">{{item?.candidateEducation}}</td>
-                    <td class="text-wrap"
+                    <td class="text-end" [title]="item?.candidateCurrentSalary">{{item?.candidateCurrentSalary}}</td>
+                    <td class="text-start" [title]="item?.candidateEducation">{{item?.candidateEducation}}</td>
+                    <td class="text-start"
                         [title]="item?.candidateSkill.length > 0 ? (item?.candidateSkill[0]?.skills?.skillName | titlecase):'N/A'">
                         {{item?.candidateSkill.length > 0 ? (item?.candidateSkill[0]?.skills?.skillName |
                         titlecase):'N/A'}}</td>
-                        <td class="text-wrap"  [title]="item?.reqServiceRequest?.requestName">{{item?.reqServiceRequest?.requestName || 'Not Assigned'}}</td>
-                    <td *ngIf="!item?.candidatesAddingAgainst">
+                    <td class="text-start" [title]="item?.reqServiceRequest?.requestName">
+                        {{item?.reqServiceRequest?.requestName || 'Not Assigned'}}</td>
+                    <td *ngIf="!item?.candidatesAddingAgainst" class="actions text-center">
                         <i class="fa fa-pencil-square-o p-r-5 icon-color" aria-hidden="true"
                             (click)="edit(item?.candidateId)"></i>
                         <i class="fa fa-trash-o p-l-5 delete-color" aria-hidden="true"
                             (click)="delete(item?.candidateId)"></i>
                     </td>
-                    <td *ngIf="item?.candidatesAddingAgainst" class="action-disabled">
+                    <td *ngIf="item?.candidatesAddingAgainst" class="action-disabled actions text-center">
                         <i class="fa fa-pencil-square-o p-r-5 disabled-icon-color"
                             [ngClass]="{'disabled-icon': !item?.candidatesAddingAgainst}"
                             [attr.aria-disabled]="!item?.candidatesAddingAgainst"></i>

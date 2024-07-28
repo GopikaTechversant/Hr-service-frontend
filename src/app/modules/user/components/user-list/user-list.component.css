@@ -84,56 +84,6 @@
     height: 28px;
 }
 
-
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.table-container {
-    flex-grow: 1;
-    overflow: auto;
-    margin-bottom: 10px;
-    height: calc(100vh - 276px);
-}
-
-tr:nth-child(odd) {
-    background: #F4F2F2;
-}
-
-tr:nth-child(even) {
-    background: #FFFFFF;
-}
-
-td {
-    padding: 10px;
-    text-align: center !important;
-    border: 1px solid #E9E9E9;
-}
-
-tr {
-    text-align: center;
-}
-
-.table-header {
-    position: sticky;
-    top: 0;
-    background: #F4F2F2 !important;
-    padding: 10px;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 18px;
-    letter-spacing: 0em;
-    text-align: center;
-
-}
-
-.table-view {
-    height: calc(100vh - 200px);
-    overflow: auto;
-}
-
 .btn {
     width: 75%;
     height: 35px;

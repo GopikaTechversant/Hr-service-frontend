@@ -189,39 +189,6 @@ input[type="text"] {
   white-space: nowrap;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.table-container {
-  overflow: auto !important;
-  height: calc(100vh - 259px);
-}
-
-tr:nth-child(odd) {
-  background:#F4F2F2;
-}
-
-tr:nth-child(even) {
-  background: #FFFFFF;
-}
-
-.candidate:hover {
-  background-color: #D3E8FF;
-}
-
-
-td {
-  padding: 10px;
-  text-align: center !important;
-  border: 1px solid #EDEDED;
-  height: 30px;
-}
-
-tr {
-  text-align: center;
-}
 
 .blue {
   color: #005EC9;
@@ -233,19 +200,6 @@ tr {
 
 .green {
   color: #08E179;
-}
-
-
-.table-header {
-  position: sticky;
-  top: 0;
-  background-color: #F4F2F2 !important;
-  padding: 10px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 18px;
-  letter-spacing: 0em;
-  text-align: center;
 }
 
 .btn {
@@ -338,3 +292,10 @@ tr {
   font-weight: 500;
 }
 
+.count-col{
+  width: 9%;
+}
+
+.date-col{
+  width: 10%;
+}

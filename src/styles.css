@@ -264,14 +264,69 @@ body {
 
 .export-btn {
   border-radius: 3px;
-  height: 40px;
+  height: 30px;
   width: 81px;
   background-color: #4F4F4F;
   color: white;
   font-weight: 500;
-  line-height: 35px;
+  line-height: 30px;
   text-align: center;
   border: none!important;
   outline: none!important;
 }
 
+.text-wrap {
+  max-width: 90px !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+tr:nth-child(odd) {
+  background: #F4F2F2;
+}
+
+tr:nth-child(even) {
+  background: #FFFFFF;
+}
+
+
+td {
+  padding: 10px;
+  border: 1px solid #E9E9E9 !important;
+}
+
+.table-header {
+  position: sticky;
+  top: 0;
+  background: #F4F2F2 !important;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: center;
+}
+
+.table-container {
+  overflow: auto !important;
+  height: calc(100vh - 372px);
+}
+
+.blue {
+  color: #0034C4;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.details-table{
+  font-size: 13px;
+}
+
+.details:hover {
+  background-color: #D3E8FF;
+}

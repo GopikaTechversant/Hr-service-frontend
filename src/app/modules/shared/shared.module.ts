@@ -8,6 +8,7 @@ import { FileUploadS3Component } from 'src/app/components/file-upload-s3/file-up
 import { MailTemplateComponent } from 'src/app/components/mail-template/mail-template.component';
 import { MaterialModule } from '../material/material.module';
 import { CandidateDetailsComponent } from 'src/app/components/candidate-details/candidate-details.component';
+import { LeftSidebarComponent } from 'src/app/components/left-sidebar/left-sidebar.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,8 @@ import { CandidateDetailsComponent } from 'src/app/components/candidate-details/
     FileUploadS3Component,
     MailTemplateComponent,
     CandidateDetailsComponent,
+    LeftSidebarComponent,
+    CandidateDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +31,9 @@ import { CandidateDetailsComponent } from 'src/app/components/candidate-details/
     SkeletonLoaderComponent,
     NgxSkeletonLoaderModule,
     FileUploadS3Component,
-    MailTemplateComponent
+    MailTemplateComponent,
+    LeftSidebarComponent,
+    CandidateDetailsComponent
   ]
 })
 export class SharedModule {}
