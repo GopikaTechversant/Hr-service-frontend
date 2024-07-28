@@ -16,7 +16,6 @@ const routes: Routes = [
     path: '', component: TechnicalHomeComponent,
     children: [
       { path: '', component: TechnicalDetailComponent },   
-      { path: 'candidate-details/:id', component: CandidateDetailsComponent },
     ]
   },
 ];

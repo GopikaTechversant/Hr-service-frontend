@@ -110,6 +110,7 @@ export class InterviewCountsBarComponent implements OnInit {
             borderWidth: 1,
             barPercentage: 0.8,
             categoryPercentage: 0.7,
+            barThickness: 70,            
           },
           {
             label: 'No. of Sourced',
@@ -119,6 +120,7 @@ export class InterviewCountsBarComponent implements OnInit {
             borderWidth: 1,
             barPercentage: 0.8,
             categoryPercentage: 0.7,
+            barThickness: 70,  
           },
           {
             label: 'No. of Offered',
@@ -128,6 +130,7 @@ export class InterviewCountsBarComponent implements OnInit {
             borderWidth: 1,
             barPercentage: 0.8,
             categoryPercentage: 0.7,
+            barThickness: 70,  
           },
 
         ]
@@ -141,6 +144,7 @@ export class InterviewCountsBarComponent implements OnInit {
             }
           },
           x: {
+            stacked: true,
             beginAtZero: false,
             grid: {
               display: false,
@@ -158,7 +162,7 @@ export class InterviewCountsBarComponent implements OnInit {
         plugins: {
           legend: {
             display: true,
-            // position: 'right',
+            position: 'bottom',
             // align: 'end',
             labels: {
               usePointStyle: true,
@@ -170,14 +174,14 @@ export class InterviewCountsBarComponent implements OnInit {
             enabled: true,
           },
           datalabels: {
-            color: '#575F6E',
+            color: '#FFFFFF',
             // backgroundColor: '#FFFFFF',
             // borderRadius: 4,
             // borderColor: '#0034C4',
             // borderWidth: 1,
             padding: 4,
-            anchor: 'end',
-            align: 'end',
+            anchor: 'center',
+            align: 'center',
             offset: -1,
             font: {
               size: 14,

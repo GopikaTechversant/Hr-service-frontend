@@ -6,7 +6,6 @@ import { HomeComponent } from './components/home/home.component';
 import { SharedModule } from '../shared/shared.module';
 import { SeriesComponent } from './components/series/series.component';
 import { ResultComponent } from './components/result/result.component';
-import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
 import { AssignSeriesComponent } from './components/assign-series/assign-series.component';
 import { FormsModule } from '@angular/forms';
 import { CandidateDetailsComponent } from 'src/app/components/candidate-details/candidate-details.component';
@@ -20,7 +19,6 @@ const routes: Routes = [
     {path:'',component: CandidateListComponent},
     {path:'series',component: SeriesComponent},
     {path:'candidates',component: CandidateAssignmentComponent},
-    { path: 'candidate-details/:id', component: CandidateDetailsComponent },
   ]
  }
 ]
@@ -31,7 +29,6 @@ const routes: Routes = [
     HomeComponent,
     SeriesComponent,
     ResultComponent,
-    LeftSidebarComponent,
     AssignSeriesComponent,
     CandidateAssignmentComponent,
     AssignQuestionComponent

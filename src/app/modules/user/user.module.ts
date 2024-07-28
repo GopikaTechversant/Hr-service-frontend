@@ -3,7 +3,6 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
-import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
 import { HomeComponent } from './components/home/home.component';
 import { AddUserComponent } from './components/add-user/add-user.component';
 import { MaterialModule } from '../material/material.module';
@@ -26,7 +25,6 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     UserListComponent,
-    LeftSidebarComponent,
     HomeComponent,
     AddUserComponent,
     EditComponent

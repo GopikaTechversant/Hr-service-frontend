@@ -7,7 +7,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { HttpClientModule } from '@angular/common/http';
-import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
 import { FormsModule } from '@angular/forms';
 import { RequirementFormComponent } from './components/requirement-form/requirement-form.component';
 import { ServiceRequestComponent } from './components/service-request/service-request.component';
@@ -47,7 +46,6 @@ const routes: Routes = [
       { path: 'candidate-details/:id', component: CandidateDetailsComponent },
       { path: 'series', component: SeriesComponent },
       { path: 'requisition-detail/:id', component: RequisitionDetailsComponent },
-      { path: 'candidate-details/:id', component: CandidateDetailsComponent },
       { path: 'candidate-pool', component: CandidateListComponent },
       { path: 'candidate-schedule',component:CandidateScheduleComponent}
     ]
@@ -61,7 +59,6 @@ const routes: Routes = [
   declarations: [
     DashboardComponent,
     AddCandidateModalComponent,
-    LeftSidebarComponent,
     RequirementFormComponent,
     ServiceRequestComponent,
     RequirementCandidateListComponent,
