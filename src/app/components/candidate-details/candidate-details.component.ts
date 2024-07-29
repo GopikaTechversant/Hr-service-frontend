@@ -57,7 +57,7 @@ export class CandidateDetailsComponent implements OnInit {
           this.currentRequirement = this.candidateDetails?.position[0]?.reqServiceRequest?.requestName;
           this.positionId = this.candidateDetails?.position[0]?.reqServiceRequest?.requestId;
           this.resumePath = this.candidateDetails?.candidateResume;
-          this.viewResumeFile = environment.s3_url;
+          this.viewResumeFile = environment.s3_url + this.resumePath;
           this.fetchCandidateHistory();
         } 
       },

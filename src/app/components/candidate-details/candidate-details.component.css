@@ -143,11 +143,12 @@
     text-align: center;
     padding: 15px;
     border-radius: 50%;
-    height: 50px;
-    width: 50px;
+    height: 57px;
+    width: 57px;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 12px;
 }
 
 .user-icon img {
@@ -258,4 +259,13 @@ tr {
     line-height: 18px;
     letter-spacing: 0em;
     text-align: center;
+}
+
+.padding-5{
+    padding: 5px;
+}
+
+.resume-file{
+    height: 30%;
+    width: 30%;
 }

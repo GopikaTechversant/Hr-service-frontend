@@ -43,7 +43,7 @@
             </div> -->
             <ng-container>
                 <ng-container *ngFor="let item of  candidateList">
-                    <tr class="c-pointer details" (dblclick)="selectCandidate(item['candidate.candidateId'])">
+                    <tr class="details">
                         <!-- <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()">
                         </td> -->
                         <td class="text-start">{{item?.userfirstName ? item?.userfirstName : item?.requestName}}</td>
