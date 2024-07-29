@@ -58,7 +58,6 @@
     display: block;
     padding-top: 20px;
     background-color: #FFFFFF;
-
 }
 
 .resume {
@@ -267,5 +266,9 @@ tr {
 
 .resume-file {
     height: 30%;
-    width: 30%;
+    width: 100%;
+}
+
+.resume-container{
+    border: 1px solid #c0c3ca;
 }

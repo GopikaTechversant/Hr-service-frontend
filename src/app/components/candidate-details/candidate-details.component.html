@@ -73,11 +73,11 @@
                             <div (click)="requirementSwitch('R')" title="Switch Requirement" class="c-pointer sub-head">
                                 <span class="sub-head">Switch Requirements</span>
                                 <span>
-                                    <img src="/assets/images/techversant/switch.svg" class="c-pointer p-t-7 p-l-5"
-                                        alt="" height="14" width="14">
+                                    <img src="/assets/images/techversant/switch.svg" class="c-pointer p-l-5" alt=""
+                                        height="17" width="17">
                                 </span>
                             </div>
-                            <span class="text-color padding-5 p-l-0 text-wrap req">:
+                            <span class="text-color p-l-0 text-wrap req">:
                                 <a
                                     [href]="env_url + '/dashboard/series?requestId=' + candidateDetails?.position[currentRequirementIndex]?.reqServiceRequest?.requestId">
                                     {{
@@ -90,7 +90,7 @@
                         </div>
                         <div class="details">
                             <span class="sub-head">Requirement Status</span>
-                            <span class="text-color padding-5 p-l-0 text-wrap req">:
+                            <span class="text-color p-l-0 text-wrap req">:
                                 {{ candidateDetails?.position[currentRequirementIndex]?.reqServiceRequest?.requestStatus
                                 }}
                             </span>
@@ -278,12 +278,12 @@
                 <div class="table-container m-b-0 w-100">
                     <table class="table">
                         <tr class="table-header f-w-500 p-b-10">
-                            <td>Date</td>
+                            <td>Station</td>
                             <td>Interview Type</td>
                             <td>Panel</td>
                             <td>Scheduled By</td>
-                            <td>Station</td>
                             <td>Status</td>
+                            <td>Date</td>
                         </tr>
                         <ng-container *ngIf="CandidateHistory?.length > 0">
                             <div *ngIf="loader && !initialLoader" class="loader-parent">
@@ -291,14 +291,14 @@
                             </div>
                             <ng-container *ngFor="let item of CandidateHistory[0]?.interviewDetail">
                                 <tr class="candidate c-pointer">
-                                    <td>{{ item?.interviewDate | date : 'dd/MM/yyyy' }}</td>
+                                    <td class="text-wrap" [title]="item?.station">{{ item?.station | titlecase }}</td>
                                     <td>{{ item?.interviewType === 0 ? 'Interview Scheduled' : 'Re-Scheduled' }}</td>
                                     <td class="text-wrap" [title]="item?.interviewBy">{{ item?.interviewBy | titlecase
                                         }}</td>
                                     <td class="text-wrap" [title]="item?.interviewScheduledBy">{{
                                         item?.interviewScheduledBy | titlecase }}</td>
-                                    <td class="text-wrap" [title]="item?.station">{{ item?.station | titlecase }}</td>
                                     <td class="text-wrap" [title]="item?.status">{{ item?.status | titlecase }}</td>
+                                    <td>{{ item?.interviewDate | date : 'dd/MM/yyyy' }}</td>
                                 </tr>
                             </ng-container>
                         </ng-container>
@@ -329,22 +329,19 @@
             </div>
             <!-- Attachment Content -->
             <div class="tabcontent" [ngClass]="{'active': activeTab === 'attachment'}" id="attachment">
-                <div class="c-pointer resume">
+                <!-- <div class="c-pointer resume">
                     <span class="blue f-w-500">
                         <a [href]="viewResumeFile + resumePath ">View Resume</a>
                     </span>
-                </div>
-                
-
+                </div> -->
                 <div class="table-container m-b-0 w-100">
                     <table class="table">
                         <tr class="table-header f-w-500 p-b-10">
-                            <td>Date</td>
-                            <td>Uploaded By</td>
                             <td>Station</td>
+                            <td>Uploaded By</td>
                             <td>Attachment</td>
                             <td>Recruiter</td>
-                            <!-- <td>Type</td> -->
+                            <td>Date</td>
                             <!-- <td>Status</td>         -->
                         </tr>
                         <div *ngIf="loader && !initialLoader" class="loader-parent">
@@ -353,18 +350,18 @@
                         <ng-container *ngIf="CandidateHistory?.length > 0">
                             <ng-container *ngFor="let item of CandidateHistory[0]?.attachedData">
                                 <tr class="candidate c-pointer">
-                                    <td>{{item?.uploadedDate | date : 'dd/MM/YYY'}}</td>
-                                    <td class="text-wrap" [title]="item?.uploadedBy | titlecase ">{{ item?.uploadedBy |
-                                        titlecase }}</td>
                                     <td class="text-wrap" [title]="item?.station | titlecase ">{{ item?.station |
+                                        titlecase }}</td>
+                                    <td class="text-wrap" [title]="item?.uploadedBy | titlecase ">{{ item?.uploadedBy |
                                         titlecase }}</td>
                                     <td (click)="viewResume(item?.uploadedFile)" class="c-pointer"
                                         title="View Attachment">
                                         <img _ngcontent-rnn-c111="" src="/assets/images/view-file.png" alt=""
-                                            height="29" width="29" class="p-l-9">
+                                            height="37" width="37" class="p-l-9">
                                     </td>
                                     <td class="text-wrap" [title]="item?.scheduledByName | titlecase ">{{
                                         item?.scheduledByName | titlecase }}</td>
+                                    <td>{{item?.uploadedDate | date : 'dd/MM/YYY'}}</td>
                                     <!-- <td class="text-wrap" [title]="item?.status ">{{ item?.status }}</td> -->
                                 </tr>
                             </ng-container>
@@ -400,11 +397,10 @@
                 <div class="table-container m-b-0 w-100">
                     <table class="table">
                         <tr class="table-header f-w-500 p-b-10">
-                            <td>Date</td>
-                            <td>Feedback By</td>
-                            <td>Feedback Message</td>
                             <td>Station</td>
-                            <!-- <td>Status</td> -->
+                            <td>Uploaded By</td>
+                            <td>Comments</td>
+                            <td>Date Uploaded</td>
                         </tr>
                         <ng-container *ngIf="CandidateHistory?.length > 0">
                             <div *ngIf="loader && !initialLoader" class="loader-parent">
@@ -412,13 +408,13 @@
                             </div>
                             <ng-container *ngFor="let item of CandidateHistory[0]?.feedbackDetail">
                                 <tr class="candidate c-pointer">
-                                    <td>{{ item?.feedbackDate | date : 'dd/MM/yyyy' }}</td>
+                                    <td class="text-wrap" [title]="item?.station">{{ item?.station }}</td>
                                     <td class="text-wrap" [title]="item?.feedbackBy">{{ item?.feedbackBy | titlecase }}
                                     </td>
                                     <td class="text-wrap" [title]="item?.feedbackMessage">{{ item?.feedbackMessage |
                                         titlecase
                                         }}</td>
-                                    <td class="text-wrap" [title]="item?.station">{{ item?.station }}</td>
+                                    <td>{{ item?.feedbackDate | date : 'dd/MM/yyyy' }}</td>
                                     <!-- <td class="text-wrap" [title]="item?.status">{{ item?.status }}</td> -->
                                 </tr>
                             </ng-container>
@@ -453,11 +449,11 @@
                 <div class="table-container m-b-0 w-100">
                     <table class="table">
                         <tr class="table-header f-w-500 p-b-10">
-                            <td>Date</td>
+                            <td>Station</td>
                             <td>History Type</td>
                             <td>History By</td>
                             <!-- <td>Comment</td> -->
-                            <td>Station</td>
+                            <td>Date</td>
                             <!-- <td>Status</td> -->
                         </tr>
                         <ng-container *ngIf="CandidateHistory?.length > 0">
@@ -466,12 +462,12 @@
                             </div>
                             <ng-container *ngFor="let item of CandidateHistory[0]?.historyDetail">
                                 <tr class="candidate c-pointer">
-                                    <td>{{ item?.historyDate | date : 'dd/MM/yyyy' }}</td>
+                                    <td class="text-wrap" [title]="item?.station">{{ item?.station }}</td>
                                     <td class="text-wrap" [title]="item?.historyType">{{ item?.historyType }}</td>
                                     <td class="text-wrap" [title]="item?.historyBy">{{ item?.historyBy | titlecase }}
                                     </td>
                                     <!-- <td class="text-wrap" [title]="item?.feedbackMessage">{{ item?.feedbackMessage }}</td> -->
-                                    <td class="text-wrap" [title]="item?.station">{{ item?.station }}</td>
+                                    <td>{{ item?.historyDate | date : 'dd/MM/yyyy' }}</td>
                                     <!-- <td class="text-wrap" [title]="item?.status">{{ item?.status }}</td> -->
                                 </tr>
                             </ng-container>
