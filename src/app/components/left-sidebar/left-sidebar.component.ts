@@ -25,8 +25,6 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
       this.updateUrls();
     });
     this.updateUrls();
-
-    console.log('Current URL:', this.router.url); // Log the current URL
   }
 
   get currentUrl(): string {
@@ -45,11 +43,6 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
       this.requirementUrl = `/dashboard/series?requestId=${this.requestId}`;
       this.candidateScheduleurl = `/dashboard/candidate-schedule?requestId=${this.requestId}`;
     }
-
-    // Log additional details for debugging
-    console.log('Snapshot:', snapshot);
-    console.log('ID:', this.id);
-    console.log('Request ID:', this.requestId);
   }
 
   ngOnDestroy(): void {

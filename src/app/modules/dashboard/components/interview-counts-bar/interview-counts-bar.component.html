@@ -3,10 +3,10 @@
         <div class="text"><span class="heading">Candidates By Recruiterwise</span></div>
         <div class="c-pointer">
             <span class="d-flex j-space filter-radio">
-                <span> <input type="radio" id="recruiter" name="radio" value="recruiter" [checked]="true"
+                <span> <input type="radio" id="recruiter" name="radio" value="recruiter" [checked]="recruiterCheck"
                         (change)="onRadioChange($event)">
                     <label for="recruiter" class="p-t-5 p-l-5 f-w-400 c-pointer">Recruiters</label></span>
-                <span><input type="radio" id="last6" name="radio" value="Last 6 Months" (change)="onRadioChange($event)"
+                <span><input type="radio" id="last6" name="radio" value="Last 6 Months" [checked]="lastSixMonth" (change)="onRadioChange($event)"
                         class="">
                     <label for="last6" class="p-t-5 p-l-5 f-w-400 c-pointer">Last 6 Months</label></span>
             </span>
