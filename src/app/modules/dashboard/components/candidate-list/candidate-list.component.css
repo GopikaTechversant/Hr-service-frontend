@@ -25,6 +25,7 @@ input[type="text"] {
     border: none;
     outline: none;
     width: 75%;
+    padding: 6px;
 }
 
 .heading {

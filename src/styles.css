@@ -259,7 +259,7 @@ body {
   padding: 4px 8px !important;
   border-radius: 3px;
   opacity: 0px;
-  outline: none!important;
+  outline: none !important;
 }
 
 .export-btn {
@@ -271,8 +271,8 @@ body {
   font-weight: 500;
   line-height: 30px;
   text-align: center;
-  border: none!important;
-  outline: none!important;
+  border: none !important;
+  outline: none !important;
 }
 
 .text-wrap {
@@ -282,6 +282,31 @@ body {
   white-space: nowrap;
 }
 
+.mat-calendar-table-header {
+  background-color: #FFFFFF;
+}
+
+th {
+  background-color: #FFFFFF;
+}
+
+.mat-calendar-table {
+  padding: 5px;
+  background: #FFFFFF;
+  border: none !important;
+}
+
+.mat-calendar-table-header {
+  background: #FFFFFF !important;
+}
+
+.mat-calendar-body-label,
+.mat-calendar-table,
+.mat-calendar-body-cell-container {
+  padding: 5px;
+  background: #FFFFFF;
+  border: none !important;
+}
 
 tr:nth-child(odd) {
   background: #F4F2F2;
@@ -290,7 +315,6 @@ tr:nth-child(odd) {
 tr:nth-child(even) {
   background: #FFFFFF;
 }
-
 
 td {
   padding: 10px;
@@ -323,7 +347,7 @@ table {
   border-collapse: collapse;
 }
 
-.details-table{
+.details-table {
   font-size: 13px;
 }
 

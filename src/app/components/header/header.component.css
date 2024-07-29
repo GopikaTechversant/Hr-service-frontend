@@ -1,11 +1,10 @@
 .main {
     display: flex;
-    box-shadow: 0px 4px 8px 0px #00000017;
 }
 
 .header {
     height: 75px !important;
-    width: 83vw;
+    width: 84vw;
     background: #FFFFFF;
     border-right: none;
 }
@@ -13,16 +12,13 @@
 .sidebar-container {
     display: flex;
     flex-direction: column;
-    width: 16vw;
+    width: 15vw;
     transition: width 0.3s ease;
     background-color: #FFFFFF;
-    border-right: 1px solid #E9E9E9;
     position: relative;
-    border-bottom: 1px solid #00000012;
     height: 75px !important;
     align-items: center;
     justify-content: center;
-    box-shadow: 0px 0px 0px 0px #00000017;
 }
 
 .side-head {
