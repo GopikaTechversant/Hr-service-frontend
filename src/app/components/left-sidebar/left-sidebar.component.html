@@ -1,4 +1,9 @@
 <div class="main p-t-10">
+  <div class="head c-pointer" (click)="navigate('/dashboard',false)">
+    <div class="sidebar">
+      <span class="side-head"> Techversant <span class="blue">Gateway</span></span>
+    </div>
+  </div>
   <div class="menu d-flex c-pointer" (click)="navigate('/dashboard',false)" [class.active]="isActive('/dashboard')">
     <span class="menu-text"><i class="fa fa-th-large" aria-hidden="true"></i></span>
     <span class="menu-text">Dashboard</span>

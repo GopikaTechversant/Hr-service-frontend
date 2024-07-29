@@ -14,6 +14,9 @@ import { DatePipe } from '@angular/common';
   }
 })
 export class InterviewCountsBarComponent implements OnInit {
+  @Input() startDate: any;
+  @Input() endDate: any;
+  @Input() positionId: any;
   chart: any;
   sixMonthCount: any;
   labels: any;
@@ -23,28 +26,39 @@ export class InterviewCountsBarComponent implements OnInit {
   teamId: any = '';
   teamName: string = '';
   barcounts: any[] = [];
-  @Input() startDate: any;
-  @Input() endDate: any;
   label: any[] = [];
   hiredData: any[] = [];
   sourcedData: any[] = [];
   offeredData: any[] = [];
-  recruiterCheck: boolean = false;
+  recruiterCheck: boolean = true;
+  lastSixMonth : boolean = false
   previousStartDate: any;
   previousEndDate: any;
+  requestId: any;
   constructor(private apiService: ApiService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     Chart.register(ChartDataLabels);
     this.fetchBarchartDetails();
+    this.previousStartDate = this.startDate
+    this.previousEndDate = this.endDate
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['startDate'] && !changes['startDate'].isFirstChange()) {
+    if ((changes['positionId'] && !changes['positionId'].isFirstChange())) {
+      this.requestId = changes['positionId'].currentValue;
+      this.fetchBarchartDetails();
+    } else if (changes['startDate'] && !changes['startDate'].isFirstChange()) {
       this.startDate = changes['startDate'].currentValue;
+      this.endDate = this.previousEndDate;
+      this.lastSixMonth = false;
+      this.recruiterCheck = true;
       this.fetchBarchartDetails();
     } else if (changes['endDate'] && !changes['endDate'].isFirstChange()) {
-      this.endDate = changes['endDate'].currentValue
+      this.endDate = changes['endDate'].currentValue;
+      this.startDate = this.previousStartDate;
+      this.lastSixMonth = false;
+      this.recruiterCheck = true;
       this.fetchBarchartDetails();
     }
   }
@@ -61,35 +75,40 @@ export class InterviewCountsBarComponent implements OnInit {
   }
 
   onRadioChange(event: Event): void {
-    const target = event.target as HTMLInputElement;
+    const target = event.target as HTMLInputElement;    
     if (target.value === 'Last 6 Months') {
       this.recruiterCheck = false;
-      const currentDate = new Date();
-      const sixMonthsAgo = new Date(currentDate);
-      sixMonthsAgo.setMonth(currentDate.getMonth() - 5);
-      this.previousStartDate = this.startDate;
-      this.previousEndDate = this.endDate;
-      this.endDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd');
-      this.startDate = this.datePipe.transform(sixMonthsAgo, 'yyyy-MM-dd');
+      this.lastSixMonth = true;
+      this.endDate = '';
+      this.startDate = '';
       this.fetchBarchartDetails();
     } else if (target.value === 'recruiter') {
+      this.startDate = this.previousStartDate;
+      this.endDate = this.previousEndDate;
       this.recruiterCheck = true;
-      if (this.previousStartDate && this.previousEndDate) {
-        this.startDate = this.previousStartDate;
-        this.endDate = this.previousEndDate;
-      }
+      this.lastSixMonth = true;      
       this.fetchBarchartDetails();
     }
   }
 
   fetchBarchartDetails(): void {
-    this.apiService.get(`/dashboard/recruiter-chart?end_date=${this.endDate}&start_date=${this.startDate}&recruiter=${this.recruiterCheck}`).subscribe((res: any) => {
+    const url = '/dashboard/recruiter-chart';
+    let params = [
+      `start_date=${this.startDate }`,
+      `end_date=${this.endDate}`,
+      `last_six_month=${this.lastSixMonth}`,
+      `recruiter=${this.recruiterCheck}`,
+      `end_date=${this.endDate}`,
+      `requestId=${this.requestId}`
+    ].filter(param => param.split('=')[1] !== '').join('&');  
+   
+    this.apiService.get(`${url}?${params}`).subscribe((res: any) => {
       if (res?.data) {
         this.sixMonthCount = res.data;
-        this.labels = this.sixMonthCount.map((item: any) => item.userfirstName);
+        this.labels = this.sixMonthCount.map((item: any) => item.userfirstName ?? item.month);
         this.hiredData = this.sixMonthCount.map((item: any) => +item.total_hired);
         this.sourcedData = this.sixMonthCount.map((item: any) => +item.total_totalsourced);
-        this.offeredData = this.sixMonthCount.map((item: any) => +item.total_offerreleased);
+        this.offeredData = this.sixMonthCount.map((item: any) => +item.total_offerreleased);        
         this.createBarChart();
       }
     });
@@ -103,8 +122,8 @@ export class InterviewCountsBarComponent implements OnInit {
         labels: this.labels,
         datasets: [
           {
-            label: 'No. of Hired',
-            data: this.hiredData, // Adjust data values accordingly
+            label: 'No.of Hired',
+            data: this.hiredData, 
             backgroundColor: '#047892',
             borderColor: '#047892',
             borderWidth: 1,
@@ -112,23 +131,24 @@ export class InterviewCountsBarComponent implements OnInit {
             categoryPercentage: 0.7,
             barThickness: 70,            
           },
+          
           {
-            label: 'No. of Sourced',
-            data: this.sourcedData, // Adjust data values accordingly
-            backgroundColor: '#628AFC',
-            borderColor: '#628AFC',
+            label: 'No.of Offered',
+            data: this.offeredData, 
+            backgroundColor: '#005EC9',
+            borderColor: '#005EC9',
             borderWidth: 1,
             barPercentage: 0.8,
             categoryPercentage: 0.7,
             barThickness: 70,  
           },
           {
-            label: 'No. of Offered',
-            data: this.offeredData, // Adjust data values accordingly
-            backgroundColor: '#005EC9',
-            borderColor: '#005EC9',
+            label: 'No.of Sourced',
+            data: this.sourcedData, 
+            backgroundColor: '#628AFC',
+            borderColor: '#628AFC',
             borderWidth: 1,
-            barPercentage: 0.8,
+            barPercentage: 0.9,
             categoryPercentage: 0.7,
             barThickness: 70,  
           },
@@ -138,6 +158,7 @@ export class InterviewCountsBarComponent implements OnInit {
       options: {
         scales: {
           y: {
+            stacked: true,
             beginAtZero: true,
             ticks: {
 

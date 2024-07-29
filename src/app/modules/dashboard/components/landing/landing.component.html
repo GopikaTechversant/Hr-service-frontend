@@ -2,9 +2,9 @@
     <div class="header">
         <app-header (toggleSidebarData)="onToggleSidebarData($event)"></app-header>
     </div>
-    <div class="d-flex main">
+    <div class="main">
         <div class="sidebar-container" [class.sidebar-hidden]="isSidebarHidden">
-            <div class="sidebar" [class.hidden]="isSidebarHidden">
+            <div class="sidebar">
                 <app-left-sidebar></app-left-sidebar>
             </div>
         </div>
