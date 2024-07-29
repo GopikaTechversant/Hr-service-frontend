@@ -155,26 +155,31 @@
     justify-content: flex-end;
 }
 
-.details:hover {
-    background-color: #D3E8FF;
-  }
 
-.requisition-col{
+.requisition-col {
     width: 19%;
 }
 
-.applicants-col{
-    background-color: #E4F6FF;
-}
-
-.technical-col{
+.selected-col {
     background-color: #DFFFF0;
 }
 
-.offer-col{
-    background-color: #FFEBEB;
+.selected-col-head {
+    background-color: #C6FAE1;
 }
 
-.hired-col{
+.applicants-col-head {
+    background-color: #CDEDFF;
+}
+
+.applicants-col:hover {
+    background-color: #D3E8FF;
+}
+
+.applicants-col {
     background-color: #E4F6FF;
+}
+
+.details:hover {
+    background-color: #D3E8FF;
 }

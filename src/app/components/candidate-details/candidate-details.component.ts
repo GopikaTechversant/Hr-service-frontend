@@ -50,25 +50,23 @@ export class CandidateDetailsComponent implements OnInit {
       next: (res: any) => {
         if (res?.data) {
           this.initialLoader = false;
-          this.loader = false;          
+          this.loader = false;
           this.CandidateData = res.data;
           this.candidateDetails = res.data[0];
           this.candidateFeedback = res.comments;
           this.currentRequirement = this.candidateDetails?.position[0]?.reqServiceRequest?.requestName;
           this.positionId = this.candidateDetails?.position[0]?.reqServiceRequest?.requestId;
           this.resumePath = this.candidateDetails?.candidateResume;
-          this.viewResumeFile = environment.s3_url;
+          if(this.resumePath) this.viewResumeFile = environment.s3_url + this.resumePath;
           this.fetchCandidateHistory();
-        } 
+        }
       },
       error: (err) => {
         this.initialLoader = false;
         this.loader = false;
       }
     });
-}
-
-
+  }
 
   requirementSwitch(direction: string): void {
     const positions = this.candidateDetails?.position;

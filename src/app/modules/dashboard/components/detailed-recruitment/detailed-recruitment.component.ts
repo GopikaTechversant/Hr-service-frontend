@@ -157,8 +157,4 @@ export class DetailedRecruitmentComponent implements OnInit {
     const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
     this.candidateIds = selectedCandidates.map((candidate: { serviceId: any; }) => candidate?.serviceId);
   }
-
-  selectCandidate(id: any): void {
-    this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
-  }
 }

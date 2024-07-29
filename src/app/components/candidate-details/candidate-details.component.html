@@ -10,16 +10,17 @@
                 <div class="p-t-20">
                     <span class="f-w-500 p-t-18 p-l-8 f-s-20"
                         [title]="candidateDetails?.candidateFirstName + ' ' + candidateDetails?.candidateLastName">
-                        {{ candidateDetails?.candidateFirstName | uppercase }} {{ candidateDetails?.candidateLastName | uppercase }}
+                        {{ candidateDetails?.candidateFirstName | uppercase }} {{ candidateDetails?.candidateLastName |
+                        uppercase }}
                     </span>
                     <div class="d-flex">
-                        <div class="text-color p-5">
+                        <div class="text-color padding-5">
                             <i class="fa fa-envelope p-r-10 p-l-3" aria-hidden="true"></i>
                             <span class="text-wrap" [title]="candidateDetails?.candidateEmail">
                                 {{ candidateDetails?.candidateEmail }} |
                             </span>
                         </div>
-                        <div class="text-color p-5 p-l-0 d-flex">
+                        <div class="text-color padding-5 p-l-0 d-flex">
                             <img src="assets/images/candidate-detail/mob.svg" alt="">
                             <span class="p-l-5 text-wrap" [title]="candidateDetails?.candidateMobileNo">
                                 {{ candidateDetails?.candidateMobileNo }}
@@ -31,14 +32,14 @@
             <div class="d-flex p-10 top-card">
                 <div class="col-1 bor">
                     <div class="details" *ngIf="candidateDetails?.position?.length > 0">
-                        <span class="sub-head p-5">Candidate Latest Status</span>
-                        <span class="text-color p-5 p-l-0 text-wrap req">:
-                           {{candidateDetails?.candidateInterviewStatus | titlecase}}
+                        <span class="sub-head padding-5">Candidate Latest Status</span>
+                        <span class="text-color padding-5 p-l-0 text-wrap req">:
+                            {{candidateDetails?.candidateInterviewStatus | titlecase}}
                         </span>
                     </div>
                     <div class="details" *ngIf="candidateDetails?.position?.length > 0">
-                        <span class="sub-head p-5">Latest Requirement</span>
-                        <span class="text-color p-5 p-l-0 text-wrap req">:
+                        <span class="sub-head padding-5">Latest Requirement</span>
+                        <span class="text-color padding-5 p-l-0 text-wrap req">:
                             <a
                                 [href]="env_url + '/dashboard/series?requestId=' + candidateDetails?.position[0]?.reqServiceRequest?.requestId">
                                 {{ candidateDetails?.position[0]?.reqServiceRequest?.requestName }}
@@ -46,38 +47,42 @@
                         </span>
                     </div>
                     <div class="details" *ngIf="candidateDetails?.position?.length > 0">
-                        <span class="sub-head p-5">Latest Requirement Status</span>
-                        <span class="text-color p-5 p-l-0 text-wrap req">:
+                        <span class="sub-head padding-5">Latest Requirement Status</span>
+                        <span class="text-color padding-5 p-l-0 text-wrap req">:
                             {{ candidateDetails?.position[0]?.reqServiceRequest?.requestStatus }}
                         </span>
                     </div>
                     <div class="details">
-                        <span class="sub-head p-5">Previous Requirements</span>
-                        <span class="text-color p-5 p-l-0 text-wrap req" *ngFor="let item of candidateDetails?.position.slice(1)">
+                        <span class="sub-head padding-5">Previous Requirements</span>
+                        <span class="text-color padding-5 p-l-0 text-wrap req"
+                            *ngFor="let item of candidateDetails?.position.slice(1)">
                             :
                             <a [href]="env_url + '/dashboard/series?requestId=' + item?.reqServiceRequest?.requestId">
                                 {{ item?.reqServiceRequest?.requestName }}
                             </a>
                         </span>
-                        <span class="text-color p-5 p-l-0 text-wrap req" *ngIf="!candidateDetails?.position || candidateDetails?.position?.length === 1">
+                        <span class="text-color padding-5 p-l-0 text-wrap req"
+                            *ngIf="!candidateDetails?.position || candidateDetails?.position?.length === 1">
                             : No previous Requirement
                         </span>
                     </div>
                 </div>
                 <div class="col-1 m-b-20">
                     <div *ngIf="candidateDetails?.position?.length > 1">
-                        <div class="details" >
+                        <div class="details">
                             <div (click)="requirementSwitch('R')" title="Switch Requirement" class="c-pointer sub-head">
                                 <span class="sub-head">Switch Requirements</span>
-                                <span >
-                                    <img src="/assets/images/techversant/switch.svg" class="c-pointer p-t-7 p-l-5" alt=""
-                                        height="14" width="14">
+                                <span>
+                                    <img src="/assets/images/techversant/switch.svg" class="c-pointer p-l-5" alt=""
+                                        height="17" width="17">
                                 </span>
                             </div>
-                            <span class="text-color p-5 p-l-0 text-wrap req">:
+                            <span class="text-color p-l-0 text-wrap req">:
                                 <a
                                     [href]="env_url + '/dashboard/series?requestId=' + candidateDetails?.position[currentRequirementIndex]?.reqServiceRequest?.requestId">
-                                    {{ candidateDetails?.position[currentRequirementIndex]?.reqServiceRequest?.requestName }}
+                                    {{
+                                    candidateDetails?.position[currentRequirementIndex]?.reqServiceRequest?.requestName
+                                    }}
                                 </a> </span>
                             <span class="text-color" *ngIf="candidateDetails?.position?.length === 1">
                                 No Other Requirement to switch
@@ -85,8 +90,9 @@
                         </div>
                         <div class="details">
                             <span class="sub-head">Requirement Status</span>
-                            <span class="text-color p-5 p-l-0 text-wrap req">:
-                                {{ candidateDetails?.position[currentRequirementIndex]?.reqServiceRequest?.requestStatus }}
+                            <span class="text-color p-l-0 text-wrap req">:
+                                {{ candidateDetails?.position[currentRequirementIndex]?.reqServiceRequest?.requestStatus
+                                }}
                             </span>
                         </div>
                     </div>
@@ -99,15 +105,21 @@
                 </span>
             </div>
             <div class="tab">
-                <button class="tablinks" [ngClass]="{'active': activeTab === 'basic'}" (click)="selectedTab($event, 'basic')">Basic Info</button>
-                <button class="tablinks" [ngClass]="{'active': activeTab === 'interview'}" (click)="selectedTab($event, 'interview')">Interviews</button>
-                <button class="tablinks" [ngClass]="{'active': activeTab === 'attachment'}" (click)="selectedTab($event, 'attachment')">Attachment</button>
-                <button class="tablinks" [ngClass]="{'active': activeTab === 'feedback'}" (click)="selectedTab($event, 'feedback')">Feedback</button>
-                <button class="tablinks" [ngClass]="{'active': activeTab === 'history'}" (click)="selectedTab($event, 'history')">History</button>
+                <button class="tablinks" [ngClass]="{'active': activeTab === 'basic'}"
+                    (click)="selectedTab($event, 'basic')">Basic Info</button>
+                <button class="tablinks" [ngClass]="{'active': activeTab === 'interview'}"
+                    (click)="selectedTab($event, 'interview')">Interviews</button>
+                <button class="tablinks" [ngClass]="{'active': activeTab === 'attachment'}"
+                    (click)="selectedTab($event, 'attachment')">Attachment</button>
+                <button class="tablinks" [ngClass]="{'active': activeTab === 'feedback'}"
+                    (click)="selectedTab($event, 'feedback')">Feedback</button>
+                <button class="tablinks" [ngClass]="{'active': activeTab === 'history'}"
+                    (click)="selectedTab($event, 'history')">History</button>
             </div>
             <!-- Basic Info Content -->
             <div class="tabcontent" [ngClass]="{ 'active': activeTab === 'basic' }" id="basic">
-                <div *ngIf="!candidateDetails?.position[0]?.reqServiceRequest?.requestName" class="d-flex j-end c-pointer m-r-20" (click)="edit(candidateDetails?.candidateId)">
+                <div *ngIf="!candidateDetails?.position[0]?.reqServiceRequest?.requestName"
+                    class="d-flex j-end c-pointer m-r-20" (click)="edit(candidateDetails?.candidateId)">
                     <span><img src="/assets/images/candidate-detail/edit.svg" alt="" height="12" width="12"></span>
                     <span class="c-blue p-l-5 p-r-5">Edit</span>
                 </div>
@@ -122,49 +134,60 @@
                         </div>
                         <div class="details">
                             <span class="sub-head">
-                                <img src="assets/images/candidate-detail/building.svg" class="p-r-4" alt=""> Previous Organization
+                                <img src="assets/images/candidate-detail/building.svg" class="p-r-4" alt=""> Previous
+                                Organization
                             </span>
                             <span class="text-wrap" [title]="candidateDetails?.candidatePreviousOrg">:
-                                {{ candidateDetails?.candidatePreviousOrg ? candidateDetails?.candidatePreviousOrg : 'Nil' }}</span>
+                                {{ candidateDetails?.candidatePreviousOrg ? candidateDetails?.candidatePreviousOrg :
+                                'Nil' }}</span>
                         </div>
                         <div class="details">
                             <span class="sub-head">
-                                <img src="assets/images/candidate-detail/org.svg" class="p-r-10" alt="">Relevant Experience
+                                <img src="assets/images/candidate-detail/org.svg" class="p-r-10" alt="">Relevant
+                                Experience
                             </span>
                             <span class="text-wrap" [title]="candidateDetails?.candidateRevlentExperience">:
-                                {{ candidateDetails?.candidateRevlentExperience ? candidateDetails?.candidateRevlentExperience : 'Nil' }}</span>
+                                {{ candidateDetails?.candidateRevlentExperience ?
+                                candidateDetails?.candidateRevlentExperience : 'Nil' }}</span>
                         </div>
                         <div class="details">
                             <span class="sub-head">
                                 <img src="assets/images/candidate-detail/org.svg" class="p-r-10" alt="">Total Experience
                             </span>
                             <span class="text-wrap" [title]="candidateDetails?.candidateTotalExperience">:
-                                {{ candidateDetails?.candidateTotalExperience ? candidateDetails?.candidateTotalExperience : 'Nil' }}</span>
+                                {{ candidateDetails?.candidateTotalExperience ?
+                                candidateDetails?.candidateTotalExperience : 'Nil' }}</span>
                         </div>
                         <div class="details">
                             <span class="sub-head">
                                 <img src="assets/images/candidate-detail/money.svg" class="p-r-6" alt=""> Current Salary
                             </span>
                             <span class="text-wrap" [title]="candidateDetails?.candidateCurrentSalary">:
-                                {{ candidateDetails?.candidateCurrentSalary ? candidateDetails?.candidateCurrentSalary : 'Nil' }}</span>
+                                {{ candidateDetails?.candidateCurrentSalary ? candidateDetails?.candidateCurrentSalary :
+                                'Nil' }}</span>
                         </div>
                         <div class="details">
                             <span class="sub-head">
-                                <img src="assets/images/candidate-detail/money.svg" class="p-r-6" alt=""> Expected Salary
+                                <img src="assets/images/candidate-detail/money.svg" class="p-r-6" alt=""> Expected
+                                Salary
                             </span>
                             <span class="text-wrap" [title]="candidateDetails?.candidateExpectedSalary">:
-                                {{ candidateDetails?.candidateExpectedSalary ? candidateDetails?.candidateExpectedSalary : 'Nil' }}</span>
+                                {{ candidateDetails?.candidateExpectedSalary ? candidateDetails?.candidateExpectedSalary
+                                : 'Nil' }}</span>
                         </div>
                         <div class="details">
                             <span class="sub-head">
-                                <img src="assets/images/candidate-detail/building.svg" class="p-r-4" alt=""> Preferred Location
+                                <img src="assets/images/candidate-detail/building.svg" class="p-r-4" alt=""> Preferred
+                                Location
                             </span>
                             <span class="text-wrap" [title]="candidateDetails?.candidatePreferlocation">:
-                                {{ candidateDetails?.candidatePreferlocation ? candidateDetails?.candidatePreferlocation : 'Nil' }}</span>
+                                {{ candidateDetails?.candidatePreferlocation ? candidateDetails?.candidatePreferlocation
+                                : 'Nil' }}</span>
                         </div>
                         <div class="details">
                             <span class="sub-head">
-                                <img src="assets/images/candidate-detail/user.svg" class="p-r-10" alt=""> Current Station
+                                <img src="assets/images/candidate-detail/user.svg" class="p-r-10" alt=""> Current
+                                Station
                             </span>
                             <span class="text-wrap" [title]="candidateDetails?.currentStation">:
                                 {{ candidateDetails?.currentStation ? candidateDetails?.currentStation : 'Nil' }}</span>
@@ -176,37 +199,47 @@
                                 <img src="assets/images/candidate-detail/education.svg" class="p-r-10" alt=""> Education
                             </span>
                             <span class="text-wrap" [title]="candidateDetails?.candidateEducation">:
-                                {{ candidateDetails?.candidateEducation ? candidateDetails?.candidateEducation : 'Nil' }}</span>
+                                {{ candidateDetails?.candidateEducation ? candidateDetails?.candidateEducation : 'Nil'
+                                }}</span>
                         </div>
                         <div class="details">
                             <span class="sub-head text-wrap">
-                                <img src="assets/images/candidate-detail/org.svg" class="p-r-10" alt=""> Previous Designation
+                                <img src="assets/images/candidate-detail/org.svg" class="p-r-10" alt=""> Previous
+                                Designation
                             </span>
                             <span class="text-wrap" [title]="candidateDetails?.candidatePreviousDesignation">:
-                                {{ candidateDetails?.candidatePreviousDesignation ? candidateDetails?.candidatePreviousDesignation : 'Nil' }}
+                                {{ candidateDetails?.candidatePreviousDesignation ?
+                                candidateDetails?.candidatePreviousDesignation : 'Nil' }}
                             </span>
                         </div>
                         <div class="details">
-                            <span class="sub-head text-wrap"><i class="fa fa-home p-r-10" aria-hidden="true"></i> City</span>
+                            <span class="sub-head text-wrap"><i class="fa fa-home p-r-10" aria-hidden="true"></i>
+                                City</span>
                             <span class="text-wrap" [title]="candidateDetails?.candidateCity">:
                                 {{ candidateDetails?.candidateCity ? candidateDetails?.candidateCity : 'Nil' }}</span>
                         </div>
                         <div class="details">
-                            <span class="sub-head text-wrap"><i class="fa fa-home p-r-10" aria-hidden="true"></i> District</span>
+                            <span class="sub-head text-wrap"><i class="fa fa-home p-r-10" aria-hidden="true"></i>
+                                District</span>
                             <span class="text-wrap" [title]="candidateDetails?.candidateDistrict">:
-                                {{ candidateDetails?.candidateDistrict ? candidateDetails?.candidateDistrict : 'Nil' }}</span>
+                                {{ candidateDetails?.candidateDistrict ? candidateDetails?.candidateDistrict : 'Nil'
+                                }}</span>
                         </div>
                         <div class="details">
-                            <span class="sub-head text-wrap"><i class="fa fa-home p-r-10" aria-hidden="true"></i> State</span>
+                            <span class="sub-head text-wrap"><i class="fa fa-home p-r-10" aria-hidden="true"></i>
+                                State</span>
                             <span class="text-wrap" [title]="candidateDetails?.candidateState">:
                                 {{ candidateDetails?.candidateState ? candidateDetails?.candidateState : 'Nil' }}</span>
                         </div>
                         <div class="details">
                             <span class="sub-head text-wrap">
-                                <img src="assets/images/candidate-detail/user.svg" class="p-r-10" alt=""> Interview Status
+                                <img src="assets/images/candidate-detail/user.svg" class="p-r-10" alt=""> Interview
+                                Status
                             </span>
-                            <span class="text-wrap" [title]="candidateDetails?.candidateStatus[0]?.interViewStatus ? candidateDetails?.candidateStatus[0]?.interViewStatus : 'Nil'">:
-                                {{ candidateDetails?.candidateStatus[0]?.interViewStatus ? candidateDetails?.candidateStatus[0]?.interViewStatus : 'Nil' }}
+                            <span class="text-wrap"
+                                [title]="candidateDetails?.candidateStatus[0]?.interViewStatus ? candidateDetails?.candidateStatus[0]?.interViewStatus : 'Nil'">:
+                                {{ candidateDetails?.candidateStatus[0]?.interViewStatus ?
+                                candidateDetails?.candidateStatus[0]?.interViewStatus : 'Nil' }}
                             </span>
                         </div>
                         <div class="details">
@@ -214,7 +247,8 @@
                                 <img src="assets/images/candidate-detail/user.svg" class="p-r-10" alt=""> Primary Skills
                             </span>
                             <span>:
-                                <ng-container *ngFor="let item of candidateDetails?.candidatePrimarySkills; let last = last">
+                                <ng-container
+                                    *ngFor="let item of candidateDetails?.candidatePrimarySkills; let last = last">
                                     <span class="text-wrap" [title]="item?.skillType">{{ item?.skillType }}<span
                                             *ngIf="!last">,</span></span>
                                 </ng-container>
@@ -222,10 +256,12 @@
                         </div>
                         <div class="details">
                             <span class="sub-head text-wrap">
-                                <img src="assets/images/candidate-detail/user.svg" class="p-r-10" alt=""> Secondary Skills
+                                <img src="assets/images/candidate-detail/user.svg" class="p-r-10" alt=""> Secondary
+                                Skills
                             </span>
                             <span class="text-wrap">:
-                                <ng-container *ngFor="let item of candidateDetails?.candidateSecondarySkills; let last = last">
+                                <ng-container
+                                    *ngFor="let item of candidateDetails?.candidateSecondarySkills; let last = last">
                                     <span class="text-wrap" [title]="item?.skillType">{{ item?.skillType }}<span
                                             *ngIf="!last">,</span></span>
                                 </ng-container>
@@ -233,40 +269,44 @@
                         </div>
                     </div>
                 </div>
-            </div>       
+                <div *ngIf="viewResumeFile" class="resume-container">
+                    <img [src]="viewResumeFile" class="resume-file">
+                </div>
+            </div>
             <!-- Interviews Content -->
             <div class="tabcontent" [ngClass]="{'active': activeTab === 'interview'}" id="interview">
                 <div class="table-container m-b-0 w-100">
                     <table class="table">
                         <tr class="table-header f-w-500 p-b-10">
-                            <td>Date</td>
+                            <td>Station</td>
                             <td>Interview Type</td>
                             <td>Panel</td>
                             <td>Scheduled By</td>
-                            <td>Station</td>
                             <td>Status</td>
+                            <td>Date</td>
                         </tr>
                         <ng-container *ngIf="CandidateHistory?.length > 0">
                             <div *ngIf="loader && !initialLoader" class="loader-parent">
                                 <img src="assets/gif/loader.gif">
-                            </div>                            
+                            </div>
                             <ng-container *ngFor="let item of CandidateHistory[0]?.interviewDetail">
                                 <tr class="candidate c-pointer">
-                                    <td>{{ item?.interviewDate | date : 'dd/MM/yyyy' }}</td>
+                                    <td class="text-wrap" [title]="item?.station">{{ item?.station | titlecase }}</td>
                                     <td>{{ item?.interviewType === 0 ? 'Interview Scheduled' : 'Re-Scheduled' }}</td>
                                     <td class="text-wrap" [title]="item?.interviewBy">{{ item?.interviewBy | titlecase
                                         }}</td>
                                     <td class="text-wrap" [title]="item?.interviewScheduledBy">{{
                                         item?.interviewScheduledBy | titlecase }}</td>
-                                    <td class="text-wrap" [title]="item?.station">{{ item?.station | titlecase }}</td>
                                     <td class="text-wrap" [title]="item?.status">{{ item?.status | titlecase }}</td>
+                                    <td>{{ item?.interviewDate | date : 'dd/MM/yyyy' }}</td>
                                 </tr>
                             </ng-container>
                         </ng-container>
-                        <div *ngIf="(!CandidateHistory[0]?.interviewDetail[0]) && !loader && !initialLoader " class="no-data">
+                        <div *ngIf="(!CandidateHistory[0]?.interviewDetail[0]) && !loader && !initialLoader "
+                            class="no-data">
                             No Data Found
                         </div>
-                        <div *ngIf="initialLoader && !loader"  class="row m-l-20 initial-loader">
+                        <div *ngIf="initialLoader && !loader" class="row m-l-20 initial-loader">
                             <div *ngFor="let item of [0,1,2,3,4,5]" class="col-md-6 m-t-10 m-b-10">
                                 <div class="gravatar-title">
                                     <div><ngx-skeleton-loader [theme]="{
@@ -277,7 +317,8 @@
                                         }"></ngx-skeleton-loader>
                                     </div>
                                     <div>
-                                        <ngx-skeleton-loader [theme]="{ width: '1300px', 'border-radius': '0', height: '15px' }">
+                                        <ngx-skeleton-loader
+                                            [theme]="{ width: '1300px', 'border-radius': '0', height: '15px' }">
                                         </ngx-skeleton-loader>
                                     </div>
                                 </div>
@@ -288,20 +329,19 @@
             </div>
             <!-- Attachment Content -->
             <div class="tabcontent" [ngClass]="{'active': activeTab === 'attachment'}" id="attachment">
-                <div class="c-pointer resume">
+                <!-- <div class="c-pointer resume">
                     <span class="blue f-w-500">
                         <a [href]="viewResumeFile + resumePath ">View Resume</a>
                     </span>
-                </div>
+                </div> -->
                 <div class="table-container m-b-0 w-100">
                     <table class="table">
                         <tr class="table-header f-w-500 p-b-10">
-                            <td>Date</td>
-                            <td>Uploaded By</td>
                             <td>Station</td>
+                            <td>Uploaded By</td>
                             <td>Attachment</td>
                             <td>Recruiter</td>
-                            <!-- <td>Type</td> -->
+                            <td>Date</td>
                             <!-- <td>Status</td>         -->
                         </tr>
                         <div *ngIf="loader && !initialLoader" class="loader-parent">
@@ -310,21 +350,27 @@
                         <ng-container *ngIf="CandidateHistory?.length > 0">
                             <ng-container *ngFor="let item of CandidateHistory[0]?.attachedData">
                                 <tr class="candidate c-pointer">
-                                    <td>{{item?.uploadedDate | date : 'dd/MM/YYY'}}</td>
-                                    <td class="text-wrap" [title]="item?.uploadedBy | titlecase ">{{ item?.uploadedBy | titlecase }}</td>
-                                    <td class="text-wrap" [title]="item?.station | titlecase ">{{ item?.station | titlecase }}</td>
-                                    <td (click)="viewResume(item?.uploadedFile)" class="c-pointer" title="View Attachment">
-                                        <img _ngcontent-rnn-c111="" src="/assets/images/view-file.png" alt="" height="29" width="29" class="p-l-9">
+                                    <td class="text-wrap" [title]="item?.station | titlecase ">{{ item?.station |
+                                        titlecase }}</td>
+                                    <td class="text-wrap" [title]="item?.uploadedBy | titlecase ">{{ item?.uploadedBy |
+                                        titlecase }}</td>
+                                    <td (click)="viewResume(item?.uploadedFile)" class="c-pointer"
+                                        title="View Attachment">
+                                        <img _ngcontent-rnn-c111="" src="/assets/images/view-file.png" alt=""
+                                            height="37" width="37" class="p-l-9">
                                     </td>
-                                    <td class="text-wrap" [title]="item?.scheduledByName | titlecase ">{{ item?.scheduledByName | titlecase }}</td>
+                                    <td class="text-wrap" [title]="item?.scheduledByName | titlecase ">{{
+                                        item?.scheduledByName | titlecase }}</td>
+                                    <td>{{item?.uploadedDate | date : 'dd/MM/YYY'}}</td>
                                     <!-- <td class="text-wrap" [title]="item?.status ">{{ item?.status }}</td> -->
                                 </tr>
                             </ng-container>
                         </ng-container>
-                        <div *ngIf="(!CandidateHistory[0]?.attachedData[0] ) && !loader && !initialLoader " class="no-data">
+                        <div *ngIf="(!CandidateHistory[0]?.attachedData[0] ) && !loader && !initialLoader "
+                            class="no-data">
                             No Data Found
                         </div>
-                        <div *ngIf="initialLoader && !loader"  class="row m-l-20 initial-loader">
+                        <div *ngIf="initialLoader && !loader" class="row m-l-20 initial-loader">
                             <div *ngFor="let item of [0,1,2,3,4,5]" class="col-md-6 m-t-10 m-b-10">
                                 <div class="gravatar-title">
                                     <div><ngx-skeleton-loader [theme]="{
@@ -335,7 +381,8 @@
                                         }"></ngx-skeleton-loader>
                                     </div>
                                     <div>
-                                        <ngx-skeleton-loader [theme]="{ width: '1300px', 'border-radius': '0', height: '15px' }">
+                                        <ngx-skeleton-loader
+                                            [theme]="{ width: '1300px', 'border-radius': '0', height: '15px' }">
                                         </ngx-skeleton-loader>
                                     </div>
                                 </div>
@@ -350,32 +397,33 @@
                 <div class="table-container m-b-0 w-100">
                     <table class="table">
                         <tr class="table-header f-w-500 p-b-10">
-                            <td>Date</td>
-                            <td>Feedback By</td>
-                            <td>Feedback Message</td>
                             <td>Station</td>
-                            <!-- <td>Status</td> -->
+                            <td>Uploaded By</td>
+                            <td>Comments</td>
+                            <td>Date Uploaded</td>
                         </tr>
                         <ng-container *ngIf="CandidateHistory?.length > 0">
                             <div *ngIf="loader && !initialLoader" class="loader-parent">
                                 <img src="assets/gif/loader.gif">
-                            </div>                            
+                            </div>
                             <ng-container *ngFor="let item of CandidateHistory[0]?.feedbackDetail">
                                 <tr class="candidate c-pointer">
-                                    <td>{{ item?.feedbackDate | date : 'dd/MM/yyyy' }}</td>
+                                    <td class="text-wrap" [title]="item?.station">{{ item?.station }}</td>
                                     <td class="text-wrap" [title]="item?.feedbackBy">{{ item?.feedbackBy | titlecase }}
                                     </td>
-                                    <td class="text-wrap" [title]="item?.feedbackMessage">{{ item?.feedbackMessage | titlecase
+                                    <td class="text-wrap" [title]="item?.feedbackMessage">{{ item?.feedbackMessage |
+                                        titlecase
                                         }}</td>
-                                    <td class="text-wrap" [title]="item?.station">{{ item?.station }}</td>
+                                    <td>{{ item?.feedbackDate | date : 'dd/MM/yyyy' }}</td>
                                     <!-- <td class="text-wrap" [title]="item?.status">{{ item?.status }}</td> -->
                                 </tr>
                             </ng-container>
                         </ng-container>
-                        <div *ngIf="(!CandidateHistory[0]?.feedbackDetail[0] ) && !loader && !initialLoader " class="no-data">
+                        <div *ngIf="(!CandidateHistory[0]?.feedbackDetail[0] ) && !loader && !initialLoader "
+                            class="no-data">
                             No Data Found
                         </div>
-                        <div *ngIf="initialLoader && !loader"  class="row m-l-20 initial-loader">
+                        <div *ngIf="initialLoader && !loader" class="row m-l-20 initial-loader">
                             <div *ngFor="let item of [0,1,2,3,4,5]" class="col-md-6 m-t-10 m-b-10">
                                 <div class="gravatar-title">
                                     <div><ngx-skeleton-loader [theme]="{
@@ -386,7 +434,8 @@
                                         }"></ngx-skeleton-loader>
                                     </div>
                                     <div>
-                                        <ngx-skeleton-loader [theme]="{ width: '1300px', 'border-radius': '0', height: '15px' }">
+                                        <ngx-skeleton-loader
+                                            [theme]="{ width: '1300px', 'border-radius': '0', height: '15px' }">
                                         </ngx-skeleton-loader>
                                     </div>
                                 </div>
@@ -400,11 +449,11 @@
                 <div class="table-container m-b-0 w-100">
                     <table class="table">
                         <tr class="table-header f-w-500 p-b-10">
-                            <td>Date</td>
+                            <td>Station</td>
                             <td>History Type</td>
                             <td>History By</td>
                             <!-- <td>Comment</td> -->
-                            <td>Station</td>
+                            <td>Date</td>
                             <!-- <td>Status</td> -->
                         </tr>
                         <ng-container *ngIf="CandidateHistory?.length > 0">
@@ -413,19 +462,21 @@
                             </div>
                             <ng-container *ngFor="let item of CandidateHistory[0]?.historyDetail">
                                 <tr class="candidate c-pointer">
-                                    <td>{{ item?.historyDate | date : 'dd/MM/yyyy' }}</td>
-                                    <td class="text-wrap" [title]="item?.historyType">{{ item?.historyType }}</td>
-                                    <td class="text-wrap" [title]="item?.historyBy">{{ item?.historyBy | titlecase }}</td>
-                                    <!-- <td class="text-wrap" [title]="item?.feedbackMessage">{{ item?.feedbackMessage }}</td> -->
                                     <td class="text-wrap" [title]="item?.station">{{ item?.station }}</td>
+                                    <td class="text-wrap" [title]="item?.historyType">{{ item?.historyType }}</td>
+                                    <td class="text-wrap" [title]="item?.historyBy">{{ item?.historyBy | titlecase }}
+                                    </td>
+                                    <!-- <td class="text-wrap" [title]="item?.feedbackMessage">{{ item?.feedbackMessage }}</td> -->
+                                    <td>{{ item?.historyDate | date : 'dd/MM/yyyy' }}</td>
                                     <!-- <td class="text-wrap" [title]="item?.status">{{ item?.status }}</td> -->
                                 </tr>
                             </ng-container>
                         </ng-container>
-                        <div *ngIf="(!CandidateHistory[0]?.historyDetail[0] ) && !loader && !initialLoader " class="no-data">
+                        <div *ngIf="(!CandidateHistory[0]?.historyDetail[0] ) && !loader && !initialLoader "
+                            class="no-data">
                             No Data Found
                         </div>
-                        <div *ngIf="initialLoader && !loader"  class="row m-l-20 initial-loader">
+                        <div *ngIf="initialLoader && !loader" class="row m-l-20 initial-loader">
                             <div *ngFor="let item of [0,1,2,3,4,5]" class="col-md-6 m-t-10 m-b-10">
                                 <div class="gravatar-title">
                                     <div><ngx-skeleton-loader [theme]="{
@@ -436,7 +487,8 @@
                                         }"></ngx-skeleton-loader>
                                     </div>
                                     <div>
-                                        <ngx-skeleton-loader [theme]="{ width: '1300px', 'border-radius': '0', height: '15px' }">
+                                        <ngx-skeleton-loader
+                                            [theme]="{ width: '1300px', 'border-radius': '0', height: '15px' }">
                                         </ngx-skeleton-loader>
                                     </div>
                                 </div>
@@ -447,7 +499,8 @@
             </div>
         </ng-container>
     </div>
-    <div class="no-data" *ngIf="(!CandidateData?.length || CandidateData?.length === 0) && (!initialLoader && !loader)">There is No Candidate Available for this Request</div>
+    <div class="no-data" *ngIf="(!CandidateData?.length || CandidateData?.length === 0) && (!initialLoader && !loader)">
+        There is No Candidate Available for this Request</div>
     <div class="row m-l-20 initial-loader" *ngIf="initialLoader && !loader">
         <div *ngFor="let item of [0,1,2,3,4,5]" class="col-md-6 m-t-10 m-b-10">
             <div class="gravatar-title">
