@@ -2,11 +2,28 @@
     <div class="heading d-flex j-space">
         <div class="title-left p-l-12"><span>Requisition List</span></div>
         <div class="d-flex  title-right">
+            <div class="input-1 c-pointer no-close p-relative" (click)="filterStatus = !filterStatus">
+                <span class="no-close p-l-10">{{filteredStatus.trim() === '' ?
+                    'Opening Requisitions' : filteredStatus | titlecase}}</span>
+                <span class="f-right">
+                    <span *ngIf="filteredStatus && filteredStatus.trim() !== ''" (click)="clearFilter('status')"
+                        class="clear-filter">x</span>
+                    <span><i
+                        [ngClass]="filterStatus ? ' fa fa-chevron-up' : ' fa fa-chevron-down'"
+                        class="m-l-5 p-r-10 s-text no-close"></i></span>
+                </span>
+                <div class="dropdown c-pointer no-close'" *ngIf="filterStatus">
+                    <span class="d-flex p-0" *ngFor="let type of status"
+                        (click)="selectStatusFilter(type);filterStatus = !filterStatus">
+                        <span class="padding-5">{{type | titlecase}}</span>
+                    </span>
+                </div>
+            </div>
             <span class="input d-flex j-space">
                 <input type="text" class="p-10" placeholder="Search Requirement" [(ngModel)]="searchKeyword"
                     (keydown.enter)="requirementSearch(searchKeyword)">
-                <span *ngIf="searchKeyword !== ''" (click)="clearFilter()"
-                    class="clear-filter c-pointer m-l-10">x</span>
+                <span *ngIf="searchKeyword !== ''" (click)="clearFilter('search')"
+                    class="clear-filter-search c-pointer m-l-10">x</span>
                 <span class="search d-flex j-end">
                     <i class="fa fa-search" aria-hidden="true" (click)="requirementSearch(searchKeyword)"></i>
                 </span>
@@ -22,13 +39,13 @@
     <div class="m-t-27">
         <div class="container-table m-b-0">
             <table class="">
-                <tr class="table-header p-b-10">
+                <tr class="table-header p-b-10 f-w-500">
                     <td>Requisition</td>
                     <td>No.of Openings</td>
                     <td class="count-col">Candidate Count</td>
-                    <td>Hired</td>
+                    <td>Hired Count</td>
                     <td>Team</td>
-                    <td>Skills</td>
+                    <td>Primary Skills</td>
                     <td>Status</td>
                     <td>Add Candidate</td>
                     <td>Date</td>

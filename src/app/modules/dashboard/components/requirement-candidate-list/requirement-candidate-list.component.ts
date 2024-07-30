@@ -8,7 +8,10 @@ import { EditRequirementComponent } from '../edit-requirement/edit-requirement.c
 @Component({
   selector: 'app-requirement-candidate-list',
   templateUrl: './requirement-candidate-list.component.html',
-  styleUrls: ['./requirement-candidate-list.component.css']
+  styleUrls: ['./requirement-candidate-list.component.css'],
+  host: {
+    '(document:click)': 'onBodyClick($event)'
+  }
 })
 export class RequirementCandidateListComponent implements OnInit {
   candidates_list: any = [];
@@ -23,11 +26,22 @@ export class RequirementCandidateListComponent implements OnInit {
   loader: boolean = false;
   deleteRequirementId: any;
   editRequirement: any;
+  filterStatus: boolean = false;
+  filteredStatus: any = '';
+  status: any[] = ['Opening Requisitions','Closed Requisitions'];
   constructor(private router: Router, private apiService: ApiService, private dialog: MatDialog, private toastr: ToastrService) { }
-
+  onBodyClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.no-close')) {
+      this.filterStatus = false;
+    }
+  }
   ngOnInit(): void {
     this.initialLoader = true;
+    this.filteredStatus = sessionStorage.getItem('requisition') ? sessionStorage.getItem('requisition') : '';
     this.fetchcandidates('');
+    console.log("status",this.status);
+    
   }
 
   fetchcandidates(searchQuery: string): void {
@@ -64,7 +78,7 @@ export class RequirementCandidateListComponent implements OnInit {
   }
 
   requirementSearch(search: any): void {
-    this.searchKeyword = search
+    this.searchKeyword = search;
     this.currentPage = 1;
     this.limit = 9;
     this.fetchcandidates(this.searchKeyword);
@@ -120,8 +134,20 @@ export class RequirementCandidateListComponent implements OnInit {
     })
   }
 
-  clearFilter(): void {
-    this.searchKeyword = '';
+  selectStatusFilter(item: string): void {
+    this.filteredStatus = item;
+    sessionStorage.setItem('requisition', this.filteredStatus);
+    this.currentPage = 1;
+    this.limit = 10;
+    this.fetchcandidates('');
+  }
+
+  clearFilter(item: any): void {
+    if (item === 'search') this.searchKeyword = '';
+    if (item === 'status') {
+      this.filteredStatus = '';
+      sessionStorage.setItem('requisition', this.filteredStatus);
+    }
     this.currentPage = 1;
     this.limit = 14;
     this.fetchcandidates('');
