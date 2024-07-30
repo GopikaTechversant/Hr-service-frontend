@@ -99,7 +99,9 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
               usePointStyle: true,
               pointStyle: 'circle',
               padding: 20,
+              boxWidth : 50,
             }
+            
           },
           tooltip: {
             enabled: false

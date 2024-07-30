@@ -7,6 +7,8 @@
     width: 84vw;
     background: #FFFFFF;
     border-right: none;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .sidebar-container {
@@ -23,7 +25,8 @@
 
 .side-head {
     font-weight: 500;
-    font-size: 1.4rem; /* Large screens */
+    font-size: 1.4rem;
+    /* Large screens */
 
 }
 
@@ -101,6 +104,11 @@
     background: #575F6E;
 }
 
+.profile {
+    align-items: center;
+    justify-content: flex-end;
+}
+
 .drop-down {
     width: 170px;
     z-index: 999;
@@ -134,7 +142,7 @@
     display: flex;
     justify-content: flex-end;
     width: 100%;
-    height: 38px;
+    height: 34px;
     gap: 0px;
     border-radius: 3px 0px 0px 0px;
     border: 1px solid #D8E2FF;
@@ -144,15 +152,15 @@
 
 .input {
     background-color: #FFFFFF;
-    padding: 9px;
+    padding: 3px;
     width: 92%;
-    height: 36px;
+    height: 30px;
     border: none !important;
     outline: none !important;
 }
 
 .search {
-    padding: 8px;
+    padding: 5px;
 }
 
 .fa-search {
@@ -176,7 +184,7 @@
     background: #005EC9;
 }
 
-.station-name{
+.station-name {
     padding-left: 10px;
     padding-right: 10px;
 }
@@ -184,22 +192,31 @@
 /* Media query for screen width between 1396px and 1000px */
 @media (max-width: 1396px) and (min-width: 1000px) {
     .side-head {
-        font-size: 1rem; /* Large screens */
+        font-size: 1rem;
+        /* Large screens */
     }
+
     .sidebar-container {
-        width: 15vw;
+        width: 14vw;
         height: auto;
     }
 
     .header {
-        width: 55vw; /* Ensuring the header still spans 83% of the screen width */
+        width: 59vw;
+        /* Ensuring the header still spans 83% of the screen width */
         flex-direction: column;
         align-items: flex-start;
+        justify-content: space-between;
     }
 
     .profile {
         justify-content: flex-end;
         width: 100%;
+        align-items: center;
+    }
+
+    .station-names {
+        justify-content: flex-end;
     }
 
     .search-container {
@@ -218,21 +235,24 @@
     .profile .user-profile {
         margin-left: auto;
     }
-    .station-name{
+
+    .station-name {
         padding: 0px;
     }
 }
 
 @media (max-width: 992px) {
     .sidebar-container {
-        width: 100%;
+        width: 14%;
         height: auto;
     }
 
     .header {
-        width: 100%; /* Making the header span 100% of the screen width */
+        width: 65%;
+        /* Making the header span 100% of the screen width */
         flex-direction: column;
         align-items: flex-start;
+        justify-content: flex-start;
     }
 
     .profile {
@@ -246,6 +266,17 @@
     }
 
     .search-div {
-        width: 100%;
+        width: 88%;
+    }
+
+    .station-name {
+        padding: 0px;
+        font-size: 13px;
+        font-weight: 400;
+    }
+
+    .user-profile {
+        width: 25px;
+        height: 25px;
     }
 }

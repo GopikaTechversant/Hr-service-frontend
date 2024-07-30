@@ -1,5 +1,5 @@
 <div class="m-10">
-    <span class="f-s-20 f-w-500 detail-head p-5 p-l-0">Management Station</span>
+    <span class="f-s-20 f-w-500 detail-head padding-5 p-l-0">Management Station</span>
     <div class="p-l-5 d-flex j-end p-b-10">
         <div class="search-div d-flex align-items-center">
             <input type="text" class="input align-items-start" placeholder="Search By Name" [(ngModel)]="searchKeyword"
@@ -39,7 +39,7 @@
             <div class="dropdown c-pointer no-close'" *ngIf="filterStatus">
                 <span class="d-flex p-0" *ngFor="let type of Status"
                     (click)="selectStatusFilter(type?.status);filterStatus = !filterStatus">
-                    <span class="p-l-10 p-5">{{type?.status | titlecase}}</span>
+                    <span class="p-l-10 padding-5">{{type?.status | titlecase}}</span>
                 </span>
             </div>
         </div>

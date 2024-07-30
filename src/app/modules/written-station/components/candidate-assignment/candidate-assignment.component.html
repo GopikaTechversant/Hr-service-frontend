@@ -1,19 +1,26 @@
 <div class="">
     <span class="f-s-20 f-w-500 p-t-5">Written Round</span>
-    <div class="d-flex j-space m-t-20 search-header">
-        <span class="input-search d-flex j-space align-center">
-            <input type="text" class="p-l-5" placeholder="Search by name" [(ngModel)]="searchKeyword"
-                (keydown)="searchCandidate(searchKeyword)">
-            <span *ngIf="searchKeyword.trim() !== ''" (click)="clearFilter('search')"
+    <div class="d-flex j-end m-t-20 search-header flex-wrap">
+        <div class="search-div d-flex align-items-center m-b-10 m-r-10">
+            <input type="text" class="input align-items-start" placeholder="Search By Name"
+                [(ngModel)]="searchKeyword" (keydown)="searchCandidate(searchKeyword)">
+                <span *ngIf="searchKeyword && searchKeyword.trim() !== ''" (click)="clearFilter('search')"
                 class="clear-filter c-pointer">x</span>
-        </span>
-        <span class="input-search  d-flex j-space align-center">
-            <input type="text" class="p-l-5" placeholder="Search by Experience" [(ngModel)]="experience"
-                (ngModelChange)="searchByExperience(experience)" maxlength="2">
-            <span *ngIf="experience.trim() !== ''" (click)="clearFilter('experience')"
-                class="clear-search c-pointer">x</span>
-        </span>
-        <div class="input  p-l-6  no-close p-relative m-l-10">
+            <span class="search c-pointer ms-2" (click)="searchCandidate(searchKeyword)">
+                <img src="/assets/images/techversant/search.svg" alt="">
+            </span>
+        </div>
+        <div class="search-div d-flex align-items-center m-b-10 m-r-10">
+            <input type="text" class="input" placeholder="Search By Experience" [(ngModel)]="experience"
+                (keydown)="searchByExperience(experience)" (keydown)="experienceValidation($event)">
+                <span *ngIf="searchKeyword && searchKeyword.trim() !== ''" (click)="clearFilter('experience')"
+                class="clear-filter c-pointer">x</span>
+            <span class="search c-pointer ms-2" (click)="searchByExperience(experience)">
+                <img src="/assets/images/techversant/search.svg" alt="">
+                <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
+            </span>
+        </div>
+        <div class="input-1 c-pointer no-close p-relative p-t-6 m-l-10 m-b-10 p-l-10 m-r-10">
             <span class="f-right d-flex">
                 <span *ngIf="displayQuestion && displayQuestion !== ''" (click)="clearFilter('question')"
                     class="clear-filter c-pointer">x</span>
@@ -27,12 +34,12 @@
                 'Filter by Question' : displayQuestion}}</span>
             <div class="no-close dropdown c-pointer no-close" *ngIf="displayQuestion_open">
                 <div (click)='filterQuestion(name?.questionName,name?.questionId); !displayQuestion_open'
-                    *ngFor="let name of questions_list" class="p-10">
+                    *ngFor="let name of questions_list" class="padding-10">
                     {{name?.questionName}}
                 </div>
             </div>
         </div>
-        <div class="input-1 c-pointer no-close p-relative">
+        <div class="input-1 c-pointer no-close p-relative p-t-6 m-l-10 m-b-10 p-l-10 m-r-10">
             <span class="no-close p-l-10" (click)="filterStatus = !filterStatus">{{filteredStatus.trim() === '' ?
                 'Filter by Status' : filteredStatus | titlecase}}</span>
             <span class="f-right">
@@ -48,16 +55,16 @@
                 </span>
             </div>
         </div>
-        <div (click)="openQuestionAssign();">
+        <div (click)="openQuestionAssign();" >
             <span class="c-pointer assign-question">Assign Question</span>
         </div>
-        <span class="input-approve  j-space align-center p-relative">
-            <div> <input type="number" class="p-l-5 average-score" placeholder="Enter Average Score" id="averageScore">
+        <div class="input-approve  j-space align-center p-relative p-t-2 m-l-10 m-b-10 m-r-10">
+            <div> <input type="number" class="p-l-5 p-t-3" placeholder="Enter Average Score" id="averageScore">
             </div>
             <button class="p-absolute approve-btn c-pointer" (click)="approve()">Approve</button>
             <div class="previous p-absolute " *ngIf="previousAverageScore">Previous Average Score :
                 {{previousAverageScore}}</div>
-        </span>
+        </div>
         <div class="export-btn c-pointer">
             <span (click)="exportData()">Export</span>
         </div>
@@ -103,7 +110,7 @@
                                 <span class="text-end"
                                     *ngIf="item?.serviceSequence?.progress?.progressScore" class="t-a-right">{{item?.serviceSequence?.progress?.progressScore}}</span>
                             </td>
-                            <td class="">
+                            <td class="text-center">
                                 <span class="c-pointer text-center"
                                     *ngIf="item?.serviceSequence?.progress?.progressScore  && item?.serviceSequence?.progress?.progressScore !== null"><img
                                         class="" src="/assets/images/view-file.png" alt="" height="29" width="29"
@@ -151,7 +158,7 @@
                 </div>
             </table>
         </div>
-        <div class="page d-flex j-end p-10">
+        <div class="page d-flex j-end padding-10">
             <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(1)">
                 <img src="assets/images/double-arrow-left-icon.svg" alt="" height="14px" width="14px">
             </button>

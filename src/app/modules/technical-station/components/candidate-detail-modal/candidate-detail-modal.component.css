@@ -59,8 +59,8 @@
 .input {
     outline: none !important;
     border: 1px solid rgb(207, 205, 205);
-    border-radius: 2px;
-    height: 30px;
+    border-radius: 5px;
+    height: 34px;
     background-color: #FFFF;
     width: 56vw;
 }
@@ -68,10 +68,10 @@
 .attach {
     outline: none !important;
     border: 1px dotted rgb(207, 205, 205);
-    border-radius: 2px;
-    height: 30px;
+    border-radius: 5px;
+    height: 34px;
     background-color: #FFFF;
-    width: 97%;
+    width: 100%;
 }
 
 .blue {
@@ -136,17 +136,17 @@
 .input-1 {
     outline: none !important;
     border: 1px solid rgb(207, 205, 205);
-    border-radius: 2px;
-    height: 30px;
+    border-radius: 5px;
+    height: 34px;
     background-color: #FFFF;
-    width: 27vw;
+    width: 28vw;
 }
 
 .input-rejection {
     outline: none !important;
     border: 1px solid rgb(207, 205, 205);
-    border-radius: 2px;
-    height: 26px;
+    border-radius: 5px;
+    height: 40px;
     background-color: #FFFF;
     width: 15vw;
 }
@@ -203,9 +203,9 @@
     height: 136px;
     outline: none !important;
     border: 1px solid rgb(207, 205, 205);
-    border-radius: 2px;
+    border-radius: 5px;
     background-color: #FFFF;
-    width: 97%;
+    width: 100%;
 }
 
 .attachment {
@@ -215,15 +215,9 @@
 
 .template {
     border: 1px solid rgb(207, 205, 205);
-    border-radius: 2px;
+    border-radius: 5px;
     border: 1px 0px 0px 0px;
 
-}
-
-.progress {
-    margin: 10px;
-    /* width: 97%; */
-    background-color: #F4F2F2;
 }
 
 .dropdown {

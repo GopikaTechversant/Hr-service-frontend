@@ -2,14 +2,14 @@
     <div class="heading d-flex j-space">
         <div class="title-left"><span>Requirement List</span></div>
         <div class="d-flex  title-right">
-            <span class="input d-flex j-space">
-                <input type="text" class="p-10" placeholder="Search Requirement" [(ngModel)]="searchKeyword"
+            <span class="input">
+                <input type="text" class="" placeholder="Search Candidates" [(ngModel)]="searchKeyword"
                     (keydown.enter)="requirementSearch(searchKeyword)">
                 <span *ngIf="searchKeyword !== ''" (click)="clearFilter()"
                     class="clear-filter c-pointer m-l-10">x</span>
-                <span class="search d-flex j-end">
-                    <i class="fa fa-search" aria-hidden="true" (click)="requirementSearch(searchKeyword)"></i>
-                </span>
+            </span>
+            <span class="search d-flex j-end">
+                <i class="fa fa-search" aria-hidden="true" (click)="requirementSearch(searchKeyword)"></i>
             </span>
         </div>
     </div>

@@ -157,6 +157,13 @@ export class HrCandidateListComponent implements OnInit {
     this.fetchList();
   }
 
+  experienceValidation(event: any): void {
+    const intermediateAllowedCharacters = /^-?(\d{0,1}\d?)?(\.\d{0,2})?$/;
+    let enteredValue = event?.target?.value + event.key;
+    if (event.key === "Backspace" || event.key === "Delete" || event.key.includes("Arrow")) return;
+    if (!intermediateAllowedCharacters.test(enteredValue)) event.preventDefault();
+  }
+
   exportData(): void {
     this.isExport = true;
     this.fetchList();

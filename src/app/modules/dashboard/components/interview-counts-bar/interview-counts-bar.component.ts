@@ -129,7 +129,9 @@ export class InterviewCountsBarComponent implements OnInit {
             borderWidth: 1,
             barPercentage: 0.8,
             categoryPercentage: 0.7,
-            barThickness: 70,            
+            barThickness:90,       
+            clip: {left: 5, top: 8, right: -2, bottom: 0}
+     
           },
           
           {
@@ -140,7 +142,9 @@ export class InterviewCountsBarComponent implements OnInit {
             borderWidth: 1,
             barPercentage: 0.8,
             categoryPercentage: 0.7,
-            barThickness: 70,  
+            barThickness: 90,  
+            clip: {left: 5, top: 1, right: -2, bottom: 0}
+
           },
           {
             label: 'No.of Sourced',
@@ -150,7 +154,8 @@ export class InterviewCountsBarComponent implements OnInit {
             borderWidth: 1,
             barPercentage: 0.9,
             categoryPercentage: 0.7,
-            barThickness: 70,  
+            barThickness: 90,  
+            clip: {left: 5, top: 1, right: -2, bottom: 0}
           },
 
         ]
@@ -170,7 +175,8 @@ export class InterviewCountsBarComponent implements OnInit {
             grid: {
               display: false,
             }
-          }
+          },
+          
         },
         layout: {
           padding: {

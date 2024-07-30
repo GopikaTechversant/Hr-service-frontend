@@ -24,8 +24,8 @@
 input[type="text"] {
     border: none;
     outline: none;
-    width: 75%;
-    padding: 6px;
+    width: 84%;
+    padding: 6px
 }
 
 .heading {
@@ -85,6 +85,21 @@ input[type="text"] {
     width: 150px;
     border-radius: 3px;
     background-color: #575F6E;
+    color: white;
+    margin-left: 10px;
+    margin-top: 0px;
+    font-weight: 500;
+    margin-right: 11px;
+}
+
+.add-candidate{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 35px;
+    width: 150px;
+    border-radius: 3px;
+    background-color: #005EC9;
     color: white;
     margin-left: 10px;
     margin-top: 0px;
