@@ -1,8 +1,8 @@
-<div class="main m-5">
+<div class="main margin-5">
     <div class="d-flex j-space">
         <div class="m-t-10">
-            <div class="p-10 head" >{{requestName | titlecase}}</div>
-            <span class="p-10 f-s-16">Department - <span class="blue">{{department}}</span></span>
+            <div class="padding-10 head" >{{requestName | titlecase}}</div>
+            <span class="padding-10 f-s-16">Department - <span class="blue">{{department}}</span></span>
         </div>
         <div class="date-filters d-flex p-r-10 j-end">
             <div class="d-flex align-items-center">
@@ -96,11 +96,11 @@
         </div>
     </div>
     <div class="detail-table">
-        <div class="d-flex j-space p-8">
-            <div class="m-10">
+        <div class="d-flex j-space p-t-8 p-b-8">
+            <div class="margin-10">
                 <span class="name">Requirement Detail of : {{requestName}} - <span class="blue">{{filteredStatus}}</span></span>
             </div>
-            <div class="input c-pointer p-t-10 no-close p-relative">
+            <div class="input c-pointer p-t-5 m-r-10 no-close p-relative">
                 <span class="no-close p-l-10" (click)="filterStatus = !filterStatus">{{filteredStatus.trim() === '' ? 'Filter by Status' : filteredStatus | titlecase}}</span>
                 <span class="f-right">
                     <span *ngIf="filteredStatus && filteredStatus !== 'Total Applicants'" (click)="clearFilter()" class="clear-filter">x</span>
@@ -108,7 +108,7 @@
                 </span>    
                 <div class="dropdown c-pointer no-close'" *ngIf="filterStatus" >
                     <span class="d-flex p-0" *ngFor="let type of lists.slice(1)" (click)="selectStatusFilter(type?.name);filterStatus = !filterStatus">
-                       <span class="p-l-10 p-5">{{type?.name | titlecase}}</span> 
+                       <span class="p-l-10 padding-5">{{type?.name | titlecase}}</span> 
                     </span>
                 </div>
             </div>
@@ -140,7 +140,7 @@
                 <div *ngIf="candidateList?.length === 0 || !candidateList" class="no-data"> No Data Found</div>
             </table>
         </div>
-        <div class="page d-flex j-end p-10">
+        <div class="page d-flex j-end padding-10">
             <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(1)">
                 <img src="assets/images/double-arrow-left-icon.svg" alt="" height="14px" width="14px">
             </button>

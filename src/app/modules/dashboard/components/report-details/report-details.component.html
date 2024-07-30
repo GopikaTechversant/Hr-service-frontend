@@ -12,7 +12,7 @@
                     <div class="d-flex filter-month">
                         <span class="filter p-r-10 p-t-10">Filter Month</span>
                         <span class="c-pointer input-filter p-relative no-close m-t-5" (click)="showMonth = !showMonth">
-                            <div class="input d-flex j-space p-5 p-b-0 no-close f-s-14">
+                            <div class="input d-flex j-space padding-5 p-b-0 no-close f-s-14">
                                 {{selectedMonth ? selectedMonth : 'Select Month'}}
                                 <span class="f-right">
                                     <span *ngIf="selectedMonth && selectedMonth !== ''" (click)="clearFilter('month')"
@@ -33,7 +33,7 @@
                         <span class="filter p-r-10 p-t-10">Filter Recruiter</span>
                         <span class="c-pointer input-filter m-t-5 p-relative no-close c-pointer"
                             (click)="showRecruiters = !showRecruiters">
-                            <div class="input d-flex j-space p-5 p-b-0 no-close f-s-14">
+                            <div class="input d-flex j-space padding-5 p-b-0 no-close f-s-14">
                                 {{recruiterName ? recruiterName : 'Select Recruiter'}}
                                 <span class="f-right">
                                     <span *ngIf="recruiterName && recruiterName !== ''" (click)="clearFilter('recruiter')"
@@ -89,7 +89,7 @@
         </div>
     </div>
     <div class="d-flex w-100">
-        <div class="w-50 m-10 m-t-20">
+        <div class="w-50 margin-10 m-t-20">
             <app-application-list-bar></app-application-list-bar>
             <!-- <div class="m-t-10">
                 <span class="f-w-500 p-20">Experienced Hiring ( Recruiter wise)</span>
@@ -102,7 +102,7 @@
             </div> -->
         </div>
         <div class="w-50">
-            <div class="count-table m-r-15 m-10 m-t-20">
+            <div class="count-table m-r-15 margin-10 m-t-20">
                 <div class="m-7 p-t-19">
                     <span class="f-w-500 p-b-20 f-s-18">Overall Interview Status</span>
                 </div>
@@ -149,7 +149,7 @@
                         No Data Found
                     </div>
                 </div>
-                <div class="page d-flex j-end p-10">
+                <div class="page d-flex j-end padding-10">
                     <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(1)">
                         <img src="assets/images/double-arrow-left-icon.svg" alt="" height="14px" width="14px">
                     </button>

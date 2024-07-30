@@ -42,9 +42,35 @@
     background-color: #FFFFFF;
     border-radius: 3px;
     width: 73%;
-    height: 30px;
+    height: 34px;
     margin-right: -10px;
     line-height: 26px;
+}
+
+.input-1 {
+    border: 1px solid #E9E9E9;
+    outline: none;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    width: 200px;
+    height: 34px;
+}
+
+.date-input{
+    border: 1px solid #E9E9E9;
+    outline: none;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    width: 105px;
+    height: 33px;
+}
+
+.filter-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
 }
 
 .search {
@@ -68,10 +94,24 @@
     margin-top: 6px;
 }
 
-.filter-icon {
-    color: #575F6E;
-    margin-left: 10px;
-    margin-top: 0px;
+.dropdown {
+    background: white;
+    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+    max-height: 150px;
+    overflow-y: auto;
+    font-size: 14px;
+    font-weight: 400;
+    width: 100%;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 999;
+    margin-top: 5px;
+    top: 100%;
+    left: 0;
+}
+
+.dropdown :hover {
+    background-color: #eceaea;
 }
 
 .table-container {
@@ -176,26 +216,6 @@ tr {
     padding: 10px 0;
 }
 
-.dropdown {
-    background: white;
-    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
-    max-height: 150px;
-    overflow-y: auto;
-    font-size: 14px;
-    font-weight: 400;
-    width: 73%;
-    padding: 5px;
-    border-radius: 4px;
-    position: absolute;
-    z-index: 999;
-    top: 100%;
-    left: 0;
-}
-
-.dropdown :hover {
-    background-color: #eceaea;
-}
-
 .month-column {
     padding: 5px 0px 5px 10px;
     cursor: pointer;
@@ -204,12 +224,6 @@ tr {
 
 .month-column:hover {
     background-color: #f0f0f0;
-}
-
-.fa-calendar-o {
-    color: #4F4F4F;
-    margin-top: 10px;
-    margin-left: -8px;
 }
 
 .box {
@@ -249,38 +263,6 @@ tr {
     font-size: 20px;
     color: black;
     font-weight: 500;
-}
-
-.export-btn {
-    border-radius: 3px;
-    height: 31px;
-    width: 141px;
-    background-color: #4F4F4F;
-    color: white;
-    font-weight: 500;
-    line-height: 31px;
-    text-align: center;
-    margin-top: 2px;
-}
-
-.date-input-box {
-    border: 1px solid #E9E9E9;
-    outline: none;
-    background-color: #FFFFFF;
-    border-radius: 3px;
-    width: 100%;
-    height: 30px;
-    margin-right: -10px;
-}
-
-.to-date-input {
-    border: 1px solid #E9E9E9;
-    outline: none;
-    background-color: #FFFFFF;
-    border-radius: 3px;
-    width: 100%;
-    height: 30px;
-    margin-right: -10px;
 }
 
 .header {
