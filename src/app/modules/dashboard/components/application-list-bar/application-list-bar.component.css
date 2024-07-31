@@ -105,16 +105,6 @@ tr:nth-child(even) {
     background: #FFFFFF;
 }
 
-td {
-    padding: 10px;
-    text-align: center;
-    border: 1px solid #E9E9E9
-}
-
-tr {
-    text-align: center;
-}
-
 
 .date-filters {
     display: flex;
@@ -127,18 +117,6 @@ tr {
     overflow-x: hidden;
     height: calc(100vh - 445px);
     /* max-height: calc(100vh - 420px); */
-}
-
-.table-header {
-    position: sticky;
-    top: 0;
-    background: #F4F2F2 !important;
-    padding: 10px;
-    font-size: 15px;
-    font-weight: 400;
-    line-height: 18px;
-    letter-spacing: 0em;
-    text-align: left;
 }
 
 table {

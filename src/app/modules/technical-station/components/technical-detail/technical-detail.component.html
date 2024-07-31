@@ -8,7 +8,8 @@
     <div class="d-flex j-end flex-wrap">
         <div class="search-div d-flex align-items-center m-b-10">
             <input type="text" class="input align-items-start" placeholder="Search By Name"
-                [(ngModel)]="searchKeyword" (keydown)="searchCandidate(searchKeyword)">
+            [(ngModel)]="searchKeyword"
+            (ngModelChange)="searchCandidate($event)">
                 <span *ngIf="searchKeyword && searchKeyword.trim() !== ''" (click)="clearFilter('search')"
                 class="clear-filter c-pointer">x</span>
             <span class="search c-pointer ms-2" (click)="searchCandidate(searchKeyword)">
@@ -36,7 +37,7 @@
         <div class="search-div d-flex align-items-center m-b-10">
             <input type="text" class="input" placeholder="Search By Experience" [(ngModel)]="experience"
                 (keydown)="searchByExperience(experience)" (keydown)="experienceValidation($event)">
-                <span *ngIf="searchKeyword && searchKeyword.trim() !== ''" (click)="clearFilter('experience')"
+                <span *ngIf="experience && experience.trim() !== ''" (click)="clearFilter('experience')"
                 class="clear-filter c-pointer">x</span>
             <span class="search c-pointer ms-2" (click)="searchByExperience(experience)">
                 <img src="/assets/images/techversant/search.svg" alt="">

@@ -317,10 +317,6 @@
     width: 97.9%;
 }
 
-.clear-filter{
-    right: 6px;
-}
-
 body::-webkit-scrollbar-track {
     background: orange;        /* color of the tracking area */
   }

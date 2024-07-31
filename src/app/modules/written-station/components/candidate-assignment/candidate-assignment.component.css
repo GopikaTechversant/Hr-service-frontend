@@ -24,24 +24,6 @@
     padding: 5px;
 }
 
-/* .clear-filter {
-
-    background-color: #ffff;
-    padding: 5px;
-} */
-.clear-filter {
-    display: inline-block;
-    height: 17px;
-    width: 17px;
-    padding: 0px 4px;
-    border: 1px solid #3c40434d;
-    border-radius: 50%;
-    background-color: #ffff;
-    text-align: center;
-    line-height: 15px;
-    font-size: 12px;
-  }
-
 .blue {
     color: #005EC9;
 }
@@ -183,7 +165,6 @@ input[type="number"] {
     background-color: #FFFFFF;
     border: 1px solid #005EC9;
 }
-
 
 .dropdown {
     background: white;

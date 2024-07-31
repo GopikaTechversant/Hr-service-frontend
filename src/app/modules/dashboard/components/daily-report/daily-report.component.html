@@ -58,9 +58,9 @@
         <div class="no-data" *ngIf="(!userRequirement || userRequirement?.length === 0) && !initialLoader && !loader">No
             Data Found</div>
         <table class="table m-l-17" *ngIf="userRequirement?.length > 0">
-            <tr class="table-header p-b-10">
+            <tr class="table-header">
                 <ng-container *ngFor="let key of  recruiterKeys">
-                    <td class="table-title text-wrap" [title]="key">{{key}}</td>
+                    <td class="" [title]="key">{{key}}</td>
                 </ng-container>
             </tr>
             <div *ngIf="loader && !initialLoader" class="loader-parent">

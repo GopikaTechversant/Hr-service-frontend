@@ -1,18 +1,21 @@
-<div class="main container-fluid">
+<div class="main container-fluid w-100">
   <div class="sidebar-container" [class.sidebar-hidden]="isSidebarHidden" *ngIf="!isSidebarHidden">
     <div class="sidebar" [class.hidden]="isSidebarHidden">
       <!-- <span class="side-head"> Techversant <span class="blue">Gateway</span></span> -->
     </div>
   </div>
-  <div class="header d-flex navbar">
+  <div class="header d-flex navbar" [class.header-full]="isSidebarHidden">
     <div class="p-2 d-flex align-items-center">
       <div>
         <img src="/assets/images/techversant/toggle.svg" alt="" (click)="toggleSidebar()" class="c-pointer">
       </div>
       <div class="search-container p-relative ms-3">
         <div class="search-div d-flex align-items-center">
-          <input type="text" class="input" placeholder="Search Candidate Detail" [(ngModel)]="searchKeyword"
-            (keydown)="searchCandidate(searchKeyword)">
+          <input type="text" class="input" placeholder="Search Candidate Detail"
+            [(ngModel)]="searchKeyword"
+            (ngModelChange)="searchCandidate($event)">
+            <span *ngIf="searchKeyword && searchKeyword.trim() !== ''" (click)="clearFilter()"
+            class="clear-filter c-pointer">x</span>
           <span class="search c-pointer" (click)="searchCandidate(searchKeyword)">
             <img src="/assets/images/techversant/search.svg" alt="">
             <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
@@ -20,7 +23,7 @@
         </div>
         <div *ngIf="showCandidates" class="p-absolute candidate-dropdown no-close">
           <div class="candidate-column" *ngFor="let item of candidateList"
-            (click)="selectCandidate(item.candidateId);showCandidates = !showCandidates">
+            (click)="selectCandidate(item.candidateId); showCandidates = !showCandidates">
             <div *ngIf="!candidateList || candidateList?.length === 0"> No Candidate Found</div>
             <div class="d-flex candidate">
               <div class="m-1">
@@ -40,6 +43,7 @@
           </div>
         </div>
       </div>
+      
     </div>    
     <div class="profile d-flex p-t-8">
       <div class="d-flex align-items-center me-2 flex-wrap station-names">

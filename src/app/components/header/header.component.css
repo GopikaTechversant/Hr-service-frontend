@@ -23,6 +23,14 @@
     justify-content: center;
 }
 
+.sidebar-hidden{
+    width: 0%;
+}
+
+.header-full{
+    width: 99vw;
+}
+
 .side-head {
     font-weight: 500;
     font-size: 1.4rem;
@@ -208,6 +216,11 @@
         align-items: flex-start;
         justify-content: space-between;
     }
+
+    .header-full{
+        width: 74vw;
+    }
+    
 
     .profile {
         justify-content: flex-end;

@@ -112,27 +112,27 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
         },
       },
       plugins: [
-        ChartDataLabels,
-        {
-          id: 'customDatalabels',
-          afterDraw(chart: any) {
-            const { ctx, chartArea: { top, bottom, left, right } } = chart;
-            chart.data.datasets.forEach((dataset: any, datasetIndex: number) => {
-              chart.getDatasetMeta(datasetIndex).data.forEach((dataPoint: any, index: number) => {
-                const { x, y } = dataPoint.tooltipPosition();
-                const sourceLabel = chart.data.labels[index];
-                const value = dataset.data[index];
+        ChartDataLabels,this.doughnutLabelsLinePlugin
+        // {
+        //   id: 'customDatalabels',
+        //   afterDraw(chart: any) {
+        //     const { ctx, chartArea: { top, bottom, left, right } } = chart;
+        //     chart.data.datasets.forEach((dataset: any, datasetIndex: number) => {
+        //       chart.getDatasetMeta(datasetIndex).data.forEach((dataPoint: any, index: number) => {
+        //         const { x, y } = dataPoint.tooltipPosition();
+        //         const sourceLabel = chart.data.labels[index];
+        //         const value = dataset.data[index];
   
-                ctx.font = '10px Arial'; 
-                ctx.fillStyle = '#FFFFFF'; 
-                ctx.textAlign = 'center';
-                ctx.fillText(sourceLabel + ' ', x, y - 10);
-                ctx.font = '16px Arial'; 
-                ctx.fillText(value.toString(), x + 35, y - 10); 
-              });
-            });
-          }
-        }
+        //         ctx.font = '10px Arial'; 
+        //         ctx.fillStyle = '#FFFFFF'; 
+        //         ctx.textAlign = 'center';
+        //         ctx.fillText(sourceLabel + ' ', x, y - 10);
+        //         ctx.font = '16px Arial'; 
+        //         ctx.fillText(value.toString(), x + 35, y - 10); 
+        //       });
+        //     });
+        //   }
+        // }
       ],
     };
   

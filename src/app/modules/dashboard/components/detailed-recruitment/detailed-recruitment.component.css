@@ -160,26 +160,3 @@
     width: 19%;
 }
 
-.selected-col {
-    background-color: #DFFFF0;
-}
-
-.selected-col-head {
-    background-color: #C6FAE1;
-}
-
-.applicants-col-head {
-    background-color: #CDEDFF;
-}
-
-.applicants-col:hover {
-    background-color: #D3E8FF;
-}
-
-.applicants-col {
-    background-color: #E4F6FF;
-}
-
-.details:hover {
-    background-color: #D3E8FF;
-}
