@@ -28,7 +28,7 @@ export class RequirementCandidateListComponent implements OnInit {
   editRequirement: any;
   filterStatus: boolean = false;
   filteredStatus: any = '';
-  status: any[] = ['Opening Requisitions','Closed Requisitions'];
+  status: any[] = ['Active Requisitions','Closed Requisitions'];
   constructor(private router: Router, private apiService: ApiService, private dialog: MatDialog, private toastr: ToastrService) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -45,8 +45,9 @@ export class RequirementCandidateListComponent implements OnInit {
   }
 
   fetchcandidates(searchQuery: string): void {
+    const isActive = this.filteredStatus === 'Closed Requisitions' ? 'closed' : 'active';
     if (!this.initialLoader) this.loader = true
-    this.apiService.get(`/screening-station/v1/list-all?page=${this.currentPage}&limit=${this.limit}&search=${searchQuery.trim()}`).subscribe((res: any) => {
+    this.apiService.get(`/screening-station/v1/list-all?page=${this.currentPage}&limit=${this.limit}&search=${searchQuery.trim()}&isActive=${isActive}`).subscribe((res: any) => {
       if (res) {
         this.initialLoader = false;
         this.loader = false
@@ -136,6 +137,7 @@ export class RequirementCandidateListComponent implements OnInit {
 
   selectStatusFilter(item: string): void {
     this.filteredStatus = item;
+    console.log("this.filteredStatus",this.filteredStatus);
     sessionStorage.setItem('requisition', this.filteredStatus);
     this.currentPage = 1;
     this.limit = 10;
@@ -145,7 +147,7 @@ export class RequirementCandidateListComponent implements OnInit {
   clearFilter(item: any): void {
     if (item === 'search') this.searchKeyword = '';
     if (item === 'status') {
-      this.filteredStatus = '';
+      this.filteredStatus = 'Active Requisitions';
       sessionStorage.setItem('requisition', this.filteredStatus);
     }
     this.currentPage = 1;

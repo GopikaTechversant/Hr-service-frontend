@@ -235,15 +235,15 @@ input[type="text"] {
 
 .clear-filter {
   display: inline-block;
-    height: 17px;
-    width: 17px;
-    padding: 0px 4px;
-    border: 1px solid #3c40434d;
-    border-radius: 50%;
-    background-color: #ffff;
-    text-align: center;
-    line-height: 15px;
-    font-size: 12px;
+  height: 17px;
+  width: 17px;
+  padding: 0px 4px;
+  border: 1px solid #3c40434d;
+  border-radius: 50%;
+  background-color: #ffff;
+  text-align: center;
+  line-height: 15px;
+  font-size: 12px;
 }
 
 .clear-filter-search {
@@ -339,6 +339,7 @@ input[type="text"] {
   margin-right: 9px;
 }
 
-.padding-5{
+.padding-5 {
   padding: 5px;
 }
+

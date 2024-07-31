@@ -266,9 +266,13 @@ tr {
 
 .resume-file {
     height: 30%;
-    width: 100%;
+    width: 50%;
 }
 
 .resume-container{
     border: 1px solid #c0c3ca;
+    margin: 20px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
 }

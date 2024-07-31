@@ -2,9 +2,9 @@
     <span class="f-s-20 f-w-500 p-t-5">Written Round</span>
     <div class="d-flex j-end m-t-20 search-header flex-wrap">
         <div class="search-div d-flex align-items-center m-b-10 m-r-10">
-            <input type="text" class="input align-items-start" placeholder="Search By Name"
-                [(ngModel)]="searchKeyword" (keydown)="searchCandidate(searchKeyword)">
-                <span *ngIf="searchKeyword && searchKeyword.trim() !== ''" (click)="clearFilter('search')"
+            <input type="text" class="input align-items-start" placeholder="Search By Name" [(ngModel)]="searchKeyword"
+                (keydown)="searchCandidate(searchKeyword)">
+            <span *ngIf="searchKeyword && searchKeyword.trim() !== ''" (click)="clearFilter('search')"
                 class="clear-filter c-pointer">x</span>
             <span class="search c-pointer ms-2" (click)="searchCandidate(searchKeyword)">
                 <img src="/assets/images/techversant/search.svg" alt="">
@@ -13,7 +13,7 @@
         <div class="search-div d-flex align-items-center m-b-10 m-r-10">
             <input type="text" class="input" placeholder="Search By Experience" [(ngModel)]="experience"
                 (keydown)="searchByExperience(experience)" (keydown)="experienceValidation($event)">
-                <span *ngIf="searchKeyword && searchKeyword.trim() !== ''" (click)="clearFilter('experience')"
+            <span *ngIf="experience && searchKeyword && searchKeyword.trim() !== ''" (click)="clearFilter('experience')"
                 class="clear-filter c-pointer">x</span>
             <span class="search c-pointer ms-2" (click)="searchByExperience(experience)">
                 <img src="/assets/images/techversant/search.svg" alt="">
@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="input-1 c-pointer no-close p-relative p-t-6 m-l-10 m-b-10 p-l-10 m-r-10">
-            <span class="no-close p-l-10" (click)="filterStatus = !filterStatus">{{filteredStatus.trim() === '' ?
+            <span class="no-close " (click)="filterStatus = !filterStatus">{{filteredStatus.trim() === '' ?
                 'Filter by Status' : filteredStatus | titlecase}}</span>
             <span class="f-right">
                 <span *ngIf="filteredStatus && filteredStatus.trim() !== ''" (click)="clearFilter('status')"
@@ -51,11 +51,11 @@
             <div class="dropdown c-pointer no-close'" *ngIf="filterStatus">
                 <span class="d-flex p-0" *ngFor="let type of Status"
                     (click)="selectStatusFilter(type?.status);filterStatus = !filterStatus">
-                    <span class="p-l-20">{{type?.status | titlecase}}</span>
+                    <span class="padding-10">{{type?.status | titlecase}}</span>
                 </span>
             </div>
         </div>
-        <div (click)="openQuestionAssign();" >
+        <div (click)="openQuestionAssign();">
             <span class="c-pointer assign-question">Assign Question</span>
         </div>
         <div class="input-approve  j-space align-center p-relative p-t-2 m-l-10 m-b-10 m-r-10">
@@ -99,17 +99,20 @@
                                 || 'Not assigned'}}
                             </td>
                             <!-- <td>{{item?.serviceSequence?.progress?.questionName}}</td> -->
-                            <td class="text-start"><button class="result text-center  c-pointer"
+                            <td class="text-start" *ngIf="item?.serviceSequence?.progress?.progressScore === null">
+                                <button class="result text-center  c-pointer"
                                     *ngIf="item?.serviceSequence?.progress?.progressScore === null && item?.serviceSequence?.progress?.questionName"
-                                    (click)="resultClick(item, item?.serviceSequence?.serviceId)">Add Result</button>
+                                    (click)="resultClick(item, item?.serviceSequence?.serviceId)">Add Result
+                                </button>
                                 <button class="disabled-button text-center"
                                     *ngIf="item?.serviceSequence?.progress?.progressScore === null && !item?.serviceSequence?.progress?.questionName"
                                     [disabled]="!item?.serviceSequence?.progress?.quertionName">
                                     Add Result
                                 </button>
-                                <span class="text-end"
-                                    *ngIf="item?.serviceSequence?.progress?.progressScore" class="t-a-right">{{item?.serviceSequence?.progress?.progressScore}}</span>
+                                <!-- <span class="score-align" *ngIf="item?.serviceSequence?.progress?.progressScore" class="t-a-right">{{item?.serviceSequence?.progress?.progressScore}}</span> -->
                             </td>
+                            <td *ngIf="item?.serviceSequence?.progress?.progressScore" class="text-end">
+                                {{item?.serviceSequence?.progress?.progressScore}}</td>
                             <td class="text-center">
                                 <span class="c-pointer text-center"
                                     *ngIf="item?.serviceSequence?.progress?.progressScore  && item?.serviceSequence?.progress?.progressScore !== null"><img
