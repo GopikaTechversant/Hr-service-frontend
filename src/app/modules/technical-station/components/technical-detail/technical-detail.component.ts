@@ -194,10 +194,17 @@ export class TechnicalDetailComponent implements OnInit {
 
   searchCandidate(searchTerm: string): void {
     this.searchKeyword = searchTerm;
+    if (this.searchKeyword.trim() === '') {
+      this.currentPage = 1; 
+      this.limit = 10; 
+      this.fetchList(); 
+      return;
+    }
     this.currentPage = 1;
     this.limit = 10;
     this.fetchList();
   }
+  
   searchByExperience(experience: string): void {
     this.experience = experience;
     this.currentPage = 1;

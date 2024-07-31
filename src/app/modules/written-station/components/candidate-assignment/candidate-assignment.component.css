@@ -24,12 +24,6 @@
     padding: 5px;
 }
 
-.clear-filter {
-
-    background-color: #ffff;
-    padding: 5px;
-}
-
 .blue {
     color: #005EC9;
 }
@@ -170,16 +164,6 @@ input[type="number"] {
     color: #005EC9;
     background-color: #FFFFFF;
     border: 1px solid #005EC9;
-}
-
-.clear-filter {
-    display: inline-block;
-    border: 1px solid #3c40434d;
-    border-radius: 53%;
-    height: 10px !important;
-    width: 10px !important;
-    line-height: 9px;
-    text-align: center;
 }
 
 .dropdown {

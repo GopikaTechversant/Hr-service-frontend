@@ -17,11 +17,6 @@
     padding: 5px;
 }
 
-/* .clear-filter {
-    background-color: #ffff;
-    padding: 5px;
-} */
-
 .search-head {
     color: #1e5181;
     background-color: white;
@@ -141,12 +136,6 @@ input[type="text"] {
     position: absolute;
     top: 35%;
     left: 21%;
-}
-
-.clear-filter {
-    padding: 0px 6px;
-    border: 1px solid #3c40434d;
-    border-radius: 50%;
 }
 
 .dropdown {

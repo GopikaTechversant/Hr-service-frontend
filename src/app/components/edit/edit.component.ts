@@ -74,8 +74,8 @@ export class EditComponent implements OnInit {
       resumeSourceId: [null, Validators.required],
       candidateId: [null, Validators.required],
       candidateCity: [null, Validators.required],
-      candidateDistrict:[null, Validators.required],
-      candidateState:[null, Validators.required]
+      candidateDistrict: [null, Validators.required],
+      candidateState: [null, Validators.required]
     })
   }
 
@@ -176,7 +176,7 @@ export class EditComponent implements OnInit {
       }
     });
   }
-  
+
   selectsource(sourceid: any, sourceName: any): void {
     this.sourceId = sourceid;
     this.sourceName = sourceName;
@@ -242,10 +242,10 @@ export class EditComponent implements OnInit {
       candidateSecondarySkills: this.secondaryskills.length > 0 ? this.secondaryskills : undefined,
       genderName: this.genderName,
       candidatePreferlocation: this.locationname,
-      candidateCity:candidateDetails?.candidateCity !== this.candidateDetails?.candidateCity ? candidateDetails?.candidateCity : undefined,
-      candidateDistrict:candidateDetails?.candidateDistrict !== this.candidateDetails?.candidateDistrict ? candidateDetails?.candidateDistrict : undefined,
-      candidateState:candidateDetails?.candidateState !== this.candidateDetails?.candidateState ? candidateDetails?.candidateState : undefined,
-     
+      candidateCity: candidateDetails?.candidateCity !== this.candidateDetails?.candidateCity ? candidateDetails?.candidateCity : undefined,
+      candidateDistrict: candidateDetails?.candidateDistrict !== this.candidateDetails?.candidateDistrict ? candidateDetails?.candidateDistrict : undefined,
+      candidateState: candidateDetails?.candidateState !== this.candidateDetails?.candidateState ? candidateDetails?.candidateState : undefined,
+
     };
 
     if (this.candidateForm.value.candidateFirstName && this.candidateForm.value.candidateLastName && this.candidateForm.value.candidateGender

@@ -82,14 +82,22 @@ export class HeaderComponent implements OnInit {
 
   searchCandidate(searchKeyword: string): void {
     this.searchKeyword = searchKeyword;
+    if (this.searchKeyword.trim() === '') {
+      this.showCandidates = false;
+      return;
+    }
     this.apiService.get(`/candidate/search/list?search=${this.searchKeyword}`).subscribe((res: any) => {
       if (res?.data) {
-        this.candidateList = res?.data
-        if (this.candidateList?.length > 0) this.showCandidates = true;
+        this.candidateList = res.data;
+        this.showCandidates = this.candidateList.length > 0;
       }
-    })
-    if (this.searchKeyword.trim() === '') this.showCandidates = false;
+    });
   }
+
+  clearFilter(): void {
+    this.searchKeyword = '';
+  }
+
 
   selectCandidate(id: any): void {
     this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);

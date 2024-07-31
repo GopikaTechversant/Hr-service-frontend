@@ -322,7 +322,7 @@ tr:nth-child(even) {
 
 td {
   padding: 10px;
-  border: 1px solid #E9E9E9 !important;
+  border: none;
 }
 
 .table-header {
@@ -334,9 +334,8 @@ td {
   font-weight: 500;
   line-height: 18px;
   letter-spacing: 0em;
-  text-align: center;
   color: black;
-  text-align: left;
+  text-align: left !important;
 }
 
 .container-table {
@@ -376,4 +375,19 @@ table {
 
 .margin-10{
   margin: 10px;
+}
+
+.clear-filter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  padding: 0 4px;
+  border: 1px solid #3c40434d;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  cursor: pointer;
 }

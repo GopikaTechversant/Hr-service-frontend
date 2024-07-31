@@ -171,6 +171,12 @@ export class HrCandidateListComponent implements OnInit {
 
   searchCandidate(searchTerm: string): void {
     this.searchKeyword = searchTerm;
+    if (this.searchKeyword.trim() === '') {
+      this.currentPage = 1; 
+      this.limit = 10; 
+      this.fetchList(); 
+      return;
+    }
     this.currentPage = 1;
     this.limit = 10;
     this.fetchList();
