@@ -24,11 +24,23 @@
     padding: 5px;
 }
 
-.clear-filter {
+/* .clear-filter {
 
     background-color: #ffff;
     padding: 5px;
-}
+} */
+.clear-filter {
+    display: inline-block;
+    height: 17px;
+    width: 17px;
+    padding: 0px 4px;
+    border: 1px solid #3c40434d;
+    border-radius: 50%;
+    background-color: #ffff;
+    text-align: center;
+    line-height: 15px;
+    font-size: 12px;
+  }
 
 .blue {
     color: #005EC9;
@@ -172,15 +184,6 @@ input[type="number"] {
     border: 1px solid #005EC9;
 }
 
-.clear-filter {
-    display: inline-block;
-    border: 1px solid #3c40434d;
-    border-radius: 53%;
-    height: 10px !important;
-    width: 10px !important;
-    line-height: 9px;
-    text-align: center;
-}
 
 .dropdown {
     background: white;
@@ -196,6 +199,7 @@ input[type="number"] {
     margin-top: 5px;
     top: 100%;
     left: 0;
+
 }
 
 .dropdown :hover {
@@ -255,11 +259,11 @@ input[type="number"] {
 
 .approve-btn {
     right: 0px;
-    bottom: 1%;
-    height: 33px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    width: 85px;
+    bottom: 0px;
+    height: 32px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    width: 78px;
     border: none;
     background-color: #575F6E;
     color: white;
@@ -302,8 +306,8 @@ input[type="number"] {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 34px;
-    width: 150px;
+    height: 31px;
+    width: 125px;
     border-radius: 3px;
     background-color: #575F6E;
     color: white;
@@ -311,4 +315,9 @@ input[type="number"] {
     margin-top: 2px;
     font-weight: 500;
     margin-right: 11px;
+}
+
+.score-align{
+    display: inline-block;
+    text-align: end !important;
 }
