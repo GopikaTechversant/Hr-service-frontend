@@ -72,9 +72,7 @@ export class SeriesComponent implements OnInit {
   }
 
   edit(path: any, requestId?: any): void {
-    const queryParams = requestId ? { requestId: requestId } : undefined;
-    console.log("queryParams",queryParams);
-    
+    const queryParams = requestId ? { requestId: requestId } : undefined;    
     if (queryParams) this.router.navigate([path], { queryParams: queryParams });
     else this.router.navigate([path]);
   }

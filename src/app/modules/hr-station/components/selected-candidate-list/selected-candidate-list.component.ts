@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environments';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-selected-candidate-list',
@@ -34,14 +35,14 @@ export class SelectedCandidateListComponent {
   displayPosition: string = '';
   positionId: any;
   requestList: any;
-  initialLoader:boolean = false
+  initialLoader: boolean = false
   experience: string = '';
   isExport: boolean = false;
   today: Date = new Date();
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   candidateIds: any;
-  constructor(private dialog: MatDialog, private apiService: ApiService , private datePipe: DatePipe) { }
+  constructor(private dialog: MatDialog, private apiService: ApiService, private datePipe: DatePipe, private router: Router) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
@@ -89,7 +90,7 @@ export class SelectedCandidateListComponent {
       `toDate=`,
       `status_filter=done`,
       `report=${this.isExport}`
-    ].filter(param => param.split('=')[1] !== '').join('&');  
+    ].filter(param => param.split('=')[1] !== '').join('&');
 
     if (this.isExport) {
       if (this.candidateIds) {
@@ -146,7 +147,12 @@ export class SelectedCandidateListComponent {
     this.limit = 10;
     this.fetchList();
   }
-
+  experienceValidation(event: any): void {
+    const intermediateAllowedCharacters = /^-?(\d{0,1}\d?)?(\.\d{0,2})?$/;
+    let enteredValue = event?.target?.value + event.key;
+    if (event.key === "Backspace" || event.key === "Delete" || event.key.includes("Arrow")) return;
+    if (!intermediateAllowedCharacters.test(enteredValue)) event.preventDefault();
+  }
   exportData(): void {
     this.isExport = true;
     this.fetchList();
@@ -213,6 +219,10 @@ export class SelectedCandidateListComponent {
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       this.fetchList();
     })
+  }
+
+  selectCandidate(id: any): void {
+    this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
   }
 
   onPageChange(pageNumber: number): void {

@@ -65,15 +65,14 @@
     cursor: pointer;
 }
 
-.input {
-    border: 1px solid #E9E9E9;
+input[type="text"] {
+    border: none;
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
-    width: 190px;
-    height: 40px;
-    padding: 5px;
-    padding-top: 10px;
+    width: 200px;
+    height: 23px;
+    padding-bottom: 1px;
 }
 
 .input-1 {
