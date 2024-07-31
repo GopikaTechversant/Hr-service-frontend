@@ -15,6 +15,8 @@ export class ForgotPasswordComponent implements OnInit {
   otpSent: boolean = false;
   hide: boolean = true;
   toggleSpinner: boolean = false;
+hidePassword: any;
+hideConfirmPassword: any;
 
   constructor(
     private tostr: ToastrServices,
@@ -36,12 +38,16 @@ export class ForgotPasswordComponent implements OnInit {
     this.passwordForm.get('userPassword')?.disable();
     this.passwordForm.get('confirmpassword')?.disable();
   }
+  submiClick(type : any):void{
+    if (type === 'Send OTP') this.sendOtp();
+    if (type === 'Reset Password') this.submitNewPassword();
+  }
 
   sendOtp(): void {
     const email = this.passwordForm.get('email')?.value;
     this.apiService.post(`/user/forgotPassword`, { userName : email }).subscribe(
       (response: any) => {
-        if (response?.token) {
+        if (response) {
           this.otpSent = true;
           this.passwordForm.get('otp')?.enable();
           this.passwordForm.get('userPassword')?.enable();
@@ -76,7 +82,7 @@ export class ForgotPasswordComponent implements OnInit {
 
       this.apiService.post(`/user/resetPassword`, payload).subscribe(
         (response: any) => {
-          if (response?.token) {
+          if (response) {
             this.passwordForm.reset();
             this.tostr.success('Password updated successfully');
           }

@@ -11,11 +11,11 @@
             <span class="label m-b-8">Requirement</span>
             <div class="input-box c-pointer p-relative no-close" (click)="showDropdown = !showDropdown">
                 <span>{{positionName.trim() !== '' ? positionName : 'Select Requirement'}}</span>
-                <span *ngIf="!positionName"><i class="f-right m-5 m-r-10 fa fa-chevron-down s-text no-close"></i></span>
+                <span *ngIf="!positionName"><i class="f-right m-l-5 m-t-5 m-b-8 m-r-10 fa fa-chevron-down s-text no-close"></i></span>
                 <div class="no-close dropdown c-pointer" *ngIf="showDropdown">
-                    <div class="p-5" *ngFor="let position of positionList"
+                    <div class="padding-5" *ngFor="let position of positionList"
                         (click)="selectPosition(position?.requestId,position?.requestName);showDropdown = !showDropdown">
-                        <span class="p-5">{{position?.requestName}}</span>
+                        <span class="padding-5">{{position?.requestName}}</span>
                     </div>
                 </div>
             </div>
@@ -25,10 +25,10 @@
             <div class="input-box c-pointer p-relative no-close" (click)="candidateClick()">
                 <span  class="c-pointer">{{candidateName.trim() !== '' ? candidateName : 'Select Candidate Name'}}</span>
                 <span *ngIf="!candidate?.candidateFirstName">
-                    <i class="f-right m-5 m-r-10 fa fa-chevron-down s-text no-close"></i>
+                    <i class="f-right m-l-5 m-t-5 m-b-8 m-r-10 fa fa-chevron-down s-text no-close"></i>
                 </span>
                 <div class="no-close dropdown c-pointer" *ngIf="showcandidate && positionId">
-                    <div class="p-5" *ngFor="let candidate of candidate_list"
+                    <div class="padding-5" *ngFor="let candidate of candidate_list"
                         (click)="selectCandidate(candidate?.candidateId,candidate?.candidateFirstName,candidate?.candidateLastName,candidate);showcandidate = !showcandidate">
                         {{candidate?.candidateFirstName}} {{candidate?.candidateLastName}}
                     </div>
@@ -39,9 +39,9 @@
             <span class="label m-b-8">Recruiter Name</span>
             <div class="input-box c-pointer p-relative no-close" (click)="showRecruiters = !showRecruiters">
                 <span>{{recruiterName.trim() !== '' ? recruiterName : 'Select Recruiter Name'}}</span>
-                <span> <i class="f-right m-5 m-r-10 fa fa-chevron-down s-text no-close"></i></span>
+                <span> <i class="f-right m-l-5 m-t-5 m-b-8 m-r-10 fa fa-chevron-down s-text no-close"></i></span>
                 <div class="no-close dropdown c-pointer" *ngIf="showRecruiters">
-                    <div class="p-5" *ngFor="let recruiter of users_list"
+                    <div class="padding-5" *ngFor="let recruiter of users_list"
                         (click)="selectRecruiter(recruiter.userId,recruiter.userfirstName,recruiter.userlastName);showRecruiters = !showRecruiters">
                         {{recruiter?.userfirstName}} {{recruiter?.userlastName}}
                     </div>
@@ -73,9 +73,9 @@
             <span class="label m-b-8">Mode of Work</span>
             <div class="input-box c-pointer p-relative no-close" (click)="showWorkMode = !showWorkMode">
                 <span >{{selectedModeName.trim() !== '' ? selectedModeName : "Select Work Mode"}}</span>
-                <span> <i class="f-right m-5 m-r-10 fa fa-chevron-down s-text"></i></span>
+                <span> <i class="f-right m-l-5 m-t-5 m-b-8 m-r-10 fa fa-chevron-down s-text"></i></span>
                 <div class="no-close dropdown c-pointer" *ngIf="showWorkMode">
-                    <div class="p-5" *ngFor="let mode of workModeList"
+                    <div class="padding-5" *ngFor="let mode of workModeList"
                         (click)="selectMode(mode?.workMode);showWorkMode = !showWorkMode">
                         {{mode?.workMode}} 
                     </div>
@@ -90,9 +90,9 @@
             <span class="label m-b-8">Job Location</span>
             <div class="input-box c-pointer p-relative no-close" (click)="showJobLocation = !showJobLocation">
                 <span >{{locationName.trim() !== '' ? locationName : "Select Job Location"}}</span>
-                <span> <i class="f-right m-5 m-r-10 fa fa-chevron-down s-text"></i></span>
+                <span> <i class="f-right m-l-5 m-t-5 m-b-8 m-r-10 fa fa-chevron-down s-text"></i></span>
                 <div class="no-close dropdown c-pointer" *ngIf="showJobLocation">
-                    <div class="p-5" *ngFor="let item of locationList"
+                    <div class="padding-5" *ngFor="let item of locationList"
                         (click)="selectLocation(item?.location);showJobLocation = !showJobLocation">
                         {{item?.location}} 
                     </div>
@@ -136,7 +136,7 @@
                 <span *ngIf="panelName" class="p-l-9">{{panelName}}</span>
                 <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
                 <div class="no-close dropdown  p-b-7 p-l-6 c-pointer" *ngIf="showPanel">
-                    <div class="p-5" *ngFor="let panel of panel_list "
+                    <div class="padding-5" *ngFor="let panel of panel_list "
                         (click)="selectPanel(panel?.userId,panel?.userfirstName,panel?.userlastName)">
                         {{panel?.userfirstName}} {{panel?.userlastName}}
                     </div>
@@ -151,7 +151,7 @@
                 <span *ngIf="selectedModeName" class="p-l-9">{{selectedModeName}}</span>
                 <span><i class="f-right p-r-10 fa fa-chevron-down s-text"></i></span>
                 <div class="no-close dropdown  p-b-7 p-l-6 c-pointer" *ngIf="showModeList">
-                    <div class="p-5" *ngFor="let mode of modeList " (click)="selectMode(mode.id,mode.modeName)">
+                    <div class="padding-5" *ngFor="let mode of modeList " (click)="selectMode(mode.id,mode.modeName)">
                         {{mode?.modeName}}
                     </div>
                 </div>

@@ -35,11 +35,11 @@
 .input {
     outline: none !important;
     border-radius: 2px;
-    height: 25px;
+    height: 35px;
     width: 100%;
     padding-left: 5px;
     padding-top: 9px;
-    padding-bottom: 2px;
+    /* padding-bottom: 20px; */
     border-radius: 5px;
     background: #FAFAFA;
     border: 1px solid #E9E9E9;
@@ -47,6 +47,10 @@
 
 .input-1 {
     width: 50%;
+}
+
+.gaps{
+    column-gap: 10px;
 }
 
 .date-input {
@@ -59,8 +63,8 @@
 
 .offer-input {
     outline: none !important;
-    height: 27px;
-    width: 97%;
+    height: 35px;
+    width: 100%;
     padding-left: 5px;
     padding-top: 6px;
     padding-bottom: 2px;
@@ -155,21 +159,12 @@
 }
 
 .attach {
-    /* outline: none !important;
-    border-radius: 2px;
-    height: 25px;
-    background-color: #FFFF;
-    width: 100%; */
-
     outline: none !important;
-    height: 25px;
-    width: 98%;
-    padding-left: 5px;
-    padding-top: 9px;
-    padding-bottom: 2px;
-    border-radius: 5px;
-    background: #FAFAFA;
     border: 1px dotted rgb(207, 205, 205);
+    border-radius: 5px;
+    height: 34px;
+    background-color: #FFFF;
+    width: 100%;
 }
 
 .file {
