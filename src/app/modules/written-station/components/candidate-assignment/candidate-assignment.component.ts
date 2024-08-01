@@ -212,14 +212,16 @@ export class CandidateAssignmentComponent implements OnInit {
   onSwitchStation(candidate: any): void {
     if (candidate?.serviceSequence?.serviceStatus === 'pending' || candidate?.serviceSequence?.serviceStatus === 'rejected') {
       const userId = localStorage.getItem('userId');
+      console.log(candidate);
+      
       const dialogRef = this.dialog.open(StationSwitchComponent, {
         data: {
           userId: userId,
-          name: candidate['candidate.candidateFirstName'] + ' ' + candidate['candidate.candidateLastName'],
+          name:candidate?.candidateFirstName + ' ' +candidate?.candidateLastName,
           serviceId: candidate?.serviceSequence?.serviceId,
           currentStation: 'Written',
           currentStationId: '2',
-          requirement: candidate['reqServiceRequest.requestName']
+          requirement: candidate?.reqServiceRequest?.requestName,
         },
         width: '700px',
         height: '500px'

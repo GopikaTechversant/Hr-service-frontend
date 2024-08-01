@@ -26,18 +26,22 @@ export class RequirementStackChartComponent {
   hiredData: any[] = [];
   sourcedData: any[] = [];
   offeredData: any[] = [];
+  selectedDeapartment: string = '';
   recruiterCheck: boolean = true;
   lastSixMonth : boolean = false
   previousStartDate: any;
   previousEndDate: any;
   requestId: any;
+  departmentList: any;
+teamListOpen: any;
   constructor(private apiService: ApiService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     Chart.register(ChartDataLabels);
-    this.fetchBarchartDetails();
     this.previousStartDate = this.startDate
-    this.previousEndDate = this.endDate
+    this.previousEndDate = this.endDate;
+    this.fetchServiceTeam();
+    this.fetchBarchartDetails();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -58,6 +62,19 @@ export class RequirementStackChartComponent {
       this.fetchBarchartDetails();
     }
   }
+  fetchServiceTeam(): void {
+    this.apiService.get(`/service-request/team`).subscribe((res: any) => {
+      if (res?.data) this.departmentList = res?.data;
+      console.log(this.departmentList);
+      
+    })
+  }
+
+  selectTeam(teamId: any, teamName: any): void {
+    this.selectedDeapartment = teamName;
+    // this.selectedTeamName = teamId;
+    this.teamListOpen = false;
+  }
 
   ngAfterViewInit(): void {
     Chart.register(ChartDataLabels);
@@ -69,7 +86,9 @@ export class RequirementStackChartComponent {
       this.showDepartment = false;
     }
   }
-
+clearFilter():void{
+  this.selectedDeapartment = ''
+}
   onRadioChange(event: Event): void {
     const target = event.target as HTMLInputElement;    
     if (target.value === 'Last 6 Months') {
@@ -102,7 +121,9 @@ export class RequirementStackChartComponent {
       if (res?.data) {
         this.sixMonthCount = res.data;
         // this.labels = this.sixMonthCount.map((item: any) => item.userfirstName ?? item.month);
-        this.labels = ['deapertment name','deapertment name','deapertment name','deapertment name','deapertment name' ]
+        this.labels = this.departmentList.map((item: any) => item.teamName)
+        console.log(this.departmentList,this.labels);
+        
         this.hiredData = this.sixMonthCount.map((item: any) => +item.total_hired);
         this.sourcedData = this.sixMonthCount.map((item: any) => +item.total_totalsourced);
         this.offeredData = this.sixMonthCount.map((item: any) => +item.total_offerreleased);        
@@ -126,7 +147,7 @@ export class RequirementStackChartComponent {
             borderWidth: 1,
             barPercentage: 0.8,
             categoryPercentage: 0.7,
-            barThickness:90,       
+            barThickness:30,       
             clip: {left: 5, top: 8, right: -2, bottom: 0}
      
           },
@@ -138,7 +159,7 @@ export class RequirementStackChartComponent {
             borderWidth: 1,
             barPercentage: 0.8,
             categoryPercentage: 0.7,
-            barThickness:90,       
+            barThickness:30,       
             clip: {left: 5, top: 8, right: -2, bottom: 0}
      
           },
@@ -151,7 +172,7 @@ export class RequirementStackChartComponent {
             borderWidth: 1,
             barPercentage: 0.8,
             categoryPercentage: 0.7,
-            barThickness: 90,  
+            barThickness: 30,  
             clip: {left: 5, top: 1, right: -2, bottom: 0}
 
           },
@@ -163,7 +184,7 @@ export class RequirementStackChartComponent {
             borderWidth: 1,
             barPercentage: 0.9,
             categoryPercentage: 0.7,
-            barThickness: 90,  
+            barThickness: 30,  
             clip: {left: 5, top: 1, right: -2, bottom: 0}
           },
 

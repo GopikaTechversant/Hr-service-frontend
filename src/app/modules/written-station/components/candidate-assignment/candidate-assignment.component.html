@@ -123,9 +123,8 @@
                                     *ngIf="!item?.serviceSequence?.progress?.progressScore  && item?.serviceSequence?.progress?.progressScore === null">Not
                                     added</span>
                             </td>
-                            <td class="p-t-15 text-center">
-                                <img src="/assets/images/candidate-detail/move.svg" alt="" height="24px" width="24px"
-                                    (click)="onSwitchStation(item)" class="text-center">
+                            <td class="text-center">
+                                <i class="fa fa-arrows" aria-hidden="true" *ngIf="item"(click)="onSwitchStation(item)"></i>
                             </td>
                             <!-- <td class="text-wrap" [title]="item?.currentStation | titlecase">{{item?.currentStation |
                                 titlecase}}</td> -->
