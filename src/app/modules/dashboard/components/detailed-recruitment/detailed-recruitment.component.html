@@ -28,14 +28,14 @@
             <tr class="table-header">
                 <!-- <td class="text">Select</td> -->
                 <td class="requisition-col" [title]="selectedDataBy === 'user' ? 'Recruiter' : 'Requisition'">{{selectedDataBy === 'user' ? 'Recruiter' : 'Requisition'}}</td>
-                <td class="f-w-500" title="Total Applicants">Total Applicants</td>
-                <td title="Screening Rejected">Screening Rejected</td>
-                <td title="Technical 1 Rejected">Technical 1 Rejected</td>
-                <td title="technical 2 Rejected">Technical 2 Rejected</td>
-                <td class="f-w-500" title="Selected from technical round">Selected from technical round</td>
-                <td title="HR Rejected">HR Rejected</td>
-                <td class="f-w-500" title="Offer Released">Offer Released</td>
-                <td class="f-w-500" title="Hired">Hired</td>
+                <td class=" text-end" title="Total Applicants">Total Applicants</td>
+                <td class=" text-end" >Screening Rejected</td>
+                <td class=" text-end" >Technical 1 Rejected</td>
+                <td class=" text-end" >Technical 2 Rejected</td>
+                <td class="text-end" title="Selected from technical round">Technical Selected</td>
+                <td class="text-end" >HR Rejected</td>
+                <td class="  text-end" title="Offer Released">Offer Released</td>
+                <td class="  text-end" title="Hired">Hired</td>
             </tr>
             <!-- <div class="loader-parent">
                 <img src="assets/gif/loader.gif">
@@ -46,15 +46,15 @@
                         <!-- <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()">
                         </td> -->
                         <td class="text-start">{{item?.userfirstName ? item?.userfirstName : item?.requestName}}</td>
-                        <td class="f-w-500 text-end">{{item?.total_totalsourced ? item?.total_totalsourced : ' '}}</td>
+                        <td class="f-w-500 text-end highlight">{{item?.total_totalsourced ? item?.total_totalsourced : ' '}}</td>
                         <td class="text-end">{{item?.total_screenrejected ? item?.total_screenrejected : ' '}}</td>
                         <td class="text-end">{{item?.total_techonereject ? item?.total_techonereject : ' '}}</td>
                         <td class="text-end">{{item?.total_techtworeject ? item?.total_techtworeject : ' '}}</td>
-                        <td class="f-w-500 text-end">{{item?.total_technicalselected ? item?.total_technicalselected : ' '}}
+                        <td class="f-w-500 text-end highlight">{{item?.total_technicalselected ? item?.total_technicalselected : ' '}}
                         </td>
                         <td class="text-end">{{item?.total_hrreject ? item?.total_hrreject : ' '}}</td>
-                        <td class="f-w-500 text-end">{{item?.total_offerreleased ? item?.total_offerreleased : ' '}}</td>
-                        <td class="f-w-500 text-end">{{item?.total_hired ? item?.total_hired : ' '}}</td>
+                        <td class="f-w-500 text-end highlight">{{item?.total_offerreleased ? item?.total_offerreleased : ' '}}</td>
+                        <td class="f-w-500 text-end highlight">{{item?.total_hired ? item?.total_hired : ' '}}</td>
                     </tr>
                 </ng-container>
             </ng-container>

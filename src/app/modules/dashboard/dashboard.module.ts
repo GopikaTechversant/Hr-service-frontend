@@ -31,6 +31,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { SharedModule } from '../shared/shared.module';
 import { AssignRequirementComponent } from './components/assign-requirement/assign-requirement.component';
 import { CandidateScheduleComponent } from './components/candidate-schedule/candidate-schedule.component';
+import { RequirementStackChartComponent } from './components/requirement-stack-chart/requirement-stack-chart.component';
 
 const routes: Routes = [
   {
@@ -76,7 +77,8 @@ const routes: Routes = [
     EditRequirementComponent,
     InterviewDetailsComponent,
     AssignRequirementComponent,
-    CandidateScheduleComponent
+    CandidateScheduleComponent,
+    RequirementStackChartComponent
   ],
   imports: [
     CommonModule,

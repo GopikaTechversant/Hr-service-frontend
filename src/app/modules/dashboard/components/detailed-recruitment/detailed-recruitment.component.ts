@@ -16,7 +16,7 @@ export class DetailedRecruitmentComponent implements OnInit {
   @Input() endDate: any;
   chart: any;
   displayDate: any;
-  pageSize = 10;
+  pageSize = 7;
   candidateList: any[] = [];
   recruitersList: any[] = [];
   recruitersListOpen: boolean = false;

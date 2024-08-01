@@ -59,7 +59,7 @@
             [gridColumn]="9"></app-skeleton-loader>
     </div>
     <!-- <div *ngIf="lists" class="candidate w-100 d-flex"> -->
-    <div *ngIf="lists" class="candidate w-100 d-flex" (click)="navigateToDetail(lists[0]?.position)" >
+    <div *ngIf="lists" class="candidate w-100 d-flex" (click)="navigateToDetail(lists[0]?.position)">
         <div class="candidate-card c-pointer">
             <div class="d-flex">
                 <div class="icon-div">
@@ -117,11 +117,12 @@
         </div>
     </div>
     <div class="d-flex w-100 m-t-10 m-b-10">
-        <div class="w-60 p-t-10">
-            <app-interview-counts-bar [positionId]="positionId" [startDate]="startDate" [endDate]="endDate"></app-interview-counts-bar>
+        <div class="w-60 p-t-10">   
+                <app-requirement-stack-chart></app-requirement-stack-chart>
         </div>
         <div class="w-40 p-t-10 ">
-            <app-application-list-pie [positionId]="positionId" [startDate]="startDate" [endDate]="endDate"></app-application-list-pie>
+            <app-application-list-pie [positionId]="positionId" [startDate]="startDate"
+                [endDate]="endDate"></app-application-list-pie>
         </div>
     </div>
     <!-- <div class="w-100 m-t-20 m-b-20">
@@ -135,7 +136,13 @@
             <app-interview-count></app-interview-count>
         </div>
     </div> -->
-    <div class="w-100  m-t-10 m-b-10">
-        <app-detailed-recruitment [startDate]="startDate" [endDate]="endDate"></app-detailed-recruitment>
+    <div class="d-flex w-100 m-t-10 m-b-10">
+        <div class="w-60 p-t-10">
+            <app-detailed-recruitment [startDate]="startDate" [endDate]="endDate"></app-detailed-recruitment>
+        </div>
+        <div class="w-40 p-t-10 m-l-10">
+            <app-interview-counts-bar [positionId]="positionId" [startDate]="startDate"
+            [endDate]="endDate"></app-interview-counts-bar>
+        </div>
     </div>
 </div>

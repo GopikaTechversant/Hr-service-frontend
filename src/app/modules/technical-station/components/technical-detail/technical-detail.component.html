@@ -130,8 +130,9 @@
                                     {{item?.progressStatus > 0 ? 'Progress Added' : 'Pending'}}
                                 </td>
                                 <td class="text-center">
-                                    <img src="/assets/images/candidate-detail/move.svg" alt="move" *ngIf="item"
-                                        (click)="onSwitchStation(item)" class="move-icon">
+                                    <i class="fa fa-arrows" aria-hidden="true"></i>
+                                    <!-- <img src="/assets/images/candidate-detail/move.svg" alt="move" *ngIf="item"
+                                        (click)="onSwitchStation(item)" class="move-icon"> -->
                                 </td>
                                 <td>
                                     <span class="f-w-500 p-10 text-start" [ngClass]="{'orange': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
@@ -145,7 +146,7 @@
                                     class="c-pointer text-start">
                                     <div class="d-flex j-centre">
                                         <i class="fa fa-eye blue f-s-18 f-w-500" aria-hidden="true"></i>
-                                        <span class="blue f-w-500 p-l-5">View detail</span>
+                                        <span class="blue p-l-5">View detail</span>
                                     </div>
                                 </td>
                                 <td class="text-end">{{item?.serviceDate | date : 'dd/MM/YYY'}}</td>

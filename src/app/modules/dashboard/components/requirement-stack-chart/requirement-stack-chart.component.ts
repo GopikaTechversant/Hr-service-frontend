@@ -5,15 +5,11 @@ import { ApiService } from 'src/app/services/api.service';
 import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-interview-counts-bar',
-  templateUrl: './interview-counts-bar.component.html',
-  styleUrls: ['./interview-counts-bar.component.css'],
-  providers: [DatePipe],
-  host: {
-    '(document:click)': 'onBodyClick($event)'
-  }
+  selector: 'app-requirement-stack-chart',
+  templateUrl: './requirement-stack-chart.component.html',
+  styleUrls: ['./requirement-stack-chart.component.css']
 })
-export class InterviewCountsBarComponent implements OnInit {
+export class RequirementStackChartComponent {
   @Input() startDate: any;
   @Input() endDate: any;
   @Input() positionId: any;
@@ -105,7 +101,8 @@ export class InterviewCountsBarComponent implements OnInit {
     this.apiService.get(`${url}?${params}`).subscribe((res: any) => {
       if (res?.data) {
         this.sixMonthCount = res.data;
-        this.labels = this.sixMonthCount.map((item: any) => item.userfirstName ?? item.month);
+        // this.labels = this.sixMonthCount.map((item: any) => item.userfirstName ?? item.month);
+        this.labels = ['deapertment name','deapertment name','deapertment name','deapertment name','deapertment name' ]
         this.hiredData = this.sixMonthCount.map((item: any) => +item.total_hired);
         this.sourcedData = this.sixMonthCount.map((item: any) => +item.total_totalsourced);
         this.offeredData = this.sixMonthCount.map((item: any) => +item.total_offerreleased);        
@@ -116,63 +113,79 @@ export class InterviewCountsBarComponent implements OnInit {
 
   createBarChart(): void {
     if (this.chart) this.chart.destroy();
-    this.chart = new Chart('barChartInterview', {
+    this.chart = new Chart('barChartRecruiter', {
       type: 'bar',
       data: {
         labels: this.labels,
         datasets: [
           {
-            label: 'No. of Hired',
-            data: this.hiredData,
+            label: 'No.of Hired',
+            data: ['5' ,' 4' , '2', '7'], 
             backgroundColor: '#047892',
             borderColor: '#047892',
             borderWidth: 1,
             barPercentage: 0.8,
             categoryPercentage: 0.7,
-            barThickness: 90,
-            clip: { left: 5, top: 8, right: -2, bottom: 0 }
+            barThickness:90,       
+            clip: {left: 5, top: 8, right: -2, bottom: 0}
+     
           },
           {
-            label: 'No. of Offered',
-            data: this.offeredData,
+            label: 'No.of Offred',
+            data: ['5' ,' 7' , '6', '7'], 
+            backgroundColor: '#598e9c',
+            borderColor: '#598e9c',
+            borderWidth: 1,
+            barPercentage: 0.8,
+            categoryPercentage: 0.7,
+            barThickness:90,       
+            clip: {left: 5, top: 8, right: -2, bottom: 0}
+     
+          },
+          
+          {
+            label: 'Technical Selected',
+            data: ['10' ,' 8' , '7', '9'], 
             backgroundColor: '#005EC9',
             borderColor: '#005EC9',
             borderWidth: 1,
             barPercentage: 0.8,
             categoryPercentage: 0.7,
-            barThickness: 90,
-            clip: { left: 5, top: 1, right: -2, bottom: 0 }
+            barThickness: 90,  
+            clip: {left: 5, top: 1, right: -2, bottom: 0}
+
           },
           {
-            label: 'No. of Sourced',
-            data: this.sourcedData,
+            label: 'Total Applicants',
+            data: ['17' ,' 18' , '20', '19'], 
             backgroundColor: '#628AFC',
             borderColor: '#628AFC',
             borderWidth: 1,
             barPercentage: 0.9,
             categoryPercentage: 0.7,
-            barThickness: 90,
-            clip: { left: 5, top: 1, right: -2, bottom: 0 }
-          }
+            barThickness: 90,  
+            clip: {left: 5, top: 1, right: -2, bottom: 0}
+          },
+
         ]
       },
       options: {
-        maintainAspectRatio: false,
         scales: {
           y: {
             stacked: true,
             beginAtZero: true,
-            ticks: {}
+            ticks: {
+
+            }
           },
           x: {
             stacked: true,
             beginAtZero: false,
             grid: {
-              display: false
-            },
-            min: 0,
-            max: this.labels.length > 5 ? 5 : this.labels.length, // Display a maximum of 5 labels at a time
-          }
+              display: false,
+            }
+          },
+          
         },
         layout: {
           padding: {
@@ -186,41 +199,37 @@ export class InterviewCountsBarComponent implements OnInit {
           legend: {
             display: true,
             position: 'bottom',
+            // align: 'end',
             labels: {
               usePointStyle: true,
               pointStyle: 'circle',
-              padding: 20
+              padding: 20,
             }
           },
           tooltip: {
-            enabled: true
+            enabled: true,
           },
           datalabels: {
             color: '#FFFFFF',
+            // backgroundColor: '#FFFFFF',
+            // borderRadius: 4,
+            // borderColor: '#0034C4',
+            // borderWidth: 1,
             padding: 4,
             anchor: 'center',
             align: 'center',
             offset: -1,
             font: {
               size: 14,
-              weight: 400
-            }
-          }
-        },
-        onClick: (e, elements) => {
-          if (elements.length) {
-            const index = elements[0].index;
-            const chartInstance = this.chart;
-            if (chartInstance) {
-              chartInstance.options.scales.x.min = index - 2 < 0 ? 0 : index - 2;
-              chartInstance.options.scales.x.max = index + 3 > this.labels.length ? this.labels.length : index + 3;
-              chartInstance.update();
-            }
-          }
+              weight: 400,
+            },
+            // formatter: (value: any, context: any) => {
+            //   return value + ' Interviews';
+            // },
+          },
         }
       },
-      plugins: [ChartDataLabels]
+      plugins: [ChartDataLabels],
     });
   }
-  
 }

@@ -313,16 +313,19 @@ th {
 }
 
 tr:nth-child(odd) {
-  background: #F4F2F2;
+  background: #FFFFFF;
+  border: 1px solid #EDEDED
+
 }
 
 tr:nth-child(even) {
   background: #FFFFFF;
+  border: 1px solid #EDEDED
+
 }
 
 td {
   padding: 10px;
-  border: none;
 }
 
 .table-header {
@@ -340,7 +343,7 @@ td {
 
 .container-table {
   overflow: auto !important;
-  height: calc(100vh - 280px);
+  /* height: calc(100vh - 280px); */
   background-color: #FFFFFF;
 }
 
