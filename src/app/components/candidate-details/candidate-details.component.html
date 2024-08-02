@@ -1,23 +1,23 @@
 <div class="main">
     <div *ngIf="CandidateData?.length > 0">
         <ng-container *ngIf="candidateDetails">
-            <div class="d-flex m-10 m-l-0">
-                <div class="f-w-500 user-icon">
+            <div class="d-flex m-20 m-l-0">
+                <!-- <div class="f-w-500 user-icon">
                     <span class="f-s-30">
                         <img src="/assets/images/techversant/user.svg" alt="" height="40px" width="40px">
                     </span>
-                </div>
-                <div class="p-t-20">
+                </div> -->
+                <div class="">
                     <span class="f-w-500 p-t-18 p-l-8 f-s-20"
                         [title]="candidateDetails?.candidateFirstName + ' ' + candidateDetails?.candidateLastName">
-                        {{ candidateDetails?.candidateFirstName | uppercase }} {{ candidateDetails?.candidateLastName |
-                        uppercase }}
+                        {{ candidateDetails?.candidateFirstName | titlecase}} {{ candidateDetails?.candidateLastName |
+                        titlecase }}
                     </span>
                     <div class="d-flex">
                         <div class="text-color padding-5">
                             <i class="fa fa-envelope p-r-10 p-l-3" aria-hidden="true"></i>
                             <span class="text-wrap" [title]="candidateDetails?.candidateEmail">
-                                {{ candidateDetails?.candidateEmail }} |
+                                {{ candidateDetails?.candidateEmail }}
                             </span>
                         </div>
                         <div class="text-color padding-5 p-l-0 d-flex">
@@ -27,9 +27,12 @@
                             </span>
                         </div>
                     </div>
+                    <span class="p-t-18 p-l-8 text-color">Candidate Latest Status : <span
+                            class="latest-status">Shorted</span></span>
+                    <div class="p-t-4 p-l-8 text-color"> <a [href]="viewResumeFile + resumePath ">View Resume</a></div>
                 </div>
             </div>
-            <div class="d-flex p-10 top-card">
+            <!-- <div class="d-flex p-10 top-card">
                 <div class="col-1 bor">
                     <div class="details" *ngIf="candidateDetails?.position?.length > 0">
                         <span class="sub-head padding-5">Candidate Latest Status</span>
@@ -97,13 +100,13 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="resume m-b-5">
+            </div> -->
+            <!-- <div class="resume m-b-5">
                 <span class="f-w-500">Showing Deatils of Requirement :</span>
                 <span class="blue f-w-500">
                     {{candidateDetails?.position[currentRequirementIndex]?.reqServiceRequest?.requestName}}
                 </span>
-            </div>
+            </div> -->
             <div class="tab">
                 <button class="tablinks" [ngClass]="{'active': activeTab === 'basic'}"
                     (click)="selectedTab($event, 'basic')">Basic Info</button>
@@ -119,12 +122,12 @@
             <!-- Basic Info Content -->
             <div class="tabcontent" [ngClass]="{ 'active': activeTab === 'basic' }" id="basic">
                 <div *ngIf="!candidateDetails?.position[0]?.reqServiceRequest?.requestName"
-                    class="d-flex j-end c-pointer m-r-20" (click)="edit(candidateDetails?.candidateId)">
+                    class="d-flex j-end c-pointer m-r-20 p-t-9" (click)="edit(candidateDetails?.candidateId)">
                     <span><img src="/assets/images/candidate-detail/edit.svg" alt="" height="12" width="12"></span>
                     <span class="c-blue p-l-5 p-r-5">Edit</span>
                 </div>
                 <div class="candidateDetailsContainer d-flex">
-                    <div class="col-1 bor">
+                    <div class="column-1 bor p-l-9 p-t-10">
                         <div class="details">
                             <span class="sub-head">
                                 <img src="assets/images/candidate-detail/calendar.svg" class="p-r-10" alt=""> DOB
@@ -193,7 +196,7 @@
                                 {{ candidateDetails?.currentStation ? candidateDetails?.currentStation : 'Nil' }}</span>
                         </div>
                     </div>
-                    <div class="col-1">
+                    <div class="column-1 p-t-10">
                         <div class="details">
                             <span class="sub-head text-wrap">
                                 <img src="assets/images/candidate-detail/education.svg" class="p-r-10" alt=""> Education
@@ -268,41 +271,53 @@
                             </span>
                         </div>
                     </div>
+
                 </div>
-                <div *ngIf="viewResumeFile" class="resume-container">
-                    <img [src]="viewResumeFile" class="resume-file">
-                </div>
+                <!-- <div class="profile-section">
+                    <div class="d-flex j-end prof-btn">
+                        <button class="m-r-6 hide-btn">Hide</button>
+                        <button class="view-pro-btn"><a [href]="viewResumeFile" target="_blank" style="text-decoration: none;color: white;">View Resume</a></button>
+                    </div>
+                    <div *ngIf="viewResumeFile" class="resume-container">
+                        <iframe [src]="viewResumeFile" class="resume-file"></iframe>
+                    </div>
+                </div> -->
             </div>
             <!-- Interviews Content -->
             <div class="tabcontent" [ngClass]="{'active': activeTab === 'interview'}" id="interview">
-                <div class="table-container m-b-0 w-100">
+                <div class="container-table m-b-0 w-100">
                     <table class="table">
                         <tr class="table-header f-w-500 p-b-10">
-                            <td>Station</td>
-                            <td>Interview Type</td>
-                            <td>Panel</td>
-                            <td>Scheduled By</td>
-                            <td>Status</td>
-                            <td>Date</td>
+                            <td class="text-start">Position</td>
+                            <td class="text-start">Station</td>
+                            <td class="text-start">Interview Type</td>
+                            <td class="text-start">Interview Panel</td>
+                            <td class="text-start">Recruiter</td>
+                            <td class="text-start">Interview Status</td>
+                            <td class="text-end">Date</td>
                         </tr>
                         <ng-container *ngIf="CandidateHistory?.length > 0">
                             <div *ngIf="loader && !initialLoader" class="loader-parent">
                                 <img src="assets/gif/loader.gif">
                             </div>
-                            <ng-container *ngFor="let item of CandidateHistory[0]?.interviewDetail">
-                                <tr class="candidate c-pointer">
-                                    <td class="text-wrap" [title]="item?.station">{{ item?.station | titlecase }}</td>
-                                    <td>{{ item?.interviewType === 0 ? 'Interview Scheduled' : 'Re-Scheduled' }}</td>
-                                    <td class="text-wrap" [title]="item?.interviewBy">{{ item?.interviewBy | titlecase
-                                        }}</td>
-                                    <td class="text-wrap" [title]="item?.interviewScheduledBy">{{
-                                        item?.interviewScheduledBy | titlecase }}</td>
-                                    <td class="text-wrap" [title]="item?.status">{{ item?.status | titlecase }}</td>
-                                    <td>{{ item?.interviewDate | date : 'dd/MM/yyyy' }}</td>
-                                </tr>
+                            <ng-container *ngFor="let item of CandidateHistory">
+                                <ng-container *ngFor="let data of item['interviewDetail']">
+                                    <tr class="candidate">
+                                        <td class="text-start">{{item?.positionName | titlecase}}</td>
+                                        <td class="text-start" [title]="item?.station">{{ data?.station | titlecase }}
+                                        </td>
+                                        <td class="text-start">{{data?.interviewType === 0 ? 'Interview Scheduled' : 'Re-Scheduled' }}</td>
+                                        <td class="text-start">{{data?.interviewBy | titlecase}}</td>
+                                        <td class="text-start" [title]="item?.interviewScheduledBy">
+                                            {{data?.interviewScheduledBy | titlecase }}</td>
+                                            <td>{{data?.status | titlecase}}</td>
+                                        <td class="text-end">{{ data?.interviewDate | date : 'dd/MM/yyyy' }}</td>
+                                    </tr>
+                                </ng-container>
+
                             </ng-container>
                         </ng-container>
-                        <div *ngIf="(!CandidateHistory[0]?.interviewDetail[0]) && !loader && !initialLoader "
+                        <div *ngIf="(!CandidateHistory) && !loader && !initialLoader "
                             class="no-data">
                             No Data Found
                         </div>
@@ -334,39 +349,35 @@
                         <a [href]="viewResumeFile + resumePath ">View Resume</a>
                     </span>
                 </div> -->
-                <div class="table-container m-b-0 w-100">
+                <div class="container-table m-b-0 w-100">
                     <table class="table">
                         <tr class="table-header f-w-500 p-b-10">
-                            <td>Station</td>
-                            <td>Uploaded By</td>
-                            <td>Attachment</td>
-                            <td>Recruiter</td>
-                            <td>Date</td>
-                            <!-- <td>Status</td>         -->
+                            <td class="text-start">Position</td>
+                            <td class="text-start">Uploaded By</td>
+                            <td class="text-center">Attachment</td>
+                            <td class="text-start">Recruiter</td>
+                            <td class="text-end">Date</td>
                         </tr>
                         <div *ngIf="loader && !initialLoader" class="loader-parent">
                             <img src="assets/gif/loader.gif">
                         </div>
                         <ng-container *ngIf="CandidateHistory?.length > 0">
-                            <ng-container *ngFor="let item of CandidateHistory[0]?.attachedData">
-                                <tr class="candidate c-pointer">
-                                    <td class="text-wrap" [title]="item?.station | titlecase ">{{ item?.station |
-                                        titlecase }}</td>
-                                    <td class="text-wrap" [title]="item?.uploadedBy | titlecase ">{{ item?.uploadedBy |
-                                        titlecase }}</td>
-                                    <td (click)="viewResume(item?.uploadedFile)" class="c-pointer"
-                                        title="View Attachment">
-                                        <img _ngcontent-rnn-c111="" src="/assets/images/view-file.png" alt=""
-                                            height="37" width="37" class="p-l-9">
-                                    </td>
-                                    <td class="text-wrap" [title]="item?.scheduledByName | titlecase ">{{
-                                        item?.scheduledByName | titlecase }}</td>
-                                    <td>{{item?.uploadedDate | date : 'dd/MM/YYY'}}</td>
-                                    <!-- <td class="text-wrap" [title]="item?.status ">{{ item?.status }}</td> -->
-                                </tr>
+                            <ng-container *ngFor="let item of CandidateHistory">
+                                <ng-container *ngFor="let data of item['attachedData']">
+                                    <tr class="candidate">
+                                        <td  class="text-start">{{item?.positionName | titlecase}}</td>
+                                        <td  class="text-start">{{ data?.uploadedBy | titlecase }}</td>
+                                        <td (click)="viewResume(data?.uploadedFile)" class="c-pointer text-center"
+                                            title="View Attachment"><img _ngcontent-rnn-c111=""
+                                                src="/assets/images/view-file.png" alt="" height="37" width="37"
+                                                class="p-l-9"></td>
+                                        <td class="text-start">{{ data?.uploadedBy | titlecase }}</td>
+                                        <td class="text-end">{{data?.uploadedDate | date : 'dd/MM/YYY'}}</td>
+                                    </tr>
+                                </ng-container>
                             </ng-container>
                         </ng-container>
-                        <div *ngIf="(!CandidateHistory[0]?.attachedData[0] ) && !loader && !initialLoader "
+                        <div *ngIf="(!CandidateHistory) && !loader && !initialLoader "
                             class="no-data">
                             No Data Found
                         </div>
@@ -394,32 +405,34 @@
             </div>
             <!-- Feedback Content -->
             <div class="tabcontent" [ngClass]="{'active': activeTab === 'feedback'}" id="feedback">
-                <div class="table-container m-b-0 w-100">
+                <div class="container-table m-b-0 w-100">
                     <table class="table">
                         <tr class="table-header f-w-500 p-b-10">
-                            <td>Station</td>
-                            <td>Uploaded By</td>
-                            <td>Comments</td>
-                            <td>Date Uploaded</td>
+                            <td class="text-start">Position</td>
+                            <td class="text-start">Station</td>
+                            <td class="text-start">Uploaded By</td>
+                            <td class="text-start">Comments</td>
+                            <td class="text-end">Date Uploaded</td>
                         </tr>
                         <ng-container *ngIf="CandidateHistory?.length > 0">
                             <div *ngIf="loader && !initialLoader" class="loader-parent">
                                 <img src="assets/gif/loader.gif">
                             </div>
-                            <ng-container *ngFor="let item of CandidateHistory[0]?.feedbackDetail">
-                                <tr class="candidate c-pointer">
-                                    <td class="text-wrap" [title]="item?.station">{{ item?.station }}</td>
-                                    <td class="text-wrap" [title]="item?.feedbackBy">{{ item?.feedbackBy | titlecase }}
-                                    </td>
-                                    <td class="text-wrap" [title]="item?.feedbackMessage">{{ item?.feedbackMessage |
-                                        titlecase
-                                        }}</td>
-                                    <td>{{ item?.feedbackDate | date : 'dd/MM/yyyy' }}</td>
-                                    <!-- <td class="text-wrap" [title]="item?.status">{{ item?.status }}</td> -->
-                                </tr>
+                            <ng-container *ngFor="let item of CandidateHistory">
+                                <ng-container *ngFor="let data of item['feedbackDetail']">
+                                    <tr class="candidate ">
+                                        <td class="text-start">{{item?.positionName | titlecase}}</td>
+                                        <td class="text-start">{{ data?.station }}</td>
+                                        <td class="text-start">{{ data?.feedbackBy | titlecase }}
+                                        </td>
+                                        <td class="text-start">{{ data?.feedbackMessage |titlecase}}</td>
+                                        <td class="text-end">{{ data?.feedbackDate | date : 'dd/MM/yyyy' }}</td>
+                                        <!-- <td class="text-wrap" [title]="item?.status">{{ item?.status }}</td> -->
+                                    </tr>
+                                </ng-container>
                             </ng-container>
                         </ng-container>
-                        <div *ngIf="(!CandidateHistory[0]?.feedbackDetail[0] ) && !loader && !initialLoader "
+                        <div *ngIf="(!CandidateHistory) && !loader && !initialLoader "
                             class="no-data">
                             No Data Found
                         </div>
@@ -446,33 +459,32 @@
             </div>
             <!-- History Content -->
             <div class="tabcontent" [ngClass]="{'active': activeTab === 'history'}" id="history">
-                <div class="table-container m-b-0 w-100">
+                <div class="container-table m-b-0 w-100">
                     <table class="table">
                         <tr class="table-header f-w-500 p-b-10">
-                            <td>Station</td>
-                            <td>History Type</td>
-                            <td>History By</td>
-                            <!-- <td>Comment</td> -->
-                            <td>Date</td>
-                            <!-- <td>Status</td> -->
+                            <td class="text-start">Position</td>
+                            <td class="text-start">Station</td>
+                            <td class="text-start">History Type</td>
+                            <td class="text-start">History By</td>
+                            <td class="text-end">Date</td>
                         </tr>
                         <ng-container *ngIf="CandidateHistory?.length > 0">
                             <div *ngIf="loader && !initialLoader" class="loader-parent">
                                 <img src="assets/gif/loader.gif">
                             </div>
-                            <ng-container *ngFor="let item of CandidateHistory[0]?.historyDetail">
-                                <tr class="candidate c-pointer">
-                                    <td class="text-wrap" [title]="item?.station">{{ item?.station }}</td>
-                                    <td class="text-wrap" [title]="item?.historyType">{{ item?.historyType }}</td>
-                                    <td class="text-wrap" [title]="item?.historyBy">{{ item?.historyBy | titlecase }}
-                                    </td>
-                                    <!-- <td class="text-wrap" [title]="item?.feedbackMessage">{{ item?.feedbackMessage }}</td> -->
-                                    <td>{{ item?.historyDate | date : 'dd/MM/yyyy' }}</td>
-                                    <!-- <td class="text-wrap" [title]="item?.status">{{ item?.status }}</td> -->
-                                </tr>
+                            <ng-container *ngFor="let item of CandidateHistory">
+                                <ng-container *ngFor="let data of item['historyDetail']">
+                                    <tr class="candidate">
+                                        <td  class="text-start">{{item?.positionName | titlecase}}</td>
+                                        <td  class="text-start">{{ data?.station }}</td>
+                                        <td  class="text-start">{{ data?.historyType }}</td>
+                                        <td  class="text-start">{{ data?.historyBy | titlecase }}</td>
+                                        <td  class="text-end">{{ data?.historyDate | date : 'dd/MM/yyyy' }}</td>
+                                    </tr>
+                                </ng-container>
                             </ng-container>
                         </ng-container>
-                        <div *ngIf="(!CandidateHistory[0]?.historyDetail[0] ) && !loader && !initialLoader "
+                        <div *ngIf="(!CandidateHistory) && !loader && !initialLoader "
                             class="no-data">
                             No Data Found
                         </div>

@@ -6,6 +6,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { EditComponent } from '../edit/edit.component';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-candidate-details',
   templateUrl: './candidate-details.component.html',
@@ -26,8 +27,12 @@ export class CandidateDetailsComponent implements OnInit {
   viewResumeFile: any;
   CandidateHistory: any;
   initialLoader: boolean = false;
-  loader: boolean = false
-  constructor(private apiService: ApiService, private route: ActivatedRoute, private datePipe: DatePipe, private dialog: MatDialog, private http: HttpClient) {
+  loader: boolean = false;
+  scaleFactor: number = 0.55; // Default scale factor
+  positonIds: any;
+  constructor(private apiService: ApiService, private route: ActivatedRoute, private datePipe: DatePipe, private dialog: MatDialog, private http: HttpClient,
+    private sanitizer: DomSanitizer
+  ) {
     // this.route.params.subscribe(params => {
     //   this.candidateId = params['id'];
     // });
@@ -43,7 +48,9 @@ export class CandidateDetailsComponent implements OnInit {
     this.env_url = window.location.origin;
 
   }
-
+  adjustScale(factor: number) {
+    this.scaleFactor = factor;
+  }
   fetchCandidateDetails(): void {
     if (!this.initialLoader) this.loader = true;
     this.apiService.get(`/candidate/list/${this.candidateId}`).subscribe({
@@ -55,9 +62,16 @@ export class CandidateDetailsComponent implements OnInit {
           this.candidateDetails = res.data[0];
           this.candidateFeedback = res.comments;
           this.currentRequirement = this.candidateDetails?.position[0]?.reqServiceRequest?.requestName;
-          this.positionId = this.candidateDetails?.position[0]?.reqServiceRequest?.requestId;
+          this.positonIds = this.candidateDetails?.position.map((pos: any) => pos.reqServiceRequest.requestId);
           this.resumePath = this.candidateDetails?.candidateResume;
-          if(this.resumePath) this.viewResumeFile = environment.s3_url + this.resumePath;
+          // if (this.resumePath) {
+          //   const sanitizedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+          //     `${environment.s3_url}${this.resumePath}#toolbar=0&navpanes=0&scrollbar=0`
+          //   );
+          //   this.viewResumeFile = sanitizedUrl;
+          // }
+          if (this.resumePath) this.viewResumeFile = environment.s3_url;
+
           this.fetchCandidateHistory();
         }
       },
@@ -82,7 +96,8 @@ export class CandidateDetailsComponent implements OnInit {
   fetchCandidateHistory(): void {
     if (!this.initialLoader) this.loader = true;
     this.CandidateHistory = [];
-    this.apiService.get(`/candidate/candidate-history?email=${this.candidateDetails?.candidateEmail}&requestId=${this.positionId}`).subscribe({
+    const requestIdParams = this.positonIds.map((id: any) => `requestId=${id}`).join('&');
+    this.apiService.get(`/candidate/candidate-history?email=${this.candidateDetails?.candidateEmail}&${requestIdParams}`).subscribe({
       next: (res: any) => {
         if (res) {
           this.initialLoader = false;
