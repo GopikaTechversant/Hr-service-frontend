@@ -17,15 +17,15 @@
 </div>
 <div class="main">
     <div class="container-table m-b-0">
-        <table class="table">
+        <table class="">
             <tr class="table-header p-b-10">
-                <td>Name</td>
-                <td>Email</td>
-                <td>Experience</td>
-                <td>Education</td>
-                <td class="status-col">Status</td>
-                <td class="count-col">Reschedule Count</td>
-                <td class="interview-status-col">Interview Status</td>
+                <td class="text-start">Name</td>
+                <td class="text-start">Email</td>
+                <td class="text-end">Experience</td>
+                <td class="text-start">Education</td>
+                <td class="status-col text-start">Status</td>
+                <td class="count-col text-end">Reschedule Count</td>
+                <td class="interview-status-col text-start">Interview Status</td>
             </tr>
             <div *ngIf="loader && !initialLoader" class="loader-parent">
                 <img src="assets/gif/loader.gif">
@@ -38,7 +38,7 @@
                             {{item?.candidateFirstName | titlecase}} {{item?.candidateLastName | titlecase}}
                         </td>
                         <td class="text-start" [title]="item?.candidateEmail">{{item?.candidateEmail}}</td>
-                        <td class="text-start" [title]="item?.candidateExperience">{{item?.candidateExperience}} years
+                        <td class="text-end" [title]="item?.candidateExperience">{{item?.candidateExperience }}
                         </td>
                         <td class="text-start" [title]="item?.candidateEducation">{{item?.candidateEducation}}</td>
                         <td class="">
@@ -47,7 +47,7 @@
                                 {{item?.serviceStatus | titlecase}}
                             </span><select *ngIf="item?.serviceStatus === 'pending'" class="name select c-pointer"
                                 (change)="onStatusChange($event, item)">
-                                <option class="name select p-t c-pointer f-w-500" value="" disabled selected>
+                                <option class="name select c-pointer f-w-500" value="" disabled selected>
                                     {{item?.serviceStatus | titlecase}}</option>
                                 <option class="name select p-t-2 c-pointer f-w-500" value="select">Select</option>
                                 <option class="name select p-t-2 c-pointer f-w-500" value="reject">Reject</option>

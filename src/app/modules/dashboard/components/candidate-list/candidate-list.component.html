@@ -27,24 +27,24 @@
     <div class="container-table m-b-0">
         <table class="">
             <tr class="table-header">
-                <td>Select</td>
-                <td title="Name">Name</td>
-                <td title="Email">Email</td>
-                <td title="Mobile">Mobile</td>
-                <td title="Previous Organization">Previous Organization</td>
-                <td title="Previous Designation">Previous Designation</td>
-                <td title="Relevent Experience">Relevent Experience</td>
-                <td title="Total Experience">Total Experience</td>
-                <td title="Current Salary">Current Salary</td>
-                <td title="Education">Education</td>
-                <td title="Skills">Skills</td>
-                <td title="Requirement">Requirement</td>
-                <td class="actions" title="Actions">Actions</td>
+                <td class="text-center">Select</td>
+                <td class="text-start" title="Name">Name</td>
+                <td class="text-start" title="Email">Email</td>
+                <td class="text-end" title="Mobile">Mobile</td>
+                <td class="text-start" title="Previous Organization">Previous Organization</td>
+                <td class="text-start" title="Previous Designation">Previous Designation</td>
+                <td class="text-end" title="Relevent Experience">Relevent Experience</td>
+                <td class="text-end" title="Total Experience">Total Experience</td>
+                <td class="text-end" title="Current Salary">Current Salary</td>
+                <td class="text-start" title="Education">Education</td>
+                <td class="text-start" title="Skills">Skills</td>
+                <td class="text-start" title="Requirement">Requirement</td>
+                <td class="text-center" class="actions" title="Actions">Actions</td>
             </tr>
             <ng-container *ngIf="candidateList?.length > 0">
                 <tr class="c-pointer details-table" *ngFor="let item of candidateList"
                     (dblclick)="selectCandidate(item?.candidateId)">
-                    <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()"></td>
+                    <td class="text-center"><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()"></td>
                     <td class="text-start"
                         [title]="(item?.candidateFirstName | titlecase) + (item?.candidateLastName | titlecase)">
                         {{item?.candidateFirstName | titlecase}} {{item?.candidateLastName | titlecase}}

@@ -9,11 +9,11 @@
                     </div>
                     <div *ngIf="questionName">{{questionName}}</div>
                 </div>
-                <div class="no-close s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub p-r-17 m-t-9">
+                <div class="no-close s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub p-r-17 m-t-5">
                     <i class="no-close s-list fa fa-chevron-down s-text"></i>
                 </div>
                 <div class="dropdown-list p-absolute" *ngIf="showDropdown">
-                    <div class="p-8 " (click)='selectQuestion(name?.questionName,name?.questionId); !showDropdown'
+                    <div class="p-1 " (click)='selectQuestion(name?.questionName,name?.questionId); !showDropdown'
                         *ngFor="let name of questions_list">
                         <span class="p-l-10 c-pointer">{{name?.questionName}}</span>
                     </div>

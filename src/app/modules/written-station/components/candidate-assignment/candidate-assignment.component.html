@@ -73,14 +73,14 @@
         <div class="container-table w-100">
             <table class="">
                 <tr class="table-header">
-                    <td class="">Select</td>
-                    <td class="">Name</td>
-                    <td class="">Email</td>
-                    <td class="">Assigned Questions</td>
-                    <td class="">Score</td>
-                    <td class="">Attachement</td>
-                    <td class="">Move Candidates</td>
-                    <td class="">Status</td>
+                    <td class="text-center">Select</td>
+                    <td class="text-start">Name</td>
+                    <td class="text-start">Email</td>
+                    <td class="text-start">Assigned Questions</td>
+                    <td class="text-center">Score</td>
+                    <td class="text-center">Attachement</td>
+                    <td class="text-center">Move Candidates</td>
+                    <td class="text-start">Status</td>
                 </tr>
                 <div *ngIf="loader && !initialLoader" class="loader-parent">
                     <img src="assets/gif/loader.gif">
@@ -88,9 +88,9 @@
                 <ng-container *ngIf="candidateList.length > 0">
                     <ng-container *ngFor="let item of candidateList">
                         <tr class="candidate c-pointer" (dblclick)="selectCandidate(item?.candidateId)">
-                            <td class="text-start"><input type="checkbox" [(ngModel)]="item.isSelected"
+                            <td class="text-center"><input type="checkbox" [(ngModel)]="item.isSelected"
                                     (change)="getSelectedCandidateServiceIds()"></td>
-                            <td class="t-a-left" [title]="item.candidateFirstName + item.candidateLastName">
+                            <td class="text-start" [title]="item.candidateFirstName + item.candidateLastName">
                                 {{ item?.candidateFirstName }} {{ item?.candidateLastName }}
                             </td>
                             <td class="text-start" [title]="item.candidateEmail">{{ item?.candidateEmail }}</td>
@@ -99,7 +99,7 @@
                                 || 'Not assigned'}}
                             </td>
                             <!-- <td>{{item?.serviceSequence?.progress?.questionName}}</td> -->
-                            <td class="text-start" *ngIf="item?.serviceSequence?.progress?.progressScore === null">
+                            <td class="text-center" *ngIf="item?.serviceSequence?.progress?.progressScore === null">
                                 <button class="result text-center  c-pointer"
                                     *ngIf="item?.serviceSequence?.progress?.progressScore === null && item?.serviceSequence?.progress?.questionName"
                                     (click)="resultClick(item, item?.serviceSequence?.serviceId)">Add Result
@@ -111,7 +111,7 @@
                                 </button>
                                 <!-- <span class="score-align" *ngIf="item?.serviceSequence?.progress?.progressScore" class="t-a-right">{{item?.serviceSequence?.progress?.progressScore}}</span> -->
                             </td>
-                            <td *ngIf="item?.serviceSequence?.progress?.progressScore" class="text-end">
+                            <td *ngIf="item?.serviceSequence?.progress?.progressScore" class="text-center">
                                 {{item?.serviceSequence?.progress?.progressScore}}</td>
                             <td class="text-center">
                                 <span class="c-pointer text-center"
@@ -119,7 +119,7 @@
                                         class="" src="/assets/images/view-file.png" alt="" height="29" width="29"
                                         (click)="viewResume(item.serviceSequence.progress.progressFile)">
                                 </span>
-                                <span class="text-start"
+                                <span class="text-center"
                                     *ngIf="!item?.serviceSequence?.progress?.progressScore  && item?.serviceSequence?.progress?.progressScore === null">Not
                                     added</span>
                             </td>

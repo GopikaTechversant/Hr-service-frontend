@@ -40,15 +40,15 @@
         <div class="container-table m-b-0">
             <table class="">
                 <tr class="table-header p-b-10 f-w-500">
-                    <td>Requisition</td>
-                    <td>No.of Openings</td>
-                    <td class="count-col">Candidate Count</td>
-                    <td>Hired Count</td>
-                    <td>Team</td>
-                    <td>Primary Skills</td>
-                    <td>Status</td>
-                    <td>Add Candidate</td>
-                    <td>Date</td>
+                    <td class="text-start p-l-16">Requisition</td>
+                    <td class="text-end">No.of Openings</td>
+                    <td class="text-end">Candidate Count</td>
+                    <td class="text-end">Hired Count</td>
+                    <td class="text-start">Team</td>
+                    <td class="text-start">Primary Skills</td>
+                    <td class="text-start">Status</td>
+                    <td class="text-center">Add Candidate</td>
+                    <td class="text-end">Date</td>
                 </tr>
                 <div *ngIf="loader && !initialLoader" class="loader-parent">
                     <img src="assets/gif/loader.gif">
@@ -57,7 +57,7 @@
                     <ng-container *ngFor="let candidate of candidates_list">
                         <tr class="c-pointer"
                             (dblclick)="navigate('/dashboard/series/',candidate?.requestId)">
-                            <td class="text-start" [title]="candidate?.requestName">{{candidate?.requestName |
+                            <td class="text-start p-l-16" [title]="candidate?.requestName">{{candidate?.requestName |
                                 titlecase}}</td>
                                 <td class="text-end">{{candidate?.requestVacancy}}</td>
                             <td class="text-end" [title]="candidate?.candidatesCount">{{candidate?.candidatesCount}}

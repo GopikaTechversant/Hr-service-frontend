@@ -60,14 +60,14 @@
         <div class="container-table m-b-0">
             <table class="">
                 <tr class="table-header">
-                    <td>Candidate ID</td>
-                    <td>Candidate Name</td>
-                    <td>Email</td>
-                    <td>Contact Number</td>
-                    <td>Relevent Experience</td>
-                    <td>Total Experience</td>
-                    <td>Requirement</td>
-                    <td>Date</td>
+                    <td class="text-end">Candidate ID</td>
+                    <td class="text-start">Candidate Name</td>
+                    <td class="text-start">Email</td>
+                    <td class="text-end">Contact Number</td>
+                    <td class="text-end">Relevent Experience</td>
+                    <td class="text-end">Total Experience</td>
+                    <td class="text-start">Requirement</td>
+                    <td class="text-end">Date</td>
                 </tr>
                 <div *ngIf="loader && !initialLoader" class="loader-parent">
                     <img src="assets/gif/loader.gif">
@@ -81,7 +81,7 @@
                                 {{ item['candidate.candidateFirstName'] }} {{ item['candidate.candidateLastName'] }}
                             </td>
                             <td class="text-start" [title]="item['candidate.candidateEmail']">{{ item['candidate.candidateEmail'] }}</td>
-                            <td class="text-start" [title]="item['candidate.candidateMobileNo']">{{ item['candidate.candidateMobileNo'] }}</td>
+                            <td class="text-end" [title]="item['candidate.candidateMobileNo']">{{ item['candidate.candidateMobileNo'] }}</td>
                             <td class="text-end" [title]="item['candidate.candidateRevlentExperience']">{{ item['candidate.candidateRevlentExperience'] }}</td>
                             <td class="text-end" [title]="item['candidate.candidateTotalExperience']">{{ item['candidate.candidateTotalExperience'] }}</td>
 

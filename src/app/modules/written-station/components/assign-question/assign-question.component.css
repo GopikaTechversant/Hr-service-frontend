@@ -24,7 +24,7 @@
     margin-left: 24px;
     padding-left: 10px;
     height: 34px;
-    padding-top: 13px;
+    padding-top: 6px;
     margin-top: 29px;
 }
 
@@ -58,10 +58,9 @@
     padding-top: 2px;
     background-color: white;
     margin-left: -10px;
-    width: 420px;
-    /* padding-left: 10px; */
+    width: 411px;
     line-height: 27px;
-    height: 82px;
+    height: 97px;
     overflow-y: scroll;
 }
 

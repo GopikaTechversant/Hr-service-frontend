@@ -95,16 +95,16 @@
             <table class="">
                 <tr class="table-header">
                     <!-- <td class="text-wrap" title="Select">Select</td> -->
-                    <td class="id-col" title="Candidate ID">Candidate ID</td>
+                    <td class="id-col text-end" title="Candidate ID">Candidate ID</td>
                     <td class="name-col" title="Name">Name</td>
-                    <td class="" title="Email">Email</td>
-                    <td class="" title="Requiremnt">Requirement</td>
-                    <td class="" title="Progress Status">Progress Status</td>
-                    <td class="" title="Move CAndidates">Move Candidates</td>
-                    <td class="" title="Service Status">Service Status</td>
-                    <td class="" title="Candidate Station">Candidate Station</td>
-                    <td class="" title="More Detail">More Detail</td>
-                    <td class="" title="Date">Date</td>
+                    <td class="text-start" title="Email">Email</td>
+                    <td class="text-start" title="Requiremnt">Requirement</td>
+                    <td class="text-start" title="Progress Status">Progress Status</td>
+                    <td class="text-center" title="Move CAndidates">Move Candidates</td>
+                    <td class="text-start" title="Service Status">Service Status</td>
+                    <td class="text-start" title="Candidate Station">Candidate Station</td>
+                    <td class="text-start" title="More Detail">More Detail</td>
+                    <td class="text-end" title="Date">Date</td>
                 </tr>
                 <div *ngIf="loader && !initialLoader" class="loader-parent">
                     <img src="assets/gif/loader.gif">
@@ -133,7 +133,7 @@
                                     <i class="fa fa-arrows" aria-hidden="true" *ngIf="item"(click)="onSwitchStation(item)"></i>
                                 </td>
                                 <td>
-                                    <span class="f-w-500 p-10 text-start" [ngClass]="{'orange': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
+                                    <span class="f-w-500 text-start" [ngClass]="{'orange': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
                                     'red': item?.serviceStatus === 'rejected'}"
                                         [title]="item?.serviceStatus | titlecase">{{ item?.serviceStatus |
                                         titlecase}}</span>
@@ -142,7 +142,7 @@
                                     | titlecase}}</td>
                                 <td (click)="fetchDetails(item?.serviceId , item?.progressStatus)"
                                     class="c-pointer text-start">
-                                    <div class="d-flex j-centre">
+                                    <div class="d-flex">
                                         <i class="fa fa-eye blue f-s-18 f-w-500" aria-hidden="true"></i>
                                         <span class="blue p-l-5">View detail</span>
                                     </div>

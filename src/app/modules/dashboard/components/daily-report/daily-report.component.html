@@ -61,10 +61,10 @@
                 <tr class="table-header">
                     <ng-container *ngFor="let key of recruiterKeys">
                         <!-- Skip 'Date' column in the main loop -->
-                        <td *ngIf="key !== 'Date'" class="" [title]="key">{{key}}</td>
+                        <td *ngIf="key !== 'Date'" [ngClass]="{'text-start': key === 'Position Title' || key === 'Recruiter', 'text-end': key !== 'Position Title' && key !== 'Recruiter'}" [title]="key">{{key}}</td>
                     </ng-container>
                     <!-- Add 'Date' column at the end -->
-                    <td *ngIf="recruiterKeys.includes('Date')" class="" [title]="'Date'">Date</td>
+                    <td *ngIf="recruiterKeys.includes('Date')" class="text-end" [title]="'Date'">Date</td>
                 </tr>
                 <div *ngIf="loader && !initialLoader" class="loader-parent">
                     <img src="assets/gif/loader.gif">

@@ -32,6 +32,8 @@
     padding-left: 6px;
     text-align: left;
     outline: none;
+    height: 29px;
+    line-height: 10px;
 }
 
 .select {
@@ -43,7 +45,7 @@
     width: 106px;
     padding-left: 2px;
     text-align: left;
-    height: 34px;
+    height:27px;
 }
 
 .title-candidate {
