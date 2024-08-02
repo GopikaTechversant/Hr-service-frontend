@@ -29,6 +29,7 @@ export class CandidateDetailsComponent implements OnInit {
   initialLoader: boolean = false;
   loader: boolean = false;
   scaleFactor: number = 0.55; // Default scale factor
+  positonIds: any;
   constructor(private apiService: ApiService, private route: ActivatedRoute, private datePipe: DatePipe, private dialog: MatDialog, private http: HttpClient,
     private sanitizer: DomSanitizer
   ) {
@@ -61,7 +62,7 @@ export class CandidateDetailsComponent implements OnInit {
           this.candidateDetails = res.data[0];
           this.candidateFeedback = res.comments;
           this.currentRequirement = this.candidateDetails?.position[0]?.reqServiceRequest?.requestName;
-          this.positionId = this.candidateDetails?.position[0]?.reqServiceRequest?.requestId;
+          this.positonIds = this.candidateDetails?.position.map((pos: any) => pos.reqServiceRequest.requestId);
           this.resumePath = this.candidateDetails?.candidateResume;
           // if (this.resumePath) {
           //   const sanitizedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -69,8 +70,8 @@ export class CandidateDetailsComponent implements OnInit {
           //   );
           //   this.viewResumeFile = sanitizedUrl;
           // }
-          if(this.resumePath) this.viewResumeFile = environment.s3_url;
-          
+          if (this.resumePath) this.viewResumeFile = environment.s3_url;
+
           this.fetchCandidateHistory();
         }
       },
@@ -95,7 +96,8 @@ export class CandidateDetailsComponent implements OnInit {
   fetchCandidateHistory(): void {
     if (!this.initialLoader) this.loader = true;
     this.CandidateHistory = [];
-    this.apiService.get(`/candidate/candidate-history?email=${this.candidateDetails?.candidateEmail}&requestId=${this.positionId}`).subscribe({
+    const requestIdParams = this.positonIds.map((id: any) => `requestId=${id}`).join('&');
+    this.apiService.get(`/candidate/candidate-history?email=${this.candidateDetails?.candidateEmail}&${requestIdParams}`).subscribe({
       next: (res: any) => {
         if (res) {
           this.initialLoader = false;

@@ -60,6 +60,7 @@
 
 .tabcontent {
     display: none;
+    padding-top: 13px;
 }
 
 .tabcontent.active {
@@ -230,50 +231,7 @@
     width: 10px;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
 
-.table-container {
-    overflow: auto !important;
-    height: calc(100vh - 587px);
-}
-
-tr:nth-child(odd) {
-    background: #C9C8C826;
-}
-
-tr:nth-child(even) {
-    background: #FFFFFF;
-}
-
-.candidate:hover {
-    background-color: #D3E8FF;
-}
-
-
-td {
-    padding: 10px;
-    text-align: center !important;
-    border: 1px solid #E9E9E9;
-}
-
-tr {
-    text-align: center;
-}
-
-.table-header {
-    position: sticky;
-    top: 0;
-    background: #F4F2F2 !important;
-    padding: 10px;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 18px;
-    letter-spacing: 0em;
-    text-align: center;
-}
 
 .padding-5 {
     padding: 5px;
