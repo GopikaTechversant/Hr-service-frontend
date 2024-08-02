@@ -87,16 +87,6 @@ table {
     border-top: 1px solid #EDEDED
 }
 
-tr:nth-child(odd) {
-    background: #FFFFFF;
-    border-top: 1px solid #EDEDED
-}
-
-tr:nth-child(even) {
-    background: #FFFFFF;
-    border-top: 1px solid #EDEDED
-}
-
 .highlight {
     background-color: #f6f6f6;
 }
@@ -162,18 +152,18 @@ tr:hover {
 }
 
 .scrollable::-webkit-scrollbar,
-.table-container::-webkit-scrollbar {
+.container-table::-webkit-scrollbar {
     display: none;
 }
 
 .scrollable,
-.table-container {
+.container-table {
     scrollbar-width: none;
     /* For Firefox */
 }
 
 .scrollable,
-.table-container {
+.container-table {
     -ms-overflow-style: none;
     /* For Internet Explorer and Edge */
 }

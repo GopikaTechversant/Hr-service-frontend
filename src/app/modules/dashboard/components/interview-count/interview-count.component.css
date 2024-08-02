@@ -61,7 +61,7 @@
     cursor: pointer;
 }
 
-.table-container {
+.container-table {
     overflow-y: auto !important;
     overflow-x: hidden;
     min-height: calc(100vh - 420px);

@@ -230,7 +230,7 @@ tr {
     text-align: center;
 }
 
-.table-container {
+.container-table {
     /* max-height: calc(100vh - 420px);
     min-height: calc(100vh - 420px); */
     overflow-y: auto !important;

@@ -168,10 +168,6 @@
     font-weight: 500;
 }
 
-.candidate:hover {
-    background-color: #D3E8FF;
-}
-
 .table .selected {
     background: #D3E8FF;
 }

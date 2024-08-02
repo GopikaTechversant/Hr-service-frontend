@@ -106,18 +106,18 @@ input[type="text"] {
 }
 
 .scrollable::-webkit-scrollbar,
-.table-container::-webkit-scrollbar {
+.container-table::-webkit-scrollbar {
     display: none;
 }
 
 .scrollable,
-.table-container {
+.container-table {
     scrollbar-width: none;
     /* For Firefox */
 }
 
 .scrollable,
-.table-container {
+.container-table {
     -ms-overflow-style: none;
     /* For Internet Explorer and Edge */
 }

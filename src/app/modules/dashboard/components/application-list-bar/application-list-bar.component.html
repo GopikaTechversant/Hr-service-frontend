@@ -29,12 +29,12 @@
             </div>
         </div>
     </div>
-    <div class="table-container m-b-0 w-100">
+    <div class="container-table m-b-0 w-100">
         <table class="table">
             <tr class="table-header p-b-10">
                 <td>Requirement</td>
-                <td>Date</td>
                 <td>No of applicants</td>
+                <td>Date</td>
             </tr>
             <!-- <div class="loader-parent">
                     <img src="assets/gif/loader.gif">
@@ -42,9 +42,9 @@
             <ng-container *ngIf="applicationList.length > 0">
                 <ng-container *ngFor="let item of applicationList">
                     <tr class="c-pointer details">
-                        <td>{{item?.requestName}}</td>
-                        <td>{{item?.createdAt | date: 'dd/MM/YYY' }}</td>
-                        <td>{{item?.totalEntries}}</td>
+                        <td class="text-start">{{item?.requestName}}</td>
+                        <td  class="text-end">{{item?.totalEntries}}</td>
+                        <td class="text-end">{{item?.createdAt | date: 'dd-MM-YYY' }}</td>
                     </tr>
                 </ng-container>
             </ng-container>

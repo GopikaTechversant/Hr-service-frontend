@@ -137,7 +137,7 @@ table {
     border-collapse: collapse;
 }
 
-.table-container {
+.container-table {
     overflow-y: auto !important;
     height: calc(100vh - 479px);
 }

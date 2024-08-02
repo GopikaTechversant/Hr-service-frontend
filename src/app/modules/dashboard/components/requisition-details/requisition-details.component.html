@@ -113,7 +113,7 @@
                 </div>
             </div>
         </div>   
-        <div class="table-container m-b-0">        
+        <div class="container-table m-b-0">        
             <table class="table">
                 <tr class="table-header p-b-10">
                     <td>Name</td>
@@ -127,14 +127,14 @@
                 </tr>
                 <ng-container *ngFor="let item of candidateList">
                     <tr class="c-pointer details">
-                        <td class="text-wrap" [title]="item?.candidateFirstName + '' + item?.candidateLastName">{{item?.candidateFirstName}} {{item?.candidateLastName}}</td>
-                        <td class="text-wrap" [title]="item?.candidateEducation">{{item?.candidateEducation}}</td>
-                        <!-- <td class="text-wrap" [title]="item?.candidateExperience ? item?.candidateExperience : 'Fresher'">{{item?.candidateExperience ? item?.candidateExperience + 'years': 'Fresher' }}</td> -->
-                        <td class="text-wrap" [title]="item?.candidatePreviousOrg ? item?.candidatePreviousOrg : 'Nil'">{{item?.candidatePreviousOrg ? item?.candidatePreviousOrg : 'Nil'}}</td>
-                        <td class="text-wrap" [title]="item?.candidatePreviousDesignation ? item?.candidatePreviousDesignation : 'Nil'">{{item?.candidatePreviousDesignation ? item?.candidatePreviousDesignation : 'Nil'}}</td>
-                        <td class="text-wrap" [title]="item?.candidateCity ? item?.candidateCity : 'Nil'"> {{item?.candidateCity ? item?.candidateCity : 'Nil'}}</td>
-                        <td class="text-wrap" [title]="item?.currentStation ? item?.currentStation : 'Not Updated'">{{item?.currentStation ? item?.currentStation : 'Not Updated'}}</td>
-                        <td class="text-wrap" [title]="item?.candidateStatus ? item?.candidateStatus : 'Nil'">{{item?.candidateStatus ? (item?.candidateStatus | titlecase) : 'Nil'}}</td>
+                        <td class="text-start" [title]="item?.candidateFirstName + '' + item?.candidateLastName">{{item?.candidateFirstName}} {{item?.candidateLastName}}</td>
+                        <td class="text-start" [title]="item?.candidateEducation">{{item?.candidateEducation}}</td>
+                        <!-- <td class="text-start" [title]="item?.candidateExperience ? item?.candidateExperience : 'Fresher'">{{item?.candidateExperience ? item?.candidateExperience + 'years': 'Fresher' }}</td> -->
+                        <td class="text-start" [title]="item?.candidatePreviousOrg ? item?.candidatePreviousOrg : 'Nil'">{{item?.candidatePreviousOrg ? item?.candidatePreviousOrg : 'Nil'}}</td>
+                        <td class="text-start" [title]="item?.candidatePreviousDesignation ? item?.candidatePreviousDesignation : 'Nil'">{{item?.candidatePreviousDesignation ? item?.candidatePreviousDesignation : 'Nil'}}</td>
+                        <td class="text-start" [title]="item?.candidateCity ? item?.candidateCity : 'Nil'"> {{item?.candidateCity ? item?.candidateCity : 'Nil'}}</td>
+                        <td class="text-start" [title]="item?.currentStation ? item?.currentStation : 'Not Updated'">{{item?.currentStation ? item?.currentStation : 'Not Updated'}}</td>
+                        <td class="text-start" [title]="item?.candidateStatus ? item?.candidateStatus : 'Nil'">{{item?.candidateStatus ? (item?.candidateStatus | titlecase) : 'Nil'}}</td>
                     </tr>
                 </ng-container>
                 <div *ngIf="candidateList?.length === 0 || !candidateList" class="no-data"> No Data Found</div>

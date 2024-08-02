@@ -114,7 +114,7 @@
     background-color: #eceaea;
 }
 
-.table-container {
+.container-table {
     overflow: auto !important;
     width: 100%;
     max-width: 100%;
@@ -126,20 +126,6 @@
 .table {
     width: 98%;
     border-collapse: collapse;
-}
-
-
-tr:nth-child(odd) {
-    background: #F4F2F2;
-}
-
-tr:nth-child(even) {
-    background: #FFFFFF;
-}
-
-
-tr {
-    text-align: center;
 }
 
 .text-wrap {
@@ -180,17 +166,17 @@ tr {
 }
 
 .scrollable::-webkit-scrollbar,
-.table-container::-webkit-scrollbar {
+.container-table::-webkit-scrollbar {
     display: none;
 }
 
 .scrollable,
-.table-container {
+.container-table {
     scrollbar-width: none;
 }
 
 .scrollable,
-.table-container {
+.container-table {
     -ms-overflow-style: none;
 }
 
@@ -279,8 +265,3 @@ tr {
 .input-filter {
     width: 100%;
 }
-
-
-.details:hover {
-    background-color: #D3E8FF;
-  }

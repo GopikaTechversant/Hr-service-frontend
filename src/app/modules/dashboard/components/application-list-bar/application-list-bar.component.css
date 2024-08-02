@@ -60,7 +60,8 @@
 }
 
 .scrollable canvas {
-    width: 1500px; /* Adjust width as needed to accommodate all data */
+    width: 1500px;
+    /* Adjust width as needed to accommodate all data */
     max-width: none;
     height: auto;
 }
@@ -96,32 +97,16 @@
 }
 
 
-
-tr:nth-child(odd) {
-    background: #F4F2F2;
-}
-
-tr:nth-child(even) {
-    background: #FFFFFF;
-}
-
-
 .date-filters {
     display: flex;
     align-items: center;
 }
 
 
-.table-container {
+.container-table {
     overflow-y: auto !important;
     overflow-x: hidden;
     height: calc(100vh - 445px);
-    /* max-height: calc(100vh - 420px); */
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
 }
 
 .box {
@@ -148,7 +133,3 @@ table {
     color: black;
     font-weight: 500;
 }
-
-.details:hover {
-    background-color: #D3E8FF;
-  }

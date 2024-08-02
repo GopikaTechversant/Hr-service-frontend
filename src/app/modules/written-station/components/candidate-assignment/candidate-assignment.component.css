@@ -73,10 +73,6 @@
     font-weight: 500;
 }
 
-.candidate:hover {
-    background-color: #D3E8FF;
-}
-
 .text-wrap {
     max-width: 120px !important;
     overflow: hidden;

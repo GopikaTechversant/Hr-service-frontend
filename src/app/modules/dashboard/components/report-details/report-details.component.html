@@ -106,7 +106,7 @@
                 <div class="m-7 p-t-19">
                     <span class="f-w-500 p-b-20 f-s-18">Overall Interview Status</span>
                 </div>
-                <div class="table-container m-b-0 m-t-20">
+                <div class="container-table m-b-0 m-t-20">
                     <table class="table">
                         <tr class="table-header f-w-500 p-b-10">
                             <td>Technology</td>
@@ -138,9 +138,9 @@
                         <ng-container *ngIf="interviewDetails?.length > 0">
                             <ng-container *ngFor="let item of interviewDetails">
                                 <tr class="c-pointer details">
-                                    <td>{{item?.technology}}</td>
-                                    <td>{{item?.interviewStatusCount}}</td>
-                                    <td>{{item?.rescheduleStatusCount}}</td>
+                                    <td class="text-start">{{item?.technology}}</td>
+                                    <td class="text-end">{{item?.interviewStatusCount}}</td>
+                                    <td class="text-end">{{item?.rescheduleStatusCount}}</td>
                                 </tr>
                             </ng-container>
                         </ng-container>

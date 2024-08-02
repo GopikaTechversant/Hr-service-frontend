@@ -50,6 +50,10 @@ export class DailyReportComponent implements OnInit {
     this.today = new Date();
   }
 
+  isNumberOrDate(value: any): boolean {
+    return !isNaN(value) || !isNaN(Date.parse(value));
+}
+
   fetchDetails(): void {
     if (!this.initialLoader) this.loader = true
     const url = `/report/report-list`

@@ -136,8 +136,6 @@
 
 }
 
-
-
 .loader-parent {
     position: fixed;
     left: 72%;
@@ -154,18 +152,10 @@ table {
     border-collapse: collapse;
 }
 
-.table-container {
+.container-table {
     height: calc(100vh - 439px);
     overflow-y: auto !important;
     overflow-x: hidden;
-}
-
-tr:nth-child(odd) {
-    background: #F4F2F2;
-}
-
-tr:nth-child(even) {
-    background: #FFFFFF;
 }
 
 .error {
@@ -228,7 +218,3 @@ tr:nth-child(even) {
     width: 100%;
     margin-top: 30px;
 }
-
-.details:hover {
-    background-color: #D3E8FF;
-  }

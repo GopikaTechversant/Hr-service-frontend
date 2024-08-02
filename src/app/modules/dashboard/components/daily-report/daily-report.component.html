@@ -54,45 +54,59 @@
             <span class="">Search</span>
         </div> -->
     </div>
-    <div class="table-container m-b-0">
+    <div class="container-table m-b-0">
         <div class="no-data" *ngIf="(!userRequirement || userRequirement?.length === 0) && !initialLoader && !loader">No
             Data Found</div>
-        <table class="table m-l-17" *ngIf="userRequirement?.length > 0">
-            <tr class="table-header">
-                <ng-container *ngFor="let key of  recruiterKeys">
-                    <td class="" [title]="key">{{key}}</td>
-                </ng-container>
-            </tr>
-            <div *ngIf="loader && !initialLoader" class="loader-parent">
-                <img src="assets/gif/loader.gif">
-            </div>
-            <ng-container *ngIf="userRequirement?.length > 0 ">
-                <tr class="c-pointer details" *ngFor="let item of userRequirement">
-                    <ng-container *ngFor="let key of  recruiterKeys">
-                        <td class="text-wrap details" [title]="item[key]"> {{ key === 'Date' ? (item[key] | date:'dd/MM/yyyy') :
-                            item[key] }}</td>
+            <table class="table m-l-17" *ngIf="userRequirement?.length > 0">
+                <tr class="table-header">
+                    <ng-container *ngFor="let key of recruiterKeys">
+                        <!-- Skip 'Date' column in the main loop -->
+                        <td *ngIf="key !== 'Date'" class="" [title]="key">{{key}}</td>
                     </ng-container>
+                    <!-- Add 'Date' column at the end -->
+                    <td *ngIf="recruiterKeys.includes('Date')" class="" [title]="'Date'">Date</td>
                 </tr>
-            </ng-container>
-            <div *ngIf="initialLoader" class="row m-l-20 initial-loader">
-                <div *ngFor="let item of [0,1,2,3,4,5]" class="col-md-6 m-t-10 m-b-10">
-                    <div class="gravatar-title">
-                        <div>
-                            <ngx-skeleton-loader [theme]="{
-                            width: '900px',
-                            'border-radius': '0',
-                            height: '15px',
-                            'margin-bottom': '10px'
-                            }"></ngx-skeleton-loader>
-                        </div>
-                        <div>
-                            <ngx-skeleton-loader [theme]="{ width: '1300px', 'border-radius': '0', height: '15px' }">
-                            </ngx-skeleton-loader>
+                <div *ngIf="loader && !initialLoader" class="loader-parent">
+                    <img src="assets/gif/loader.gif">
+                </div>
+                <ng-container *ngIf="userRequirement?.length > 0">
+                    <tr class="c-pointer details" *ngFor="let item of userRequirement">
+                        <ng-container *ngFor="let key of recruiterKeys">
+                            <!-- Skip 'Date' column in the main loop -->
+                            <td *ngIf="key !== 'Date'" 
+                                [ngClass]="{'text-end': isNumberOrDate(item[key]), 'text-start': !isNumberOrDate(item[key])}" 
+                                [title]="item[key]">
+                                {{ item[key] }}
+                            </td>
+                        </ng-container>
+                        <!-- Add 'Date' column at the end -->
+                        <td *ngIf="item['Date']" 
+                            [ngClass]="{'text-end': isNumberOrDate(item['Date']), 'text-start': !isNumberOrDate(item['Date'])}" 
+                            [title]="item['Date']">
+                            {{ item['Date'] | date: 'dd-MM-yyyy' }}
+                        </td>
+                    </tr>
+                </ng-container>
+                <div *ngIf="initialLoader" class="row m-l-20 initial-loader">
+                    <div *ngFor="let item of [0,1,2,3,4,5]" class="col-md-6 m-t-10 m-b-10">
+                        <div class="gravatar-title">
+                            <div>
+                                <ngx-skeleton-loader [theme]="{
+                                width: '900px',
+                                'border-radius': '0',
+                                height: '15px',
+                                'margin-bottom': '10px'
+                                }"></ngx-skeleton-loader>
+                            </div>
+                            <div>
+                                <ngx-skeleton-loader [theme]="{ width: '1300px', 'border-radius': '0', height: '15px' }">
+                                </ngx-skeleton-loader>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </table>
+            </table>
+            
     </div>
     <div class="page d-flex j-end padding-10">
         <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(1)">
