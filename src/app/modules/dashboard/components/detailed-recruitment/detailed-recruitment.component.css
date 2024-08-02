@@ -83,35 +83,39 @@
 }
 
 
-table{
+table {
     border-top: 1px solid #EDEDED
 }
+
 tr:nth-child(odd) {
     background: #FFFFFF;
     border-top: 1px solid #EDEDED
+}
 
-  }
-  
-  tr:nth-child(even) {
+tr:nth-child(even) {
     background: #FFFFFF;
     border-top: 1px solid #EDEDED
+}
 
-  }
-
-
-.highlight{
+.highlight {
     background-color: #f6f6f6;
 }
-tr:hover{
+
+tr:hover {
     background-color: #f6f6f6;
 
 }
+
 .text-box {
     height: 30px;
     border: 1px solid #EEEEEE;
     border-radius: 5px;
     padding: 4px 8px;
     outline: none;
+}
+
+.container-table {
+    height: calc(100vh - 490px);
 }
 
 .recruiter-drop-down {
@@ -179,8 +183,6 @@ tr:hover{
     justify-content: flex-end;
 }
 
-
 .requisition-col {
     width: 19%;
 }
-

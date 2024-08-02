@@ -300,6 +300,11 @@ th {
   border: none !important;
 }
 
+.mat-calendar-body,
+tr {
+  border: none !important;
+}
+
 .mat-calendar-table-header {
   background: #FFFFFF !important;
 }
@@ -312,23 +317,7 @@ th {
   border: none !important;
 }
 
-tr:nth-child(odd) {
-  background: #FFFFFF;
-  border: 1px solid #EDEDED
-
-}
-
-tr:nth-child(even) {
-  background: #FFFFFF;
-  border: 1px solid #EDEDED
-
-}
-
-td {
-  padding: 10px;
-}
-
-.table-header {
+.container-table .table-header {
   position: sticky;
   top: 0;
   background: #F4F2F2 !important;
@@ -338,14 +327,27 @@ td {
   line-height: 18px;
   letter-spacing: 0em;
   color: black;
-  text-align: left !important;
+  text-align: center !important;
 }
 
 .container-table {
   overflow: auto !important;
-  /* height: calc(100vh - 280px); */
+  height: calc(100vh - 280px);
   background-color: #FFFFFF;
 }
+
+.container-table tr {
+  border: 1px solid #EDEDED!important;
+}
+
+.container-table td {
+  padding: 10px;
+}
+
+.container-table tr:hover {
+  background-color: #f6f6f6;
+}
+
 
 .blue {
   color: #0034C4;
@@ -364,19 +366,19 @@ table {
   background-color: #D3E8FF;
 } */
 
-.padding-5{
+.padding-5 {
   padding: 5px;
 }
 
-.margin-5{
+.margin-5 {
   margin: 5px;
 }
 
-.padding-10{
+.padding-10 {
   padding: 10px;
 }
 
-.margin-10{
+.margin-10 {
   margin: 10px;
 }
 
@@ -393,4 +395,15 @@ table {
   line-height: 20px;
   text-align: center;
   cursor: pointer;
+}
+
+.modal-header .modal-close button{
+  outline: none!important;
+  border: 1px solid #e0dbdb;
+}
+
+a{
+  border: none!important;
+  outline: none!important;
+  color: #0034C4;
 }

@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="d-flex m-l-10">
-                <div class="input p-t-4 p-l-6 no-close p-relative c-pointer"
+                <div class="input p-t-6 p-l-6 no-close p-relative c-pointer"
                     (click)="requestList_open = !requestList_open">
                     <span class="f-right d-flex">
                         <span *ngIf="displayPosition && displayPosition.trim() !== ''" (click)="clearFilter()"
@@ -47,7 +47,7 @@
                         <div class="p-8"
                             (click)='selectPosition(name?.requestName,name?.requestId);requestList_open = !requestList_open'
                             *ngFor="let name of requestList">
-                            <span class="p-l-10 text-wrap">{{name?.requestName}}</span>
+                            <span class="p-l-10">{{name?.requestName}}</span>
                         </div>
                     </div>
                 </div>
@@ -116,11 +116,11 @@
             </div>
         </div>
     </div>
-    <div class="d-flex w-100 m-t-10 m-b-10">
+    <div class="d-flex w-100 m-t-10 m-b-10 gaps">
         <div class="w-60 p-t-10">   
                 <app-requirement-stack-chart></app-requirement-stack-chart>
         </div>
-        <div class="w-40 p-t-10 ">
+        <div class="w-40 p-t-10">
             <app-application-list-pie [positionId]="positionId" [startDate]="startDate"
                 [endDate]="endDate"></app-application-list-pie>
         </div>
@@ -136,11 +136,11 @@
             <app-interview-count></app-interview-count>
         </div>
     </div> -->
-    <div class="d-flex w-100 m-t-10 m-b-10">
+    <div class="d-flex w-100 m-t-10 m-b-10 gaps">
         <div class="w-60 p-t-10">
             <app-detailed-recruitment [startDate]="startDate" [endDate]="endDate"></app-detailed-recruitment>
         </div>
-        <div class="w-40 p-t-10 m-l-10">
+        <div class="w-40 p-t-10">
             <app-interview-counts-bar [positionId]="positionId" [startDate]="startDate"
             [endDate]="endDate"></app-interview-counts-bar>
         </div>

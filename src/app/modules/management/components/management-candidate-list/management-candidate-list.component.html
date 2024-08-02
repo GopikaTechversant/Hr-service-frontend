@@ -73,7 +73,7 @@
                                 <td class="text-start" [title]="item['serviceRequest.requestName']">{{
                                     item['serviceRequest.requestName'] }}</td>
                                     <td class="text-center">
-                                        <img src="/assets/images/candidate-detail/move.svg" alt="move" *ngIf="item" (click)="onSwitchStation(item)">
+                                        <i class="fa fa-arrows" aria-hidden="true" *ngIf="item"(click)="onSwitchStation(item)"></i>
                                     </td>
                                 <td class="text-start">{{item?.currentStation}}</td>
                                 <td class="f-w-500 text-start" [ngClass]="{'orange': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',

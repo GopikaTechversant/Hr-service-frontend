@@ -18,9 +18,9 @@
             <div *ngFor="let candidate of candidates_list" class="candidate-box">
                 <div class="d-flex j-space">
                     <p class="candidate-name">{{candidate.candidateFirstName}}</p>
-                    <img src="/assets/images/candidate-detail/move.svg" alt="" height="20px" width="20px"
-                        class="c-pointer p-r-12" (click)="onSwitchStation(candidate)"
-                        *ngIf="candidate.serviceStatus !== 'moved'">
+                    <td class="text-center">
+                        <i class="fa fa-arrows" aria-hidden="true"   *ngIf="candidate.serviceStatus !== 'moved'"(click)="onSwitchStation(candidate)"></i>
+                    </td>
                     <p *ngIf="candidate.serviceStatus === 'moved'" class="moved">Moved</p>
                     <!-- <button (click)="onSwitchStation(candidate)" class="m-r-14 move">Move</button> -->
                 </div>
@@ -98,9 +98,7 @@
                         <div class="m-t-14">
                             <div class="d-flex j-space">
                                 <p class="candidate-name">{{candidate.candidateFirstName}}</p>
-                                <img src="/assets/images/candidate-detail/move.svg" alt="" height="20px" width="20px"
-                                    class="c-pointer p-r-12" (click)="onSwitchStation(candidate)"
-                                    *ngIf="candidate.serviceStatus !== 'moved'">
+                                <i class="fa fa-arrows" aria-hidden="true"*ngIf="candidate.serviceStatus !== 'moved'"(click)="onSwitchStation(candidate)"></i>
                                 <p *ngIf="candidate.serviceStatus === 'moved'" class="moved">Moved</p>
                             </div>
                             <div class="info-container">

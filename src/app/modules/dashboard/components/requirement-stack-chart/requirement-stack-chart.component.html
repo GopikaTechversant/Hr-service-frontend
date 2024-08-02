@@ -1,28 +1,37 @@
 <div class="barchart">
     <div class="d-flex head">
         <div class="text"><span class="heading">Requirement Report</span></div>
-        <div class="d-flex m-l-10">
-            <div class="input p-t-4 p-l-6 no-close p-relative c-pointer"
-               >
-                <span class="f-right d-flex">
-                  
-                    <div class="c-pointer">
-                        <i  
-                            class="m-l-5 p-r-10 s-text no-close fa fa-chevron-down"></i>
-                    </div>
+        <!-- <div class="input p-t-6 p-l-6 no-close p-relative c-pointer">
+            <span (click)="teamListOpen = !teamListOpen" class="w-100 d-flex">
+                <span class="align-center m-t-6 c-pointer">
+                    {{selectedDeapartment.trim() !== '' ? selectedDeapartment : 'Select Department'}}</span>
+                <span class="no-close s-list c-pointer align-center m-b-2 flex-1 sub j-end"><i
+                        class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
                 </span>
-                <span>All</span>
-                <!-- <span class="c-pointer text-wrap"
-                    [title]="displayPosition.trim() === '' ? 'Select Requisition' : displayPosition">
-                    {{displayPosition.trim() === '' ? 'Select Requisition' : displayPosition}}
-                </span> -->
-                <!-- <div class="no-close dropdown c-pointer" *ngIf="requestList_open">
-                    <div class="p-8"
-                        (click)='selectPosition(name?.requestName,name?.requestId);requestList_open = !requestList_open'
-                        *ngFor="let name of requestList">
-                        <span class="p-l-10 text-wrap">{{name?.requestName}}</span>
-                    </div>
-                </div> -->
+            </span>
+            <div class=" m-b-2 dropdown no-close" *ngIf="teamListOpen">
+                <div (click)="selectTeam(team?.teamId,team?.teamName)" *ngFor="let team of departmentList"
+                    class=" p-t-5 p-b-5 p-l-8 c-pointer">{{team?.teamName}}</div>
+            </div>
+        </div> -->
+        <div class="input p-t-6 p-l-6 no-close p-relative c-pointer" (click)="teamListOpen = !teamListOpen">
+            <span class="f-right d-flex">
+                <span *ngIf="selectedDeapartment && selectedDeapartment.trim() !== ''" (click)="clearFilter()"
+                    class="clear-filter c-pointer">x</span>
+                <div class="c-pointer">
+                    <i [ngClass]="teamListOpen ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"
+                        class="m-l-5 p-r-10 s-text no-close"></i>
+                </div>
+            </span>
+            <span class="c-pointer text-wrap"
+                [title]="selectedDeapartment.trim() === '' ? 'ALL' : selectedDeapartment">
+                {{selectedDeapartment.trim() === '' ? 'ALL' : selectedDeapartment}}
+            </span>
+            <div class="no-close dropdown c-pointer" *ngIf="teamListOpen">
+                <div class="p-8" (click)='selectTeam(name?.teamName,name?.requestId);teamListOpen = !teamListOpen'
+                    *ngFor="let name of departmentList">
+                    <span class="p-l-10 text-wrap">{{name?.teamName}}</span>
+                </div>
             </div>
         </div>
     </div>

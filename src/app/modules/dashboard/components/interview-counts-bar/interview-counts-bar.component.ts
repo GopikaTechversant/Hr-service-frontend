@@ -31,7 +31,7 @@ export class InterviewCountsBarComponent implements OnInit {
   sourcedData: any[] = [];
   offeredData: any[] = [];
   recruiterCheck: boolean = true;
-  lastSixMonth : boolean = false
+  lastSixMonth: boolean = false
   previousStartDate: any;
   previousEndDate: any;
   requestId: any;
@@ -75,7 +75,7 @@ export class InterviewCountsBarComponent implements OnInit {
   }
 
   onRadioChange(event: Event): void {
-    const target = event.target as HTMLInputElement;    
+    const target = event.target as HTMLInputElement;
     if (target.value === 'Last 6 Months') {
       this.recruiterCheck = false;
       this.lastSixMonth = true;
@@ -86,7 +86,7 @@ export class InterviewCountsBarComponent implements OnInit {
       this.startDate = this.previousStartDate;
       this.endDate = this.previousEndDate;
       this.recruiterCheck = true;
-      this.lastSixMonth = true;      
+      this.lastSixMonth = true;
       this.fetchBarchartDetails();
     }
   }
@@ -94,21 +94,21 @@ export class InterviewCountsBarComponent implements OnInit {
   fetchBarchartDetails(): void {
     const url = '/dashboard/recruiter-chart';
     let params = [
-      `start_date=${this.startDate }`,
+      `start_date=${this.startDate}`,
       `end_date=${this.endDate}`,
       `last_six_month=${this.lastSixMonth}`,
       `recruiter=${this.recruiterCheck}`,
       `end_date=${this.endDate}`,
       `requestId=${this.requestId}`
-    ].filter(param => param.split('=')[1] !== '').join('&');  
-   
+    ].filter(param => param.split('=')[1] !== '').join('&');
+
     this.apiService.get(`${url}?${params}`).subscribe((res: any) => {
       if (res?.data) {
         this.sixMonthCount = res.data;
         this.labels = this.sixMonthCount.map((item: any) => item.userfirstName ?? item.month);
         this.hiredData = this.sixMonthCount.map((item: any) => +item.total_hired);
         this.sourcedData = this.sixMonthCount.map((item: any) => +item.total_totalsourced);
-        this.offeredData = this.sixMonthCount.map((item: any) => +item.total_offerreleased);        
+        this.offeredData = this.sixMonthCount.map((item: any) => +item.total_offerreleased);
         this.createBarChart();
       }
     });
@@ -129,7 +129,7 @@ export class InterviewCountsBarComponent implements OnInit {
             borderWidth: 1,
             barPercentage: 0.8,
             categoryPercentage: 0.7,
-            barThickness: 90,
+            barThickness: 30,
             clip: { left: 5, top: 8, right: -2, bottom: 0 }
           },
           {
@@ -140,7 +140,7 @@ export class InterviewCountsBarComponent implements OnInit {
             borderWidth: 1,
             barPercentage: 0.8,
             categoryPercentage: 0.7,
-            barThickness: 90,
+            barThickness: 30,
             clip: { left: 5, top: 1, right: -2, bottom: 0 }
           },
           {
@@ -151,7 +151,7 @@ export class InterviewCountsBarComponent implements OnInit {
             borderWidth: 1,
             barPercentage: 0.9,
             categoryPercentage: 0.7,
-            barThickness: 90,
+            barThickness: 30,
             clip: { left: 5, top: 1, right: -2, bottom: 0 }
           }
         ]
@@ -222,5 +222,5 @@ export class InterviewCountsBarComponent implements OnInit {
       plugins: [ChartDataLabels]
     });
   }
-  
+
 }

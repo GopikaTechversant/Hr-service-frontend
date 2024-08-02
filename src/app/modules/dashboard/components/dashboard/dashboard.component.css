@@ -13,7 +13,7 @@
   background-color: #FFFFFF;
   border-radius: 3px;
   width: 250px;
-  height: 30px;
+  height: 34px;
 }
 
 .date-filters {
@@ -28,6 +28,7 @@
   white-space: nowrap;
   display: block;
   cursor: pointer;
+  height: 20px;
 }
 
 .break-word {
@@ -134,6 +135,10 @@
 
 .w-60 {
   width: 60%;
+}
+
+.gaps{
+  gap: 20px;
 }
 
 .dropdown {
