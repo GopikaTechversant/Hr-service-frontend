@@ -56,6 +56,9 @@ export class CandidateAssignmentComponent implements OnInit {
   serviceIds: any[] = [];
   previousAverageScore: any;
   userId: any;
+  statusMoved: boolean = false;
+  statusHired: boolean = false;
+  candidateStatus: any;
   constructor(private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService, private s3Service: S3Service, private router: Router) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -182,11 +185,18 @@ export class CandidateAssignmentComponent implements OnInit {
     this.fetchCandidates();
   }
 
+  onCandidateSelect(candidate: any): void {
+    if (candidate.serviceSequence?.serviceStatus === 'moved') this.tostr.warning('Cannot assign questions: Candidate is in Moved status');
+    if (candidate.serviceSequence?.serviceStatus === 'hired') this.tostr.warning('Cannot assign questions: Candidate is in Hired status.');
+    if (candidate.serviceSequence?.serviceStatus === 'rejected') this.tostr.warning('Cannot assign questions: Candidate is in Rejected status.');
+    else this.getSelectedCandidateServiceIds();
+  }
+
   getSelectedCandidateServiceIds(): void {
     const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
     this.candidateIds = selectedCandidates.map((candidate: { serviceSequence: { serviceId: any; }; }) => candidate.serviceSequence?.serviceId);
     const candidatesWithoutQuestionName = selectedCandidates.filter(
-      (candidate: { serviceSequence: { progress: { questionName: any; }; }; }) => !candidate.serviceSequence?.progress?.questionName
+      (candidate: { serviceSequence: { serviceStatus: string, progress: { questionName: any; }; }; }) => candidate.serviceSequence?.serviceStatus === 'pending' && !candidate.serviceSequence?.progress?.questionName
     );
     this.candidateIdsQuestion = candidatesWithoutQuestionName.map((candidate: { serviceSequence: { serviceId: any; }; }) => candidate.serviceSequence?.serviceId);
   }
@@ -212,12 +222,10 @@ export class CandidateAssignmentComponent implements OnInit {
   onSwitchStation(candidate: any): void {
     if (candidate?.serviceSequence?.serviceStatus === 'pending' || candidate?.serviceSequence?.serviceStatus === 'rejected') {
       const userId = localStorage.getItem('userId');
-      console.log(candidate);
-      
       const dialogRef = this.dialog.open(StationSwitchComponent, {
         data: {
           userId: userId,
-          name:candidate?.candidateFirstName + ' ' +candidate?.candidateLastName,
+          name: candidate?.candidateFirstName + ' ' + candidate?.candidateLastName,
           serviceId: candidate?.serviceSequence?.serviceId,
           currentStation: 'Written',
           currentStationId: '2',
