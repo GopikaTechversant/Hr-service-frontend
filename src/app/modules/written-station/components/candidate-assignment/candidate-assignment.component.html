@@ -89,7 +89,7 @@
                     <ng-container *ngFor="let item of candidateList">
                         <tr class="candidate c-pointer" (dblclick)="selectCandidate(item?.candidateId)">
                             <td class="text-center"><input type="checkbox" [(ngModel)]="item.isSelected"
-                                    (change)="getSelectedCandidateServiceIds()"></td>
+                                (change)="onCandidateSelect(item)"></td>
                             <td class="text-start" [title]="item.candidateFirstName + item.candidateLastName">
                                 {{ item?.candidateFirstName }} {{ item?.candidateLastName }}
                             </td>
@@ -101,12 +101,12 @@
                             <!-- <td>{{item?.serviceSequence?.progress?.questionName}}</td> -->
                             <td class="text-center" *ngIf="item?.serviceSequence?.progress?.progressScore === null">
                                 <button class="result text-center  c-pointer"
-                                    *ngIf="item?.serviceSequence?.progress?.progressScore === null && item?.serviceSequence?.progress?.questionName"
+                                    *ngIf="item?.serviceSequence?.progress?.progressScore === null && item?.serviceSequence?.progress?.questionName && (item?.candidateInterviewStatus !== 'hired' && item?.serviceSequence?.serviceStatus !== 'moved') " 
                                     (click)="resultClick(item, item?.serviceSequence?.serviceId)">Add Result
                                 </button>
                                 <button class="disabled-button text-center"
-                                    *ngIf="item?.serviceSequence?.progress?.progressScore === null && !item?.serviceSequence?.progress?.questionName"
-                                    [disabled]="!item?.serviceSequence?.progress?.quertionName">
+                                    *ngIf="item?.serviceSequence?.progress?.progressScore === null && !item?.serviceSequence?.progress?.questionName || (item?.candidateInterviewStatus === 'hired' || item?.serviceSequence?.serviceStatus === 'moved')"
+                                    [disabled]="!item?.serviceSequence?.progress?.quertionName || (item?.candidateInterviewStatus === 'hired' || item?.serviceSequence?.serviceStatus === 'moved')">
                                     Add Result
                                 </button>
                                 <!-- <span class="score-align" *ngIf="item?.serviceSequence?.progress?.progressScore" class="t-a-right">{{item?.serviceSequence?.progress?.progressScore}}</span> -->

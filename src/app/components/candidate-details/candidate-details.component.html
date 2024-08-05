@@ -28,7 +28,8 @@
                         </div>
                     </div>
                     <span class="p-t-18 p-l-8 text-color">Candidate Latest Status : <span
-                            class="latest-status">Shorted</span></span>
+                            class="latest-status f-w-500" [ngStyle]="{'color': candidateDetails.candidateInterviewStatus === 'rejected' ? 'red' : '#07C369'}">
+                            {{candidateDetails.candidateInterviewStatus | titlecase}}</span></span>
                     <div class="p-t-4 p-l-8 text-color"> <a [href]="viewResumeFile + resumePath ">View Resume</a></div>
                 </div>
             </div>
