@@ -101,6 +101,21 @@ input[type="text"] {
     margin-right: 11px;
 }
 
+.clear-filter{
+    background-color: #fff;
+    padding-bottom: 3px;
+    padding-top: 2px;
+    padding-left: 6px;
+    padding-right: 5px;
+    border: 1px solid #3c40434d;
+    border-radius: 50%;
+    width: 20px;
+    height: 22px;
+    line-height: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
 .icon-color {
     color: #575F6E;
 }

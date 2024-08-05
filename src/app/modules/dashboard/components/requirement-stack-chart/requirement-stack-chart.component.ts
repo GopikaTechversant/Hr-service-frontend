@@ -7,7 +7,10 @@ import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-requirement-stack-chart',
   templateUrl: './requirement-stack-chart.component.html',
-  styleUrls: ['./requirement-stack-chart.component.css']
+  styleUrls: ['./requirement-stack-chart.component.css'],
+  host: {
+    '(document:click)': 'onBodyClick($event)'
+  }
 })
 export class RequirementStackChartComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() startDate: string | null = null;
@@ -31,6 +34,13 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
     Chart.register(...registerables, ChartDataLabels);
     this.fetchServiceTeam();
     this.fetchBarchartDetails();
+  }
+
+  onBodyClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.no-close')) {
+      this.teamListOpen = false;
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -84,10 +94,7 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
         this.totalApplicants = barchartList.map((item: any) => +item?.total_applicant);
         this.offeredData = barchartList.map((item: any) => +item?.offered_Count);
         this.technicalData = barchartList.map((item: any) => +item?.technical_selected_Count);
-        this.createBarChart();
-
-        console.log(barchartList[0]);
-        
+        this.createBarChart();        
       }
     });
   }
@@ -102,27 +109,26 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
     return context.measureText(text).width;
   }
   
-
   createBarChart(): void {
     if (this.chart) {
       this.chart.destroy();
     }
-    const baseWidth = 900;
-    const labelFont = '11px Arial';
   
-    let maxLabelWidth = 0;
-    for (const label of this.labels) {
-      const labelWidth = this.measureTextWidth(label, labelFont);      
-      if (labelWidth > maxLabelWidth) {
-        maxLabelWidth = labelWidth;
-      }      
-    }
-    const minLabelWidth = 40;
-    const chartWidth = Math.max(baseWidth, maxLabelWidth * this.labels.length);    
+    const baseWidth = 1000;
+    const labelFont = '13px Arial';
+    const labelPadding = 10; // Padding between labels
+  
+    // Calculate total width needed based on labels and padding
+    let totalLabelWidth = this.labels.reduce((total, label) => {
+      return total + this.measureTextWidth(label, labelFont) + labelPadding;
+    }, 0);
+  
+    const chartWidth = Math.max(baseWidth, totalLabelWidth);
   
     const chartContainer = document.querySelector('.chart-inner-container') as HTMLElement;
     if (chartContainer) {
       chartContainer.style.width = `${chartWidth}px`;
+      chartContainer.style.overflowX = 'auto'; // Enable horizontal scrolling if needed
     } else {
       console.error('Chart container not found!');
     }
@@ -143,9 +149,9 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
               backgroundColor: '#047892',
               borderColor: '#047892',
               borderWidth: 1,
-              barPercentage:0.6,
-              categoryPercentage:0.5,
-              barThickness: 20
+              barPercentage: 0.6,
+              categoryPercentage: 0.5,
+              barThickness: 30
             },
             {
               label: 'No. of Offered',
@@ -153,9 +159,9 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
               backgroundColor: '#2870B8',
               borderColor: '#2870B8',
               borderWidth: 1,
-              barPercentage:0.6,
-              categoryPercentage:0.5,
-              barThickness: 20
+              barPercentage: 0.6,
+              categoryPercentage: 0.5,
+              barThickness: 30
             },
             {
               label: 'Technical Selected',
@@ -163,19 +169,19 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
               backgroundColor: '#3EB2B8',
               borderColor: '#3EB2B8',
               borderWidth: 1,
-              barPercentage:0.6,
-              categoryPercentage:0.5,
-              barThickness: 20
+              barPercentage: 0.6,
+              categoryPercentage: 0.5,
+              barThickness: 30
             },
             // {
             //   label: 'Total Applicants',
-            //   data: this.totalApplicants,
+            //   data: [13 ,133 ,13 ,13 ,14,18],
             //   backgroundColor: '#1790C5',
             //   borderColor: '#1790C5',
             //   borderWidth: 1,
-            //   barPercentage:0.6,
-            //   categoryPercentage:0.5,
-            //   barThickness: 20
+            //   barPercentage: 0.6,
+            //   categoryPercentage: 0.5,
+            //   barThickness: 30
             // },
           ]
         },
@@ -189,7 +195,16 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
               },
               ticks: {
                 font: { size: 12 },
-                autoSkip: false // Ensure all labels are displayed
+                autoSkip: false,
+                maxRotation: 0, // No rotation
+                minRotation: 0, // No rotation
+                callback: (tickValue: string | number, index: number): string => {
+                  // Use the labels array to map tick values to custom labels
+                  if (this.labels && index < this.labels.length) {
+                    return this.labels[index];
+                  }
+                  return tickValue.toString(); // Default to tick value if out of range
+                }
               }
             },
             y: {
@@ -200,7 +215,7 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
               },
               ticks: {
                 font: { size: 12 },
-                autoSkip: false // Ensure all labels are displayed
+                autoSkip: false
               }
             }
           },
@@ -216,7 +231,7 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
             legend: {
               display: true,
               position: 'bottom',
-            align: 'start',
+              align: 'start',
               labels: {
                 usePointStyle: true,
                 pointStyle: 'circle',
@@ -246,5 +261,4 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
     }
   }
   
-
 }

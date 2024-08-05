@@ -62,12 +62,12 @@ export class LoginComponent implements OnInit {
       this.apiService.post(`/user/login`, this.loginForm.value).subscribe(
         (response: any) => {
           if (response?.token) {
-            this.tostr.success('Login Successfully');
             localStorage.setItem('userToken', response?.token);
             localStorage.setItem('userRole', response?.user?.userRole);
             localStorage.setItem('userFullName', response?.user?.userFullName);
             localStorage.setItem('userId', response?.user?.userId);
             this.router.navigate(['/dashboard']);
+            this.tostr.success('Login Successfully');
           }
         },
         (error) => {
@@ -102,9 +102,7 @@ export class LoginComponent implements OnInit {
       client_id: environment.client_id,
       callback: this.handleGoogleResponse.bind(this)
     });
-  
-    this.renderGoogleButton();
-    
+    this.renderGoogleButton();   
     // Optionally, you can listen for window resize events to adjust the button size dynamically
     window.addEventListener('resize', () => this.renderGoogleButton());
   }
@@ -133,9 +131,6 @@ export class LoginComponent implements OnInit {
       }
     );
   }
-  
-
-
 
   handleGoogleResponse(response: any): void {
     // console.log(response);

@@ -140,6 +140,17 @@
     margin: 10px;
 }
 
+.loader-parent {
+    position: absolute;
+    left: 47%;
+    top: 190%;
+    z-index: 9;
+}
+
+.loader-parent img {
+    width: 100px;
+}
+
 .add-candidate {
     width: 150px;
     height: 40px;

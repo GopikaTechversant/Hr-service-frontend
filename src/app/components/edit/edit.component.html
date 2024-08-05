@@ -1,4 +1,7 @@
 <div class="main p-20 m-l-14">
+    <div *ngIf="loader" class="loader-parent">
+        <img src="assets/gif/loader.gif">
+    </div>
     <span class="heading  m-t-12">Edit Candidate Details</span>
     <form [formGroup]="candidateForm" (ngSubmit)="submitClick(); $event.preventDefault()" enctype="multipart/form-data"
         class="p-t-6">

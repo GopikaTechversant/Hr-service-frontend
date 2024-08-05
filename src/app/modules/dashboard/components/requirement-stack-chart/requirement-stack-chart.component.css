@@ -10,35 +10,35 @@
     height: 100% !important;
     background-color: #FFFFFF;
     box-shadow: 0px 4px 8px 0px #0000001A;
-  }
-  
-  .head {
+}
+
+.head {
     padding: 10px;
     justify-content: space-between;
-  }
-  
-  .text {
+}
+
+.text {
     display: flex;
     flex: 2;
-  }
-  
-  .heading {
+}
+
+.heading {
     color: #000000;
     font-weight: 500;
     line-height: 26.07px;
     font-size: 18px;
-  }
-  
-  .input {
+}
+
+.input {
     border: 1px solid #E9E9E9;
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
     width: 250px;
     height: 34px;
-  }
-  
-  .dropdown {
+}
+
+.dropdown {
     background: white;
     box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
     max-height: 150px;
@@ -52,43 +52,23 @@
     margin-top: 5px;
     top: 100%;
     left: 0;
-  }
-  
-  .dropdown :hover {
+}
+
+.dropdown :hover {
     background-color: #eceaea;
-  }
-  
-  .chart-container {
+}
+
+.chart-container {
     padding-top: 15px;
-  }
-  .chart-container {
-    /* Ensure the container is responsive */
     width: 100%;
     overflow-x: auto;
 }
 
-.scrollable-chart-container {
-    display: flex;
-    flex-direction: column; /* Ensure proper stacking of elements */
-}
-
 .chart-inner-container {
-    display: flex; /* Flexbox for horizontal scrolling */
-    width: max-content; /* Ensure width adjusts based on content */
+    width: 100%;
+    overflow-x: auto; /* Enable horizontal scrolling */
 }
 
 .canvas-container {
-    position: relative; /* For positioning the canvas */
+    position: relative;
 }
-
-.chart-label {
-    display: inline-block;
-    max-width: 120px; /* Limit width */
-    word-break: break-word; /* Break long words */
-    text-align: center; /* Center text if needed */
-    white-space: normal; /* Allow wrapping */
-    overflow-wrap: break-word; /* Break long words */
-}
-
-
- 

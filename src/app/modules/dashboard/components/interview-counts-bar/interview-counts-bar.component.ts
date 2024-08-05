@@ -135,8 +135,8 @@ export class InterviewCountsBarComponent implements OnInit {
           {
             label: 'No. of Offered',
             data: this.offeredData,
-            backgroundColor: '#005EC9',
-            borderColor: '#005EC9',
+            backgroundColor: '#2870B8',
+            borderColor: '#2870B8',
             borderWidth: 1,
             barPercentage: 0.8,
             categoryPercentage: 0.7,
@@ -146,8 +146,8 @@ export class InterviewCountsBarComponent implements OnInit {
           {
             label: 'No. of Sourced',
             data: this.sourcedData,
-            backgroundColor: '#628AFC',
-            borderColor: '#628AFC',
+            backgroundColor: '#3EB2B8',
+            borderColor: '#3EB2B8',
             borderWidth: 1,
             barPercentage: 0.9,
             categoryPercentage: 0.7,
