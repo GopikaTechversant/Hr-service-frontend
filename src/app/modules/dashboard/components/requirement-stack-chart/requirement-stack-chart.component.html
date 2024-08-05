@@ -1,19 +1,19 @@
 <div class="barchart">
     <div class="d-flex head">
         <div class="text"><span class="heading">Requirement Report</span></div>
-        <div class="input p-t-6 p-l-6 no-close p-relative c-pointer" >
-            <span class="f-right d-flex">
-                <span *ngIf="selectedDepartment !== ''" (click)="clearFilter()" class="clear-filter c-pointer">x</span>
-                <div class="c-pointer" (click)="teamListOpen = !teamListOpen">
+        <div class="input p-t-6 p-l-6 no-close p-relative c-pointer" (click)="teamListOpen = !teamListOpen">
+            <span class="f-right d-flex"  >
+                <span *ngIf="selectedDepartment !== ''" (click)="clearFilter();teamListOpen = !teamListOpen" class="clear-filter c-pointer">x</span>
+                <div class="c-pointer">
                     <i [ngClass]="teamListOpen ? 'fa fa-chevron-up' : 'fa fa-chevron-down'" class="m-l-5 p-r-10 s-text no-close"></i>
                 </div>
             </span>
-            <span (click)="teamListOpen = !teamListOpen" class="c-pointer text-wrap" [title]="selectedDepartment === '' ? 'ALL' : selectedDepartment">
+            <span class="c-pointer text-wrap" [title]="selectedDepartment === '' ? 'ALL' : selectedDepartment">
                 {{selectedDepartment === '' ? 'ALL' : selectedDepartment}}
             </span>
-            <div class="no-close dropdown c-pointer" *ngIf="teamListOpen" (click)="teamListOpen = !teamListOpen">
-                <div class="p-8" *ngFor="let name of departmentList">
-                    <span class="p-l-10 text-wrap" (click)='selectTeam(name?.teamId , name?.teamName);teamListOpen = !teamListOpen'>
+            <div class="no-close dropdown c-pointer" *ngIf="teamListOpen">
+                <div class="p-8" *ngFor="let name of departmentList" (click)='selectTeam(name?.teamId , name?.teamName);teamListOpen = !teamListOpen'>
+                    <span class="p-l-10 text-wrap" >
                         {{name?.teamName}}
                     </span>
                 </div>
