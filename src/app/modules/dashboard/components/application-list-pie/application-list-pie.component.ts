@@ -53,9 +53,7 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
         this.sourceList = res.data;
         this.sourceCount = this.sourceList.map((item: any) => Number(item?.sourcecount ? item?.sourcecount: '0'));
         this.sourceLabels = this.sourceList.map((item: any) => item.sourceName);
-        this.createChart();
-        console.log(this.sourceCount);
-        
+        this.createChart();        
       }
     });
   }

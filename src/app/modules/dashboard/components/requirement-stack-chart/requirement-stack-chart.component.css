@@ -6,32 +6,30 @@
     display: flex;
     flex-direction: column;
 }
-
-.head {
+.barchart {
+    height: 100% !important;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 8px 0px #0000001A;
+  }
+  
+  .head {
     padding: 10px;
     justify-content: space-between;
-}
-
-.text {
+  }
+  
+  .text {
     display: flex;
     flex: 2;
-}
-
-.heading {
+  }
+  
+  .heading {
     color: #000000;
     font-weight: 500;
     line-height: 26.07px;
     font-size: 18px;
-}
-
-.filter {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 18.96px;
-    color: #4F4F4F;
-}
-
-.input {
+  }
+  
+  .input {
     border: 1px solid #E9E9E9;
     outline: none;
     background-color: #FFFFFF;
@@ -40,8 +38,7 @@
     height: 34px;
   }
   
-
-.dropdown {
+  .dropdown {
     background: white;
     box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
     max-height: 150px;
@@ -49,98 +46,49 @@
     font-size: 14px;
     font-weight: 400;
     width: 98%;
-    /* padding: 5px; */
     border-radius: 4px;
     position: absolute;
     z-index: 999;
     margin-top: 5px;
     top: 100%;
     left: 0;
-}
-
-.dropdown :hover {
+  }
+  
+  .dropdown :hover {
     background-color: #eceaea;
-}
-
-.chart-container {
+  }
+  
+  .chart-container {
     padding-top: 15px;
-}
-
-.arrow {
-    color: #4F4F4F;
-}
-
-.barchart {
-    height: 100% !important;
-    background-color: #FFFFFF;
-    box-shadow: 0px 4px 8px 0px #0000001A;
-}
-
-.clear-filter {
-    padding: 0px 4px;
-    border: 1px solid #3c40434d;
-    border-radius: 50%;
-}
-
-.calendar-icon {
-    color: gray;
-    width: 18px;
-    height: 18px;
-    margin-left: -22px;
-    top: 13px;
-}
-
-tr:nth-child(odd) {
-    background: #F0F7FF;
-}
-
-tr:nth-child(even) {
-    background: #FFFFFF;
-}
-
-td {
-    padding: 10px;
-    text-align: center;
-    border: 1px solid #E9E9E9
-}
-
-tr {
-    text-align: center;
-}
-
-
-.date-filters {
-    display: flex;
-    align-items: center;
-}
-
-.no-data {
-    text-align: center;
-    font-size: 16px;
-    font-weight: 500;
-    color: #525455;
+  }
+  .chart-container {
+    /* Ensure the container is responsive */
     width: 100%;
-    justify-content: center;
-    margin-top: 30px;
+    overflow-x: auto;
 }
 
-.filter-icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-}
-
-.d-flex {
+.scrollable-chart-container {
     display: flex;
-    align-items: center;
+    flex-direction: column; /* Ensure proper stacking of elements */
 }
 
-.flex-1 {
-    flex: 1;
+.chart-inner-container {
+    display: flex; /* Flexbox for horizontal scrolling */
+    width: max-content; /* Ensure width adjusts based on content */
 }
 
-.filter-radio{
-    width: 209px;
+.canvas-container {
+    position: relative; /* For positioning the canvas */
 }
+
+.chart-label {
+    display: inline-block;
+    max-width: 120px; /* Limit width */
+    word-break: break-word; /* Break long words */
+    text-align: center; /* Center text if needed */
+    white-space: normal; /* Allow wrapping */
+    overflow-wrap: break-word; /* Break long words */
+}
+
+
+ 
