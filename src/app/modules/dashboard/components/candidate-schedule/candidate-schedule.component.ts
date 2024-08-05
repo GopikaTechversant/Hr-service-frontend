@@ -113,7 +113,7 @@ export class CandidateScheduleComponent implements OnInit {
     const dialogRef = this.dialog.open(FeedbackComponent, {
       data: { candidateId: candidate?.serviceId, stationId: 1, status: 'rejected', candidateDetails: candidate, userId: userId },
       width: '600px',
-      height: '300px'
+      height: '280px'
     })
 
     dialogRef.afterClosed().subscribe(() => {

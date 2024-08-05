@@ -15,15 +15,16 @@
     text-align: left;
 }
 
-.btn {
-    width: 187px;
+.btns {
+    width: 163px;
     float: right;
-    margin-right: 10px;
+    margin-right: 16px;
+    margin-top: 11px;
 }
 
 .submit-btn {
-    width: 87px;
-    height: 30px;
+    width: 77px;
+    height: 29px;
     color: #FFFFFF;
     border-radius: 5px;
     background: #005EC9;
@@ -36,8 +37,8 @@
 }
 
 .cancel-btn {
-    width: 87px;
-    height: 30px;
+    width: 77px;
+    height: 28px;
     background: #575F6E;
     border-radius: 5px;
     color: #FFFFFF;
