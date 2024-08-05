@@ -24,7 +24,7 @@ export class HrCandidateListComponent implements OnInit {
   filteredStatus: any = '';
   filterStatus: boolean = false;
   currentPage: number = 1;
-  limit: number = 10
+  limit: number = 12
   totalCount: any;
   lastPage: any;
   searchKeyword: string = '';
@@ -153,7 +153,7 @@ export class HrCandidateListComponent implements OnInit {
     if (range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
     if (range == 'endDate') this.endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
     this.currentPage = 1;
-    this.limit = 10;
+    this.limit = 12;
     this.fetchList();
   }
 
@@ -173,19 +173,19 @@ export class HrCandidateListComponent implements OnInit {
     this.searchKeyword = searchTerm;
     if (this.searchKeyword.trim() === '') {
       this.currentPage = 1; 
-      this.limit = 10; 
+      this.limit = 12; 
       this.fetchList(); 
       return;
     }
     this.currentPage = 1;
-    this.limit = 10;
+    this.limit = 12;
     this.fetchList();
   }
 
   searchByExperience(experience: string): void {
     this.experience = experience;
     this.currentPage = 1;
-    this.limit = 10;
+    this.limit = 12;
     this.fetchList();
   }
 
@@ -195,7 +195,7 @@ export class HrCandidateListComponent implements OnInit {
     this.positionId = id;
     sessionStorage.setItem(`requirement_5`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
     this.currentPage = 1;
-    this.limit = 10;
+    this.limit = 12;
     this.fetchList();
   }
 
@@ -203,7 +203,7 @@ export class HrCandidateListComponent implements OnInit {
     this.filteredStatus = item;
     sessionStorage.setItem('status_5', this.filteredStatus);
     this.currentPage = 1;
-    this.limit = 10;
+    this.limit = 12;
     this.fetchList();
   }
 
@@ -220,7 +220,7 @@ export class HrCandidateListComponent implements OnInit {
     if (item === 'search') this.searchKeyword = '';
     if (item === 'experience') this.experience = '';
     this.currentPage = 1;
-    this.limit = 10;
+    this.limit = 12;
     this.fetchList();
   }
 

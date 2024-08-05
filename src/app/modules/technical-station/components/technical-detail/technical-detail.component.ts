@@ -24,7 +24,7 @@ export class TechnicalDetailComponent implements OnInit {
   stationId: any;
   filterStatus: boolean = false;
   selectStatus: boolean = false;
-  limit: number = 10;
+  limit: number = 12;
   status: any;
   filteredStatus: any = '';
   candidateStatus: string = 'Choose Candidate Status';
@@ -71,8 +71,6 @@ export class TechnicalDetailComponent implements OnInit {
         this.positionId = '';
       }
       this.searchKeyword = '';
-      this.currentPage = 1;
-      this.limit = 10;
       this.candidateList = [];
       this.fetchList();
     });
@@ -153,7 +151,7 @@ export class TechnicalDetailComponent implements OnInit {
     if (range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
     if (range == 'endDate') this.endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
     this.currentPage = 1;
-    this.limit = 10;
+    this.limit = 12;
     this.fetchList();
   }
 
@@ -196,19 +194,19 @@ export class TechnicalDetailComponent implements OnInit {
     this.searchKeyword = searchTerm;
     if (this.searchKeyword.trim() === '') {
       this.currentPage = 1; 
-      this.limit = 10; 
+      this.limit = 12; 
       this.fetchList(); 
       return;
     }
     this.currentPage = 1;
-    this.limit = 10;
+    this.limit = 12;
     this.fetchList();
   }
   
   searchByExperience(experience: string): void {
     this.experience = experience;
     this.currentPage = 1;
-    this.limit = 10;
+    this.limit = 12;
     this.fetchList();
   }
 
@@ -218,7 +216,7 @@ export class TechnicalDetailComponent implements OnInit {
     this.positionId = id;
     sessionStorage.setItem(`requirement_${this.stationId}`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
     this.currentPage = 1;
-    this.limit = 10;
+    this.limit = 12;
     this.fetchList();
   }
 
@@ -226,7 +224,7 @@ export class TechnicalDetailComponent implements OnInit {
     this.filteredStatus = item;
     sessionStorage.setItem(`status_${this.stationId}`, this.filteredStatus);
     this.currentPage = 1;
-    this.limit = 10;
+    this.limit = 12;
     this.fetchList();
   }
 
@@ -243,7 +241,7 @@ export class TechnicalDetailComponent implements OnInit {
     if (item === 'search') this.searchKeyword = '';
     if (item === 'experience') this.experience = '';
     this.currentPage = 1;
-    this.limit = 10;
+    this.limit = 12;
     this.fetchList();
   }
 
@@ -261,7 +259,7 @@ export class TechnicalDetailComponent implements OnInit {
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       this.candidateList = [];
       this.currentPage = 1;
-      this.limit = 10;
+      this.limit = 12;
       this.fetchList();
     })
   }
