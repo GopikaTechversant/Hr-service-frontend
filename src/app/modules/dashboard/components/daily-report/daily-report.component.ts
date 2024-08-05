@@ -51,7 +51,7 @@ export class DailyReportComponent implements OnInit {
   }
 
   isNumberOrDate(value: any): boolean {
-    return !isNaN(value) || !isNaN(Date.parse(value));
+    return !isNaN(value);
 }
 
   fetchDetails(): void {

@@ -81,7 +81,7 @@
                         </ng-container>
                         <!-- Add 'Date' column at the end -->
                         <td *ngIf="item['Date']" 
-                            [ngClass]="{'text-end': isNumberOrDate(item['Date']), 'text-start': !isNumberOrDate(item['Date'])}" 
+                            [ngClass]="{'text-end': item['Date']}" 
                             [title]="item['Date']">
                             {{ item['Date'] | date: 'dd-MM-yyyy' }}
                         </td>
