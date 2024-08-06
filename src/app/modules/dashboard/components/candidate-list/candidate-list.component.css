@@ -19,7 +19,8 @@ input[type="text"] {
     border: none;
     outline: none;
     width: 84%;
-    padding: 6px
+    padding: 6px;
+    height: 30px;
 }
 
 .heading {
@@ -44,24 +45,25 @@ input[type="text"] {
     background-color: #FFFFFF;
     border-radius: 3px;
     width: 330px;
-    height: 35px;
+    height: 32px;
     margin-right: -21px;
+    margin-top: 1px;
 }
 
 .search {
     background-color: #005EC9;
-    /* position: relative; */
-    padding: 17px;
+    padding: 16px;
     top: 724px;
     right: 258px;
     width: 50px;
-    height: 22px;
+    height: 11px;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
     cursor: pointer;
     align-items: center;
     display: flex;
     justify-content: center;
+    margin-top: 1px;
 }
 
 .fa-search {
@@ -75,30 +77,28 @@ input[type="text"] {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 35px;
+    height: 32px;
     width: 150px;
     border-radius: 3px;
     background-color: #575F6E;
     color: white;
     margin-left: 10px;
-    margin-top: 0px;
+    margin-top: 1px;
     font-weight: 500;
-    margin-right: 11px;
 }
 
 .add-candidate{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 35px;
+    height: 31px;
     width: 150px;
     border-radius: 3px;
     background-color: #005EC9;
     color: white;
     margin-left: 10px;
-    margin-top: 0px;
+    margin-top: 1px;
     font-weight: 500;
-    margin-right: 11px;
 }
 
 .clear-filter{
@@ -188,10 +188,10 @@ input[type="text"] {
 }
 
 
-
+/* 
 .search {
     height: 19px;
-}
+} */
 
 .disabled-icon-color {
     color: #dfdfd7;

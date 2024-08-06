@@ -13,10 +13,10 @@
             <span class="search d-flex j-end">
                 <i class="fa fa-search" aria-hidden="true" (click)="searchCandidate(searchKeyword)"></i>
             </span>
-            <div class="add c-pointer m-r-11" (click)="openRequisition()">
+            <div class="add c-pointer" (click)="openRequisition()">
                 <span class="c-pointer">Add Requirement</span>
             </div>
-            <div class="add-candidate  c-pointer m-r-11" (click)="navigate('/dashboard/add-candidate',false)">
+            <div class="add-candidate  c-pointer" (click)="navigate('/dashboard/add-candidate',false)">
                 <span class="c-pointer">Add Candidate</span>
             </div>
             <div class="export-btn c-pointer">
@@ -44,7 +44,7 @@
             <ng-container *ngIf="candidateList?.length > 0">
                 <tr class="c-pointer details-table" *ngFor="let item of candidateList"
                     (dblclick)="selectCandidate(item?.candidateId)">
-                    <td class="text-center"><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()"></td>
+                    <td class="text-center"><input type="checkbox" [(ngModel)]="item.isSelected" (change)="onCandidateSelect(item)"></td>
                     <td class="text-start"
                         [title]="(item?.candidateFirstName | titlecase) + (item?.candidateLastName | titlecase)">
                         {{item?.candidateFirstName | titlecase}} {{item?.candidateLastName | titlecase}}

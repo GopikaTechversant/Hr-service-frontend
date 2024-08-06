@@ -5,7 +5,7 @@
         </div>
         <div class="date-filters">
             <div class="d-flex">
-                <span class="filter p-r-10 p-t-10">From</span>
+                <span class="filter p-t-10">From</span>
                 <div class="p-relative">
                     <input class="p-l-5 input c-pointer" placeholder="29/02/11" matInput
                         [matDatepicker]="pickerFromDate" [value]="startDate | date:'yyyy-MM-dd'" id="startDate"
@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="d-flex">
-                <span class="filter p-l-10 p-r-10 p-t-10">To</span>
+                <span class="filter p-l-10 p-t-10">To</span>
                 <div class="p-relative">
                     <input class="p-l-5 input c-pointer" placeholder="29/02/11" matInput [matDatepicker]="pickerToDate"
                         (dateChange)="dateChange($event, 'endDate')" [ngModel]="endDate" (click)="pickerToDate.open()"

@@ -91,15 +91,36 @@ export class CandidateListComponent {
     this.fetchCandidates();
   }
 
+  onCandidateSelect(candidate: any): void {
+    if (candidate.candidatesAddingAgainst !== null) this.toastr.warning('Candidate already added to requisition');
+    else this.getSelectedCandidateIds();
+  }
+
   getSelectedCandidateIds(): void {
-    const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
+    const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; candidatesAddingAgainst: any }) => candidate.isSelected && candidate.candidatesAddingAgainst === null);
+
+    console.log("selectedCandidates",selectedCandidates);
+    
     this.candidates = selectedCandidates.map((candidate: { candidateId: any; resumeSourceId: any; }) => ({
       candidatesId: candidate?.candidateId,
       resumeSource: candidate?.resumeSourceId
     }));
-    this.candidateIdsRequirement = selectedCandidates.filter((candidate: { candidatesAddingAgainst: any; }) => candidate.candidatesAddingAgainst === null)
-      .map((candidate: { candidateId: any; }) => candidate?.candidateId);
+    console.log("this.candidates",this.candidates);
+    
+    // this.candidateIdsRequirement = selectedCandidates.filter((candidate: { candidatesAddingAgainst: any; }) => candidate.candidatesAddingAgainst === null)
+    //   .map((candidate: { candidateId: any; }) => candidate?.candidateId);
+    //   console.log(" this.candidateIdsRequirement", this.candidateIdsRequirement);
+      
   }
+
+  // getSelectedCandidateServiceIds(): void {
+  //   const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
+  //   this.candidateIds = selectedCandidates.map((candidate: { serviceSequence: { serviceId: any; }; }) => candidate.serviceSequence?.serviceId);
+  //   const candidatesWithoutQuestionName = selectedCandidates.filter(
+  //     (candidate: { serviceSequence: { serviceStatus: string, progress: { questionName: any; }; }; }) => candidate.serviceSequence?.serviceStatus === 'pending' && !candidate.serviceSequence?.progress?.questionName
+  //   );
+  //   this.candidateIdsQuestion = candidatesWithoutQuestionName.map((candidate: { serviceSequence: { serviceId: any; }; }) => candidate.serviceSequence?.serviceId);
+  // }
 
 
   generatePageNumbers() {
