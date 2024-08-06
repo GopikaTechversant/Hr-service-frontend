@@ -14,7 +14,7 @@
                 <img src="/assets/images/techversant/search.svg" alt="">
             </span>
         </div>
-        <div class="input-1 c-pointer no-close p-relative p-t-6 m-l-10 m-b-10 p-l-10 m-r-10">
+        <div class="input-1 c-pointer no-close p-relative p-t-10 m-l-10 m-b-10 p-l-10 m-r-10">
             <span class="f-right d-flex">
                 <span *ngIf="displayPosition && displayPosition !== ''" (click)="clearFilter('position')"
                     class="clear-filter c-pointer">x</span>
@@ -42,7 +42,7 @@
                 <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
             </span>
         </div>
-        <div class="input-1 c-pointer no-close p-relative p-t-6 m-l-10 m-b-10 p-l-10 m-r-10">
+        <div class="input-1 c-pointer no-close p-relative p-t-10 m-l-10 m-b-10 p-l-10 m-r-10">
             <span class="no-close" (click)="filterStatus = !filterStatus">{{filteredStatus.trim() === '' ?
                 'Filter by Status' : filteredStatus | titlecase}}</span>
             <span class="f-right">

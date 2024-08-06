@@ -173,16 +173,16 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
               categoryPercentage: 0.5,
               barThickness: 30
             },
-            // {
-            //   label: 'Total Applicants',
-            //   data: [13 ,133 ,13 ,13 ,14,18],
-            //   backgroundColor: '#1790C5',
-            //   borderColor: '#1790C5',
-            //   borderWidth: 1,
-            //   barPercentage: 0.6,
-            //   categoryPercentage: 0.5,
-            //   barThickness: 30
-            // },
+            {
+              label: 'Total Applicants',
+              data: this.totalApplicants,
+              backgroundColor: '#1790C5',
+              borderColor: '#1790C5',
+              borderWidth: 1,
+              barPercentage: 0.6,
+              categoryPercentage: 0.5,
+              barThickness: 30
+            },
           ]
         },
         options: {
@@ -200,20 +200,24 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
                 minRotation: 0, // No rotation
                 callback: (tickValue: string | number, index: number): string => {
                   // Use the labels array to map tick values to custom labels
+                  console.log( this.labels[index].split(' '));
+                  
                   if (this.labels && index < this.labels.length) {
-                    return this.labels[index];
+                    return  this.labels[index].split(' ').join('\n');
                   }
                   return tickValue.toString(); // Default to tick value if out of range
                 }
               }
             },
             y: {
+              type: 'logarithmic',
               stacked: true,
-              beginAtZero: false,
+              // beginAtZero: false,
               grid: {
-                display: true
+                display: false,
               },
               ticks: {
+                display: false,
                 font: { size: 12 },
                 autoSkip: false
               }
