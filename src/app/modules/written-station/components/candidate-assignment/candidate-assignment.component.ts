@@ -59,6 +59,7 @@ export class CandidateAssignmentComponent implements OnInit {
   statusMoved: boolean = false;
   statusHired: boolean = false;
   candidateStatus: any;
+  serviceSequence: any;
   constructor(private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices, private apiService: ApiService, private s3Service: S3Service, private router: Router) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -279,35 +280,36 @@ export class CandidateAssignmentComponent implements OnInit {
     const averageScore = averageScoreInput.value;
     localStorage.getItem('userId');
     this.candidateList.forEach(candidate => {
-      const serviceSequence = candidate.serviceSequence;
-      if (serviceSequence.serviceStatus === 'pending' && serviceSequence.progress.progressScore !== null) this.serviceIds.push(serviceSequence.serviceId);
-      if (this.serviceIds.length > 0 && averageScore) {
-        const payload = {
-          serviceId: this.serviceIds,
-          averageScore: averageScore,
-          recruiterId: this.recruiterId,
-          requestionId: this.requestId
-        };
-        this.apiService.post(`/written-station/approve`, payload).subscribe({
-          next: (res: any) => {
-            this.tostr.success('Approved');
-            this.averageScore = averageScore;
-            this.serviceIds = [];
-            this.fetchCandidates();
-          },
-          error: (error) => {
-            if (error?.status === 500) this.tostr.error("Internal Server Error");
-            else if (!this.serviceIds) {
-              this.tostr.warning('Candidates meeting the average score were not found');
-              this.fetchCandidates();
-            }
-            else this.tostr.error("Rejected due to a below-average score");
-          }
-        })
-      } else if (serviceSequence.progress.progressScore === null) this.tostr.warning("Ensure the candidate's question and result are included")
-      else this.tostr.warning('There is no candidates to approve');
+      this.serviceSequence = candidate.serviceSequence;
+
     });
-    this.fetchCandidates();
+    if (this.serviceSequence.serviceStatus === 'pending' && this.serviceSequence.progress.progressScore !== null) this.serviceIds.push(this.serviceSequence.serviceId);
+    if (this.serviceIds.length > 0 && averageScore) {
+      const payload = {
+        serviceId: this.serviceIds,
+        averageScore: averageScore,
+        recruiterId: this.recruiterId,
+        requestionId: this.requestId
+      };
+      this.apiService.post(`/written-station/approve`, payload).subscribe({
+        next: (res: any) => {
+          this.tostr.success('Approved');
+          this.averageScore = averageScore;
+          this.serviceIds = [];
+          this.fetchCandidates();
+        },
+        error: (error) => {
+          if (error?.status === 500) this.tostr.error("Internal Server Error");
+          else if (!this.serviceIds) {
+            this.tostr.warning('Candidates meeting the average score were not found');
+            // this.fetchCandidates();
+          }
+          else this.tostr.error("Rejected due to a below-average score");
+        }
+      })
+    } else if (this.serviceSequence.progress.progressScore === null) this.tostr.warning("Ensure the candidate's question and result are included")
+    else this.tostr.warning('There is no candidates to approve');
+    // this.fetchCandidates();
   }
 
   exportData(): void {
