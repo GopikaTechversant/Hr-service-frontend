@@ -10,7 +10,10 @@ import { environment } from 'src/environments/environments';
 @Component({
   selector: 'app-mail-template',
   templateUrl: './mail-template.component.html',
-  styleUrls: ['./mail-template.component.css']
+  styleUrls: ['./mail-template.component.css'],
+  host: {
+    '(document:click)': 'onBodyClick($event)'
+  }
 })
 export class MailTemplateComponent implements OnInit {
   @Input() candidate: any;
@@ -65,7 +68,8 @@ export class MailTemplateComponent implements OnInit {
   Interviewlocation: any;
   displaydateTime: any;
   loader: boolean = false;
-  showTemplate:boolean = false;
+  showTemplate: boolean = false;
+  showTimePicker: Boolean = false;
   constructor(private apiService: ApiService, private tostr: ToastrService, private datePipe: DatePipe, private s3Service: S3Service, private http: HttpClient) { }
   ngOnInit(): void {
     this.resetFormAndState();
@@ -80,17 +84,17 @@ export class MailTemplateComponent implements OnInit {
       if (this.candidate?.messageType === 're-schedule') this.fetchCandidatesDetails();
       this.fetchMode();
       this.fetchPanel();
-    }else this.showTemplate = false;
+    } else this.showTemplate = false;
 
   }
-  // @HostListener('document:click', ['$event'])
-  // onBodyClick(event: Event): void {
-  //   const clickedElement = event.target as HTMLElement;
-  //   if (!this.recruiterNameDiv.nativeElement.contains(clickedElement)) this.showRecruiters = false;
-  //   if (!this.positionDiv.nativeElement.contains(clickedElement)) this.showDropdown = false;
-  //   if (this.candidate?.candidateFirstName) this.showcandidate = false;
-  //   if (!this.panelDiv.nativeElement.contains(clickedElement)) this.showPanel = false;
-  // }
+
+  onBodyClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.no-close')) {
+      this.showPanel = false;
+      this.showModeList = false;
+    }
+  }
 
   fetchPanel(): void {
     const headers = new HttpHeaders({
@@ -146,7 +150,7 @@ export class MailTemplateComponent implements OnInit {
         this.scheduledDate = status?.serviceDate;
         if (this.scheduledDate) {
           this.displayDate = this.datePipe.transform(this.scheduledDate, 'MM/dd/yyyy');
-          this.displayTime = this.datePipe.transform(this.scheduledDate, 'hh:mm');          
+          this.displayTime = this.datePipe.transform(this.scheduledDate, 'hh:mm');
         }
       })
     })
@@ -191,7 +195,7 @@ export class MailTemplateComponent implements OnInit {
     this.displayTime = event;
 
   }
-  
+
   getKeyFroms3(): void {
     this.keySubscription = this.s3Service.key.subscribe((key: string) => {
       this.uploadedFileKey = key;
@@ -380,7 +384,7 @@ export class MailTemplateComponent implements OnInit {
     this.clearInputvalue('bcc');
     this.clearInputvalue('feedback');
 
-   
+
   }
 
   cancelClick() {
