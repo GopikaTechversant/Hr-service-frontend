@@ -108,25 +108,24 @@
     z-index: 1;
 }
 
-.container{
+.container-requisition{
     /* height: 340px; */
     /* min-height: 490px; */
     overflow-y: auto !important;
     transition: width 0.3s ease;
     width: 99%;
-    background-color: white;
 }
 
 .title-requirement{
     padding-left: 16px;
     height: 46px;
-    background-color: #F4F2F2;
+    background-color: #575F6E;
     line-height: 46px;
    
 }
 
 .requirement-name{
-    color: #4F4F4F;
+    color: white;
     font-weight: 500;
     font-size: 17px;
 }
@@ -170,6 +169,7 @@
 
 .container-requirement{
     gap: 38px;
+    background-color: white;
 }
 
 .info-container-requirement:first-of-type{
@@ -426,13 +426,12 @@ input[type="text"] {
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
-    width: 97.5%;
-    margin-left: 13px;
+    width: 99.6%;
+    margin-left: 5px;
     padding-left: 10px;
     margin-top: 9px;
     min-height: 73px;
     padding-top: 8px;
-    /* color: #575F6E; */
 }
 
 .jd-title{
