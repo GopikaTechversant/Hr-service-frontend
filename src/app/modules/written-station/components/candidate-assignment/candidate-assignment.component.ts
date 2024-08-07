@@ -278,15 +278,21 @@ export class CandidateAssignmentComponent implements OnInit {
   approve(): void {
     const averageScoreInput = document.getElementById('averageScore') as HTMLInputElement;
     const averageScore = averageScoreInput.value;
+
+    // Use a Set to ensure unique serviceIds
+    const serviceIdSet = new Set<number>();
+
     localStorage.getItem('userId');
     this.candidateList.forEach(candidate => {
-      this.serviceSequence = candidate.serviceSequence;
-
+      const serviceSequence = candidate.serviceSequence;
+      if (serviceSequence.serviceStatus === 'pending' && serviceSequence.progress.progressScore !== null) {
+        serviceIdSet.add(serviceSequence.serviceId);
+      }
     });
-    if (this.serviceSequence.serviceStatus === 'pending' && this.serviceSequence.progress.progressScore !== null) this.serviceIds.push(this.serviceSequence.serviceId);
-    if (this.serviceIds.length > 0 && averageScore) {
+    const uniqueServiceIds = Array.from(serviceIdSet);
+    if (uniqueServiceIds.length > 0 && averageScore) {
       const payload = {
-        serviceId: this.serviceIds,
+        serviceId: uniqueServiceIds,
         averageScore: averageScore,
         recruiterId: this.recruiterId,
         requestionId: this.requestId
@@ -295,22 +301,26 @@ export class CandidateAssignmentComponent implements OnInit {
         next: (res: any) => {
           this.tostr.success('Approved');
           this.averageScore = averageScore;
+          // Reset the serviceIds array
           this.serviceIds = [];
           this.fetchCandidates();
         },
         error: (error) => {
           if (error?.status === 500) this.tostr.error("Internal Server Error");
-          else if (!this.serviceIds) {
+          else if (!uniqueServiceIds.length) {
             this.tostr.warning('Candidates meeting the average score were not found');
-            // this.fetchCandidates();
+          } else {
+            this.tostr.error("Rejected due to a below-average score");
           }
-          else this.tostr.error("Rejected due to a below-average score");
         }
-      })
-    } else if (this.serviceSequence.progress.progressScore === null) this.tostr.warning("Ensure the candidate's question and result are included")
-    else this.tostr.warning('There is no candidates to approve');
-    // this.fetchCandidates();
+      });
+    } else if (this.serviceSequence?.progress.progressScore === null) {
+      this.tostr.warning("Ensure the candidate's question and result are included");
+    } else {
+      this.tostr.warning('There are no candidates to approve');
+    }
   }
+
 
   exportData(): void {
     this.isExport = true;
