@@ -116,7 +116,7 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
   
     const baseWidth = 1000;
     const labelFont = '13px Arial';
-    const labelPadding = 10; // Padding between labels
+    const labelPadding = 30; // Padding between labels
   
     // Calculate total width needed based on labels and padding
     let totalLabelWidth = this.labels.reduce((total, label) => {

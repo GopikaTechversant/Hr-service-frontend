@@ -8,7 +8,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-management-candidate-list',
   templateUrl: './management-candidate-list.component.html',
-  styleUrls: ['./management-candidate-list.component.css']
+  styleUrls: ['./management-candidate-list.component.css'],
+  host: {
+    '(document:click)': 'onBodyClick($event)'
+  }
 })
 export class ManagementCandidateListComponent implements OnInit {
   candidateList: any[] = [];
@@ -38,6 +41,14 @@ export class ManagementCandidateListComponent implements OnInit {
   ngOnInit(): void {
     this.fetchCandidates();
     this.fetchRequirements();
+  }
+
+  onBodyClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.no-close')) {
+      this.filterStatus = false;
+      this.requestList_open = false;
+    }
   }
 
   fetchCandidates(): void {

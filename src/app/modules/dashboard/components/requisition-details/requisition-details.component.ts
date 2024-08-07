@@ -7,7 +7,10 @@ import { ApiService } from 'src/app/services/api.service';
 @Component({
   selector: 'app-requisition-details',
   templateUrl: './requisition-details.component.html',
-  styleUrls: ['./requisition-details.component.css']
+  styleUrls: ['./requisition-details.component.css'],
+  host: {
+    '(document:click)': 'onBodyClick($event)'
+  }
 })
 export class RequisitionDetailsComponent implements OnInit {
   requestId: any;
@@ -37,6 +40,13 @@ export class RequisitionDetailsComponent implements OnInit {
     this.pageSize = 9;
     this.fetchcount();
     this.fetchCandidates();
+  }
+
+  onBodyClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.no-close')) {
+      this.filterStatus = false;
+    }
   }
 
   dateChange(event: any, range: string): void {
