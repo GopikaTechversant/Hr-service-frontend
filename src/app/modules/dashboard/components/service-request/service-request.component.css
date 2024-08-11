@@ -184,6 +184,16 @@
     width: 96.4%;
 }
 
+.skill-input {
+    width: 99.4%;
+    outline: none;
+    border: none;
+    height: 32px;
+    padding: 5px;
+    background: #FAFAFA;
+
+}
+
 .child-skill {
     width: 62.7%;
 }
@@ -554,6 +564,6 @@
     width: 30px !important;
 }
 
-.drop-menu{
+.drop-menu {
     padding: 4px;
 }

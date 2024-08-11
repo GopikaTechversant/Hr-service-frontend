@@ -129,6 +129,8 @@ export class DailyReportComponent implements OnInit {
     this.startDate = start;
     this.endDate = end;
     this.recruiterName = name;
+    this.currentPage = 1;
+    this.pageSize = 10;
     this.fetchDetails()
   }
 
@@ -152,6 +154,8 @@ export class DailyReportComponent implements OnInit {
       this.recruiterName = "";
       this.reportUserId = "";
     }
+    this.currentPage = 1;
+    this.pageSize = 10;
     this.fetchDetails();
   }
 }

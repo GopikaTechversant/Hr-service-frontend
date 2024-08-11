@@ -6,16 +6,15 @@
                 <span class="no-close p-l-10" (click)="filterStatus = !filterStatus">{{filteredStatus.trim() === '' ?
                     'Active Requisitions' : filteredStatus | titlecase}}</span>
                 <span class="f-right">
-                    <span
-                        *ngIf="filteredStatus !== 'Active Requisitions' && filteredStatus && filteredStatus.trim() !== ''"
-                        (click)="clearFilter('status')" class="clear-filter">x</span>
-                    <span (click)="filterStatus = !filterStatus"><i
-                            [ngClass]="filterStatus ? ' fa fa-chevron-up' : ' fa fa-chevron-down'"
-                            class="m-l-5 p-r-10 s-text no-close"></i></span>
+                    <span *ngIf="filteredStatus !== 'Active Requisitions' && filteredStatus && filteredStatus.trim() !== ''" (click)="clearFilter('status')">
+                        <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
+                    </span>
+                    <span (click)="filterStatus = !filterStatus">
+                        <i [ngClass]="filterStatus ? ' fa fa-chevron-up' : ' fa fa-chevron-down'" class="m-l-5 p-r-10 s-text no-close"></i>
+                    </span>
                 </span>
                 <div class="dropdown c-pointer no-close'" *ngIf="filterStatus">
-                    <span class="d-flex p-0" *ngFor="let type of status"
-                        (click)="selectStatusFilter(type);filterStatus = !filterStatus">
+                    <span class="d-flex p-0" *ngFor="let type of status" (click)="selectStatusFilter(type);filterStatus = !filterStatus">
                         <span class="padding-5">{{type | titlecase}}</span>
                     </span>
                 </div>
@@ -24,7 +23,7 @@
                 <input type="text" class="p-10" placeholder="Search Requirement" [(ngModel)]="searchKeyword"
                     (keydown.enter)="requirementSearch(searchKeyword)">
                 <span *ngIf="searchKeyword !== ''" (click)="clearFilter('search')"
-                    class="clear-filter-search c-pointer m-l-10">x</span>
+                    class="c-pointer m-l-10 p-t-5"><img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20"></span>
                 <span class="search d-flex j-end">
                     <i class="fa fa-search" aria-hidden="true" (click)="requirementSearch(searchKeyword)"></i>
                 </span>

@@ -7,8 +7,9 @@
             <span class="input">
                 <input type="text" class="" placeholder="Search Candidates" [(ngModel)]="searchKeyword"
                     (keydown.enter)="searchCandidate(searchKeyword)">
-                <span *ngIf="searchKeyword !== ''" (click)="clearFilter()"
-                    class="clear-filter c-pointer m-l-10">x</span>
+                <span *ngIf="searchKeyword !== ''" (click)="clearFilter()" class=" c-pointer m-l-10">
+                    <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
+                </span>
             </span>
             <span class="search d-flex j-end">
                 <i class="fa fa-search" aria-hidden="true" (click)="searchCandidate(searchKeyword)"></i>

@@ -14,8 +14,9 @@
           <input type="text" class="input" placeholder="Search Candidate Detail"
             [(ngModel)]="searchKeyword"
             (ngModelChange)="searchCandidate($event)">
-            <span *ngIf="searchKeyword && searchKeyword.trim() !== ''" (click)="clearFilter()"
-            class="clear-filter c-pointer">x</span>
+            <span *ngIf="searchKeyword && searchKeyword.trim() !== ''" (click)="clearFilter()" class="c-pointer">
+              <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
+          </span>
           <span class="search c-pointer" (click)="searchCandidate(searchKeyword)">
             <img src="/assets/images/techversant/search.svg" alt="">
             <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
@@ -42,10 +43,9 @@
             </div>
           </div>
         </div>
-      </div>
-      
+      </div>      
     </div>    
-    <div class="profile d-flex p-t-8">
+    <div class="profile d-flex p-t-8 m-b-10">
       <div class="d-flex align-items-center me-2 flex-wrap station-names">
         <span *ngFor="let station of stationsList">
           <span class="c-pointer p-2" [ngClass]="{'active-station': station?.stationName === activeStation}"

@@ -32,8 +32,9 @@
                 <div class="input p-t-6 p-l-6 no-close p-relative c-pointer"
                     (click)="requestList_open = !requestList_open">
                     <span class="f-right d-flex">
-                        <span *ngIf="displayPosition && displayPosition.trim() !== ''" (click)="clearFilter()"
-                            class="clear-filter c-pointer">x</span>
+                        <span *ngIf="displayPosition && displayPosition.trim() !== ''" (click)="clearFilter()"class="c-pointer">
+                            <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
+                        </span>
                         <div class="c-pointer">
                             <i [ngClass]="requestList_open ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"
                                 class="m-l-5 p-r-10 s-text no-close"></i>

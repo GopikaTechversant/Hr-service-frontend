@@ -17,14 +17,14 @@
 }
 
 
-.input {
+/* .input {
     border: 1px solid #E9E9E9;
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
     width: 250px;
-    height: 25px;
-  }
+    height: 34px;
+  } */
 
   .candidate{
     display: flex;
@@ -134,50 +134,8 @@
     background-color: #FFFFFF;
     border-radius: 3px;
     width: 20%;
-    height: 30px;
+    height: 34px;
 }
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.container-table {
-    overflow-y: auto !important;
-    height: calc(100vh - 479px);
-}
-
-tr:nth-child(odd) {
-    background: #F0F7FF;
-}
-
-tr:nth-child(even) {
-    background: #FFFFFF;
-}
-
-
-td {
-    padding: 10px;
-    text-align: center;
-    border: 1px solid #E9E9E9
-}
-
-tr {
-    text-align: center;
-}
-
-.table-header {
-    position: sticky;
-    top: 0;
-    background-color: #F4F2F2 !important;
-    padding: 10px;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 18px;
-    letter-spacing: 0em;
-    text-align: center;
-}
-
 .no-data {
     position: absolute;
     left: 52%;
@@ -188,12 +146,7 @@ tr {
     font-weight: 500;
 }
 
-.text-wrap {
-    max-width: 120px !important;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
+
 
 .box {
     height: 26px;

@@ -71,6 +71,10 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
       this.dynamicMenuItems.push({ path: this.writtenCandidateList, label: 'Candidate List Written', icon: 'fa fa-list-ol' });
     }
 
+    if(homeUrl === 'dashboard' && this.currentUrl.includes(this.candidateScheduleUrl)){
+      this.dynamicMenuItems.push({ path: this.seriesUrl, label: 'Requisition Detail', icon: 'fa fa-table' });
+    }
+
     if (homeUrl === 'user') {
       this.dynamicMenuItems.push({ path: '/user/addUser', label: 'Add User', icon: 'fa fa-user-plus' });
     }

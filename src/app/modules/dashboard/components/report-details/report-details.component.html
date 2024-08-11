@@ -15,8 +15,9 @@
                             <div class="input d-flex j-space padding-5 p-b-0 no-close f-s-14">
                                 {{selectedMonth ? selectedMonth : 'Select Month'}}
                                 <span class="f-right">
-                                    <span *ngIf="selectedMonth && selectedMonth !== ''" (click)="clearFilter('month')"
-                                        class="clear-filter">x</span>
+                                    <span *ngIf="selectedMonth && selectedMonth !== ''" (click)="clearFilter('month')">
+                                        <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
+                                    </span>
                                     <span (click)="showMonth = !showMonth"><i [ngClass]="showMonth ? ' fa fa-chevron-up' : ' fa fa-chevron-down'" (click)="showMonth = !showMonth"
                                             class="p-l-8 p-r-10"></i></span>
                                 </span>
@@ -36,8 +37,9 @@
                             <div class="input d-flex j-space padding-5 p-b-0 no-close f-s-14">
                                 {{recruiterName ? recruiterName : 'Select Recruiter'}}
                                 <span class="f-right">
-                                    <span *ngIf="recruiterName && recruiterName !== ''" (click)="clearFilter('recruiter')"
-                                        class="clear-filter">x</span>
+                                    <span *ngIf="recruiterName && recruiterName !== ''" (click)="clearFilter('recruiter')">
+                                        <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
+                                    </span>
                                     <span (click)="showRecruiters = !showRecruiters">
                                         <i (click)="showRecruiters = !showRecruiters" [ngClass]="showRecruiters ? ' fa fa-chevron-up' : ' fa fa-chevron-down'" class="p-l-8 p-r-10"></i>
                                     </span>

@@ -9,16 +9,18 @@
             <input type="text" class="input align-items-start" placeholder="Search By Name"
             [(ngModel)]="searchKeyword"
             (ngModelChange)="searchCandidate($event)">
-                <span *ngIf="searchKeyword && searchKeyword.trim() !== ''" (click)="clearFilter('search')"
-                class="clear-filter c-pointer">x</span>
+                <span *ngIf="searchKeyword && searchKeyword.trim() !== ''" (click)="clearFilter('search')" class=" c-pointer">
+                    <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
+                </span>
             <span class="search c-pointer ms-2" (click)="searchCandidate(searchKeyword)">
                 <img src="/assets/images/techversant/search.svg" alt="">
             </span>
         </div>
         <div class="input-1 c-pointer no-close p-relative p-t-6 m-l-10 m-b-10 p-l-10 m-r-10">
             <span class="f-right d-flex">
-                <span *ngIf="displayPosition && displayPosition !== ''" (click)="clearFilter('position')"
-                    class="clear-filter c-pointer">x</span>
+                <span *ngIf="displayPosition && displayPosition !== ''" (click)="clearFilter('position')" class="c-pointer">
+                    <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
+                </span>
                 <div (click)="requestList_open = !requestList_open" class="c-pointer">
                     <i [ngClass]="requestList_open ? ' fa fa-chevron-up' : ' fa fa-chevron-down'"
                         class="m-l-5 p-r-10 s-text no-close"></i>
@@ -36,8 +38,8 @@
         <div class="search-div d-flex align-items-center m-b-10">
             <input type="text" class="input" placeholder="Search By Experience" [(ngModel)]="experience"
                 (keydown)="searchByExperience(experience)"  (keydown)="experienceValidation($event)">
-                <span *ngIf="experience && experience.trim() !== ''" (click)="clearFilter('experience')"
-                class="clear-filter c-pointer">x</span>
+                <span *ngIf="experience && experience.trim() !== ''" (click)="clearFilter('experience')" class="c-pointer">
+                <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20"></span>
             <span class="search c-pointer ms-2" (click)="searchByExperience(experience)">
                 <img src="/assets/images/techversant/search.svg" alt="">
                 <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
@@ -47,8 +49,9 @@
             <span class="no-close" (click)="filterStatus = !filterStatus">{{filteredStatus.trim() === '' ?
                 'Filter by Status' : filteredStatus | titlecase}}</span>
             <span class="f-right">
-                <span *ngIf="filteredStatus && filteredStatus.trim() !== ''" (click)="clearFilter('status')"
-                    class="clear-filter">x</span>
+                <span *ngIf="filteredStatus && filteredStatus.trim() !== ''" (click)="clearFilter('status')"class="">
+                    <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
+                </span>
                 <span (click)="filterStatus = !filterStatus"><i
                         class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
             </span>

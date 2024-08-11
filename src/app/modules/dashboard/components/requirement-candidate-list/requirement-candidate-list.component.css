@@ -252,18 +252,6 @@ input[type="text"] {
   font-size: 12px;
 }
 
-.clear-filter-search {
-  padding: 0px 4px;
-  border: 1px solid #3c40434d;
-  border-radius: 58%;
-  height: 18px;
-  width: 17px;
-  margin-top: 7px;
-  margin-right: 10px;
-  line-height: 14px;
-  font-size: 13px;
-}
-
 .dropdown {
   background: white;
   box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;

@@ -3,7 +3,9 @@
         <div class="text"><span class="heading">Requirement Report</span></div>
         <div class="input p-t-6 p-l-6 no-close p-relative c-pointer" (click)="teamListOpen = !teamListOpen">
             <span class="f-right d-flex"  >
-                <span *ngIf="selectedDepartment !== ''" (click)="clearFilter();teamListOpen = !teamListOpen" class="clear-filter c-pointer">x</span>
+                <span *ngIf="selectedDepartment !== ''" (click)="clearFilter();teamListOpen = !teamListOpen" class=" c-pointer">
+                    <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
+                </span>
                 <div class="c-pointer">
                     <i [ngClass]="teamListOpen ? 'fa fa-chevron-up' : 'fa fa-chevron-down'" class="m-l-5 p-r-10 s-text no-close"></i>
                 </div>

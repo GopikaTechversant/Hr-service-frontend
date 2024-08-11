@@ -168,10 +168,8 @@
                     <span class="p-relative">
                         <input type="text" class="input-interview-rounds-skill" placeholder="Search Skills"
                             (input)="getSkillSuggestions($event)" id="skillSearch" [(ngModel)]="searchvalue">
-                        <span *ngIf="searchvalue.trim() !== ''" (click)="clearFilter()"
-                            class="clear-filter c-pointer m-l-10 p-absolute m-t-20"><img
-                                src="assets/images/skill-close-icon.png" alt="" class="m-t-0 p-r-13" width="17px"
-                                height="17px">
+                        <span *ngIf="searchvalue.trim() !== ''" (click)="clearFilter()"class="c-pointer m-l-10 p-absolute m-t-20">
+                            <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
                         </span>
                         <div class="m-t-8 drop-list-skill" *ngIf="showSearchBar">
                             <div *ngFor="let suggestion of skillSuggestions" (click)="selectSkill(suggestion)">

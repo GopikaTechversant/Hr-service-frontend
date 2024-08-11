@@ -279,6 +279,11 @@ body {
   margin-right: 11px;
 }
 
+.fa-times-circle-o {
+  color: #4F4F4F;
+
+}
+
 .text-wrap {
   max-width: 90px !important;
   overflow: hidden;
@@ -336,7 +341,7 @@ tr {
 }
 
 .container-table tr {
-  border: 1px solid #EDEDED!important;
+  border: 1px solid #EDEDED !important;
 }
 
 .container-table td {
@@ -397,13 +402,13 @@ table {
   cursor: pointer;
 }
 
-.modal-header .modal-close button{
-  outline: none!important;
+.modal-header .modal-close button {
+  outline: none !important;
   border: 1px solid #e0dbdb;
 }
 
-a{
-  border: none!important;
-  outline: none!important;
+a {
+  border: none !important;
+  outline: none !important;
   color: #0034C4;
 }
