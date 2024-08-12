@@ -22,8 +22,9 @@
             </div>
         </div>
     </div>
+    <div *ngIf="!barchartList" class="no-data"> No Data Found</div>
     <div class="chart-container">
-        <div class="chart-inner-container">
+        <div class="chart-inner-container" *ngIf="totalApplicants || labels">
           <canvas id="barChartRecruiter"></canvas>
         </div>
       </div>

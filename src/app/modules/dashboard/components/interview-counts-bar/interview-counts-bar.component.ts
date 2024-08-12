@@ -86,25 +86,25 @@ export class InterviewCountsBarComponent implements OnInit {
       this.startDate = this.previousStartDate;
       this.endDate = this.previousEndDate;
       this.recruiterCheck = true;
-      this.lastSixMonth = true;
+      this.lastSixMonth = false;
       this.fetchBarchartDetails();
     }
   }
 
   fetchBarchartDetails(): void {
+    this.sixMonthCount =[];
     const url = '/dashboard/recruiter-chart';
     let params = [
       `start_date=${this.startDate}`,
       `end_date=${this.endDate}`,
       `last_six_month=${this.lastSixMonth}`,
       `recruiter=${this.recruiterCheck}`,
-      `end_date=${this.endDate}`,
       `requestId=${this.requestId}`
     ].filter(param => param.split('=')[1] !== '').join('&');
 
     this.apiService.get(`${url}?${params}`).subscribe((res: any) => {
       if (res?.data) {
-        this.sixMonthCount = res.data;
+        this.sixMonthCount = res?.data;
         this.labels = this.sixMonthCount.map((item: any) => item.userfirstName ?? item.month);
         this.hiredData = this.sixMonthCount.map((item: any) => +item.total_hired);
         this.sourcedData = this.sixMonthCount.map((item: any) => +item.total_totalsourced);

@@ -6,6 +6,7 @@
     display: flex;
     flex-direction: column;
 }
+
 .barchart {
     height: 100% !important;
     background-color: #FFFFFF;
@@ -66,9 +67,20 @@
 
 .chart-inner-container {
     width: 100%;
-    overflow-x: auto; /* Enable horizontal scrolling */
+    overflow-x: auto;
+    /* Enable horizontal scrolling */
 }
 
 .canvas-container {
     position: relative;
+}
+
+.no-data {
+    /* position: absolute; */
+    padding-left: 52%;
+    padding-top: 9%;
+    z-index: 9;
+    color: #c10a0a;
+    font-size: 16px;
+    font-weight: 500;
 }

@@ -121,67 +121,6 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
 
     this.chart = new Chart("MyChart", chartConfig);
   }
-
-  // doughnutLabelsLinePlugin = {
-  //   id: 'doughnutLabelsLine',
-  //   afterDraw: (chart: any) => {
-  //     const { ctx, chartArea: { top, bottom, left, right } } = chart;
-  //     const centerX = (left + right) / 2;
-  //     const centerY = (top + bottom) / 2;
-  //     const radius = (Math.min(right - left, bottom - top) / 2) * 0.9;
-
-  //     chart.data.datasets.forEach((dataset: any, i: any) => {
-  //       chart.getDatasetMeta(i).data.forEach((datapoint: { tooltipPosition: () => { x: any; y: any; }; }, index: number) => {
-  //         const { x, y } = datapoint.tooltipPosition();
-  //         const angle = Math.atan2(y - centerY, x - centerX);
-  //         const xLine = centerX + Math.cos(angle) * (radius + 30);
-  //         const yLine = centerY + Math.sin(angle) * (radius + 30);
-  //         const extraLine = 30 * Math.sign(Math.cos(angle));
-
-  //         ctx.beginPath();
-  //         ctx.moveTo(x, y);
-  //         ctx.arc(x, y, 2, 0, 2 * Math.PI, true);
-  //         ctx.fill();
-  //         ctx.moveTo(x, y);
-  //         ctx.lineTo(xLine, yLine);
-  //         ctx.lineTo(xLine + extraLine, yLine);
-  //         ctx.strokeStyle = "black";
-  //         ctx.stroke();
-
-  //         const boxSize = 10;
-  //         ctx.fillStyle = dataset.backgroundColor[index];
-  //         ctx.fillRect(xLine + extraLine, yLine - boxSize / 2, boxSize, boxSize);
-
-  //         ctx.font = '14px Roboto';
-  //         ctx.fontWeight = 'bold';
-
-  //         const textXPosition = extraLine >= 0 ? 'left' : 'right';
-
-  //         ctx.textAlign = textXPosition;
-  //         ctx.textBaseline = 'middle';
-  //         ctx.fillStyle = "#575F6E";
-
-  //         const label = chart.data.labels[index] + ':';
-  //         const value = chart.data.datasets[0].data[index];
-
-  //         ctx.save();
-  //         ctx.translate(xLine + extraLine + boxSize + 10, yLine);
-  //         ctx.rotate(angle);
-  //         ctx.fillText(label, 0, 0);
-  //         ctx.restore();
-
-  //         ctx.save();
-  //         ctx.translate(xLine + extraLine + boxSize + 30, yLine);
-  //         ctx.rotate(angle);
-  //         ctx.font = 'bold 16px Roboto';
-  //         ctx.fillText(value.toString(), 0, 0);
-  //         ctx.restore();
-  //       });
-  //     });
-  //   },
-  // };
-
-
   doughnutLabelsLinePlugin = {
     id: 'doughnutLabelsLine',
     afterDraw: (chart: any) => {
@@ -270,13 +209,77 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
           const value = chart.data.datasets[0].data[index];
 
           ctx.fillText(label, xLine + extraLine + boxSize + 10, finalYLine);
-
           ctx.font = 'bold 16px Roboto';
-          // if() ctx.fillText(value, xLine + extraLine + boxSize + 70, finalYLine);
-          if (index === 0 || index === 2 || index === 1) ctx.fillText(value, xLine + extraLine + boxSize + 67, finalYLine);
-          if (index === 3 || index === 4) ctx.fillText(value, xLine + extraLine + boxSize + 90, finalYLine);
+          if(this.sourceLabels?.length === 1) {
+            ctx.fillText(value, xLine + extraLine + boxSize + 77, finalYLine);
+          }else{
+            if (index === 0 || index === 2 || index === 1) ctx.fillText(value, xLine + extraLine + boxSize + 67, finalYLine);
+            if (index === 3 || index === 4) ctx.fillText(value, xLine + extraLine + boxSize + 90, finalYLine);
+          }  
         });
       });
     },
   };
+
+  // doughnutLabelsLinePlugin = {
+  //   id: 'doughnutLabelsLine',
+  //   afterDraw: (chart: any) => {
+  //     const { ctx, chartArea: { top, bottom, left, right } } = chart;
+  //     const centerX = (left + right) / 2;
+  //     const centerY = (top + bottom) / 2;
+  //     const radius = (Math.min(right - left, bottom - top) / 2) * 0.9;
+
+  //     chart.data.datasets.forEach((dataset: any, i: any) => {
+  //       chart.getDatasetMeta(i).data.forEach((datapoint: { tooltipPosition: () => { x: any; y: any; }; }, index: number) => {
+  //         const { x, y } = datapoint.tooltipPosition();
+  //         const angle = Math.atan2(y - centerY, x - centerX);
+  //         const xLine = centerX + Math.cos(angle) * (radius + 30);
+  //         const yLine = centerY + Math.sin(angle) * (radius + 30);
+  //         const extraLine = 30 * Math.sign(Math.cos(angle));
+
+  //         ctx.beginPath();
+  //         ctx.moveTo(x, y);
+  //         ctx.arc(x, y, 2, 0, 2 * Math.PI, true);
+  //         ctx.fill();
+  //         ctx.moveTo(x, y);
+  //         ctx.lineTo(xLine, yLine);
+  //         ctx.lineTo(xLine + extraLine, yLine);
+  //         ctx.strokeStyle = "black";
+  //         ctx.stroke();
+
+  //         const boxSize = 10;
+  //         ctx.fillStyle = dataset.backgroundColor[index];
+  //         ctx.fillRect(xLine + extraLine, yLine - boxSize / 2, boxSize, boxSize);
+
+  //         ctx.font = '14px Roboto';
+  //         ctx.fontWeight = 'bold';
+
+  //         const textXPosition = extraLine >= 0 ? 'left' : 'right';
+
+  //         ctx.textAlign = textXPosition;
+  //         ctx.textBaseline = 'middle';
+  //         ctx.fillStyle = "#575F6E";
+
+  //         const label = chart.data.labels[index] + ':';
+  //         const value = chart.data.datasets[0].data[index];
+
+  //         ctx.save();
+  //         ctx.translate(xLine + extraLine + boxSize + 10, yLine);
+  //         ctx.rotate(angle);
+  //         ctx.fillText(label, 0, 0);
+  //         ctx.restore();
+
+  //         ctx.save();
+  //         ctx.translate(xLine + extraLine + boxSize + 30, yLine);
+  //         ctx.rotate(angle);
+  //         ctx.font = 'bold 16px Roboto';
+  //         ctx.fillText(value.toString(), 0, 0);
+  //         ctx.restore();
+  //       });
+  //     });
+  //   },
+  // };
+
+
+
 }

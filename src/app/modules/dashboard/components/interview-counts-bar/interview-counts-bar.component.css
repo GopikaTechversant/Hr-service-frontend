@@ -51,3 +51,13 @@
 .filter-radio {
     width: 209px;
 }
+
+.no-data {
+    /* position: absolute; */
+    padding-left: 50%;
+    padding-top: 25%;
+    z-index: 9;
+    color: #c10a0a;
+    font-size: 16px;
+    font-weight: 500;
+}

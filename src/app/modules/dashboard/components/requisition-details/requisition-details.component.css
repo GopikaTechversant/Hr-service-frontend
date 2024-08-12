@@ -52,7 +52,7 @@
   
   .name {
     font-weight: 400;
-    font-size: 15px;
+    font-size: 16px;
     color: #575F6E;
     /* padding-bottom: 5px; */
   }
@@ -75,7 +75,9 @@
   }
   
   .icon {
-    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 69px;
     width: 69px;
     font-weight: 500;
@@ -84,11 +86,10 @@
     border-radius: 50%;
     border: 2px solid #005EC97A;
     background: #EBF0FF;
-    padding-top: 20px;
-    padding-left: 20px;
+    /* padding-top: 20px; */
+    /* padding-left: 20px; */
   
   }
-
 .date-input {
     border: 1px solid #E9E9E9;
     outline: none;
@@ -201,4 +202,12 @@
 
 .dropdown :hover {
     background-color: #eceaea;
+}
+
+@media (max-width: 1396px) and (min-width: 1000px) {
+  .icon{
+    font-size: 19px;
+    height: 55px;
+    width: 55px;
+  }
 }
