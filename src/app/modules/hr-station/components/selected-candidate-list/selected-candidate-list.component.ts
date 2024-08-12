@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { ExportService } from 'src/app/services/export.service';
 
 @Component({
   selector: 'app-selected-candidate-list',
@@ -42,7 +43,7 @@ export class SelectedCandidateListComponent {
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   candidateIds: any;
-  constructor(private dialog: MatDialog, private apiService: ApiService, private datePipe: DatePipe, private router: Router) { }
+  constructor(private dialog: MatDialog, private apiService: ApiService, private datePipe: DatePipe, private router: Router, private exportService: ExportService) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
@@ -97,9 +98,26 @@ export class SelectedCandidateListComponent {
         const idsParams = this.candidateIds.map((id: string) => `ids=${id}`).join('&');
         params += `&${idsParams}`;
       }
-      const exportUrl = `${environment.api_url}${url}?${params}`;
-      window.open(exportUrl, '_blank');
-      this.isExport = false;
+      const exportUrl = `${url}?${params}`;      
+      this.apiService.getTemplate(exportUrl).subscribe(
+        (data: Blob) => {
+          if (data.type === 'application/json') {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              const text = event.target?.result as string;
+              const jsonResponse = JSON.parse(text);
+              this.downloadAsExcel(jsonResponse.data, 'hired_candidate_list.xlsx');
+            };
+            reader.readAsText(data);
+          } else {
+            this.downloadBlob(data, 'hired_candidate_list.xlsx');
+          }
+        },
+        (error: any) => {
+          this.loader = false;
+          this.initialLoader = false;
+        }
+      ); this.isExport = false;
       if (this.isExport === false) this.fetchList();
       return;
     }
@@ -137,7 +155,17 @@ export class SelectedCandidateListComponent {
     return pages;
   }
 
+  downloadAsExcel(jsonData: any[], fileName: string) {
+    this.exportService.downloadAsExcel(jsonData, fileName);
+  }
 
+  downloadBlob(blob: Blob, fileName: string) {
+    this.exportService.downloadBlob(blob, fileName);
+  }
+
+  downloadAsJson(jsonResponse: any) {
+    this.exportService.downloadAsJson(jsonResponse);
+  }
 
   dateChange(event: any, range: string): void {
     let date = new Date(event?.value);

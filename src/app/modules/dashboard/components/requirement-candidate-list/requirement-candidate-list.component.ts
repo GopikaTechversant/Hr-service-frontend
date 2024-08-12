@@ -39,9 +39,7 @@ export class RequirementCandidateListComponent implements OnInit {
   ngOnInit(): void {
     this.initialLoader = true;
     this.filteredStatus = sessionStorage.getItem('requisition') ? sessionStorage.getItem('requisition') : '';
-    this.fetchcandidates('');
-    console.log("status",this.status);
-    
+    this.fetchcandidates('');    
   }
 
   fetchcandidates(searchQuery: string): void {
@@ -137,7 +135,6 @@ export class RequirementCandidateListComponent implements OnInit {
 
   selectStatusFilter(item: string): void {
     this.filteredStatus = item;
-    console.log("this.filteredStatus",this.filteredStatus);
     sessionStorage.setItem('requisition', this.filteredStatus);
     this.currentPage = 1;
     this.limit = 10;

@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
+import { ExportService } from 'src/app/services/export.service';
 import { environment } from 'src/environments/environments';
 
 @Component({
@@ -35,7 +36,7 @@ export class DailyReportComponent implements OnInit {
   loader: boolean = false;
   report: boolean = false;
   url: any;
-  constructor(private apiService: ApiService, private datePipe: DatePipe) { }
+  constructor(private apiService: ApiService, private datePipe: DatePipe, private exportService: ExportService) { }
 
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -52,7 +53,7 @@ export class DailyReportComponent implements OnInit {
 
   isNumberOrDate(value: any): boolean {
     return !isNaN(value);
-}
+  }
 
   fetchDetails(): void {
     if (!this.initialLoader) this.loader = true
@@ -66,9 +67,26 @@ export class DailyReportComponent implements OnInit {
       `report=${this.report}`
     ].filter(param => param.split('=')[1] !== '').join('&');  // Filter out empty parameters
     if (this.report) {
-      const exportUrl = `${environment.api_url}${url}?${params}`;
-      window.open(exportUrl, '_blank');
-      this.report = false;
+      const exportUrl = `${url}?${params}`;      
+      this.apiService.getTemplate(exportUrl).subscribe(
+        (data: Blob) => {
+          if (data.type === 'application/json') {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              const text = event.target?.result as string;
+              const jsonResponse = JSON.parse(text);
+              this.downloadAsExcel(jsonResponse.data, 'daily_report.xlsx');
+            };
+            reader.readAsText(data);
+          } else {
+            this.downloadBlob(data, 'daily_report.xlsx');
+          }
+        },
+        (error: any) => {
+          this.loader = false;
+          this.initialLoader = false;
+        }
+      ); this.report = false;
       if (this.report === false) this.fetchDetails();
       return;
     }
@@ -105,6 +123,18 @@ export class DailyReportComponent implements OnInit {
       pages.push(this.lastPage);
     }
     return pages;
+  }
+
+  downloadAsExcel(jsonData: any[], fileName: string) {
+    this.exportService.downloadAsExcel(jsonData, fileName);
+  }
+
+  downloadBlob(blob: Blob, fileName: string) {
+    this.exportService.downloadBlob(blob, fileName);
+  }
+
+  downloadAsJson(jsonResponse: any) {
+    this.exportService.downloadAsJson(jsonResponse);
   }
 
   selectRecruiter(recruiter: string, recruiterId: string): void {

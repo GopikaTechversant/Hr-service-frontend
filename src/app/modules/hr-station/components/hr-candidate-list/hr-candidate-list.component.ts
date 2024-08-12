@@ -7,6 +7,8 @@ import { WarningBoxComponent } from 'src/app/components/warning-box/warning-box.
 import { DatePipe } from '@angular/common';
 import { environment } from 'src/environments/environments';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { ExportService } from 'src/app/services/export.service';
 
 @Component({
   selector: 'app-hr-candidate-list',
@@ -40,7 +42,8 @@ export class HrCandidateListComponent implements OnInit {
   endDate: string | null = this.datePipe.transform(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   candidateIds: any;
   status: any;
-  constructor(private dialog: MatDialog, private apiService: ApiService, private datePipe: DatePipe, private router: Router, private route: ActivatedRoute) { }
+  constructor(private dialog: MatDialog, private apiService: ApiService, private datePipe: DatePipe, private router: Router,
+    private route: ActivatedRoute, private toastr: ToastrService, private exportService: ExportService) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
@@ -63,6 +66,8 @@ export class HrCandidateListComponent implements OnInit {
       this.displayPosition = '';
       this.positionId = '';
     }
+    this.limit = 12;
+    this.currentPage = 1
     this.fetchList();
     this.fetchRequirements();
     this.fetchStatus();
@@ -95,16 +100,33 @@ export class HrCandidateListComponent implements OnInit {
       `toDate=${this.endDate}`,
       `status_filter=${this.filteredStatus}`,
       `report=${this.isExport}`
-    ].filter(param => param.split('=')[1] !== '').join('&');  
+    ].filter(param => param.split('=')[1] !== '').join('&');
 
     if (this.isExport) {
       if (this.candidateIds) {
         const idsParams = this.candidateIds.map((id: string) => `ids=${id}`).join('&');
         params += `&${idsParams}`;
       }
-      const exportUrl = `${environment.api_url}${url}?${params}`;
-      window.open(exportUrl, '_blank');
-      this.isExport = false;
+      const exportUrl = `${url}?${params}`;      
+      this.apiService.getTemplate(exportUrl).subscribe(
+        (data: Blob) => {
+          if (data.type === 'application/json') {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              const text = event.target?.result as string;
+              const jsonResponse = JSON.parse(text);
+              this.downloadAsExcel(jsonResponse.data, 'hr_candidate_list.xlsx');
+            };
+            reader.readAsText(data);
+          } else {
+            this.downloadBlob(data, 'hr_candidate_list.xlsx');
+          }
+        },
+        (error: any) => {
+          this.loader = false;
+          this.initialLoader = false;
+        }
+      ); this.isExport = false;
       if (this.isExport === false) this.fetchList();
       return;
     }
@@ -120,9 +142,30 @@ export class HrCandidateListComponent implements OnInit {
         this.lastPage = totalPages;
         if (this.currentPage > totalPages) this.currentPage = totalPages;
       }
-    });
+    },
+      (error: any) => {
+        this.loader = false;
+        this.initialLoader = false;
+        if (error.status === 500) {
+          this.toastr.error('Internal server error');
+        } else {
+          this.toastr.error('Something went wrong');
+        }
+      }
+    );
   }
 
+  downloadAsExcel(jsonData: any[], fileName: string) {
+    this.exportService.downloadAsExcel(jsonData, fileName);
+  }
+
+  downloadBlob(blob: Blob, fileName: string) {
+    this.exportService.downloadBlob(blob, fileName);
+  }
+
+  downloadAsJson(jsonResponse: any) {
+    this.exportService.downloadAsJson(jsonResponse);
+  }
   getSelectedCandidateIds(): void {
     const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
     this.candidateIds = selectedCandidates.map((candidate: { serviceId: any; }) => candidate?.serviceId);
@@ -172,9 +215,9 @@ export class HrCandidateListComponent implements OnInit {
   searchCandidate(searchTerm: string): void {
     this.searchKeyword = searchTerm;
     if (this.searchKeyword.trim() === '') {
-      this.currentPage = 1; 
-      this.limit = 12; 
-      this.fetchList(); 
+      this.currentPage = 1;
+      this.limit = 12;
+      this.fetchList();
       return;
     }
     this.currentPage = 1;
