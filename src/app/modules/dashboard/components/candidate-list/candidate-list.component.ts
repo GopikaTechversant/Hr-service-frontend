@@ -7,6 +7,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environments';
 import { AssignRequirementComponent } from '../assign-requirement/assign-requirement.component';
+import { ExportService } from 'src/app/services/export.service';
 @Component({
   selector: 'app-candidate-list',
   templateUrl: './candidate-list.component.html',
@@ -37,7 +38,7 @@ export class CandidateListComponent {
   loader: boolean = true;
   resumeSourceIds: any;
 
-  constructor(private apiService: ApiService, private router: Router, private dialog: MatDialog, private toastr: ToastrService) { }
+  constructor(private apiService: ApiService, private router: Router, private dialog: MatDialog, private toastr: ToastrService, private exportService: ExportService) { }
 
   ngOnInit(): void {
     this.initialLoader = true;
@@ -68,8 +69,32 @@ export class CandidateListComponent {
         const idsParams = this.candidateIds.map((id: string) => `ids=${id}`).join('&');
         params += `&${idsParams}`;
       }
-      const exportUrl = `${environment.api_url}${url}?${params}`;
-      window.open(exportUrl, '_blank');
+      const exportUrl = `${url}?${params}`;      
+      console.log(exportUrl);
+      
+      this.apiService.getTemplate(exportUrl).subscribe(
+        (data: Blob) => {
+          console.log(data);
+          
+          if (data.type === 'application/json') {
+            console.log(data);
+            
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              const text = event.target?.result as string;
+              const jsonResponse = JSON.parse(text);
+              this.downloadAsExcel(jsonResponse.data, 'candidate_list.xlsx');
+            };
+            reader.readAsText(data);
+          } else {
+            this.downloadBlob(data, 'candidate_list.xlsx');
+          }
+        },
+        (error: any) => {
+          this.loader = false;
+          this.initialLoader = false;
+        }
+      ); 
       this.report = false;
       if (this.report === false) this.fetchCandidates();
       return;
@@ -91,6 +116,18 @@ export class CandidateListComponent {
     this.fetchCandidates();
   }
 
+  downloadAsExcel(jsonData: any[], fileName: string) {
+    this.exportService.downloadAsExcel(jsonData, fileName);
+  }
+
+  downloadBlob(blob: Blob, fileName: string) {
+    this.exportService.downloadBlob(blob, fileName);
+  }
+
+  downloadAsJson(jsonResponse: any) {
+    this.exportService.downloadAsJson(jsonResponse);
+  }
+
   onCandidateSelect(candidate: any): void {
     if (candidate.candidatesAddingAgainst !== null) this.toastr.warning('Candidate already added to requisition');
     else this.getSelectedCandidateIds();
@@ -98,19 +135,14 @@ export class CandidateListComponent {
 
   getSelectedCandidateIds(): void {
     const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; candidatesAddingAgainst: any }) => candidate.isSelected && candidate.candidatesAddingAgainst === null);
-
-    console.log("selectedCandidates",selectedCandidates);
-    
     this.candidates = selectedCandidates.map((candidate: { candidateId: any; resumeSourceId: any; }) => ({
       candidatesId: candidate?.candidateId,
       resumeSource: candidate?.resumeSourceId
     }));
-    console.log("this.candidates",this.candidates);
-    
     // this.candidateIdsRequirement = selectedCandidates.filter((candidate: { candidatesAddingAgainst: any; }) => candidate.candidatesAddingAgainst === null)
     //   .map((candidate: { candidateId: any; }) => candidate?.candidateId);
     //   console.log(" this.candidateIdsRequirement", this.candidateIdsRequirement);
-      
+
   }
 
   // getSelectedCandidateServiceIds(): void {

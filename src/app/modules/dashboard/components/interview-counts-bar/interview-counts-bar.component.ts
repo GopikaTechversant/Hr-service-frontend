@@ -60,14 +60,11 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
   }
   
   tryCreateChart() {
-    // Ensure the canvas element exists before creating the chart
     setTimeout(() => {
       const canvasElement = document.getElementById('barChartInterview') as HTMLCanvasElement;
       if (canvasElement && this.sixMonthCount.length) {
         this.createBarChart();
-      } else {
-        console.warn('Canvas element not found or no data available for the chart.');
-      }
+      } 
     }, 0);
   }
   
@@ -86,9 +83,9 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
       if (res?.data) {
         this.sixMonthCount = res.data;
         this.labels = this.sixMonthCount.map((item: any) => item.userfirstName ?? item.month);
-        this.hiredData = this.sixMonthCount.map((item: any) => +item.total_hired);
-        this.sourcedData = this.sixMonthCount.map((item: any) => +item.total_totalsourced);
-        this.offeredData = this.sixMonthCount.map((item: any) => +item.total_offerreleased);
+        this.hiredData = this.sixMonthCount.map((item: any) => +item.total_hired ?? '0');
+        this.sourcedData = this.sixMonthCount.map((item: any) => +item.total_totalsourced ?? '0');
+        this.offeredData = this.sixMonthCount.map((item: any) => +item.total_offerreleased ?? '0');
         this.tryCreateChart(); // Updated to call tryCreateChart
       }
     });
@@ -121,10 +118,7 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
     if (this.chart) this.chart.destroy();
 
     const canvasElement = document.getElementById('barChartInterview') as HTMLCanvasElement;
-    if (!canvasElement) {
-      console.error('Canvas element not found');
-      return;
-    }
+    if (!canvasElement) return;
 
     this.chart = new Chart(canvasElement, {
       type: 'bar',

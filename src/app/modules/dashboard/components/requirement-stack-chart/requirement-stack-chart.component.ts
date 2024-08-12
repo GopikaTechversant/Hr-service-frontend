@@ -74,9 +74,7 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
     const canvasElement = document.getElementById('barChartRecruiter') as HTMLCanvasElement;
     if (canvasElement) {
         this.createBarChart();
-    } else {
-        console.error('Canvas element not found!');
-    }
+    } 
 }
 
   clearFilter(): void {
@@ -94,9 +92,7 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
         this.hiredData = this.barchartList.map((item: any) => +item?.hire_count);
         this.totalApplicants = this.barchartList.map((item: any) => +item?.total_applicant);
         this.offeredData = this.barchartList.map((item: any) => +item?.offered_Count);
-        this.technicalData = this.barchartList.map((item: any) => +item?.technical_selected_Count);
-        console.log(this.labels);
-        
+        this.technicalData = this.barchartList.map((item: any) => +item?.technical_selected_Count);        
         this.createBarChart();        
       }
     });
@@ -131,9 +127,7 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
     const chartContainer = document.querySelector('.chart-inner-container') as HTMLElement;
     if (chartContainer) {
       chartContainer.style.width = `${chartWidth}px`;
-      chartContainer.style.overflowX = 'auto'; // Enable horizontal scrolling if needed
-    } else {
-      console.error('Chart container not found!');
+      chartContainer.style.overflowX = 'auto'; 
     }
   
     const canvasElement = document.getElementById('barChartRecruiter') as HTMLCanvasElement;
@@ -202,9 +196,6 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
                 maxRotation: 0, // No rotation
                 minRotation: 0, // No rotation
                 callback: (tickValue: string | number, index: number): string => {
-                  // Use the labels array to map tick values to custom labels
-                  console.log( this.labels[index].split(' '));
-                  
                   if (this.labels && index < this.labels.length) {
                     return  this.labels[index].split(' ').join('\n');
                   }

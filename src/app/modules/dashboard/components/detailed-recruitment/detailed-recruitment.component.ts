@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environments';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
+import { ExportService } from 'src/app/services/export.service';
+
 @Component({
   selector: 'app-detailed-recruitment',
   templateUrl: './detailed-recruitment.component.html',
@@ -34,8 +34,7 @@ export class DetailedRecruitmentComponent implements OnInit {
   data: any;
   selectedDataBy: string = 'position';
 
-  constructor(private apiService: ApiService, private router: Router) {
-  }
+  constructor(private apiService: ApiService, private router: Router, private exportService: ExportService) { }
 
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -47,7 +46,6 @@ export class DetailedRecruitmentComponent implements OnInit {
   ngOnInit(): void {
     this.selectedRecruiterId = '';
     this.fetchCandidateList();
-    // this.fetchRecruitersList();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -76,19 +74,54 @@ export class DetailedRecruitmentComponent implements OnInit {
         const idsParams = this.candidateIds.map((id: string) => `ids=${id}`).join('&');
         params += `&${idsParams}`;
       }
-      const exportUrl = `${environment.api_url}${url}?${params}`;
-      window.open(exportUrl, '_blank');
+      const exportUrl = `${url}?${params}`;      
+      this.apiService.getTemplate(exportUrl).subscribe(
+        (data: Blob) => {
+          if (data.type === 'application/json') {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              const text = event.target?.result as string;
+              const jsonResponse = JSON.parse(text);
+              this.downloadAsExcel(jsonResponse.data, 'recruitment_report.xlsx');
+            };
+            reader.readAsText(data);
+          } else {
+            this.downloadBlob(data, 'recruitment_report.xlsx');
+          }
+        },
+        (error: any) => {
+          this.loader = false;
+          this.initialLoader = false;
+        }
+      );
       this.report = false;
       if (this.report === false) this.fetchCandidateList();
       return;
     }
     this.apiService.get(`${url}?${params}`).subscribe((res: any) => {
-      this.candidateList = res?.data;
-      this.totalCount = res?.total;
-      const totalPages = Math.ceil(this.totalCount / this.pageSize);
-      this.lastPage = totalPages;
-      if (this.currentPage > totalPages) this.currentPage = totalPages;
+      if (res?.data) {
+        this.candidateList = res?.data;
+        this.totalCount = res?.total;
+        const totalPages = Math.ceil(this.totalCount / this.pageSize);
+        this.lastPage = totalPages;
+        if (this.currentPage > totalPages) this.currentPage = totalPages;
+      }
+    }, (error: any) => {
+      this.loader = false;
+      this.initialLoader = false;
     })
+  }
+
+  downloadAsExcel(jsonData: any[], fileName: string) {
+    this.exportService.downloadAsExcel(jsonData, fileName);
+  }
+
+  downloadBlob(blob: Blob, fileName: string) {
+    this.exportService.downloadBlob(blob, fileName);
+  }
+
+  downloadAsJson(jsonResponse: any) {
+    this.exportService.downloadAsJson(jsonResponse);
   }
 
   onRadioChange(event: Event): void {

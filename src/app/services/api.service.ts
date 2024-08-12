@@ -10,14 +10,13 @@ export class ApiService {
   authToken: any;
   constructor(private http: HttpClient,) {
     const headers = this.createHeaders();
-   }
+  }
 
-  private createHeaders():HttpHeaders{
-    const token = localStorage.getItem('userToken') || '';
+  private createHeaders(): HttpHeaders {
+    const token = (localStorage.getItem('userToken') || '').trim(); // Trim any whitespace
     return new HttpHeaders({
       'Authorization': `Bearer ${token}`,
-      'ngrok-skip-browser-warning': 'true'
-    })
+    });
   }
 
   getToken() {
@@ -29,24 +28,33 @@ export class ApiService {
     }
   }
 
+
   get(url: string): Observable<any> {
-    return this.http.get(`${environment.api_url}${url}`,{ headers: this.createHeaders() });
+    return this.http.get(`${environment.api_url}${url}`, { headers: this.createHeaders() });
   }
 
   // Generic POST method
   post(url: string, data: any): Observable<any> {
-    return this.http.post(`${environment.api_url}${url}`, data,{ headers: this.createHeaders() });
+    return this.http.post(`${environment.api_url}${url}`, data, { headers: this.createHeaders() });
   }
 
   // Generic PUT method
   update(url: string, data: any): Observable<any> {
-    return this.http.put(`${environment.api_url}${url}`, data,{ headers: this.createHeaders() });
+    return this.http.put(`${environment.api_url}${url}`, data, { headers: this.createHeaders() });
   }
 
   // Generic DELETE method
   delete(url: string): Observable<any> {
-    return this.http.delete(`${environment.api_url}${url}`,{ headers: this.createHeaders() });
+    return this.http.delete(`${environment.api_url}${url}`, { headers: this.createHeaders() });
   }
+
+  getTemplate(url: string): Observable<Blob> {
+    return this.http.get(`${environment.api_url}${url}`, {
+      headers: this.createHeaders(),
+      responseType: 'blob' // Explicitly set responseType to 'blob'
+    });
+  }
+   
 
   // private getHeaders(): HttpHeaders {
   //   const authToken = localStorage.getItem('userToken');
@@ -80,13 +88,5 @@ export class ApiService {
   //   return this.http.delete(`${environment.api_url}${url}`);
   // }
 
-  
+
 }
-
-
-
-
-
-
-
-
