@@ -56,16 +56,12 @@ export class DashboardComponent implements OnInit {
 
   dateChange(event: any, range: string): void {
     let date = new Date(event?.value);
-    if (range == 'startDate') {
-        this.startDate = this.datePipe.transform(date, 'dd/MM/yyyy');
-    }
-    if (range == 'endDate') {
-        this.endDate = this.datePipe.transform(date, 'dd/MM/yyyy');
-    }
+    if (range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    if (range == 'endDate') this.endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
     this.startDateChange.emit(this.startDate);
-    this.endDateChange.emit(this.endDate);    
+    this.endDateChange.emit(this.endDate);
     this.fetchcount();
-}
+  }
 
   fetchcount(): void {
     this.apiService.get(`/dashboard/card-data?requestId=${this.positionId}&fromDate=${this.startDate}&todate=${this.endDate}`).subscribe((res: any) => {

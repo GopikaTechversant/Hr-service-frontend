@@ -13,7 +13,7 @@
         </div>
     </div>
     <div *ngIf="sixMonthCount?.length === 0 || !sixMonthCount" class="no-data"> No Data Found</div>
-    <div *ngIf="sixMonthCount.length !== 0" >
+    <div *ngIf="sixMonthCount?.length !== 0" >
         <canvas id="barChartInterview"></canvas>
     </div>
 </div>

@@ -87,7 +87,7 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
   }
 
   fetchBarchartDetails(): void {
-    this.apiService.get(`/dashboard/department-chart?teamId=${this.selectedTeamId}&start_date=${this.startDate}&end_date${this.endDate}`).subscribe((res: any) => {
+    this.apiService.get(`/dashboard/department-chart?teamId=${this.selectedTeamId}&start_date=${this.startDate}&end_date=${this.endDate}`).subscribe((res: any) => {
       if (res) {
         this.barchartList = res;
         this.labels = this.barchartList.map((item: any) => item.requestName ?? item.teamName);
@@ -220,9 +220,9 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
                 display: false,
               },
               ticks: {
-                display: false,
+                display: true,
                 font: { size: 12 },
-                autoSkip: false
+                autoSkip: true
               }
             }
           },

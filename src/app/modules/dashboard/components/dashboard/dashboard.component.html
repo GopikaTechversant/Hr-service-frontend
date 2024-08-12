@@ -2,15 +2,14 @@
     <div class="m-t-5 m-b-8 d-flex justify-between">
         <div class="flex-start m-t-10"><span class="head">Dashboard</span></div>
         <div class="d-flex j-end">
-            <div class="date-filters d-flex p-r-10">
+            <div class="date-filters d-flex p-r-10 ">
                 <div class="d-flex align-items-center">
                     <span class="filter p-r-10 p-t-10">From</span>
                     <div class="p-relative">
                         <input class="p-l-5 date-input c-pointer" placeholder="29/02/11" matInput
-                        [matDatepicker]="pickerFromDate" [value]="startDate | date:'dd/MM/yyyy'" id="startDate"
-                        [max]="today" (dateChange)="dateChange($event, 'startDate')" [ngModel]="startDate"
-                        (click)="pickerFromDate.open()">
-                    
+                            [matDatepicker]="pickerFromDate" [value]="startDate | date:'yyyy-MM-dd'" id="startDate"
+                            [max]="today" (dateChange)="dateChange($event, 'startDate')" [ngModel]="startDate"
+                            (click)="pickerFromDate.open()">
                         <mat-datepicker #pickerFromDate></mat-datepicker>
                         <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"
                             (click)="pickerFromDate.open()"></i>
@@ -21,14 +20,14 @@
                     <div class="p-relative">
                         <input class="p-l-5 date-input c-pointer" placeholder="29/02/11" matInput
                             [matDatepicker]="pickerToDate" (dateChange)="dateChange($event, 'endDate')"
-                            [ngModel]="endDate" (click)="pickerToDate.open()" [value]="endDate | date:'dd/MM/yyyy'"
+                            [ngModel]="endDate" (click)="pickerToDate.open()" [value]="endDate | date:'yyyy-MM-dd'"
                             id="endDate" [min]="startDate" [max]="today">
                         <mat-datepicker #pickerToDate></mat-datepicker>
                         <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"
                             (click)="pickerToDate.open()"></i>
                     </div>
                 </div>
-            </div>            
+            </div>    
             <div class="d-flex m-l-10">
                 <div class="input p-t-6 p-l-6 no-close p-relative c-pointer"
                     (click)="requestList_open = !requestList_open">

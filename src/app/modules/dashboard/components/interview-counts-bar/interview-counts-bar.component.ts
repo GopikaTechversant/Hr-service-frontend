@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, AfterViewInit, HostListener } from '@angular/core';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import Chart from 'chart.js/auto';
 import { ApiService } from 'src/app/services/api.service';
@@ -8,44 +8,35 @@ import { DatePipe } from '@angular/common';
   selector: 'app-interview-counts-bar',
   templateUrl: './interview-counts-bar.component.html',
   styleUrls: ['./interview-counts-bar.component.css'],
-  providers: [DatePipe],
-  host: {
-    '(document:click)': 'onBodyClick($event)'
-  }
+  providers: [DatePipe]
 })
-export class InterviewCountsBarComponent implements OnInit {
+export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() startDate: any;
   @Input() endDate: any;
   @Input() positionId: any;
   chart: any;
-  sixMonthCount: any;
-  labels: any;
-  dataSets: any[] = [];
-  teamDetails: any;
-  showDepartment: boolean = false;
-  teamId: any = '';
-  teamName: string = '';
-  barcounts: any[] = [];
-  label: any[] = [];
+  sixMonthCount: any[] = [];
+  labels: any[] = [];
   hiredData: any[] = [];
   sourcedData: any[] = [];
   offeredData: any[] = [];
   recruiterCheck: boolean = true;
-  lastSixMonth: boolean = false
+  lastSixMonth: boolean = false;
   previousStartDate: any;
   previousEndDate: any;
   requestId: any;
-  constructor(private apiService: ApiService, private datePipe: DatePipe) { }
+
+  constructor(private apiService: ApiService, private datePipe: DatePipe) {}
 
   ngOnInit(): void {
     Chart.register(ChartDataLabels);
+    this.previousStartDate = this.startDate;
+    this.previousEndDate = this.endDate;
     this.fetchBarchartDetails();
-    this.previousStartDate = this.startDate
-    this.previousEndDate = this.endDate
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if ((changes['positionId'] && !changes['positionId'].isFirstChange())) {
+    if (changes['positionId'] && !changes['positionId'].isFirstChange()) {
       this.requestId = changes['positionId'].currentValue;
       this.fetchBarchartDetails();
     } else if (changes['startDate'] && !changes['startDate'].isFirstChange()) {
@@ -64,16 +55,45 @@ export class InterviewCountsBarComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    Chart.register(ChartDataLabels);
+    // Ensure that the chart is created only after the view has fully initialized
+    this.tryCreateChart();
   }
-
-  onBodyClick(event: MouseEvent): void {
-    const target = event.target as HTMLElement;
-    if (!target.closest('.no-close')) {
-      this.showDepartment = false;
-    }
+  
+  tryCreateChart() {
+    // Ensure the canvas element exists before creating the chart
+    setTimeout(() => {
+      const canvasElement = document.getElementById('barChartInterview') as HTMLCanvasElement;
+      if (canvasElement && this.sixMonthCount.length) {
+        this.createBarChart();
+      } else {
+        console.warn('Canvas element not found or no data available for the chart.');
+      }
+    }, 0);
   }
-
+  
+  fetchBarchartDetails(): void {
+    this.sixMonthCount = [];
+    const url = '/dashboard/recruiter-chart';
+    let params = [
+      `start_date=${this.startDate}`,
+      `end_date=${this.endDate}`,
+      `last_six_month=${this.lastSixMonth}`,
+      `recruiter=${this.recruiterCheck}`,
+      `requestId=${this.requestId}`
+    ].filter(param => param.split('=')[1] !== '').join('&');
+  
+    this.apiService.get(`${url}?${params}`).subscribe((res: any) => {
+      if (res?.data) {
+        this.sixMonthCount = res.data;
+        this.labels = this.sixMonthCount.map((item: any) => item.userfirstName ?? item.month);
+        this.hiredData = this.sixMonthCount.map((item: any) => +item.total_hired);
+        this.sourcedData = this.sixMonthCount.map((item: any) => +item.total_totalsourced);
+        this.offeredData = this.sixMonthCount.map((item: any) => +item.total_offerreleased);
+        this.tryCreateChart(); // Updated to call tryCreateChart
+      }
+    });
+  }
+  
   onRadioChange(event: Event): void {
     const target = event.target as HTMLInputElement;
     if (target.value === 'Last 6 Months') {
@@ -89,34 +109,24 @@ export class InterviewCountsBarComponent implements OnInit {
       this.lastSixMonth = false;
       this.fetchBarchartDetails();
     }
+  
+    this.tryCreateChart(); // Updated to call tryCreateChart
   }
-
-  fetchBarchartDetails(): void {
-    this.sixMonthCount =[];
-    const url = '/dashboard/recruiter-chart';
-    let params = [
-      `start_date=${this.startDate}`,
-      `end_date=${this.endDate}`,
-      `last_six_month=${this.lastSixMonth}`,
-      `recruiter=${this.recruiterCheck}`,
-      `requestId=${this.requestId}`
-    ].filter(param => param.split('=')[1] !== '').join('&');
-
-    this.apiService.get(`${url}?${params}`).subscribe((res: any) => {
-      if (res?.data) {
-        this.sixMonthCount = res?.data;
-        this.labels = this.sixMonthCount.map((item: any) => item.userfirstName ?? item.month);
-        this.hiredData = this.sixMonthCount.map((item: any) => +item.total_hired);
-        this.sourcedData = this.sixMonthCount.map((item: any) => +item.total_totalsourced);
-        this.offeredData = this.sixMonthCount.map((item: any) => +item.total_offerreleased);
-        this.createBarChart();
-      }
-    });
+  
+  @HostListener('document:click', ['$event'])
+  onBodyClick(event: Event): void {
   }
-
+  
   createBarChart(): void {
     if (this.chart) this.chart.destroy();
-    this.chart = new Chart('barChartInterview', {
+
+    const canvasElement = document.getElementById('barChartInterview') as HTMLCanvasElement;
+    if (!canvasElement) {
+      console.error('Canvas element not found');
+      return;
+    }
+
+    this.chart = new Chart(canvasElement, {
       type: 'bar',
       data: {
         labels: this.labels,
@@ -161,17 +171,20 @@ export class InterviewCountsBarComponent implements OnInit {
         scales: {
           y: {
             stacked: true,
-            beginAtZero: true,
-            ticks: {}
+            // beginAtZero: true,
+            type: 'logarithmic',
+            grid: {
+              display: false
+            },
+
           },
           x: {
             stacked: true,
-            beginAtZero: false,
             grid: {
               display: false
             },
             min: 0,
-            max: this.labels.length > 5 ? 5 : this.labels.length, // Display a maximum of 5 labels at a time
+            max: this.labels.length > 5 ? 5 : this.labels.length,
           }
         },
         layout: {
@@ -222,5 +235,4 @@ export class InterviewCountsBarComponent implements OnInit {
       plugins: [ChartDataLabels]
     });
   }
-
 }
