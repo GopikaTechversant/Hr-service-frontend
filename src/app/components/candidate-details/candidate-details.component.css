@@ -33,21 +33,21 @@
     outline: none;
     cursor: pointer;
     padding: 4px 18px;
-    transition: 0.3s;
+    /* transition: 0.3s; */
     font-size: 17px;
     color: #575F6E;
     font-weight: 400;
     height: 35px;
 }
 
-.tab button:hover {
+/* .tab button:hover {
     background-color: #005EC9;
     color: #FFFFFF;
     border: 1px solid #005EC9;
     border-radius: 54px;
     margin-left: 3px !important;
     padding-bottom: 5px !important;
-}
+} */
 
 .tab button.active {
     background-color: #005EC9;

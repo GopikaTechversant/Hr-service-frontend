@@ -190,7 +190,7 @@
                         </div>
                         <div class="details">
                             <span class="sub-head">
-                                <img src="assets/images/candidate-detail/user.svg" class="p-r-10" alt=""> Current
+                                <img src="assets/images/candidate-detail/user.svg" class="p-r-6" alt=""> Current
                                 Station
                             </span>
                             <span class="text-wrap" [title]="candidateDetails?.currentStation">:
@@ -306,7 +306,7 @@
                                     <tr class="candidate" *ngIf="data?.station !== null">
                                         <td class="text-start" *ngIf="data?.station !== null">{{item?.positionName |
                                             titlecase}}</td>
-                                        <td class="text-start">{{ data?.station | titlecase }}
+                                        <td class="text-start">{{ data?.station | titlecase }} 
                                         </td>
                                         <td class="text-start">{{data?.interviewType === 0 ? 'Interview Scheduled' :
                                             'Re-Scheduled' }}</td>
@@ -322,7 +322,7 @@
                                 </ng-container>
                             </ng-container>
                         </ng-container>
-                        <div *ngIf="(!CandidateHistory) && !loader && !initialLoader" class="no-data">
+                        <div *ngIf="(CandidateHistory?.length == 0) && !loader && !initialLoader" class="no-data">
                             No Data Found
                         </div>
                         <div *ngIf="initialLoader && !loader" class="row m-l-20 initial-loader">
@@ -450,7 +450,7 @@
                                 </ng-template>
                             </ng-container>
                         </ng-container>
-                        <div *ngIf="(!CandidateHistory) && !loader && !initialLoader " class="no-data">
+                        <div *ngIf="(CandidateHistory?.length == 0) && !loader && !initialLoader " class="no-data">
                             No Data Found
                         </div>
                         <div *ngIf="initialLoader && !loader" class="row m-l-20 initial-loader">
@@ -501,7 +501,7 @@
                                 </ng-container>
                             </ng-container>
                         </ng-container>
-                        <div *ngIf="(!CandidateHistory) && !loader && !initialLoader " class="no-data">
+                        <div *ngIf="(CandidateHistory?.length == 0) && !loader && !initialLoader " class="no-data">
                             No Data Found
                         </div>
                         <div *ngIf="initialLoader && !loader" class="row m-l-20 initial-loader">
