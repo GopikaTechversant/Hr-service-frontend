@@ -229,6 +229,8 @@ export class HrCandidateListComponent implements OnInit {
     this.experience = experience;
     this.currentPage = 1;
     this.limit = 12;
+    console.log(this.experience);
+    
     this.fetchList();
   }
 

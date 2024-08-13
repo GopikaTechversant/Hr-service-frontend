@@ -35,7 +35,7 @@
         </div>
         <div class="search-div d-flex align-items-center m-b-10">
             <input type="text" class="input" placeholder="Search By Experience" [(ngModel)]="experience"
-                (keydown)="searchByExperience(experience)"  (keydown)="experienceValidation($event)">
+                (ngModelChange)="searchByExperience(experience)"  (keydown)="experienceValidation($event)">
                 <span *ngIf="experience && experience.trim() !== ''" (click)="clearFilter('experience')" class=" c-pointer">
                 <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
             </span>

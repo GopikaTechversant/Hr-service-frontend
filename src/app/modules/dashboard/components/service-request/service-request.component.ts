@@ -98,8 +98,8 @@ export class ServiceRequestComponent implements OnInit {
     this.currentYear = new Date().getFullYear();
     this.maxDate = new Date();
     this.minDate = new Date();
+    if(this.requestId) this.fetchDetails()
     this.fetchStations();
-    this.fetchDetails()
     this.fetchServiceTeam();
     this.fetchDesignation();
     this.fetchPanel();
@@ -115,6 +115,7 @@ export class ServiceRequestComponent implements OnInit {
       this.showFormats = false;
     }
   }
+
   fetchDetails(): void {
     this.apiService.get(`/service-request/view?requestId=${this.requestId}`).subscribe((res: any) => {
       if (res?.data) this.requirement_details = res?.data;
