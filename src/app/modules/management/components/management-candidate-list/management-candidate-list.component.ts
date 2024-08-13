@@ -64,7 +64,17 @@ export class ManagementCandidateListComponent implements OnInit {
         this.lastPage = totalPages;
         if (this.currentPage > totalPages) this.currentPage = totalPages;
       }
-    })
+    },
+    (error: any) => {
+      this.loader = false;
+      this.initialLoader = false;
+      if (error.status === 500) {
+        // this.toastr.error('Internal server error');
+      } else {
+        // this.toastr.error('Something went wrong');
+      }
+    }
+  );
   }
 
   fetchDetails(id: any, status: any): void {
