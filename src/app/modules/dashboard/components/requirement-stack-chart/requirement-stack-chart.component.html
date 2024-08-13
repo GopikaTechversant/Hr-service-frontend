@@ -2,31 +2,35 @@
     <div class="d-flex head">
         <div class="text"><span class="heading">Requirement Report</span></div>
         <div class="input p-t-6 p-l-6 no-close p-relative c-pointer" (click)="teamListOpen = !teamListOpen">
-            <span class="f-right d-flex"  >
-                <span *ngIf="selectedDepartment !== ''" (click)="clearFilter();teamListOpen = !teamListOpen" class=" c-pointer">
+            <span class="f-right d-flex">
+                <span *ngIf="selectedDepartment !== ''" (click)="clearFilter();teamListOpen = !teamListOpen"
+                    class=" c-pointer">
                     <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
                 </span>
                 <div class="c-pointer">
-                    <i [ngClass]="teamListOpen ? 'fa fa-chevron-up' : 'fa fa-chevron-down'" class="m-l-5 p-r-10 s-text no-close"></i>
+                    <i [ngClass]="teamListOpen ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"
+                        class="m-l-5 p-r-10 s-text no-close"></i>
                 </div>
             </span>
             <span class="c-pointer text-wrap" [title]="selectedDepartment === '' ? 'ALL' : selectedDepartment">
                 {{selectedDepartment === '' ? 'ALL' : selectedDepartment}}
             </span>
             <div class="no-close dropdown c-pointer" *ngIf="teamListOpen">
-                <div class="p-8" *ngFor="let name of departmentList" (click)='selectTeam(name?.teamId , name?.teamName);teamListOpen = !teamListOpen'>
-                    <span class="p-l-10 text-wrap" >
+                <div class="p-8" *ngFor="let name of departmentList"
+                    (click)='selectTeam(name?.teamId , name?.teamName);teamListOpen = !teamListOpen'>
+                    <span class="p-l-10 text-wrap">
                         {{name?.teamName}}
                     </span>
                 </div>
             </div>
         </div>
     </div>
-    <div *ngIf="!barchartList" class="no-data"> No Data Found</div>
+    <div *ngIf="!barchartList || barchartList?.length === 0" class="no-data">
+        No Data Found
+    </div>
     <div class="chart-container">
-        <div class="chart-inner-container" *ngIf="totalApplicants || labels">
-          <canvas id="barChartRecruiter"></canvas>
+        <div class="chart-inner-container" *ngIf="barchartList?.length !== 0">
+            <canvas id="barChartRecruiter"></canvas>
         </div>
-      </div>
-      
+    </div>
 </div>

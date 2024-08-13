@@ -164,13 +164,17 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
         maintainAspectRatio: false,
         scales: {
           y: {
-            stacked: true,
-            // beginAtZero: true,
             type: 'logarithmic',
+            stacked: true,
+            // beginAtZero: false,
             grid: {
-              display: false
+              display: false,
             },
-
+            ticks: {
+              display: true,
+              font: { size: 12 },
+              autoSkip: true
+            }
           },
           x: {
             stacked: true,

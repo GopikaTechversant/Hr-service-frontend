@@ -224,7 +224,8 @@ input[type="text"] {
 .initial-loader {
     position: absolute;
     top: 31%;
-    left: 21%;
+    left: 17%;
+    width: 98%;
   }
   
   .count-col{

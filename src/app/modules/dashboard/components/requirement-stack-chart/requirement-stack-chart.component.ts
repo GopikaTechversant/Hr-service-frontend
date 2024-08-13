@@ -85,19 +85,21 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
   }
 
   fetchBarchartDetails(): void {
-    this.apiService.get(`/dashboard/department-chart?teamId=${this.selectedTeamId}&start_date=${this.startDate}&end_date=${this.endDate}`).subscribe((res: any) => {
-      if (res) {
-        this.barchartList = res;
-        this.labels = this.barchartList.map((item: any) => item.requestName ?? item.teamName);
-        this.hiredData = this.barchartList.map((item: any) => +item?.hire_count);
-        this.totalApplicants = this.barchartList.map((item: any) => +item?.total_applicant);
-        this.offeredData = this.barchartList.map((item: any) => +item?.offered_Count);
-        this.technicalData = this.barchartList.map((item: any) => +item?.technical_selected_Count);        
-        this.createBarChart();        
-      }
+    this.apiService.get(`/dashboard/department-chart?teamId=${this.selectedTeamId}&start_date=${this.startDate}&end_date=${this.endDate}`).subscribe((res: any) => {     
+      this.barchartList = res || [];      
+      if (this.barchartList.length > 0) {
+        this.labels = this.barchartList.map((item: any) => item.teamName ?? item.requestName);
+        this.hiredData = this.barchartList.map((item: any) => +item.hire_count);
+        this.totalApplicants = this.barchartList.map((item: any) => +item.total_applicant);
+        this.offeredData = this.barchartList.map((item: any) => +item.offered_Count);
+        this.technicalData = this.barchartList.map((item: any) => +item.technical_selected_Count);
+        this.createBarChart();
+      } 
+    }, error => {
+      console.error("Error fetching bar chart details", error);
     });
   }
-
+  
   private measureTextWidth(text: string, font: string): number {
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
@@ -115,7 +117,7 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
   
     const baseWidth = 1300;
     const labelFont = '13px Arial';
-    const labelPadding = 40; // Padding between labels
+    const labelPadding = 40;
   
     // Calculate total width needed based on labels and padding
     let totalLabelWidth = this.labels.reduce((total, label) => {

@@ -64,6 +64,11 @@ export class AddCandidateModalComponent implements OnInit {
   searchKeyword: string = '';
   candidateList: any[] = [];
   showCandidates: boolean = false;
+  mailInput: boolean = false;
+  numberInput: boolean = false;
+  firstNameInput: boolean = false;
+  lastNameInput: boolean = false;
+
   constructor(private apiService: ApiService, private tostr: ToastrServices, private formBuilder: UntypedFormBuilder,
     private datePipe: DatePipe, private s3Service: S3Service, private router: Router, private route: ActivatedRoute) {
     this.candidateForm = this.formBuilder.group({
@@ -312,11 +317,20 @@ export class AddCandidateModalComponent implements OnInit {
   }
 
   experienceValidation(event: any): void {
-    const intermediateAllowedCharacters = /^-?(\d{0,1}\d?)?(\.\d{0,2})?$/;
+    const intermediateAllowedCharacters = /^-?(\d{0,1}\d?)?(\.\d{0,2})?\+?$/;
     let enteredValue = event?.target?.value + event.key;
-    if (event.key === "Backspace" || event.key === "Delete" || event.key.includes("Arrow")) return;
-    if (!intermediateAllowedCharacters.test(enteredValue)) event.preventDefault();
+
+    if (
+      event.key === "Backspace" ||
+      event.key === "Delete" ||
+      event.key.includes("Arrow")
+    ) return;
+
+    if (!intermediateAllowedCharacters.test(enteredValue)) {
+      event.preventDefault();
+    }
   }
+
 
   dateChange(event: any): void {
     let date = new Date(event?.value);
@@ -335,9 +349,15 @@ export class AddCandidateModalComponent implements OnInit {
   onFileSelected(event: any) {
     this.fileInputClicked = true;
     this.selectedFile = event.target.files[0];
-    if (event.target.files.length > 0) this.resumeUploadSuccess = true;
-    this.loader = true;
-    if (this.selectedFile) this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', this.selectedFile);
+    if (event.target.files.length > 0) {
+      this.resumeUploadSuccess = true;
+    }
+    if (this.selectedFile) {
+      this.loader = true;
+      this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', this.selectedFile);
+    } else {
+      this.loader = false;
+    }
     this.getKeyFroms3();
   }
 
@@ -561,20 +581,50 @@ export class AddCandidateModalComponent implements OnInit {
     this.searchvalue = '';
   }
 
-  searchCandidate(searchKeyword: string): void {
-    if (searchKeyword.trim() !== '') {
-      this.apiService.get(`/candidate/search/list?search=${searchKeyword}`).subscribe((res: any) => {
-        if (res?.data) {
-          this.candidateList = res.data;
-          this.showCandidates = this.candidateList.length > 0;
-        } else {
-          this.showCandidates = false;
-        }
-      });
-    } else {
-      this.showCandidates = false;
+  searchCandidate(searchKeyword: string, type: string): void {
+    this.resetInputFlags();
+    switch (type.trim()) {
+      case 'mail':
+        this.mailInput = true;
+        break;
+      case 'number':
+        this.numberInput = true;
+        break;
+      case 'firstName':
+        this.firstNameInput = true;
+        break;
+      case 'lastName':
+        this.lastNameInput = true;
+        break;
     }
+
+    if (searchKeyword.trim() !== '') {
+      this.apiService.get(`/candidate/search/list?search=${searchKeyword}`).subscribe(
+        (res: any) => {
+          this.candidateList = res?.data || [];
+          this.showCandidates = this.candidateList.length > 0;
+          if (!this.showCandidates) this.resetInputFlags();
+        },
+        () => this.handleSearchError()
+      );
+    } else {
+      this.handleSearchError();
+    }
+
   }
+
+  private resetInputFlags(): void {
+    this.mailInput = false;
+    this.numberInput = false;
+    this.firstNameInput = false;
+    this.lastNameInput = false;
+  }
+
+  private handleSearchError(): void {
+    this.showCandidates = false;
+    this.resetInputFlags();
+  }
+
 
   selectCandidate(id: any): void {
     this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);

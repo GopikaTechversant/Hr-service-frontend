@@ -28,7 +28,7 @@ export class RequirementCandidateListComponent implements OnInit {
   editRequirement: any;
   filterStatus: boolean = false;
   filteredStatus: any = '';
-  status: any[] = ['Active Requisitions','Closed Requisitions'];
+  status: any[] = ['Active Requisitions', 'Closed Requisitions'];
   constructor(private router: Router, private apiService: ApiService, private dialog: MatDialog, private toastr: ToastrService) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -39,7 +39,7 @@ export class RequirementCandidateListComponent implements OnInit {
   ngOnInit(): void {
     this.initialLoader = true;
     this.filteredStatus = sessionStorage.getItem('requisition') ? sessionStorage.getItem('requisition') : '';
-    this.fetchcandidates('');    
+    this.fetchcandidates('');
   }
 
   fetchcandidates(searchQuery: string): void {
@@ -55,7 +55,10 @@ export class RequirementCandidateListComponent implements OnInit {
         this.lastPage = totalPages;
         if (this.currentPage > totalPages) this.currentPage = totalPages;
       }
-    })
+    }, (error: any) => {
+      this.loader = false;
+      this.initialLoader = false;
+    });
   }
 
   generatePageNumbers() {

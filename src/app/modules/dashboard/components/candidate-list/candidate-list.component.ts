@@ -5,7 +5,6 @@ import { DeleteComponent } from 'src/app/components/delete/delete.component';
 import { EditComponent } from 'src/app/components/edit/edit.component';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from 'src/environments/environments';
 import { AssignRequirementComponent } from '../assign-requirement/assign-requirement.component';
 import { ExportService } from 'src/app/services/export.service';
 @Component({
@@ -47,6 +46,7 @@ export class CandidateListComponent {
     this.userId = localStorage.getItem('userId');
 
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['positionId'] && !changes['positionId'].isFirstChange()) {
       this.requestId = changes['positionId'].currentValue;
@@ -73,21 +73,20 @@ export class CandidateListComponent {
       console.log(exportUrl);
       
       this.apiService.getTemplate(exportUrl).subscribe(
-        (data: Blob) => {
-          console.log(data);
-          
-          if (data.type === 'application/json') {
-            console.log(data);
-            
+        (data: Blob) => {          
+          if (data.type === 'application/json') {            
             const reader = new FileReader();
             reader.onload = (event) => {
               const text = event.target?.result as string;
               const jsonResponse = JSON.parse(text);
               this.downloadAsExcel(jsonResponse.data, 'candidate_list.xlsx');
+              this.loader = false;
             };
+            this.loader = false;
             reader.readAsText(data);
           } else {
             this.downloadBlob(data, 'candidate_list.xlsx');
+            this.loader= false;
           }
         },
         (error: any) => {
@@ -101,6 +100,7 @@ export class CandidateListComponent {
     }
     this.apiService.get(`${url}?${params}`).subscribe((res: any) => {
       this.initialLoader = false;
+      this.loader = false;
       this.data = res;
       this.candidateList = [];
       this.candidateList = res?.candidates;
@@ -108,10 +108,14 @@ export class CandidateListComponent {
       const totalPages = Math.ceil(this.totalCount / this.pageSize);
       this.lastPage = totalPages;
       if (this.currentPage > totalPages) this.currentPage = totalPages;
-    })
+    }, (error: any) => {
+      this.loader = false;
+      this.initialLoader = false;
+    });
   }
 
   exportData(): void {
+    this.loader = true;
     this.report = true;
     this.fetchCandidates();
   }
@@ -154,7 +158,6 @@ export class CandidateListComponent {
   //   this.candidateIdsQuestion = candidatesWithoutQuestionName.map((candidate: { serviceSequence: { serviceId: any; }; }) => candidate.serviceSequence?.serviceId);
   // }
 
-
   generatePageNumbers() {
     let pages = [];
     if (this.lastPage <= 5) {
@@ -176,14 +179,14 @@ export class CandidateListComponent {
   searchCandidate(search: string): void {
     this.searchKeyword = search;
     this.currentPage = 1;
-    this.pageSize = 14;
+    this.pageSize = 11;
     this.fetchCandidates();
   }
 
   clearFilter(): void {
     this.searchKeyword = '';
     this.currentPage = 1;
-    this.pageSize = 14;
+    this.pageSize = 11;
     this.fetchCandidates();
   }
 
@@ -207,7 +210,7 @@ export class CandidateListComponent {
       this.apiService.post(`/candidate/remove-candidate`, { candidateId: this.deleteCandidateId }).subscribe({
         next: (res: any) => {
           this.currentPage = 1;
-          this.pageSize = 14;
+          this.pageSize = 11;
           this.fetchCandidates();
         },
         error: (error) => {
@@ -225,14 +228,14 @@ export class CandidateListComponent {
     })
     dialogRef.componentInstance.onEditSuccess.subscribe(() => {
       this.currentPage = 1;
-      this.pageSize = 14;
+      this.pageSize = 11;
       this.fetchCandidates();
     })
   }
 
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);
-    this.pageSize = 14;
+    this.pageSize = 11;
     this.fetchCandidates();
   }
 
@@ -245,7 +248,7 @@ export class CandidateListComponent {
       });
       dialogRef.afterClosed().subscribe((confirmed: boolean) => {
         this.currentPage = 1;
-        this.pageSize = 14;
+        this.pageSize = 11;
         this.fetchCandidates();
       })
     } else this.toastr.warning('You have not selected candidates to assign');

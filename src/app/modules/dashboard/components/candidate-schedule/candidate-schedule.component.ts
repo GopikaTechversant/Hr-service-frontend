@@ -27,16 +27,16 @@ export class CandidateScheduleComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
     });
-
   }
+
   ngOnInit(): void {
     this.initialLoader = true;
-    this.fetchcandidates('');
-
+    this.fetchcandidates();
   }
-  fetchcandidates(searchQuery: string): void {
+
+  fetchcandidates(): void {
     if (!this.initialLoader) this.loader = true;
-    this.apiService.get(`/screening-station/list-batch/${this.requestId}?limit=${this.limit}&page=${this.currentPage}&search=${searchQuery.trim()}`).subscribe((res: any) => {
+    this.apiService.get(`/screening-station/list-batch/${this.requestId}?limit=${this.limit}&page=${this.currentPage}&search=${this.searchKeyword}`).subscribe((res: any) => {
       if (res?.candidates) {
         this.initialLoader = false;
         this.loader = false;
@@ -49,10 +49,12 @@ export class CandidateScheduleComponent implements OnInit {
         if (this.currentPage > totalPages) this.currentPage = totalPages;
         this.candidates_list.forEach((candidate: any) => {
           if (candidate.serviceId) this.serviceIds.push(candidate?.serviceId);
-
         });
       }
-    })
+    }, (error: any) => {
+      this.loader = false;
+      this.initialLoader = false;
+    });
   }
 
   selectCandidate(id: any): void {
@@ -61,7 +63,7 @@ export class CandidateScheduleComponent implements OnInit {
 
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);
-    this.fetchcandidates('');
+    this.fetchcandidates();
   }
 
   generatePageNumbers() {
@@ -87,14 +89,14 @@ export class CandidateScheduleComponent implements OnInit {
     this.searchKeyword = search;
     this.currentPage = 1;
     this.pageSize = 10;
-    this.fetchcandidates(this.searchKeyword);
+    this.fetchcandidates();
   }
 
   clearFilter(): void {
     this.searchKeyword = '';
     this.currentPage = 1;
     this.pageSize = 10;
-    this.fetchcandidates('');
+    this.fetchcandidates();
   }
 
   onStatusChange(event: any, candidate: any): void {
@@ -115,9 +117,8 @@ export class CandidateScheduleComponent implements OnInit {
       width: '600px',
       height: '280px'
     })
-
     dialogRef.afterClosed().subscribe(() => {
-      this.fetchcandidates('');
+      this.fetchcandidates();
     });
   }
 }

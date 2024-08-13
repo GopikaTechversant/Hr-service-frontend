@@ -77,8 +77,11 @@
 .data {
   position: absolute;
   left: 52%;
-  top: 34%;
+  top: 50%;
   z-index: 9;
+  color: #C10A0A;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .box {
@@ -162,7 +165,8 @@
 .initial-loader {
   position: absolute;
   top: 31%;
-  left: 1%;
+  left: 17%;
+  width: 16%;
 }
 
 .data {
@@ -231,12 +235,6 @@ input[type="text"] {
   color: #005EC9;
   background-color: #FFFFFF;
   border: 1px solid #005EC9;
-}
-
-.initial-loader {
-  position: absolute;
-  top: 31%;
-  left: 21%;
 }
 
 .clear-filter {

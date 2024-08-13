@@ -31,7 +31,6 @@
     "chartjs-plugin-datalabels": "2.2.0",
     "font-awesome": "^4.7.0",
     "jwt-decode": "^4.0.0",
-    "ngx-material-timepicker": "^13.1.1",
     "ngx-skeleton-loader": "^4.0.0",
     "ngx-toastr": "^16.2.0",
     "rxjs": "~7.8.0",

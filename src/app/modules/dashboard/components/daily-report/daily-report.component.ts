@@ -46,7 +46,7 @@ export class DailyReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.initialLoader = true;
+    this.initialLoader = true;
     this.fetchDetails();
     this.today = new Date();
   }
@@ -65,9 +65,9 @@ export class DailyReportComponent implements OnInit {
       `reportPageNo=${this.report ? '' : this.currentPage}`,
       `reportPageLimit=${this.report ? '' : this.pageSize}`,
       `report=${this.report}`
-    ].filter(param => param.split('=')[1] !== '').join('&');  // Filter out empty parameters
+    ].filter(param => param.split('=')[1] !== '').join('&'); 
     if (this.report) {
-      const exportUrl = `${url}?${params}`;      
+      const exportUrl = `${url}?${params}`;
       this.apiService.getTemplate(exportUrl).subscribe(
         (data: Blob) => {
           if (data.type === 'application/json') {
@@ -76,9 +76,12 @@ export class DailyReportComponent implements OnInit {
               const text = event.target?.result as string;
               const jsonResponse = JSON.parse(text);
               this.downloadAsExcel(jsonResponse.data, 'daily_report.xlsx');
+              this.loader = false;
             };
             reader.readAsText(data);
+            this.loader = false;
           } else {
+            this.loader = false;
             this.downloadBlob(data, 'daily_report.xlsx');
           }
         },
@@ -104,6 +107,9 @@ export class DailyReportComponent implements OnInit {
           this.recruiterKeys = Object.keys(objectItem);
         })
       }
+    }, (error: any) => {
+      this.loader = false;
+      this.initialLoader = false;
     });
   }
 
@@ -170,14 +176,11 @@ export class DailyReportComponent implements OnInit {
   }
 
   exportData(): void {
+    this.loader = true;
     this.report = true;
     this.fetchDetails();
-    if (this.report = true) {
-      window.open(`${environment.api_url}${this.url}`, '_blank')
-      this.initialLoader = false;
-      this.loader = false;
-    }
   }
+
 
   clearFilter(item: string): void {
     if (item === 'recruiter') {
