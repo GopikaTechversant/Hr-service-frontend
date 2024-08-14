@@ -1,14 +1,16 @@
-<div class="modal-header heading p-10 p-t-20 d-flex j-space" style="position: sticky; top: 0; z-index: 2;">
+<div class="modal-header heading p-t-10 d-flex j-space" style="position: sticky; top: 0; z-index: 2;">
     <div *ngIf="loader" class="loader-parent">
         <img src="assets/gif/loader.gif">
     </div>
     <div>
-        <span>{{candidateDetails?.candidateFirstName}} {{candidateDetails?.candidateLastName}}</span>
+        <span class="p-l-10">{{candidateDetails?.candidateFirstName}} {{candidateDetails?.candidateLastName ?? candidateDetails?.candidateLastName}}</span>
     </div>
     <div class="modal-close d-flex j-end">
+        <img src="assets/images/techversant/modal-close.svg" class="c-pointer p-r-5"  (click)="closeDialog()"alt="" width="35">
+<!-- 
         <button class="c-pointer" (click)="closeDialog()">
             <mat-icon>close</mat-icon>
-        </button>
+        </button> -->
     </div>
 </div>
 <div class="modal-content">

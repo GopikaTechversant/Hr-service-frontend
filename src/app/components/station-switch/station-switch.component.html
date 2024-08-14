@@ -1,12 +1,13 @@
-<div class="modal-header heading p-10 p-t-20 d-flex j-space">
-    <div>
+<div class="modal-header heading p-10 d-flex j-space">
+    <div class="">
         <span> {{data?.name | titlecase}} </span>
         <span class="blue">  </span>
     </div>
     <div class="modal-close">
-        <button class="c-pointer" (click)="closeDialog()">
+        <img src="assets/images/techversant/modal-close.svg" class="c-pointer p-r-5"  (click)="closeDialog()"alt="" width="35">
+        <!-- <button class="c-pointer" (click)="closeDialog()">
             <mat-icon>close</mat-icon>
-        </button>
+        </button> -->
     </div>
 </div>
 <div class="modal-content">

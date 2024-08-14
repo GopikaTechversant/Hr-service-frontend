@@ -46,6 +46,7 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['positionId'] && !changes['positionId'].isFirstChange()) {
+      if (this.positionId === '')  this.fetchBarchartDetails();
       this.fetchBarchartDetails();
     } else if (changes['startDate'] && !changes['startDate'].isFirstChange()) {
       this.fetchBarchartDetails();

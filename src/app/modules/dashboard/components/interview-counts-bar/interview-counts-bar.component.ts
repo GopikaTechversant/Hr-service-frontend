@@ -37,6 +37,7 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['positionId'] && !changes['positionId'].isFirstChange()) {
+      if (this.positionId === '')  this.fetchBarchartDetails();
       this.requestId = changes['positionId'].currentValue;
       this.fetchBarchartDetails();
     } else if (changes['startDate'] && !changes['startDate'].isFirstChange()) {

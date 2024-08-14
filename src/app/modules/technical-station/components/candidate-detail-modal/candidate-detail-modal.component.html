@@ -1,4 +1,4 @@
-<div class="modal-header heading   p-t-20 d-flex j-space" style="position: sticky; top: 0; z-index: 2;">
+<div class="modal-header heading p-t-10 d-flex j-space" style="position: sticky; top: 0; z-index: 2;">
     <div *ngIf="loader" class="loader-parent">
         <img src="assets/gif/loader.gif">
     </div>
@@ -10,11 +10,14 @@
             </a>)
         </span>
     </div>
-    <div class="modal-close margin-10">
-        <span class=" padding-10" [ngClass]="{'blue': candidateDetails?.serviceStatus === 'pending','green': candidateDetails?.serviceStatus === 'done',
+    <div class="modal-close margin-10 d-flex">
+        <span class="" [ngClass]="{'blue': candidateDetails?.serviceStatus === 'pending','green': candidateDetails?.serviceStatus === 'done',
             'red': candidateDetails?.serviceStatus === 'rejected'}">{{candidateDetails?.serviceStatus | titlecase}}
-        </span>
-        <button class="c-pointer" (click)="closeDialog()"><mat-icon>close</mat-icon></button>
+        <img src="assets/images/techversant/modal-close.svg" class="c-pointer p-r-5"  (click)="closeDialog()"alt="" width="35">
+    </span>
+        <!-- <div> -->
+        <!-- </div> -->
+        <!-- <im class="c-pointer"><mat-icon>close</mat-icon></im> -->
     </div>
 </div>
 <div class="modal-content">
@@ -28,8 +31,7 @@
                     <span class="key p-8">Requirement Name</span>
                     <span class="key p-8">Skills</span>
                     <span class="key p-8">Minimum Experience</span>
-                    <span class="key p-8">Maximum Experience</span>
-              
+                    <span class="key p-8">Maximum Experience</span>             
                     <span class="key p-8">Requirement Status</span>
                     <span class="key p-8">Requirement Vacancy</span>
                 </div>

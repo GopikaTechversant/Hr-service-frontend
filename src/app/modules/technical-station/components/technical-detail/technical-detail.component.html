@@ -124,10 +124,11 @@
                                     item['candidate.candidateEmail'] }}</td>
                                 <td class="text-start" [title]="item['serviceRequest.requestName']">{{
                                     item['serviceRequest.requestName'] }}</td>
-                                <td class="f-w-500 text-start"
-                                    [title]="item?.progressStatus > 0 ? 'Progress Added' : 'Pending'"
-                                    [ngClass]="item?.progressStatus > 0  ? 'green' : 'orange'">
-                                    {{item?.progressStatus > 0 ? 'Progress Added' : 'Pending'}}
+                                <td class="f-w-500 text-start">
+                                    <span *ngIf="item?.progressStatus === '0' && item?.serviceStatus !== 'done'" class="orange">Pending</span>
+                                    <span *ngIf="item?.progressStatus === '0' && item?.serviceStatus === 'done'" class="green">Added</span>
+                                    <span *ngIf="item?.progressStatus !== '0' && item?.serviceStatus === 'done'" class="green">Added</span>
+                                    <span *ngIf="item?.progressStatus !== '0' && item?.serviceStatus !== 'done'" class="orange">Pending</span>
                                 </td>
                                 <td class="text-center">
                                     <i class="fa fa-arrows" aria-hidden="true" *ngIf="item"(click)="onSwitchStation(item)"></i>

@@ -16,13 +16,7 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
   @Input() endDate: any;
 
   chart: any;
-  sourceList: any[] = [
-    { sourceId: 1, sourceName: 'Naukri', sourcecount: '206' },
-    { sourceId: 2, sourceName: 'Linkedin', sourcecount: '396' },
-    { sourceId: 3, sourceName: 'Indeed', sourcecount: '99' },
-    { sourceId: 4, sourceName: 'Candidate', sourcecount: '41' },
-    { sourceId: 5, sourceName: 'Reference', sourcecount: '11' },
-  ];
+  sourceList: any[] = [{}];
   sourceLabels: string[] = [];
   sourceCount: number[] = [];
   requestId: any;
@@ -43,6 +37,7 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['positionId'] && !changes['positionId'].isFirstChange()) {
+      if (this.positionId === '')  this.fetchResumeSource();
       this.requestId = changes['positionId'].currentValue;
       this.fetchResumeSource();
     } else if (changes['startDate'] && !changes['startDate'].isFirstChange()) {
@@ -54,11 +49,6 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
     }
   }
 
-  setSourceData(): void {
-    this.sourceLabels = this.sourceList.map((item: any) => item.sourceName);
-    this.sourceCount = this.sourceList.map((item: any) => Number(item.sourcecount));
-  }
-
   fetchResumeSource(): void {
     this.apiService.get(`/dashboard/resume-source?fromDate=${this.startDate}&toDate=${this.endDate}&requestId=${this.requestId}`).subscribe((res: any) => {
       if (res?.data) {
@@ -67,6 +57,11 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
         this.createChart();
       }
     });
+  }
+
+  setSourceData(): void {
+    this.sourceLabels = this.sourceList.map((item: any) => item.sourceName);
+    this.sourceCount = this.sourceList.map((item: any) => Number(item.sourcecount));
   }
 
   createChart(): void {
@@ -88,18 +83,19 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
       },
       options: {
         responsive: true,
-        aspectRatio: 1.9,
+        aspectRatio: 1.5,
         layout: {
           padding: {
-            top: 20,
-            bottom: 30,
-            right: 10,
+            top: 50,
+            bottom: 50,
+            right: 80,
+            left: 80
           }
         },
         plugins: {
           legend: {
-            display: true,
-            position: 'left',
+            display: false,
+            position: 'right',
             align: 'center',
             labels: {
               usePointStyle: true,
@@ -124,102 +120,172 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
   doughnutLabelsLinePlugin = {
     id: 'doughnutLabelsLine',
     afterDraw: (chart: any) => {
-      const { ctx, chartArea: { top, bottom, left, right } } = chart;
-      const labelPositions: any[] = [];
+      const { ctx, chartArea: { top, bottom, left, right, width, height } } = chart;
+      const center = { x: (left + right) / 2, y: (top + bottom) / 2 };
+      const labelPositions: { x: number, y: number }[] = [];
+      const minLabelSpacing = 20; // Adjust this to control spacing
+      const lineLength = 30; // Length of the line connecting the chart to the label
 
-      chart.data.datasets.forEach((dataset: any, i: any) => {
-        chart.getDatasetMeta(i).data.forEach((datapoint: { tooltipPosition: () => { x: any; y: any; }; }, index: number) => {
+      chart.data.datasets.forEach((dataset: any, i: number) => {
+        chart.getDatasetMeta(i).data.forEach((datapoint: any, index: number) => {
           const { x, y } = datapoint.tooltipPosition();
-          let xLine = right;
-          let yLine = y;
-          let extraLine = 30;
+          const angle = Math.atan2(y - center.y, x - center.x);
+          const quadrant = angle < 0 ? 4 : angle <= Math.PI / 2 ? 1 : angle <= Math.PI ? 2 : 3;
 
-          switch (index) {
-            case 0://naukri
-              xLine = x;
-              yLine = bottom - 20;
-              extraLine = 70;
-              break;
-            case 1://linkidin
-              xLine = x;
-              yLine = bottom + 25;
-              extraLine = 90;
-              break;
-            case 2://indeed
-              xLine = x;
-              yLine = bottom + 90;
-              extraLine = 100;
-              if (xLine > top) {
-                yLine = top;
+          let xLine = center.x + Math.cos(angle) * (width / 2 + lineLength);
+          let yLine = center.y + Math.sin(angle) * (height / 2 + lineLength);
+
+          // Check and adjust yLine for overlapping
+          let adjustment = 0;
+          let foundOverlap = true;
+          while (foundOverlap) {
+            foundOverlap = false;
+            for (let pos of labelPositions) {
+              if (Math.abs(yLine - pos.y) < minLabelSpacing) {
+                adjustment += minLabelSpacing;
+                if (quadrant === 2 || quadrant === 3) {
+                  yLine -= adjustment;
+                } else {
+                  yLine += adjustment;
+                }
+                foundOverlap = true;
+                break;
               }
-
-              break;
-            case 3://candidate 
-              xLine = x;
-              yLine = bottom - 10;
-              extraLine = 120;
-              if (xLine > top) {
-                yLine = top + 20;
-              }
-              break;
-            case 4://reference
-              xLine = x;
-              yLine = bottom - 20;
-              extraLine = 100;
-              if (xLine > top) {
-                yLine = top + 60;
-              } break;
-            default:
-              break;
-          }
-          let finalYLine = yLine;
-
-          for (const pos of labelPositions) {
-            if (Math.abs(finalYLine - pos) < 30) {
-              finalYLine += 30 * (yLine > pos ? 1 : -1);
             }
           }
-          labelPositions.push(finalYLine);
+          labelPositions.push({ x: xLine, y: yLine });
 
+          // Draw line to label
           ctx.beginPath();
           ctx.moveTo(x, y);
-          ctx.arc(x, y, 2, 0, 2 * Math.PI, true);
-          ctx.fill();
-          ctx.moveTo(x, y);
-          ctx.lineTo(xLine, finalYLine);
-          ctx.lineTo(xLine + extraLine, finalYLine);
-          ctx.strokeStyle = "black";
+          ctx.lineTo(xLine, yLine);
+          ctx.strokeStyle = dataset.borderColor[index];
           ctx.stroke();
 
-          const boxSize = 10;
+          // Draw label box
           ctx.fillStyle = dataset.backgroundColor[index];
-          ctx.fillRect(xLine + extraLine, finalYLine - boxSize / 2, boxSize, boxSize);
+          ctx.fillRect(xLine - 5, yLine - 5, 10, 10); // Adjust for box size
 
-          ctx.font = '14px Roboto';
-          ctx.fontWeight = 'bold';
-
-          const textXPosition = extraLine >= 0 ? 'left' : 'right';
-          const plusFivePx = extraLine >= 0 ? 18 : -18;
-
-          ctx.textAlign = textXPosition;
+          // Draw label text
+          ctx.font = '13px Roboto'; // Default font style for label
+          ctx.textAlign = xLine < center.x ? 'right' : 'left';
           ctx.textBaseline = 'middle';
-          ctx.fillStyle = "#575F6E";
+          ctx.fillStyle = '#575F6E';
+          const label = `${chart.data.labels[index]}: `;
+          const textX = xLine < center.x ? xLine - 10 : xLine + 15;
+          const labelWidth = ctx.measureText(label).width;
 
-          const label = chart.data.labels[index] + ':';
-          const value = chart.data.datasets[0].data[index];
+          // Draw the label text
+          ctx.fillText(label, textX, yLine);
 
-          ctx.fillText(label, xLine + extraLine + boxSize + 10, finalYLine);
-          ctx.font = 'bold 16px Roboto';
-          if(this.sourceLabels?.length === 1) {
-            ctx.fillText(value, xLine + extraLine + boxSize + 77, finalYLine);
-          }else{
-            if (index === 0 || index === 2 || index === 1) ctx.fillText(value, xLine + extraLine + boxSize + 67, finalYLine);
-            if (index === 3 || index === 4) ctx.fillText(value, xLine + extraLine + boxSize + 90, finalYLine);
-          }  
+          // Draw the value text with different styling
+          ctx.font = 'bold 16px Roboto'; // Increased font size and weight for value
+          ctx.fillStyle = '#000000'; // Highlight color for value
+          ctx.fillText(dataset.data[index], textX + labelWidth, yLine);
         });
       });
-    },
+    }
   };
+
+  // doughnutLabelsLinePlugin = {
+  //   id: 'doughnutLabelsLine',
+  //   afterDraw: (chart: any) => {
+  //     const { ctx, chartArea: { top, bottom, left, right } } = chart;
+  //     const labelPositions: any[] = [];
+
+  //     chart.data.datasets.forEach((dataset: any, i: any) => {
+  //       chart.getDatasetMeta(i).data.forEach((datapoint: { tooltipPosition: () => { x: any; y: any; }; }, index: number) => {
+  //         const { x, y } = datapoint.tooltipPosition();
+  //         let xLine = right;
+  //         let yLine = y;
+  //         let extraLine = 30;
+
+  //         switch (index) {
+  //           case 0://naukri
+  //             xLine = x;
+  //             yLine = bottom - 20;
+  //             extraLine = 70;
+  //             break;
+  //           case 1://linkidin
+  //             xLine = x;
+  //             yLine = bottom + 25;
+  //             extraLine = 90;
+  //             break;
+  //           case 2://indeed
+  //             xLine = x;
+  //             yLine = bottom + 90;
+  //             extraLine = 100;
+  //             if (xLine > top) {
+  //               yLine = top;
+  //             }
+
+  //             break;
+  //           case 3://candidate 
+  //             xLine = x;
+  //             yLine = bottom - 10;
+  //             extraLine = 120;
+  //             if (xLine > top) {
+  //               yLine = top + 20;
+  //             }
+  //             break;
+  //           case 4://reference
+  //             xLine = x;
+  //             yLine = bottom - 20;
+  //             extraLine = 100;
+  //             if (xLine > top) {
+  //               yLine = top + 60;
+  //             } break;
+  //           default:
+  //             break;
+  //         }
+  //         let finalYLine = yLine;
+
+  //         for (const pos of labelPositions) {
+  //           if (Math.abs(finalYLine - pos) < 30) {
+  //             finalYLine += 30 * (yLine > pos ? 1 : -1);
+  //           }
+  //         }
+  //         labelPositions.push(finalYLine);
+
+  //         ctx.beginPath();
+  //         ctx.moveTo(x, y);
+  //         ctx.arc(x, y, 2, 0, 2 * Math.PI, true);
+  //         ctx.fill();
+  //         ctx.moveTo(x, y);
+  //         ctx.lineTo(xLine, finalYLine);
+  //         ctx.lineTo(xLine + extraLine, finalYLine);
+  //         ctx.strokeStyle = "black";
+  //         ctx.stroke();
+
+  //         const boxSize = 10;
+  //         ctx.fillStyle = dataset.backgroundColor[index];
+  //         ctx.fillRect(xLine + extraLine, finalYLine - boxSize / 2, boxSize, boxSize);
+
+  //         ctx.font = '14px Roboto';
+  //         ctx.fontWeight = 'bold';
+
+  //         const textXPosition = extraLine >= 0 ? 'left' : 'right';
+  //         const plusFivePx = extraLine >= 0 ? 18 : -18;
+
+  //         ctx.textAlign = textXPosition;
+  //         ctx.textBaseline = 'middle';
+  //         ctx.fillStyle = "#575F6E";
+
+  //         const label = chart.data.labels[index] + ':';
+  //         const value = chart.data.datasets[0].data[index];
+
+  //         ctx.fillText(label, xLine + extraLine + boxSize + 10, finalYLine);
+  //         ctx.font = 'bold 16px Roboto';
+  //         if(this.sourceLabels?.length === 1) {
+  //           ctx.fillText(value, xLine + extraLine + boxSize + 77, finalYLine);
+  //         }else{
+  //           if (index === 0 || index === 2 || index === 1) ctx.fillText(value, xLine + extraLine + boxSize + 67, finalYLine);
+  //           if (index === 3 || index === 4) ctx.fillText(value, xLine + extraLine + boxSize + 90, finalYLine);
+  //         }  
+  //       });
+  //     });
+  //   },
+  // };
 
   // doughnutLabelsLinePlugin = {
   //   id: 'doughnutLabelsLine',

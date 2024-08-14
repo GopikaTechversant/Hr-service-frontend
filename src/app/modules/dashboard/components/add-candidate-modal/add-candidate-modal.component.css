@@ -25,7 +25,7 @@
 }
 
 .loader-parent img {
-    width: 150px;
+    width: 120px;
 }
 
 .input-box {
@@ -63,7 +63,7 @@
 
 .parent {
     column-gap: 18px;
-    min-height: 200px;
+    width: 100%;
 }
 
 .text-area {
@@ -116,7 +116,7 @@
 }
 
 .skills {
-    height: fit-content;
+    min-height: 200px;
     border-radius: 3px;
     background-color: #FFFFFF;
     box-shadow: 0px 4px 8px 0px #0000001A;
@@ -257,7 +257,7 @@
 .child-1 {
     flex-direction: column;
     /* flex: 1; */
-    width: 48.7%;
+    width: 50.7%;
 }
 
 .child-text {

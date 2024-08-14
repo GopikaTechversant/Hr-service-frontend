@@ -2,7 +2,7 @@
     font-size: 18px;
     font-weight: 500;
     text-align: left;
-    padding-bottom: 10px;
+    /* padding-bottom: 10px; */
     /* background-color: #E3E0E0; */
 }
 
@@ -89,8 +89,6 @@
 .modal-header {
     position: sticky;
     top: 0;
-    z-index: 2;
-    background-color: #f8f9fa;
     z-index: 2;
     background-color: #f8f9fa;
 }
@@ -243,7 +241,7 @@
 .loader-parent {
     position: absolute;
     left: 50%;
-    top: 600%;
+    top: 500%;
     z-index: 9;
 }
 

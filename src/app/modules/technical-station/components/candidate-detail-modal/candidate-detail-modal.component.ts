@@ -8,7 +8,10 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-candidate-detail-modal',
   templateUrl: './candidate-detail-modal.component.html',
-  styleUrls: ['./candidate-detail-modal.component.css']
+  styleUrls: ['./candidate-detail-modal.component.css'],
+  host: {
+    '(document:click)': 'onBodyClick($event)'
+  }
 })
 export class CandidateDetailModalComponent implements OnInit {
   private keySubscription?: Subscription;
@@ -61,6 +64,13 @@ export class CandidateDetailModalComponent implements OnInit {
     }
     this.dialogRef.updateSize('60vw', '90vh');
     this.templateData = { message: '' };
+  }
+
+  onBodyClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.no-close')) {
+      this.filterStatus = false;
+    }
   }
 
   ngOnInit(): void {

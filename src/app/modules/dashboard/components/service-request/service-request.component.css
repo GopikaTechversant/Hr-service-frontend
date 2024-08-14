@@ -26,9 +26,8 @@
 }
 
 .loader-parent img {
-    width: 150px;
+    width: 120px;
 }
-
 .input-box {
     width: 100%;
     height: 34px;
@@ -47,7 +46,7 @@
 
 .parent {
     column-gap: 18px;
-    width: 98.9%;
+    width: 100%;
 }
 
 .input-box {
@@ -56,7 +55,7 @@
     border-radius: 5px;
     outline: none;
     background: #FAFAFA;
-    padding-left: 7px;
+    padding-left: 9px;
     border: 1px solid #E9E9E9;
 }
 
