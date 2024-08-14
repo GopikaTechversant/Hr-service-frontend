@@ -48,8 +48,8 @@ export class TechnicalDetailComponent implements OnInit {
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 150 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   candidateIds: any;
-  constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog, private datePipe: DatePipe, 
-    private router: Router , private toastr : ToastrService, private exportService: ExportService) { }
+  constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog, private datePipe: DatePipe,
+    private router: Router, private toastr: ToastrService, private exportService: ExportService) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
@@ -103,7 +103,7 @@ export class TechnicalDetailComponent implements OnInit {
       this.status = res?.data;
     });
   }
-  
+
 
   fetchList(): void {
     if (!this.initialLoader) this.loader = true;
@@ -120,15 +120,15 @@ export class TechnicalDetailComponent implements OnInit {
       `toDate=${this.endDate}`,
       `status_filter=${this.filteredStatus}`,
       `report=${this.isExport}`
-    ].filter(param => param.split('=')[1] !== '').join('&');  
-    
+    ].filter(param => param.split('=')[1] !== '').join('&');
+
 
     if (this.isExport) {
       if (this.candidateIds) {
         const idsParams = this.candidateIds.map((id: string) => `ids=${id}`).join('&');
         params += `&${idsParams}`;
       }
-      const exportUrl = `${url}?${params}`;      
+      const exportUrl = `${url}?${params}`;
       this.apiService.getTemplate(exportUrl).subscribe(
         (data: Blob) => {
           if (data.type === 'application/json') {
@@ -177,7 +177,7 @@ export class TechnicalDetailComponent implements OnInit {
       }
     );
   }
-  
+
   downloadAsExcel(jsonData: any[], fileName: string) {
     this.exportService.downloadAsExcel(jsonData, fileName);
   }
@@ -242,16 +242,16 @@ export class TechnicalDetailComponent implements OnInit {
   searchCandidate(searchTerm: string): void {
     this.searchKeyword = searchTerm;
     if (this.searchKeyword.trim() === '') {
-      this.currentPage = 1; 
-      this.limit = 12; 
-      this.fetchList(); 
+      this.currentPage = 1;
+      this.limit = 12;
+      this.fetchList();
       return;
     }
     this.currentPage = 1;
     this.limit = 12;
     this.fetchList();
   }
-  
+
   searchByExperience(experience: string): void {
     this.experience = experience;
     this.currentPage = 1;
