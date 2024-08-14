@@ -63,6 +63,7 @@
 
 .parent {
     column-gap: 18px;
+    min-height: 200px;
 }
 
 .text-area {
@@ -102,19 +103,16 @@
 }
 
 .add-btn {
-    margin-left: 9px;
-    margin-top: 10px;
-    width: 50px;
-    height: 16px;
+    background-color: #005EC9;
+    width: 150px;
+    height: 34px;
     border-radius: 3px;
-    border: 1px;
-    background: linear-gradient(0deg, #005EC9, #005EC9), linear-gradient(0deg, #E9E9E9, #E9E9E9);
-    color: white;
-    font-size: 16px;
+    outline: none;
+    border: none;
+    color: #FFFFFF;
     font-weight: 400;
-    text-align: center;
-    padding: 7px;
-    padding-bottom: 10px;
+    font-size: 17px;
+    margin: 10px;
 }
 
 .skills {
@@ -132,35 +130,28 @@
 }
 
 .cancel-btn {
-    width: 150px;
-    height: 40px;
+    background-color: #575F6E;
+    width: 100px;
+    height: 34px;
     border-radius: 3px;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 21px;
-    letter-spacing: 0em;
-    background: #575F6E;
+    outline: none;
     border: none;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    color: #FFFFFF;
+    font-weight: 400;
+    font-size: 17px;
     margin: 10px;
 }
 
 .add-candidate {
-    width: 150px;
-    height: 40px;
+    background-color: #005EC9;
+    width: 100px;
+    height: 34px;
     border-radius: 3px;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 21px;
-    letter-spacing: 0em;
-    text-align: left;
-    background: #005EC9;
-    color: white;
-    text-align: center;
+    outline: none;
     border: none;
+    color: #FFFFFF;
+    font-weight: 400;
+    font-size: 18px;
     margin: 10px;
 }
 

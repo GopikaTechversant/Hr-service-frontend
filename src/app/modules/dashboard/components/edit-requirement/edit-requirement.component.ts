@@ -135,6 +135,7 @@ export class EditRequirementComponent implements OnInit {
       if (res?.data) this.designationList = res?.data;
     }))
   }
+  
   fetchPanel(): void {
     this.apiService.get(`/user/lists?userRole=2`).subscribe((res: any) => {
       if (res?.users) this.panel_list = res?.users;

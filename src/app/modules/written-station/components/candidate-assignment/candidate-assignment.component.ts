@@ -102,7 +102,7 @@ export class CandidateAssignmentComponent implements OnInit {
         const idsParams = this.candidateIds.map((id: string) => `filterByIds=${id}`).join('&');
         params += `&${idsParams}`;
       }
-      const exportUrl = `${url}?${params}`;      
+      const exportUrl = `${url}?${params}`;
       this.apiService.getTemplate(exportUrl).subscribe(
         (data: Blob) => {
           if (data.type === 'application/json') {
@@ -138,7 +138,17 @@ export class CandidateAssignmentComponent implements OnInit {
         this.lastPage = totalPages;
         if (this.currentPage > totalPages) this.currentPage = totalPages;
       }
-    });
+    },
+      (error: any) => {
+        this.loader = false;
+        this.initialLoader = false;
+        if (error.status === 500) {
+          this.tostr.error('Internal server error');
+        } else {
+          this.tostr.error('Something went wrong');
+        }
+      }
+    );
   }
 
   downloadAsExcel(jsonData: any[], fileName: string) {
@@ -159,6 +169,18 @@ export class CandidateAssignmentComponent implements OnInit {
       this.questions_list = data?.data;
     });
   }
+
+  onKeypress(event: any): void {
+    let enteredValue: string;
+    if (event.key === "Backspace") enteredValue = event?.target?.value.slice(0, -1);
+    else enteredValue = event.target.value + event.key;
+    const allowedCharacters: RegExp = /^[0-9]+$/;
+    if (event.key !== "Backspace" && !allowedCharacters.test(enteredValue)) {
+      event.preventDefault();
+      return;
+    }
+  }
+
 
   experienceValidation(event: any): void {
     const intermediateAllowedCharacters = /^-?(\d{0,1}\d?)?(\.\d{0,2})?$/;

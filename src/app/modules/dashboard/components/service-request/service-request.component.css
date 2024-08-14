@@ -247,31 +247,32 @@
 
 .btn-cancel {
     background-color: #575F6E;
-    width: 150px;
-    height: 48px;
+    width: 100px;
+    height: 34px;
     border-radius: 3px;
     outline: none;
     border: none;
     color: #FFFFFF;
     font-weight: 400;
     font-size: 18px;
+    margin: 10px;
 }
 
 .btn-submit {
     background-color: #005EC9;
-    width: 150px;
-    height: 48px;
+    width: 100px;
+    height: 34px;
     border-radius: 3px;
     outline: none;
     border: none;
     color: #FFFFFF;
     font-weight: 400;
     font-size: 18px;
+    margin: 10px;
 }
 
 .button {
-    width: 28%;
-    float: right;
+    width: 93%;
 }
 
 .fa-trash-o {
