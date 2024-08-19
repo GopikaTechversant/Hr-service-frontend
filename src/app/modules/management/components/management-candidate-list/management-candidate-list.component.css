@@ -149,10 +149,10 @@ input[type="text"] {
 
 .initial-loader {
     position: absolute;
-    top: 35%;
-    left: 21%;
-}
-
+    top: 31%;
+    left: 17%;
+    width: 98%;
+  }
 .dropdown {
     background: white;
     box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
@@ -187,8 +187,8 @@ input[type="text"] {
 .current-page {
     background-color: #005EC9;
     color: #FFFFFF;
-    height: 26px;
-    width: 26px;
+    height: 29px;
+    width: 46px;
 }
 
 .page {

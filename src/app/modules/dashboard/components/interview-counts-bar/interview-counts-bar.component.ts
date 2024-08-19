@@ -25,10 +25,12 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
   previousStartDate: any;
   previousEndDate: any;
   requestId: any;
+  initialLoader:boolean = false;
 
   constructor(private apiService: ApiService, private datePipe: DatePipe) {}
 
   ngOnInit(): void {
+    this.initialLoader = true;
     Chart.register(ChartDataLabels);
     this.previousStartDate = this.startDate;
     this.previousEndDate = this.endDate;
@@ -64,12 +66,15 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
     setTimeout(() => {
       const canvasElement = document.getElementById('barChartInterview') as HTMLCanvasElement;
       if (canvasElement && this.sixMonthCount.length) {
-        this.createBarChart();
+        setTimeout(() => {
+          this.createBarChart();
+        }, 0);
       } 
     }, 0);
   }
   
   fetchBarchartDetails(): void {
+    this.initialLoader = true;
     this.sixMonthCount = [];
     const url = '/dashboard/recruiter-chart';
     let params = [
@@ -82,12 +87,20 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
   
     this.apiService.get(`${url}?${params}`).subscribe((res: any) => {
       if (res?.data) {
-        this.sixMonthCount = res.data;
+        this.sixMonthCount = res?.data;
         this.labels = this.sixMonthCount.map((item: any) => item.userfirstName ?? item.month);
         this.hiredData = this.sixMonthCount.map((item: any) => +item.total_hired ?? '0');
         this.sourcedData = this.sixMonthCount.map((item: any) => +item.total_totalsourced ?? '0');
         this.offeredData = this.sixMonthCount.map((item: any) => +item.total_offerreleased ?? '0');
-        this.tryCreateChart(); // Updated to call tryCreateChart
+        this.initialLoader = false;
+        this.tryCreateChart(); 
+      }else {
+        this.sixMonthCount = [];
+        this.labels = [];
+        this.hiredData = [];
+        this.sourcedData = [];
+        this.offeredData = [];
+        this.initialLoader = false;
       }
     });
   }

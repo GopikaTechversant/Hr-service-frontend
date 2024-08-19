@@ -21,12 +21,13 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
   sourceCount: number[] = [];
   requestId: any;
   today: Date = new Date();
+  initialLoader: Boolean = false;
 
   constructor(private apiService: ApiService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
+    this.initialLoader = true;
     this.requestId = this.positionId ? this.positionId : '';
-    this.setSourceData();
     this.fetchResumeSource();
   }
 
@@ -37,7 +38,7 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['positionId'] && !changes['positionId'].isFirstChange()) {
-      if (this.positionId === '')  this.fetchResumeSource();
+      if (this.positionId === '') this.fetchResumeSource();
       this.requestId = changes['positionId'].currentValue;
       this.fetchResumeSource();
     } else if (changes['startDate'] && !changes['startDate'].isFirstChange()) {
@@ -48,27 +49,45 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
       this.fetchResumeSource();
     }
   }
-
   fetchResumeSource(): void {
+    this.initialLoader = true;
+    this.sourceList = [];
+    this.sourceLabels = [];
+    this.sourceCount = [];
     this.apiService.get(`/dashboard/resume-source?fromDate=${this.startDate}&toDate=${this.endDate}&requestId=${this.requestId}`).subscribe((res: any) => {
-      if (res?.data) {
+      if (res?.data && res.data.length > 0) {
         this.sourceList = res.data;
-        this.setSourceData();
-        this.createChart();
-      }
+        this.sourceLabels = this.sourceList.map((item: any) => item.sourceName);
+        this.sourceCount = this.sourceList.map((item: any) => Number(item.sourcecount));
+        this.initialLoader = false
+        setTimeout(() => {
+          this.createChart();
+        }, 10);
+      } else {
+        this.initialLoader = false;
+        this.sourceList = [];
+        this.sourceLabels = [];
+        this.sourceCount = [];
+      }    
     });
   }
-
-  setSourceData(): void {
-    this.sourceLabels = this.sourceList.map((item: any) => item.sourceName);
-    this.sourceCount = this.sourceList.map((item: any) => Number(item.sourcecount));
-  }
-
+  
   createChart(): void {
+    const canvasElement = document.getElementById('MyChart') as HTMLCanvasElement;
+    if (!canvasElement) {
+      // console.error("Canvas element not found");
+      return; 
+    }
+  
     if (this.chart) {
       this.chart.destroy();
     }
-
+  
+    if (!this.sourceList || this.sourceList.length === 0) {
+      console.warn("No data available for the chart");
+      return; 
+    }
+  
     const chartConfig: ChartConfiguration = {
       type: 'doughnut',
       data: {
@@ -88,8 +107,8 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
           padding: {
             top: 50,
             bottom: 50,
-            right: 80,
-            left: 80
+            right: 120,
+            left: 120
           }
         },
         plugins: {
@@ -114,9 +133,10 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
         ChartDataLabels, this.doughnutLabelsLinePlugin
       ],
     };
-
-    this.chart = new Chart("MyChart", chartConfig);
+  
+    this.chart = new Chart(canvasElement, chartConfig);
   }
+  
   doughnutLabelsLinePlugin = {
     id: 'doughnutLabelsLine',
     afterDraw: (chart: any) => {
@@ -165,7 +185,6 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
           // Draw label box
           ctx.fillStyle = dataset.backgroundColor[index];
           ctx.fillRect(xLine - 5, yLine - 5, 10, 10); // Adjust for box size
-
           // Draw label text
           ctx.font = '13px Roboto'; // Default font style for label
           ctx.textAlign = xLine < center.x ? 'right' : 'left';

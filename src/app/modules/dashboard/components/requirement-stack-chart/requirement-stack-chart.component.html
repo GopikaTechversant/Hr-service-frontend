@@ -25,11 +25,28 @@
             </div>
         </div>
     </div>
-    <div *ngIf="!barchartList || barchartList?.length === 0" class="no-data">
-        No Data Found
-    </div>
     <div class="chart-container">
-        <div class="chart-inner-container" *ngIf="barchartList?.length !== 0">
+        <div *ngIf="!initialLoader && (!barchartList || barchartList?.length === 0) " class="no-data">
+            No Data Found
+        </div>
+        <div *ngIf="initialLoader" class="row m-l-20 initial-loader">
+            <div *ngFor="let item of [0,1,2,3]" class="m-t-10 m-b-10">
+                <div class="gravatar-title">
+                    <div><ngx-skeleton-loader [theme]="{
+                        width: '200px',
+                        'border-radius': '0',
+                        height: '15px',
+                        'margin-bottom': '10px'
+                        }"></ngx-skeleton-loader>
+                    </div>
+                    <div>
+                        <ngx-skeleton-loader [theme]="{ width: '400px', 'border-radius': '0', height: '15px' }">
+                        </ngx-skeleton-loader>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="chart-inner-container" *ngIf="barchartList?.length !== 0 && !initialLoader">
             <canvas id="barChartRecruiter"></canvas>
         </div>
     </div>

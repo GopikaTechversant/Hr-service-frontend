@@ -179,7 +179,8 @@ input[type="text"] {
 .initial-loader {
   position: absolute;
   top: 31%;
-  left: 1%;
+  left: 17%;
+  width: 98%;
 }
 
 .data {
@@ -231,12 +232,6 @@ input[type="text"] {
   color: #005EC9;
   background-color: #FFFFFF;
   border: 1px solid #005EC9;
-}
-
-.initial-loader {
-  position: absolute;
-  top: 31%;
-  left: 21%;
 }
 
 .dropdown {

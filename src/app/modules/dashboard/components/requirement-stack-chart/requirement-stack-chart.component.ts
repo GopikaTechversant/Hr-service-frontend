@@ -28,6 +28,7 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
   teamListOpen: boolean = false;
   selectedTeamId: string = '';
   barchartList: any;
+  initialLoader: boolean = false;
 
   constructor(private apiService: ApiService, private datePipe: DatePipe) { }
 
@@ -45,8 +46,14 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.initialLoader = true;
+    this.labels = [];
+    this.hiredData = [];
+    this.totalApplicants = [];
+    this.offeredData = [];
+    this.technicalData = [];
     if (changes['positionId'] && !changes['positionId'].isFirstChange()) {
-      if (this.positionId === '')  this.fetchBarchartDetails();
+      if (this.positionId === '') this.fetchBarchartDetails();
       this.fetchBarchartDetails();
     } else if (changes['startDate'] && !changes['startDate'].isFirstChange()) {
       this.fetchBarchartDetails();
@@ -58,7 +65,7 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
   fetchServiceTeam(): void {
     this.apiService.get(`/service-request/team`).subscribe((res: any) => {
       if (res?.data) {
-        this.departmentList = res.data;
+        this.departmentList = res?.data;
       }
     });
   }
@@ -67,6 +74,9 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
     this.teamListOpen = false;
     this.selectedDepartment = teamName;
     this.selectedTeamId = teamId;
+    if (this.chart) {
+      this.chart.destroy();
+    }
     this.fetchBarchartDetails();
   }
 
@@ -74,33 +84,53 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
     Chart.register(ChartDataLabels);
     const canvasElement = document.getElementById('barChartRecruiter') as HTMLCanvasElement;
     if (canvasElement) {
-        this.createBarChart();
-    } 
-}
+      this.createBarChart();
+    }
+  }
 
   clearFilter(): void {
     this.teamListOpen = false;
     this.selectedDepartment = '';
     this.selectedTeamId = '';
+    if (this.chart) {
+      this.chart.destroy();
+    }
     this.fetchBarchartDetails();
   }
 
   fetchBarchartDetails(): void {
-    this.apiService.get(`/dashboard/department-chart?teamId=${this.selectedTeamId}&start_date=${this.startDate}&end_date=${this.endDate}`).subscribe((res: any) => {     
-      this.barchartList = res || [];      
+    this.initialLoader = true;
+    this.labels = [];
+    this.hiredData = [];
+    this.totalApplicants = [];
+    this.offeredData = [];
+    this.technicalData = [];
+    this.apiService.get(`/dashboard/department-chart?teamId=${this.selectedTeamId}&start_date=${this.startDate}&end_date=${this.endDate}`).subscribe((res: any) => {
+      this.barchartList = res || [];
       if (this.barchartList.length > 0) {
         this.labels = this.barchartList.map((item: any) => item.teamName ?? item.requestName);
         this.hiredData = this.barchartList.map((item: any) => +item.hire_count);
         this.totalApplicants = this.barchartList.map((item: any) => +item.total_applicant);
         this.offeredData = this.barchartList.map((item: any) => +item.offered_Count);
         this.technicalData = this.barchartList.map((item: any) => +item.technical_selected_Count);
-        this.createBarChart();
-      } 
+        this.initialLoader = false;        
+        setTimeout(() => {
+          this.createBarChart();
+        }, 0);
+      } else {
+        this.labels = [];
+        this.hiredData = [];
+        this.totalApplicants = [];
+        this.offeredData = [];
+        this.technicalData = [];
+        this.initialLoader = false;
+      }
     }, error => {
       console.error("Error fetching bar chart details", error);
     });
   }
-  
+
+
   private measureTextWidth(text: string, font: string): number {
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
@@ -110,34 +140,36 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
     context.font = font;
     return context.measureText(text).width;
   }
-  
+
   createBarChart(): void {
+    this.initialLoader = false;
+
     if (this.chart) {
       this.chart.destroy();
     }
-  
+
     const baseWidth = 1300;
     const labelFont = '13px Arial';
     const labelPadding = 40;
-  
+
     // Calculate total width needed based on labels and padding
     let totalLabelWidth = this.labels.reduce((total, label) => {
       return total + this.measureTextWidth(label, labelFont) + labelPadding;
     }, 0);
-  
+
     const chartWidth = Math.max(baseWidth, totalLabelWidth);
-  
+
     const chartContainer = document.querySelector('.chart-inner-container') as HTMLElement;
     if (chartContainer) {
       chartContainer.style.width = `${chartWidth}px`;
-      chartContainer.style.overflowX = 'auto'; 
+      chartContainer.style.overflowX = 'auto';
     }
-  
+
     const canvasElement = document.getElementById('barChartRecruiter') as HTMLCanvasElement;
-    if (canvasElement) {
+    if (canvasElement) {      
       canvasElement.width = chartWidth;
       canvasElement.height = 400;
-  
+
       this.chart = new Chart(canvasElement, {
         type: 'bar',
         data: {
@@ -200,7 +232,7 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
                 minRotation: 0, // No rotation
                 callback: (tickValue: string | number, index: number): string => {
                   if (this.labels && index < this.labels.length) {
-                    return  this.labels[index].split(' ').join('\n');
+                    return this.labels[index].split(' ').join('\n');
                   }
                   return tickValue.toString(); // Default to tick value if out of range
                 }
@@ -258,8 +290,8 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
         plugins: [ChartDataLabels]
       });
     } else {
-      console.error('Canvas element not found!');
+      // console.error('Canvas element not found!');
     }
   }
-  
+
 }

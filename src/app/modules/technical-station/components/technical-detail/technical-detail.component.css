@@ -134,11 +134,10 @@ input[type="text"] {
 
 .initial-loader {
     position: absolute;
-    top: 35%;
-    left: 21%;
+    top: 31%;
+    left: 17%;
+    width: 98%;
 }
-
-
 
 .dropdown {
     background: white;
@@ -174,8 +173,8 @@ input[type="text"] {
 .current-page {
     background-color: #005EC9;
     color: #FFFFFF;
-    height: 26px;
-    width: 26px;
+    height: 29px;
+    width: 46px;
 }
 
 .page {
@@ -195,27 +194,27 @@ input[type="text"] {
     border-radius: 50%;
 }
 
-.id-col{
+.id-col {
     width: 7%;
 }
 
-.name-col{
+.name-col {
     width: 10%;
 }
 
 .green {
     color: #08BC66;
-   /* background-color:#08BC66 ;  */
+    /* background-color:#08BC66 ;  */
 }
 
-@media (max-width: 1250px){
-    tr td{
+@media (max-width: 1250px) {
+    tr td {
         font-size: 12px;
         padding: 9px;
     }
 
-    .move-icon{
+    .move-icon {
         width: 23px;
         height: 23px;
     }
-  }
+}

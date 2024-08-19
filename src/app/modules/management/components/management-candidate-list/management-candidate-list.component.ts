@@ -34,11 +34,12 @@ export class ManagementCandidateListComponent implements OnInit {
     { status: 'done' },
     { status: 'moved' }
   ]
-  constructor(private apiService: ApiService, private dialog: MatDialog,private router: Router, private route: ActivatedRoute) {
+  constructor(private apiService: ApiService, private dialog: MatDialog, private router: Router, private route: ActivatedRoute) {
 
   }
 
   ngOnInit(): void {
+    this.initialLoader = true;
     this.fetchCandidates();
     this.fetchRequirements();
   }
@@ -65,16 +66,16 @@ export class ManagementCandidateListComponent implements OnInit {
         if (this.currentPage > totalPages) this.currentPage = totalPages;
       }
     },
-    (error: any) => {
-      this.loader = false;
-      this.initialLoader = false;
-      if (error.status === 500) {
-        // this.toastr.error('Internal server error');
-      } else {
-        // this.toastr.error('Something went wrong');
+      (error: any) => {
+        this.loader = false;
+        this.initialLoader = false;
+        if (error.status === 500) {
+          // this.toastr.error('Internal server error');
+        } else {
+          // this.toastr.error('Something went wrong');
+        }
       }
-    }
-  );
+    );
   }
 
   fetchDetails(id: any, status: any): void {
