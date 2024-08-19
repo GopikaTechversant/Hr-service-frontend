@@ -180,7 +180,8 @@ table {
 }
 
 .page {
-    margin: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     padding-bottom: 10px;
 }
 
@@ -188,7 +189,7 @@ table {
     background-color: #005EC9;
     color: #FFFFFF;
     height: 26px;
-    width: 26px;
+    width: 36px;
     cursor: pointer;
 }
 

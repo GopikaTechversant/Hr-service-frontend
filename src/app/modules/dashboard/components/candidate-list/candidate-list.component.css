@@ -163,12 +163,11 @@ input[type="text"] {
 }
 
 .box {
-    height: 26px;
-    width: 26px;
+   height: 29px;
+    width: 32px;
     border: none;
     background-color: white;
 }
-
 .box :hover {
     background: #F0F7FF;
 }
@@ -185,7 +184,7 @@ input[type="text"] {
     background-color: #005ec9;
     color: #fff;
     height: 29px;
-    width: 46px;
+    width: 36px;
 }
 
 .dot {

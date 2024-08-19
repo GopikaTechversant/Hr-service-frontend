@@ -144,21 +144,21 @@
 }
 
 .box {
-    height: 26px;
-    width: 26px;
+   height: 29px;
+    width: 32px;
     border: none;
     background-color: white;
 }
-
 .page {
-    margin: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .current-page {
     background-color: #005EC9;
     color: #FFFFFF;
     height: 29px;
-    width: 46px;
+    width: 36px;
 }
 
 .dot {

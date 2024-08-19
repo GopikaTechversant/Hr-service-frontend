@@ -114,12 +114,11 @@ tr {
 }
 
 .box {
-    height: 26px;
-    width: 26px;
+   height: 29px;
+    width: 32px;
     border: none;
     background-color: white;
 }
-
 .page {
     width: 97%;
     float: right;
@@ -129,7 +128,7 @@ tr {
     background-color: #005EC9;
     color: #FFFFFF;
     height: 29px;
-    width: 46px;
+    width: 36px;
 }
 
 .dot {
