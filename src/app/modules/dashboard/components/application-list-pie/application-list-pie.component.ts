@@ -89,51 +89,45 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
     }
   
     const chartConfig: ChartConfiguration = {
-      type: 'doughnut',
+      type: 'pie',
       data: {
         labels: this.sourceLabels,
         datasets: [{
           data: this.sourceCount,
-          backgroundColor: ['#628AFC', '#1790C5', '#005EC9', '#047892', '#3EB2B8'],
-          borderColor: ['#628AFC', '#1790C5', '#005EC9', '#047892', '#3EB2B8'],
+          backgroundColor: ['#0905f0', '#628AFC', '#44b874', '#047892', '#3EB2B8'],
+          borderColor: ['#0905f0', '#628AFC', '#44b874', '#047892', '#3EB2B8'],
           fill: false,
           hoverOffset: 5
         }],
       },
       options: {
         responsive: true,
-        aspectRatio: 1.5,
+        aspectRatio: 1.9,
         layout: {
-          padding: {
-            top: 50,
-            bottom: 50,
-            right: 120,
-            left: 120
-          }
+          padding: 10
         },
         plugins: {
           legend: {
-            display: false,
+            display: true,
             position: 'right',
             align: 'center',
             labels: {
               usePointStyle: true,
               pointStyle: 'circle',
+              padding: 20
             }
           },
           tooltip: {
-            enabled: false
+            enabled: true
           },
           datalabels: {
-            display: false,
+            display: true,
+            color: 'white',
           },
         },
       },
-      plugins: [
-        ChartDataLabels, this.doughnutLabelsLinePlugin
-      ],
+      plugins: [ChartDataLabels],
     };
-  
     this.chart = new Chart(canvasElement, chartConfig);
   }
   

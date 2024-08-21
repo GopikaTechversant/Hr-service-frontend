@@ -5,19 +5,11 @@
     <div class="padding-10">
         <span>{{candidateDetails['candidate.candidateFirstName']}} {{candidateDetails['candidate.candidateLastName']}} &nbsp;- </span>
         <span class="blue">( 
-            <a [href]="env_url + '/dashboard/candidate-details/' + candidateDetails['candidate.candidateId']">
-                {{candidateDetails['candidate.candidateId']}}
-            </a>)
+            <a [href]="env_url + '/dashboard/candidate-details/' + candidateDetails['candidate.candidateId']"> {{candidateDetails['candidate.candidateId']}}</a>)
         </span>
     </div>
-    <div class="modal-close margin-10 d-flex">
-        <span class="" [ngClass]="{'blue': candidateDetails?.serviceStatus === 'pending','green': candidateDetails?.serviceStatus === 'done',
-            'red': candidateDetails?.serviceStatus === 'rejected'}">{{candidateDetails?.serviceStatus | titlecase}}
-        <img src="assets/images/techversant/modal-close.svg" class="c-pointer p-r-5"  (click)="closeDialog()"alt="" width="35">
-    </span>
-        <!-- <div> -->
-        <!-- </div> -->
-        <!-- <im class="c-pointer"><mat-icon>close</mat-icon></im> -->
+    <div class="modal-close margin-10 d-flex">   
+        <img src="assets/images/techversant/clear-filter.svg" class="c-pointer p-r-5"  (click)="closeDialog()"alt="" width="35">
     </div>
 </div>
 <div class="modal-content">
@@ -79,6 +71,7 @@
             </div>
             <div class="d-flex  padding-10">
                 <div class="sub-head f-w-500 f-s-14 d-flex">
+                    <div class="p-8">Candidate Status</div>
                     <div class="p-8">Contact Number</div>
                     <div class="p-8">Mail</div>
                     <div class="p-8">Date of Birth</div>
@@ -93,6 +86,11 @@
                     <div class="p-8">State</div>
                 </div>
                 <div class="sub-head d-flex">
+                    <div class="p-8">
+                       :   <span class="" [ngClass]="{'blue': candidateDetails?.serviceStatus === 'pending','green': candidateDetails?.serviceStatus === 'done',
+                                 'red': candidateDetails?.serviceStatus === 'rejected'}">
+                        {{candidateDetails?.serviceStatus | titlecase}} </span>
+                    </div>
                     <div class="p-8">
                         : {{candidateDetails['candidate.candidateMobileNo'] ?(candidateDetails['candidate.candidateMobileNo']): '0000000000' }}
                     </div>
@@ -130,59 +128,69 @@
                     <div class="p-8">
                         : {{candidateDetails['candidate.candidateState'] ? candidateDetails['candidate.candidateState'] :'State'}}
                     </div>
+                  
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Initial buttons -->
-    <div *ngIf="!progessAdded && candidateDetails?.serviceStatus === 'pending' && !progessAdded"
-        class="details  padding-10 d-flex j-end w-97">
-        <button class="select-btn" (click)="selectButton('reschedule');showMail('re-schedule')" [ngClass]="{'offer-reject-btn': buttonType === 'reschedule'}">Reschedule Inteview</button>
-        <button class="select-btn" (click)="selectButton('rejection');showMail('')"  [ngClass]="{'offer-reject-btn': buttonType === 'rejection'}" >Rejection</button>
-        <button class="select-btn" (click)="selectButton('add');showMail('')"  [ngClass]="{'offer-reject-btn': buttonType === 'add'}" >Add Progress</button>
+    <div *ngIf="!progessAdded && candidateDetails?.serviceStatus === 'pending' && !progessAdded" class="p-t-20 details padding-10 d-flex j-space w-50 c-pointer">
+        <label class="c-pointer f-w-500 f-s-14">
+            <input type="radio" name="action" value="reschedule" (change)="selectButton('reschedule');showMail('re-schedule')" [checked]="buttonType === 'reschedule'" />
+            Reschedule Interview
+        </label>
+        <label class="c-pointer f-w-500 f-s-14">
+            <input type="radio" name="action" value="rejection" (change)="selectButton('rejection');showMail('')" [checked]="buttonType === 'rejection'" />
+            Reject Candidate
+        </label>
+        <label class="c-pointer f-w-500 f-s-14">
+            <input type="radio" name="action" value="add" (change)="selectButton('add');showMail('')" [checked]="buttonType === 'add'" />
+            Interview Feedback
+        </label>
     </div>
-    <!-- Add progress -->
-    <div class="margin-10" *ngIf="!progessAdded && candidateDetails?.serviceStatus === 'pending' && !progessAdded && buttonType.trim() === 'add'">
-        <div class="heading  padding-10">
-            <span>Add Progress</span>
+
+    <!-- Interview Feedback -->
+    <div class="margin-10" *ngIf="!progessAdded && candidateDetails?.serviceStatus === 'pending' && buttonType.trim() === 'add'">
+        <div class="margin-10">
+            <span class="padding-10 sub-head">Feedback</span>
+            <textarea *ngIf="!candidateDetails['progress.progressDescription']" class="text-area m-l-5 p-r-5 p-b-5" id="description"></textarea>
         </div>
-        <div class="d-flex  margin-10"
-            *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done' && candidateDetails?.serviceStatus !== 'moved'">
-            <div>
-                <span class=" padding-10 sub-head">Skill</span>
-                <span class="padding-5 m-r-5"><input class="input-1" *ngIf="!candidateDetails['progress.progressSkills']" type="text" id="skill"></span>
-            </div>
-            <div>
-                <span class=" padding-10 sub-head">Score</span>
-                <div class="p-relative w-100 m-l-10">
-                    <span class="padding-5 m-r-5"> <input class="input-1" *ngIf="!candidateDetails['progress.progressScore']"
-                            type="text" id="score"></span>
-                </div>
-            </div>
-        </div>
-        <div class=" margin-10">
-            <span class=" padding-10 sub-head">Add Attachment</span>
-            <span class="c-pointer attach m-l-5 p-r-5 p-b-5 d-flex file" title="Attach File" (click)="fileInput.click()">
-                <img class="p-t-3" src="/assets/images/paperclip.svg" alt="" height="20" width="20">
-                <span class="m-b-10 padding-5" *ngIf="fileName"> {{fileName}}</span>
-                <span class="m-b-10 padding-5" *ngIf="!fileName">Upload File</span>
-                <input type="file" id="fileInput" #fileInput style="display: none;" (change)="onFileSelected($event)">
+        <div class="margin-10 d-flex">
+            <span class="c-pointer file padding-10 d-flex" title="Attach File" (click)="fileInput.click()">
+                <img src="/assets/images/paperclip.svg" alt="Attach File" class="p-t-3" height="20" width="20">
+                <span class="p-t-4 p-l-4">{{ fileName || 'Upload File' }}</span>
+                <input type="file" #fileInput id="fileInput" style="display: none;" (change)="onFileSelected($event)">
             </span>
-        </div>
-        <div class=" margin-10">
-            <span class=" padding-10 sub-head">Add Description</span>
-            <textarea class="text-area  m-l-5 p-r-5 p-b-5" *ngIf="!candidateDetails['progress.progressDescription']" id="description"></textarea>
-        </div>
-        <div *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done' && candidateDetails?.serviceStatus !== 'moved'" class="details  padding-10 d-flex j-end w-97">
-            <button class="btn c-pointer" (click)="addProgress()">Add progress</button>
+        </div>     
+        <div *ngIf="candidateDetails?.serviceStatus !== 'done' && candidateDetails?.serviceStatus !== 'moved'" class="details padding-10 p-r-0 d-flex j-end w-100">
+            <button class="btn c-pointer" (click)="addProgress()">Submit</button>
         </div>
     </div>
+    
+    <div *ngIf="data?.progressStatus > 0 || candidateDetails?.serviceStatus === 'moved'">
+        <div class="heading padding-10 d-flex j-space">
+            <span>Interview Feedback</span>
+        </div>       
+        <div class="d-flex padding-10">
+            <div class="sub-head f-w-500 f-s-14 d-flex">
+                <span class="p-8">Feedback</span>
+                <span class="p-8" *ngIf="candidateDetails['progress.progressFile']">Attached File</span>
+            </div>
+            <div class="sub-head d-flex">
+                <span class="p-8">: {{ candidateDetails['progress.progressDescription'] || 'Nil' }}</span>
+                <span class="p-8" *ngIf=" candidateDetails['progress.progressFile']">: 
+                    <span class="p-l-5 view-attachment c-pointer"  title="View Attachment" (click)="viewResume(candidateDetails['progress.progressFile'])">View Attachment</span>
+                </span>
+            </div>
+        </div>
+    </div>  
+    
     <!-- Back-off Or Panel Rejection -->
     <div class="margin-10" *ngIf="!progessAdded && candidateDetails?.serviceStatus === 'pending' && !progessAdded && buttonType.trim() === 'rejection'">
         <div class="  padding-10 d-flex j-space m-r-20">
-            <span class="f-w-500 f-s-20">Reason For Rejection</span>
-            <span class="input-rejection c-pointer no-close p-relative p-t-8">
+            <!-- <span class="f-w-500 f-s-20">Reason For Rejection</span> -->
+            <span class="input-rejection c-pointer no-close p-relative p-t-5">
                 <span class="no-close p-l-10 f-s-14 f-w-400" (click)="filterStatus = !filterStatus">{{filteredStatus.trim()
                     === '' ? 'Select Reason for Rejection' : filteredStatus | titlecase}}</span>
                 <span class="f-right">
@@ -199,57 +207,39 @@
             </span>
         </div>
         <div class=" margin-10">
-            <span class="sub-head">Add Description</span>
+            <span class="sub-head">Comments</span>
             <textarea class="text-area padding-5" id="" id="feedback"></textarea>
         </div>
         <div *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done' && candidateDetails?.serviceStatus !== 'moved'"
-            class="details  padding-10 d-flex j-end w-97">
+            class="details  padding-10 p-r-0 d-flex j-end w-97">
             <button class="btn c-pointer" (click)="rejectClick('')">Submit</button>
         </div>
-    </div>
-    <!-- Added Progress -->
-    <div class="head  padding-10 d-flex j-space" *ngIf="data?.progressStatus > 0 || candidateDetails?.serviceStatus === 'moved'">
-        <span>Added Progress</span>
-    </div>
-    <div class="d-flex  padding-10" *ngIf="data?.progressStatus > 0 || candidateDetails?.serviceStatus === 'moved'">   
-        <div class="sub-head f-w-500 f-s-14 d-flex">
-            <span class="p-8" *ngIf="candidateDetails['progress.progressSkills'] ">Skill</span>
-            <span class="p-8" *ngIf="candidateDetails['progress.progressScore']">Score</span>
-            <span class="p-8">Attached File</span>
-            <span class="p-8">Description</span>
         </div>
-        <div class="sub-head d-flex">
-            <span class="p-8" *ngIf="candidateDetails['progress.progressSkills']"> : {{candidateDetails['progress.progressSkills'] ? candidateDetails['progress.progressSkills'] : 'NIL'}}</span>
-            <span class="p-8" *ngIf="candidateDetails['progress.progressScore']"> : {{candidateDetails['progress.progressScore'] ? candidateDetails['progress.progressScore'] : 'NIL'}}</span>
-            <span class="p-8"> : <i class="fa fa-file-text-o p-l-5 blue f-s-22" aria-hidden="true" title="View Attachment"
-                (click)="viewResume(candidateDetails['progress.progressFile'])"></i>
-                <span class="p-l-5">{{candidateDetails['progress.progressFile']}}</span>
-            </span>
-                <span class="p-8"> : {{candidateDetails['progress.progressDescription'] ? candidateDetails['progress.progressDescription']: 'Nil'}}</span>
-        </div>
-    </div>  
         <!-- Next Round Approval or Rejection After Adding Progress -->
-    <div *ngIf="candidateDetails?.serviceStatus === 'pending' && candidateDetails['progress.progressId'] !== null">
-        <button class="select-btn" [ngClass]="{'offer-select-btn': messageType === 'approve'}"
-            (click)="showMail('approve')">Interview Invitation Mail
-        </button>
-        <button class="reject-btn" [ngClass]="{'offer-reject-btn': messageType === 'rejection'}"
-            (click)="showMail('rejection')">Rejection Notification Mail
-        </button>
-    </div>
+        <div *ngIf="candidateDetails?.serviceStatus === 'pending' && candidateDetails['progress.progressId'] !== null"
+            class="p-t-20 details padding-10 d-flex j-space w-50 c-pointer">
+            <label class="c-pointer f-w-500 f-s-14">
+                <input type="radio" name="messageType" value="approve" (change)="showMail('approve')" [checked]="messageType === 'approve'" />
+                Select for Next Round
+            </label>
+            <label class="c-pointer f-w-500 f-s-14">
+                <input type="radio" name="messageType" value="rejection" (change)="showMail('rejection')" [checked]="messageType === 'rejection'" />
+                Reject Candidate
+            </label>
+        </div>
         <!-- Reschedule Interview / send Approval mail for next round / Rejection mail -->
         <div *ngIf="candidateDetails?.serviceStatus === 'pending' && messageType.trim() !== ''">
             <app-mail-template [candidate]="mailTemplateData" (submitData)="onSubmitData($event)"></app-mail-template>
         </div>
-    
-    <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'done' || this.data?.candidateDetails?.serviceStatus === 'rejected'">
-        <div class="head  padding-10">
-            <span>Feedback</span>
-        </div>
-        <div class="sub-head d-flex">
-            <span class=" padding-10" *ngIf="candidateDetails['reqCandidateComment.commentComment']">
-                {{candidateDetails['reqCandidateComment.commentComment'] ? candidateDetails['reqCandidateComment.commentComment'] : 'Not Updated'}}
-            </span>
-        </div>
-    </div>
+        <div *ngIf="data?.candidateDetails?.serviceStatus !== 'pending'">
+            <div class="heading padding-10 d-flex j-space">
+                <span>Selection Status</span>
+            </div>
+            <div class="sub-head d-flex">
+                <span class="padding-10">
+                    {{ data?.candidateDetails?.serviceStatus === 'done' ? 'Candidate Selected to Next Round' : '' }}
+                    {{ data?.candidateDetails?.serviceStatus !== 'rejected' ? 'Candidate Rejected In this Round' : '' }}
+                </span>
+            </div>
+        </div>        
 </div>

@@ -149,16 +149,15 @@
                 <div *ngIf="(this.candidateList[0]?.length === 0 || !this.candidateList[0]) && !loader && !initialLoader" class="data">
                     No Data Found
                 </div>
-                <div *ngIf="initialLoader"  class="row m-l-20 initial-loader">
-                    <div *ngFor="let item of [0,1,2,3,4,5]" class="col-md-6 m-t-10 m-b-10">
+                <div *ngIf="initialLoader" class="row m-l-20 initial-loader">
+                    <div *ngFor="let item of [0,1,2,3,4,5]" class="m-t-10 m-b-10">
                         <div class="gravatar-title">
-                            <div>
-                                <ngx-skeleton-loader [theme]="{
-                                width: '900px',
-                                'border-radius': '0',
-                                height: '15px',
-                                'margin-bottom': '10px'
-                                }"></ngx-skeleton-loader>
+                            <div><ngx-skeleton-loader [theme]="{
+                                                    width: '900px',
+                                                    'border-radius': '0',
+                                                    height: '15px',
+                                                    'margin-bottom': '10px'
+                                                    }"></ngx-skeleton-loader>
                             </div>
                             <div>
                                 <ngx-skeleton-loader [theme]="{ width: '1300px', 'border-radius': '0', height: '15px' }">
@@ -167,7 +166,7 @@
                         </div>
                     </div>
                 </div>
-            </table>       
+                </table>
         </div>
         <div class="page d-flex j-end p-10">
             <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(1)">

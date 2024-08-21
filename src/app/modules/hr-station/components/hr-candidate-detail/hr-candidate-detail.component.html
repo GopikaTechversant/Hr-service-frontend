@@ -5,12 +5,8 @@
     <div>
         <span class="p-l-10">{{candidateDetails?.candidateFirstName}} {{candidateDetails?.candidateLastName ?? candidateDetails?.candidateLastName}}</span>
     </div>
-    <div class="modal-close d-flex j-end">
-        <img src="assets/images/techversant/modal-close.svg" class="c-pointer p-r-5"  (click)="closeDialog()"alt="" width="35">
-<!-- 
-        <button class="c-pointer" (click)="closeDialog()">
-            <mat-icon>close</mat-icon>
-        </button> -->
+    <div class="modal-close margin-10 d-flex">   
+        <img src="assets/images/techversant/clear-filter.svg" class="c-pointer p-r-5"  (click)="closeDialog()"alt="" width="35">
     </div>
 </div>
 <div class="modal-content">
@@ -62,22 +58,13 @@
             </span>
         </div>
     </div>
-    <div class="selection-btn" *ngIf="data?.candidateDetails?.serviceStatus === 'pending' && !hrReview">
-        <button class="select-btn" [ngClass]="{'offer-select-btn': messageType === 'offer'}"
-            (click)="showMail('offer')">Offer Letter</button>
-        <button class="reject-btn" [ngClass]="{'offer-reject-btn': messageType === 'rejection'}"
-            (click)="showMail('rejection')">Rejection Letter</button>
-    </div>
-    <div *ngIf="!hrReview && this.data?.candidateDetails?.serviceStatus !== 'moved' && this.data?.candidateDetails?.serviceStatus === 'pending' && (showSelection || showRejection)">
-        <app-mail-template [candidate]="mailTemplateData" (submitData)="onSubmitData($event)"></app-mail-template>
-    </div>
     <div *ngIf="hrReview && data?.offerStatus > 0">
-        <div class="head p-10">
-            <span>Details of {{candidateDetails?.candidateFirstName}} {{candidateDetails?.candidateLastName}}</span>
-        </div>
+        <!-- <div class="head p-10">
+            <span>Offer Details of {{candidateDetails?.candidateFirstName}} {{candidateDetails?.candidateLastName}}</span>
+        </div> -->
         <div class="p-10">
             <div class="p-10" *ngIf="hrReview">
-                <span class="f-w-500">Offer Salary : </span> {{hrReview?.reviewedSalary}}
+                <span class="f-w-500">Offered Salary : </span> {{hrReview?.reviewedSalary}}
             </div>
             <div class="p-10" *ngIf="hrReview">
                 <span class="f-w-500">Joining Date : </span>{{hrReview?.reviewedJoiningDate | date: 'dd/MM/YYY'}}
@@ -87,6 +74,21 @@
             </div> -->
         </div>
     </div>
+    <div *ngIf="data?.candidateDetails?.serviceStatus === 'pending' && !hrReview"  class="p-t-20 details padding-10 d-flex j-space w-50 c-pointer">
+            <label class="c-pointer f-w-500 f-s-14">
+                <input type="radio" name="selection" value="offer" [(ngModel)]="messageType" (change)="showMail('offer')">
+                Offer Letter
+            </label>
+            <label class="c-pointer f-w-500 f-s-14">
+                <input type="radio" name="selection" value="rejection" [(ngModel)]="messageType" (change)="showMail('rejection')">
+               Rejection Letter
+            </label>
+    </div>
+    
+    <div *ngIf="!hrReview && this.data?.candidateDetails?.serviceStatus !== 'moved' && this.data?.candidateDetails?.serviceStatus === 'pending' && (showSelection || showRejection)">
+        <app-mail-template [candidate]="mailTemplateData" (submitData)="onSubmitData($event)"></app-mail-template>
+    </div>
+  
     <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'pending' && hrReview">
         <div class="head p-10">
             <span>Feedback</span>
@@ -99,12 +101,17 @@
             </div>
         </div>
     </div>
-    <div *ngIf="this.data?.candidateDetails?.serviceStatus !== 'pending'">
+    <div *ngIf="data?.candidateDetails?.serviceStatus !== 'pending'">
         <div class="head p-10">
             <span>Feedback</span>
         </div>
         <div class="p-10">
-            <span class="padding-5">{{feedback ? feedback : 'Not Updated'}}</span>
+            <span class="padding-5">
+                {{data?.candidateDetails?.serviceStatus === 'done' ? 'Candidate Accepted the offer Letter and Hired' : ''}}
+                {{(hrReview && data?.candidateDetails?.serviceStatus === 'rejected') ? 'Candidate Rejected the Offer Letter' : ''}}
+                {{(!hrReview && data?.candidateDetails?.serviceStatus === 'rejected') ? 'Candidate Rejected in H R Round' : ''}}
+                {{data?.candidateDetails?.serviceStatus === 'moved' ? 'Candidate Moved from H R Round' : ''}}
+            </span>
         </div>
     </div>
 </div>

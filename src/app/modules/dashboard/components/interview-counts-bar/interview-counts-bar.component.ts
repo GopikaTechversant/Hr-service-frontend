@@ -142,8 +142,8 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
           {
             label: 'No. of Hired',
             data: this.hiredData,
-            backgroundColor: '#047892',
-            borderColor: '#047892',
+            backgroundColor: '#628AFC',
+            borderColor: '#628AFC',
             borderWidth: 1,
             barPercentage: 0.8,
             categoryPercentage: 0.7,
@@ -153,8 +153,8 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
           {
             label: 'No. of Offered',
             data: this.offeredData,
-            backgroundColor: '#2870B8',
-            borderColor: '#2870B8',
+            backgroundColor: '#65bde6',
+            borderColor: '#65bde6',
             borderWidth: 1,
             barPercentage: 0.8,
             categoryPercentage: 0.7,
@@ -164,8 +164,8 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
           {
             label: 'No. of Sourced',
             data: this.sourcedData,
-            backgroundColor: '#3EB2B8',
-            borderColor: '#3EB2B8',
+            backgroundColor: '#047892',
+            borderColor: '#047892',
             borderWidth: 1,
             barPercentage: 0.9,
             categoryPercentage: 0.7,

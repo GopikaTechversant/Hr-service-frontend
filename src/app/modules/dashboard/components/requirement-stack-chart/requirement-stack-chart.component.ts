@@ -178,8 +178,8 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
             {
               label: 'No. of Hired',
               data: this.hiredData,
-              backgroundColor: '#047892',
-              borderColor: '#047892',
+              backgroundColor: '#628AFC',
+              borderColor: '#628AFC',
               borderWidth: 1,
               barPercentage: 0.6,
               categoryPercentage: 0.5,
@@ -188,8 +188,8 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
             {
               label: 'No. of Offered',
               data: this.offeredData,
-              backgroundColor: '#2870B8',
-              borderColor: '#2870B8',
+              backgroundColor: '#65bde6',
+              borderColor: '#65bde6',
               borderWidth: 1,
               barPercentage: 0.6,
               categoryPercentage: 0.5,
@@ -198,8 +198,8 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
             {
               label: 'Technical Selected',
               data: this.technicalData,
-              backgroundColor: '#3EB2B8',
-              borderColor: '#3EB2B8',
+              backgroundColor: '#0905f0',
+              borderColor: '#0905f0',
               borderWidth: 1,
               barPercentage: 0.6,
               categoryPercentage: 0.5,
@@ -208,8 +208,8 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
             {
               label: 'Total Applicants',
               data: this.totalApplicants,
-              backgroundColor: '#1790C5',
-              borderColor: '#1790C5',
+              backgroundColor: '#047892',
+              borderColor: '#047892',
               borderWidth: 1,
               barPercentage: 0.6,
               categoryPercentage: 0.5,

@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.checkRememberMe();
     this.env_url = window.location.origin;
-    this.initializeGoogleSignIn();
+    // this.initializeGoogleSignIn();
   }
 
   checkRememberMe() {
@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
       this.loginForm.patchValue({
         userName: userName,
         userPassword: userPassword,
-        rememberMe: true
+        // rememberMe: true
       });
     }
   }
