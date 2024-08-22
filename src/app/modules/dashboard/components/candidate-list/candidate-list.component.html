@@ -87,7 +87,7 @@
                 Found</div>
         </table>
         <div *ngIf="initialLoader" class="row m-l-20 initial-loader">
-            <div *ngFor="let item of [0,1,2,3]" class="col-md-6 m-t-10 m-b-10">
+            <div *ngFor="let item of [0,1,2,3,4,5]" class="m-t-10 m-b-10">
                 <div class="gravatar-title">
                     <div><ngx-skeleton-loader [theme]="{
                         width: '900px',
@@ -97,7 +97,8 @@
                         }"></ngx-skeleton-loader>
                     </div>
                     <div>
-                        <ngx-skeleton-loader [theme]="{ width: '1300px', 'border-radius': '0', height: '15px' }">
+                        <ngx-skeleton-loader
+                            [theme]="{ width: '1300px', 'border-radius': '0', height: '15px' }">
                         </ngx-skeleton-loader>
                     </div>
                 </div>
