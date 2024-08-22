@@ -449,3 +449,12 @@ button{
     -ms-overflow-style: none;
     /* For Internet Explorer and Edge */
 }
+
+input[type="radio"] {
+  outline: none !important;
+}
+
+input[type="text"] {
+  border: none;
+  outline: none;
+}

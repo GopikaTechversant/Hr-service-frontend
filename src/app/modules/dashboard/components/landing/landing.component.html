@@ -1,15 +1,16 @@
 <div class="page">
     <div class="header">
-        <app-header (toggleSidebarData)="onToggleSidebarData($event)"></app-header>
+      <app-header (toggleSidebarData)="onToggleSidebarData($event)"></app-header>
     </div>
     <div class="main">
-        <div class="sidebar-container" [class.sidebar-hidden]="isSidebarHidden">
-            <div class="sidebar">
-                <app-left-sidebar></app-left-sidebar>
-            </div>
+      <div class="sidebar-container" [class.sidebar-hidden]="isSidebarHidden">
+        <div class="sidebar">
+          <app-left-sidebar></app-left-sidebar>
         </div>
-        <div class="content" [class.full-width]="isSidebarHidden">
-            <router-outlet></router-outlet>
-        </div>
+      </div>
+      <div class="content" [class.full-width]="isSidebarHidden">
+        <router-outlet></router-outlet>
+      </div>
     </div>
-</div>
+  </div>
+  

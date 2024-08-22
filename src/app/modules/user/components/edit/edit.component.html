@@ -52,14 +52,13 @@
             <div class="m-t-20 m-b-10 p-l-10  child p-relative">
                 <span class="sub-head">Work Station</span>
                 <div class="no-close col-md-3 s-list d-flex input-station j-space m-text p-relative " (click)="idListOpen = !idListOpen">
-                    <span *ngIf="!selectedStation"
+                    <span
                         class="no-close s-list m-r-10 m-text align-center m-b-2 f-w-400 c-pointer h-min sub flex-1">
-                        {{workStation}}
+                        {{selectedStation ? selectedStation : workStation}}
                     </span>
-                    <div class="align-center p-t-7" *ngIf="selectedStation">{{selectedStation}}</div>
-                    <div class="no-close s-list c-pointer align-center m-b-2 flex-1 d-flex j-end sub"><i
+                    <span class="no-close s-list c-pointer align-center m-b-2 flex-1 d-flex j-end sub"><i
                             class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
-                    </div>
+                    </span>
                     <div class=" m-b-2 drop-list no-close p-absolute" *ngIf="idListOpen">
                         <div (click)="selectStation(station?.stationId,station?.stationName)"
                             *ngFor="let station of stationList" class="c-pointer">

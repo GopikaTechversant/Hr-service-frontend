@@ -6,9 +6,11 @@
   </div>
   <div class="header d-flex navbar" [class.header-full]="isSidebarHidden">
     <div class="p-2 d-flex align-items-center">
-      <div>
-        <img src="/assets/images/techversant/toggle.svg" alt="" (click)="toggleSidebar()" class="c-pointer" width="55">
+      <div (click)="toggleSidebar()" class="m-b-9 c-pointer toggle">
+        <i class="fa fa-bars"></i>
+        <!-- <img src="/assets/images/techversant/toggle.svg" alt="Toggle Sidebar" class="c-pointer" style="width: 25px; height: auto;"> -->
       </div>
+      
       <div class="search-container p-relative ms-3">
         <div class="search-div d-flex align-items-center">
           <input type="text" class="input" placeholder="Search Candidate Detail"

@@ -1,9 +1,7 @@
 import { DatePipe } from '@angular/common';
-import { Component, ElementRef, EventEmitter, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Inject, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastrServices } from 'src/app/services/toastr.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environments';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-edit',
@@ -30,7 +28,7 @@ export class EditComponent implements OnInit {
   originalUser: any[] = [];
   dob: any;
   workStation: any;
-  constructor(private datePipe: DatePipe, private apiService: ApiService, private tostr: ToastrServices, private http: HttpClient, public dialogRef: MatDialogRef<EditComponent>,
+  constructor(private datePipe: DatePipe, private apiService: ApiService, private tostr: ToastrServices, public dialogRef: MatDialogRef<EditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
 
   }
@@ -39,10 +37,7 @@ export class EditComponent implements OnInit {
     this.fetchStations();
   }
   fetchUserDetails(): void {
-    const headers = new HttpHeaders({
-      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
-    });
-    this.http.get(`${environment.api_url}/user/reqUsersList/${this.data}`, { headers }).subscribe((res: any) => {
+    this.apiService.get(`/user/reqUsersList/${this.data}`).subscribe((res: any) => {
       this.candidateDetails = res?.data;
       this.populateFieldvalues();
     })
@@ -94,11 +89,8 @@ export class EditComponent implements OnInit {
     if (this.selectedStationId) {
       if (this.selectedStationId !== this.candidateDetails?.userWorkStation) payload.userWorkStation = this.selectedStationId;
     }
-    const headers = new HttpHeaders({
-      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
-    });
     if (Object.keys(payload).length > 0) {
-      this.http.put(`${environment.api_url}/user/update/?userId=${this.data}`, payload, { headers }).subscribe((res: any) => {
+      this.apiService.put(`/user/update/?userId=${this.data}`, payload).subscribe((res: any) => {
         this.tostr.success('User Updated');
         this.dialogRef.close();
         this.onEditSuccess.emit();
@@ -107,9 +99,11 @@ export class EditComponent implements OnInit {
       this.dialogRef.close();
     }
   }
+
   cancel(): void {
     this.dialogRef.close();
   }
+
   dateChange(event: any): void {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');

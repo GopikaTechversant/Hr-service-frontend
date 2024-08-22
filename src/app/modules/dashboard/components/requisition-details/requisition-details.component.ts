@@ -119,6 +119,8 @@ export class RequisitionDetailsComponent implements OnInit {
     this.fetchCandidates();
   }
 
-
+  selectCandidate(id: any): void {
+    this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
+  }
 
 }

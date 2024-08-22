@@ -130,10 +130,10 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
   
   createBarChart(): void {
     if (this.chart) this.chart.destroy();
-
+  
     const canvasElement = document.getElementById('barChartInterview') as HTMLCanvasElement;
     if (!canvasElement) return;
-
+  
     this.chart = new Chart(canvasElement, {
       type: 'bar',
       data: {
@@ -142,35 +142,32 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
           {
             label: 'No. of Hired',
             data: this.hiredData,
-            backgroundColor: '#628AFC',
-            borderColor: '#628AFC',
+            backgroundColor: '#6E4F7B',
+            borderColor: '#6E4F7B',
             borderWidth: 1,
-            barPercentage: 0.8,
-            categoryPercentage: 0.7,
+            barPercentage: 0.6,
+            categoryPercentage: 0.6,
             barThickness: 30,
-            clip: { left: 5, top: 8, right: -2, bottom: 0 }
           },
           {
             label: 'No. of Offered',
             data: this.offeredData,
-            backgroundColor: '#65bde6',
-            borderColor: '#65bde6',
+            backgroundColor: '#1782A3',
+            borderColor: '#1782A3',
             borderWidth: 1,
-            barPercentage: 0.8,
-            categoryPercentage: 0.7,
+            barPercentage: 0.6,
+            categoryPercentage: 0.6,
             barThickness: 30,
-            clip: { left: 5, top: 1, right: -2, bottom: 0 }
           },
           {
             label: 'No. of Sourced',
             data: this.sourcedData,
-            backgroundColor: '#047892',
-            borderColor: '#047892',
+            backgroundColor: '#9FD66A',
+            borderColor: '#9FD66A',
             borderWidth: 1,
-            barPercentage: 0.9,
-            categoryPercentage: 0.7,
+            barPercentage: 0.6,
+            categoryPercentage: 0.6,
             barThickness: 30,
-            clip: { left: 5, top: 1, right: -2, bottom: 0 }
           }
         ]
       },
@@ -180,7 +177,6 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
           y: {
             type: 'logarithmic',
             stacked: true,
-            // beginAtZero: false,
             grid: {
               display: false,
             },
@@ -196,7 +192,6 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
               display: false
             },
             min: 0,
-            max: this.labels.length > 5 ? 5 : this.labels.length,
           }
         },
         layout: {
@@ -221,6 +216,10 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
             enabled: true
           },
           datalabels: {
+            display: (context) => {
+              // Check if the data value is zero; if so, hide the label
+              return context.dataset.data[context.dataIndex] !== 0;
+            },
             color: '#FFFFFF',
             padding: 4,
             anchor: 'center',
@@ -247,4 +246,5 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
       plugins: [ChartDataLabels]
     });
   }
+  
 }

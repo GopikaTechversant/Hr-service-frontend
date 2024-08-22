@@ -48,6 +48,10 @@ export class ApiService {
     return this.http.delete(`${environment.api_url}${url}`, { headers: this.createHeaders() });
   }
 
+  put(url: string, data: any): Observable<any> {
+    return this.http.put(`${environment.api_url}${url}`, data, { headers: this.createHeaders() });
+  }
+  
   getTemplate(url: string): Observable<Blob> {
     return this.http.get(`${environment.api_url}${url}`, {
       headers: this.createHeaders(),

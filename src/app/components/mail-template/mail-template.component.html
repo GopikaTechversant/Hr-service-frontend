@@ -1,14 +1,15 @@
 <div *ngIf="showTemplate" class="main">
+    <div *ngIf="!isEditable" class="f-right m-10 p-10 c-pointer" (click)="editClick()" title="Edit">
+        <span><img src="/assets/images/candidate-detail/edit.svg" alt="" height="12" width="12"></span>
+        <span class="c-blue p-l-5 p-r-5">Edit</span>
+    </div>
     <div *ngIf="loader" class="loader-parent">
         <img src="assets/gif/loader.gif">
     </div>
     <!-- <div class="heading p-10">
         <span>Email Details</span>
     </div> -->
-    <div *ngIf="!isEditable" class="f-right m-10 p-10 c-pointer" (click)="editClick()" title="Edit">
-        <span><img src="/assets/images/candidate-detail/edit.svg" alt="" height="12" width="12"></span>
-        <span class="c-blue p-l-5 p-r-5">Edit</span>
-    </div>
+   
     <div *ngIf="isEditable" class="f-right m-10 p-10 c-pointer" (click)="saveClick($event)" title="Save">
         <span><img src="/assets/images/candidate-detail/save.svg" alt="" height="12" width="12"></span>
         <span class="c-blue p-l-5 p-r-5">Save</span>
@@ -26,7 +27,7 @@
                     padding: 10px;">
             <div style="padding-bottom: 5px;">Dear {{candidate?.firstName}},</div>
             <textarea class="editable " id="editable"  [(ngModel)]="templateData.message" [readonly]="!isEditable" (input)="updateHtmlContent($event);" 
-                style="width: 100%; outline: none !important; border: none !important; min-height: 200px; max-height: 500px;padding-top: 5px;padding-bottom: 10px;">
+                style="width: 100%; outline: none !important; border: none !important; min-height: 290px;padding-top: 5px;padding-bottom: 10px;">
                         </textarea><br>
             <span style="padding: 10px; padding-left: 0px;">Best Regards,</span>
     
@@ -176,7 +177,7 @@
             <span class="p-10 sub-head p-l-0">Feedback</span>
             <textarea class="text-area" id="feedback"></textarea>
         </div>
-        <div class="m-15">
+        <div class="m-t-15 p-l-5">
             <input type="checkbox" id="confirmDetails"><span class="p-l-10">Confirm all Details</span>
         </div>
         <div class="d-flex j-end">

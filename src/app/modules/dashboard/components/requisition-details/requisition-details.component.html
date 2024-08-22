@@ -127,8 +127,8 @@
                     <td class="text-start">Candidate Station</td>
                     <td class="text-start">Status</td>
                 </tr>
-                <ng-container *ngFor="let item of candidateList">
-                    <tr class="c-pointer details">
+                <ng-container *ngFor="let item of candidateList" >
+                    <tr class="c-pointer details" (dblclick)="selectCandidate(item?.candidateId)">
                         <td class="text-start" [title]="item?.candidateFirstName + '' + item?.candidateLastName">{{item?.candidateFirstName}} {{item?.candidateLastName}}</td>
                         <td class="text-start" [title]="item?.candidateEducation">{{item?.candidateEducation}}</td>
                         <!-- <td class="text-start" [title]="item?.candidateExperience ? item?.candidateExperience : 'Fresher'">{{item?.candidateExperience ? item?.candidateExperience + 'years': 'Fresher' }}</td> -->

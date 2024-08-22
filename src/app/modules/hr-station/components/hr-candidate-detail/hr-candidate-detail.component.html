@@ -74,12 +74,12 @@
             </div> -->
         </div>
     </div>
-    <div *ngIf="data?.candidateDetails?.serviceStatus === 'pending' && !hrReview"  class="p-t-20 details padding-10 d-flex j-space w-50 c-pointer">
-            <label class="c-pointer f-w-500 f-s-14">
+    <div *ngIf="data?.candidateDetails?.serviceStatus === 'pending' && !hrReview"  class="p-t-20 details padding-10 d-flex w-50 c-pointer">
+            <label class="c-pointer f-w-500 f-s-14 p-r-10">
                 <input type="radio" name="selection" value="offer" [(ngModel)]="messageType" (change)="showMail('offer')">
                 Offer Letter
             </label>
-            <label class="c-pointer f-w-500 f-s-14">
+            <label class="c-pointer f-w-500 f-s-14 p-r-10">
                 <input type="radio" name="selection" value="rejection" [(ngModel)]="messageType" (change)="showMail('rejection')">
                Rejection Letter
             </label>

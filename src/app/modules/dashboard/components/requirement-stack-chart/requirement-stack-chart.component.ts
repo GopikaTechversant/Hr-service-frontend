@@ -109,10 +109,10 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
       this.barchartList = res || [];
       if (this.barchartList.length > 0) {
         this.labels = this.barchartList.map((item: any) => item.teamName ?? item.requestName);
-        this.hiredData = this.barchartList.map((item: any) => +item.hire_count);
-        this.totalApplicants = this.barchartList.map((item: any) => +item.total_applicant);
-        this.offeredData = this.barchartList.map((item: any) => +item.offered_Count);
-        this.technicalData = this.barchartList.map((item: any) => +item.technical_selected_Count);
+        this.hiredData = this.barchartList.map((item: any) => +item.hire_count || null); // Replace 0 with null
+        this.totalApplicants = this.barchartList.map((item: any) => +item.total_applicant || null); // Replace 0 with null
+        this.offeredData = this.barchartList.map((item: any) => +item.offered_Count || null); // Replace 0 with null
+        this.technicalData = this.barchartList.map((item: any) => +item.technical_selected_Count || null); // Replace 0 with null
         this.initialLoader = false;        
         setTimeout(() => {
           this.createBarChart();
@@ -129,7 +129,6 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
       console.error("Error fetching bar chart details", error);
     });
   }
-
 
   private measureTextWidth(text: string, font: string): number {
     const canvas = document.createElement('canvas');
@@ -148,13 +147,13 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
       this.chart.destroy();
     }
 
-    const baseWidth = 1300;
+    const baseWidth = 800;
     const labelFont = '13px Arial';
-    const labelPadding = 40;
+    const labelPadding = 20;
 
     // Calculate total width needed based on labels and padding
     let totalLabelWidth = this.labels.reduce((total, label) => {
-      return total + this.measureTextWidth(label, labelFont) + labelPadding;
+      return total + this.measureTextWidth(label, labelFont) + labelPadding * 2;
     }, 0);
 
     const chartWidth = Math.max(baseWidth, totalLabelWidth);
@@ -166,7 +165,7 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
     }
 
     const canvasElement = document.getElementById('barChartRecruiter') as HTMLCanvasElement;
-    if (canvasElement) {      
+    if (canvasElement) {
       canvasElement.width = chartWidth;
       canvasElement.height = 400;
 
@@ -178,8 +177,8 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
             {
               label: 'No. of Hired',
               data: this.hiredData,
-              backgroundColor: '#628AFC',
-              borderColor: '#628AFC',
+              backgroundColor: '#6E4F7B',
+              borderColor: '#6E4F7B',
               borderWidth: 1,
               barPercentage: 0.6,
               categoryPercentage: 0.5,
@@ -188,8 +187,8 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
             {
               label: 'No. of Offered',
               data: this.offeredData,
-              backgroundColor: '#65bde6',
-              borderColor: '#65bde6',
+              backgroundColor: '#1782A3',
+              borderColor: '#1782A3',
               borderWidth: 1,
               barPercentage: 0.6,
               categoryPercentage: 0.5,
@@ -198,8 +197,8 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
             {
               label: 'Technical Selected',
               data: this.technicalData,
-              backgroundColor: '#0905f0',
-              borderColor: '#0905f0',
+              backgroundColor: '#F5C767',
+              borderColor: '#F5C767',
               borderWidth: 1,
               barPercentage: 0.6,
               categoryPercentage: 0.5,
@@ -208,8 +207,8 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
             {
               label: 'Total Applicants',
               data: this.totalApplicants,
-              backgroundColor: '#047892',
-              borderColor: '#047892',
+              backgroundColor: '#9FD66A',
+              borderColor: '#9FD66A',
               borderWidth: 1,
               barPercentage: 0.6,
               categoryPercentage: 0.5,
@@ -275,23 +274,17 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
               enabled: true
             },
             datalabels: {
-              color: '#FFFFFF',
-              padding: 4,
-              anchor: 'center',
-              align: 'center',
-              offset: -1,
-              font: {
-                size: 14,
-                weight: 400
+              display: true,
+              color: 'white',
+              formatter: function (value: number) {
+                return value;
               }
             }
-          }
-        },
-        plugins: [ChartDataLabels]
+          },
+          responsive: true,
+          maintainAspectRatio: false,
+        }
       });
-    } else {
-      // console.error('Canvas element not found!');
     }
   }
-
 }

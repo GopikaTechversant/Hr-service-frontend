@@ -94,8 +94,8 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
         labels: this.sourceLabels,
         datasets: [{
           data: this.sourceCount,
-          backgroundColor: ['#0905f0', '#628AFC', '#44b874', '#047892', '#3EB2B8'],
-          borderColor: ['#0905f0', '#628AFC', '#44b874', '#047892', '#3EB2B8'],
+          backgroundColor: ['#6E4F7B', '#1782A3', '#F5C767', '#9FD66A', '#628AFC'],
+          borderColor: ['#6E4F7B', '#1782A3', '#F5C767', '#9FD66A', '#628AFC'],
           fill: false,
           hoverOffset: 5
         }],
@@ -123,6 +123,10 @@ export class ApplicationListPieComponent implements OnInit, AfterViewInit {
           datalabels: {
             display: true,
             color: 'white',
+            font: {
+              size: 16,  // Increase font size
+              weight: 'bold',  // Make text bold
+            }
           },
         },
       },

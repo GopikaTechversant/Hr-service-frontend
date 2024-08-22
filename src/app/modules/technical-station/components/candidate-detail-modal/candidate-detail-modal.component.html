@@ -135,16 +135,16 @@
     </div>
 
     <!-- Initial buttons -->
-    <div *ngIf="!progessAdded && candidateDetails?.serviceStatus === 'pending' && !progessAdded" class="p-t-20 details padding-10 d-flex j-space w-50 c-pointer">
-        <label class="c-pointer f-w-500 f-s-14">
+    <div *ngIf="!progessAdded && candidateDetails?.serviceStatus === 'pending' && !progessAdded" class="p-t-20 details padding-10 d-flex w-50 c-pointer">
+        <label class="c-pointer f-w-500 f-s-14 p-r-10">
             <input type="radio" name="action" value="reschedule" (change)="selectButton('reschedule');showMail('re-schedule')" [checked]="buttonType === 'reschedule'" />
             Reschedule Interview
         </label>
-        <label class="c-pointer f-w-500 f-s-14">
+        <label class="c-pointer f-w-500 f-s-14 p-r-10">
             <input type="radio" name="action" value="rejection" (change)="selectButton('rejection');showMail('')" [checked]="buttonType === 'rejection'" />
             Reject Candidate
         </label>
-        <label class="c-pointer f-w-500 f-s-14">
+        <label class="c-pointer f-w-500 f-s-14 p-r-10">
             <input type="radio" name="action" value="add" (change)="selectButton('add');showMail('')" [checked]="buttonType === 'add'" />
             Interview Feedback
         </label>
@@ -217,12 +217,12 @@
         </div>
         <!-- Next Round Approval or Rejection After Adding Progress -->
         <div *ngIf="candidateDetails?.serviceStatus === 'pending' && candidateDetails['progress.progressId'] !== null"
-            class="p-t-20 details padding-10 d-flex j-space w-50 c-pointer">
-            <label class="c-pointer f-w-500 f-s-14">
+            class="p-t-20 details padding-10 d-flex  w-50 c-pointer">
+            <label class="c-pointer f-w-500 f-s-14 p-r-10">
                 <input type="radio" name="messageType" value="approve" (change)="showMail('approve')" [checked]="messageType === 'approve'" />
                 Select for Next Round
             </label>
-            <label class="c-pointer f-w-500 f-s-14">
+            <label class="c-pointer f-w-500 f-s-14 p-r-10">
                 <input type="radio" name="messageType" value="rejection" (change)="showMail('rejection')" [checked]="messageType === 'rejection'" />
                 Reject Candidate
             </label>
