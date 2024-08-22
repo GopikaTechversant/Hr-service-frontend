@@ -33,7 +33,7 @@ export class EditComponent implements OnInit {
   showSearchBar: boolean = false;
   primaryskills: any;
   secondaryskills: any;
-  searchvalue: any;
+  searchvalue: string = '';
   selectedRequirementName: any;
   selectedRequirementId: any;
   validationSuccess: boolean = false;

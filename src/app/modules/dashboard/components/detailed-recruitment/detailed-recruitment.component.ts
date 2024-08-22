@@ -30,7 +30,7 @@ export class DetailedRecruitmentComponent implements OnInit {
   url: any;
   candidateIds: any;
   initialLoader: boolean = false
-  loader: boolean = true;
+  loader: boolean = false;
   data: any;
   selectedDataBy: string = 'position';
 
@@ -44,7 +44,11 @@ export class DetailedRecruitmentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.initialLoader = true;
     this.selectedRecruiterId = '';
+    this.candidateList = [];
+    this.pageSize = 7;
+    this.currentPage = 1
     this.fetchCandidateList();
   }
 
@@ -60,6 +64,7 @@ export class DetailedRecruitmentComponent implements OnInit {
 
   fetchCandidateList(): void {
     if (!this.initialLoader) this.loader = true;
+    this.candidateList = [];
     const url = `/dashboard/recruiter-requirement-report`
     let params = [
       `dataBy=${this.selectedDataBy}`,
@@ -100,6 +105,8 @@ export class DetailedRecruitmentComponent implements OnInit {
     }
     this.apiService.get(`${url}?${params}`).subscribe((res: any) => {
       if (res?.data) {
+        this.loader = false;
+        this.initialLoader = false;
         this.candidateList = res?.data;
         this.totalCount = res?.total;
         const totalPages = Math.ceil(this.totalCount / this.pageSize);
