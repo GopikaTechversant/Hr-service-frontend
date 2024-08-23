@@ -29,6 +29,7 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
   selectedTeamId: string = '';
   barchartList: any;
   initialLoader: boolean = false;
+  chartWidth: any;
 
   constructor(private apiService: ApiService, private datePipe: DatePipe) { }
 
@@ -113,7 +114,7 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
         this.totalApplicants = this.barchartList.map((item: any) => +item.total_applicant || null); // Replace 0 with null
         this.offeredData = this.barchartList.map((item: any) => +item.offered_Count || null); // Replace 0 with null
         this.technicalData = this.barchartList.map((item: any) => +item.technical_selected_Count || null); // Replace 0 with null
-        this.initialLoader = false;        
+        this.initialLoader = false;
         setTimeout(() => {
           this.createBarChart();
         }, 0);
@@ -147,26 +148,32 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
       this.chart.destroy();
     }
 
-    const baseWidth = 800;
+    const baseWidth = 700;
     const labelFont = '13px Arial';
-    const labelPadding = 20;
+    const labelPadding = 30;
 
     // Calculate total width needed based on labels and padding
     let totalLabelWidth = this.labels.reduce((total, label) => {
       return total + this.measureTextWidth(label, labelFont) + labelPadding * 2;
     }, 0);
 
-    const chartWidth = Math.max(baseWidth, totalLabelWidth);
+    if (this.labels.length > 7) {
+      this.chartWidth = Math.max(baseWidth * 2, totalLabelWidth);
+    } else {
+      this.chartWidth = Math.max(baseWidth, totalLabelWidth);
+
+    }
+
 
     const chartContainer = document.querySelector('.chart-inner-container') as HTMLElement;
     if (chartContainer) {
-      chartContainer.style.width = `${chartWidth}px`;
+      chartContainer.style.width = `${this.chartWidth}px`;
       chartContainer.style.overflowX = 'auto';
     }
 
     const canvasElement = document.getElementById('barChartRecruiter') as HTMLCanvasElement;
     if (canvasElement) {
-      canvasElement.width = chartWidth;
+      canvasElement.width = this.chartWidth;
       canvasElement.height = 400;
 
       this.chart = new Chart(canvasElement, {
@@ -247,7 +254,8 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
               ticks: {
                 display: true,
                 font: { size: 12 },
-                autoSkip: true
+                // autoSkip: true,
+                maxTicksLimit: 10,
               }
             }
           },

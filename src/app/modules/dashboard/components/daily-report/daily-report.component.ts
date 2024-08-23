@@ -22,7 +22,7 @@ export class DailyReportComponent implements OnInit {
   totalCount: any;
   data: any;
   displayDate: any;
-  startDate: string | null = this.datePipe.transform(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
+  startDate: string | null = this.datePipe.transform(new Date(Date.now() - 31 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   reportUserId: any = '';
   showRecruiters: boolean = false;

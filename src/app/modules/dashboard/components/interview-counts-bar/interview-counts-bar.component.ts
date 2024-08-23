@@ -177,13 +177,15 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
           y: {
             type: 'logarithmic',
             stacked: true,
+            // beginAtZero: false,
             grid: {
               display: false,
             },
             ticks: {
               display: true,
               font: { size: 12 },
-              autoSkip: true
+              // autoSkip: true,
+              maxTicksLimit : 10,
             }
           },
           x: {

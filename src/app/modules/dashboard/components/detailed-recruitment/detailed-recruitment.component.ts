@@ -16,7 +16,7 @@ export class DetailedRecruitmentComponent implements OnInit {
   @Input() endDate: any;
   chart: any;
   displayDate: any;
-  pageSize = 7;
+  pageSize = 10;
   candidateList: any[] = [];
   recruitersList: any[] = [];
   recruitersListOpen: boolean = false;
@@ -153,7 +153,7 @@ export class DetailedRecruitmentComponent implements OnInit {
     this.selectedRecruitername = "";
     this.selectedRecruiterId = "";
     this.currentPage = 1;
-    this.pageSize = 7;
+    this.pageSize = 10;
     this.fetchCandidateList()
   }
 
@@ -170,7 +170,7 @@ export class DetailedRecruitmentComponent implements OnInit {
   //   this.selectedRecruiterId = id;
   //   this.recruitersListOpen = false;
   //   this.currentPage = 1;
-  //   this.pageSize = 7;
+  //   this.pageSize = 10;
   //   this.fetchCandidateList()
   // }
 

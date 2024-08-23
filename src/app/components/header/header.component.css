@@ -29,24 +29,26 @@
     /* Slide out effect */
 }
 
-.toggle {
-    height: 34px;
-    width: 44px;
-    border-radius: 5px;
-    /* background: #005EC9; */
+/*  */
+.hamburger {
+    width: 30px;
+    height: 22px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    /* color: #005EC9; */
+
 }
 
-.fa-bars {
-    color: #005EC9;
-    font-size: 30px; /* Reduced font size */
-    padding-left: 5px;
-    padding-right: 5px;
-    text-align: center;
-    font-weight: lighter;
+.hamburger span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: #0a2eb3;
+    border-radius: 2px;
 }
+
 
 
 .header-full {

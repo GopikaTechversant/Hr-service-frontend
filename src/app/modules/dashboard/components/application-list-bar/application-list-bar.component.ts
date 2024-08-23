@@ -20,7 +20,7 @@ export class ApplicationListBarComponent implements OnInit {
   today: Date = new Date();
   limit: number =10;
   currentPage: number = 1;
-  startDate: string | null = this.datePipe.transform(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
+  startDate: string | null = this.datePipe.transform(new Date(Date.now() - 31 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   lastPage: any;
   totalCount: any;
