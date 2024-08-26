@@ -1,3 +1,14 @@
+.main {
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 8px 0px #0000001A;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-left: 18px;
+
+}
+
 .head {
     padding: 10px;
     justify-content: space-between;
@@ -41,12 +52,6 @@
     padding-top: 15px;
 }
 
-.barchart {
-    height: 100% !important;
-    width: 100% !important;
-    background-color: #FFFFFF;
-    box-shadow: 0px 4px 8px 0px #0000001A;
-}
 
 .filter-radio {
     width: 209px;

@@ -40,6 +40,9 @@ export class HrCandidateListComponent implements OnInit {
   today: Date = new Date();
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 150 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
+  // startDate: string | null = this.datePipe.transform(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
+  // endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+
   candidateIds: any;
   status: any;
   constructor(private dialog: MatDialog, private apiService: ApiService, private datePipe: DatePipe, private router: Router,

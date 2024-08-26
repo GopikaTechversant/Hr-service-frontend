@@ -125,7 +125,7 @@ export class ReportDetailsComponent implements OnInit {
               requirementDetail.interviewScheduled ?? '0',
               requirementDetail.offerReleased ?? '0'
             ];
-            this.createChart();
+            // this.createChart();
           } else this.requirementDetailData = ['0', '0', '0', '0', '0'];
         }
       }
