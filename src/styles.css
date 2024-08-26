@@ -450,6 +450,11 @@ button{
     /* For Internet Explorer and Edge */
 }
 
+.btn {
+  outline: none !important;
+  border: none !important;
+}
+
 input[type="radio"] {
   outline: none !important;
 }

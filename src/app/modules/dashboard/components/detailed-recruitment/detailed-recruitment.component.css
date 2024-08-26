@@ -176,3 +176,14 @@ tr:hover {
 .requisition-col {
     width: 19%;
 }
+
+.loader-parent {
+    position: absolute;
+    left: 40%;
+    z-index: 9;
+    top: 50%;
+}
+
+.loader-parent img {
+    width: 100px;
+}

@@ -37,10 +37,10 @@
                 <td class="  text-end" title="Offer Released">Offer Released</td>
                 <td class="  text-end" title="Hired">Hired</td>
             </tr>
-            <!-- <div class="loader-parent">
+            <div *ngIf="loader && !initialLoader" class="loader-parent">
                 <img src="assets/gif/loader.gif">
-            </div> -->
-            <ng-container>
+            </div>
+            <ng-container *ngIf="candidateList.length > 0">
                 <ng-container *ngFor="let item of  candidateList">
                     <tr class="details">
                         <!-- <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()">
@@ -60,7 +60,7 @@
             </ng-container>
             <!-- <div *ngIf="candidateList?.length === 0" class="no-data">No Data Found</div> -->
         </table>
-        <div *ngIf="candidateList?.length === 0" class="no-data">No Data Found</div>
+        <div *ngIf="candidateList?.length === 0 && !loader && !initialLoader" class="no-data">No Data Found</div>
     </div>
     <div class="page d-flex j-end p-10">
         <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(1)">
