@@ -176,7 +176,7 @@
                                 <div class=" skill-search-bar c-pointer p-t-10 no-close"
                                     (click)="toggleSearchBarPrimary()">
                                     <input type="search" class="input-search p-l-8"
-                                        placeholder="Search primary skills..." (input)="getSkillSuggestions($event)">
+                                        placeholder="Search primary skills..." (input)="getSkillSuggestions($event,'primary')">
                                     <div class="m-t-8 skill-drop-list c-pointer" *ngIf="showPrimary && searchvalue.trim() !== ''">
                                         <div *ngFor="let suggestion of skillSuggestions"
                                             (click)="selectSkill(suggestion,'primary')">
@@ -203,8 +203,8 @@
                                 <div class=" skill-search-bar c-pointer p-t-10 no-close"
                                     (click)="toggleSearchBarSecondary()">
                                     <input type="search" class="input-search p-l-8"
-                                        placeholder="Search secondary skills..." (input)="getSkillSuggestions($event)">
-                                    <div class="m-t-8 skill-drop-list c-pointer" *ngIf="!showPrimary && showSecondary && searchvalue.trim() !== ''">
+                                        placeholder="Search secondary skills..." (input)="getSkillSuggestions($event,'secondary')">
+                                    <div class="m-t-8 skill-drop-list c-pointer" *ngIf="showSecondary && searchvalue.trim() !== ''">
                                         <div *ngFor="let suggestion of skillSuggestions"
                                             (click)="selectSkill(suggestion,'secondary')">
                                             <span class="p-t-7" *ngIf="showSecondary">

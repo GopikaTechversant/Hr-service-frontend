@@ -295,9 +295,18 @@ export class EditComponent implements OnInit {
     this.resumeUploadSuccess = false;
   }
 
-  getSkillSuggestions(event: any): void {
+  getSkillSuggestions(event: any,type:string): void {
     this.searchvalue = event?.target.value;
+    const Skilltype = type;
     this.apiService.get(`/candidate/skills/list?search=${this.searchvalue}`).subscribe((res: any) => {
+      if(Skilltype === 'primary'){
+        this.showPrimary = true;
+        this.showSecondary = false;
+      } 
+      if(Skilltype === 'secondary'){
+        this.showPrimary = false;
+        this.showSecondary = true;
+      } 
       this.skillSuggestions = res.data.filter((suggestion: any) =>
         suggestion.skillName.toLowerCase().startsWith(this.searchvalue.toLowerCase()) && !this.isSkillSelected(suggestion)
       );
