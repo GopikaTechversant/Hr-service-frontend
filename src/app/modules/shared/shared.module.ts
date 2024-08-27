@@ -9,6 +9,7 @@ import { MailTemplateComponent } from 'src/app/components/mail-template/mail-tem
 import { MaterialModule } from '../material/material.module';
 import { CandidateDetailsComponent } from 'src/app/components/candidate-details/candidate-details.component';
 import { LeftSidebarComponent } from 'src/app/components/left-sidebar/left-sidebar.component';
+import { StationCandidatesComponent } from 'src/app/components/station-candidates/station-candidates.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { LeftSidebarComponent } from 'src/app/components/left-sidebar/left-sideb
     MailTemplateComponent,
     CandidateDetailsComponent,
     LeftSidebarComponent,
-    CandidateDetailsComponent
+    CandidateDetailsComponent,
+    StationCandidatesComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,8 @@ import { LeftSidebarComponent } from 'src/app/components/left-sidebar/left-sideb
     FileUploadS3Component,
     MailTemplateComponent,
     LeftSidebarComponent,
-    CandidateDetailsComponent
+    CandidateDetailsComponent,
+    StationCandidatesComponent
   ]
 })
 export class SharedModule {}
