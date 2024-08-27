@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-station-candidates',
@@ -37,7 +38,7 @@ export class StationCandidatesComponent implements OnInit {
   stationsList: any;
   today: Date = new Date();
   @Output() filterCleared: EventEmitter<any> = new EventEmitter<any>();
-  constructor(private apiService: ApiService, private datePipe: DatePipe) { }
+  constructor(private apiService: ApiService, private datePipe: DatePipe,private router: Router,) { }
 
   ngOnInit(): void {
     this.fetchRequirements();
@@ -105,6 +106,10 @@ export class StationCandidatesComponent implements OnInit {
   onPageChange(pageNumber: number): void {
     this.pageNumber.emit(pageNumber)
     
+  }
+
+  selectCandidate(id: any): void {
+    this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
   }
   
   generatePageNumbers() {
