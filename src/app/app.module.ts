@@ -18,7 +18,8 @@ import { RequirementEditComponent } from './components/requirement-edit/requirem
 import { RequirementDeleteComponent } from './components/requirement-delete/requirement-delete.component';
 import { GoogleLoginProvider, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
 import { environment } from 'src/environments/environments';
-
+import { StationCandidateDetailComponent } from './components/station-candidate-detail/station-candidate-detail.component';
+import { SharedModule } from './modules/shared/shared.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +31,7 @@ import { environment } from 'src/environments/environments';
     WarningBoxComponent,
     RequirementEditComponent,
     RequirementDeleteComponent,
+    StationCandidateDetailComponent,
   
   ],
   imports: [
@@ -40,6 +42,7 @@ import { environment } from 'src/environments/environments';
     ReactiveFormsModule,
     BrowserAnimationsModule, 
     MaterialModule,
+    SharedModule,
     ToastrModule.forRoot({
       timeOut: 2000,
       positionClass: 'toast-top-right',

@@ -1,19 +1,17 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
+import { S3Service } from 'src/app/services/s3.service';
 import { ToastrServices } from 'src/app/services/toastr.service';
 import { environment } from 'src/environments/environments';
-import { S3Service } from 'src/app/services/s3.service';
-import { Subscription } from 'rxjs';
+
 @Component({
-  selector: 'app-candidate-detail-modal',
-  templateUrl: './candidate-detail-modal.component.html',
-  styleUrls: ['./candidate-detail-modal.component.css'],
-  host: {
-    '(document:click)': 'onBodyClick($event)'
-  }
+  selector: 'app-station-candidate-detail',
+  templateUrl: './station-candidate-detail.component.html',
+  styleUrls: ['./station-candidate-detail.component.css']
 })
-export class CandidateDetailModalComponent implements OnInit {
+export class StationCandidateDetailComponent implements OnInit {
   private keySubscription?: Subscription;
   uploadedFileKey: string = '';
   candidateDetails: any;
@@ -53,16 +51,14 @@ export class CandidateDetailModalComponent implements OnInit {
   filteredStatus: string = '';
   filterStatus: boolean = false;
   loader: boolean = false;
-  env_url: string ='';
-  constructor(public dialogRef: MatDialogRef<CandidateDetailModalComponent>, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
+  env_url: string = '';
+  constructor(public dialogRef: MatDialogRef<StationCandidateDetailComponent>, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data) {
       this.candidateDetails = data?.candidateDetails;
       this.stationId = data?.stationId;
       this.serviceId = this.candidateDetails?.serviceId;
-      if (data?.progressStatus > 0) this.progessAdded = true;
-      console.log("data?.progressStatus",data);
-      
+      if (data?.offerStatus > 0) this.progessAdded = true;
     }
     this.dialogRef.updateSize('60vw', '90vh');
     this.templateData = { message: '' };
@@ -141,6 +137,7 @@ export class CandidateDetailModalComponent implements OnInit {
     const descriptionElement = document.getElementById('description') as HTMLInputElement;
     const fileInput = document.getElementById('fileInput') as HTMLInputElement;
     const file = fileInput.files ? fileInput.files[0] : null;
+    console.log("descriptionElement.value", descriptionElement.value);
 
     const payload = {
       progressAssignee: this.progressAssignee ? this.progressAssignee : this.userId,
@@ -151,7 +148,7 @@ export class CandidateDetailModalComponent implements OnInit {
       file: this.uploadedFileKey,
     }
     if (descriptionElement.value) {
-      let baseUrl = this.stationId === '3' ? `/technical-station` : this.stationId === '4' ? `/technical-station-two` : '';
+      let baseUrl = `/written-station`;
       if (baseUrl) {
         this.apiService.post(`${baseUrl}/add-progress/v1`, payload).subscribe({
           next: (res: any) => {
@@ -172,37 +169,6 @@ export class CandidateDetailModalComponent implements OnInit {
 
   }
 
-  // addProgress(): void {
-  //   const formData = new FormData();
-  //   const skillElement = document.getElementById('skill') as HTMLInputElement;
-  //   const scoreElement = document.getElementById('score') as HTMLInputElement;
-  //   const descriptionElement = document.getElementById('description') as HTMLInputElement;
-  //   const fileInput = document.getElementById('fileInput') as HTMLInputElement;
-  //   const file = fileInput.files ? fileInput.files[0] : null;
-
-  //   if (skillElement && skillElement.value) formData.append('progressSkill', skillElement.value);
-  //   if (scoreElement && scoreElement.value) formData.append('progressScore', scoreElement.value);
-  //   if (descriptionElement && descriptionElement.value) formData.append('progressDescription', descriptionElement.value);
-  //   if (file) formData.append('file', file, file.name);
-
-  //   formData.append('progressAssignee', this.progressAssignee ? this.progressAssignee : this.userId);
-  //   formData.append('progressServiceId', this.serviceId ? this.serviceId.toString() : '0');
-
-  //   let baseUrl = this.stationId === '3' ? `/technical-station` : this.stationId === '4' ? `/technical-station-two` : '';
-  //   if (baseUrl) {
-  //     this.apiService.post(`${baseUrl}/add-progress`, formData).subscribe({
-  //       next: (res: any) => {
-  //         this.tostr.success('Progress added successfully');
-  //         this.closeDialog();
-  //       },
-  //       error: (error) => {
-  //         this.tostr.warning('Unable to Update Progress');
-  //       }
-  //     });
-  //   } else {
-  //     this.tostr.error('Invalid operation');
-  //   }
-  // }
 
   showMail(item: string): void {
     if (item === 'approve') this.showSelection = true;
@@ -267,7 +233,7 @@ export class CandidateDetailModalComponent implements OnInit {
 
   approveClick(data: any): void {
     this.loader = true;
-    const baseUrl = this.stationId === '3' ? '/technical-station' : this.stationId === '4' ? '/technical-station-two' : '';
+    const baseUrl = '/written-station';
     if (baseUrl) {
       const payload = {
         serviceSeqId: this.serviceId,
@@ -340,5 +306,4 @@ export class CandidateDetailModalComponent implements OnInit {
       this.keySubscription.unsubscribe();
     }
   }
-
 }
