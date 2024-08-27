@@ -150,6 +150,9 @@ export class StationCandidateDetailComponent implements OnInit {
       let baseUrl = '';
       if (this.currentStation === 'written') baseUrl = '/written-station';
       if (this.currentStation === 'management') baseUrl = '/management-station';
+      if (this.currentStation === 'technical' && this.stationId === '3') baseUrl = `/technical-station`;
+      if (this.currentStation === 'technical' && this.stationId === '4') baseUrl = `/technical-station-two`
+
       if (baseUrl) {
         this.apiService.post(`${baseUrl}/add-progress/v1`, payload).subscribe({
           next: (res: any) => {
@@ -236,6 +239,8 @@ export class StationCandidateDetailComponent implements OnInit {
     let baseUrl = '';
     if (this.currentStation === 'written') baseUrl = '/written-station';
     if (this.currentStation === 'management') baseUrl = '/management-station';
+    if (this.currentStation === 'technical' && this.stationId === '3') baseUrl = `/technical-station`;
+    if (this.currentStation === 'technical' && this.stationId === '4') baseUrl = `/technical-station-two`
 
     if (baseUrl) {
       const payload = {

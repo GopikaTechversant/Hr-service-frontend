@@ -255,12 +255,19 @@ export class TechnicalDetailComponent implements OnInit {
   fetchDetails(details: { id: any, status: any }): void {
     const id = details.id;
     const status = details.status;
-    this.apiService.get(`/management-station/progressDetail?serviceId=${id}`).subscribe((data: any) => {
-      if (data?.candidates) this.viewCandidateDetail(data?.candidates, status);
-    });
+
+      if (this.stationId === '3') {
+        this.apiService.get(`/technical-station/progressDetail?serviceId=${id}`).subscribe((data: any) => {
+          if (data?.candidates) this.viewCandidateDetail(data?.candidates, status);
+        });
+      } else if (this.stationId === '4') {
+        this.apiService.get(`/technical-station-two/progressDetail?serviceId=${id}`).subscribe((data: any) => {
+          if (data?.candidates) this.viewCandidateDetail(data?.candidates, status);
+        });
+      }
   }
 
-  viewCandidateDetail(item: any, status: any): void {
+  viewCandidateDetail(item: any, status: any): void {    
     const dialogRef = this.dialog.open(StationCandidateDetailComponent, {
       data: { candidateDetails: item, offerStatus: status },
     })
