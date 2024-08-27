@@ -104,7 +104,7 @@
                             <span *ngIf="panelName">{{panelName}}</span>
                             <span><i class="f-right margin-5 m-r-10 fa fa-chevron-down s-text no-close"></i></span>
                             <div class="no-close dropdown c-pointer no-close" *ngIf="showPanel">
-                                <div class="padding-5 no-close" *ngFor="let panel of panel_list "
+                                <div class="padding-5 p-l-10 no-close" *ngFor="let panel of panel_list "
                                     (click)="selectPanel(panel?.userId,panel?.userfirstName,panel?.userlastName);showPanel = !showPanel">
                                     {{panel?.userfirstName}} {{panel?.userlastName}}
                                 </div>
@@ -118,7 +118,7 @@
                         <span *ngIf="selectedModeName">{{selectedModeName}}</span>
                         <span><i class="f-right margin-5 m-r-10 fa fa-chevron-down s-text no-close"></i></span>
                         <div class="no-close dropdown c-pointer no-close" *ngIf="showModeList">
-                            <div class="padding-5" *ngFor="let mode of modeList " (click)="selectMode(mode?.id,mode?.modeName)">
+                            <div class="padding-5 p-l-10" *ngFor="let mode of modeList " (click)="selectMode(mode?.id,mode?.modeName)">
                                 {{mode?.modeName}}
                             </div>
                         </div>
@@ -138,16 +138,16 @@
                                 (click)="pickerInterview?.open()"></i>
                         </div>
                         <!-- Time Input -->
-                        <div class="c-pointer flex-1 m-r-10 m-l-20">
-                            <input  class="date-input c-pointer" type="time" id="appt" name="appt" required [value]="displayTime " [(ngModel)]="displayTime"
-                                (change)="onTimeChange($event)" />
-                        </div>    
-                    </div>
-                </div>   
+                       <div class="c-pointer flex-1 m-r-10 m-l-20">
+                        <input  class="date-input c-pointer" type="time" id="appt" name="appt" required [value]="displayTime " [(ngModel)]="displayTime"
+                            (change)="onTimeChange($event)" />
+                    </div>    
+                </div>
+                </div>
                 <div class="input-1">
                     <span class="p-10 sub-head p-l-0">Interview status</span>
-                    <div>
-                        <input class="offer-input" type="text" id="interviewStatus" [value]="interviewStatus | titlecase">
+                    <div class="offer-input">
+                        <span  type="text" id="interviewStatus" >{{interviewStatus | titlecase}}</span>
                     </div>
                 </div>
             </div>

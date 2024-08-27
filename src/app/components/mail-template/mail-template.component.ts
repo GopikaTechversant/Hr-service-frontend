@@ -1,6 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { HttpClient, } from '@angular/common/http';
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
@@ -21,6 +20,7 @@ export class MailTemplateComponent implements OnInit {
   @ViewChild('recruiterNameDiv') recruiterNameDiv!: ElementRef;
   @ViewChild('positionDiv') positionDiv!: ElementRef;
   @ViewChild('panelDiv') panelDiv!: ElementRef;
+  
   isEditable: boolean = false;
   templateData: any = {};
   content: string = '';
@@ -69,7 +69,7 @@ export class MailTemplateComponent implements OnInit {
   loader: boolean = false;
   showTemplate: boolean = false;
   showTimePicker: Boolean = false;
-  constructor(private apiService: ApiService, private tostr: ToastrService, private datePipe: DatePipe, private s3Service: S3Service, private http: HttpClient) { }
+  constructor(private apiService: ApiService, private tostr: ToastrService, private datePipe: DatePipe, private s3Service: S3Service) { }
   ngOnInit(): void {
     this.resetFormAndState();
 
