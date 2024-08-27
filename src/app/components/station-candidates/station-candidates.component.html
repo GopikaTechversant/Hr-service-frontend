@@ -1,9 +1,8 @@
 <div class="m-10">
     <div class="d-flex j-space m-b-10">
         <div class="flex-grow-1">
-            <span class="f-s-20 f-w-500 p-t-5">Written Round</span>
-        </div>
-      
+            <span class="f-s-20 f-w-500 p-t-5">{{currentStation | titlecase}} Round {{stationId ? stationId : ''}}</span>
+        </div>     
     </div>
     <div class="d-flex j-end flex-wrap">
         <div class="search-div d-flex align-items-center m-b-10">

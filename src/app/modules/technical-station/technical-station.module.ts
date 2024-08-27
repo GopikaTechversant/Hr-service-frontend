@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { TechnicalHomeComponent } from './components/technical-home/technical-home.component';
-import { TechnicalSidebarComponent } from './components/technical-sidebar/technical-sidebar.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { TechnicalDetailComponent } from './components/technical-detail/technical-detail.component';
@@ -9,7 +8,6 @@ import { CandidateDetailModalComponent } from './components/candidate-detail-mod
 import { MaterialModule } from '../material/material.module';
 import { FormsModule } from '@angular/forms';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
-import { CandidateDetailsComponent } from 'src/app/components/candidate-details/candidate-details.component';
 
 const routes: Routes = [
   {
@@ -23,7 +21,6 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     TechnicalHomeComponent,
-    TechnicalSidebarComponent,
     TechnicalDetailComponent,
     CandidateDetailModalComponent,
   ],

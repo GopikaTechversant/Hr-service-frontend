@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { S3Service } from 'src/app/services/s3.service';
@@ -52,7 +53,10 @@ export class StationCandidateDetailComponent implements OnInit {
   filterStatus: boolean = false;
   loader: boolean = false;
   env_url: string = '';
+  url: any;
+  currentStation: string = '';
   constructor(public dialogRef: MatDialogRef<StationCandidateDetailComponent>, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
+    private route: ActivatedRoute, private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data) {
       this.candidateDetails = data?.candidateDetails;
@@ -72,6 +76,11 @@ export class StationCandidateDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.currentStation = this.router.url.split('/')[1];
+    this.route.params.subscribe(params => {
+      this.stationId = params['id'];
+      this.url = `/technical/${this.stationId}`;
+    });
     this.userId = localStorage.getItem('userId');
     this.env_url = window.location.origin;
   }
@@ -131,12 +140,12 @@ export class StationCandidateDetailComponent implements OnInit {
   addProgress(): void {
     this.loader = true;
     // this.submitForm = true;
-    const formData = new FormData();
-    const skillElement = document.getElementById('skill') as HTMLInputElement;
-    const scoreElement = document.getElementById('score') as HTMLInputElement;
+    // const formData = new FormData();
+    // const skillElement = document.getElementById('skill') as HTMLInputElement;
+    // const scoreElement = document.getElementById('score') as HTMLInputElement;
     const descriptionElement = document.getElementById('description') as HTMLInputElement;
     const fileInput = document.getElementById('fileInput') as HTMLInputElement;
-    const file = fileInput.files ? fileInput.files[0] : null;
+    // const file = fileInput.files ? fileInput.files[0] : null;
     console.log("descriptionElement.value", descriptionElement.value);
 
     const payload = {
@@ -148,7 +157,9 @@ export class StationCandidateDetailComponent implements OnInit {
       file: this.uploadedFileKey,
     }
     if (descriptionElement.value) {
-      let baseUrl = `/written-station`;
+      let baseUrl = '';
+      if (this.currentStation === 'written') baseUrl = '/written-station';
+      if (this.currentStation === 'management') baseUrl = '/written-station';
       if (baseUrl) {
         this.apiService.post(`${baseUrl}/add-progress/v1`, payload).subscribe({
           next: (res: any) => {
@@ -166,7 +177,6 @@ export class StationCandidateDetailComponent implements OnInit {
         this.tostr.error('Invalid operation');
       }
     }
-
   }
 
 
@@ -233,7 +243,10 @@ export class StationCandidateDetailComponent implements OnInit {
 
   approveClick(data: any): void {
     this.loader = true;
-    const baseUrl = '/written-station';
+    let baseUrl = '';
+    if (this.currentStation === 'written') baseUrl = '/written-station';
+    if (this.currentStation === 'management') baseUrl = '/written-station';
+
     if (baseUrl) {
       const payload = {
         serviceSeqId: this.serviceId,

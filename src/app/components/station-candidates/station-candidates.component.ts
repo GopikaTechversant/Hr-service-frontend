@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -35,11 +36,19 @@ export class StationCandidatesComponent implements OnInit {
   filterStatus: any;
   positionId: any;
   stationsList: any;
+  stationId : any;
+  url: any;
+  currentStation : string = '';
   today: Date = new Date();
   @Output() filterCleared: EventEmitter<any> = new EventEmitter<any>();
-  constructor(private apiService: ApiService, private datePipe: DatePipe) { }
+  constructor(private apiService: ApiService, private datePipe: DatePipe , private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
+    this.currentStation = this.router.url.split('/')[1];
+    this.route.params.subscribe(params => {
+      this.stationId = params['id'];
+      this.url = `/technical/${this.stationId}`;
+    });
     this.fetchRequirements();
     this.fetchStatus();
   }
