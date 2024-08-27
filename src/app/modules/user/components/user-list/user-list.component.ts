@@ -87,8 +87,8 @@ export class UserListComponent implements OnInit {
     this.candidateId = id;
     const dialogRef = this.dialog.open(EditComponent, {
       data: id,
-      width: '950px',
-      height: '500px'
+      width: '700px',
+      height: '450px'
     })
     dialogRef.componentInstance.onEditSuccess.subscribe(() => {
       this.fetchUserList();
