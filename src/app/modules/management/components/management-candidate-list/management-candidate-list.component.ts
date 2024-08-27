@@ -127,11 +127,11 @@ export class ManagementCandidateListComponent implements OnInit {
             reader.onload = (event) => {
               const text = event.target?.result as string;
               const jsonResponse = JSON.parse(text);
-              this.downloadAsExcel(jsonResponse.data, `technical${this.stationId}_candidate_list.xlsx`);
+              this.downloadAsExcel(jsonResponse.data, `management_candidate_list.xlsx`);
             };
             reader.readAsText(data);
           } else {
-            this.downloadBlob(data, `technical${this.stationId}_candidate_list.xlsx`);
+            this.downloadBlob(data, `management_candidate_list.xlsx`);
           }
         },
         (error: any) => {
@@ -230,8 +230,8 @@ export class ManagementCandidateListComponent implements OnInit {
           userId: userId,
           name: candidate['candidate.candidateFirstName'] + ' ' + candidate['candidate.candidateLastName'],
           serviceId: candidate?.serviceId,
-          currentStation: 'Written',
-          currentStationId: '2',
+          currentStation: 'management',
+          currentStationId: '6',
           requirement: candidate['serviceRequest.requestName']
         },
       })

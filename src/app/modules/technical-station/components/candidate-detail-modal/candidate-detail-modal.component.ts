@@ -19,16 +19,6 @@ export class CandidateDetailModalComponent implements OnInit {
   candidateDetails: any;
   showRequest: boolean = false;
   progessAdded: boolean = false;
-  scoreValue: string = '';
-  descriptionValue: string = '';
-  skillValue: string = '';
-  progressQuery = {
-    progressAssignee: "",
-    progressSkill: "",
-    progressServiceId: 0,
-    progressScore: "",
-    progressDescription: ""
-  }
   serviceId: any = null
   progressAssignee: any = null;
   stationId: any;

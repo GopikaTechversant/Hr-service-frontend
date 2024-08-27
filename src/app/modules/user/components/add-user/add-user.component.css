@@ -12,7 +12,7 @@
 
 .header {
     color: #000000;
-    font-size: 30px;
+    font-size: 20px;
     font-weight: 500;
     line-height: 35.55px;
 }
@@ -42,7 +42,7 @@
 .sub-head {
     color: #000000;
     font-weight: 400;
-    font-size: 16px;
+    /* font-size: 16px; */
     line-height: 21.33px;
     padding-bottom: 10px;
 }
@@ -58,26 +58,26 @@
 
 .btn-cancel {
     background-color: #575F6E;
-    width: 150px;
-    height: 48px;
+    width: 149px;
+    height: 38px;
     border-radius: 3px;
     outline: none;
     border: none;
     color: #FFFFFF;
     font-weight: 400;
-    font-size: 18px;
+    font-size: 17px;
 }
 
 .btn-submit {
     background-color: #005EC9;
-    width: 150px;
-    height: 48px;
+    width: 149px;
+    height: 38px;
     border-radius: 3px;
     outline: none;
     border: none;
     color: #FFFFFF;
     font-weight: 400;
-    font-size: 18px;
+    font-size: 17px;
 }
 
 .add-btn {
@@ -99,13 +99,13 @@
     overflow-y: scroll;
     font-size: 15px;
     margin-left: 0px;
-    width: 94%;
+    width: 95%;
     padding-left: 10px;
     padding-top: 10px;
     position: absolute;
     z-index: 1;
     margin-top: 35px;
-    right: 21px;
+    right: 30px;
 }
 
 .drop-list :hover {
@@ -127,7 +127,7 @@
 
 .eyeIcon {
     position: absolute;
-    z-index: 4;
+    /* z-index: 4; */
     right: 35px;
     top: 16px;
     bottom: 0px;

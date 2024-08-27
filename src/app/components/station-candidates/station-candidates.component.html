@@ -1,7 +1,7 @@
 <div class="m-10">
     <div class="d-flex j-space m-b-10">
         <div class="flex-grow-1">
-            <span class="f-s-20 f-w-500 p-t-5">{{currentStation | titlecase}} Round {{stationId ? stationId : ''}}</span>
+            <span class="f-s-20 f-w-500 p-t-5">{{currentStation | titlecase}} Round {{stationId === '3' ? '1' : '2'}}</span>
         </div>     
     </div>
     <div class="d-flex j-end flex-wrap">
@@ -100,7 +100,7 @@
                     <td class="text-center" title="Move CAndidates">Move Candidates</td>
                     <td class="text-start" title="Service Status">Service Status</td>
                     <td class="text-start" title="Candidate Station">Candidate Station</td>
-                    <td class="text-start" title="More Detail">More Detail</td>
+                    <td class="text-start more" title="More Detail">More Detail</td>
                     <td class="text-end" title="Date">Date</td>
                 </tr>
                 <div *ngIf="loader && !initialLoader" class="loader-parent">
@@ -109,7 +109,7 @@
                 <ng-container *ngIf="candidateList?.length > 0">
                     <ng-container *ngFor="let innerArray of candidateList">
                         <ng-container *ngFor="let item of innerArray">
-                            <tr class="candidate c-pointer">
+                            <tr class="candidate c-pointer" (dblclick)="selectCandidate(item['candidate.candidateId'])">
                                 <td class="text-end">{{ item['candidate.candidateId'] }}</td>
                                 <td class="text-start"
                                     [title]="item['candidate.candidateFirstName'] +' '+ item['candidate.candidateLastName']">
@@ -136,7 +136,7 @@
                                     | titlecase}}</td>
                                 <td (click)="fetchDetails(item?.serviceId , item?.progressStatus)"
                                     class="c-pointer text-start">
-                                    <div class="d-flex">
+                                    <div class="d-flex more">
                                         <i class="fa fa-eye blue f-s-18 f-w-500" aria-hidden="true"></i>
                                         <span class="blue p-l-5">View detail</span>
                                     </div>

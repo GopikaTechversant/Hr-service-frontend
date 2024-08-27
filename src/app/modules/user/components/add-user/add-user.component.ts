@@ -6,6 +6,9 @@ import { ToastrServices } from 'src/app/services/toastr.service';
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
   styleUrls: ['./add-user.component.css'],
+  host: {
+    '(document:click)': 'onBodyClick($event)'
+  },
   providers: [DatePipe],
 })
 export class AddUserComponent implements OnInit {
@@ -24,6 +27,13 @@ export class AddUserComponent implements OnInit {
   multipleRole: any[] = [];
   email: any;
   constructor(private datePipe: DatePipe, private apiService: ApiService, private tostr: ToastrServices) {
+  }
+
+  onBodyClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.no-close')) {
+      this.idListOpen = false;
+    }
   }
   ngOnInit(): void { }
 

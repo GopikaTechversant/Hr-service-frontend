@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environments';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,7 +7,6 @@ import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import { StationSwitchComponent } from 'src/app/components/station-switch/station-switch.component';
 import { WarningBoxComponent } from 'src/app/components/warning-box/warning-box.component';
-import { TechnicalDetailComponent } from 'src/app/modules/technical-station/components/technical-detail/technical-detail.component';
 import { StationCandidateDetailComponent } from 'src/app/components/station-candidate-detail/station-candidate-detail.component';
 
 @Component({
@@ -128,11 +125,11 @@ export class CandidateListComponent implements OnInit {
             reader.onload = (event) => {
               const text = event.target?.result as string;
               const jsonResponse = JSON.parse(text);
-              this.downloadAsExcel(jsonResponse.data, `technical${this.stationId}_candidate_list.xlsx`);
+              this.downloadAsExcel(jsonResponse.data, `written_candidate_list.xlsx`);
             };
             reader.readAsText(data);
           } else {
-            this.downloadBlob(data, `technical${this.stationId}_candidate_list.xlsx`);
+            this.downloadBlob(data, `written_candidate_list.xlsx`);
           }
         },
         (error: any) => {

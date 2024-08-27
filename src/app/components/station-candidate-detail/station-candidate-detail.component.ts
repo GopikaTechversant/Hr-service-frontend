@@ -18,16 +18,6 @@ export class StationCandidateDetailComponent implements OnInit {
   candidateDetails: any;
   showRequest: boolean = false;
   progessAdded: boolean = false;
-  scoreValue: string = '';
-  descriptionValue: string = '';
-  skillValue: string = '';
-  progressQuery = {
-    progressAssignee: "",
-    progressSkill: "",
-    progressServiceId: 0,
-    progressScore: "",
-    progressDescription: ""
-  }
   serviceId: any = null
   progressAssignee: any = null;
   stationId: any;
@@ -154,12 +144,12 @@ export class StationCandidateDetailComponent implements OnInit {
       progressServiceId: this.serviceId ? this.serviceId.toString() : '0',
       // progressScore: scoreElement.value,
       progressDescription: descriptionElement.value,
-      file: this.uploadedFileKey,
+      file: this.uploadedFileKey ? this.uploadedFileKey : '',
     }
     if (descriptionElement.value) {
       let baseUrl = '';
       if (this.currentStation === 'written') baseUrl = '/written-station';
-      if (this.currentStation === 'management') baseUrl = '/written-station';
+      if (this.currentStation === 'management') baseUrl = '/management-station';
       if (baseUrl) {
         this.apiService.post(`${baseUrl}/add-progress/v1`, payload).subscribe({
           next: (res: any) => {
@@ -245,7 +235,7 @@ export class StationCandidateDetailComponent implements OnInit {
     this.loader = true;
     let baseUrl = '';
     if (this.currentStation === 'written') baseUrl = '/written-station';
-    if (this.currentStation === 'management') baseUrl = '/written-station';
+    if (this.currentStation === 'management') baseUrl = '/management-station';
 
     if (baseUrl) {
       const payload = {

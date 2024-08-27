@@ -115,6 +115,10 @@ export class StationCandidatesComponent implements OnInit {
     this.pageNumber.emit(pageNumber)
     
   }
+
+  selectCandidate(id: any): void {
+    this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
+  }
   
   generatePageNumbers() {
     let pages = [];
