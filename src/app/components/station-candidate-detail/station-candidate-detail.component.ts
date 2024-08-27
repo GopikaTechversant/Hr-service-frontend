@@ -145,7 +145,7 @@ export class StationCandidateDetailComponent implements OnInit {
       progressServiceId: this.serviceId ? this.serviceId.toString() : '0',
       // progressScore: scoreElement.value,
       progressDescription: descriptionElement.value,
-      file: this.uploadedFileKey,
+      file: this.uploadedFileKey ? this.uploadedFileKey : '',
     }
     if (descriptionElement.value) {
       let baseUrl = `/written-station`;
