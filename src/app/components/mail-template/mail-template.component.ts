@@ -62,7 +62,6 @@ export class MailTemplateComponent implements OnInit {
   noticeperiodvalue: any;
   id: any;
   serviceId: any;
-  interviewMode: any;
   comment: any;
   Interviewlocation: any;
   displaydateTime: any;
@@ -95,6 +94,11 @@ export class MailTemplateComponent implements OnInit {
     }
   }
 
+  openTimePicker(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    inputElement.click();  // Simulate a click to open the time selector
+  }
+
   fetchPanel(): void {
     this.apiService.get(`/user/lists?userRole=2`).subscribe((res: any) => {
       if (res?.users) this.panel_list = res?.users;
@@ -105,12 +109,14 @@ export class MailTemplateComponent implements OnInit {
     this.showPanel = false;
     this.panelId = panelid;
     this.panelName = `${firstname} ${secondName}`;
+    if (this.candidate?.messageType === 're-schedule') this.changeInterviewStatus();
   }
 
   changeInterviewStatus(): void {
-    if (this.displayDate && this.displayTime) {
+    if (this.displayDate || this.displayTime || this.selectedModeName || this.panelName) {
       if (!this.interviewStatus) this.interviewStatus = 'Scheduled';
       if (this.interviewStatus === 'Not yet Schedule') this.interviewStatus = 'scheduled';
+      if (this.interviewStatus === 'scheduled') this.interviewStatus = 'Re-Scheduled';
     }
   }
 
@@ -124,6 +130,7 @@ export class MailTemplateComponent implements OnInit {
   selectMode(id: any, name: any): void {
     this.selectedModeId = id;
     this.selectedModeName = name;
+    if (this.candidate?.messageType === 're-schedule') this.changeInterviewStatus();
   }
 
   fetchCandidatesDetails(): void {
@@ -138,7 +145,7 @@ export class MailTemplateComponent implements OnInit {
       })
       this.candidateStatus.forEach((status: any) => {
         this.serviceId = this.candidate?.serviceId;
-        if (status?.interviewMode) this.interviewMode = status?.interviewMode;
+        if (status?.interviewMode) this.selectedModeName = status?.interviewMode;
         if (status?.comment) this.comment = status?.comment;
         if (status?.interviewStatus) this.interviewStatus = status?.interviewStatus;
         if (status?.interviewLocation) this.Interviewlocation = status?.interviewLocation;

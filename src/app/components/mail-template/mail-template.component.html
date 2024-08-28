@@ -114,8 +114,7 @@
                 <div class="input-1">
                     <span class="p-10 sub-head p-l-0">Interview Mode</span>
                     <div class="offer-input c-pointer p-relative no-close" (click)="showModeList = !showModeList">
-                        <span *ngIf="!selectedModeName">Select Mode</span>
-                        <span *ngIf="selectedModeName">{{selectedModeName}}</span>
+                        <span>{{selectedModeName ? selectedModeName : 'Select Mode'}}</span>
                         <span><i class="f-right margin-5 m-r-10 fa fa-chevron-down s-text no-close"></i></span>
                         <div class="no-close dropdown c-pointer no-close" *ngIf="showModeList">
                             <div class="padding-5 p-l-10" *ngFor="let mode of modeList " (click)="selectMode(mode?.id,mode?.modeName)">
@@ -139,8 +138,8 @@
                         </div>
                         <!-- Time Input -->
                        <div class="c-pointer flex-1 m-r-10 m-l-20">
-                        <input  class="date-input c-pointer" type="time" id="appt" name="appt" required [value]="displayTime " [(ngModel)]="displayTime"
-                            (change)="onTimeChange($event)" />
+                        <input class="date-input c-pointer" type="time" id="appt" name="appt" required [value]="displayTime" timeformat="12h"
+                        [(ngModel)]="displayTime" (click)="openTimePicker($event)"   (change)="onTimeChange($event)" />
                     </div>    
                 </div>
                 </div>
