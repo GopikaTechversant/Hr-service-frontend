@@ -10,58 +10,152 @@
     </div>
 </div>
 <div class="modal-content">
-    <div class="head p-10 d-flex j-space">
-        <span>Candidate Details</span>
-        <span class="c-pointer">Resume:
-            <i class="fa fa-file-text-o p-l-5 c-blue" aria-hidden="true" title="View resume"
-                (click)="viewResume(candidateDetails?.candidateResume)"></i>
-        </span>
+    <div class="d-flex flex-1">
+        <div class="w-50 border">
+            <div class="heading  padding-10 d-flex j-space">
+                <span>Requirement Details</span>
+            </div>
+            <div class="d-flex  padding-10">
+                <div class="sub-head">
+                    <span class="key p-8">Requirement Name</span>
+                    <span class="key p-8">Skills</span>
+                    <span class="key p-8">Minimum Experience</span>
+                    <span class="key p-8">Maximum Experience</span>             
+                    <span class="key p-8">Requirement Status</span>
+                    <span class="key p-8">Requirement Vacancy</span>
+                </div>
+                <div class="sub-head">
+                    <span class="p-8 job-description"> : 
+                        <a [href]="env_url + '/dashboard/series?requestId=' + requestDetails?.requestId">
+                          {{ requestDetails?.requestName | titlecase }}
+                        </a>
+                      </span>
+                    <span class="p-8 job-description"> : {{requestDetails?.requestSkills | titlecase}}</span>
+                    <span class="p-8 job-description"> : {{requestDetails?.requestMinimumExperience}}</span>
+                    <span class="p-8 job-description"> : {{requestDetails?.requestMaximumExperience}}</span>
+                    <span class="p-8 job-description"> : {{requestDetails?.requestStatus}}</span>
+                    <span class="p-8 job-description"> : {{requestDetails?.requestVacancy}}</span>
+                </div>
+            </div>
+            <div class="w-40">
+                <div class="heading  padding-10 d-flex j-space">
+                    <span>Interview Details</span>
+                </div>
+                <div class="d-flex  padding-10">
+                    <div class="sub-head f-w-500 f-s-14 d-flex">
+                        <div class="p-8 key">Scheduled Date</div>
+                        <div class="p-8 key">Scheduled time</div>
+                        <div class="p-8 key">Panel</div>
+                        <div class="p-8 key">Inteview Satus</div>
+                        <div class="p-8 key">Inteview Mode</div>
+                    </div>
+                    <div class="sub-head">
+                        <span class="p-8 job-description"> : {{data?.candidateDetails?.interviewTime  | date: 'dd/MM/YYY'}}</span>
+                        <span class="p-8 job-description"> : {{data?.candidateDetails?.interviewTime  | date: 'hh:mm a'}}</span>
+                        <span class="p-8 job-description"> : {{data?.candidateDetails?.pannelName | titlecase}}</span>
+                        <span class="p-8 job-description"> : {{data?.candidateDetails?.interviewstatus}}</span>
+                        <span class="p-8 job-description"> : {{data?.candidateDetails?.interviewMode ? data?.candidateDetails?.interviewMode : 'Not Updated'}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="w-50 border">
+            <div class="heading  padding-10 d-flex j-space">
+                <span>Candidate Details</span>
+                <span class="c-pointer"><span class="f-s-14 f-w-400">Candidate Resume : </span>
+                <i class="fa fa-file-text-o p-l-5 blue" aria-hidden="true" title="View resume" (click)="viewResume(candidateDetails['candidate.candidateResume'])"></i>
+            </span>
+            </div>
+            <div class="d-flex  padding-10">
+                <div class="sub-head f-w-500 f-s-14 d-flex">
+                    <div class="p-8">Candidate Status</div>
+                    <div class="p-8">Contact Number</div>
+                    <div class="p-8">Mail</div>
+                    <div class="p-8">Date of Birth</div>
+                    <div class="p-8">Skills</div>
+                    <div class="p-8">Previous Organisation</div>
+                    <div class="p-8">Previous Designation</div>
+                    <div class="p-8">Education</div>
+                    <div class="p-8">Relevant Experience</div>
+                    <div class="p-8">Total Experience</div>
+                    <div class="p-8">City</div>
+                    <div class="p-8">District</div>
+                    <div class="p-8">State</div>
+                </div>
+                <div class="sub-head d-flex">
+                    <div class="p-8">
+                       :   <span class="" [ngClass]="{'blue': data?.candidateDetails?.serviceStatus === 'pending','green': data?.candidateDetails?.serviceStatus === 'done',
+                                 'red': data?.candidateDetails?.serviceStatus === 'rejected'}">
+                        {{data?.candidateDetails?.serviceStatus | titlecase}} </span>
+                    </div>
+                    <div class="p-8">
+                        : {{candidateDetails?.candidateMobileNo ?(candidateDetails?.candidateMobileNo): '0000000000' }}
+                    </div>
+                    <div class="p-8">
+                        : {{candidateDetails?.candidateEmail ? candidateDetails?.candidateEmail : 'NIL'}}
+                    </div>
+                    <div class="p-8">
+                        : {{candidateDetails?.candidateDoB ?(candidateDetails?.candidateDoB | date: 'dd/MM/YYY' ): 'NIL' }}
+                    </div>
+                    <div class="p-8 d-flex">
+                        : <span class="p-l-3" *ngFor="let item of candidateDetails?.skills; let last = last">
+                            {{item?.skillName ? (item?.skillName | titlecase ): 'NIL'}} <span *ngIf="!last">,</span>
+                        </span>
+                    </div>
+                    <div class="p-8">
+                        : {{candidateDetails?.candidatePreviousOrg ? candidateDetails?.candidatePreviousOrg : 'NIL'}}
+                    </div>
+                    <div class="p-8">
+                        : {{candidateDetails?.candidatePreviousDesignation ? candidateDetails?.candidatePreviousDesignation : 'NIL'}}
+                    </div>
+                    <div class="p-8">
+                        : {{candidateDetails?.candidateEducation ? candidateDetails?.candidateEducation: 'NIL'}}
+                    </div>
+                    <div class="p-8">
+                        : {{candidateDetails?.candidateRevlentExperience ? candidateDetails?.candidateRevlentExperience : '0'}}
+                    </div> <div class="p-8">
+                        : {{candidateDetails?.candidateTotalExperience ? candidateDetails?.candidateTotalExperience : 'NIL'}}
+                    </div>
+                    <div class="p-8">
+                        : {{candidateDetails?.candidateCity ? candidateDetails?.candidateCity :'City'}}
+                    </div>
+                    <div class="p-8">
+                        : {{candidateDetails?.candidateDistrict ? candidateDetails?.candidateDistrict:'District '}}
+                    </div>
+                    <div class="p-8">
+                        : {{candidateDetails?.candidateState ? candidateDetails?.candidateState :'State'}}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="d-flex p-10">
-        <div class="sub-head f-w-500 f-s-14 d-flex">
-            <span class="p-8">Date of Birth</span>
-            <span class="p-8">Total Experience</span>
-            <span class="p-8">Relevant </span>
-            <span class="p-8">Previous Organisation</span>
-            <span class="p-8">Previous Designation</span>
-            <span class="p-8">Education</span>
-            <span class="p-8">Expected Salary</span>
-            <span class="p-8">Address</span>
-        </div>
-        <div class="sub-head d-flex">
-            <span class="p-8">
-                : {{candidateDetails?.candidateDoB ?(candidateDetails?.candidateDoB | date: 'dd/MM/YYY' ): 'NIL' }}
-            </span>
-            <span class="p-8">
-                : {{candidateDetails?.candidateTotalExperience ? candidateDetails?.candidateTotalExperience : '0'}}
-            </span>
-            <span class="p-8">
-                : {{candidateDetails?.candidateRevlentExperience ? candidateDetails?.candidateRevlentExperience : '0'}}
-            </span>
-            <span class="p-8">
-                : {{candidateDetails?.candidatePreviousOrg ? candidateDetails?.candidatePreviousOrg : 'NIL'}}
-            </span>
-            <span class="p-8">
-                : {{candidateDetails?.candidatePreviousDesignation ? candidateDetails?.candidatePreviousDesignation :
-                'NIL'}}
-            </span>
-            <span class="p-8">
-                : {{candidateDetails?.candidateEducation ? candidateDetails?.candidateEducation : 'NIL'}}
-            </span>
-            <span class="p-8">
-                : {{candidateDetails?.candidateExpectedSalary ? candidateDetails?.candidateExpectedSalary : 'NIL'}}
-            </span>
-            <span class="p-8">
-                : {{candidateDetails?.candidateCity ? candidateDetails?.candidateCity : 'City '}} ,
-                {{candidateDetails?.candidateDistrict ? candidateDetails?.candidateDistrict : 'District '}},
-                {{candidateDetails?.candidateState ? candidateDetails?.candidateState : 'State '}}
-            </span>
-        </div>
+
+    <!-- Initial buttons -->
+    <div *ngIf="data?.candidateDetails?.serviceStatus === 'pending' && !hrReview && !offerSent"
+        class="p-t-20 details padding-10 d-flex w-50 c-pointer">
+        <label class="c-pointer f-w-500 f-s-14 p-r-10">
+            <input type="radio" name="action" value="reschedule"
+                (change)="selectButton('reschedule');showMail('re-schedule')" [checked]="buttonType === 'reschedule'" />
+            Reschedule Interview
+        </label>
+        <label class="c-pointer f-w-500 f-s-14 p-r-10">
+            <input type="radio" name="selection" value="offer" [(ngModel)]="messageType" (change)="selectButton('offer');showMail('offer')">
+            Offer Letter
+        </label>
+        <label class="c-pointer f-w-500 f-s-14 p-r-10">
+            <input type="radio" name="selection" value="rejection" [(ngModel)]="messageType"
+                (change)="selectButton('rejection-mail');showMail('rejection')">
+            Rejection Letter
+        </label>
+    </div>
+
+    <div *ngIf="!hrReview && this.data?.candidateDetails?.serviceStatus !== 'moved' && this.data?.candidateDetails?.serviceStatus === 'pending' && (showMailTemp)">
+        <app-mail-template [candidate]="mailTemplateData" (submitData)="onSubmitData($event)"></app-mail-template>
     </div>
     <div *ngIf="hrReview && data?.offerStatus > 0">
-        <!-- <div class="head p-10">
-            <span>Offer Details of {{candidateDetails?.candidateFirstName}} {{candidateDetails?.candidateLastName}}</span>
-        </div> -->
+        <div class="head p-10">
+            <span>Offer Deatils</span>
+        </div>
         <div class="p-10">
             <div class="p-10" *ngIf="hrReview">
                 <span class="f-w-500">Offered Salary : </span> {{hrReview?.reviewedSalary}}
@@ -69,32 +163,14 @@
             <div class="p-10" *ngIf="hrReview">
                 <span class="f-w-500">Joining Date : </span>{{hrReview?.reviewedJoiningDate | date: 'dd/MM/YYY'}}
             </div>
-            <!-- <div class="p-10" *ngIf="hrReview">
-                <span class="f-w-500">Description : </span>{{hrReview?.reviewedDescription}}
-            </div> -->
         </div>
     </div>
-    <div *ngIf="data?.candidateDetails?.serviceStatus === 'pending' && !hrReview"  class="p-t-20 details padding-10 d-flex w-50 c-pointer">
-            <label class="c-pointer f-w-500 f-s-14 p-r-10">
-                <input type="radio" name="selection" value="offer" [(ngModel)]="messageType" (change)="showMail('offer')">
-                Offer Letter
-            </label>
-            <label class="c-pointer f-w-500 f-s-14 p-r-10">
-                <input type="radio" name="selection" value="rejection" [(ngModel)]="messageType" (change)="showMail('rejection')">
-               Rejection Letter
-            </label>
-    </div>
-    
-    <div *ngIf="!hrReview && this.data?.candidateDetails?.serviceStatus !== 'moved' && this.data?.candidateDetails?.serviceStatus === 'pending' && (showSelection || showRejection)">
-        <app-mail-template [candidate]="mailTemplateData" (submitData)="onSubmitData($event)"></app-mail-template>
-    </div>
-  
     <div *ngIf="this.data?.candidateDetails?.serviceStatus === 'pending' && hrReview">
         <div class="head p-10">
             <span>Feedback</span>
         </div>
         <div class="m-10">
-            <textarea class="text-area" id="" id="feedback" placeholder="Add Feedback"></textarea>
+            <textarea class="text-area m-l-5 padding-5" id="" id="feedback" placeholder="Add Feedback"></textarea>
             <div class="btn-parent">
                 <button class="c-pointer btn-reject"  (click)="rejectClick('')">Rejected</button>
                 <button class="btn c-pointer" (click)="approveClick()">Accepted</button>
@@ -105,11 +181,11 @@
         <div class="head p-10">
             <span>Feedback</span>
         </div>
-        <div class="p-10">
+        <div class="p-10" *ngIf="data?.candidateDetails?.serviceStatus !== 'pending'">
             <span class="padding-5">
                 {{data?.candidateDetails?.serviceStatus === 'done' ? 'Candidate Accepted the offer Letter and Hired' : ''}}
-                {{(hrReview && data?.candidateDetails?.serviceStatus === 'rejected') ? 'Candidate Rejected the Offer Letter' : ''}}
-                {{(!hrReview && data?.candidateDetails?.serviceStatus === 'rejected') ? 'Candidate Rejected in H R Round' : ''}}
+                {{(offerSent && data?.candidateDetails?.serviceStatus === 'rejected') ? 'Candidate Rejected the Offer Letter' : ''}}
+                {{(!offerSent && data?.candidateDetails?.serviceStatus === 'rejected') ? 'Candidate Rejected in H R Round' : ''}}
                 {{data?.candidateDetails?.serviceStatus === 'moved' ? 'Candidate Moved from H R Round' : ''}}
             </span>
         </div>

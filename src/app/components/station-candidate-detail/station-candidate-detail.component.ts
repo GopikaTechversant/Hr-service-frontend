@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { S3Service } from 'src/app/services/s3.service';
@@ -17,16 +18,6 @@ export class StationCandidateDetailComponent implements OnInit {
   candidateDetails: any;
   showRequest: boolean = false;
   progessAdded: boolean = false;
-  scoreValue: string = '';
-  descriptionValue: string = '';
-  skillValue: string = '';
-  progressQuery = {
-    progressAssignee: "",
-    progressSkill: "",
-    progressServiceId: 0,
-    progressScore: "",
-    progressDescription: ""
-  }
   serviceId: any = null
   progressAssignee: any = null;
   stationId: any;
@@ -52,13 +43,18 @@ export class StationCandidateDetailComponent implements OnInit {
   filterStatus: boolean = false;
   loader: boolean = false;
   env_url: string = '';
+  url: any;
+  currentStation: string = '';
   constructor(public dialogRef: MatDialogRef<StationCandidateDetailComponent>, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
+    private route: ActivatedRoute, private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data) {
       this.candidateDetails = data?.candidateDetails;
       this.stationId = data?.stationId;
       this.serviceId = this.candidateDetails?.serviceId;
       if (data?.offerStatus > 0) this.progessAdded = true;
+      console.log(data);
+      
     }
     this.dialogRef.updateSize('60vw', '90vh');
     this.templateData = { message: '' };
@@ -72,6 +68,12 @@ export class StationCandidateDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.currentStation = this.router.url.split('/')[1];
+    this.route.params.subscribe(params => {
+      this.stationId = params['id'];
+      this.url = `/technical/${this.stationId}`;
+    });
+    this.stationId = this.router.url.split('/')[2];
     this.userId = localStorage.getItem('userId');
     this.env_url = window.location.origin;
   }
@@ -130,43 +132,52 @@ export class StationCandidateDetailComponent implements OnInit {
 
   addProgress(): void {
     this.loader = true;
-    // this.submitForm = true;
-    const formData = new FormData();
-    const skillElement = document.getElementById('skill') as HTMLInputElement;
-    const scoreElement = document.getElementById('score') as HTMLInputElement;
-    const descriptionElement = document.getElementById('description') as HTMLInputElement;
-    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
-    const file = fileInput.files ? fileInput.files[0] : null;
-    console.log("descriptionElement.value", descriptionElement.value);
 
+    const description = (document.getElementById('description') as HTMLInputElement)?.value.trim();
     const payload = {
-      progressAssignee: this.progressAssignee ? this.progressAssignee : this.userId,
-      // progressSkill: skillElement.value,
-      progressServiceId: this.serviceId ? this.serviceId.toString() : '0',
-      // progressScore: scoreElement.value,
-      progressDescription: descriptionElement.value,
-      file: this.uploadedFileKey ? this.uploadedFileKey : '',
-    }
-    if (descriptionElement.value) {
-      let baseUrl = `/written-station`;
-      if (baseUrl) {
-        this.apiService.post(`${baseUrl}/add-progress/v1`, payload).subscribe({
-          next: (res: any) => {
-            this.loader = false;
-            this.tostr.success('Progress added successfully');
-            this.closeDialog();
-          },
-          error: (error) => {
-            this.loader = false;
-            this.tostr.warning('Unable to Update Progress');
-          }
-        });
-      } else {
-        this.loader = false;
-        this.tostr.error('Invalid operation');
-      }
+      progressAssignee: this.progressAssignee || this.userId,
+      progressServiceId: this.serviceId?.toString() || '0',
+      progressDescription: description,
+      file: this.uploadedFileKey || '',
+    };
+
+    if (!description) {
+      this.loader = false;
+      this.tostr.error('Invalid operation');
+      return;
     }
 
+    const baseUrlMap: { [key: string]: string } = {
+      'written': '/written-station',
+      'management': '/management-station',
+      'technical-3': '/technical-station',
+      'technical-4': '/technical-station-two'
+    };
+
+    const baseUrl = baseUrlMap[`${this.currentStation}-${this.stationId}`] || baseUrlMap[this.currentStation];
+
+    if (!baseUrl) {
+      this.tostr.error('Invalid operation');
+      this.loader = false;
+      return;
+    }
+
+    if (baseUrl) {
+      this.apiService.post(`${baseUrl}/add-progress/v1`, payload).subscribe({
+        next: () => {
+          this.loader = false;
+          this.tostr.success('Progress added successfully');
+          this.closeDialog();
+        },
+        error: () => {
+          this.loader = false;
+          this.tostr.warning('Unable to Update Progress');
+        }
+      });
+    } else {
+      this.loader = false;
+      this.tostr.error('Invalid operation');
+    }
   }
 
 
@@ -233,39 +244,49 @@ export class StationCandidateDetailComponent implements OnInit {
 
   approveClick(data: any): void {
     this.loader = true;
-    const baseUrl = '/written-station';
-    if (baseUrl) {
-      const payload = {
-        serviceSeqId: this.serviceId,
-        feedBack: data?.feedback,
-        feedBackBy: this.userId,
-        feedBackCc: data?.mailCc,
-        feedBackMailTemp: data?.mailTemp || '',
-        feedBackSubject: data?.mailSubject,
-        feedBcc: data?.mailBcc,
-        date: data?.interviewTime,
-        pannelUser: data?.interviewPanel,
-        interviewMode: data?.interviewMode,
-        requestionId: this.candidateDetails['serviceRequest.requestId']
-      };
-      this.apiService.post(`${baseUrl}/approve`, payload).subscribe({
-        next: () => {
-          this.tostr.success('Candidate Selected to Next Round');
-          this.closeDialog();
-          this.loader = false;
 
-        },
-        error: () => {
-          this.tostr.error('Error during approval');
-          this.loader = false;
-        }
-      });
-    } else {
+    const baseUrlMap: { [key: string]: string } = {
+      'written': '/written-station',
+      'management': '/management-station',
+      'technical-3': '/technical-station',
+      'technical-4': '/technical-station-two'
+    };
+
+    const baseUrl = baseUrlMap[`${this.currentStation}-${this.stationId}`] || baseUrlMap[this.currentStation];
+
+    if (!baseUrl) {
       this.tostr.error('Invalid operation');
       this.loader = false;
+      return;
     }
-  }
 
+    const payload = {
+      serviceSeqId: this.serviceId,
+      feedBack: data?.feedback,
+      feedBackBy: this.userId,
+      feedBackCc: data?.mailCc,
+      feedBackMailTemp: data?.mailTemp || '',
+      feedBackSubject: data?.mailSubject,
+      feedBcc: data?.mailBcc,
+      date: data?.interviewTime,
+      pannelUser: data?.interviewPanel,
+      interviewMode: data?.interviewMode,
+      requestionId: this.candidateDetails['serviceRequest.requestId']
+    };
+
+    this.apiService.post(`${baseUrl}/approve`, payload).subscribe({
+      next: () => {
+        this.tostr.success('Candidate Selected to Next Round');
+        this.closeDialog();
+      },
+      error: () => {
+        this.tostr.error('Error during approval');
+      },
+      complete: () => {
+        this.loader = false;
+      }
+    });
+  }
 
   rejectClick(data: any): void {
     this.loader = true;

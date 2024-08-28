@@ -216,4 +216,8 @@ input[type="text"] {
         width: 23px;
         height: 23px;
     }
+
+    .more{
+        width: 90px;
+    }
 }

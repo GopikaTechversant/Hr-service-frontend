@@ -24,7 +24,7 @@
                     <div class="dropdown c-pointer no-close'" *ngIf="showStations">
                         <span class="d-flex p-0" *ngFor="let item of stationsList"
                             (click)="selectStation(item?.stationName , item?.stationId);showStations = !showStations">
-                            <span class="p-l-10   ">{{item?.stationName | titlecase}}</span>
+                            <span class="p-l-10  padding-5">{{item?.stationName | titlecase}}</span>
                         </span>
                     </div>
                 </span>

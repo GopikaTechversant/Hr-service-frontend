@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, ElementRef, Inject, Input, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { S3Service } from 'src/app/services/s3.service';
@@ -15,8 +16,6 @@ import { environment } from "src/environments/environments";
 export class HrCandidateDetailComponent {
   @ViewChild('template', { static: false }) templateRef!: ElementRef;
   private keySubscription?: Subscription;
-  descriptionValue: any;
-  showDescription: boolean = false;
   serviceId: number = 0;
   candidateDetails: any;
   today: Date = new Date();
@@ -24,50 +23,75 @@ export class HrCandidateDetailComponent {
   feedback: any;
   userId: any;
   resumePath: any;
-  templateData: any;
-  showSelection: boolean = false;
-  showRejection: boolean = false;
   messageType: string = '';
-  isEditable: boolean = false;
-  file: File | null = null;
   fileName: string = '';
-  content: any;
-  htmlString: any;
   mailTemplateData: any;
-  uploadedFileKey: string = '';
-  loader:boolean = false;
-  constructor(public dialogRef: MatDialogRef<HrCandidateDetailComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
-    private apiService: ApiService, private datePipe: DatePipe, private tostr: ToastrServices,private s3Service : S3Service) {
+  loader: boolean = false;
+  env_url: string = '';
+  buttonType: string = '';
+  status: any;
+  currentStation: any;
+  stationId: any;
+  url: any;
+  progessAdded: boolean = false;
+  requestDetails: any;
+  offerSent: boolean = false;
+  filterStatus: boolean = false;
+  filteredStatus: string = '';
+  showMailTemp: boolean = false;
+  constructor(public dialogRef: MatDialogRef<HrCandidateDetailComponent>, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
+    private route: ActivatedRoute, private router: Router,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data) {
+      console.log(data);
+
       this.candidateDetails = data?.candidateDetails?.candidate;
+      this.requestDetails = data?.candidateDetails?.serviceRequest;
       this.hrReview = data?.candidateDetails?.reqHrReview;
       this.serviceId = this.data?.candidateDetails?.serviceId;
-      this.feedback = data?.candidateDetails?.reqCandidateComment?.commentComment;      
+      this.feedback = data?.candidateDetails?.reqCandidateComment?.commentComment;
+      console.log(this.candidateDetails);
+
+      if (data?.offerStatus > 0) this.offerSent = true;
     }
     this.dialogRef.updateSize('60%', '85%')
   }
 
   ngOnInit(): void {
+    this.currentStation = this.router.url.split('/')[1];
+    this.route.params.subscribe(params => {
+      this.stationId = params['id'];
+      this.url = `/technical/${this.stationId}`;
+    });
+    this.stationId = this.router.url.split('/')[2];
     this.today = new Date();
     this.userId = localStorage.getItem('userId');
+    this.env_url = window.location.origin;
   }
 
   closeDialog(): void {
     this.dialogRef.close();
   }
 
-  showMail(item: 'offer' | 'rejection'): void {
-    this.showSelection = item === 'offer';
-    this.showRejection = item !== 'offer';
-    const { candidateFirstName = '', candidateLastName = '', candidateId = '' } = this.candidateDetails || {};
+  showMail(item: string): void {
+    // this.showOffer = item === 'offer';
+    // if (item === 're-schedule') this.showReschedule = true;
+    // if (item === 'rejection') this.showRejection = true;
+    this.showMailTemp = true;
     this.messageType = item;
-    this.mailTemplateData = {
-      firstName: candidateFirstName,
-      lastName: candidateLastName,
-      id: candidateId,
-      messageType: item,
-      staionId : '5',
-    };
+    if (item.trim() !== '') {
+      this.mailTemplateData = {
+        firstName: this.candidateDetails?.candidateFirstName,
+        lastName: this.candidateDetails?.candidateLastName,
+        id: this.candidateDetails?.candidateId,
+        messageType: this.messageType,
+        stationId: this.stationId,
+      };
+    }
+  }
+
+  selectButton(type: any): void {
+    this.buttonType = type;
   }
 
   onSubmitData(event: any): void {
@@ -88,10 +112,10 @@ export class HrCandidateDetailComponent {
       offerMailBackCc: data?.mailCc,
       offerMailBackBcc: data?.mailBcc,
       offerRleasedBy: this.userId,
-      attachmentArray : [ {   
-        filename:  data?.file ,
+      attachmentArray: [{
+        filename: data?.file,
         path: `${environment.s3_url}${data?.file}`
-    }]
+      }]
     };
 
     this.apiService.post(`/hr-station/candidateOffer`, payload).subscribe({
@@ -124,7 +148,7 @@ export class HrCandidateDetailComponent {
       this.loader = true;
       const payload = {
         serviceId: this.serviceId,
-        stationId:'5',
+        stationId: '5',
         userId: this.userId,
         status: "rejected",
         rejectCc: data?.mailCc ?? '',

@@ -1,13 +1,13 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { CandidateDetailModalComponent } from '../candidate-detail-modal/candidate-detail-modal.component';
 import { ApiService } from 'src/app/services/api.service';
 import { StationSwitchComponent } from 'src/app/components/station-switch/station-switch.component';
 import { WarningBoxComponent } from 'src/app/components/warning-box/warning-box.component';
 import { DatePipe } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { ExportService } from 'src/app/services/export.service';
+import { StationCandidateDetailComponent } from 'src/app/components/station-candidate-detail/station-candidate-detail.component';
 
 @Component({
   selector: 'app-technical-detail',
@@ -18,7 +18,6 @@ import { ExportService } from 'src/app/services/export.service';
   }
 })
 export class TechnicalDetailComponent implements OnInit {
-  @Output() itemSelected = new EventEmitter<any>();
   candidateList: any = [];
   loader: boolean = false;
   selectedItem: any;
@@ -46,8 +45,10 @@ export class TechnicalDetailComponent implements OnInit {
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 150 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   candidateIds: any;
+
   constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog, private datePipe: DatePipe,
     private router: Router, private toastr: ToastrService, private exportService: ExportService) { }
+
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
@@ -77,8 +78,7 @@ export class TechnicalDetailComponent implements OnInit {
       this.limit = 12;
       this.currentPage = 1
       this.fetchList();
-    });
-    this.fetchRequirements();
+    }); this.fetchRequirements();
     this.fetchStatus();
   }
 
@@ -101,7 +101,6 @@ export class TechnicalDetailComponent implements OnInit {
       this.status = res?.data;
     });
   }
-
 
   fetchList(): void {
     if (!this.initialLoader) this.loader = true;
@@ -134,11 +133,11 @@ export class TechnicalDetailComponent implements OnInit {
             reader.onload = (event) => {
               const text = event.target?.result as string;
               const jsonResponse = JSON.parse(text);
-              this.downloadAsExcel(jsonResponse.data, `technical${this.stationId}_candidate_list.xlsx`);
+              this.downloadAsExcel(jsonResponse.data, `technical${this.stationId === '3' ? '1' : '2'}_candidate_list.xlsx`);
             };
             reader.readAsText(data);
           } else {
-            this.downloadBlob(data, `technical${this.stationId}_candidate_list.xlsx`);
+            this.downloadBlob(data, `technical${this.stationId === '3' ? '1' : '2'}_candidate_list.xlsx`);
           }
         },
         (error: any) => {
@@ -188,79 +187,19 @@ export class TechnicalDetailComponent implements OnInit {
     this.exportService.downloadAsJson(jsonResponse);
   }
 
-  getSelectedCandidateIds(): void {
-    const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
-    this.candidateIds = selectedCandidates.map((candidate: { serviceId: any; }) => candidate?.serviceId);
-  }
-
-  dateChange(event: any, range: string): void {
-    let date = new Date(event?.value);
-    if (range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
-    if (range == 'endDate') this.endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
-    this.currentPage = 1;
-    this.limit = 12;
+  onSearch(keyword: string): void {
+    this.searchKeyword = keyword;
     this.fetchList();
   }
 
-  fetchDetails(id: any, status: any): void {
-    if (this.stationId === '3') {
-      this.apiService.get(`/technical-station/progressDetail?serviceId=${id}`).subscribe((data: any) => {
-        if (data?.candidates) this.viewCandidateDetail(data?.candidates, status);
-      });
-    } else if (this.stationId === '4') {
-      this.apiService.get(`/technical-station-two/progressDetail?serviceId=${id}`).subscribe((data: any) => {
-        if (data?.candidates) this.viewCandidateDetail(data?.candidates, status);
-      });
-    }
-  }
-
-  generatePageNumbers() {
-    let pages = [];
-    if (this.lastPage <= 5) {
-      for (let i = 1; i <= this.lastPage; i++) pages.push(i);
-    } else {
-      pages.push(1);
-      let start = Math.max(2, this.currentPage - 1);
-      let end = Math.min(this.lastPage - 1, this.currentPage + 1);
-      if (this.currentPage <= 3) end = 4;
-      else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
-      if (start > 2) pages.push('...');
-      for (let i = start; i <= end; i++) pages.push(i);
-      if (end < this.lastPage - 1) pages.push('...');
-      pages.push(this.lastPage);
-    }
-    return pages;
-  }
-
-  exportData(): void {
-    this.isExport = true;
+  onExperience(exp: any): void {
+    this.experience = exp;
     this.fetchList();
   }
 
-  searchCandidate(searchTerm: string): void {
-    this.searchKeyword = searchTerm;
-    if (this.searchKeyword.trim() === '') {
-      this.currentPage = 1;
-      this.limit = 12;
-      this.fetchList();
-      return;
-    }
-    this.currentPage = 1;
-    this.limit = 12;
-    this.fetchList();
-  }
-
-  searchByExperience(experience: string): void {
-    this.experience = experience;
-    this.currentPage = 1;
-    this.limit = 12;
-    this.fetchList();
-  }
-
-  selectPosition(name: string, id: string): void {
-    this.requestList_open = false;
-    this.displayPosition = name;
-    this.positionId = id;
+  selectPosition(position: { name: string, id: any }): void {
+    this.displayPosition = position.name;
+    this.positionId = position.id;
     sessionStorage.setItem(`requirement_${this.stationId}`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
     this.currentPage = 1;
     this.limit = 12;
@@ -275,44 +214,17 @@ export class TechnicalDetailComponent implements OnInit {
     this.fetchList();
   }
 
-  clearFilter(item: any): void {
-    if (item === 'status') {
-      this.filteredStatus = '';
-      sessionStorage.setItem(`status_${this.stationId}`, this.filteredStatus);
-    }
-    if (item === 'position') {
-      this.displayPosition = '';
-      this.positionId = '';
-      sessionStorage.setItem(`requirement_${this.stationId}`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
-    }
-    if (item === 'search') this.searchKeyword = '';
-    if (item === 'experience') this.experience = '';
+  dateChange(data: { event: any, range: string }): void {
+    let date = new Date(data.event.value);
+    if (data.range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    if (data.range == 'endDate') this.endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
     this.currentPage = 1;
     this.limit = 12;
     this.fetchList();
   }
 
-  experienceValidation(event: any): void {
-    const intermediateAllowedCharacters = /^-?(\d{0,1}\d?)?(\.\d{0,2})?$/;
-    let enteredValue = event?.target?.value + event.key;
-    if (event.key === "Backspace" || event.key === "Delete" || event.key.includes("Arrow")) return;
-    if (!intermediateAllowedCharacters.test(enteredValue)) event.preventDefault();
-  }
-
-  viewCandidateDetail(item: any, status: any): void {
-    const dialogRef = this.dialog.open(CandidateDetailModalComponent, {
-      data: { candidateId: item['candidate.candidateId'], stationId: this.stationId, candidateDetails: item, progressStatus: status },
-    })
-    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-      this.candidateList = [];
-      this.currentPage = 1;
-      this.limit = 12;
-      this.fetchList();
-    })
-  }
-
-  onPageChange(pageNumber: number): void {
-    this.currentPage = Math.max(1, pageNumber);
+  exportData(data: boolean): void {
+    if (data) this.isExport = true;
     this.fetchList();
   }
 
@@ -340,9 +252,49 @@ export class TechnicalDetailComponent implements OnInit {
     }
   }
 
+  fetchDetails(details: { id: any, status: any }): void {
+    const id = details.id;
+    const status = details.status;
 
-  selectCandidate(id: any): void {
-    this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
+      if (this.stationId === '3') {
+        this.apiService.get(`/technical-station/progressDetail?serviceId=${id}`).subscribe((data: any) => {
+          if (data?.candidates) this.viewCandidateDetail(data?.candidates, status);
+        });
+      } else if (this.stationId === '4') {
+        this.apiService.get(`/technical-station-two/progressDetail?serviceId=${id}`).subscribe((data: any) => {
+          if (data?.candidates) this.viewCandidateDetail(data?.candidates, status);
+        });
+      }
   }
 
+  viewCandidateDetail(item: any, status: any): void {    
+    const dialogRef = this.dialog.open(StationCandidateDetailComponent, {
+      data: { candidateDetails: item, offerStatus: status },
+    })
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      this.fetchList();
+    })
+  }
+
+  clearFilter(item: any): void {
+    if (item === 'status') {
+      this.filteredStatus = '';
+      sessionStorage.setItem(`status_${this.stationId}`, this.filteredStatus);
+    }
+    if (item === 'position') {
+      this.displayPosition = '';
+      this.positionId = '';
+      sessionStorage.setItem(`requirement_${this.stationId}`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
+    }
+    if (item === 'search') this.searchKeyword = '';
+    if (item === 'experience') this.experience = '';
+    this.currentPage = 1;
+    this.limit = 12;
+    this.fetchList();
+  }
+
+  onPageChange(pageNumber: number): void {
+    this.currentPage = Math.max(1, pageNumber);
+    this.fetchList();
+  }
 }

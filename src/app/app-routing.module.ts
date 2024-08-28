@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
-import { CandidateDetailsComponent } from './components/candidate-details/candidate-details.component';
 
 const routes: Routes = [
   { path: '', loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule) },
@@ -22,10 +21,10 @@ const routes: Routes = [
     path: 'user', loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule)
   },
   {
-    path:'management', loadChildren: () => import('./modules/management/management.module').then(m => m.ManagementModule)
+    path: 'management', loadChildren: () => import('./modules/management/management.module').then(m => m.ManagementModule)
   },
   { path: '**', redirectTo: '', pathMatch: 'full' },
-  
+
 ];
 
 @NgModule({

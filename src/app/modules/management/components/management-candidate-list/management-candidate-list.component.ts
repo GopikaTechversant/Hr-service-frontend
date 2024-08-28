@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ManagementDetailComponent } from '../management-detail/management-detail.component';
 import { ApiService } from 'src/app/services/api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { StationSwitchComponent } from 'src/app/components/station-switch/station-switch.component';
 import { WarningBoxComponent } from 'src/app/components/warning-box/warning-box.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { ExportService } from 'src/app/services/export.service';
+import { DatePipe } from '@angular/common';
+import { StationCandidateDetailComponent } from 'src/app/components/station-candidate-detail/station-candidate-detail.component';
 @Component({
   selector: 'app-management-candidate-list',
   templateUrl: './management-candidate-list.component.html',
@@ -14,35 +17,36 @@ import { ActivatedRoute, Router } from '@angular/router';
   }
 })
 export class ManagementCandidateListComponent implements OnInit {
-  candidateList: any[] = [];
-  searchKeyword: string = '';
-  currentPage: number = 1;
-  limit: number = 10
+  candidateList: any = [];
+  loader: boolean = false;
+  selectedItem: any;
+  stationId: any;
+  filterStatus: boolean = false;
+  selectStatus: boolean = false;
+  limit: number = 12;
+  status: any;
   filteredStatus: any = '';
-  displayPosition: string = '';
-  positionId: any;
-  requestList_open: any;
-  requestList: any;
-  initialLoader: boolean = false
-  loader: boolean = true;
+  candidateStatus: string = 'Choose Candidate Status';
+  currentPage: number = 1;
   totalCount: any;
   lastPage: any;
-  filterStatus: boolean = false;
-  Status: any = [
-    { status: 'pending' },
-    { status: 'rejected' },
-    { status: 'done' },
-    { status: 'moved' }
-  ]
-  constructor(private apiService: ApiService, private dialog: MatDialog, private router: Router, private route: ActivatedRoute) {
+  searchKeyword: string = '';
+  requestList: any;
+  requestList_open: any;
+  displayPosition: string = '';
+  positionId: any;
+  stationsList: any;
+  switchStations: Boolean = false;
+  initialLoader: boolean = false;
+  experience: string = '';
+  today: Date = new Date();
+  isExport: boolean = false;
+  startDate: string | null = this.datePipe.transform(new Date(Date.now() - 150 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
+  endDate: string | null = this.datePipe.transform(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
+  candidateIds: any;
 
-  }
-
-  ngOnInit(): void {
-    this.initialLoader = true;
-    this.fetchCandidates();
-    this.fetchRequirements();
-  }
+  constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog, private datePipe: DatePipe,
+    private router: Router, private toastr: ToastrService, private exportService: ExportService) { }
 
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -52,38 +56,29 @@ export class ManagementCandidateListComponent implements OnInit {
     }
   }
 
-  fetchCandidates(): void {
-    if (!this.initialLoader) this.loader = true;
-    this.apiService.get(`/management-station/list?search=${this.searchKeyword}&page=${this.currentPage}&limit=${this.limit}&status_filter=${this.filteredStatus}&report=false`).subscribe((data: any) => {
-      this.candidateList = [];
-      this.initialLoader = false;
-      this.loader = false;
-      if (data.candidates) {
-        this.candidateList.push(data.candidates);
-        this.totalCount = data?.totalCount
-        const totalPages = Math.ceil(this.totalCount / this.limit);
-        this.lastPage = totalPages;
-        if (this.currentPage > totalPages) this.currentPage = totalPages;
+  ngOnInit(): void {
+    this.initialLoader = true;
+    this.filteredStatus = sessionStorage.getItem(`status_6`) ? sessionStorage.getItem(`status_6`) : '';
+    const requirementData = sessionStorage.getItem(`requirement_6`);
+    if (requirementData) {
+      let requirement = JSON.parse(requirementData);
+      if (requirement) {
+        this.displayPosition = requirement.name;
+        this.positionId = requirement.id;
       }
-    },
-      (error: any) => {
-        this.loader = false;
-        this.initialLoader = false;
-        if (error.status === 500) {
-          // this.toastr.error('Internal server error');
-        } else {
-          // this.toastr.error('Something went wrong');
-        }
-      }
-    );
+    } else {
+      this.displayPosition = '';
+      this.positionId = '';
+    }
+    this.searchKeyword = '';
+    this.candidateList = [];
+    this.limit = 12;
+    this.currentPage = 1
+    this.fetchList();
+    this.fetchRequirements();
+    this.fetchStatus();
   }
-
-  fetchDetails(id: any, status: any): void {
-    this.apiService.get(`/management-station/candidateDetail?serviceId=${id}`).subscribe((data: any) => {
-      if (data?.candidates) this.viewCandidateDetail(data?.candidates, status);
-    });
-  }
-
+ 
   fetchRequirements(): void {
     this.apiService.get(`/service-request/list`).subscribe((res: any) => {
       if (res?.data) {
@@ -92,44 +87,139 @@ export class ManagementCandidateListComponent implements OnInit {
     })
   }
 
-  viewCandidateDetail(item: any, status: any): void {
-    const dialogRef = this.dialog.open(ManagementDetailComponent, {
-      data: { candidateDetails: item, offerStatus: status },
-    })
-    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-      this.fetchCandidates();
-    })
+  fetchStations(): void {
+    this.apiService.get(`/user/stations`).subscribe((res: any) => {
+      this.stationsList = res?.data;
+    });
   }
 
-  searchCandidate(searchTerm: string): void {
-    this.searchKeyword = searchTerm;
-    this.currentPage = 1;
-    this.limit = 10;
-    this.fetchCandidates();
+  fetchStatus(): void {
+    this.apiService.get(`/user/filter-status`).subscribe(res => {
+      this.status = res?.data;
+    });
   }
 
-  clearFilter(item: any): void {
-    if (item === 'status') {
-      this.filteredStatus = '';
-      sessionStorage.setItem('status', this.filteredStatus);
+  fetchList(): void {
+    if (!this.initialLoader) this.loader = true;
+    this.candidateList = [];
+    const url = `/management-station/list`;
+    let params = [
+      `search=${this.searchKeyword}`,
+      `page=${this.isExport ? '' : this.currentPage}`,
+      `limit=${this.isExport ? '' : this.limit}`,
+      `position=${this.positionId ? this.positionId : ''}`,
+      `experience=${this.experience.trim()}`,
+      `fromDate=${this.startDate}`,
+      `toDate=${this.endDate}`,
+      `status_filter=${this.filteredStatus}`,
+      `report=${this.isExport}`
+    ].filter(param => param.split('=')[1] !== '').join('&');
+    if (this.isExport) {
+      if (this.candidateIds) {
+        const idsParams = this.candidateIds.map((id: string) => `ids=${id}`).join('&');
+        params += `&${idsParams}`;
+      }
+      const exportUrl = `${url}?${params}`;
+      this.apiService.getTemplate(exportUrl).subscribe(
+        (data: Blob) => {
+          if (data.type === 'application/json') {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              const text = event.target?.result as string;
+              const jsonResponse = JSON.parse(text);
+              this.downloadAsExcel(jsonResponse.data, `management_candidate_list.xlsx`);
+            };
+            reader.readAsText(data);
+          } else {
+            this.downloadBlob(data, `management_candidate_list.xlsx`);
+          }
+        },
+        (error: any) => {
+          this.loader = false;
+          this.initialLoader = false;
+        }
+      );
+      this.isExport = false;
+      if (this.isExport === false) this.fetchList();
+      return;
     }
-    if (item === 'position') {
-      this.displayPosition = '';
-      this.positionId = '';
-      sessionStorage.setItem(`requirement`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
-    }
-    if (item === 'search') this.searchKeyword = '';
-    this.currentPage = 1;
-    this.limit = 10;
-    this.fetchCandidates();
+    this.apiService.get(`${url}?${params}`).subscribe(
+      (data: any) => {
+        this.loader = false;
+        this.initialLoader = false;
+        this.candidateList = [];
+        this.candidateIds = [];
+        if (data?.candidates) {
+          this.candidateList.push(data?.candidates);
+          this.totalCount = data?.totalCount;
+          const totalPages = Math.ceil(this.totalCount / this.limit);
+          this.lastPage = totalPages;
+          if (this.currentPage > totalPages) this.currentPage = totalPages;
+        }
+      },
+      (error: any) => {
+        this.loader = false;
+        this.initialLoader = false;
+        if (error.status === 500) {
+          this.toastr.error('Internal server error');
+        } else {
+          this.toastr.error('Something went wrong');
+        }
+      }
+    );
   }
 
-  selectPosition(name: string, id: string): void {
-    this.requestList_open = false;
-    this.displayPosition = name;
-    this.positionId = id;
-    sessionStorage.setItem(`requirement`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
-    this.fetchCandidates();
+  downloadAsExcel(jsonData: any[], fileName: string) {
+    this.exportService.downloadAsExcel(jsonData, fileName);
+  }
+
+  downloadBlob(blob: Blob, fileName: string) {
+    this.exportService.downloadBlob(blob, fileName);
+  }
+
+  downloadAsJson(jsonResponse: any) {
+    this.exportService.downloadAsJson(jsonResponse);
+  }
+
+  onSearch(keyword: string): void {
+    this.searchKeyword = keyword;
+    this.fetchList();
+  }
+
+  onExperience(exp: any): void {
+    this.experience = exp;
+    this.fetchList();
+  }
+
+  selectPosition(position: { name: string, id: any }): void {
+    this.displayPosition = position.name;
+    this.positionId = position.id;
+    sessionStorage.setItem(`requirement_6`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
+    this.currentPage = 1;
+    this.limit = 12;
+    this.fetchList();
+  }
+
+  selectStatusFilter(item: string): void {
+    this.filteredStatus = item;
+    sessionStorage.setItem('status_6', this.filteredStatus);
+    this.currentPage = 1;
+    this.limit = 12;
+    this.fetchList();
+  }
+
+  dateChange(data: { event: any, range: string }): void {
+    let date = new Date(data.event.value);
+    if (data.range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    if (data.range == 'endDate') this.endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    this.currentPage = 1;
+    this.limit = 12;
+    this.fetchList();
+  }
+
+  exportData(data: boolean): void {
+    if (data) this.isExport = true;
+    this.fetchList();
   }
 
   onSwitchStation(candidate: any): void {
@@ -140,55 +230,59 @@ export class ManagementCandidateListComponent implements OnInit {
           userId: userId,
           name: candidate['candidate.candidateFirstName'] + ' ' + candidate['candidate.candidateLastName'],
           serviceId: candidate?.serviceId,
-          currentStation: 'Management',
+          currentStation: 'management',
           currentStationId: '6',
           requirement: candidate['serviceRequest.requestName']
         },
       })
       dialogRef.afterClosed().subscribe(() => {
-        this.fetchCandidates();
+        this.fetchList();
       });
     } else {
       const dialogRef = this.dialog.open(WarningBoxComponent, {})
       dialogRef.afterClosed().subscribe(() => {
-        this.fetchCandidates();
+        this.fetchList();
       });
     }
   }
 
-  selectStatusFilter(item: string): void {
-    this.filteredStatus = item;
-    sessionStorage.setItem('status', this.filteredStatus);
+  fetchDetails(details: { id: any, status: any }): void {
+    const id = details.id;
+    const status = details.status;
+    this.apiService.get(`/management-station/progressDetail?serviceId=${id}`).subscribe((data: any) => {
+      if (data?.candidates) this.viewCandidateDetail(data?.candidates, status);
+    });
+  }
+
+  viewCandidateDetail(item: any, status: any): void {
+    const dialogRef = this.dialog.open(StationCandidateDetailComponent, {
+      data: { candidateDetails: item, offerStatus: status },
+    })
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      this.fetchList();
+    })
+  }
+
+  clearFilter(item: any): void {
+    if (item === 'status') {
+      this.filteredStatus = '';
+      sessionStorage.setItem('status_6', this.filteredStatus);
+    }
+    if (item === 'position') {
+      this.displayPosition = '';
+      this.positionId = '';
+      sessionStorage.setItem(`requirement_6`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
+    }
+    if (item === 'search') this.searchKeyword = '';
+    if (item === 'experience') this.experience = '';
     this.currentPage = 1;
-    this.limit = 10;
-    this.fetchCandidates();
+    this.limit = 12;
+    this.fetchList();
   }
 
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);
-    this.fetchCandidates();
+    this.fetchList();
   }
 
-  generatePageNumbers() {
-    let pages = [];
-    if (this.lastPage <= 5) {
-      for (let i = 1; i <= this.lastPage; i++) pages.push(i);
-    } else {
-      pages.push(1);
-      let start = Math.max(2, this.currentPage - 1);
-      let end = Math.min(this.lastPage - 1, this.currentPage + 1);
-
-      if (this.currentPage <= 3) end = 4;
-      else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
-      if (start > 2) pages.push('...');
-      for (let i = start; i <= end; i++) pages.push(i);
-      if (end < this.lastPage - 1) pages.push('...');
-      pages.push(this.lastPage);
-    }
-    return pages;
-  }
-
-  selectCandidate(id: any): void {
-    this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
-  }
 }
