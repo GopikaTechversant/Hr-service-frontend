@@ -1,7 +1,7 @@
 <div class="m-10">
     <div class="d-flex j-space m-b-10">
         <div class="flex-grow-1">
-            <span class="f-s-20 f-w-500 p-t-5">{{currentStation | titlecase}} Round {{stationId === '3' ? '1' : '2'}}</span>
+            <span class="f-s-20 f-w-500 p-t-5">{{currentStation | titlecase}} Round {{currentStation === 'technical' ?(stationId === '3' ? '1' : '2') : ''}}</span>
         </div>     
     </div>
     <div class="d-flex j-end flex-wrap">
