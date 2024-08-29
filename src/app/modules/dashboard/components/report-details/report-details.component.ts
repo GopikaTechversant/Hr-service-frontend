@@ -54,7 +54,7 @@ export class ReportDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.initialLoader = true;
     this.today = new Date()
-    this.reportUserId = localStorage.getItem('userId');
+    // this.reportUserId = localStorage.getItem('userId');
     this.currentYear = new Date().getFullYear();
     this.reportMonth = new Date().getMonth() + 1;
     this.fetchDetails();
