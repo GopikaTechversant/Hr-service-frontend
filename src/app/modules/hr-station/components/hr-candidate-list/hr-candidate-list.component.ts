@@ -231,9 +231,7 @@ export class HrCandidateListComponent implements OnInit {
   searchByExperience(experience: string): void {
     this.experience = experience;
     this.currentPage = 1;
-    this.limit = 12;
-    console.log(this.experience);
-    
+    this.limit = 12;    
     this.fetchList();
   }
 

@@ -59,33 +59,31 @@
             <div class="d-flex-column line">
                 <span class="name">Total Resumes sourced & screened</span>
                 <div class="d-flex p-l-10"><i class="fa fa-file-text-o card-icon" aria-hidden="true"></i>
-                    <span class="count">{{totalReport?.sourcedScreened ? totalReport?.sourcedScreened : '0'}}</span>
+                    <span class="count">{{userRequirement?.sourcedScreened ? userRequirement?.sourcedScreened : '0'}}</span>
                 </div>
             </div>
             <div class="d-flex-column line">
                 <span class="name">Candidates contacted by recruiter</span>
                 <div class="d-flex p-l-10"><i class="fa fa-user card-icon" aria-hidden="true"></i>
-                    <span class="count">{{totalReport?.candidateContacted ? totalReport?.candidateContacted
-                        :'0'}}</span>
+                    <span class="count">{{userRequirement?.candidateContacted ? userRequirement?.candidateContacted :'0'}}</span>
                 </div>
             </div>
             <div class="d-flex-column line">
                 <span class="name">Interviews scheduled</span>
                 <div class="d-flex p-l-10"><i class="fa fa-calendar-o card-icon" aria-hidden="true"></i>
-                    <span class="count">{{totalReport?.interviewScheduled ? totalReport?.interviewScheduled
-                        :'0'}}</span>
+                    <span class="count">{{userRequirement?.interviewScheduled ? userRequirement?.interviewScheduled :'0'}}</span>
                 </div>
             </div>
             <div class="d-flex-column line">
                 <span class="name">Offer Released</span>
                 <div class="d-flex p-l-10"><i class="fa fa-tags card-icon" aria-hidden="true"></i>
-                    <span class="count">{{totalReport?.offerReleased ? totalReport?.offerReleased : '0'}}</span>
+                    <span class="count">{{userRequirement?.offerReleased ? userRequirement?.offerReleased : '0'}}</span>
                 </div>
             </div>
             <div class="d-flex-column ">
                 <span class="name">Offer Accepted</span>
                 <div class="d-flex p-l-10"><i class="fa fa-user card-icon" aria-hidden="true"></i>
-                    <span class="count">{{totalReport?.candidatesIntrested ? totalReport?.candidatesIntrested :'0'}}</span>
+                    <span class="count">{{userRequirement?.offerAccepeted ? userRequirement?.offerAccepeted :'0'}}</span>
                 </div>
             </div>
         </div>
@@ -111,9 +109,9 @@
                 <div class="container-table m-b-0 m-t-20">
                     <table class="table">
                         <tr class="table-header f-w-500 p-b-10">
-                            <td class="text-start">Technology</td>
-                            <td class="text-end">Interview Status (All status)</td>
-                            <td class="text-end">Total Reschedule Status</td>
+                            <td class="text-start">Requisition</td>
+                            <td class="text-end">Total Scheduled count</td>
+                            <td class="text-end">Total Reschedule Count</td>
                         </tr>
                         <!-- <div class="loader-parent">
                             <img src="assets/gif/loader.gif">

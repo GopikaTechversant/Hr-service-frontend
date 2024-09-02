@@ -111,7 +111,7 @@ export class ReportDetailsComponent implements OnInit {
       if (res?.data) {
         this.userRequirement = [];
         this.totalReport = [];
-        this.userRequirement = res?.data;
+        this.userRequirement = res?.data[0];
         this.totalReport = res?.totalReportMonth[0];
         for (let requirement of this.userRequirement) {
           this.requirementDetail = requirement;

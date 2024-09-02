@@ -1,8 +1,12 @@
 <div *ngIf="showTemplate" class="main">
-    <div *ngIf="!isEditable" class="f-right m-10 p-10 c-pointer" (click)="editClick()" title="Edit">
-        <span><img src="/assets/images/candidate-detail/edit.svg" alt="" height="12" width="12"></span>
-        <span class="c-blue p-l-5 p-r-5">Edit</span>
+    <div>
+        <!-- <div>Email Template</div> -->
+        <div *ngIf="!isEditable" class="f-right m-10 p-10 c-pointer" (click)="editClick()" title="Edit">
+            <span><img src="/assets/images/candidate-detail/edit.svg" alt="" height="12" width="12"></span>
+            <span class="c-blue p-l-5 p-r-5">Edit</span>
+        </div>
     </div>
+  
     <div *ngIf="loader" class="loader-parent">
         <img src="assets/gif/loader.gif">
     </div>
@@ -18,6 +22,7 @@
         <div class="template" #template style="
                     background-color: #FFFFFF;   
                     width: 100%;
+                    overflow-x: hidden;
                     height: fit-content;
                     top: 536px;
                     left: 31px;

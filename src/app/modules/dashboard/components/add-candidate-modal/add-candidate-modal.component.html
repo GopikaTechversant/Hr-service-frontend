@@ -313,10 +313,10 @@
                             (input)="getSkillSuggestions($event)" id="addskill" [(ngModel)]="searchvalue">
                         <div class="drop-list" *ngIf="searchvalue.trim() !== ''">
                             <div *ngFor="let suggestion of skillSuggestions" (click)="selectSkill(suggestion)"
-                                class="p-t-8">
+                                class="p-t-8 p-b-5">
                                 <span class="p-7 "><img src="/assets/images/candidate-detail/checkMark.svg" alt=""
                                         class="m-t-0 p-r-4" width="15px" height="13px"></span>
-                                <span class="c-pointer ">{{suggestion?.skillName | titlecase}}</span>
+                                <span class="c-pointer p-b-3">{{suggestion?.skillName | titlecase}}</span>
                             </div>
                         </div>
                     </div>
