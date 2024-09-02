@@ -1,25 +1,30 @@
 <div *ngIf="showTemplate" class="main">
-    <div>
-        <!-- <div>Email Template</div> -->
-        <div *ngIf="!isEditable" class="f-right m-10 p-10 c-pointer" (click)="editClick()" title="Edit">
-            <span><img src="/assets/images/candidate-detail/edit.svg" alt="" height="12" width="12"></span>
-            <span class="c-blue p-l-5 p-r-5">Edit</span>
+    <div class="p-b-5 p-t-5 d-flex j-space">
+        <div class="m-10 c-pointer">
+            <span class="heading p-r-5">Email Details </span>
         </div>
+         
     </div>
-  
     <div *ngIf="loader" class="loader-parent">
         <img src="assets/gif/loader.gif">
     </div>
     <!-- <div class="heading p-10">
         <span>Email Details</span>
     </div> -->
-   
-    <div *ngIf="isEditable" class="f-right m-10 p-10 c-pointer" (click)="saveClick($event)" title="Save">
-        <span><img src="/assets/images/candidate-detail/save.svg" alt="" height="12" width="12"></span>
-        <span class="c-blue p-l-5 p-r-5">Save</span>
-    </div>
+    <div  class="template">
+    <div class="d-flex j-end">
+        <!-- <div>Email Template</div> -->
+        <div *ngIf="!isEditable" class="f-right m-10 c-pointer" (click)="editClick()" title="Edit">
+            <span><img src="/assets/images/candidate-detail/edit.svg" alt="" height="13" width="13"></span>
+            <span class="c-blue p-l-5 p-r-5">Edit</span>
+        </div>
+        <div *ngIf="isEditable" class="f-right m-10 c-pointer" (click)="saveClick($event)" title="Save">
+            <span><img src="/assets/images/candidate-detail/save.svg" alt="" height="13" width="13"></span>
+            <span class="c-blue p-l-5 p-r-5">Save</span>
+        </div>
+    </div>   
     <div style="margin: 10px;">
-        <div class="template" #template style="
+        <div #template style="
                     background-color: #FFFFFF;   
                     width: 100%;
                     overflow-x: hidden;
@@ -80,6 +85,8 @@
             </div>
         </div>
     </div>
+</div>
+
     <div class="m-10 p-8">
         <div class="d-flex w-100 gaps" *ngIf="candidate?.messageType.trim() === 'offer'">
             <div class="input-1">

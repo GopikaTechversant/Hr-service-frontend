@@ -463,3 +463,7 @@ input[type="text"] {
   border: none;
   outline: none;
 }
+
+.f-left{
+  float: left;
+}
