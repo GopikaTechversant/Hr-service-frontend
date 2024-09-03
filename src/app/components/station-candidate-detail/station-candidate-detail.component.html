@@ -135,7 +135,7 @@
     </div>
 
     <!-- Initial buttons -->
-    <div *ngIf="!progessAdded && candidateDetails?.serviceStatus === 'pending' && !candidateDetails['progress.progressDescription']" class="p-t-20 details padding-10 d-flex w-50 c-pointer">
+    <div *ngIf="!progessAdded && candidateDetails?.serviceStatus === 'pending' && !candidateDetails['progress.progressDescription']" class="p-t-20 details padding-10 d-flex c-pointer">
         <label class="c-pointer f-w-500 f-s-14 p-r-10">
             <input type="radio" name="action" value="reschedule" (change)="selectButton('reschedule');showMail('re-schedule')" [checked]="buttonType === 'reschedule'" />
             Reschedule Interview
@@ -229,7 +229,7 @@
         </div>
         <!-- Reschedule Interview / send Approval mail for next round / Rejection mail -->
         <div *ngIf="candidateDetails?.serviceStatus === 'pending' && messageType.trim() !== ''">
-            <app-mail-template [candidate]="mailTemplateData" (submitData)="onSubmitData($event)"></app-mail-template>
+            <app-mail-template [candidate]="mailTemplateData" (submitData)="onSubmitData($event)" [loader]="loader"></app-mail-template>
         </div>
         <div *ngIf="data?.candidateDetails?.serviceStatus !== 'pending'">
             <div class="heading padding-10 p-b-0 d-flex j-space">

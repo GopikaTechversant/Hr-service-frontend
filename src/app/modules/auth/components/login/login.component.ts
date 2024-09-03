@@ -67,7 +67,8 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('userFullName', response?.user?.userFullName);
             localStorage.setItem('userId', response?.user?.userId);
             this.router.navigate(['/dashboard']);
-            this.tostr.success('Login Successfully');
+            this.toggleSpinner = false;
+            this.tostr.success('Logged in Successfully');
           }
         },
         (error) => {

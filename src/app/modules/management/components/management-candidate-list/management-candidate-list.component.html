@@ -1,8 +1,19 @@
-<app-station-candidates [candidateList]="candidateList" (search)="onSearch($event)"
-    (positionData)="selectPosition($event)" [displayPosition]="displayPosition"
-    (experienceSearch)="onExperience($event)" (statusData)="selectStatusFilter($event)" [filteredStatus]="filteredStatus"
-    (dateChangeEvent)="dateChange($event)" (exportClicked)="exportData($event)"
-    (switchStation)="onSwitchStation($event)" (viewDetails)="fetchDetails($event)"
-    (filterCleared)="clearFilter($event)" (pageNumber)="onPageChange($event)" 
-    [currentPage]="currentPage" [lastPage]="lastPage">
+<app-station-candidates 
+    [candidateList]="candidateList"
+    (search)="onSearch($event)"
+    (positionData)="selectPosition($event)" 
+    [displayPosition]="displayPosition"
+    (experienceSearch)="onExperience($event)" 
+    (statusData)="selectStatusFilter($event)" 
+    [filteredStatus]="filteredStatus"
+    (dateChangeEvent)="dateChange($event)" 
+    (exportClicked)="exportData($event)"
+    (switchStation)="onSwitchStation($event)" 
+    (viewDetails)="fetchDetails($event)"
+    (filterCleared)="clearFilter($event)" 
+    (pageNumber)="onPageChange($event)" 
+    [currentPage]="currentPage" 
+    [lastPage]="lastPage"
+    [initialLoader]="initialLoader" 
+    [loader]="loader">
 </app-station-candidates>

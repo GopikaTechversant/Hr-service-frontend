@@ -43,15 +43,11 @@ export class HrCandidateDetailComponent {
     private route: ActivatedRoute, private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data) {
-      console.log(data);
-
       this.candidateDetails = data?.candidateDetails?.candidate;
       this.requestDetails = data?.candidateDetails?.serviceRequest;
       this.hrReview = data?.candidateDetails?.reqHrReview;
       this.serviceId = this.data?.candidateDetails?.serviceId;
       this.feedback = data?.candidateDetails?.reqCandidateComment?.commentComment;
-      console.log(this.candidateDetails);
-
       if (data?.offerStatus > 0) this.offerSent = true;
     }
     this.dialogRef.updateSize('60%', '85%')

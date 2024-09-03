@@ -132,7 +132,7 @@
 
     <!-- Initial buttons -->
     <div *ngIf="data?.candidateDetails?.serviceStatus === 'pending' && !hrReview && !offerSent"
-        class="p-t-20 details padding-10 d-flex w-50 c-pointer">
+        class="p-t-20 details padding-10 d-flex c-pointer">
         <label class="c-pointer f-w-500 f-s-14 p-r-10">
             <input type="radio" name="action" value="reschedule"
                 (change)="selectButton('reschedule');showMail('re-schedule')" [checked]="buttonType === 'reschedule'" />
@@ -150,7 +150,7 @@
     </div>
 
     <div *ngIf="!hrReview && this.data?.candidateDetails?.serviceStatus !== 'moved' && this.data?.candidateDetails?.serviceStatus === 'pending' && (showMailTemp)">
-        <app-mail-template [candidate]="mailTemplateData" (submitData)="onSubmitData($event)"></app-mail-template>
+        <app-mail-template [candidate]="mailTemplateData" [loader]="loader" (submitData)="onSubmitData($event)"></app-mail-template>
     </div>
     <div *ngIf="hrReview && data?.offerStatus > 0">
         <div class="head p-10">
@@ -182,7 +182,7 @@
             <span>Feedback</span>
         </div>
         <div class="p-10" *ngIf="data?.candidateDetails?.serviceStatus !== 'pending'">
-            <span class="padding-5">
+            <span class="padding-5 p-l-8">
                 {{data?.candidateDetails?.serviceStatus === 'done' ? 'Candidate Accepted the offer Letter and Hired' : ''}}
                 {{(offerSent && data?.candidateDetails?.serviceStatus === 'rejected') ? 'Candidate Rejected the Offer Letter' : ''}}
                 {{(!offerSent && data?.candidateDetails?.serviceStatus === 'rejected') ? 'Candidate Rejected in H R Round' : ''}}

@@ -70,8 +70,7 @@ export class CandidateListComponent {
         params += `&${idsParams}`;
       }
       const exportUrl = `${url}?${params}`;      
-      console.log(exportUrl);
-      
+      // console.log(exportUrl);
       this.apiService.getTemplate(exportUrl).subscribe(
         (data: Blob) => {          
           if (data.type === 'application/json') {            

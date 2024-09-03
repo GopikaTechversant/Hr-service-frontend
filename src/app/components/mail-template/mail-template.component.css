@@ -24,7 +24,7 @@
     border-radius: 2px;
     border: 1px 0px 0px 0px;
     margin: 10px;
-
+    width: 98%;
 }
 
 .heading {
@@ -51,7 +51,7 @@
     width: 50%;
 }
 
-.gaps{
+.gaps {
     column-gap: 10px;
 }
 
@@ -75,7 +75,7 @@
     border: 1px solid #E9E9E9;
 }
 
-.input-offer{
+.input-offer {
     outline: none !important;
     height: 25px;
     width: 97%;

@@ -5,7 +5,7 @@
         </div>
          
     </div>
-    <div *ngIf="loader" class="loader-parent">
+    <div *ngIf="fileUploader" class="loader-parent">
         <img src="assets/gif/loader.gif">
     </div>
     <!-- <div class="heading p-10">
@@ -14,12 +14,12 @@
     <div  class="template">
     <div class="d-flex j-end">
         <!-- <div>Email Template</div> -->
-        <div *ngIf="!isEditable" class="f-right m-10 c-pointer" (click)="editClick()" title="Edit">
-            <span><img src="/assets/images/candidate-detail/edit.svg" alt="" height="13" width="13"></span>
-            <span class="c-blue p-l-5 p-r-5">Edit</span>
+        <div *ngIf="!isEditable" class="f-right m-10 c-pointer blue" (click)="editClick()" title="Edit">
+            <span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+            <span class="c-blue p-l-4 p-r-5">Edit</span>
         </div>
-        <div *ngIf="isEditable" class="f-right m-10 c-pointer" (click)="saveClick($event)" title="Save">
-            <span><img src="/assets/images/candidate-detail/save.svg" alt="" height="13" width="13"></span>
+        <div *ngIf="isEditable" class="f-right m-10 c-pointer blue" (click)="saveClick($event)" title="Save">
+            <span><i class="fa fa-floppy-o" aria-hidden="true"></i></span>
             <span class="c-blue p-l-5 p-r-5">Save</span>
         </div>
     </div>   
@@ -34,10 +34,10 @@
                     gap: 0px;
                     opacity: 0px;
                     outline: none !important;
-                    padding: 10px;">
-            <div style="padding-bottom: 5px;">Dear {{candidate?.firstName}},</div>
+                    padding-left: 10px;">
+            <div style="padding-bottom: 10px;">Dear {{candidate?.firstName}},</div>
             <textarea class="editable " id="editable"  [(ngModel)]="templateData.message" [readonly]="!isEditable" (input)="updateHtmlContent($event);" 
-                style="width: 100%; outline: none !important; border: none !important; min-height: 290px;padding-top: 5px;padding-bottom: 10px;">
+                style="width: 100%; outline: none !important; border: none !important; min-height: 220px;padding-top: 5px;padding-left: 0px; padding-bottom: 10px;">
                         </textarea><br>
             <span style="padding: 10px; padding-left: 0px;">Best Regards,</span>
     

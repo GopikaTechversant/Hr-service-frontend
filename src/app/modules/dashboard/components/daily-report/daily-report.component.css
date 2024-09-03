@@ -119,12 +119,11 @@
     width: 100%;
     max-width: 100%;
     margin-bottom: 10px;
-    min-height: calc(100vh - 450px);
-    max-height: calc(100vh - 450px);
+    height: calc(100vh - 450px);
 }
 
 .table {
-    width: 98%;
+    width: 100%;
     border-collapse: collapse;
 }
 
@@ -165,21 +164,6 @@
     left: 21%;
 }
 
-.scrollable::-webkit-scrollbar,
-.container-table::-webkit-scrollbar {
-    display: none;
-}
-
-.scrollable,
-.container-table {
-    scrollbar-width: none;
-}
-
-.scrollable,
-.container-table {
-    -ms-overflow-style: none;
-}
-
 .j-end {
     display: flex;
     justify-content: flex-end;
@@ -187,6 +171,11 @@
 
 .details {
     font-size: 12px;
+}
+
+.date{
+    min-width: 90px !important;
+    text-align: right;
 }
 
 .pagination {

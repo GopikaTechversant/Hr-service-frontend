@@ -52,9 +52,7 @@ export class StationCandidateDetailComponent implements OnInit {
       this.candidateDetails = data?.candidateDetails;
       this.stationId = data?.stationId;
       this.serviceId = this.candidateDetails?.serviceId;
-      if (data?.offerStatus > 0) this.progessAdded = true;
-      console.log(data);
-      
+      if (data?.offerStatus > 0) this.progessAdded = true;      
     }
     this.dialogRef.updateSize('60vw', '90vh');
     this.templateData = { message: '' };

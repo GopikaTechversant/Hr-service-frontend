@@ -23,12 +23,12 @@ export class StationCandidatesComponent implements OnInit {
   @Output() switchStation = new EventEmitter<any>();
   @Output() viewDetails: EventEmitter<{ id: any, status: any }> = new EventEmitter<{ id: any, status: any }>();
   @Output() pageNumber: EventEmitter<number> = new EventEmitter<number>();
+  @Input() initialLoader: boolean = false;
+  @Input() loader: boolean = false;
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 150 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   searchKeyword: string = '';
   experience: string = '';
-  initialLoader: boolean = false;
-  loader: boolean = false;
   status: any[] = [];
   isExport: boolean = false;
   requestList: any;
@@ -44,13 +44,26 @@ export class StationCandidatesComponent implements OnInit {
   constructor(private apiService: ApiService, private datePipe: DatePipe , private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
+    this.initialLoader = true;
     this.currentStation = this.router.url.split('/')[1];
     this.route.params.subscribe(params => {
       this.stationId = params['id'];
+      this.initialLoader = true;
       this.url = `/technical/${this.stationId}`;
     });
     this.fetchRequirements();
     this.fetchStatus();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if ((changes['filteredStatus'] && !changes['filteredStatus'].isFirstChange()) ||
+      (changes['displayPosition'] && !changes['displayPosition'].isFirstChange())
+    ) this.loader = true;
+    else if ((changes['lastPage'] && !changes['lastPage'].isFirstChange()) ||
+      (changes['candidateList'].currentValue.length > 0 && !changes['candidateList'].isFirstChange())) {
+      this.loader = false;
+      this.initialLoader = false;
+    }
   }
 
   fetchStatus(): void {
@@ -68,6 +81,7 @@ export class StationCandidatesComponent implements OnInit {
   }
 
   searchCandidate(keyword: string): void {
+    this.loader = true;
     this.search.emit(keyword);
   }
 
@@ -77,6 +91,7 @@ export class StationCandidatesComponent implements OnInit {
   }
 
   searchByExperience(exp: any): void {
+    this.loader = true;
     this.experienceSearch.emit(exp);
   }
 
@@ -86,7 +101,11 @@ export class StationCandidatesComponent implements OnInit {
   }
 
   clearFilter(item: any): void {
+    if (item === 'search') this.searchKeyword = '';
+    if (item === 'experience') this.experience = '';
+    this.loader = true;
     this.filterCleared.emit(item);
+
   }
 
   experienceValidation(event: any): void {
@@ -97,6 +116,7 @@ export class StationCandidatesComponent implements OnInit {
   }
 
   dateChange(event: any, range: string): void {
+    this.loader = true;
     this.dateChangeEvent.emit({ event, range });
   }
 
@@ -111,9 +131,10 @@ export class StationCandidatesComponent implements OnInit {
   fetchDetails(id: any, status: any): void {
     this.viewDetails.emit({ id, status });
   }
+
   onPageChange(pageNumber: number): void {
+    this.loader = true;
     this.pageNumber.emit(pageNumber)
-    
   }
 
   selectCandidate(id: any): void {

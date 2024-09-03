@@ -20,7 +20,8 @@ export class MailTemplateComponent implements OnInit {
   @ViewChild('recruiterNameDiv') recruiterNameDiv!: ElementRef;
   @ViewChild('positionDiv') positionDiv!: ElementRef;
   @ViewChild('panelDiv') panelDiv!: ElementRef;
-  
+  @Input() initialLoader: boolean = false;
+  @Input() loader: boolean = false;
   isEditable: boolean = false;
   templateData: any = {};
   content: string = '';
@@ -65,9 +66,9 @@ export class MailTemplateComponent implements OnInit {
   comment: any;
   Interviewlocation: any;
   displaydateTime: any;
-  loader: boolean = false;
   showTemplate: boolean = false;
   showTimePicker: Boolean = false;
+  fileUploader : boolean = false;
   constructor(private apiService: ApiService, private tostr: ToastrService, private datePipe: DatePipe, private s3Service: S3Service) { }
   ngOnInit(): void {
     this.resetFormAndState();
@@ -171,7 +172,7 @@ export class MailTemplateComponent implements OnInit {
     if (file) {
       this.file = file;
       this.fileName = file?.name;
-      this.loader = true;
+      this.fileUploader = true;
       if (this.fileName) this.s3Service.uploadImage(this.file, 'hr-service-images', this.file);
       this.getKeyFroms3();
     }
@@ -202,10 +203,10 @@ export class MailTemplateComponent implements OnInit {
     this.keySubscription = this.s3Service.key.subscribe((key: string) => {
       this.uploadedFileKey = key;
       if (!this.uploadedFileKey) {
-        this.loader = false;
+        this.fileUploader = false;
         this.tostr.error('Something Went Wrong Please Try Again');
       } else {
-        this.loader = false;
+        this.fileUploader = false;
         this.tostr.success('File upload Successfully');
       }
     });

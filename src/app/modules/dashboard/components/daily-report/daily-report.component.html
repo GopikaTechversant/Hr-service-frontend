@@ -57,7 +57,7 @@
     <div class="container-table m-b-0">
         <div class="no-data" *ngIf="(!userRequirement || userRequirement?.length === 0) && !initialLoader && !loader">No
             Data Found</div>
-            <table class="table m-l-17" *ngIf="userRequirement?.length > 0">
+            <table class="table " *ngIf="userRequirement?.length > 0">
                 <tr class="table-header">
                     <ng-container *ngFor="let key of recruiterKeys">
                         <!-- Skip 'Date' column in the main loop -->
@@ -81,7 +81,7 @@
                         </ng-container>
                         <!-- Add 'Date' column at the end -->
                         <td *ngIf="item['Date']" 
-                            [ngClass]="{'text-end': item['Date']}" 
+                            [ngClass]="{'date': item['Date']}" 
                             [title]="item['Date']">
                             {{ item['Date'] | date: 'dd-MM-yyyy' }}
                         </td>

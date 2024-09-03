@@ -24,6 +24,7 @@ export class ApplicationListBarComponent implements OnInit {
   endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   lastPage: any;
   totalCount: any;
+  initialLoader : boolean = false;
   constructor(private apiService: ApiService, private datePipe: DatePipe) { }
   // @HostListener('window:beforeunload', ['$event'])
   // unloadNotification($event: any) {
@@ -31,6 +32,7 @@ export class ApplicationListBarComponent implements OnInit {
   // }
 
   ngOnInit(): void {
+    this.initialLoader = true;
     this.requestId = this.positionId ? this.positionId : '';
     this.fetchApplicationList();
   }
@@ -55,6 +57,7 @@ export class ApplicationListBarComponent implements OnInit {
         this.totalCount = res?.dataCount;
         const totalPages = Math.ceil(this.totalCount / this.limit);
         this.lastPage = totalPages;
+        this.initialLoader = false;
         if (this.currentPage > totalPages) this.currentPage = totalPages;
       }
     });
