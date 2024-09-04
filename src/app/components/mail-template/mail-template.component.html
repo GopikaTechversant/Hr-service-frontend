@@ -2,8 +2,7 @@
     <div class="p-b-5 p-t-5 d-flex j-space">
         <div class="m-10 c-pointer">
             <span class="heading p-r-5">Email Details </span>
-        </div>
-         
+        </div>       
     </div>
     <div *ngIf="fileUploader" class="loader-parent">
         <img src="assets/gif/loader.gif">
@@ -11,7 +10,7 @@
     <!-- <div class="heading p-10">
         <span>Email Details</span>
     </div> -->
-    <div  class="template">
+    <div  class="template p-l-10">
     <div class="d-flex j-end">
         <!-- <div>Email Template</div> -->
         <div *ngIf="!isEditable" class="f-right m-10 c-pointer blue" (click)="editClick()" title="Edit">
@@ -34,7 +33,7 @@
                     gap: 0px;
                     opacity: 0px;
                     outline: none !important;
-                    padding-left: 10px;">
+                    padding-left: 0px;">
             <div style="padding-bottom: 10px;">Dear {{candidate?.firstName}},</div>
             <textarea class="editable " id="editable"  [(ngModel)]="templateData.message" [readonly]="!isEditable" (input)="updateHtmlContent($event);" 
                 style="width: 100%; outline: none !important; border: none !important; min-height: 220px;padding-top: 5px;padding-left: 0px; padding-bottom: 10px;">

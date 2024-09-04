@@ -60,10 +60,8 @@
                             class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
                     </span>
                     <div class=" m-b-2 drop-list no-close p-absolute" *ngIf="idListOpen">
-                        <div (click)="selectStation(station?.stationId,station?.stationName)"
-                            *ngFor="let station of stationList" class="c-pointer">
-                            <span  class="p-10 p-l-8 c-pointer"> {{station?.stationName}}</span>
-                           
+                        <div (click)="selectStation(station?.stationId,station?.stationName)" *ngFor="let station of stationList" class="c-pointer p-l-10 padding-5">
+                            <span  class="c-pointer"> {{station?.stationName}}</span>      
                         </div>
                     </div>
                 </div>

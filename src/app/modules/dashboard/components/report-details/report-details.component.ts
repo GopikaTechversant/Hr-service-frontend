@@ -75,6 +75,7 @@ export class ReportDetailsComponent implements OnInit {
   }
 
   fetchInterviewStatus(): void {
+    this.interviewDetails = [];
     this.apiService.get(`/report/over-all-interview-status?page=${this.currentPage}&limit=${this.pageSize}`).subscribe((res: any) => {
       if (res?.data) {
         this.initialLoader = false;

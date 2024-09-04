@@ -36,9 +36,9 @@
                 <td class="text-end">No of applicants</td>
                 <td class="text-end">Date</td>
             </tr>
-            <!-- <div class="loader-parent">
-                    <img src="assets/gif/loader.gif">
-                </div> -->
+            <div *ngIf="loader && !initialLoader" class="loader-parent">
+                <img src="assets/gif/loader.gif">
+            </div>
             <ng-container *ngIf="applicationList.length > 0">
                 <ng-container *ngFor="let item of applicationList">
                     <tr class="c-pointer details">
@@ -67,7 +67,7 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="applicationList?.length === 0 && !initialLoader" class="no-data d-flex w-100">No Data Found</div>
+            <div *ngIf="applicationList?.length === 0 && !initialLoader && !loader" class="no-data d-flex w-100">No Data Found</div>
         </table>
     </div>
     <div class="page d-flex j-end p-10 m-10 m-r-0">

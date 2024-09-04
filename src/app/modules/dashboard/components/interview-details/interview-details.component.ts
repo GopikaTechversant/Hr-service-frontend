@@ -109,6 +109,7 @@ export class InterviewDetailsComponent implements OnInit {
       this.fetchLocation();
       this.showMail('screening');
     }
+    this.recruiterId = localStorage.getItem('userId');
   }
   fetchPosition(): void {
     this.apiService.get(`/service-request/list`).subscribe({
@@ -177,11 +178,11 @@ export class InterviewDetailsComponent implements OnInit {
     this.resetFormAndState('position');
   }
 
-  selectRecruiter(recruiterid: any, firstname: any, secondName: any): void {
-    this.showRecruiters = false;
-    this.recruiterId = recruiterid;
-    this.recruiterName = `${firstname} ${secondName}`;
-  }
+  // selectRecruiter(recruiterid: any, firstname: any, secondName: any): void {
+  //   this.showRecruiters = false;
+  //   this.recruiterId = recruiterid;
+  //   this.recruiterName = `${firstname} ${secondName}`;
+  // }
 
   selectMode(mode: any): void {
     this.selectedModeName = mode;
@@ -303,7 +304,7 @@ export class InterviewDetailsComponent implements OnInit {
     this.loader = true;
     const noticeperiod = document.getElementById('noticePeriod') as HTMLInputElement;
     this.noticeperiodvalue = noticeperiod?.value ? noticeperiod?.value : this.noticeperiodvalue;
-
+    
     const payload = {
       recruiterId: this.recruiterId,
       candidateId: this.candidateId,

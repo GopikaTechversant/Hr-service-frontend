@@ -129,6 +129,16 @@
     padding-bottom: 10px;
 }
 
+.loader-parent {
+    /* position: absolute; */
+    padding-left: 130%;
+    z-index: 9;
+    top: 50%;
+}
+
+.loader-parent img {
+    width: 100px;
+}
 .current-page {
     background-color: #005EC9;
     color: #FFFFFF;

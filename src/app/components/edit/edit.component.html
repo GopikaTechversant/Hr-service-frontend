@@ -147,9 +147,7 @@
         </div>
         <div class="d-flex j-space p-relative margin-10 m-l-0">
                 <div class="c-pointer">
-                    <span class="label m-b-4">Uploaded Resume</span>
-                    <img src="assets/images/file-uploaded.png" alt="" height="25px"
-                        (click)="viewResume(candidateDetails?.candidateResume)">
+                    <span class="resume m-b-4" (click)="viewResume(candidateDetails?.candidateResume)">Uploaded Resume</span>
                 </div>
                 <div class="c-pointer">
                     <span *ngIf="!resumeUploadSuccess" class="upload-success-message"

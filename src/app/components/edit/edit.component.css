@@ -7,16 +7,21 @@
     letter-spacing: 0em;
 }
 
-.selected-skills{
+.selected-skills {
     width: 100%;
 }
 
-.primary-skills{
+.primary-skills {
     width: 50%;
 }
 
-.secondary-skills{
+.secondary-skills {
     width: 50%;
+}
+
+.resume {
+    color: #005EC9;
+    border-bottom: 1px solid #005EC9;
 }
 
 .input-1 {
@@ -29,7 +34,7 @@
     padding-left: 5px;
 }
 
-.dropdown-height{
+.dropdown-height {
     height: 25px !important;
 }
 
@@ -245,7 +250,7 @@
     flex-direction: column;
 }
 
-.skill-drop-list{
+.skill-drop-list {
     position: absolute;
     background-color: #EFEFEF;
     overflow-y: scroll;
@@ -256,17 +261,17 @@
     padding-top: 8px;
 }
 
-ul{
+ul {
     height: 100px;
     overflow-y: scroll;
 }
 
-.delete-color{
+.delete-color {
     color: #C10A0A;
     margin-left: 19px;
 }
 
-.input-box-last{
+.input-box-last {
     height: 34px;
     border-radius: 5px;
     outline: none;
@@ -276,10 +281,10 @@ ul{
     width: 59%;
 }
 
-.fa-file-alt{
+.fa-file-alt {
     color: blue;
 }
 
-.padding-4{
+.padding-4 {
     padding: 4px;
 }

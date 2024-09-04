@@ -18,13 +18,14 @@ export class ApplicationListBarComponent implements OnInit {
   dataSet: any;
   requestId: any;
   today: Date = new Date();
-  limit: number =10;
+  limit: number = 10;
   currentPage: number = 1;
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 31 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   lastPage: any;
   totalCount: any;
-  initialLoader : boolean = false;
+  initialLoader: boolean = false;
+  loader: boolean = false
   constructor(private apiService: ApiService, private datePipe: DatePipe) { }
   // @HostListener('window:beforeunload', ['$event'])
   // unloadNotification($event: any) {
@@ -51,6 +52,8 @@ export class ApplicationListBarComponent implements OnInit {
   }
 
   fetchApplicationList(): void {
+    if(!this.initialLoader) this.loader = true;
+    this.applicationList = [];
     this.apiService.get(`/dashboard/department-daily-application?fromDate=${this.startDate}&toDate=${this.endDate}&limit=${this.limit}&currentPage=${this.currentPage}&requestId=${this.requestId}`).subscribe((res: any) => {
       if (res?.data) {
         this.applicationList = res?.data;
@@ -58,6 +61,7 @@ export class ApplicationListBarComponent implements OnInit {
         const totalPages = Math.ceil(this.totalCount / this.limit);
         this.lastPage = totalPages;
         this.initialLoader = false;
+        this.loader = false;
         if (this.currentPage > totalPages) this.currentPage = totalPages;
       }
     });
@@ -96,7 +100,7 @@ export class ApplicationListBarComponent implements OnInit {
     this.currentPage = Math.max(1, pageNumber);
     this.limit = 10;
     this.fetchApplicationList();
-  }  
+  }
 
 
   // createBarChart() {

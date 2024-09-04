@@ -93,11 +93,11 @@ export class DailyReportComponent implements OnInit {
       if (this.report === false) this.fetchDetails();
       return;
     }
+    this.userRequirement = [];
     this.apiService.get(`${url}?${params}`).subscribe((res: any) => {
       if (res?.data) {
         this.initialLoader = false;
         this.loader = false;
-        this.userRequirement = [];
         this.userRequirement = res?.data;
         this.totalCount = res?.reportCount;
         const totalPages = Math.ceil(this.totalCount / this.pageSize);

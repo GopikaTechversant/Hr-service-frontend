@@ -14,8 +14,9 @@
 
 .initial-loader {
     position: absolute;
-    top: 35%;
-    left: 21%;
+    top: 31%;
+    left: 17%;
+    width: 98%;
 }
 
 .w-75 {

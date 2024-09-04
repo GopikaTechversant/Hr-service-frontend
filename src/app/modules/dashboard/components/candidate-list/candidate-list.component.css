@@ -108,6 +108,16 @@ input[type="text"] {
     width: 98%;
 }
 
+.loader-parent {
+    position: absolute;
+    left: 53%;
+    z-index: 9;
+}
+
+.loader-parent img {
+    width: 100px;
+}
+
 .clear-filter {
     background-color: #fff;
     padding-bottom: 3px;

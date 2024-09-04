@@ -19,7 +19,7 @@
 
 }
 
-.head{
+.head {
   display: flex;
   flex-direction: column;
   background-color: #FFFFFF;
@@ -34,7 +34,8 @@
 
 .side-head {
   font-weight: 500;
-  font-size: 1.2rem; /* Large screens */
+  font-size: 1.2rem;
+  /* Large screens */
   min-height: 75px;
   max-height: 75px;
 
@@ -50,12 +51,14 @@
   font-weight: 500;
 }
 
-.menu:hover, .menu.active {
+.menu:hover,
+.menu.active {
   color: #005EC9;
   background-color: #005EC91F;
 }
 
-.menu:hover .menu-text, .menu.active .menu-text {
+.menu:hover .menu-text,
+.menu.active .menu-text {
   color: #005EC9;
   font-weight: 500;
 }
@@ -64,10 +67,13 @@
 /* Media query for screen width between 1396px and 1000px */
 @media (max-width: 1396px) and (min-width: 1000px) {
   .side-head {
-      font-size: 1rem; /* Large screens */
+    font-size: 1rem;
+    /* Large screens */
+  }
+
+  .menu-text {
+    font-size: 15px;
   }
 }
 
-@media (max-width: 992px) {
- 
-}
+@media (max-width: 992px) {}

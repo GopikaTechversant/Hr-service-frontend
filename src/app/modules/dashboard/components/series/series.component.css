@@ -108,7 +108,7 @@
     z-index: 1;
 }
 
-.container-requisition{
+.container-requisition {
     /* height: 340px; */
     /* min-height: 490px; */
     overflow-y: auto !important;
@@ -116,15 +116,20 @@
     width: 99%;
 }
 
-.title-requirement{
+.title-requirement {
     padding-left: 16px;
     height: 46px;
     background-color: #575F6E;
     line-height: 46px;
-   
+
 }
 
-.requirement-name{
+.requirement {
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 8px 0px #0000001A;
+}
+
+.requirement-name {
     color: white;
     font-weight: 500;
     font-size: 17px;
@@ -151,7 +156,8 @@
 
 .key-requirement {
     color: #000000;
-    width: 52%;;
+    width: 52%;
+    ;
     color: #575F6E;
 }
 
@@ -161,33 +167,31 @@
     width: 78%;
 }
 
-.info-container-requirement{
+.info-container-requirement {
     display: flex;
     flex-direction: column;
     width: 45%;
 }
 
-.container-requirement{
+.container-requirement {
     gap: 38px;
     background-color: white;
 }
 
-.info-container-requirement:first-of-type{
+.info-container-requirement:first-of-type {
     border-right: 1px dotted #ABABAB
-
 }
 
 .icon {
     margin: 5px;
-    
-  
-  }
+}
 
-  .actions{
+.actions {
     float: right;
-  }
+    gap: 10px;
+}
 
-  .main {
+.main {
     display: flex;
     flex-direction: column;
     background-color: #FFFFFF;
@@ -252,6 +256,7 @@ table {
     line-height: 18.96px;
     color: #4F4F4F;
 }
+
 /* 
 .head {
     padding: 10px;
@@ -338,11 +343,12 @@ table {
 }
 
 .box {
-   height: 29px;
+    height: 29px;
     width: 32px;
     border: none;
     background-color: white;
 }
+
 .page {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -361,7 +367,7 @@ table {
     font-weight: 500;
 }
 
-.text-wrap{
+.text-wrap {
     max-width: 150px !important;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -369,7 +375,7 @@ table {
     cursor: pointer;
 }
 
-.export-btn{
+.export-btn {
     border-radius: 3px;
     height: 34px;
     width: 81px;
@@ -416,13 +422,13 @@ input[type="text"] {
     cursor: pointer;
 }
 
-.count{
+.count {
     color: #005EC9;
     font-weight: 500;
 }
 
-.description-text{
-    border: 1px solid #E9E9E9;
+.description-text {
+    /* border: 1px solid #E9E9E9; */
     outline: none;
     background-color: #FFFFFF;
     border-radius: 3px;
@@ -432,9 +438,10 @@ input[type="text"] {
     margin-top: 9px;
     min-height: 73px;
     padding-top: 8px;
+    box-shadow: 0px 4px 8px 0px #0000001A;
 }
 
-.jd-title{
+.jd-title {
     color: #4F4F4F;
     font-weight: 500;
 }

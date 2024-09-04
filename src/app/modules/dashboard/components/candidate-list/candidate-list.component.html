@@ -42,6 +42,9 @@
                 <td class="text-start" title="Requirement">Requirement</td>
                 <td class="text-center" class="actions" title="Actions">Actions</td>
             </tr>
+            <div *ngIf="loader && !initialLoader" class="loader-parent">
+                <img src="assets/gif/loader.gif">
+            </div>
             <ng-container *ngIf="candidateList?.length > 0">
                 <tr class="c-pointer details-table" *ngFor="let item of candidateList"
                     (dblclick)="selectCandidate(item?.candidateId)">

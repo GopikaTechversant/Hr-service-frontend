@@ -172,8 +172,8 @@ tr:hover {
 }
 
 .loader-parent {
-    position: absolute;
-    left: 40%;
+    /* position: absolute; */
+    padding-left: 245%;
     z-index: 9;
     top: 50%;
 }
