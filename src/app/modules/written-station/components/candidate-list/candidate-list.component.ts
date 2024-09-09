@@ -42,6 +42,7 @@ export class CandidateListComponent implements OnInit {
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 150 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   candidateIds: any;
+  modalClose: boolean = false;
 
   constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog, private datePipe: DatePipe,
     private router: Router, private toastr: ToastrService, private exportService: ExportService) { }
@@ -72,11 +73,9 @@ export class CandidateListComponent implements OnInit {
     this.candidateList = [];
     this.limit = 12;
     this.currentPage = 1
-    this.fetchList();
-    this.fetchRequirements();
-    this.fetchStatus();
+
   }
- 
+
   fetchRequirements(): void {
     this.apiService.get(`/service-request/list`).subscribe((res: any) => {
       if (res?.data) {
@@ -221,6 +220,7 @@ export class CandidateListComponent implements OnInit {
   }
 
   onSwitchStation(candidate: any): void {
+    this.modalClose = false;
     if (candidate?.serviceStatus === 'pending' && candidate?.progressStatus === '0') {
       const userId = localStorage.getItem('userId');
       const dialogRef = this.dialog.open(StationSwitchComponent, {
@@ -234,17 +234,18 @@ export class CandidateListComponent implements OnInit {
         },
       })
       dialogRef.afterClosed().subscribe(() => {
-        this.fetchList();
+        this.modalClose = true;
       });
     } else {
       const dialogRef = this.dialog.open(WarningBoxComponent, {})
       dialogRef.afterClosed().subscribe(() => {
-        this.fetchList();
+        this.modalClose = true;
       });
     }
   }
 
   fetchDetails(details: { id: any, status: any }): void {
+    this.modalClose = false;
     const id = details.id;
     const status = details.status;
     this.apiService.get(`/written-station/progressDetail?serviceId=${id}`).subscribe((data: any) => {
@@ -257,7 +258,7 @@ export class CandidateListComponent implements OnInit {
       data: { candidateDetails: item, offerStatus: status },
     })
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-      this.fetchList();
+      this.modalClose = true;
     })
   }
 
@@ -283,6 +284,6 @@ export class CandidateListComponent implements OnInit {
     this.fetchList();
   }
 
- 
+
 }
 

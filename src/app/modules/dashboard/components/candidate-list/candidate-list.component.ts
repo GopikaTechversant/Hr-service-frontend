@@ -14,7 +14,7 @@ import { ExportService } from 'src/app/services/export.service';
 })
 export class CandidateListComponent {
   @Input() positionId: any
-  pageSize = 11;
+  pageSize = 12;
   pageIndex = 1;
   showFirstLastButtons = true;
   candidateList: any;
@@ -178,14 +178,14 @@ export class CandidateListComponent {
   searchCandidate(search: string): void {
     this.searchKeyword = search;
     this.currentPage = 1;
-    this.pageSize = 11;
+    this.pageSize = 12;
     this.fetchCandidates();
   }
 
   clearFilter(): void {
     this.searchKeyword = '';
     this.currentPage = 1;
-    this.pageSize = 11;
+    this.pageSize = 12;
     this.fetchCandidates();
   }
 
@@ -209,7 +209,7 @@ export class CandidateListComponent {
       this.apiService.post(`/candidate/remove-candidate`, { candidateId: this.deleteCandidateId }).subscribe({
         next: (res: any) => {
           this.currentPage = 1;
-          this.pageSize = 11;
+          this.pageSize = 12;
           this.fetchCandidates();
         },
         error: (error) => {
@@ -227,14 +227,14 @@ export class CandidateListComponent {
     })
     dialogRef.componentInstance.onEditSuccess.subscribe(() => {
       this.currentPage = 1;
-      this.pageSize = 11;
+      this.pageSize = 12;
       this.fetchCandidates();
     })
   }
 
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);
-    this.pageSize = 11;
+    this.pageSize = 12;
     this.fetchCandidates();
   }
 
@@ -247,7 +247,7 @@ export class CandidateListComponent {
       });
       dialogRef.afterClosed().subscribe((confirmed: boolean) => {
         this.currentPage = 1;
-        this.pageSize = 11;
+        this.pageSize = 12;
         this.fetchCandidates();
       })
     } else this.toastr.warning('You have not selected candidates to assign');

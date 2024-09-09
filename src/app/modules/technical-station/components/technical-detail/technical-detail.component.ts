@@ -12,50 +12,34 @@ import { StationCandidateDetailComponent } from 'src/app/components/station-cand
 @Component({
   selector: 'app-technical-detail',
   templateUrl: './technical-detail.component.html',
-  styleUrls: ['./technical-detail.component.css'],
-  host: {
-    '(document:click)': 'onBodyClick($event)'
-  }
+  styleUrls: ['./technical-detail.component.css']
 })
 export class TechnicalDetailComponent implements OnInit {
   candidateList: any = [];
   loader: boolean = false;
-  selectedItem: any;
   stationId: any;
-  filterStatus: boolean = false;
   selectStatus: boolean = false;
   limit: number = 12;
   status: any;
   filteredStatus: any = '';
-  candidateStatus: string = 'Choose Candidate Status';
   currentPage: number = 1;
   totalCount: any;
   lastPage: any;
   searchKeyword: string = '';
   requestList: any;
-  requestList_open: any;
   displayPosition: string = '';
   positionId: any;
   stationsList: any;
-  switchStations: Boolean = false;
   initialLoader: boolean = false;
   experience: string = '';
-  today: Date = new Date();
   isExport: boolean = false;
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 150 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   candidateIds: any;
+  modalClose : boolean = false;
 
   constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog, private datePipe: DatePipe,
-    private router: Router, private toastr: ToastrService, private exportService: ExportService) { }
-
-  onBodyClick(event: MouseEvent): void {
-    const target = event.target as HTMLElement;
-    if (!target.closest('.no-close')) {
-      this.filterStatus = false;
-      this.requestList_open = false;
-    }
-  }
+    private toastr: ToastrService, private exportService: ExportService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -77,7 +61,7 @@ export class TechnicalDetailComponent implements OnInit {
       this.candidateList = [];
       this.limit = 12;
       this.currentPage = 1
-      this.fetchList();
+      // this.fetchList();
     }); this.fetchRequirements();
     this.fetchStatus();
   }
@@ -229,6 +213,7 @@ export class TechnicalDetailComponent implements OnInit {
   }
 
   onSwitchStation(candidate: any): void {
+    this.modalClose = false;
     if (candidate?.serviceStatus !== 'done' && ((this.stationId === '3' && candidate?.currentStation === 'Technical 1') || (this.stationId === '4' && candidate?.currentStation === 'Technical 2'))) {
       const userId = localStorage.getItem('userId');
       const dialogRef = this.dialog.open(StationSwitchComponent, {
@@ -242,12 +227,13 @@ export class TechnicalDetailComponent implements OnInit {
         },
       })
       dialogRef.afterClosed().subscribe(() => {
-        this.fetchList();
+        this.modalClose = true;
       });
     } else {
       const dialogRef = this.dialog.open(WarningBoxComponent, {})
       dialogRef.afterClosed().subscribe(() => {
-        this.fetchList();
+        this.modalClose = true;
+        console.log(this.modalClose); 
       });
     }
   }
@@ -256,23 +242,24 @@ export class TechnicalDetailComponent implements OnInit {
     const id = details.id;
     const status = details.status;
 
-      if (this.stationId === '3') {
-        this.apiService.get(`/technical-station/progressDetail?serviceId=${id}`).subscribe((data: any) => {
-          if (data?.candidates) this.viewCandidateDetail(data?.candidates, status);
-        });
-      } else if (this.stationId === '4') {
-        this.apiService.get(`/technical-station-two/progressDetail?serviceId=${id}`).subscribe((data: any) => {
-          if (data?.candidates) this.viewCandidateDetail(data?.candidates, status);
-        });
-      }
+    if (this.stationId === '3') {
+      this.apiService.get(`/technical-station/progressDetail?serviceId=${id}`).subscribe((data: any) => {
+        if (data?.candidates) this.viewCandidateDetail(data?.candidates, status);
+      });
+    } else if (this.stationId === '4') {
+      this.apiService.get(`/technical-station-two/progressDetail?serviceId=${id}`).subscribe((data: any) => {
+        if (data?.candidates) this.viewCandidateDetail(data?.candidates, status);
+      });
+    }
   }
 
-  viewCandidateDetail(item: any, status: any): void {    
+  viewCandidateDetail(item: any, status: any): void {
+    this.modalClose = false;
     const dialogRef = this.dialog.open(StationCandidateDetailComponent, {
       data: { candidateDetails: item, offerStatus: status },
     })
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-      this.fetchList();
+      this.modalClose = true;
     })
   }
 
@@ -293,8 +280,5 @@ export class TechnicalDetailComponent implements OnInit {
     this.fetchList();
   }
 
-  onPageChange(pageNumber: number): void {
-    this.currentPage = Math.max(1, pageNumber);
-    this.fetchList();
-  }
+
 }
