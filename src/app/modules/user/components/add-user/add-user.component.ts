@@ -35,7 +35,9 @@ export class AddUserComponent implements OnInit {
       this.idListOpen = false;
     }
   }
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.fetchStations();
+  }
 
   fetchStations(): void {
     this.apiService.get(`/user/stations`).subscribe((res: any) => {

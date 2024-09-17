@@ -1,7 +1,15 @@
-<div class="main p-l-20">
-    <div class="heading">
+<div class="modal-header heading p-t-10 w-100 d-flex j-space" style="position: sticky; top: 0; z-index: 2;">
+    <div *ngIf="loader" class="loader-parent">
+        <img src="assets/gif/loader.gif">
+    </div>
+    <div class="padding-10">
         <span>Interview Details</span>
     </div>
+    <div class="modal-close margin-10 d-flex">   
+        <img src="assets/images/techversant/clear-filter.svg" class="c-pointer p-r-5"  (click)="closeDialog()"alt="" width="35">
+    </div>
+</div>
+<div class="modal-content p-l-20 p-t-10">
     <div *ngIf="loader" class="loader-parent">
         <img src="assets/gif/loader.gif">
     </div>
@@ -35,18 +43,7 @@
                 </div>
             </div>
         </div>
-        <div class="child d-flex m-b-10">
-            <span class="label m-b-8">Relevant Experience</span>
-            <div class="input-box">
-                <span>{{candidateRevlentExperience || ''}}</span>
-            </div>
-        </div>
-        <div class="child d-flex m-b-10">
-            <span class="label m-b-8">Total Experience</span>
-            <div class="input-box">
-                <span>{{candidateTotalExperience || ''}}</span>
-            </div>
-        </div>
+      
         <!-- <div class="child d-flex m-b-10" #recruiterNameDiv>
             <span class="label m-b-8">Recruiter Name</span>
             <div class="input-box c-pointer p-relative no-close" (click)="showRecruiters = !showRecruiters">
@@ -61,7 +58,20 @@
             </div>
         </div> -->
     </div>
-
+    <div class="d-flex j-space parent">
+        <div class="child d-flex m-b-10">
+            <span class="label m-b-8">Relevant Experience</span>
+            <div class="input-box">
+                <span>{{candidateRevlentExperience || ''}}</span>
+            </div>
+        </div>
+        <div class="child d-flex m-b-10">
+            <span class="label m-b-8">Total Experience</span>
+            <div class="input-box">
+                <span>{{candidateTotalExperience || ''}}</span>
+            </div>
+        </div>
+</div>
     <div class="d-flex j-space parent">
         <div class="child d-flex m-b-10">
             <span class="label m-b-8 ">Notice Period</span>
@@ -80,6 +90,10 @@
                 </div>
             </div>
         </div>
+
+
+    </div>
+    <div class="d-flex j-space parent">
         <div class="child d-flex m-b-10">
             <span class="label m-b-8">Current Company</span>
             <input type="text" class="input-box" [value]="currentCompany.trim() !== '' ? currentCompany : ''">
@@ -97,10 +111,6 @@
                 </div>
             </div>
         </div>
-
-    </div>
-    <div class="d-flex j-space parent">
-        
     </div>
 </div>
 <div>

@@ -100,8 +100,8 @@
     font-size: 15px;
     margin-left: 0px;
     width: 95%;
-    padding-left: 10px;
-    padding-top: 10px;
+    /* padding-left: 10px; */
+    /* padding-top: 10px; */
     position: absolute;
     z-index: 1;
     margin-top: 35px;

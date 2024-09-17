@@ -55,7 +55,7 @@
                         <input type="text" class="input-role" formControlName="userWorkStation">
                     </div> -->
                 <div class="no-close col-md-3 s-list d-flex input j-space m-text "
-                    (click)="idListOpen = !idListOpen;fetchStations();">
+                    (click)="idListOpen = !idListOpen">
                     <div *ngIf="!selectedStation"
                         class="s-list m-r-10 m-text align-center m-b-2 f-w-400 c-pointer h-min sub flex-1">
                         Select Station
@@ -64,10 +64,11 @@
                     <div class=" s-list c-pointer align-center m-b-2 flex-1 d-flex j-end sub"><i
                             class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
                     </div>
-                    <div class=" m-b-2 drop-list no-close" *ngIf="idListOpen">
+                    <div class="drop-list no-close" *ngIf="idListOpen">
                         <div (click)="selectStation(station.stationId,station.stationName)"
-                            *ngFor="let station of stationList" class=" p-t-5 p-b-5 p-l-8 c-pointer">
-                            {{station.stationName}}</div>
+                            *ngFor="let station of stationList" class=" p-t-5 p-b-5 p-l-10 c-pointer">
+                           <span> {{station?.stationName}}</span>
+                        </div>
                     </div>
                 </div>
             </div>

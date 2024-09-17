@@ -26,28 +26,28 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
       userName: [null, [Validators.required]],
       userPassword: [null, [Validators.required]],
-      rememberMe: [false]
+      // rememberMe: [false]
     });
   }
 
   ngOnInit(): void {
-    this.checkRememberMe();
+    // this.checkRememberMe();
     this.env_url = window.location.origin;
     // this.initializeGoogleSignIn();
   }
 
-  checkRememberMe() {
-    const remembered = JSON.parse(localStorage.getItem('rememberMe') || 'false');
-    if (remembered) {
-      const userName = localStorage.getItem('userName');
-      const userPassword = localStorage.getItem('userPassword');
-      this.loginForm.patchValue({
-        userName: userName,
-        userPassword: userPassword,
-        // rememberMe: true
-      });
-    }
-  }
+  // checkRememberMe() {
+  //   const remembered = JSON.parse(localStorage.getItem('rememberMe') || 'false');
+  //   if (remembered) {
+  //     const userName = localStorage.getItem('userName');
+  //     const userPassword = localStorage.getItem('userPassword');
+  //     this.loginForm.patchValue({
+  //       userName: userName,
+  //       userPassword: userPassword,
+  //       // rememberMe: true
+  //     });
+  //   }
+  // }
 
   get userName() {
     return this.loginForm.get("userName");

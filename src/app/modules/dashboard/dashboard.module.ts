@@ -32,6 +32,7 @@ import { SharedModule } from '../shared/shared.module';
 import { AssignRequirementComponent } from './components/assign-requirement/assign-requirement.component';
 import { CandidateScheduleComponent } from './components/candidate-schedule/candidate-schedule.component';
 import { RequirementStackChartComponent } from './components/requirement-stack-chart/requirement-stack-chart.component';
+import { InterviewListComponent } from './components/interview-list/interview-list.component';
 
 const routes: Routes = [
   {
@@ -41,7 +42,8 @@ const routes: Routes = [
       { path: 'service-requirement', component: ServiceRequestComponent },
       { path: 'candidate-list', component: RequirementCandidateListComponent },
       { path: 'add-candidate', component: AddCandidateModalComponent },
-      { path: 'interview-details', component: InterviewDetailsComponent },
+      // { path: 'interview-details', component: InterviewDetailsComponent },
+      { path: 'interview-details', component: InterviewListComponent },
       { path: 'requirement-candidate-list', component: RequirementCandidateListComponent },
       { path: 'report-details', component: ReportDetailsComponent },
       { path: 'candidate-details/:id', component: CandidateDetailsComponent },
@@ -78,7 +80,8 @@ const routes: Routes = [
     InterviewDetailsComponent,
     AssignRequirementComponent,
     CandidateScheduleComponent,
-    RequirementStackChartComponent
+    RequirementStackChartComponent,
+    InterviewListComponent
   ],
   imports: [
     CommonModule,

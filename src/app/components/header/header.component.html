@@ -11,11 +11,9 @@
           <span></span>
           <span></span>
           <span></span>
-      </div>
-      
+        </div>
         <!-- <img src="/assets/images/techversant/toggle.svg" alt="Toggle Sidebar" class="c-pointer" style="width: 25px; height: auto;"> -->
       </div>
-      
       <div class="search-container p-relative ms-3">
         <div class="search-div d-flex align-items-center">
           <input type="text" class="input" placeholder="Search Candidate Detail"
@@ -62,8 +60,7 @@
         </span>
       </div>
       <div class="user-profile c-pointer position-relative" (click)="dropDown = !dropDown">
-        <span class="fw-bold user-name text-white"> {{ currentRole?.charAt(0) ? (currentRole?.charAt(0) |
-          uppercase): '' }}</span>
+        <span class="fw-bold user-name text-white"> {{ currentUser?.charAt(0) ? (currentUser?.charAt(0) | uppercase): '' }}</span>
         <div *ngIf="dropDown" class="drop-down d-flex position-absolute">
           <div class="profile-drop" *ngFor="let station of profileDropDown">
             <div class="c-pointer p-2 ps-3" (click)="navigate(station)">{{station?.stationName}}</div>

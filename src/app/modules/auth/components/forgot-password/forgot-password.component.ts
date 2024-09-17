@@ -17,6 +17,7 @@ export class ForgotPasswordComponent implements OnInit {
   toggleSpinner: boolean = false;
   hidePassword: any;
   hideConfirmPassword: any;
+  env_url: any;
 
   constructor(
     private tostr: ToastrServices,
@@ -37,6 +38,8 @@ export class ForgotPasswordComponent implements OnInit {
     this.passwordForm.get('otp')?.disable();
     this.passwordForm.get('userPassword')?.disable();
     this.passwordForm.get('confirmpassword')?.disable();
+    this.env_url = window.location.origin;
+
   }
   submiClick(type: any): void {
     if (type === 'Send OTP') this.sendOtp();

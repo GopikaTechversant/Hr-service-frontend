@@ -1,9 +1,10 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environments';
 import { ToastrServices } from 'src/app/services/toastr.service';
 import { DatePipe } from '@angular/common';
 import { ApiService } from 'src/app/services/api.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-interview-details',
   templateUrl: './interview-details.component.html',
@@ -71,7 +72,32 @@ export class InterviewDetailsComponent implements OnInit {
   locationName: string = '';
   locationList: any;
   showJobLocation: boolean = false;
-  constructor(private datePipe: DatePipe, private http: HttpClient, private tostr: ToastrServices, private apiService: ApiService) { }
+  constructor(private datePipe: DatePipe, private tostr: ToastrServices, private apiService: ApiService,public dialogRef: MatDialogRef<InterviewDetailsComponent>, @Inject(MAT_DIALOG_DATA)
+  public data: any,
+   ) {
+    if (data) this.data = data
+    this.dialogRef.updateSize('60vw', '90vh');
+    console.log(data);
+    
+    this.candidate = data?.candidate;
+    console.log(this.candidate);
+    
+    this.positionName = this.candidate['reqServiceRequest.requestName'] ?? '';
+    this.positionId = this.candidate?.candidatesAddingAgainst ?? '';
+    this.scheduleStatus = true;
+    this.serviceId = '';
+    this.candidateId = this.candidate?.candidateId ?? '';
+    this.currentCompany = this.candidate?.candidatePreviousOrg ?? '';
+    this.candidateRevlentExperience = this.candidate?.candidateRevlentExperience ?? '';
+    this.candidateTotalExperience = this.candidate?.candidateTotalExperience ?? '';
+    this.candidateName = (this.candidate?.candidateFirstName ?? '') + ' ' + (this.candidate?.candidateLastName ?? '' );
+    this.fetchUsers();
+    // this.fetchCandidates();
+    this.fetchWorkMode();
+    this.fetchMode();
+    this.fetchLocation();
+    this.showMail('screening');
+  }
 
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
@@ -120,6 +146,10 @@ export class InterviewDetailsComponent implements OnInit {
         this.tostr.error("Error fetching position.");
       }
     });
+  }
+
+  closeDialog(): void {
+    this.dialogRef.close();
   }
 
   fetchUsers(): void {
@@ -348,6 +378,8 @@ export class InterviewDetailsComponent implements OnInit {
       if (!this.selectedModeName) this.tostr.warning('Please Select Work Mode');
 
     }
+    this.closeDialog();
+
   }
 
   selectLocation(name: any): void {
@@ -392,6 +424,7 @@ export class InterviewDetailsComponent implements OnInit {
 
   cancelClick(): void {
     this.resetFormAndState('');
+    this.closeDialog();
   }
 
 }

@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FeedbackComponent } from 'src/app/components/feedback/feedback.component';
 import { ApiService } from 'src/app/services/api.service';
+import { InterviewDetailsComponent } from '../interview-details/interview-details.component';
 
 @Component({
   selector: 'app-candidate-schedule',
@@ -101,12 +102,22 @@ export class CandidateScheduleComponent implements OnInit {
 
   onStatusChange(event: any, candidate: any): void {
     const selectedStatus = event?.target?.value;
+    const userId = localStorage.getItem('userId');
     if (selectedStatus === 'reject') this.onCandidateSelectionChange(candidate);
     if (selectedStatus === 'select') {
-      this.router.navigate(['dashboard/interview-details'], {
-        state: { candidate }
+      const dialogRef = this.dialog.open(InterviewDetailsComponent, {
+        data: { candidate },
+        width: '600px',
+        height: '280px'
+      })
+      dialogRef.afterClosed().subscribe(() => {
+        this.fetchcandidates();
       });
     }
+      // this.router.navigate(['dashboard/interview-details'], {
+      //   state: { candidate }
+      // });
+    // }
   }
 
   onCandidateSelectionChange(candidate: any): void {
