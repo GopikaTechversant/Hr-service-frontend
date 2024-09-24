@@ -24,6 +24,7 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
   seriesUrl: any;
   homePages: any;
   writtenCandidateList: any;
+  userType: any;
 
   constructor(private router: Router, private route: ActivatedRoute) { }
 
@@ -32,15 +33,16 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => this.updateUrls());
     this.updateUrls();
+    this.userType = localStorage.getItem('userType');    
   }
 
-  get currentUrl(): string {    
+  get currentUrl(): string {
     return this.router.url;
   }
 
   updateUrls(): void {
     let homeUrl = this.currentUrl.split('/')[1];
-    let stationId =  this.currentUrl.split('/')[2];
+    let stationId = this.currentUrl.split('/')[2];
     const snapshot = this.route.snapshot;
     this.id = snapshot.firstChild?.params['id'] || null;
     this.requestId = snapshot.queryParams['requestId'] || null;
@@ -49,20 +51,20 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
     this.seriesUrl = `/dashboard/series?requestId=${this.requestId}`;
     const requisitionDetailUrl = `/dashboard/requisition-detail/${this.id}`;
     this.candidateScheduleUrl = `/dashboard/candidate-schedule?requestId=${this.requestId}`;
-    this.writtenCandidateList =`/written/candidates?requestId=${this.requestId}`
-     
+    this.writtenCandidateList = `/written/candidates?requestId=${this.requestId}`
+
     if (this.currentUrl.includes(candidateDetailsUrl)) {
       this.dynamicMenuItems.push({ path: candidateDetailsUrl, label: 'Candidate Detail', icon: 'fa fa-user-circle' });
     }
-  
+
     if (this.currentUrl.includes(this.seriesUrl)) {
       this.dynamicMenuItems.push({ path: this.seriesUrl, label: 'Requisition Detail', icon: 'fa fa-table' });
     }
-  
+
     if (this.currentUrl.includes(requisitionDetailUrl)) {
       this.dynamicMenuItems.push({ path: requisitionDetailUrl, label: 'Requisition Detail', icon: 'fa fa-table' });
     }
-  
+
     if (this.currentUrl.includes(this.candidateScheduleUrl)) {
       this.dynamicMenuItems.push({ path: this.candidateScheduleUrl, label: 'Candidate Lists', icon: 'fa fa-list-ol' });
     }
@@ -71,14 +73,13 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
       this.dynamicMenuItems.push({ path: this.writtenCandidateList, label: 'Candidate List Written', icon: 'fa fa-list-ol' });
     }
 
-    if(homeUrl === 'dashboard' && this.currentUrl.includes(this.candidateScheduleUrl)){
+    if (homeUrl === 'dashboard' && this.currentUrl.includes(this.candidateScheduleUrl)) {
       this.dynamicMenuItems.push({ path: this.seriesUrl, label: 'Requisition Detail', icon: 'fa fa-table' });
     }
 
     if (homeUrl === 'user') {
-      this.dynamicMenuItems.push({ path: '/user/addUser', label: 'Add User', icon: 'fa fa-user-plus' });
+      if (this.userType === 'admin') this.dynamicMenuItems.push({ path: '/user/addUser', label: 'Add User', icon: 'fa fa-user-plus' });
       this.dynamicMenuItems.push({ path: '/user/reset', label: 'Reset Password', icon: 'fa fa-key' });
-
     }
 
     if (homeUrl === 'hr') {
@@ -94,7 +95,7 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
       if (homeUrl === 'user') this.dynamicMenuItems.push({ path: '/user', label: 'User List', icon: 'fa fa-tasks' });
     }
   }
-  
+
   ngOnDestroy(): void {
     if (this.routerEventsSubscription) {
       this.routerEventsSubscription.unsubscribe();
@@ -102,14 +103,14 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
   }
 
   navigate(path: string): void {
-    if(path === this.seriesUrl || path === this.candidateScheduleUrl || path === this.writtenCandidateList){
+    if (path === this.seriesUrl || path === this.candidateScheduleUrl || path === this.writtenCandidateList) {
       const requestId = path.split('requestId=')[1]
       const queryParams = requestId ? { requestId: requestId } : {};
       if (queryParams) this.router.navigate([path.split('requestId=')[0].split('?')[0]], { queryParams: queryParams });
     }
-    else this.router.navigate([path]); 
+    else this.router.navigate([path]);
   }
-  
+
   isActive(route: string): boolean {
     this.homePages = this.router.url.startsWith(route)
     return this.router.url === route;

@@ -11,7 +11,7 @@
                     <td class="text-start">Email</td>
                     <td class="text-start">Role</td>
                     <td class="text-start">Status</td>
-                    <td class="text-center">Actions</td>
+                    <td class="text-center" *ngIf="userType === 'admin'">Actions</td>
                 </tr>
                 <div *ngIf="loader && !initialLoader" class="loader-parent">
                     <img src="assets/gif/loader.gif">
@@ -25,7 +25,7 @@
                             <td class="text-start">{{user.userEmail}}</td>
                             <td class="text-start">{{user.userRole}}</td>
                             <td class="text-start">{{user.userStatus}}</td>
-                            <td class="text-center">
+                            <td class="text-center" *ngIf="userType === 'admin'">
                                 <div class="d-flex j-center">
                                     <img src="assets/images/candidate-detail/edit.svg" class="icon" alt="" (click)="update(user.userId)">
                                     <img src="assets/images/candidate-detail/delete.svg" class="icon" alt="" (click)="delete(user.userId)">

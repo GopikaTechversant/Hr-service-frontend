@@ -101,7 +101,7 @@ export class MailTemplateComponent implements OnInit {
   }
 
   fetchPanel(): void {
-    this.apiService.get(`/user/lists?userRole=2`).subscribe((res: any) => {
+    this.apiService.get(`/user/lists?userRole=3`).subscribe((res: any) => {
       if (res?.users) this.panel_list = res?.users;
     })
   }

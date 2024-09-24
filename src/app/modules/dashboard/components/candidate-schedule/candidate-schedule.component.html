@@ -41,7 +41,7 @@
                         </td>
                         <td class="text-start" [title]="item?.candidateEmail">{{item?.candidateEmail}}</td>
                         <td class="text-end" [title]="item?.candidateRevlentExperience">{{item?.candidateRevlentExperience }}</td>
-                        <td class="text-end" [title]="item?.candidateTotalExperience">{{item?.candidateTotalExperience }}</td>
+                        <td class="text-end" [title]="item?.candidateTotalExperience">{{item?.candidateTotalExperience ? item?.candidateTotalExperience : '0' }}</td>
                         <td class="text-start" [title]="item?.candidateEducation">{{item?.candidateEducation}}</td>
                         <td class="">
                             <span *ngIf="item?.serviceStatus && item?.serviceStatus !== 'pending'"

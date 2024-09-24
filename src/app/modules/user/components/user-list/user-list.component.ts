@@ -24,6 +24,7 @@ export class UserListComponent implements OnInit {
   totalCount: any;
   limit = 9;
   initialLoader : boolean = false;
+  userType: any;
   // headers = new HttpHeaders({
   //   'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
   // });
@@ -33,6 +34,7 @@ export class UserListComponent implements OnInit {
 
   ngOnInit(): void {
     this.initialLoader = true;
+    this.userType = localStorage.getItem('userType');    
     this.fetchUserList();
   }
 
@@ -78,7 +80,7 @@ export class UserListComponent implements OnInit {
       height: '250px'
     })
     dialogRef.componentInstance.onDeleteSuccess.subscribe(() => {
-      this.http.post(`${environment.api_url}/user/delete`, { userId: this.candidateId }).subscribe((res: any) => {
+      this.apiService.post(`/user/delete`, { userId: this.candidateId }).subscribe((res: any) => {
         this.fetchUserList();
       })
     })

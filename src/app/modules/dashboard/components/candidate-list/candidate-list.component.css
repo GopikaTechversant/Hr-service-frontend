@@ -174,11 +174,12 @@ input[type="text"] {
 }
 
 .box {
-   height: 29px;
+    height: 29px;
     width: 32px;
     border: none;
     background-color: white;
 }
+
 .box :hover {
     background: #F0F7FF;
 }

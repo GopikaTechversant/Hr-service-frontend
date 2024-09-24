@@ -77,11 +77,7 @@ export class InterviewDetailsComponent implements OnInit {
    ) {
     if (data) this.data = data
     this.dialogRef.updateSize('60vw', '90vh');
-    console.log(data);
-    
-    this.candidate = data?.candidate;
-    console.log(this.candidate);
-    
+    this.candidate = data?.candidate;    
     this.positionName = this.candidate['reqServiceRequest.requestName'] ?? '';
     this.positionId = this.candidate?.candidatesAddingAgainst ?? '';
     this.scheduleStatus = true;

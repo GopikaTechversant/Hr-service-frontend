@@ -15,8 +15,8 @@ export class ForgotPasswordComponent implements OnInit {
   otpSent: boolean = false;
   hide: boolean = true;
   toggleSpinner: boolean = false;
-  hidePassword: any;
-  hideConfirmPassword: any;
+  hidePassword: Boolean = false;
+  hideConfirmPassword: Boolean = false;
   env_url: any;
 
   constructor(

@@ -233,7 +233,6 @@ export class TechnicalDetailComponent implements OnInit {
       const dialogRef = this.dialog.open(WarningBoxComponent, {})
       dialogRef.afterClosed().subscribe(() => {
         this.modalClose = true;
-        console.log(this.modalClose); 
       });
     }
   }

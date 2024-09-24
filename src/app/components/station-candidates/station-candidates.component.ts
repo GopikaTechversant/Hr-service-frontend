@@ -91,15 +91,8 @@ export class StationCandidatesComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes, this.modalClose);
     if(this.modalClose) this.fetchList();
-    
     if (changes['modalClose'] && !changes['modalClose'].isFirstChange()) this.fetchList();
-    // else if ((changes['lastPage'] && !changes['lastPage'].isFirstChange()) ||
-    //   (changes['candidateList'].currentValue.length > 0 && !changes['candidateList'].isFirstChange())) {
-    //   this.loader = false;
-    //   this.initialLoader = false;
-    // }
   }
 
   fetchList(): void {
@@ -225,7 +218,6 @@ export class StationCandidatesComponent implements OnInit {
 
   selectPosition(name: string, id: string): void {
     this.displayPosition = name;
-    console.log(this.displayPosition);
     this.requestList_open = false;
     this.positionId = id;
     sessionStorage.setItem(`requirement_${this.stationId}`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));

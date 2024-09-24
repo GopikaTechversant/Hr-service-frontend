@@ -103,7 +103,6 @@ export class CandidateDetailsComponent implements OnInit {
           this.initialLoader = false;
           this.loader = false;
           this.CandidateHistory = res?.history;
-          // if(this.CandidateHistory) console.log("this.CandidateHistory",this.CandidateHistory)
         }
       },
       error: (err) => {

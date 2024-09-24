@@ -69,11 +69,11 @@ export class CandidateListComponent {
         const idsParams = this.candidateIds.map((id: string) => `ids=${id}`).join('&');
         params += `&${idsParams}`;
       }
-      const exportUrl = `${url}?${params}`;      
+      const exportUrl = `${url}?${params}`;
       // console.log(exportUrl);
       this.apiService.getTemplate(exportUrl).subscribe(
-        (data: Blob) => {          
-          if (data.type === 'application/json') {            
+        (data: Blob) => {
+          if (data.type === 'application/json') {
             const reader = new FileReader();
             reader.onload = (event) => {
               const text = event.target?.result as string;
@@ -85,14 +85,14 @@ export class CandidateListComponent {
             reader.readAsText(data);
           } else {
             this.downloadBlob(data, 'candidate_list.xlsx');
-            this.loader= false;
+            this.loader = false;
           }
         },
         (error: any) => {
           this.loader = false;
           this.initialLoader = false;
         }
-      ); 
+      );
       this.report = false;
       if (this.report === false) this.fetchCandidates();
       return;
