@@ -14,6 +14,7 @@ import { ToastrServices } from 'src/app/services/toastr.service';
 export class AddUserComponent implements OnInit {
 
   hide: boolean = true;
+  hide2 :boolean = true;
   displayDate: any;
   passwordsMatch: boolean = true;
   stationList: any[] = [];

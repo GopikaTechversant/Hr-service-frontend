@@ -29,11 +29,14 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.userType = localStorage.getItem('userType');  
+    console.log("userType", this.userType);
     this.routerEventsSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => this.updateUrls());
     this.updateUrls();
-    this.userType = localStorage.getItem('userType');    
+    
+      
   }
 
   get currentUrl(): string {
@@ -78,6 +81,8 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
     }
 
     if (homeUrl === 'user') {
+      console.log(this.userType === 'admin' , "this.userType === 'admin'",this.userType);
+      
       if (this.userType === 'admin') this.dynamicMenuItems.push({ path: '/user/addUser', label: 'Add User', icon: 'fa fa-user-plus' });
       this.dynamicMenuItems.push({ path: '/user/reset', label: 'Reset Password', icon: 'fa fa-key' });
     }

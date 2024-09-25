@@ -33,8 +33,8 @@ export class UserListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initialLoader = true;
     this.userType = localStorage.getItem('userType');    
+    this.initialLoader = true;
     this.fetchUserList();
   }
 

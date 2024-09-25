@@ -90,11 +90,11 @@
                 <span class="sub-head">Confirm Password</span>
                 <div class="p-relative">
                     <!-- <input type="password" class="input" autocomplete="new-password" formControlName="confirmPassword"> -->
-                    <input [type]="hide ? 'password' : 'text'" class="input" placeholder="Password"
+                    <input [type]="hide2 ? 'password' : 'text'" class="input" placeholder="Password"
                         autocomplete="new-password" id="conformPassword">
-                    <span class="eyeIcon c-black p-absolute" mat-icon-button matSuffix (click)="hide = !hide"
-                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                        <mat-icon class="m-icon">{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+                    <span class="eyeIcon c-black p-absolute" mat-icon-button matSuffix (click)="hide2 = !hide2"
+                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide2">
+                        <mat-icon class="m-icon">{{ hide2 ? "visibility_off" : "visibility" }}</mat-icon>
                     </span>
                 </div>
                 <div *ngIf="!passwordsMatch" class="mismatch-error m-t-4">Password not matching</div>

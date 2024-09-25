@@ -131,7 +131,7 @@
                     </div>
                     <div class="drop-list no-close" *ngIf="idListOpen && (selectedStations?.length < 5)">
                         <div (click)="selectStation(station?.stationId, station?.stationName)"
-                            *ngFor="let station of stationsList" class="c-pointer drop-menu 4 p-l-15 no-close">
+                            *ngFor="let station of stationsList" class="c-pointer drop-menu 4 no-close">
                             {{station?.stationName}}
                         </div>
                     </div>

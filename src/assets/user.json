@@ -1,31 +1,20 @@
-[
-    {
-        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MDI3ODY4OTEsImlhdCI6MTcwMjM1NDg5MSwic3ViIjoiYzkyZjNkODQtY2Q3OC00MmMwLWE3YmQtOTEyZDE5OGJiYjkxIiwidXNlcklkIjo0OSwicm9sZSI6ImFkbWluIiwidXNlclR5cGUiOiJBZ2VudCIsImZpcnN0TmFtZSI6IkFkbWluIiwibGFzdE5hbWUiOiJHUzEiLCJ1c2VyUm9sZXMiOlt7ImlkIjo4OCwidXNlcklkIjoiNDkiLCJyb2xlIjoiYWRtaW4iLCJzdGF0aW9uIjpudWxsLCJ1c2VyVHlwZSI6IkFnZW50IiwiY3JlYXRlZEF0IjoiMjAyMy0wNS0wNFQwNzoyMToyNC45MDVaIiwidXBkYXRlZEF0IjoiMjAyMy0wNS0wNFQwNzoyMToyNC45MDVaIn1dLCJ1c2VyTmFtZSI6IkFkbWluQEdzMSJ9.GpVPkurxTX7hwtiSzcpOXsCHUG3apnqRKd-JzTvTqLI",
-        "user": {
-            "userId": 49,
-            "userfirstName": "Admin",
-            "userlastName": "GS1",
-            "userName": "Admin@Gs1",
-            "userEmail": "admings1@gmail.com",
-            "userWorkStation": 0,
-            "userDOB":"2023-12-08T07:39:35.405Z",
-            "userType": "admin",
-            "userPassword":"123456",
-            "userRole": "ceo",
-            "userStatus": "active",
-            "createdAt": "2023-05-04T07:21:23.595Z",
-            "updatedAt": "2023-12-08T07:39:35.405Z",
-            "userRoles": [
-                {
-                    "id": 88,
-                    "userId": "49",
-                    "role": "admin",
-                    "station": null,
-                    "userType": "Agent",
-                    "createdAt": "2023-05-04T07:21:24.905Z",
-                    "updatedAt": "2023-05-04T07:21:24.905Z"
-                }
-            ]
-        }
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJGdWxsTmFtZSI6ImFkbWluIGFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AaHJzZXJ2aWNlLmNvbSIsInVzZXJET0IiOiIxOTg3LTAxLTA0VDE4OjMwOjAwLjAwMFoiLCJ1c2VyVHlwZSI6ImFkbWluIiwiaWF0IjoxNzI3MjUyMTc1fQ.ZBxdJguKl22JkJ-EaVh18JbD3oI6A2M1k5FlPtOZ9Ew",
+    "user": {
+      "userFullName": "admin admin",
+      "userId": 1,
+      "userfirstName": "admin",
+      "userlastName": "admin",
+      "userEmail": "admin@hrservice.com",
+      "userDOB": "1987-01-04T18:30:00.000Z",
+      "userPassword": "$2a$10$/3VSB./u.2DV3UBkMRbkVewiaoRWHpxl1fkUF3R01h3FEzjuGy2ci",
+      "userWorkStation": 1,
+      "userRole": "talent",
+      "userType": "admin",
+      "userOtp": null,
+      "useOtpExpire": null,
+      "userStatus": "active",
+      "createdAt": "2024-07-22T11:26:57.712Z",
+      "updatedAt": "2024-07-22T11:26:57.712Z"
     }
-]
+  }
