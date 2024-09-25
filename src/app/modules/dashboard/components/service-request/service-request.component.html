@@ -9,7 +9,7 @@
                 <div class="m-t-20 m-b-10">
                     <span class="sub-head">Job Title<span class="required">*</span></span>
                     <div>
-                        <input type="text" class="input-box" max="20" [(ngModel)]="jobTitle">
+                        <input type="text" class="input-box" max="20" [(ngModel)]="jobTitle" id="job-title">
                     </div>
                 </div>
             </div>
@@ -17,7 +17,7 @@
                 <div class="m-t-20 m-b-10">
                     <span class="sub-head">Job Code<span class="required">*</span></span>
                     <div>
-                        <input type="text" class="input-box" max="20" [(ngModel)]="jobCode">
+                        <input type="text" class="input-box" max="20" [(ngModel)]="jobCode" id="jobCode">
                     </div>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                     <span class="sub-head">Job Posting Date<span class="required">*</span></span>
                     <div class="p-relative w-100">
                         <input class="p-l-5  input-box" placeholder="DD/MM/YYYY" matInput [matDatepicker]="pickerdate"
-                            (dateChange)="dateChange($event,'postdate')" (click)="pickerdate?.open()"
+                            (dateChange)="dateChange($event,'postdate')" (click)="pickerdate?.open()" name="postDate"
                             [(ngModel)]="postDate">
                         <span> <mat-datepicker #pickerdate class=""></mat-datepicker>
                             <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
@@ -41,7 +41,7 @@
                 <div class="m-t-20 m-b-10">
                     <span class="sub-head">Job Closing Date<span class="required">*</span></span>
                     <div class="p-relative w-100">
-                        <input class="p-l-5  input-box" placeholder="MM/DD/YYYY" matInput
+                        <input class="p-l-5  input-box" placeholder="MM/DD/YYYY" matInput name="closeDate"
                             [matDatepicker]="pickerClosedate" (dateChange)="dateChange($event,'closeDate')"
                             (click)="pickerClosedate?.open()" [(ngModel)]="closeDateObj" [min]="today">
                         <span> <mat-datepicker #pickerClosedate class=""></mat-datepicker>
@@ -143,7 +143,7 @@
                 <div class="m-t-20 m-b-10">
                     <span class="sub-head">Base salary<span class="required">*</span></span>
                     <div>
-                        <input type="text" class="input-box" #baseSalaryInput
+                        <input type="text" class="input-box" #baseSalaryInput name="baseSalary"
                             (keypress)="onKeypressSalary($event, baseSalaryInput)"
                             (paste)="onPasteSalary($event, baseSalaryInput)" maxlength="10" [(ngModel)]="baseSalary">
                     </div>
@@ -153,7 +153,7 @@
                 <div class="m-t-20 m-b-10">
                     <span class="sub-head">Maximum salary<span class="required">*</span></span>
                     <div>
-                        <input type="text" class="input-box" #maxSalaryInput
+                        <input type="text" class="input-box" #maxSalaryInput name="maxSalary"
                             (keypress)="onKeypressSalary($event, maxSalaryInput)"
                             (paste)="onPasteSalary($event, maxSalaryInput)" maxlength="10" [(ngModel)]="maxSalary">
                     </div>
@@ -163,7 +163,7 @@
                 <div class="m-t-20 m-b-10">
                     <span class="sub-head">Minimum Experience<span class="required">*</span></span>
                     <div>
-                        <input type="text" class="input-box" #minExperienceInput
+                        <input type="text" class="input-box" #minExperienceInput name="minExperience"
                             (keydown)="experienceValidation($event)" [(ngModel)]="minExperience">
                     </div>
                 </div>
@@ -174,7 +174,7 @@
                 <div class="m-t-20 m-b-10">
                     <span class="sub-head">Maximum Experience<span class="required">*</span></span>
                     <div>
-                        <input type="text" class="input-box" #maxExperienceInput
+                        <input type="text" class="input-box" #maxExperienceInput name="maxExperience"
                             (keydown)="experienceValidation($event)" [(ngModel)]="experience">
                     </div>
                 </div>
@@ -202,7 +202,7 @@
                 <div class="m-t-20 m-b-10">
                     <span class="sub-head">Vacancy<span class="required">*</span></span>
                     <div>
-                        <input type="text" class="input-box" max="4" (keypress)="onKeypress($event)"
+                        <input type="text" class="input-box" max="4" (keypress)="onKeypress($event)" id="vacancy"
                             [(ngModel)]="vacancy">
                     </div>
                 </div>
@@ -213,7 +213,7 @@
             <div>
                 <span class="p-relative ">
                     <span class="d-flex input-interview-rounds-skill">
-                        <input type="text" placeholder="Search Skills" class=" skill-input"
+                        <input type="text" placeholder="Search Skills" class=" skill-input" name="skill search"
                             (input)="getSkillSuggestions($event)" id="skillSearch" [(ngModel)]="searchvalue">
                         <div class=" d-flex j-end p-t-5">
                             <span *ngIf="searchvalue.trim() !== ''" (click)="clearFilter()"

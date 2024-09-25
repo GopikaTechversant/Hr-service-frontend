@@ -20,7 +20,7 @@
                 </div>
             </div>
             <span class="input d-flex j-space">
-                <input type="text" class="p-10" placeholder="Search Requirement" [(ngModel)]="searchKeyword"
+                <input type="text" class="p-10" placeholder="Search Requirement" [(ngModel)]="searchKeyword" name="search candidate"
                     (keydown.enter)="requirementSearch(searchKeyword)">
                 <span *ngIf="searchKeyword !== ''" (click)="clearFilter('search')"
                     class="c-pointer m-l-10 p-t-5"><img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20"></span>

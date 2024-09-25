@@ -17,7 +17,7 @@
       <div class="search-container p-relative ms-3">
         <div class="search-div d-flex align-items-center">
           <input type="text" class="input" placeholder="Search Candidate Detail"
-            [(ngModel)]="searchKeyword"
+            [(ngModel)]="searchKeyword" name="search"
             (ngModelChange)="searchCandidate($event)">
             <span *ngIf="searchKeyword && searchKeyword.trim() !== ''" (click)="clearFilter()" class="c-pointer">
               <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">

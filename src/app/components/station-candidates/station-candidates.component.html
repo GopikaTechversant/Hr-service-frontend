@@ -6,7 +6,7 @@
     </div>
     <div class="d-flex j-end flex-wrap">
         <div class="search-div d-flex align-items-center m-b-10">
-            <input type="text" class="input align-items-start" placeholder="Search By Name"
+            <input type="text" class="input align-items-start" placeholder="Search By Name" name="search candidate"
             [(ngModel)]="searchKeyword"
             (ngModelChange)="onSearch($event)">
                 <span *ngIf="searchKeyword && searchKeyword.trim() !== ''" (click)="clearFilter('search')"
@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="search-div d-flex align-items-center m-b-10">
-            <input type="text" class="input" placeholder="Search By Experience" [(ngModel)]="experience"
+            <input type="text" class="input" placeholder="Search By Experience" [(ngModel)]="experience" name="search experience"
                 (ngModelChange)="searchByExperience(experience)" (keydown)="experienceValidation($event)">
                 <span *ngIf="experience && experience.trim() !== ''" (click)="clearFilter('experience')"
                 class="c-pointer"><img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20"></span>

@@ -5,14 +5,14 @@
         </div>
         <div class="d-flex j-space m-t-7">
             <span class="input">
-                <input type="text" class="" placeholder="Search Candidates" [(ngModel)]="searchKeyword"
+                <input type="text" class="" placeholder="Search Candidates" [(ngModel)]="searchKeyword" name="search candidates" 
                     (keydown.enter)="searchCandidate(searchKeyword)">
                 <span *ngIf="searchKeyword !== ''" (click)="clearFilter()" class=" c-pointer m-l-10">
                     <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
                 </span>
             </span>
             <span class="search d-flex j-end">
-                <i class="fa fa-search" aria-hidden="true" (click)="searchCandidate(searchKeyword)"></i>
+                <i class="fa fa-search" aria-hidden="true" (click)="searchCandidate(searchKeyword)" ></i>
             </span>
             <div class="add c-pointer" (click)="openRequisition()">
                 <span class="c-pointer">Add Requirement</span>
@@ -48,7 +48,9 @@
             <ng-container *ngIf="candidateList?.length > 0">
                 <tr class="c-pointer details-table" *ngFor="let item of candidateList"
                     (dblclick)="selectCandidate(item?.candidateId)">
-                    <td class="text-center"><input type="checkbox" [(ngModel)]="item.isSelected" (change)="onCandidateSelect(item)"></td>
+                    <td class="text-center">
+                        <input type="checkbox" [(ngModel)]="item.isSelected" (change)="onCandidateSelect(item)" name="select">
+                    </td>
                     <td class="text-start"
                         [title]="(item?.candidateFirstName | titlecase) + (item?.candidateLastName | titlecase)">
                         {{item?.candidateFirstName | titlecase}} {{item?.candidateLastName | titlecase}}
