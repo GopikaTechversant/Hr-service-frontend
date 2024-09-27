@@ -62,8 +62,10 @@ export class CandidateDetailsComponent implements OnInit {
           this.candidateDetails = res.data[0];
           this.candidateFeedback = res.comments;
           this.currentRequirement = this.candidateDetails?.position[0]?.reqServiceRequest?.requestName;
-          this.positonIds = this.candidateDetails?.position.map((pos: any) => pos.reqServiceRequest.requestId);
+          this.positonIds = this.candidateDetails?.position.map((pos: any) => pos?.reqServiceRequest?.requestId);
           this.resumePath = this.candidateDetails?.candidateResume;
+          console.log(this.candidateDetails);
+
           // if (this.resumePath) {
           //   const sanitizedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
           //     `${environment.s3_url}${this.resumePath}#toolbar=0&navpanes=0&scrollbar=0`
@@ -71,8 +73,9 @@ export class CandidateDetailsComponent implements OnInit {
           //   this.viewResumeFile = sanitizedUrl;
           // }
           if (this.resumePath) this.viewResumeFile = environment.s3_url;
+console.log(this.positonIds);
 
-          this.fetchCandidateHistory();
+          if (this.positonIds?.length !==0) this.fetchCandidateHistory();
         }
       },
       error: (err) => {

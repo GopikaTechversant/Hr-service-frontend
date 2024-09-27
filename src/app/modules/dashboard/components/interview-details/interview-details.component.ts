@@ -330,7 +330,7 @@ export class InterviewDetailsComponent implements OnInit {
     this.loader = true;
     const noticeperiod = document.getElementById('noticePeriod') as HTMLInputElement;
     this.noticeperiodvalue = noticeperiod?.value ? noticeperiod?.value : this.noticeperiodvalue;
-    
+    if (this.locationName && this.recruiterId && this.selectedModeName && data) {
     const payload = {
       recruiterId: this.recruiterId,
       candidateId: this.candidateId,
@@ -353,17 +353,18 @@ export class InterviewDetailsComponent implements OnInit {
       interviewBcc: data?.mailBcc,
     }
 
-    if (this.locationName && this.recruiterId && this.selectedModeName && data) {
       this.apiService.post(`/screening-station/interview-details`, payload).subscribe({
         next: (res: any) => {
           this.loader = false;
           this.tostr.success('Interview Scheduled Successfully');
           this.resetFormAndState('');
+          this.closeDialog();
         },
         error: (error) => {
           this.loader = false;
           if (error?.status === 500) this.tostr.error("Internal Server Error");
           else this.tostr.warning("Unable to update");
+          this.closeDialog();
         }
       });
     } else {
@@ -372,9 +373,7 @@ export class InterviewDetailsComponent implements OnInit {
       if (!this.locationName) this.tostr.warning('Please Add Interview location');
       if (!this.recruiterId) this.tostr.warning('Please Select Recruiter');
       if (!this.selectedModeName) this.tostr.warning('Please Select Work Mode');
-
     }
-    this.closeDialog();
 
   }
 

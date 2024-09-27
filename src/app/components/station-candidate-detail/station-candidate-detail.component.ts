@@ -52,7 +52,7 @@ export class StationCandidateDetailComponent implements OnInit {
       this.candidateDetails = data?.candidateDetails;
       this.stationId = data?.stationId;
       this.serviceId = this.candidateDetails?.serviceId;
-      if (data?.offerStatus > 0) this.progessAdded = true;      
+      if (data?.offerStatus > 0) this.progessAdded = true;
     }
     this.dialogRef.updateSize('60vw', '90vh');
     this.templateData = { message: '' };
@@ -271,14 +271,16 @@ export class StationCandidateDetailComponent implements OnInit {
       interviewMode: data?.interviewMode,
       requestionId: this.candidateDetails['serviceRequest.requestId']
     };
-
+    console.log(payload);
     this.apiService.post(`${baseUrl}/approve`, payload).subscribe({
       next: () => {
         this.tostr.success('Candidate Selected to Next Round');
         this.closeDialog();
+        this.loader = false;
       },
       error: () => {
         this.tostr.error('Error during approval');
+        this.loader = false;
       },
       complete: () => {
         this.loader = false;
