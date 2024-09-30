@@ -19,7 +19,6 @@ import { StationCandidatesComponent } from 'src/app/components/station-candidate
     MailTemplateComponent,
     CandidateDetailsComponent,
     LeftSidebarComponent,
-    CandidateDetailsComponent,
     StationCandidatesComponent
   ],
   imports: [

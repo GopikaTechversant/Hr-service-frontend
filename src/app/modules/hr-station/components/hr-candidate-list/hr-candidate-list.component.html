@@ -101,7 +101,7 @@
                     <td class="text-start">Name</td>
                     <td class="text-start">Email</td>
                     <td class="text-start">Requirement</td>
-                    <td class="text-start">Offer Status</td>
+                    <td class="text-start">Review Status</td>
                     <td class="text-center">Move Candidate</td>
                     <td class="text-start">Candidate Station</td>
                     <td class="text-start">Service Status</td>
@@ -124,8 +124,10 @@
                             <td class="text-start" [title]="item['candidate.candidateEmail']">{{ item['candidate.candidateEmail'] }}</td>
                             <td class="text-start" [title]="item['serviceRequest.requestName']">{{ item['serviceRequest.requestName'] }}</td>
                             <td class="f-w-500 text-start" 
-                            [ngClass]="{'orange': item?.progressStatus === '0' && item?.serviceStatus !== 'done', 'green': item?.progressStatus !== '0' || item?.serviceStatus === 'done'}">
-                                {{ item?.progressStatus === '0' && item?.serviceStatus !== 'done' ? 'Pending' : 'Released' }}
+                            [ngClass]="{'orange': item?.progressStatus === '0' && item?.reviewStatus == 0 && item?.serviceStatus !== 'done', 'green': item?.progressStatus !== '0' || item?.serviceStatus === 'done',
+                                'blue' : item?.progressStatus === '0' && item?.reviewStatus != 0
+                            }">
+                                {{ (item?.reviewStatus > 0 && item?.progressStatus === '0') ? 'Review Added' : (item?.progressStatus === '0' && item?.serviceStatus !== 'done' ? 'Pending' : 'Offer Released' )}}
                                 <!-- <span  *ngIf="item?.progressStatus === '0' && item?.serviceStatus === 'pending'" class="orange">Pending</span>
                                 <span  *ngIf="item?.progressStatus  !== '0'|| item?.serviceStatus === 'done'" class="green">Released</span>
                                 <span  *ngIf="item?.progressStatus === '0' && item?.serviceStatus === 'rejected'" class="red">Rejected</span> -->
@@ -137,7 +139,7 @@
                             <td class="f-w-500 text-start" [ngClass]="{'orange': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
                             'red': item?.serviceStatus === 'rejected'}">
                             {{ item?.serviceStatus === 'done' ? 'Offer Accepted' : item?.serviceStatus | titlecase}}</td>
-                            <td (click)="fetchDetails(item?.serviceId , item?.progressStatus)" class="c-pointer text-start">
+                            <td (click)="fetchDetails(item?.serviceId , item?.progressStatus , item?.reviewStatus)" class="c-pointer text-start">
                                 <div class="d-flex more">
                                     <i class="fa fa-eye blue f-s-18 f-w-500" aria-hidden="true"></i>
                                     <span class="blue p-l-5">View detail</span>

@@ -246,26 +246,50 @@ export class MailTemplateComponent implements OnInit {
       this.tostr.warning(this.isEditable ? 'Please Save Template before submitting' : 'Please Edit and Save Mail before submitting');
       return;
     }
-
+  
+    // Extract input values
     this.feedback = (document.getElementById('feedback') as HTMLInputElement)?.value || '';
     this.mailCc = (document.getElementById('cc') as HTMLInputElement)?.value || '';
     this.mailBcc = (document.getElementById('bcc') as HTMLInputElement)?.value || '';
     this.mailSubject = (document.getElementById('subject') as HTMLInputElement)?.value || '';
     this.offerSalary = (document.getElementById('salary') as HTMLInputElement)?.value || '';
-
-    if (this.displayDate && this.displayDate) this.displaydateTime = `${this.displayDate} ${this.displayTime}`;
-    // if (this.scheduledDate) this.displaydateTime = this.scheduledDate;
-
+  
+    // Concatenate displayDate and displayTime if both are available
+    if (this.displayDate && this.displayTime) {
+      this.displaydateTime = `${this.displayDate} ${this.displayTime}`;
+    }
+  
     if (this.isEditable) {
       this.tostr.warning('Please Save Changes in Mail');
       return;
     }
-    // Validate confirmation checkbox and message type
+  
+    // Check for confirmation checkbox and message type
     const confirmationCheckbox = document.getElementById('confirmDetails') as HTMLInputElement;
     if (!confirmationCheckbox?.checked || !this.candidate?.messageType.trim()) {
       this.tostr.warning('Please confirm all details before submitting');
       return;
     }
+  
+    // Email validation logic
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+  
+    // Function to validate a list of email addresses separated by commas
+    const validateEmails = (emails: string): boolean => {
+      const emailArray = emails.split(',').map(email => email.trim());
+      return emailArray.every(email => emailPattern.test(email));
+    };
+  
+    // Validate mailCc and mailBcc
+    if (this.mailCc && !validateEmails(this.mailCc)) {
+      this.tostr.warning('Invalid email address found in CC field');
+      return;
+    }
+    if (this.mailBcc && !validateEmails(this.mailBcc)) {
+      this.tostr.warning('Invalid email address found in BCC field');
+      return;
+    }
+  
     // Process the template content
     if (this.templateRef) {
       const templateElement = this.templateRef.nativeElement;
@@ -282,14 +306,14 @@ export class MailTemplateComponent implements OnInit {
       }
       this.htmlString = templateElement.outerHTML.replace(textarea, '<div>');
     }
-
+  
     // Validate feedback and subject fields
     if (!this.feedback.trim() || !this.mailSubject.trim()) {
       if (!this.feedback.trim()) this.tostr.warning('Please Add a feedback');
       if (!this.mailSubject.trim()) this.tostr.warning('Please Add a Subject');
       return;
     }
-
+  
     const commonData = {
       feedback: this.feedback,
       mailCc: this.mailCc,
@@ -298,11 +322,11 @@ export class MailTemplateComponent implements OnInit {
       messageType: this.candidate?.messageType,
       mailTemp: this.htmlString,
     };
-
+  
     let data;
     if (this.candidate?.messageType === 'offer') {
       if (!this.uploadedFileKey || !this.offerSalary || !this.displayDate) {
-        if (!this.uploadedFileKey) this.tostr.warning('Please Wait file to be uploaded');
+        if (!this.uploadedFileKey) this.tostr.warning('Please Wait for the file to be uploaded');
         if (!this.offerSalary) this.tostr.warning('Please Add Offer Salary');
         if (!this.displayDate) this.tostr.warning('Please Select Joining Date');
         return;
@@ -324,37 +348,20 @@ export class MailTemplateComponent implements OnInit {
         if (!this.displaydateTime) this.tostr.warning('Please Enter an Interview Time');
         return;
       }
-
+  
       data = {
         ...commonData,
         interviewPanel: this.panelId,
         interviewMode: this.selectedModeName,
         interviewStatus: this.interviewStatus,
-        interviewTime: this.displaydateTime
+        interviewTime: this.displaydateTime,
       };
     }
+  
+    // Emit the data
     this.submitData.emit(data);
   }
-
-  // submitClickTest() {
-  //   const payload = {
-  //     // serviceSeqId: this.serviceId,
-  //     // feedBack: this.feedback,
-  //     // feedBackBy: this.userId,
-  //     mailId: 'alfiya.sr@techversantinfotech.com',
-  //     cc: this.mailCc,
-  //     message: this.htmlString,
-  //     subject: this.mailSubject,
-  //   };
-  //   this.apiService.post(`/candidate/send-mail`, payload).subscribe({
-  //     next: (res: any) => {
-  //       this.tostr.success('Approval successful');
-  //       // this.closeDialog();
-  //     },
-  //     error: (error) => this.tostr.error('Error during approval')
-  //   });
-
-  // }
+  
 
   clearInputvalue(id: string) {
     const inputElement = document.getElementById(id) as HTMLInputElement;

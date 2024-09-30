@@ -19,7 +19,6 @@ export class StationCandidateDetailComponent implements OnInit {
   showRequest: boolean = false;
   progessAdded: boolean = false;
   serviceId: any = null
-  progressAssignee: any = null;
   stationId: any;
   feedback: any;
   userId: any;
@@ -133,7 +132,7 @@ export class StationCandidateDetailComponent implements OnInit {
 
     const description = (document.getElementById('description') as HTMLInputElement)?.value.trim();
     const payload = {
-      progressAssignee: this.progressAssignee || this.userId,
+      progressAssignee: this.userId,
       progressServiceId: this.serviceId?.toString() || '0',
       progressDescription: description,
       file: this.uploadedFileKey || '',

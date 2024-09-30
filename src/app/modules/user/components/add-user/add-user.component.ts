@@ -85,7 +85,15 @@ export class AddUserComponent implements OnInit {
     }
     this.apiService.post(`/user/create`, payload).subscribe((res: any) => {
       this.tostr.success('User Created');
-    })
+    },
+    (error) => {
+      if (error?.status === 500) {
+        this.tostr.error("Internal Server Error");
+      } else {
+        this.tostr.error(error?.error?.error_message ? error?.error?.error_message : "Unable to create User");
+      }
+    }
+  );
     // this.resetForm();
   }
 

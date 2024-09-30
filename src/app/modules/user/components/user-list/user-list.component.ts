@@ -1,11 +1,10 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
-import { environment } from 'src/environments/environments';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteComponent } from 'src/app/components/delete/delete.component';
 import { EditComponent } from '../edit/edit.component';
 import { ApiService } from 'src/app/services/api.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
@@ -28,7 +27,7 @@ export class UserListComponent implements OnInit {
   // headers = new HttpHeaders({
   //   'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
   // });
-  constructor(private http: HttpClient, private router: Router, private dialog: MatDialog,private apiService:ApiService) {
+  constructor(private toastr: ToastrService, private router: Router, private dialog: MatDialog,private apiService:ApiService) {
 
   }
 
@@ -82,6 +81,8 @@ export class UserListComponent implements OnInit {
     dialogRef.componentInstance.onDeleteSuccess.subscribe(() => {
       this.apiService.post(`/user/delete`, { userId: this.candidateId }).subscribe((res: any) => {
         this.fetchUserList();
+        this.toastr.success('User Deleted succesfully')
+
       })
     })
   }

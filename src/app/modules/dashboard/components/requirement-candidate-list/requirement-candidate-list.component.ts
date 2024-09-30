@@ -128,6 +128,7 @@ export class RequirementCandidateListComponent implements OnInit {
         next: (res: any) => {
           this.generatePageNumbers();
           this.fetchcandidates('');
+          this.toastr.success('Deleted succesfully')
         },
         error: (error) => {
           this.toastr.error(error?.error?.message ? error?.error?.message : 'Unable to Delete candidates');

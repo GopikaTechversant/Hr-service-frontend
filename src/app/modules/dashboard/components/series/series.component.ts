@@ -1,14 +1,11 @@
 import { Component, ElementRef, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environments';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FeedbackComponent } from 'src/app/components/feedback/feedback.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrServices } from 'src/app/services/toastr.service';
 import { ApiService } from 'src/app/services/api.service';
-import { EditRequirementComponent } from '../edit-requirement/edit-requirement.component';
 import { DeleteComponent } from 'src/app/components/delete/delete.component';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-series',
   templateUrl: './series.component.html',
@@ -45,7 +42,7 @@ export class SeriesComponent implements OnInit {
   searchKeyword: string = '';
   formattedText: SafeHtml | undefined;
   env_url: string = '';
-  constructor(private apiService: ApiService, private http: HttpClient, private router: Router, private route: ActivatedRoute,
+  constructor(private apiService: ApiService, private toastr: ToastrService, private router: Router, private route: ActivatedRoute,
     private dialog: MatDialog, private tostr: ToastrServices, private renderer: Renderer2, private sanitizer: DomSanitizer) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -88,6 +85,7 @@ export class SeriesComponent implements OnInit {
       this.apiService.post(`/service-request/delete`, { requestId: this.deleteRequirementId }).subscribe({
         next: (res: any) => {
           this.fetchDetails();
+          this.toastr.success('Deleted succesfully')
         },
         error: (error) => {
           this.tostr.error(error?.error?.message ? error?.error?.message : 'Unable to Delete candidates');

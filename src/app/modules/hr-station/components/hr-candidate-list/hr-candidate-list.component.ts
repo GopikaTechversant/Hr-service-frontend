@@ -5,7 +5,6 @@ import { ApiService } from 'src/app/services/api.service';
 import { StationSwitchComponent } from 'src/app/components/station-switch/station-switch.component';
 import { WarningBoxComponent } from 'src/app/components/warning-box/warning-box.component';
 import { DatePipe } from '@angular/common';
-import { environment } from 'src/environments/environments';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ExportService } from 'src/app/services/export.service';
@@ -110,7 +109,7 @@ export class HrCandidateListComponent implements OnInit {
         const idsParams = this.candidateIds.map((id: string) => `ids=${id}`).join('&');
         params += `&${idsParams}`;
       }
-      const exportUrl = `${url}?${params}`;      
+      const exportUrl = `${url}?${params}`;
       this.apiService.getTemplate(exportUrl).subscribe(
         (data: Blob) => {
           if (data.type === 'application/json') {
@@ -231,7 +230,7 @@ export class HrCandidateListComponent implements OnInit {
   searchByExperience(experience: string): void {
     this.experience = experience;
     this.currentPage = 1;
-    this.limit = 12;    
+    this.limit = 12;
     this.fetchList();
   }
 
@@ -270,15 +269,15 @@ export class HrCandidateListComponent implements OnInit {
     this.fetchList();
   }
 
-  fetchDetails(id: any, status: any): void {
+  fetchDetails(id: any, offerStatus: any, reviewStatus: any): void {
     this.apiService.get(`/hr-station/candidateDetail?serviceId=${id}`).subscribe((data: any) => {
-      if (data?.candidates) this.viewCandidateDetail(data?.candidates, status);
+      if (data?.candidates) this.viewCandidateDetail(data?.candidates, offerStatus, reviewStatus);
     });
   }
 
-  viewCandidateDetail(item: any, status: any): void {
+  viewCandidateDetail(item: any, offerStatus: any, reviewStatus: any): void {
     const dialogRef = this.dialog.open(HrCandidateDetailComponent, {
-      data: { candidateDetails: item, offerStatus: status },
+      data: { candidateDetails: item, offerStatus: offerStatus, reviewStatus: reviewStatus },
     })
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       this.fetchList();

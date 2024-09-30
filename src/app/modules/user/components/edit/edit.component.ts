@@ -48,7 +48,7 @@ export class EditComponent implements OnInit {
     this.displayDate = this.datePipe.transform(this.candidateDetails?.userDOB, 'yyyy-MM-dd');
     this.email = this.candidateDetails?.userEmail;
     this.role = this.candidateDetails?.userRole;
-    this.workStation = this.candidateDetails?.userWorkStation;
+    this.workStation = this.candidateDetails?.station;
   }
   fetchStations(): void {
     this.apiService.get(`/user/stations`).subscribe((res: any) => {
@@ -97,6 +97,7 @@ export class EditComponent implements OnInit {
       })
     } else {
       this.dialogRef.close();
+      this.tostr.error('Updation Failed');
     }
   }
 
