@@ -72,7 +72,6 @@ export class MailTemplateComponent implements OnInit {
   constructor(private apiService: ApiService, private tostr: ToastrService, private datePipe: DatePipe, private s3Service: S3Service) { }
   ngOnInit(): void {
     this.resetFormAndState();
-
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -84,7 +83,6 @@ export class MailTemplateComponent implements OnInit {
       this.fetchMode();
       this.fetchPanel();
     } else this.showTemplate = false;
-
   }
 
   onBodyClick(event: MouseEvent): void {
@@ -120,7 +118,6 @@ export class MailTemplateComponent implements OnInit {
       if (this.interviewStatus === 'scheduled') this.interviewStatus = 'Re-Scheduled';
     }
   }
-
 
   fetchMode(): void {
     this.apiService.get(`/screening-station/interview-mode/list`).subscribe((res: any) => {
@@ -168,7 +165,7 @@ export class MailTemplateComponent implements OnInit {
   }
 
   onFileSelected(event: any): void {
-    const file: File = event.target.files[0];
+    const file: File = event?.target?.files?.[0];
     if (file) {
       this.file = file;
       this.fileName = file?.name;
@@ -193,7 +190,6 @@ export class MailTemplateComponent implements OnInit {
     this.changeInterviewStatus();
   }
 
-
   timeChange(event: any): void {
     this.displayTime = event;
 
@@ -211,7 +207,6 @@ export class MailTemplateComponent implements OnInit {
       }
     });
   }
-
 
   dateChange(event: any): void {
     let date = new Date(event?.value);
@@ -233,7 +228,6 @@ export class MailTemplateComponent implements OnInit {
     this.messageSaved = true;
   }
 
-
   updateHtmlContent(event: any): void {
     this.content = event?.target?.value ? event?.target?.value : '';
     this.templateData.message = this.content;
@@ -246,7 +240,6 @@ export class MailTemplateComponent implements OnInit {
       this.tostr.warning(this.isEditable ? 'Please Save Template before submitting' : 'Please Edit and Save Mail before submitting');
       return;
     }
-  
     // Extract input values
     this.feedback = (document.getElementById('feedback') as HTMLInputElement)?.value || '';
     this.mailCc = (document.getElementById('cc') as HTMLInputElement)?.value || '';
@@ -357,7 +350,6 @@ export class MailTemplateComponent implements OnInit {
         interviewTime: this.displaydateTime,
       };
     }
-  
     // Emit the data
     this.submitData.emit(data);
   }
@@ -384,7 +376,6 @@ export class MailTemplateComponent implements OnInit {
     this.displayTime = '';
     this.displayTime = '';
 
-
     this.clearInputvalue('joining');
     this.clearInputvalue('salary');
     this.clearInputvalue('interviewStatus');
@@ -393,8 +384,6 @@ export class MailTemplateComponent implements OnInit {
     this.clearInputvalue('cc');
     this.clearInputvalue('bcc');
     this.clearInputvalue('feedback');
-
-
   }
 
   cancelClick() {

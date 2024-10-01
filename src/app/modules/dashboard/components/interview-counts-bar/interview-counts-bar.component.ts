@@ -25,9 +25,9 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
   previousStartDate: any;
   previousEndDate: any;
   requestId: any;
-  initialLoader:boolean = false;
+  initialLoader: boolean = false;
 
-  constructor(private apiService: ApiService, private datePipe: DatePipe) {}
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.initialLoader = true;
@@ -39,7 +39,7 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['positionId'] && !changes['positionId'].isFirstChange()) {
-      if (this.positionId === '')  this.fetchBarchartDetails();
+      if (this.positionId === '') this.fetchBarchartDetails();
       this.requestId = changes['positionId'].currentValue;
       this.fetchBarchartDetails();
     } else if (changes['startDate'] && !changes['startDate'].isFirstChange()) {
@@ -58,10 +58,9 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
   }
 
   ngAfterViewInit(): void {
-    // Ensure that the chart is created only after the view has fully initialized
     this.tryCreateChart();
   }
-  
+
   tryCreateChart() {
     setTimeout(() => {
       const canvasElement = document.getElementById('barChartInterview') as HTMLCanvasElement;
@@ -69,10 +68,10 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
         setTimeout(() => {
           this.createBarChart();
         }, 0);
-      } 
+      }
     }, 0);
   }
-  
+
   fetchBarchartDetails(): void {
     this.initialLoader = true;
     this.sixMonthCount = [];
@@ -84,7 +83,7 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
       `recruiter=${this.recruiterCheck}`,
       `requestId=${this.requestId}`
     ].filter(param => param.split('=')[1] !== '').join('&');
-  
+
     this.apiService.get(`${url}?${params}`).subscribe((res: any) => {
       if (res?.data) {
         this.sixMonthCount = res?.data;
@@ -93,8 +92,8 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
         this.sourcedData = this.sixMonthCount.map((item: any) => +item.total_totalsourced ?? '0');
         this.offeredData = this.sixMonthCount.map((item: any) => +item.total_offerreleased ?? '0');
         this.initialLoader = false;
-        this.tryCreateChart(); 
-      }else {
+        this.tryCreateChart();
+      } else {
         this.sixMonthCount = [];
         this.labels = [];
         this.hiredData = [];
@@ -104,7 +103,7 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
       }
     });
   }
-  
+
   onRadioChange(event: Event): void {
     const target = event.target as HTMLInputElement;
     if (target.value === 'Last 6 Months') {
@@ -120,20 +119,20 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
       this.lastSixMonth = false;
       this.fetchBarchartDetails();
     }
-  
+
     this.tryCreateChart(); // Updated to call tryCreateChart
   }
-  
+
   @HostListener('document:click', ['$event'])
   onBodyClick(event: Event): void {
   }
-  
+
   createBarChart(): void {
     if (this.chart) this.chart.destroy();
-  
+
     const canvasElement = document.getElementById('barChartInterview') as HTMLCanvasElement;
     if (!canvasElement) return;
-  
+
     this.chart = new Chart(canvasElement, {
       type: 'bar',
       data: {
@@ -185,7 +184,7 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
               display: true,
               font: { size: 12 },
               // autoSkip: true,
-              maxTicksLimit : 10,
+              maxTicksLimit: 10,
             }
           },
           x: {
@@ -248,5 +247,5 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
       plugins: [ChartDataLabels]
     });
   }
-  
+
 }

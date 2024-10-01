@@ -26,7 +26,6 @@
     <div class="container-table m-b-0">
         <table class="table">
             <tr class="table-header">
-                <!-- <td class="text">Select</td> -->
                 <td class="requisition-col" [title]="selectedDataBy === 'user' ? 'Recruiter' : 'Requisition'">{{selectedDataBy === 'user' ? 'Recruiter' : 'Requisition'}}</td>
                 <td class=" text-end" title="Total Applicants">Total Applicants</td>
                 <td class=" text-end" >Screening Rejected</td>
@@ -43,22 +42,18 @@
             <ng-container *ngIf="candidateList.length > 0">
                 <ng-container *ngFor="let item of  candidateList">
                     <tr class="details">
-                        <!-- <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="getSelectedCandidateIds()">
-                        </td> -->
                         <td class="text-start">{{item?.userfirstName ? item?.userfirstName : item?.requestName}}</td>
-                        <td class="f-w-500 text-end highlight">{{item?.total_totalsourced ? item?.total_totalsourced : ' '}}</td>
-                        <td class="text-end">{{item?.total_screenrejected ? item?.total_screenrejected : ' '}}</td>
-                        <td class="text-end">{{item?.total_techonereject ? item?.total_techonereject : ' '}}</td>
-                        <td class="text-end">{{item?.total_techtworeject ? item?.total_techtworeject : ' '}}</td>
-                        <td class="f-w-500 text-end highlight">{{item?.total_technicalselected ? item?.total_technicalselected : ' '}}
-                        </td>
-                        <td class="text-end">{{item?.total_hrreject ? item?.total_hrreject : ' '}}</td>
-                        <td class="f-w-500 text-end highlight">{{item?.total_offerreleased ? item?.total_offerreleased : ' '}}</td>
-                        <td class="f-w-500 text-end highlight">{{item?.total_hired ? item?.total_hired : ' '}}</td>
+                        <td class="f-w-500 text-end highlight">{{item?.total_totalsourced ? item?.total_totalsourced : '0'}}</td>
+                        <td class="text-end">{{item?.total_screenrejected ? item?.total_screenrejected : '0'}}</td>
+                        <td class="text-end">{{item?.total_techonereject ? item?.total_techonereject : '0'}}</td>
+                        <td class="text-end">{{item?.total_techtworeject ? item?.total_techtworeject : '0'}}</td>
+                        <td class="f-w-500 text-end highlight">{{item?.total_technicalselected ? item?.total_technicalselected : '0'}}</td>
+                        <td class="text-end">{{item?.total_hrreject ? item?.total_hrreject : '0'}}</td>
+                        <td class="f-w-500 text-end highlight">{{item?.total_offerreleased ? item?.total_offerreleased : '0'}}</td>
+                        <td class="f-w-500 text-end highlight">{{item?.total_hired ? item?.total_hired : '0'}}</td>
                     </tr>
                 </ng-container>
             </ng-container>
-            <!-- <div *ngIf="candidateList?.length === 0" class="no-data">No Data Found</div> -->
         </table>
         <div *ngIf="candidateList?.length === 0 && !loader && !initialLoader" class="no-data">No Data Found</div>
     </div>

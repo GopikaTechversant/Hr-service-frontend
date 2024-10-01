@@ -2,8 +2,6 @@
     font-size: 18px;
     font-weight: 500;
     text-align: left;
-    /* padding-bottom: 10px; */
-    /* background-color: #E3E0E0; */
 }
 
 .head {
@@ -11,14 +9,12 @@
     font-weight: 500;
     text-align: left;
     padding-bottom: 10px;
-    /* border-bottom: 1px solid #E3E0E0; */
     padding-left: 18px !important;
 }
 
 .job-description {
     width: 310px;
     overflow: hidden;
-    /* height: 100px; */
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -31,7 +27,6 @@
     overflow: visible;
     white-space: normal;
     height: auto;
-    /* just added this line */
 }
 
 .w-40 {
@@ -40,7 +35,6 @@
 
 .border {
     border-left: 1px solid #E3E0E0;
-    /* padding-left: 20px; */
 }
 
 .key {
@@ -77,18 +71,6 @@
 .view-attachment {
     color: #005EC9;
     border-bottom: 1px solid #005EC9;
-}
-
-.blue {
-    color: #005EC9;
-}
-
-.red {
-    color: rgb(167, 14, 14);
-}
-
-.green {
-    color: green;
 }
 
 .modal-header {
@@ -148,7 +130,6 @@
 .input-rejection {
     outline: none !important;
     border: 1px solid rgb(207, 205, 205);
-    /* border-radius: 5px; */
     height: 34px;
     background-color: #FFFF;
     width: 221px;

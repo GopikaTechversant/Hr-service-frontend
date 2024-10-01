@@ -2,10 +2,6 @@
     <div *ngIf="CandidateData?.length > 0">
         <ng-container *ngIf="candidateDetails">
             <div class="d-flex m-20 m-l-0">
-                <!-- <div class="f-w-500 user-icon">
-                    <span class="f-s-30">
-                    </span>
-                </div> -->
                 <div class="">
                     <span class="f-w-500 p-t-18 p-l-8 f-s-20"
                         [title]="candidateDetails?.candidateFirstName + ' ' + candidateDetails?.candidateLastName">
@@ -27,89 +23,15 @@
                     </div>
                     <span class="p-t-18 p-l-10 text-color">Candidate Latest Status : <span class="latest-status f-w-500"
                             [ngStyle]="{'color': candidateDetails.candidateInterviewStatus === 'rejected' ? 'red' : '#07C369'}">
-                            {{candidateDetails.candidateInterviewStatus | titlecase}}</span></span>
-                    <!-- <div *ngIf="resumePath" class="p-t-4 p-l-10 text-color"> <a [href]="viewResumeFile + resumePath ">View Resume</a></div> -->
+                            {{candidateDetails.candidateInterviewStatus | titlecase}}</span>
+                        <span *ngIf="candidateDetails?.currentStation"> | Current Station : <span class="latest-status blue f-w-500">
+                                {{candidateDetails?.currentStation | titlecase}}</span></span>
+                    </span>
                     <div *ngIf="resumePath" class="p-t-4 p-l-10 text-color">
                         <span (click)="viewResume(resumePath)" class="c-pointer resume-cls">View Resume</span>
                     </div>
-                      
                 </div>
             </div>
-            <!-- <div class="d-flex p-10 top-card">
-                <div class="col-1 bor">
-                    <div class="details" *ngIf="candidateDetails?.position?.length > 0">
-                        <span class="sub-head padding-5">Candidate Latest Status</span>
-                        <span class="text-color padding-5 p-l-0 text-wrap req">:
-                            {{candidateDetails?.candidateInterviewStatus | titlecase}}
-                        </span>
-                    </div>
-                    <div class="details" *ngIf="candidateDetails?.position?.length > 0">
-                        <span class="sub-head padding-5">Latest Requirement</span>
-                        <span class="text-color padding-5 p-l-0 text-wrap req">:
-                            <a
-                                [href]="env_url + '/dashboard/series?requestId=' + candidateDetails?.position[0]?.reqServiceRequest?.requestId">
-                                {{ candidateDetails?.position[0]?.reqServiceRequest?.requestName }}
-                            </a>
-                        </span>
-                    </div>
-                    <div class="details" *ngIf="candidateDetails?.position?.length > 0">
-                        <span class="sub-head padding-5">Latest Requirement Status</span>
-                        <span class="text-color padding-5 p-l-0 text-wrap req">:
-                            {{ candidateDetails?.position[0]?.reqServiceRequest?.requestStatus }}
-                        </span>
-                    </div>
-                    <div class="details">
-                        <span class="sub-head padding-5">Previous Requirements</span>
-                        <span class="text-color padding-5 p-l-0 text-wrap req"
-                            *ngFor="let item of candidateDetails?.position.slice(1)">
-                            :
-                            <a [href]="env_url + '/dashboard/series?requestId=' + item?.reqServiceRequest?.requestId">
-                                {{ item?.reqServiceRequest?.requestName }}
-                            </a>
-                        </span>
-                        <span class="text-color padding-5 p-l-0 text-wrap req"
-                            *ngIf="!candidateDetails?.position || candidateDetails?.position?.length === 1">
-                            : No previous Requirement
-                        </span>
-                    </div>
-                </div>
-                <div class="col-1 m-b-20">
-                    <div *ngIf="candidateDetails?.position?.length > 1">
-                        <div class="details">
-                            <div (click)="requirementSwitch('R')" title="Switch Requirement" class="c-pointer sub-head">
-                                <span class="sub-head">Switch Requirements</span>
-                                <span>
-                                    <img src="/assets/images/techversant/switch.svg" class="c-pointer p-l-5" alt=""
-                                        height="17" width="17">
-                                </span>
-                            </div>
-                            <span class="text-color p-l-0 text-wrap req">:
-                                <a
-                                    [href]="env_url + '/dashboard/series?requestId=' + candidateDetails?.position[currentRequirementIndex]?.reqServiceRequest?.requestId">
-                                    {{
-                                    candidateDetails?.position[currentRequirementIndex]?.reqServiceRequest?.requestName
-                                    }}
-                                </a> </span>
-                            <span class="text-color" *ngIf="candidateDetails?.position?.length === 1">
-                                No Other Requirement to switch
-                            </span>
-                        </div>
-                        <div class="details">
-                            <span class="sub-head">Requirement Status</span>
-                            <span class="text-color p-l-0 text-wrap req">:
-                                {{ candidateDetails?.position[currentRequirementIndex]?.reqServiceRequest?.requestStatus
-                                }}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <!-- <div class="resume m-b-5">
-                <span class="f-w-500">Showing Deatils of Requirement :</span>
-                <span class="blue f-w-500">
-                    {{candidateDetails?.position[currentRequirementIndex]?.reqServiceRequest?.requestName}}
-                </span>
-            </div> -->
             <div class="tab">
                 <button class="tablinks" [ngClass]="{'active': activeTab === 'basic'}"
                     (click)="selectedTab($event, 'basic')">Basic Info</button>
@@ -124,7 +46,7 @@
             </div>
             <!-- Basic Info Content -->
             <div class="tabcontent" [ngClass]="{ 'active': activeTab === 'basic' }" id="basic">
-                <div *ngIf="!candidateDetails?.position[0]?.reqServiceRequest?.requestName"
+                <div *ngIf="!candidateDetails?.position?.[0]?.reqServiceRequest?.requestName"
                     class="d-flex j-end c-pointer m-r-20 p-t-9" (click)="edit(candidateDetails?.candidateId)">
                     <span><img src="/assets/images/candidate-detail/edit.svg" alt="" height="12" width="12"></span>
                     <span class="c-blue p-l-5 p-r-5">Edit</span>
@@ -236,18 +158,7 @@
                                 State</span>
                             <span class="text-wrap" [title]="candidateDetails?.candidateState">:
                                 {{ candidateDetails?.candidateState ? candidateDetails?.candidateState : 'Nil' }}</span>
-                        </div>
-                        <!-- <div class="details">
-                            <span class="sub-head text-wrap">
-                                <img src="assets/images/candidate-detail/user.svg" class="p-r-10" alt=""> Interview
-                                Status
-                            </span>
-                            <span class="text-wrap"
-                                [title]="candidateDetails?.candidateStatus[0]?.interViewStatus ? candidateDetails?.candidateStatus[0]?.interViewStatus : 'Nil'">:
-                                {{ candidateDetails?.candidateStatus[0]?.interViewStatus ?
-                                candidateDetails?.candidateStatus[0]?.interViewStatus : 'Nil' }}
-                            </span>
-                        </div> -->
+                        </div>                     
                         <div class="details">
                             <span class="sub-head text-wrap">
                                 <img src="assets/images/candidate-detail/user.svg" class="p-r-10" alt=""> Primary Skills
@@ -274,17 +185,7 @@
                             </span>
                         </div>
                     </div>
-
                 </div>
-                <!-- <div class="profile-section">
-                    <div class="d-flex j-end prof-btn">
-                        <button class="m-r-6 hide-btn">Hide</button>
-                        <button class="view-pro-btn"><a [href]="viewResumeFile" target="_blank" style="text-decoration: none;color: white;">View Resume</a></button>
-                    </div>
-                    <div *ngIf="viewResumeFile" class="resume-container">
-                        <iframe [src]="viewResumeFile" class="resume-file"></iframe>
-                    </div>
-                </div> -->
             </div>
             <!-- Interviews Content -->
             <div class="tabcontent" [ngClass]="{'active': activeTab === 'interview'}" id="interview">
@@ -349,12 +250,7 @@
                 </div>
             </div>
             <!-- Attachment Content -->
-            <div class="tabcontent" [ngClass]="{'active': activeTab === 'attachment'}" id="attachment">
-                <!-- <div class="c-pointer resume">
-                    <span class="blue f-w-500">
-                        <a [href]="viewResumeFile + resumePath ">View Resume</a>
-                    </span>
-                </div> -->
+            <div class="tabcontent" [ngClass]="{'active': activeTab === 'attachment'}" id="attachment">        
                 <div class="container-table m-b-0 w-100">
                     <table class="table">
                         <tr class="table-header f-w-500 p-b-10">
@@ -443,7 +339,6 @@
                                             </td>
                                             <td class="text-start">{{ data?.feedbackMessage |titlecase}}</td>
                                             <td class="text-end">{{ data?.feedbackDate | date : 'dd/MM/yyyy' }}</td>
-                                            <!-- <td class="text-wrap" [title]="item?.status">{{ item?.status }}</td> -->
                                         </tr>
                                     </ng-container>
                                 </ng-container>
@@ -553,39 +448,3 @@
         </div>
     </div>
 </div>
-
-<!-- <div class="Feedback">
-                    <div class="feedback-head">
-                        <span class="f-w-500 f-s-16">Feedback Section </span>
-                    </div>
-                    <div *ngIf="candidateFeedback?.length > 0">
-                        <ng-container *ngFor="let item of candidateFeedback; let last = last">
-                            <div class="d-flex">
-                                <div class="col-1">
-                                    <div class="p-10">
-                                        <span class="f-w-500 user-icon"> 
-                                            {{ item?.['reqServiceSequence.reqUser.userName']?.charAt(0) ? (item?.['reqServiceSequence.reqUser.userName']?.charAt(0) |uppercase) : 'U' }}
-                                        </span>
-                                        <span class="text-color p-r-10 p-l-8 f-w-500 f-s-15">{{item?.['reqServiceSequence.reqUser.userName'] ? item?.['reqServiceSequence.reqUser.userName'] : 'User Name'}}</span>
-                                        <span class="p-r-10">{{item?.['reqServiceSequence.reqStation.stationName'] ? item?.['reqServiceSequence.reqStation.stationName'] : 'Station Name'}} - </span>
-                                        <span class="p-r-10 date-color"> {{item?.['reqServiceSequence.serviceDate'] | date:'dd/MM/yyyy'}}</span>
-                                    </div>
-                                    <div class="p-10">
-                                        <span class="p-l-20 m-l-20">{{item?.commentComment}}</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex j-end">
-                                    <img src="assets/images/candidate-detail/edit.svg" class="icon" alt="">
-                                    <img src="assets/images/candidate-detail/delete.svg" class="icon" alt="">
-                                </div>
-                            </div>
-                            <div *ngIf="!last" class="bor-2"></div>
-                        </ng-container>
-                    </div>
-                    <div class="p-10" *ngIf="candidateFeedback?.length === 0">No other Feedback Available</div>
-                    <div class="m-b-20">
-                        <textarea class="text-area" id="feedback" cols="30" rows="10" placeholder="Add New Feedback"></textarea>
-                        <button class="btn-cancel c-pointer">Cancel</button>
-                        <button class="btn-submit c-pointer">Submit</button>
-                    </div>
-                </div>                 -->

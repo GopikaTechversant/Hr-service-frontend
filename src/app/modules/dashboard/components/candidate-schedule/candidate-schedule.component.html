@@ -1,5 +1,7 @@
 <div class="d-flex head m-b-10 j-space">
-    <span class="heading p-t-12">Candidate Lists</span>
+    <span class="heading p-t-12">Candidate List 
+        <span *ngIf="candidates_list && candidates_list?.[0]['reqServiceRequest.requestName'] !== null" class="blue f-w-500">: {{candidates_list?.[0]['reqServiceRequest.requestName']}}</span>
+    </span>
     <div class="d-flex j-space m-b-10">
         <span class="input">
             <input type="text" class="" placeholder="Search Candidates" [(ngModel)]="searchKeyword"
@@ -11,9 +13,6 @@
         <span class="search d-flex j-end">
             <i class="fa fa-search" aria-hidden="true" (click)="searchCandidate(searchKeyword)"></i>
         </span>
-        <!-- <div class="export-btn c-pointer">
-        <span (click)="exportList()">Export</span>
-    </div> -->
     </div>
 </div>
 <div class="main">

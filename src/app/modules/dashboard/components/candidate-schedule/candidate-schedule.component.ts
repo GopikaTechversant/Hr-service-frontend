@@ -114,10 +114,6 @@ export class CandidateScheduleComponent implements OnInit {
         this.fetchcandidates();
       });
     }
-      // this.router.navigate(['dashboard/interview-details'], {
-      //   state: { candidate }
-      // });
-    // }
   }
 
   onCandidateSelectionChange(candidate: any): void {

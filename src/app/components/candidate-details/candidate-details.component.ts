@@ -4,9 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { ApiService } from 'src/app/services/api.service';
 import { MatDialog } from '@angular/material/dialog';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { EditComponent } from '../edit/edit.component';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-candidate-details',
   templateUrl: './candidate-details.component.html',
@@ -30,14 +28,11 @@ export class CandidateDetailsComponent implements OnInit {
   loader: boolean = false;
   scaleFactor: number = 0.55; // Default scale factor
   positonIds: any;
-  constructor(private apiService: ApiService, private route: ActivatedRoute, private datePipe: DatePipe, private dialog: MatDialog, private http: HttpClient,
-    private sanitizer: DomSanitizer
-  ) {
+  constructor(private apiService: ApiService, private route: ActivatedRoute, private datePipe: DatePipe, private dialog: MatDialog) {
     // this.route.params.subscribe(params => {
     //   this.candidateId = params['id'];
     // });
   }
-
 
   ngOnInit(): void {
     this.initialLoader = true
@@ -58,23 +53,13 @@ export class CandidateDetailsComponent implements OnInit {
         if (res?.data) {
           this.initialLoader = false;
           this.loader = false;
-          this.CandidateData = res.data;
-          this.candidateDetails = res.data[0];
+          this.CandidateData = res?.data;
+          this.candidateDetails = res?.data?.[0];
           this.candidateFeedback = res.comments;
-          this.currentRequirement = this.candidateDetails?.position[0]?.reqServiceRequest?.requestName;
+          this.currentRequirement = this.candidateDetails?.position?.[0]?.reqServiceRequest?.requestName;
           this.positonIds = this.candidateDetails?.position.map((pos: any) => pos?.reqServiceRequest?.requestId);
           this.resumePath = this.candidateDetails?.candidateResume;
-          console.log(this.candidateDetails);
-
-          // if (this.resumePath) {
-          //   const sanitizedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-          //     `${environment.s3_url}${this.resumePath}#toolbar=0&navpanes=0&scrollbar=0`
-          //   );
-          //   this.viewResumeFile = sanitizedUrl;
-          // }
           if (this.resumePath) this.viewResumeFile = environment.s3_url;
-console.log(this.positonIds);
-
           if (this.positonIds?.length !==0) this.fetchCandidateHistory();
         }
       },

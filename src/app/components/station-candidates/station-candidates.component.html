@@ -12,7 +12,7 @@
                 <span *ngIf="searchKeyword && searchKeyword.trim() !== ''" (click)="clearFilter('search')"
                 class=" c-pointer"><img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20"></span>
             <span class="search c-pointer ms-2" (click)="onSearch(searchKeyword)">
-                <img src="/assets/images/techversant/search.svg" alt="">
+                <i class="fa fa-search" aria-hidden="true"></i>
             </span>
         </div>
         <div class="input-1 c-pointer no-close p-relative p-t-6 m-l-10 m-b-10 p-l-10 m-r-10">
@@ -40,7 +40,7 @@
                 <span *ngIf="experience && experience.trim() !== ''" (click)="clearFilter('experience')"
                 class="c-pointer"><img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20"></span>
             <span class="search c-pointer ms-2" (click)="searchByExperience(experience)">
-                <img src="/assets/images/techversant/search.svg" alt="">
+                <i class="fa fa-search" aria-hidden="true"></i>
             </span>
         </div>
         <div class="input-1 c-pointer no-close p-relative p-t-6 m-l-10 m-b-10 p-l-10 m-r-10">
@@ -147,7 +147,7 @@
                         </ng-container>
                     </ng-container>
                 </ng-container>
-                <div *ngIf="(candidateList[0]?.length === 0 || !candidateList[0]) && !loader && !initialLoader "
+                <div *ngIf="(candidateList?.[0]?.length === 0 || !candidateList?.[0]) && !loader && !initialLoader "
                     class="data">
                     No Data Found
                 </div>

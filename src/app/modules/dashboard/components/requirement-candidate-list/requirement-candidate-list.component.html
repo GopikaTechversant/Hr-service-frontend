@@ -40,6 +40,7 @@
         <div class="container-table m-b-0">
             <table class="">
                 <tr class="table-header p-b-10 f-w-500">
+                    <td class="text-end p-l-16">Requisition Code</td>
                     <td class="text-start p-l-16">Requisition</td>
                     <td class="text-end">No.of Openings</td>
                     <td class="text-end">Candidate Count</td>
@@ -56,6 +57,7 @@
                 <ng-container *ngIf="candidates_list?.length > 0">
                     <ng-container *ngFor="let candidate of candidates_list">
                         <tr class="c-pointer" (dblclick)="navigate('/dashboard/series/',candidate?.requestId)">
+                            <td class="text-end">{{candidate?.requestCode}}</td>
                             <td class="text-start p-l-16" [title]="candidate?.requestName">{{candidate?.requestName |
                                 titlecase}}</td>
                             <td class="text-end">{{candidate?.requestVacancy}}</td>

@@ -117,7 +117,7 @@ export class EditComponent implements OnInit {
     this.apiService.get(`/candidate/list/${this.data}`).subscribe((res: any) => {
       if (res?.data) {
         this.CandidateData = res?.data
-        this.candidateDetails = res?.data[0];
+        this.candidateDetails = res?.data?.[0];
         if (this.candidateDetails?.candidatePrimarySkills) {
           this.selectedPrimarySkills = this.candidateDetails?.candidatePrimarySkills.map((skill: any) => ({
             id: skill.skillType,
@@ -157,8 +157,8 @@ export class EditComponent implements OnInit {
 
   onFileSelected(event: any) {
     this.fileInputClicked = true;
-    this.selectedFile = event.target.files[0];
-    if (event.target.files.length > 0) this.resumeUploadSuccess = true;
+    this.selectedFile = event.target.files?.[0];
+    if (event?.target?.files?.length > 0) this.resumeUploadSuccess = true;
     this.loader = true;
     if (this.selectedFile) this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', this.selectedFile);
     this.getKeyFroms3();
@@ -238,8 +238,8 @@ export class EditComponent implements OnInit {
       candidateMobileNo: candidateDetails?.candidateMobileNo !== this.candidateDetails?.candidateMobileNo ? candidateDetails?.candidateMobileNo : undefined,
       resumeSourceId: this.sourceId,
       candidateResume: this.uploadedFileKey,
-      candidatePrimarySkills: this.primaryskills.length > 0 ? this.primaryskills : undefined,
-      candidateSecondarySkills: this.secondaryskills.length > 0 ? this.secondaryskills : undefined,
+      candidatePrimarySkills: this.primaryskills?.length > 0 ? this.primaryskills : undefined,
+      candidateSecondarySkills: this.secondaryskills?.length > 0 ? this.secondaryskills : undefined,
       genderName: this.genderName,
       candidatePreferlocation: this.locationname,
       candidateCity: candidateDetails?.candidateCity !== this.candidateDetails?.candidateCity ? candidateDetails?.candidateCity : undefined,

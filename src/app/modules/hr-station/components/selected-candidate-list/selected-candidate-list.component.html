@@ -11,7 +11,7 @@
                 <span *ngIf="searchKeyword && searchKeyword.trim() !== ''" (click)="clearFilter('search')" class="c-pointer">
                 <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20"></span>
             <span class="search c-pointer ms-2" (click)="searchCandidate(searchKeyword)">
-                <img src="/assets/images/techversant/search.svg" alt="">
+                <i class="fa fa-search" aria-hidden="true"></i>
             </span>
         </div>
         <div class="input-1 c-pointer no-close p-relative p-t-10 m-l-10 m-b-10 p-l-10 m-r-10">
@@ -40,20 +40,10 @@
                 <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
             </span>
             <span class="search c-pointer ms-2" (click)="searchByExperience(experience)">
-                <img src="/assets/images/techversant/search.svg" alt="">
+                <i class="fa fa-search" aria-hidden="true"></i>
                 <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
             </span>
         </div>
-        <!-- <div class="input-1 c-pointer no-close p-relative p-t-10 m-l-10 m-b-10 p-l-10 m-r-10">
-            <span class="no-close" (click)="filterStatus = !filterStatus">{{filteredStatus.trim() === '' ?
-                'Filter by Status' : filteredStatus | titlecase}}</span>
-            <span class="f-right">
-                <span *ngIf="filteredStatus && filteredStatus.trim() !== ''" (click)="clearFilter('status')">
-                    <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20"></span>
-                <span (click)="filterStatus = !filterStatus"><i
-                        class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
-            </span>
-        </div> -->
         <div class="m-b-10">
             <button class="export-btn c-pointer m-l-10" (click)="exportData()">Export</button>
         </div>
@@ -93,7 +83,7 @@
                     </ng-container>
                     </ng-container>
                   </ng-container>
-                <div *ngIf="(this.candidateList[0]?.length === 0 || !this.candidateList[0]) && !loader && !initialLoader" class="data">
+                <div *ngIf="(this.candidateList?.[0]?.length === 0 || !this.candidateList?.[0]) && !loader && !initialLoader" class="data">
                     No Data Found
                 </div>
                 <div *ngIf="initialLoader"  class="row m-l-20 initial-loader">

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
 import { ExportService } from 'src/app/services/export.service';
@@ -79,7 +79,7 @@ export class DetailedRecruitmentComponent implements OnInit {
         const idsParams = this.candidateIds.map((id: string) => `ids=${id}`).join('&');
         params += `&${idsParams}`;
       }
-      const exportUrl = `${url}?${params}`;      
+      const exportUrl = `${url}?${params}`;
       this.apiService.getTemplate(exportUrl).subscribe(
         (data: Blob) => {
           if (data.type === 'application/json') {
@@ -163,23 +163,6 @@ export class DetailedRecruitmentComponent implements OnInit {
     this.pageSize = 10;
     this.fetchCandidateList()
   }
-
-  // fetchRecruitersList(): void {
-  //   this.apiService.get(`/dashboard/recruiter-list`).subscribe((res: any) => {
-  //     if (res?.data) {
-  //       this.recruitersList = res?.data;
-  //     }
-  //   })
-  // }
-
-  // selectedRecruiter(id: number, name: string): void {
-  //   this.selectedRecruitername = name;
-  //   this.selectedRecruiterId = id;
-  //   this.recruitersListOpen = false;
-  //   this.currentPage = 1;
-  //   this.pageSize = 10;
-  //   this.fetchCandidateList()
-  // }
 
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);

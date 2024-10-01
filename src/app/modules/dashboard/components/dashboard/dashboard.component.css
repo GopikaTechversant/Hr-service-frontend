@@ -72,21 +72,18 @@
   margin-left: 6px;
   width: 58%;
   gap: 2px;
-  /* justify-content: space-evenly; */
 }
 
 .name {
   font-weight: 400;
   font-size: 16px;
   color: #575F6E;
-  /* padding-bottom: 5px; */
 }
 
 .count {
   font-weight: 500;
   font-size: 17px;
   color: #575F6E;
-  /* padding-bottom: 10px; */
   line-height: 26.07px;
 }
 
@@ -111,9 +108,6 @@
   border-radius: 50%;
   border: 2px solid #005EC97A;
   background: #EBF0FF;
-  /* padding-top: 20px; */
-  /* padding-left: 20px; */
-
 }
 
 .scrollable::-webkit-scrollbar,
@@ -139,7 +133,7 @@
   width: 60%;
 }
 
-.gaps{
+.gaps {
   gap: 15px;
 }
 
@@ -197,7 +191,7 @@
 }
 
 @media (max-width: 1396px) and (min-width: 1000px) {
-  .icon{
+  .icon {
     font-size: 19px;
     height: 55px;
     width: 55px;

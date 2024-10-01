@@ -3,7 +3,6 @@ import { ApiService } from 'src/app/services/api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LogoutModalComponent } from '../logout-modal/logout-modal.component';
-import { environment } from 'src/environments/environments';
 
 @Component({
   selector: 'app-header',
@@ -88,8 +87,8 @@ export class HeaderComponent implements OnInit {
     }
     this.apiService.get(`/candidate/search/list?search=${this.searchKeyword}`).subscribe((res: any) => {
       if (res?.data) {
-        this.candidateList = res.data;
-        this.showCandidates = this.candidateList.length > 0;
+        this.candidateList = res?.data;
+        this.showCandidates = this.candidateList?.length > 0;
       }
     });
   }

@@ -6,7 +6,6 @@
     flex-direction: column;
     width: 100%;
     margin-left: 18px;
-
 }
 
 .head {
@@ -52,13 +51,11 @@
     padding-top: 15px;
 }
 
-
 .filter-radio {
     width: 209px;
 }
 
 .no-data {
-    /* position: absolute; */
     padding-left: 50%;
     padding-top: 25%;
     z-index: 9;

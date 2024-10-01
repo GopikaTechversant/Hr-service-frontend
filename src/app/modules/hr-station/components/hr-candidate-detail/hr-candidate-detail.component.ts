@@ -101,7 +101,7 @@ export class HrCandidateDetailComponent {
   }
 
   onFileSelected(event: any): void {
-    const file: File = event.target.files[0];
+    const file: File = event?.target?.files?.[0];
     if (file) {
       this.file = file;
       this.fileName = file?.name;

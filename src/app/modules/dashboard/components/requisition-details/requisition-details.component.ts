@@ -62,8 +62,8 @@ export class RequisitionDetailsComponent implements OnInit {
       if (res?.data) {
         this.initialLoader = false;
         this.lists = res?.data;
-        this.requestName = this.lists[0]?.position;
-        this.department = this.lists[0]?.team;
+        this.requestName = this.lists?.[0]?.position;
+        this.department = this.lists?.[0]?.team;
       }
     })
   }

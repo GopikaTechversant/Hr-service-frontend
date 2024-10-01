@@ -102,20 +102,11 @@ input[type="text"] {
     align-items: center;
 }
 
-.flex-1 {
-    flex: 1;
-}
-
 input[type="text"] {
     border: none;
     outline: none;
     width: 84%;
     padding: 6px
-}
-
-.green {
-    color: #08BC66;
-    /* background-color:#08BC66 ;  */
 }
 
 .search-div {

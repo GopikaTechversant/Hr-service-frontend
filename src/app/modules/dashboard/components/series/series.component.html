@@ -2,13 +2,6 @@
     <div class="title-requirement"><span class="requirement-name">
         <span class="f-w-500">{{requirement_details?.requestName | titlecase}}</span></span>
     </div>
-    <!-- <div class="actions d-flex" *ngIf="requirement_details?.candidatesCount === '0'"><img src="assets/images/edit.png"
-            class="icon" alt="" height="28px" width="28px"
-            (click)="edit('/dashboard/service-requirement',requirement_details?.requestId)">
-        <img src="assets/images/delete.png" class="icon" alt="" height="26px" width="26px"
-            (click)="delete(requirement_details?.requestId)">
-    </div> -->
-    
     <div class="requirement">
         <div class="actions d-flex p-t-8 p-r-8" *ngIf="requirement_details?.candidatesCount === '0'">
             <span class="c-pointer f-s-20" (click)="edit('/dashboard/service-requirement',requirement_details?.requestId)">
@@ -26,7 +19,7 @@
                         {{requirement_details?.candidatesCount}}
                         <span class="" *ngIf="requirement_details?.candidatesCount > 0"> <a
                                 [href]="env_url + '/dashboard/candidate-schedule?requestId=' + requirement_details?.requestId">
-                                (Click here to view)
+                                View Candidates
                             </a></span>
                     </div>
                 </div>

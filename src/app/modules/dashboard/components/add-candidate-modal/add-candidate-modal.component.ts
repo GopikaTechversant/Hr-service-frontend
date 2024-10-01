@@ -96,7 +96,6 @@ export class AddCandidateModalComponent implements OnInit {
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
     $event.returnValue = true;
-
   }
 
   ngOnInit(): void {
@@ -158,43 +157,6 @@ export class AddCandidateModalComponent implements OnInit {
     }
   }
 
-  // pasteNameValidation(event: ClipboardEvent): void {
-
-  //   const clipboardData = event.clipboardData;
-  //   if (!clipboardData) {
-  //     event.preventDefault();
-  //     return;
-  //   }
-
-  //   let pastedData = clipboardData.getData('Text');
-
-  //   const allowedCharacters = /^[\.\&A-Za-z\s]+$/;
-  //   if (!allowedCharacters.test(pastedData)) {
-  //     event.preventDefault();
-  //     return;
-  //   }
-
-  //   const target = event.target as HTMLInputElement;
-  //   if (target) {
-  //     // Get current input value and selected text
-  //     const currentValue = target.value;
-  //     const selectionStart = target.selectionStart ?? 0; // Default to 0 if null or undefined
-  //     const selectionEnd = target.selectionEnd ?? 0; // Default to 0 if null or undefined
-
-  //     // Modify the current value with pasted data
-  //     const newValue =
-  //       currentValue.slice(0, selectionStart) +
-  //       pastedData +
-  //       currentValue.slice(selectionEnd);
-
-  //     // Validate the new value
-  //     if (!allowedCharacters.test(newValue)) {
-  //       event.preventDefault();
-  //     }
-  //   }
-  // }
-
-
   selectsource(sourceid: any, sourceName: any): void {
     this.sourceId = sourceid;
     this.sourceName = sourceName;
@@ -232,7 +194,6 @@ export class AddCandidateModalComponent implements OnInit {
     if (controlKeys.includes(key)) return;
 
     let value = target.value.replace(/,/g, '');
-    // Only allow one dot
     if (key === '.' && value.includes('.')) {
       event.preventDefault();
       return;
@@ -306,10 +267,6 @@ export class AddCandidateModalComponent implements OnInit {
       event.preventDefault();
       return;
     }
-    // if (this.maxSalary === undefined || this.fromRequirementName.trim() !== '') {
-    //   this.tostr.warning(`Please Choose a Requirement`);
-    //   return;
-    // }
     if (enteredValue && Number(enteredValue) >= this.maxSalary) {
       this.tostr.warning(`Budget should be less than ${this.maxSalary}`);
       event.preventDefault();
@@ -348,8 +305,8 @@ export class AddCandidateModalComponent implements OnInit {
 
   onFileSelected(event: any) {
     this.fileInputClicked = true;
-    this.selectedFile = event.target.files[0];
-    if (event.target.files.length > 0) {
+    this.selectedFile = event?.target?.files?.[0];
+    if (event?.target?.files?.length > 0) {
       this.resumeUploadSuccess = true;
     }
     if (this.selectedFile) {
@@ -404,18 +361,6 @@ export class AddCandidateModalComponent implements OnInit {
         condition: !this.sourceId,
         message: 'Please Enter an Application source'
       },
-      // {
-      //   condition: !this.uploadedFileKey,
-      //   message: 'Please Upload Candidate Resume'
-      // },
-      // {
-      //   condition: !this.selectedFile,
-      //   message: 'Please Upload Candidate Resume'
-      // },
-      // {
-      //   condition: !this.selectedRequirementId,
-      //   message: 'Please Select a Requirement'
-      // }
     ];
     this.validationSuccess = true;
     validations.forEach(({ condition, message }) => {
@@ -468,7 +413,6 @@ export class AddCandidateModalComponent implements OnInit {
   submitClick(): void {
     this.submitForm = true;
     this.loader = true;
-    // this.uploadFile();
     this.checkValidation();
     if (this.validationSuccess) {
       let candidateDetails = this.candidateForm.value;
@@ -630,15 +574,6 @@ export class AddCandidateModalComponent implements OnInit {
     this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
     this.searchKeyword = '';
   }
-
-  // addExtraSkills(): void {
-  //   let skill = document.getElementById('addskill') as HTMLInputElement;
-  //   let skillValue = skill.value;
-  //   this.apiService.post(`/candidate/add/skill?skillName=${skillValue}`, skillValue).subscribe((res: any) => {
-  //     const extraSkill = res?.data;
-  //     this.selectSkill(extraSkill);
-  //   })
-  // }
 
   ngOnDestroy(): void {
     if (this.keySubscription) {

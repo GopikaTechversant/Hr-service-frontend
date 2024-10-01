@@ -8,7 +8,6 @@ import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/materi
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { RequirementFormComponent } from './components/requirement-form/requirement-form.component';
 import { ServiceRequestComponent } from './components/service-request/service-request.component';
 import { RequirementCandidateListComponent } from './components/requirement-candidate-list/requirement-candidate-list.component';
 import { SeriesComponent } from './components/series/series.component';
@@ -42,7 +41,6 @@ const routes: Routes = [
       { path: 'service-requirement', component: ServiceRequestComponent },
       { path: 'candidate-list', component: RequirementCandidateListComponent },
       { path: 'add-candidate', component: AddCandidateModalComponent },
-      // { path: 'interview-details', component: InterviewDetailsComponent },
       { path: 'interview-details', component: InterviewListComponent },
       { path: 'requirement-candidate-list', component: RequirementCandidateListComponent },
       { path: 'report-details', component: ReportDetailsComponent },
@@ -62,7 +60,6 @@ const routes: Routes = [
   declarations: [
     DashboardComponent,
     AddCandidateModalComponent,
-    RequirementFormComponent,
     ServiceRequestComponent,
     RequirementCandidateListComponent,
     SeriesComponent,

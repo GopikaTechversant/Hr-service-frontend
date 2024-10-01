@@ -114,7 +114,6 @@ tr:hover {
     color: #c10a0a;
     width: 100%;
     padding-top: 15%;
-    /* padding: 50% 300%; */
 }
 
 .fa-chevron-down {
@@ -122,11 +121,12 @@ tr:hover {
 }
 
 .box {
-   height: 29px;
+    height: 29px;
     width: 32px;
     border: none;
     background-color: white;
 }
+
 .page {
     margin-top: 10px;
     margin-bottom: 10px;

@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastrServices } from 'src/app/services/toastr.service';
 import { ApiService } from 'src/app/services/api.service';
-import { jwtDecode } from 'jwt-decode';
 import { environment } from 'src/environments/environments';
 
 declare const google: any;

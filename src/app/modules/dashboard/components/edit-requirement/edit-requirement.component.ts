@@ -70,7 +70,7 @@ export class EditRequirementComponent implements OnInit {
   textFormats: any[] = ['Aa', 'AA', 'aa', 'Aa A'];
   description: any;
   constructor(public dialogRef: MatDialogRef<EditRequirementComponent>, private tostr: ToastrServices, private apiService: ApiService, private sanitizer: DomSanitizer,
-    private datePipe: DatePipe, @Inject(MAT_DIALOG_DATA) public data: any) {
+   @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
   ngOnInit(): void {

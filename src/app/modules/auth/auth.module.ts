@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 const routes: Routes = [
@@ -24,6 +25,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     MaterialModule,
     HttpClientModule,
+    SharedModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], 
 })

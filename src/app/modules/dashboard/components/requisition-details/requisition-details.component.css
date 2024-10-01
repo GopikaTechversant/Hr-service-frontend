@@ -7,10 +7,6 @@
     font-weight: 500;
 }
 
-.blue {
-    color: #005EC9;
-}
-
 .date-filters {
     display: flex;
     align-items: center;

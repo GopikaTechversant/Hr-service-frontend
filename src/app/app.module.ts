@@ -2,66 +2,34 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthModule } from './modules/auth/auth.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-import { FeedbackComponent } from './components/feedback/feedback.component';
-import { FormsModule } from '@angular/forms';
-import { DeleteComponent } from './components/delete/delete.component';
-import { EditComponent } from './components/edit/edit.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from './modules/material/material.module';
-import { LogoutModalComponent } from './components/logout-modal/logout-modal.component';
-import { StationSwitchComponent } from './components/station-switch/station-switch.component';
-import { WarningBoxComponent } from './components/warning-box/warning-box.component';
-import { RequirementEditComponent } from './components/requirement-edit/requirement-edit.component';
-import { RequirementDeleteComponent } from './components/requirement-delete/requirement-delete.component';
-import { GoogleLoginProvider, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from 'src/environments/environments';
-import { StationCandidateDetailComponent } from './components/station-candidate-detail/station-candidate-detail.component';
-import { SharedModule } from './modules/shared/shared.module';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'; 
+import { AuthGuardService } from './services/auth-guard.service';
+import { Interceptor } from './interceptor/interceptor';
+
 @NgModule({
   declarations: [
     AppComponent,
-    FeedbackComponent,
-    DeleteComponent,
-    EditComponent,
-    LogoutModalComponent,
-    StationSwitchComponent,
-    WarningBoxComponent,
-    RequirementEditComponent,
-    RequirementDeleteComponent,
-    StationCandidateDetailComponent,
-  
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AuthModule,
-    FormsModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule, 
-    MaterialModule,
-    SharedModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
     ToastrModule.forRoot({
       timeOut: 2000,
       positionClass: 'toast-top-right',
       preventDuplicates: true
-    }),],
-  providers: [
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(environment.client_id),
-          },
-        ],
-      } as SocialAuthServiceConfig,
-    },
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      registrationStrategy: 'registerWhenStable:30000' // Register when the app is stable
+    }),
   ],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true },AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

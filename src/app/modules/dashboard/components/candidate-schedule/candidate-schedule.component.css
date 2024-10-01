@@ -1,22 +1,19 @@
-
-
 .heading {
     font-weight: 500;
     border-radius: 3px;
     color: black;
     font-size: 20px;
-
 }
 
 .loader-parent {
     position: absolute;
     left: 53%;
     z-index: 9;
-  }
-  
-  .loader-parent img {
+}
+
+.loader-parent img {
     width: 100px;
-  }
+}
 
 .name {
     font-size: 14px;
@@ -45,7 +42,7 @@
     width: 106px;
     padding-left: 2px;
     text-align: left;
-    height:27px;
+    height: 27px;
 }
 
 .title-candidate {
@@ -99,7 +96,6 @@
     right: 11%;
 }
 
-
 .drop-list {
     background: white;
     box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
@@ -134,7 +130,8 @@
     text-align: center;
     font-size: 16px;
     font-weight: 500;
-    color: #C10A0A;;
+    color: #C10A0A;
+    ;
     width: 100%;
     padding: 50% 218%;
 }
@@ -144,11 +141,12 @@
 }
 
 .box {
-   height: 29px;
+    height: 29px;
     width: 32px;
     border: none;
     background-color: white;
 }
+
 .page {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -173,6 +171,7 @@ input[type="text"] {
     width: 84%;
     padding: 6px
 }
+
 .input {
     border: 1px solid #E9E9E9;
     outline: none;
@@ -199,7 +198,7 @@ input[type="text"] {
     justify-content: center;
 }
 
-.clear-filter{
+.clear-filter {
     background-color: #fff;
     padding-bottom: 3px;
     padding-top: 2px;
@@ -226,16 +225,16 @@ input[type="text"] {
     top: 31%;
     left: 17%;
     width: 98%;
-  }
-  
-  .count-col{
-    width: 10%;
-  }
+}
 
-  .status-col{
+.count-col {
     width: 10%;
-  }
+}
 
-  .interview-status-col{
+.status-col {
+    width: 10%;
+}
+
+.interview-status-col {
     width: 12%;
-  }
+}

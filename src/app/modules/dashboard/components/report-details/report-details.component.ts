@@ -112,29 +112,14 @@ export class ReportDetailsComponent implements OnInit {
       if (res?.data) {
         this.userRequirement = [];
         this.totalReport = [];
-        this.userRequirement = res?.data[0];
-        this.totalReport = res?.totalReportMonth[0];
-        // for (let requirement of this.userRequirement) {
-        //   this.requirementDetail = requirement;
-        //   if (this.userRequirement.length > 0) {
-        //     this.error = false;
-        //     const requirementDetail = this.userRequirement[this.userRequirement.length - 1];
-        //     this.requirementDetailData = [
-        //       requirementDetail.sourcedScreened ?? '0',
-        //       requirementDetail.candidateContacted ?? '0',
-        //       requirementDetail.candidatesInterested ?? '0',
-        //       requirementDetail.interviewScheduled ?? '0',
-        //       requirementDetail.offerReleased ?? '0'
-        //     ];
-        //     // this.createChart();
-        //   } else this.requirementDetailData = ['0', '0', '0', '0', '0'];
-        // }
+        this.userRequirement = res?.data?.[0];
+        this.totalReport = res?.totalReportMonth?.[0];
       }
     }, (error) => {
       if (error?.status === 500) {
         this.tostr.error("Internal Server Error");
       } else {
-        // this.tostr.warning("No data found due to invalid request");
+        this.tostr.warning("No data found due to invalid request");
         this.userRequirement = [];
         this.totalReport = [];
         this.error = true;
@@ -166,7 +151,7 @@ export class ReportDetailsComponent implements OnInit {
     }
     if (item === 'recruiter') {
       this.recruiterName = "";
-      this.reportUserId = localStorage.getItem('userId');
+      this.reportUserId = '';
     }
     this.fetchDetails();
   }

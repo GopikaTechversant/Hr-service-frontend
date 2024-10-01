@@ -40,11 +40,10 @@ export class CandidateListComponent {
   constructor(private apiService: ApiService, private router: Router, private dialog: MatDialog, private toastr: ToastrService, private exportService: ExportService) { }
 
   ngOnInit(): void {
+    this.userId = localStorage.getItem('userId');
     this.initialLoader = true;
     this.requestId = this.positionId ? this.positionId : '';
     this.fetchCandidates();
-    this.userId = localStorage.getItem('userId');
-
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -70,7 +69,6 @@ export class CandidateListComponent {
         params += `&${idsParams}`;
       }
       const exportUrl = `${url}?${params}`;
-      // console.log(exportUrl);
       this.apiService.getTemplate(exportUrl).subscribe(
         (data: Blob) => {
           if (data.type === 'application/json') {
@@ -142,20 +140,7 @@ export class CandidateListComponent {
       candidatesId: candidate?.candidateId,
       resumeSource: candidate?.resumeSourceId
     }));
-    // this.candidateIdsRequirement = selectedCandidates.filter((candidate: { candidatesAddingAgainst: any; }) => candidate.candidatesAddingAgainst === null)
-    //   .map((candidate: { candidateId: any; }) => candidate?.candidateId);
-    //   console.log(" this.candidateIdsRequirement", this.candidateIdsRequirement);
-
   }
-
-  // getSelectedCandidateServiceIds(): void {
-  //   const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
-  //   this.candidateIds = selectedCandidates.map((candidate: { serviceSequence: { serviceId: any; }; }) => candidate.serviceSequence?.serviceId);
-  //   const candidatesWithoutQuestionName = selectedCandidates.filter(
-  //     (candidate: { serviceSequence: { serviceStatus: string, progress: { questionName: any; }; }; }) => candidate.serviceSequence?.serviceStatus === 'pending' && !candidate.serviceSequence?.progress?.questionName
-  //   );
-  //   this.candidateIdsQuestion = candidatesWithoutQuestionName.map((candidate: { serviceSequence: { serviceId: any; }; }) => candidate.serviceSequence?.serviceId);
-  // }
 
   generatePageNumbers() {
     let pages = [];

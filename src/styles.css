@@ -2,6 +2,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: default;
+  font-family: 'Roboto', sans-serif;
 }
 
 textarea {
@@ -83,11 +84,6 @@ textarea {
   height: 100%;
 }
 
-
-a {
-  color: unset;
-}
-
 a:hover {
   text-decoration: none !important;
 }
@@ -119,73 +115,12 @@ a:hover {
   box-shadow: var(--ds-shadow-raised, 0 1px 1px rgba(9, 30, 66, 0.25), 0 0 1px 1px rgba(9, 30, 66, 0.13));
 }
 
-
 .mat-dialog-container {
   padding: 0px !important;
 }
 
 .image-dialog-container .mat-dialog-container {
   overflow: hidden !important;
-}
-
-.mat-tab-label-active .mat-tab-label-content {
-
-  font-weight: 600 !important;
-}
-
-/* FONT STYLES SIZES STARTS*/
-/* f-s-8 xxs-text f-s-10 s-text f-s-12 m-text f-s-14 f-s-15 f-s-16 f-s-17 f-s-18 f-s-19 f-s-20 f-s-22 */
-.xxs-text {
-  /* f-s-8 xxs-text f-s-10 s-text*/
-  font-size: 9px !important;
-}
-
-.xs-text {
-  /*  xxs-text f-s-10  s-text*/
-  font-size: 10px !important;
-}
-
-.s-text {
-  /* s-text f-s-12 m-text */
-  font-size: 12px !important;
-}
-
-.m-text {
-  /* m-text f-s-14 f-s-15 */
-  font-size: 14px !important;
-
-}
-
-.l-text {
-  /* f-s-15 f-s-16 f-s-17 f-s-18 */
-  font-size: 15px !important;
-}
-
-.xl-text {
-  /* f-s-17 f-s-18 f-s-19 f-s-20  */
-  font-size: 16px !important;
-}
-
-.f-s-17-text {
-  font-size: 17px !important;
-}
-
-.xxl-text {
-  /* f-s-20 f-s-22 */
-  font-size: 18px !important;
-}
-
-.xxxl-text {
-  /* f-s-22 f-s-23 f-s-24 */
-  font-size: 20px !important
-}
-
-.very-large-text {
-  font-size: 22px !important;
-}
-
-.huge-text {
-  font-size: 35px !important;
 }
 
 .scrollable::-webkit-scrollbar,
@@ -226,10 +161,6 @@ body {
   justify-content: center;
 }
 
-.p-absolute {
-  position: absolute !important;
-}
-
 .c-pointer {
   cursor: pointer !important;
 }
@@ -247,6 +178,10 @@ body {
 
 .red {
   color: #C10A0A;
+}
+
+.green {
+  color: green;
 }
 
 .orange {
@@ -353,11 +288,6 @@ tr {
   background-color: #f6f6f6;
 }
 
-
-.blue {
-  color: #0034C4;
-}
-
 table {
   width: 100%;
   border-collapse: collapse;
@@ -366,10 +296,6 @@ table {
 .details-table {
   font-size: 13px;
 }
-
-/* .details:hover {
-  background-color: #D3E8FF;
-} */
 
 .padding-5 {
   padding: 5px;
@@ -405,10 +331,10 @@ table {
 .modal-header .modal-close button {
   outline: none !important;
   border: 1px solid #e0dbdb;
-  border-radius: 50%!important;
-  background-color: white!important;
-  height: 50px!important;
-  width: 50px!important;
+  border-radius: 50% !important;
+  background-color: white !important;
+  height: 50px !important;
+  width: 50px !important;
 }
 
 .mat-icon {
@@ -418,7 +344,7 @@ table {
   display: inline-block;
   fill: currentColor;
   height: 19px !important;
-  width: 24px!important;
+  width: 24px !important;
   overflow: hidden;
 }
 
@@ -428,26 +354,23 @@ a {
   color: #0034C4;
 }
 
-button{
-  outline: none!important;
+button {
+  outline: none !important;
 }
-
 
 .scrollable::-webkit-scrollbar,
 .mat-dialog-container::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .scrollable,
 .mat-dialog-container {
-    scrollbar-width: none;
-    /* For Firefox */
+  scrollbar-width: none;
 }
 
 .scrollable,
 .mat-dialog-container {
-    -ms-overflow-style: none;
-    /* For Internet Explorer and Edge */
+  -ms-overflow-style: none;
 }
 
 .btn {
@@ -464,6 +387,6 @@ input[type="text"] {
   outline: none;
 }
 
-.f-left{
+.f-left {
   float: left;
 }

@@ -4,6 +4,11 @@
     width: 100%;
 }
 
+.fa-search {
+    color: #575F6E;
+    font-size: 18px;
+}
+
 .w-75 {
     width: 75%;
 }
@@ -27,6 +32,7 @@
     overflow: hidden;
     background-color: whitesmoke;
 }
+
 .date-filters {
     display: flex;
     align-items: center;
@@ -80,7 +86,7 @@ input[type="text"] {
     height: 40px;
 }
 
-.date-input{
+.date-input {
     border: 1px solid #E9E9E9;
     outline: none;
     background-color: #FFFFFF;
@@ -102,20 +108,11 @@ input[type="text"] {
     align-items: center;
 }
 
-.flex-1 {
-    flex: 1;
-}
-
 input[type="text"] {
     border: none;
     outline: none;
     width: 84%;
     padding: 6px
-}
-
-.green {
-    color: #08BC66;
-   /* background-color:#08BC66 ;  */
 }
 
 .search-div {
@@ -129,7 +126,6 @@ input[type="text"] {
     background: #FFFFFF;
     position: relative;
     padding: 10px;
-    /* margin-left: 10px; */
 }
 
 .move {
@@ -149,7 +145,6 @@ input[type="text"] {
     top: 35%;
     left: 21%;
 }
-
 
 .dropdown {
     background: white;
@@ -172,11 +167,12 @@ input[type="text"] {
 }
 
 .box {
-   height: 29px;
+    height: 29px;
     width: 32px;
     border: none;
     background-color: white;
 }
+
 .box :hover {
     background: #F0F7FF;
 }
@@ -206,14 +202,14 @@ input[type="text"] {
     border-radius: 50%;
 }
 
-@media (max-width: 1250px){
-    tr td{
+@media (max-width: 1250px) {
+    tr td {
         font-size: 12px;
         padding: 9px;
     }
 
-    .move-icon{
+    .move-icon {
         width: 23px;
         height: 23px;
     }
-  }
+}

@@ -2,7 +2,6 @@ import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { ExportService } from 'src/app/services/export.service';
-import { environment } from 'src/environments/environments';
 
 @Component({
   selector: 'app-daily-report',
@@ -65,7 +64,7 @@ export class DailyReportComponent implements OnInit {
       `reportPageNo=${this.report ? '' : this.currentPage}`,
       `reportPageLimit=${this.report ? '' : this.pageSize}`,
       `report=${this.report}`
-    ].filter(param => param.split('=')[1] !== '').join('&'); 
+    ].filter(param => param.split('=')[1] !== '').join('&');
     if (this.report) {
       const exportUrl = `${url}?${params}`;
       this.apiService.getTemplate(exportUrl).subscribe(

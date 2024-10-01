@@ -120,9 +120,7 @@
     border-radius: 3px;
     background-color: #FFFFFF;
     box-shadow: 0px 4px 8px 0px #0000001A;
-    /* padding: 20px; */
     margin-bottom: 20px;
-    /* width: 99%; */
 }
 
 .skill-drop-down {
@@ -256,7 +254,6 @@
 
 .child-1 {
     flex-direction: column;
-    /* flex: 1; */
     width: 50.7%;
 }
 

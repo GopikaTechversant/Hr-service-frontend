@@ -70,10 +70,6 @@
     font-weight: 500;
 }
 
-.p-relative {
-    position: relative;
-}
-
 .filter-icon {
     position: absolute;
     right: 10px;
@@ -85,8 +81,4 @@
 .d-flex {
     display: flex;
     align-items: center;
-}
-
-.flex-1 {
-    flex: 1;
 }

@@ -76,10 +76,6 @@
     font-weight: 500;
 }
 
-.p-relative {
-    position: relative;
-}
-
 .filter-icon {
     position: absolute;
     right: 10px;
@@ -92,11 +88,6 @@
     display: flex;
     align-items: center;
 }
-
-.flex-1 {
-    flex: 1;
-}
-
 
 .date-filters {
     display: flex;

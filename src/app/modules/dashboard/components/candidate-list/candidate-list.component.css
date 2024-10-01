@@ -205,12 +205,6 @@ input[type="text"] {
     font-weight: 500;
 }
 
-
-/* 
-.search {
-    height: 19px;
-} */
-
 .disabled-icon-color {
     color: #dfdfd7;
     pointer-events: none;

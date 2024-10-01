@@ -108,7 +108,7 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
     this.technicalData = [];
     this.apiService.get(`/dashboard/department-chart?teamId=${this.selectedTeamId}&start_date=${this.startDate}&end_date=${this.endDate}`).subscribe((res: any) => {
       this.barchartList = res || [];
-      if (this.barchartList.length > 0) {
+      if (this.barchartList?.length > 0) {
         this.labels = this.barchartList.map((item: any) => item.teamName ?? item.requestName);
         this.hiredData = this.barchartList.map((item: any) => +item.hire_count || null); // Replace 0 with null
         this.totalApplicants = this.barchartList.map((item: any) => +item.total_applicant || null); // Replace 0 with null
@@ -157,7 +157,7 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
       return total + this.measureTextWidth(label, labelFont) + labelPadding * 2;
     }, 0);
 
-    if (this.labels.length > 7) {
+    if (this.labels?.length > 7) {
       this.chartWidth = Math.max(baseWidth * 2, totalLabelWidth);
     } else {
       this.chartWidth = Math.max(baseWidth, totalLabelWidth);
