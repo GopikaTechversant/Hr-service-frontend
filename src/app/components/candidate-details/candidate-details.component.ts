@@ -26,7 +26,6 @@ export class CandidateDetailsComponent implements OnInit {
   CandidateHistory: any;
   initialLoader: boolean = false;
   loader: boolean = false;
-  scaleFactor: number = 0.55; // Default scale factor
   positonIds: any;
   constructor(private apiService: ApiService, private route: ActivatedRoute, private datePipe: DatePipe, private dialog: MatDialog) {
     // this.route.params.subscribe(params => {
@@ -43,9 +42,7 @@ export class CandidateDetailsComponent implements OnInit {
     this.env_url = window.location.origin;
 
   }
-  adjustScale(factor: number) {
-    this.scaleFactor = factor;
-  }
+
   fetchCandidateDetails(): void {
     if (!this.initialLoader) this.loader = true;
     this.apiService.get(`/candidate/list/${this.candidateId}`).subscribe({
@@ -69,17 +66,14 @@ export class CandidateDetailsComponent implements OnInit {
       }
     });
   }
-
-  requirementSwitch(direction: string): void {
-    const positions = this.candidateDetails?.position;
-    if (direction === 'L') {
-      this.currentRequirementIndex = (this.currentRequirementIndex + 1) % positions.length;
-    } else if (direction === 'R') {
-      this.currentRequirementIndex = (this.currentRequirementIndex - 1 + positions.length) % positions.length;
-    }
-    this.positionId = this.candidateDetails?.position[this.currentRequirementIndex]?.reqServiceRequest?.requestId
-    this.fetchCandidateHistory();
-  }
+  // requirementSwitch(direction: string): void {
+  //   const positions = this.candidateDetails?.position;
+  //   if (direction === 'L') {
+  //     this.currentRequirementIndex = (this.currentRequirementIndex + 1) % positions.length;
+  //   }
+  //   this.positionId = this.candidateDetails?.position[this.currentRequirementIndex]?.reqServiceRequest?.requestId
+  //   this.fetchCandidateHistory();
+  // }
 
   fetchCandidateHistory(): void {
     if (!this.initialLoader) this.loader = true;
@@ -117,9 +111,7 @@ export class CandidateDetailsComponent implements OnInit {
       height: '700px'
     })
     dialogRef.componentInstance.onEditSuccess.subscribe(() => {
-      // this.currentPage = 1;
-      // this.pageSize = 14;
-      // this.fetchCandidates();
+     
     })
   }
 

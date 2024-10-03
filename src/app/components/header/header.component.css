@@ -26,10 +26,8 @@
 .sidebar-hidden {
     width: 0;
     margin-left: -15vw;
-    /* Slide out effect */
 }
 
-/*  */
 .hamburger {
     width: 30px;
     height: 22px;
@@ -37,8 +35,6 @@
     flex-direction: column;
     justify-content: space-between;
     cursor: pointer;
-    /* color: #005EC9; */
-
 }
 
 .hamburger span {
@@ -49,8 +45,6 @@
     border-radius: 2px;
 }
 
-
-
 .header-full {
     width: 99vw;
 }
@@ -58,8 +52,6 @@
 .side-head {
     font-weight: 500;
     font-size: 1.4rem;
-    /* Large screens */
-
 }
 
 .detail {
@@ -227,7 +219,6 @@
 @media (max-width: 1396px) and (min-width: 1000px) {
     .side-head {
         font-size: 1rem;
-        /* Large screens */
     }
 
     .sidebar-container {
@@ -237,7 +228,6 @@
 
     .header {
         width: 59vw;
-        /* Ensuring the header still spans 83% of the screen width */
         flex-direction: column;
         align-items: flex-start;
         justify-content: space-between;
@@ -246,7 +236,6 @@
     .header-full {
         width: 74vw;
     }
-
 
     .profile {
         justify-content: flex-end;

@@ -241,11 +241,6 @@
     margin-left: 10px;
 }
 
-.btns {
-    /* margin-right: -22px !important; */
-    margin-top: 20px;
-}
-
 .selected-primary {
     flex-direction: column;
 }
@@ -283,8 +278,4 @@ ul {
 
 .fa-file-alt {
     color: blue;
-}
-
-.padding-4 {
-    padding: 4px;
 }

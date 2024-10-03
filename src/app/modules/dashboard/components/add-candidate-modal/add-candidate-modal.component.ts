@@ -99,6 +99,7 @@ export class AddCandidateModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  
     this.candidateCreatedby = localStorage.getItem('userId');
     this.currentYear = new Date().getFullYear();
     this.maxDate = new Date();
@@ -149,13 +150,29 @@ export class AddCandidateModalComponent implements OnInit {
   nameValidation(event: any): void {
     const allowedCharacters = /^[\.\&A-Za-z\s]+$/;
     let enteredValue = event?.target?.value;
+    // Allow Ctrl + C (copy) and Ctrl + V (paste)
+    if ((event.ctrlKey || event.metaKey) && (event.key === 'c' || event.key === 'v' || event.key === 'A') ) {
+      return;
+    }
+  
     if (!event.ctrlKey && !event.metaKey && !event.altKey && event?.key?.length === 1) {
       enteredValue += event?.key;
     }
+  
     if (!allowedCharacters.test(enteredValue)) {
       event.preventDefault();
     }
   }
+
+  namePasteValidation(event: ClipboardEvent): void {
+    const pastedData = event.clipboardData?.getData('text') || '';
+    const allowedCharacters = /^[\.\&A-Za-z\s]+$/;
+  
+    if (!allowedCharacters.test(pastedData)) {
+      event.preventDefault(); // Prevent paste if invalid characters are found
+    }
+  }
+  
 
   selectsource(sourceid: any, sourceName: any): void {
     this.sourceId = sourceid;
@@ -185,6 +202,10 @@ export class AddCandidateModalComponent implements OnInit {
     const allowedKeys = /[0-9.,]/;
     const controlKeys = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete', 'Tab'];
     const key = event.key;
+ // Allow Ctrl + C (copy) and Ctrl + V (paste)
+ if ((event.ctrlKey || event.metaKey) && (event.key === 'c' || event.key === 'v')) {
+  return;
+}
 
     if (!allowedKeys.test(key) && !controlKeys.includes(key)) {
       event.preventDefault();
@@ -248,6 +269,11 @@ export class AddCandidateModalComponent implements OnInit {
     if (event.key === "Backspace") enteredValue = event?.target?.value.slice(0, -1);
     else enteredValue = event.target.value + event.key;
     const allowedCharacters: RegExp = /^[0-9]+$/;
+     // Allow Ctrl + C (copy) and Ctrl + V (paste)
+     if ((event.ctrlKey || event.metaKey) && (event.key === 'c' || event.key === 'v')) {
+      return;
+    }
+  
     if (event.key !== "Backspace" && !allowedCharacters.test(enteredValue)) {
       event.preventDefault();
       return;

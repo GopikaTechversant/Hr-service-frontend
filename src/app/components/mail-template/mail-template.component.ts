@@ -95,7 +95,7 @@ export class MailTemplateComponent implements OnInit {
 
   openTimePicker(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
-    inputElement.click();  // Simulate a click to open the time selector
+    inputElement.click(); 
   }
 
   fetchPanel(): void {
@@ -354,7 +354,6 @@ export class MailTemplateComponent implements OnInit {
     this.submitData.emit(data);
   }
   
-
   clearInputvalue(id: string) {
     const inputElement = document.getElementById(id) as HTMLInputElement;
     if (inputElement) inputElement.value = '';

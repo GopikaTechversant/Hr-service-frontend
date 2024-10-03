@@ -188,7 +188,7 @@
                                 </div>
                             </div>
                             <ul *ngIf="candidateDetails?.candidatePrimarySkills?.length > 0 || candidateDetails?.candidatePrimarySkills?.length > 0">
-                                <li *ngFor="let skill of selectedPrimarySkills" class="padding-4">
+                                <li *ngFor="let skill of selectedPrimarySkills" class="p-4">
                                     {{skill?.name | titlecase}}
                                     <i class="fa fa-trash-o delete-color c-pointer" aria-hidden="true"
                                         (click)="removeSkill(skill, 'primary')"></i>
@@ -232,7 +232,7 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex f-right btns">
+        <div class="d-flex f-right m-t-20">
             <span class="cancel-btn c-pointer" (click)="cancel()">Cancel</span>
             <button class="add-candidate c-pointer" type="submit">Update</button>
         </div>

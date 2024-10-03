@@ -97,7 +97,6 @@ export class HeaderComponent implements OnInit {
     this.searchKeyword = '';
   }
 
-
   selectCandidate(id: any): void {
     this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
     this.searchKeyword = '';

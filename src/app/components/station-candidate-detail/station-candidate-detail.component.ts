@@ -205,7 +205,6 @@ export class StationCandidateDetailComponent implements OnInit {
     this.closeDialog();
   }
 
-
   rescheduleClick(data: any): void {
     this.loader = true;
     const payload = {

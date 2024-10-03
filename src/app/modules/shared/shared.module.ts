@@ -5,7 +5,6 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { MaterialModule } from '../material/material.module';
 import { HeaderComponent } from 'src/app/components/header/header.component';
 import { SkeletonLoaderComponent } from 'src/app/components/skeleton-loader/skeleton-loader.component';
-import { FileUploadS3Component } from 'src/app/components/file-upload-s3/file-upload-s3.component';
 import { MailTemplateComponent } from 'src/app/components/mail-template/mail-template.component';
 import { CandidateDetailsComponent } from 'src/app/components/candidate-details/candidate-details.component';
 import { LeftSidebarComponent } from 'src/app/components/left-sidebar/left-sidebar.component';
@@ -22,7 +21,6 @@ import { WarningBoxComponent } from 'src/app/components/warning-box/warning-box.
   declarations: [
     HeaderComponent,
     SkeletonLoaderComponent,
-    FileUploadS3Component,
     MailTemplateComponent,
     CandidateDetailsComponent,
     LeftSidebarComponent,
@@ -46,7 +44,6 @@ import { WarningBoxComponent } from 'src/app/components/warning-box/warning-box.
     HeaderComponent,
     SkeletonLoaderComponent,
     NgxSkeletonLoaderModule,
-    FileUploadS3Component,
     MailTemplateComponent,
     LeftSidebarComponent,
     CandidateDetailsComponent,

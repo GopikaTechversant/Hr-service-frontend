@@ -56,7 +56,7 @@
         "/user/filter-status**",
         "/user/lists**",
         "/service-request/designation/list**",
-        "/hr-station/**"
+        "/hr-station/list**"
       ],
       "cacheConfig": {
         "strategy": "performance",

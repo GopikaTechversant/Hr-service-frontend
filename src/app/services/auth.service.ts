@@ -12,7 +12,6 @@ export class AuthService {
       // let decodedToken: any = jwtDecode(token);
       return true;
     }
-
   }
 
   getUser() {

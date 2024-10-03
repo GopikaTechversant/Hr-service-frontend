@@ -38,9 +38,7 @@ export class FeedbackComponent implements OnInit {
       }
     });
     this.dialogRef.close(true);
-
   }
-
 
   onCancelClick(): void {
     this.dialogRef.close();

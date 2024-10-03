@@ -22,7 +22,6 @@ export class ServiceRequestComponent implements OnInit {
   selectedId: any;
   selectedName: any;
   teamListOpen: boolean = false;
-  // skillsArray: any = [];
   requestVacancy: any;
   stationsList: any[] = [];
   stationId: any;
@@ -34,8 +33,6 @@ export class ServiceRequestComponent implements OnInit {
   skillSuggestions: any[] = [];
   showSearchBar: boolean = false;
   selectedSkills: any[] = [];
-  // skillNameValue: string = '';
-  // stationIdToRemove: any;
   stationsLists: any;
   designationList: any;
   openDesignation: boolean = false;
@@ -44,7 +41,6 @@ export class ServiceRequestComponent implements OnInit {
   maxDate: any;
   currentYear: any;
   minDate: any;
-  // commentValue: any = '';
   today: Date = new Date();
   displayDate: string | null = null;
   closeDate: string | null = null;
@@ -131,11 +127,7 @@ export class ServiceRequestComponent implements OnInit {
       if (res?.data) this.designationList = res?.data;
     }))
   }
-  // fetchServiceId(): void {
-  //   this.apiService.get(`/service-request/services`).subscribe(((res: any) => {
-  //     if (res?.data) this.list_id = res?.data;
-  //   }))
-  // }
+
   fetchServiceTeam(): void {
     this.apiService.get(`/service-request/team`).subscribe((res: any) => {
       if (res.data) this.list_team = res.data;
