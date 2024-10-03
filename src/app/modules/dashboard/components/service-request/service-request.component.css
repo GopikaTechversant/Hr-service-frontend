@@ -239,11 +239,6 @@
     right: 22px;
 }
 
-.mat-ripple {
-    overflow: hidden;
-    position: relative;
-}
-
 .btn-cancel {
     background-color: #575F6E;
     width: 100px;

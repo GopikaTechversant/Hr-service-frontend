@@ -47,6 +47,23 @@
         "maxAge": "6h",
         "timeout": "10s"
       }
+    },
+    {
+      "name": "api-calls",
+      "urls": [
+        "/user/stations**",
+        "/service-request/team**",
+        "/user/filter-status**",
+        "/user/lists**",
+        "/service-request/designation/list**",
+        "/hr-station/**"
+      ],
+      "cacheConfig": {
+        "strategy": "performance",
+        "maxSize": 200,
+        "maxAge": "6h",
+        "timeout": "10s"
+      }
     }
   ]
 }
