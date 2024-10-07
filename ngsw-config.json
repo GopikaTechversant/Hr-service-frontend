@@ -12,8 +12,8 @@
           "/manifest.webmanifest",
           "/*.css",
           "/*.js",
-          "/assets/chart.min.js" ,
-          "/assets"
+          "/assets/chart.min.js",
+          "/assets/**"
         ]
       }
     },
@@ -31,7 +31,7 @@
   ],
   "dataGroups": [
     {
-      "name": "api-calls",
+      "name": "api-calls-dashboard",
       "urls": [
         "/dashboard/**",
         "/user/**",
@@ -42,27 +42,26 @@
         "/hr-station/**"
       ],
       "cacheConfig": {
-        "strategy": "freshness",
-        "maxSize": 200,
-        "maxAge": "6h",
-        "timeout": "10s"
+        "maxSize": 100,
+        "maxAge": "1h",
+        "timeout": "10s",
+        "strategy": "freshness"
       }
     },
     {
-      "name": "api-calls",
+      "name": "api-calls-user",
       "urls": [
-        "/user/stations**",
-        "/service-request/team**",
-        "/user/filter-status**",
-        "/user/lists**",
-        "/service-request/designation/list**",
-        "/hr-station/list**"
+        "/user/stations/**",
+        "/service-request/team/**",
+        "/user/filter-status/**",
+        "/user/lists/**",
+        "/service-request/designation/list/**",
+        "/hr-station/list/**"
       ],
       "cacheConfig": {
-        "strategy": "performance",
-        "maxSize": 200,
-        "maxAge": "6h",
-        "timeout": "10s"
+        "maxSize": 50,
+        "maxAge": "24h",
+        "strategy": "performance"
       }
     }
   ]

@@ -32,7 +32,6 @@ export class HrCandidateDetailComponent {
   status: any;
   currentStation: any;
   stationId: any;
-  url: any;
   reviewAdded: boolean = false;
   requestDetails: any;
   offerSent: boolean = false;
@@ -64,12 +63,12 @@ export class HrCandidateDetailComponent {
     this.currentStation = this.router.url.split('/')[1];
     this.route.params.subscribe(params => {
       this.stationId = params['id'];
-      this.url = `/technical/${this.stationId}`;
     });
     this.stationId = this.router.url.split('/')[2];
     this.today = new Date();
     this.userId = localStorage.getItem('userId');
     this.env_url = window.location.origin;
+    this.fetchStatus();
   }
 
   closeDialog(): void {
@@ -96,6 +95,13 @@ export class HrCandidateDetailComponent {
   selectButton(type: any): void {
     this.buttonType = type;
   }
+
+  fetchStatus(): void {
+    this.apiService.get(`/user/filter-status`).subscribe(res => {
+      this.status = res?.data.slice(4);
+    });
+  }
+
   selectStatusFilter(status: string) {
     this.filteredStatus = status;
   }
@@ -207,13 +213,13 @@ export class HrCandidateDetailComponent {
   }
 
   rejectClick(data: any): void {
+    this.loader = true;
     const feedback = document.getElementById('feedback') as HTMLInputElement;
     if (feedback) this.feedback = feedback?.value;
-    if (this.feedback.trim() !== '' || data) {
-      this.loader = true;
+    if ((this.feedback.trim() !== '' && this.filteredStatus) || data) {
       const payload = {
         serviceId: this.serviceId,
-        stationId: this.stationId,
+        stationId: 5,
         userId: this.userId,
         status: this.filteredStatus ? this.filteredStatus : "rejected",
         rejectCc: data?.mailCc ?? '',
@@ -222,7 +228,6 @@ export class HrCandidateDetailComponent {
         rejectBcc: data?.mailBcc ?? '',
         feedBack: data?.feedback ? data?.feedback : this.feedback,
       };
-
       this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
         next: (res: any) => {
           this.loader = false;
@@ -233,8 +238,7 @@ export class HrCandidateDetailComponent {
           this.tostr.error('Error adding progress');
         }
       });
-    } else this.tostr.warning('Please Add Feedback');
-
+    }
   }
 
   approveClick(): void {

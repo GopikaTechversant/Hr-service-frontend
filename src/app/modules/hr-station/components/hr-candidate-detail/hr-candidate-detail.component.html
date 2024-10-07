@@ -46,8 +46,8 @@
                         <div class="p-8 key">Scheduled Date</div>
                         <div class="p-8 key">Scheduled time</div>
                         <div class="p-8 key">Panel</div>
-                        <div class="p-8 key">Inteview Satus</div>
-                        <div class="p-8 key">Inteview Mode</div>
+                        <div class="p-8 key">Interview Satus</div>
+                        <div class="p-8 key">Interview Mode</div>
                     </div>
                     <div class="sub-head">
                         <span class="p-8 job-description"> : {{data?.candidateDetails?.interviewTime  | date: 'dd/MM/YYY'}}</span>
@@ -177,7 +177,7 @@
         </div>
     </div>
         <!-- Interview Feedback -->
-        <div class="margin-10" *ngIf="reviewAdded && data?.candidateDetails?.serviceStatus === 'pending' && buttonType.trim() === 'add' && !candidateDetails['progress.progressDescription']">
+        <div class="margin-10" *ngIf="!reviewAdded && data?.candidateDetails?.serviceStatus === 'pending' && buttonType.trim() === 'add' && !candidateDetails['progress.progressDescription']">
             <div class="margin-10">
                 <span class="padding-10 sub-head">Feedback</span>
                 <textarea *ngIf="!candidateDetails['progress.progressDescription']" class="text-area m-l-5 padding-5" id="description"></textarea>
