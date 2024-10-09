@@ -250,17 +250,11 @@
                 </div>
                 <div class="child d-flex m-b-10">
                     <span class="label m-b-4">Current Salary<span class="f-s-12">(CTC)</span></span>
-                    <input type="text" class="input-box" #baseSalaryInput
-                        (keypress)="onKeypressSalary($event, baseSalaryInput)"
-                        (paste)="onPasteSalary($event, baseSalaryInput)" maxlength="10"
-                        formControlName="candidateCurrentSalary">
+                    <input type="text" class="input-box" #baseSalaryInput maxlength="20" formControlName="candidateCurrentSalary">
                 </div>
                 <div class="child d-flex m-b-10">
                     <span class="label m-b-4">Expected Salary <span class="f-s-12">(ECTC)</span></span>
-                    <input type="text" class="input-box" #maxSalaryInput
-                        (keypress)="onKeypressSalary($event, maxSalaryInput)"
-                        (paste)="onPasteSalary($event, maxSalaryInput)" maxlength="10"
-                        formControlName="candidateExpectedSalary">
+                    <input type="text" class="input-box" #maxSalaryInput maxlength="20" formControlName="candidateExpectedSalary">
                 </div>
             </div>
             <div class="d-flex parent-last">

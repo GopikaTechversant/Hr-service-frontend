@@ -52,9 +52,7 @@ export class HrCandidateDetailComponent {
       this.serviceId = this.data?.candidateDetails?.serviceId;
       this.feedback = data?.candidateDetails?.reqCandidateComment?.commentComment;
       if (data?.reviewStatus > 0) this.reviewAdded = true;
-      if (data?.offerStatus > 0) this.offerSent = true;
-      console.log(this.data, "vgvdygewdsva", this.offerSent);
-      
+      if (data?.offerStatus > 0) this.offerSent = true;      
     }
     this.dialogRef.updateSize('60%', '85%')
   }

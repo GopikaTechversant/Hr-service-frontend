@@ -269,7 +269,6 @@ export class StationCandidateDetailComponent implements OnInit {
       interviewMode: data?.interviewMode,
       requestionId: this.candidateDetails['serviceRequest.requestId']
     };
-    console.log(payload);
     this.apiService.post(`${baseUrl}/approve`, payload).subscribe({
       next: () => {
         this.tostr.success('Candidate Selected to Next Round');
