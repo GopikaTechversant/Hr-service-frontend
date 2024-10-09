@@ -25,9 +25,11 @@
   cursor: pointer;
 }
 
-/* .container-table{
-  height: calc(100vh - 190px);
-} */
+.container-table {
+  overflow: auto !important;
+  height: calc(100vh - 240px);
+  background-color: #FFFFFF;
+}
 
 .create-btn {
   background-color: #575F6E;

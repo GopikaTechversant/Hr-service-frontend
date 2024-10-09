@@ -3,7 +3,7 @@ import { ViewChild, ElementRef } from '@angular/core';
 import { ToastrServices } from 'src/app/services/toastr.service';
 import { ApiService } from 'src/app/services/api.service';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
@@ -16,7 +16,6 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 })
 export class ServiceRequestComponent implements OnInit {
   @ViewChild('comment') commentDiv!: ElementRef<HTMLDivElement>;
-  list_id: any = [];
   list_team: any = [];
   idListOpen: boolean = false;
   selectedId: any;
@@ -74,7 +73,8 @@ export class ServiceRequestComponent implements OnInit {
   panel_list: any[] = [];
   managerListOpen: boolean = false;
   description: any;
-  constructor(private toastr: ToastrServices, private apiService: ApiService, private datePipe: DatePipe, private router: Router, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
+  candidateCount: string = '0';
+  constructor(private toastr: ToastrServices, private apiService: ApiService, private datePipe: DatePipe, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
     });
@@ -94,7 +94,7 @@ export class ServiceRequestComponent implements OnInit {
     this.currentYear = new Date().getFullYear();
     this.maxDate = new Date();
     this.minDate = new Date();
-    if(this.requestId) this.fetchDetails()
+    if (this.requestId) this.fetchDetails()
     this.fetchStations();
     this.fetchServiceTeam();
     this.fetchDesignation();
@@ -114,11 +114,14 @@ export class ServiceRequestComponent implements OnInit {
 
   fetchDetails(): void {
     this.apiService.get(`/service-request/view?requestId=${this.requestId}`).subscribe((res: any) => {
-      if (res?.data) this.requirement_details = res?.data;
-      const text = this.requirement_details?.requestDescription;
-      this.formattedText = this.sanitizer.bypassSecurityTrustHtml(text);
-      this.flows = res?.flows;
-      this.initializeDataValues();
+      if (res?.data) {
+        this.requirement_details = res?.data;
+        this.candidateCount = this.requirement_details?.candidatesCount;
+        const text = this.requirement_details?.requestDescription;
+        this.formattedText = this.sanitizer.bypassSecurityTrustHtml(text);
+        this.flows = res?.flows;
+        this.initializeDataValues();
+      }
     })
   }
 
@@ -350,7 +353,8 @@ export class ServiceRequestComponent implements OnInit {
   }
 
   submitClick(): void {
-    const payload: any = {};
+    const payload: any = {};   
+    // Build the payload
     if (this.jobTitle !== this.requirement_details.requestName) payload.requestName = this.jobTitle;
     if (this.jobCode !== this.requirement_details.requestCode) payload.requestCode = this.jobCode;
     if (this.vacancy !== this.requirement_details.requestVacancy) payload.requestVacancy = this.vacancy;
@@ -363,27 +367,47 @@ export class ServiceRequestComponent implements OnInit {
     if (this.maxSalary !== this.requirement_details.requestMaxSalary) payload.requestMaxSalary = this.maxSalary;
     if (this.selectedTeam !== this.requirement_details?.team?.teamName) payload.requestTeam = this.selectedTeamName;
     if (this.reportingmanager !== this.requirement_details?.reporting?.userFullName) payload.requestManager = this.managerId;
-    if (this.displayDate !== this.requirement_details.requestPostingDate) payload.requestPostingDate = this.displayDate;
-    if (this.displayDate !== this.requirement_details.requestPostingDate) payload.requestClosingDate = this.closeDate;
+    if (this.displayDate !== this.requirement_details.requestPostingDate) {
+      payload.requestPostingDate = this.displayDate;
+      payload.requestClosingDate = this.closeDate;
+    }
+    
     const currentDescription = this.commentDiv.nativeElement.innerHTML;
     if (currentDescription !== this.requirement_details.requestDescription) payload.requestDescription = currentDescription;
-    if (this.jobTitle && this.jobCode && this.vacancy && this.skills && this.selectedStations && this.experience && this.selectedDesignation && this.baseSalary && this.maxSalary && this.selectedTeam) {
+  
+    // Check mandatory fields
+    const allFieldsFilled = this.jobTitle && this.jobCode && this.vacancy && this.skills && this.selectedStations && this.experience && this.selectedDesignation && this.baseSalary && this.maxSalary && this.selectedTeam;
+  
+    if (allFieldsFilled) {
       if (this.requestId) {
-        payload.requestId = this.requestId
-        this.apiService.post('/service-request/edit', payload).subscribe(response => {
-          this.toastr.success('Requirement updated successfully');
-          this.resetFormAndState();
-        }, error => {
-          this.toastr.error('Failed to update requirement');
-        });
-      } else
-        this.apiService.post('/service-request/create', payload).subscribe(response => {
-          this.toastr.success('Requirement Created successfully');
-          this.resetFormAndState();
-        }, error => {
-          this.toastr.error('Failed to create requirement');
-        });
-    } else this.toastr.warning('Please fill all mandatory fields');
+        if (this.candidateCount === '0') {
+          payload.requestId = this.requestId;
+          this.handleApiCall('post', '/service-request/edit', payload);
+        } else {
+          this.handleApiCall('patch', `/service-request/edit-requestion/${this.requestId}`, payload);
+        }
+      } else {
+        this.handleApiCall('post', '/service-request/create', payload);
+      }
+    } else {
+      this.toastr.warning('Please fill all mandatory fields');
+    }
+  }
+  
+  // Helper method to handle API calls
+  private handleApiCall(method: 'post' | 'patch', url: string, payload: any): void {
+    this.apiService[method](url, payload).subscribe(
+      response => {
+        const successMessage = method === 'post' ? 'Requirement created successfully' : 'Requirement updated successfully';
+        this.toastr.success(successMessage);
+        this.resetFormAndState();
+      },
+      error => {
+        const errorMessage = method === 'post' ? 'Failed to create requirement' : 'Failed to update requirement';
+        this.toastr.error(errorMessage);
+        console.error('API Error:', error);
+      }
+    );
   }
 
   clearInputvalue(inputElement: ElementRef<HTMLInputElement>) {

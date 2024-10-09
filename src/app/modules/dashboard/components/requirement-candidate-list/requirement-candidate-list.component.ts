@@ -16,8 +16,7 @@ import { EditRequirementComponent } from '../edit-requirement/edit-requirement.c
 export class RequirementCandidateListComponent implements OnInit {
   candidates_list: any = [];
   searchKeyword: string = '';
-  length: any = 20;
-  limit = 12;
+  limit = 15;
   currentPage = 1;
   showFirstLastButtons = true;
   totalCount: any;
@@ -82,7 +81,7 @@ export class RequirementCandidateListComponent implements OnInit {
   requirementSearch(search: any): void {
     this.searchKeyword = search;
     this.currentPage = 1;
-    this.limit = 9;
+    this.limit = 15;
     this.fetchcandidates(this.searchKeyword);
   }
 
@@ -111,7 +110,7 @@ export class RequirementCandidateListComponent implements OnInit {
       height: '80%'
     })
     dialogRef.componentInstance.onEditSuccess.subscribe(() => {
-      this.limit = 9;
+      this.limit = 15;
       this.fetchcandidates('');
     })
   }
@@ -141,7 +140,7 @@ export class RequirementCandidateListComponent implements OnInit {
     this.filteredStatus = item;
     sessionStorage.setItem('requisition', this.filteredStatus);
     this.currentPage = 1;
-    this.limit = 10;
+    this.limit = 15;
     this.fetchcandidates('');
   }
 
@@ -152,7 +151,7 @@ export class RequirementCandidateListComponent implements OnInit {
       sessionStorage.setItem('requisition', this.filteredStatus);
     }
     this.currentPage = 1;
-    this.limit = 14;
+    this.limit = 15;
     this.fetchcandidates('');
   }
 

@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environments';
 })
 export class ApiService {
   authToken: any;
+
   constructor(private http: HttpClient) { }
 
   private createHeaders(): HttpHeaders {
@@ -26,6 +27,7 @@ export class ApiService {
     }
   }
 
+  // Generic GET method
   get(url: string): Observable<any> {
     return this.http.get(`${environment.api_url}${url}`, { headers: this.createHeaders() });
   }
@@ -45,19 +47,21 @@ export class ApiService {
     return this.http.delete(`${environment.api_url}${url}`, { headers: this.createHeaders() });
   }
 
+  // Generic PUT method (duplicate, can be removed if not needed)
   put(url: string, data: any): Observable<any> {
     return this.http.put(`${environment.api_url}${url}`, data, { headers: this.createHeaders() });
   }
 
+  // Generic PATCH method
   patch(url: string, data: any): Observable<any> {
     return this.http.patch(`${environment.api_url}${url}`, data, { headers: this.createHeaders() });
   }
 
+  // Method to get templates (e.g., files) with a Blob response
   getTemplate(url: string): Observable<Blob> {
     return this.http.get(`${environment.api_url}${url}`, {
       headers: this.createHeaders(),
       responseType: 'blob'
     });
   }
-
 }

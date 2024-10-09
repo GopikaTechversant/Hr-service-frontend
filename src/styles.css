@@ -390,3 +390,7 @@ input[type="text"] {
 .f-left {
   float: left;
 }
+
+.text-muted{
+  color: #4F4F4F;
+}

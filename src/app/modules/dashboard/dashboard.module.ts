@@ -32,6 +32,7 @@ import { AssignRequirementComponent } from './components/assign-requirement/assi
 import { CandidateScheduleComponent } from './components/candidate-schedule/candidate-schedule.component';
 import { RequirementStackChartComponent } from './components/requirement-stack-chart/requirement-stack-chart.component';
 import { InterviewListComponent } from './components/interview-list/interview-list.component';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 
 const routes: Routes = [
   {
@@ -48,9 +49,10 @@ const routes: Routes = [
       { path: 'series', component: SeriesComponent },
       { path: 'requisition-detail/:id', component: RequisitionDetailsComponent },
       { path: 'candidate-pool', component: CandidateListComponent },
-      { path: 'candidate-schedule',component:CandidateScheduleComponent}
+      { path: 'candidate-schedule', component: CandidateScheduleComponent },
+      { path: 'admin', component: AdminPanelComponent }
     ]
-    
+
   },
   { path: 'series', component: SeriesComponent },
 
@@ -78,7 +80,8 @@ const routes: Routes = [
     AssignRequirementComponent,
     CandidateScheduleComponent,
     RequirementStackChartComponent,
-    InterviewListComponent
+    InterviewListComponent,
+    AdminPanelComponent
   ],
   imports: [
     CommonModule,

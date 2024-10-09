@@ -1,0 +1,18 @@
+<div class="m-b-10">
+    <span class="f-s-20 f-w-500">Admin Panel</span>
+</div>
+<div class="skill-portion">
+    <div class="skill-head p-t-10">
+        <span class="f-s-20 f-w-500 text-centre">Skills</span>
+    </div>
+    <div *ngIf="skillsList" class="w-100 flex-wrap skills">
+        <span *ngFor="let item of skillsList" class="skill-pill">
+            {{item?.skillName}} 
+            <i (click)="removeSkill(item)" class="fa fa-times c-pointer" aria-hidden="true"></i>
+        </span>
+    </div>
+    <div class="p-10">
+        <input type="text" placeholder="Add New Skill" class="skill-input" [(ngModel)]="newSkill">
+        <button class="add-btn" (click)="addSkill(newSkill)">Add</button>
+    </div>
+</div>
