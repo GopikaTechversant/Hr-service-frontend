@@ -15,6 +15,7 @@ export class AdminPanelComponent implements OnInit {
 
   constructor(private apiService: ApiService, private toastr: ToastrService) { }
   ngOnInit(): void {
+    this.initialLoader = true;
     this.fetchSkill();
   }
 

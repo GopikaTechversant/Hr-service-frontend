@@ -88,9 +88,9 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
       if (res?.data) {
         this.sixMonthCount = res?.data;
         this.labels = this.sixMonthCount.map((item: any) => item.userfirstName ?? item.month);
-        this.hiredData = this.sixMonthCount.map((item: any) => +item.total_hired ?? '0');
-        this.sourcedData = this.sixMonthCount.map((item: any) => +item.total_totalsourced ?? '0');
-        this.offeredData = this.sixMonthCount.map((item: any) => +item.total_offerreleased ?? '0');
+        this.hiredData = this.sixMonthCount.map((item: any) => +item.total_hired || '0');
+        this.sourcedData = this.sixMonthCount.map((item: any) => +item.total_totalsourced || '0');
+        this.offeredData = this.sixMonthCount.map((item: any) => +item.total_offerreleased || '0');
         this.initialLoader = false;
         this.tryCreateChart();
       } else {

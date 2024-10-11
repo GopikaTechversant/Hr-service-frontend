@@ -5,13 +5,30 @@
     <div class="skill-head p-t-10">
         <span class="f-s-20 f-w-500 text-centre">Skills</span>
     </div>
-    <div *ngIf="skillsList" class="w-100 flex-wrap skills">
+    <div *ngIf="initialLoader" class="row m-l-20 initial-loader">
+        <div *ngFor="let item of [0,1,2]" class="m-t-10 m-b-10">
+            <div class="gravatar-title">
+                <div><ngx-skeleton-loader [theme]="{
+                                            width: '900px',
+                                            'border-radius': '0',
+                                            height: '15px',
+                                            'margin-bottom': '10px'
+                                            }"></ngx-skeleton-loader>
+                </div>
+                <div>
+                    <ngx-skeleton-loader [theme]="{ width: '1300px', 'border-radius': '0', height: '15px' }">
+                    </ngx-skeleton-loader>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="skillsList && !initialLoader" class="w-100 flex-wrap skills">
         <span *ngFor="let item of skillsList" class="skill-pill">
-            {{item?.skillName}} 
+            {{item?.skillName}}
             <i (click)="removeSkill(item)" class="fa fa-times c-pointer" aria-hidden="true"></i>
         </span>
     </div>
-    <div class="p-10">
+    <div class="p-10" *ngIf="skillsList && !initialLoader">
         <input type="text" placeholder="Add New Skill" class="skill-input" [(ngModel)]="newSkill">
         <button class="add-btn" (click)="addSkill(newSkill)">Add</button>
     </div>

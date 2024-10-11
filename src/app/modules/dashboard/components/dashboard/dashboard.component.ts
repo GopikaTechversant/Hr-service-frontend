@@ -64,14 +64,20 @@ export class DashboardComponent implements OnInit {
   }
 
   fetchcount(): void {
-    this.apiService.get(`/dashboard/card-data?requestId=${this.positionId}&fromDate=${this.startDate}&todate=${this.endDate}`).subscribe((res: any) => {
-      if (res?.data) {
-        this.initialLoader = false;
-        this.lists = res?.data;
-      }
-    })
+    this.apiService.get(`/dashboard/card-data?requestId=${this.positionId}&fromDate=${this.startDate}&todate=${this.endDate}`)
+      .subscribe({
+        next: (res: any) => {
+          if (res?.data) {
+            this.lists = res?.data;
+            this.initialLoader = false; 
+          }
+        },
+        error: (err: any) => {
+          this.initialLoader = false; 
+        }
+      });
   }
-
+  
   fetchRequirements(): void {
     this.apiService.get(`/service-request/list`).subscribe((res: any) => {
       if (res?.data) {

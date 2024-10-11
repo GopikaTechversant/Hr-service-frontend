@@ -50,18 +50,30 @@ export class SeriesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.initialLoader = true;
     this.fetchDetails();
     this.env_url = window.location.origin;
   }
 
   fetchDetails(): void {
-    this.apiService.get(`/service-request/view?requestId=${this.requestId}`).subscribe((res: any) => {
-      if (res?.data) this.requirement_details = res?.data;
-      const text = this.requirement_details?.requestDescription;
-      this.formattedText = this.sanitizer.bypassSecurityTrustHtml(text);
-      if (res?.flows) this.flows = res?.flows;
-      this.roundNames = this.flows.map(flow => flow.flowStationName).join(', ');
-    })
+    this.apiService.get(`/service-request/view?requestId=${this.requestId}`).subscribe({
+       next: (res: any) => {
+      if (res?.data) {
+        this.requirement_details = res?.data;
+        const text = this.requirement_details?.requestDescription;
+        this.formattedText = this.sanitizer.bypassSecurityTrustHtml(text);
+        this.initialLoader = false;
+      }
+      if (res?.flows) {
+        this.flows = res?.flows;
+        this.roundNames = this.flows.map(flow => flow.flowStationName).join(', ');
+        this.initialLoader = false;
+      }
+    },
+    error: (error) => {
+      this.initialLoader = false;
+    }
+  })
   }
 
   toggleTaskDetails() {
@@ -69,7 +81,7 @@ export class SeriesComponent implements OnInit {
   }
 
   edit(path: any, requestId?: any): void {
-    const queryParams = requestId ? { requestId: requestId } : undefined;    
+    const queryParams = requestId ? { requestId: requestId } : undefined;
     if (queryParams) this.router.navigate([path], { queryParams: queryParams });
     else this.router.navigate([path]);
   }

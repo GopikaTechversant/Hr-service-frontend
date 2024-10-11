@@ -55,11 +55,11 @@
             </div>
         </div>
     </div>
-    <div *ngIf="initialLoader && !lists">
+    <div *ngIf="initialLoader">
         <app-skeleton-loader [loaderDatas]="[9]" [higherWidth]="1000" [lowerWidth]="800"
             [gridColumn]="9"></app-skeleton-loader>
     </div>
-    <div *ngIf="lists" class="candidate w-100 d-flex" (click)="navigateToDetail(lists)">
+    <div *ngIf="lists && !initialLoader" class="candidate w-100 d-flex" (click)="navigateToDetail(lists)">
         <div class="candidate-card c-pointer">
             <div class="d-flex">
                 <div class="icon-div">

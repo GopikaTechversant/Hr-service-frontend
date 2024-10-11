@@ -4,7 +4,7 @@
       <span class="side-head">Techversant <span class="blue">Gateway</span></span>
     </div>
   </div>
-
+  
   <div *ngFor="let item of staticMenuItems" class="menu d-flex c-pointer"
        (click)="navigate(item.path)"
        [class.active]="isActive(item.path)">

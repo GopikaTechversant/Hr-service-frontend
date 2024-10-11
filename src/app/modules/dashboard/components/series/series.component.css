@@ -173,7 +173,15 @@
 }
 
 .info-container-requirement:first-of-type {
-    border-right: 1px dotted #ABABAB
+    border-right: 1px dotted #ABABAB;
+    margin-bottom: 10px;
+}
+
+.initial-loader {
+    position: absolute;
+    top: 21%;
+    left: 17%;
+    width: 16%;
 }
 
 .icon {
