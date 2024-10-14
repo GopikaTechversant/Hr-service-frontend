@@ -1,3 +1,17 @@
+.modal-header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: #f8f9fa;
+    overflow-x: hidden;
+}
+
+.modal-content {
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 98%;
+}
+
 .heading {
     text-align: left;
     padding-bottom: 10px;
@@ -10,6 +24,7 @@
 .selected-skills {
     width: 100%;
 }
+
 
 .primary-skills {
     width: 50%;
@@ -147,8 +162,8 @@
 
 .loader-parent {
     position: absolute;
-    left: 47%;
-    top: 190%;
+    left: 50%;
+    top: 50%;
     z-index: 9;
 }
 

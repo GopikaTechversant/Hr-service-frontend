@@ -1,10 +1,18 @@
-<div class="main p-20 m-l-14">
+<div class="modal-header heading p-t-10 d-flex j-space" style="position: sticky; top: 0; z-index: 2;">
+  
+    <div class="padding-10">
+        <span>Edit Candidate Details </span>
+        
+    </div>
+    <div class="modal-close margin-10 d-flex">   
+        <img src="assets/images/techversant/clear-filter.svg" class="c-pointer p-r-5"  (click)="closeDialog()"alt="" width="35">
+    </div>
+</div>
+<div class="modal-content m-10">
     <div *ngIf="loader" class="loader-parent">
         <img src="assets/gif/loader.gif">
     </div>
-    <span class="heading  m-t-12">Edit Candidate Details</span>
-    <form [formGroup]="candidateForm" (ngSubmit)="submitClick(); $event.preventDefault()" enctype="multipart/form-data"
-        class="p-t-6">
+    <form [formGroup]="candidateForm" (ngSubmit)="submitClick(); $event.preventDefault()" enctype="multipart/form-data" class="p-l-5">
         <div class="d-flex parent p-t-10">
             <div class="child d-flex m-b-10">
                 <span class="label m-b-4">First Name<span class="required">*</span></span>
@@ -146,13 +154,14 @@
             </div>
         </div>
         <div class="d-flex j-space p-relative margin-10 m-l-0">
-                <div class="c-pointer">
+                <div class="c-pointer" *ngIf="candidateResume">
                     <span class="resume m-b-4" (click)="viewResume(candidateDetails?.candidateResume)">Uploaded Resume</span>
+                    <i class="fa fa-trash-o delete-color c-pointer" aria-hidden="true"  (click)="removeResume()"></i>
                 </div>
-                <div class="c-pointer">
+                <div class="c-pointer" *ngIf="candidateResume === ''">
                     <span *ngIf="!resumeUploadSuccess" class="upload-success-message"
                         (click)="triggerFileInput();$event.stopPropagation();$event.preventDefault();">
-                        Click to Upload New Resume
+                        <i class="fa fa-upload" aria-hidden="true"></i> Upload New Resume
                     </span>
                     <input type="file" #fileInput class="input-1" style="display:none"
                         (change)="onFileSelected($event)">
@@ -187,12 +196,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <ul *ngIf="candidateDetails?.candidatePrimarySkills?.length > 0 || candidateDetails?.candidatePrimarySkills?.length > 0">
-                                <li *ngFor="let skill of selectedPrimarySkills" class="p-4">
+                            <ul *ngIf="candidateDetails?.candidatePrimarySkills?.[0].length > 0 || candidateDetails?.candidatePrimarySkills?.length > 0">
+                                <span  *ngFor="let skill of selectedPrimarySkills" class="p-4">
+                                 <li *ngIf="skill?.name">
                                     {{skill?.name | titlecase}}
                                     <i class="fa fa-trash-o delete-color c-pointer" aria-hidden="true"
                                         (click)="removeSkill(skill, 'primary')"></i>
-                                </li>
+                                 </li>   
+                                </span>
                             </ul>
                         </div>
                         <div class="secondary-skills">
@@ -216,11 +227,13 @@
                             </div>
                             <div>
                                 <ul *ngIf="candidateDetails?.candidatePrimarySkills?.length > 0 || candidateDetails?.candidatePrimarySkills?.length > 0">
-                                    <li *ngFor="let skill of selectedSecondarySkills" class="padding-4">
+                                    <span *ngFor="let skill of selectedSecondarySkills" class="padding-4">
+                                       <li *ngIf="skill?.name">
                                         {{skill?.name | titlecase}}
                                         <i class="fa fa-trash-o delete-color c-pointer" aria-hidden="true"
                                             (click)="removeSkill(skill, 'secondary')"></i>
-                                    </li>
+                                       </li>
+                                    </span>
                                 </ul>
                                 <span *ngIf="candidateDetails?.candidatePrimarySkills?.length === 0 || candidateDetails?.candidatePrimarySkills?.length > 0">
 

@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FeedbackComponent } from 'src/app/components/feedback/feedback.component';
 import { ApiService } from 'src/app/services/api.service';
 import { InterviewDetailsComponent } from '../interview-details/interview-details.component';
+import { DeleteComponent } from 'src/app/components/delete/delete.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-candidate-schedule',
@@ -24,7 +26,7 @@ export class CandidateScheduleComponent implements OnInit {
   candidateServiceId: any;
   totalCount: any;
 
-  constructor(private router: Router, private route: ActivatedRoute, private apiService: ApiService, private dialog: MatDialog) {
+  constructor(private router: Router, private route: ActivatedRoute, private apiService: ApiService, private dialog: MatDialog ,private toastr : ToastrService) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
     });
@@ -116,6 +118,29 @@ export class CandidateScheduleComponent implements OnInit {
     }
   }
 
+  deleteCandidate(candidateId: any , serviceId: any): void {
+    const dialogRef = this.dialog.open(DeleteComponent, {
+      data: candidateId,
+      width: '500px',
+      height: '250px',
+    });
+  
+    dialogRef.componentInstance.onDeleteSuccess.subscribe(() => {
+      this.apiService
+        .put(`/screening-station/unmapp/candidate?serviceId=${serviceId}&candidateId=${candidateId}`, {})
+        .subscribe({
+          next: (res: any) => {
+            this.toastr.success('User removed');
+            this.fetchcandidates();
+          },
+          error: (error) => {
+            this.toastr.error(error?.error?.message ? error?.error?.message : 'Unable to Delete candidates');
+            this.fetchcandidates();
+          },
+        });
+    });
+  }
+  
   onCandidateSelectionChange(candidate: any): void {
     this.candidateServiceId = candidate?.serviceId;
     const userId = localStorage.getItem('userId');

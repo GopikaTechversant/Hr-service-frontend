@@ -15,6 +15,12 @@
     width: 100px;
 }
 
+.disabled-icon {
+    color: #dfdfd7;
+    pointer-events: none;
+}
+
+
 .name {
     font-size: 14px;
 }

@@ -54,6 +54,9 @@ export class EditComponent implements OnInit {
   locationname: any;
   locationListOpen: boolean = false;
   loader: boolean = false;
+  file: any;
+  fileName: any;
+  candidateResume: any;
   constructor(public dialogRef: MatDialogRef<EditComponent>, private tostr: ToastrServices, private formBuilder: UntypedFormBuilder, private apiService: ApiService,
     private datePipe: DatePipe, @Inject(MAT_DIALOG_DATA) public data: any, private s3Service: S3Service) {
     this.candidateForm = this.formBuilder.group({
@@ -118,6 +121,7 @@ export class EditComponent implements OnInit {
       if (res?.data) {
         this.CandidateData = res?.data
         this.candidateDetails = res?.data?.[0];
+        this.candidateResume = this.candidateDetails?.candidateResume || "";
         if (this.candidateDetails?.candidatePrimarySkills) {
           this.selectedPrimarySkills = this.candidateDetails?.candidatePrimarySkills.map((skill: any) => ({
             id: skill.skillType,
@@ -155,10 +159,14 @@ export class EditComponent implements OnInit {
     });
   }
 
+  removeResume(): void {
+    this.candidateResume = '';
+  }
+
   onFileSelected(event: any) {
+    this.loader = true;
     this.fileInputClicked = true;
     this.selectedFile = event.target.files?.[0];
-    if (event?.target?.files?.length > 0) this.resumeUploadSuccess = true;
     this.loader = true;
     if (this.selectedFile) this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', this.selectedFile);
     this.getKeyFroms3();
@@ -170,11 +178,17 @@ export class EditComponent implements OnInit {
       if (!this.uploadedFileKey) {
         this.loader = false;
         this.tostr.error('Something Went Wrong Please Try Again');
+        this.resumeUploadSuccess = true;
       } else {
         this.loader = false;
         this.tostr.success('File upload Successfully');
+        this.candidateResume = this.uploadedFileKey;
       }
     });
+  }
+
+  closeDialog(): void {
+    this.dialogRef.close();
   }
 
   selectsource(sourceid: any, sourceName: any): void {
@@ -216,62 +230,61 @@ export class EditComponent implements OnInit {
   }
 
   submitClick(): void {
-    let candidateDetails = this.candidateForm.value;
-    this.primaryskills = this.selectedPrimarySkills.map(skill => skill.id);
-    this.secondaryskills = this.selectedSecondarySkills.map(skill => skill.id);
-
+    const { candidateFirstName, candidateLastName, candidateDoB, candidateGender, candidateTotalExperience, candidateRevlentExperience, candidatePreviousOrg, candidatePreviousDesignation, candidateEducation, candidateCurrentSalary, candidateExpectedSalary, candidateAddress, candidateemail, candidateMobileNo, candidateCity, candidateDistrict, candidateState } = this.candidateForm.value;
+  
+    this.primaryskills = this.selectedPrimarySkills.map(skill => skill.id).filter(Boolean);
+    this.secondaryskills = this.selectedSecondarySkills.map(skill => skill.id).filter(Boolean);
+  
     const payload = {
       candidateId: this.candidateDetails?.candidateId,
-      candidateFirstName: candidateDetails?.candidateFirstName !== this.candidateDetails?.candidateFirstName ? candidateDetails?.candidateFirstName : undefined,
-      candidateLastName: candidateDetails?.candidateLastName !== this.candidateDetails?.candidateLastName ? candidateDetails?.candidateLastName : undefined,
-      candidateDoB: candidateDetails?.candidateDoB !== this.candidateDetails?.candidateDoB ? candidateDetails?.candidateDoB : undefined,
-      candidateGender: candidateDetails?.candidateGender !== this.candidateDetails?.candidateGender ? candidateDetails?.candidateGender : undefined,
-      candidateTotalExperience: candidateDetails?.candidateTotalExperience !== this.candidateDetails?.candidateTotalExperience ? candidateDetails?.candidateTotalExperience : undefined,
-      candidateRevlentExperience: candidateDetails?.candidateRevlentExperience !== this.candidateDetails?.candidateRevlentExperience ? candidateDetails?.candidateRevlentExperience : undefined,
-      candidatePreviousOrg: candidateDetails?.candidatePreviousOrg !== this.candidateDetails?.candidatePreviousOrg ? candidateDetails?.candidatePreviousOrg : undefined,
-      candidatePreviousDesignation: candidateDetails?.candidatePreviousDesignation !== this.candidateDetails?.candidatePreviousDesignation ? candidateDetails?.candidatePreviousDesignation : undefined,
-      candidateEducation: candidateDetails?.candidateEducation !== this.candidateDetails?.candidateEducation ? candidateDetails?.candidateEducation : undefined,
-      candidateCurrentSalary: candidateDetails?.candidateCurrentSalary !== this.candidateDetails?.candidateCurrentSalary ? candidateDetails?.candidateCurrentSalary : undefined,
-      candidateExpectedSalary: candidateDetails?.candidateExpectedSalary !== this.candidateDetails?.candidateExpectedSalary ? candidateDetails?.candidateExpectedSalary : undefined,
-      candidateAddress: candidateDetails?.candidateAddress !== this.candidateDetails?.candidateAddress ? candidateDetails?.candidateAddress : undefined,
-      candidateEmail: candidateDetails?.candidateemail !== this.candidateDetails?.candidateEmail ? candidateDetails?.candidateemail : undefined,
-      candidateMobileNo: candidateDetails?.candidateMobileNo !== this.candidateDetails?.candidateMobileNo ? candidateDetails?.candidateMobileNo : undefined,
+      candidateFirstName: candidateFirstName !== this.candidateDetails?.candidateFirstName ? candidateFirstName : undefined,
+      candidateLastName: candidateLastName !== this.candidateDetails?.candidateLastName ? candidateLastName : undefined,
+      candidateDoB: candidateDoB !== this.candidateDetails?.candidateDoB ? candidateDoB : undefined,
+      candidateGender: candidateGender !== this.candidateDetails?.candidateGender ? candidateGender : undefined,
+      candidateTotalExperience: candidateTotalExperience !== this.candidateDetails?.candidateTotalExperience ? candidateTotalExperience : undefined,
+      candidateRevlentExperience: candidateRevlentExperience !== this.candidateDetails?.candidateRevlentExperience ? candidateRevlentExperience : undefined,
+      candidatePreviousOrg: candidatePreviousOrg !== this.candidateDetails?.candidatePreviousOrg ? candidatePreviousOrg : undefined,
+      candidatePreviousDesignation: candidatePreviousDesignation !== this.candidateDetails?.candidatePreviousDesignation ? candidatePreviousDesignation : undefined,
+      candidateEducation: candidateEducation !== this.candidateDetails?.candidateEducation ? candidateEducation : undefined,
+      candidateCurrentSalary: candidateCurrentSalary !== this.candidateDetails?.candidateCurrentSalary ? candidateCurrentSalary : undefined,
+      candidateExpectedSalary: candidateExpectedSalary !== this.candidateDetails?.candidateExpectedSalary ? candidateExpectedSalary : undefined,
+      candidateAddress: candidateAddress !== this.candidateDetails?.candidateAddress ? candidateAddress : undefined,
+      candidateEmail: candidateemail !== this.candidateDetails?.candidateEmail ? candidateemail : undefined,
+      candidateMobileNo: candidateMobileNo !== this.candidateDetails?.candidateMobileNo ? candidateMobileNo : undefined,
       resumeSourceId: this.sourceId,
       candidateResume: this.uploadedFileKey,
-      candidatePrimarySkills: this.primaryskills?.length > 0 ? this.primaryskills : undefined,
-      candidateSecondarySkills: this.secondaryskills?.length > 0 ? this.secondaryskills : undefined,
+      candidatePrimarySkills: this.primaryskills.length ? this.primaryskills : undefined,
+      candidateSecondarySkills: this.secondaryskills.length ? this.secondaryskills : undefined,
       genderName: this.genderName,
       candidatePreferlocation: this.locationname,
-      candidateCity: candidateDetails?.candidateCity !== this.candidateDetails?.candidateCity ? candidateDetails?.candidateCity : undefined,
-      candidateDistrict: candidateDetails?.candidateDistrict !== this.candidateDetails?.candidateDistrict ? candidateDetails?.candidateDistrict : undefined,
-      candidateState: candidateDetails?.candidateState !== this.candidateDetails?.candidateState ? candidateDetails?.candidateState : undefined,
-
+      candidateCity: candidateCity !== this.candidateDetails?.candidateCity ? candidateCity : undefined,
+      candidateDistrict: candidateDistrict !== this.candidateDetails?.candidateDistrict ? candidateDistrict : undefined,
+      candidateState: candidateState !== this.candidateDetails?.candidateState ? candidateState : undefined,
     };
-
-    if (this.candidateForm.value.candidateFirstName && this.candidateForm.value.candidateLastName && this.candidateForm.value.candidateGender
-      && this.candidateForm.value.candidateemail && this.candidateForm.value.candidateMobileNo) {
-      this.validationSuccess = true;
-    } else this.tostr.warning('Please fill all mandatory fields');
-
-    if (this.validationSuccess) {
-      this.apiService.post(`/candidate/edit`, payload).subscribe(
-        (response) => {
-          this.tostr.success('Candidate updated successfully');
-          this.onEditSuccess.emit();
-          this.dialogRef.close();
-        },
-        (error) => {
-          if (error?.status === 500) {
-            this.tostr.error("Internal Server Error");
-          } else {
-            this.tostr.warning(error?.error?.message ? error?.error?.message : "Unable to create candidate");
-          }
-        }
-      );
-    } else {
+  
+    // Validation
+    const mandatoryFieldsFilled = candidateFirstName && candidateLastName && candidateGender && candidateemail && candidateMobileNo;
+    
+    if (!mandatoryFieldsFilled) {
+      this.tostr.warning('Please fill all mandatory fields');
       this.submitted = true;
+      return;
     }
-  }
+  
+    // Submit the form if validation is successful
+    this.apiService.post(`/candidate/edit`, payload).subscribe(
+      (response) => {
+        this.tostr.success('Candidate updated successfully');
+        this.onEditSuccess.emit();
+        this.dialogRef.close();
+      },
+      (error) => {
+        const errorMessage = error?.error?.message || (error?.status === 500 ? 'Internal Server Error' : 'Unable to update candidate');
+        this.tostr.error(errorMessage);
+        this.dialogRef.close();
+      }
+    );
+  }  
 
   triggerFileInput(): void {
     const fileInput = document.querySelector('input[type="file"]') as HTMLElement;
@@ -320,13 +333,17 @@ export class EditComponent implements OnInit {
 
   isSkillSelected(suggestion: any): boolean {
     const allSelectedSkills = [...this.selectedPrimarySkills, ...this.selectedSecondarySkills];
+
     return allSelectedSkills.some(selectedSkill => selectedSkill.id === suggestion.id);
+    
   }
 
   selectSkill(suggestion: any, skillType: any): void {
-    const selectedSkill = { id: suggestion.id, name: suggestion.skillName };
+    const selectedSkill = { id: suggestion?.id, name: suggestion?.skillName };
     if (skillType === 'primary') this.selectedPrimarySkills.push(selectedSkill);
     else if (skillType === 'secondary') this.selectedSecondarySkills.push(selectedSkill);
+    console.log(this.selectedPrimarySkills ,"llll", this.selectedSecondarySkills);
+
     this.showSearchBar = false;
     this.skillSuggestions = [];
   }

@@ -13,6 +13,7 @@ import { ExportService } from 'src/app/services/export.service';
   styleUrls: ['./candidate-list.component.css']
 })
 export class CandidateListComponent {
+[x: string]: any;
   @Input() positionId: any
   pageSize = 13;
   pageIndex = 1;
@@ -160,6 +161,14 @@ export class CandidateListComponent {
     return pages;
   }
 
+  getFormattedSkills(item: any): string {
+    const skills = item?.candidateSkill
+      ?.filter((skill: any) => skill?.skills?.skillName) 
+      ?.map((skill: any) => skill.skills.skillName);
+
+    return skills?.length ? skills.join(', ') : 'N/A';
+  }
+  
   searchCandidate(search: string): void {
     this.searchKeyword = search;
     this.currentPage = 1;
@@ -183,7 +192,7 @@ export class CandidateListComponent {
     return this.router.isActive(route, false);
   }
 
-  delete(id: any): void {
+  deleteCandidate(id: any): void {
     this.deleteCandidateId = id;
     const dialogRef = this.dialog.open(DeleteComponent, {
       data: id,
@@ -202,6 +211,11 @@ export class CandidateListComponent {
         }
       })
     })
+    dialogRef.afterClosed().subscribe(() => {
+      this.currentPage = 1;
+          this.pageSize = 13;
+          this.fetchCandidates();
+    });
   }
 
   edit(id: any): void {
@@ -215,6 +229,11 @@ export class CandidateListComponent {
       this.pageSize = 13;
       this.fetchCandidates();
     })
+    dialogRef.afterClosed().subscribe(() => {
+      this.currentPage = 1;
+          this.pageSize = 13;
+          this.fetchCandidates();
+    });
   }
 
   onPageChange(pageNumber: number): void {

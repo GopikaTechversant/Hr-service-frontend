@@ -221,11 +221,11 @@
                             </span>
                         </div>
                     </span>
-                    <div class="m-t-8 drop-list-skill" *ngIf="showSearchBar">
-                        <div *ngFor="let suggestion of skillSuggestions" (click)="selectSkill(suggestion)">
+                    <div class="m-t-3 drop-list-skill" *ngIf="showSearchBar">
+                        <div class="p-6 c-pointer" *ngFor="let suggestion of skillSuggestions" (click)="selectSkill(suggestion)">
                             <span class="p-t-7 "><img src="assets/images/akar-icons_check.png" alt=""
-                                    class="m-t-0 p-r-4" width="13px" height="10px"></span>
-                            <span class="c-pointer ">{{suggestion?.skillName}}</span>
+                                    class="m-t-0 p-r-4" width="15px" height="13px"></span>
+                            <span class="c-pointer">{{suggestion?.skillName}}</span>
                         </div>
                     </div>
                     <div class="m-t-16 skills-main" *ngIf="selectedSkills.length > 0">

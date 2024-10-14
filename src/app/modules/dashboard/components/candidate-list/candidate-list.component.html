@@ -79,17 +79,14 @@
                         <td class="text-start"
                             [title]="item?.candidateEducation ? item?.candidateEducation?.candidateEducation : 'N/A'">
                             {{item?.candidateEducation ? item?.candidateEducation : 'N/A'}}</td>
-                        <td class="text-start"
-                            [title]="item?.candidateSkill.length > 0 ? (item?.candidateSkill[0]?.skills?.skillName | titlecase):'N/A'">
-                            {{item?.candidateSkill.length > 0 ? (item?.candidateSkill[0]?.skills?.skillName |
-                            titlecase):'N/A'}}</td>
+                        <td class="text-start"> {{ getFormattedSkills(item) }} </td>
                         <td class="text-start" [title]="item?.reqServiceRequest?.requestName">
                             {{item?.reqServiceRequest?.requestName || 'Not Assigned'}}</td>
                         <td *ngIf="!item?.candidatesAddingAgainst" class="actions text-center">
                             <i class="fa fa-pencil-square-o p-r-5 icon-color" aria-hidden="true"
                                 (click)="edit(item?.candidateId)"></i>
                             <i class="fa fa-trash-o p-l-5 delete-color" aria-hidden="true"
-                                (click)="delete(item?.candidateId)"></i>
+                                (click)="deleteCandidate(item?.candidateId)"></i>
                         </td>
                         <td *ngIf="item?.candidatesAddingAgainst" class="action-disabled actions text-center">
                             <i class="fa fa-pencil-square-o p-r-5 disabled-icon-color"

@@ -21,7 +21,6 @@ import { ReportDetailsComponent } from './components/report-details/report-detai
 import { DailyReportComponent } from './components/daily-report/daily-report.component';
 import { RequisitionDetailsComponent } from './components/requisition-details/requisition-details.component';
 import { InterviewCountsBarComponent } from './components/interview-counts-bar/interview-counts-bar.component';
-import { EditRequirementComponent } from './components/edit-requirement/edit-requirement.component';
 import { CandidateDetailsComponent } from 'src/app/components/candidate-details/candidate-details.component';
 import { InterviewDetailsComponent } from './components/interview-details/interview-details.component';
 import { MaterialModule } from '../material/material.module';
@@ -75,7 +74,6 @@ const routes: Routes = [
     DailyReportComponent,
     RequisitionDetailsComponent,
     InterviewCountsBarComponent,
-    EditRequirementComponent,
     InterviewDetailsComponent,
     AssignRequirementComponent,
     CandidateScheduleComponent,

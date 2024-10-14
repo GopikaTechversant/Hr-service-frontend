@@ -24,6 +24,10 @@
     top: 37%;
 }
 
+.drop-list :hover {
+    background-color: rgb(240, 235, 235);
+}
+
 .loader-parent img {
     width: 120px;
 }

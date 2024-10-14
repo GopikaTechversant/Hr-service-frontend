@@ -24,9 +24,10 @@
                 <td class="text-end">Relevant Experience</td>
                 <td class="text-end">Total Experience</td>
                 <td class="text-start">Education</td>
-                <td class="status-col text-start">Status</td>
+                <td class="status-col text-start">Screening Status</td>
                 <td class="count-col text-end">Reschedule Count</td>
-                <td class="interview-status-col text-start">Interview Status</td>
+                <td class="interview-status-col text-start">Candidate Status</td>
+                <td class="text-end">Remove Candidate</td>
             </tr>
             <div *ngIf="loader && !initialLoader" class="loader-parent">
                 <img src="assets/gif/loader.gif">
@@ -55,7 +56,14 @@
                             </select>
                         </td>
                         <td class="text-end">{{item?.rescheduledCount}}</td>
-                        <td class="text-start" [title]="item?.interviewStatus">{{item?.interviewStatus}}</td>
+                        <td class="text-start" [title]="item?.candidateInterviewStatus">
+                            {{item?.candidateInterviewStatus ? (item?.candidateInterviewStatus | titlecase) : 'N/A'}}
+                        </td>
+                        <td class="text-end">
+                            <i *ngIf="item?.serviceStatus !== 'done'" class="fa fa-trash-o p-l-5 red" aria-hidden="true" 
+                            (click)="deleteCandidate(item?.candidateId, item?.serviceId)" title="Remove Candidate"></i>
+                            <i *ngIf="item?.serviceStatus === 'done'" class="fa fa-trash-o p-l-5 disabled-icon"></i>
+                        </td>
                     </tr>
                 </ng-container>
             </ng-container>

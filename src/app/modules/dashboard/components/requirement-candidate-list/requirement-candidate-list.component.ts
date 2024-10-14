@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { DeleteComponent } from 'src/app/components/delete/delete.component';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastrService } from 'ngx-toastr';
-import { EditRequirementComponent } from '../edit-requirement/edit-requirement.component';
 @Component({
   selector: 'app-requirement-candidate-list',
   templateUrl: './requirement-candidate-list.component.html',
@@ -100,19 +99,6 @@ export class RequirementCandidateListComponent implements OnInit {
     this.router.navigate(['dashboard/add-candidate'], {
       state: { candidate }
     });
-  }
-
-  update(requirement: any): void {
-    this.editRequirement = requirement;
-    const dialogRef = this.dialog.open(EditRequirementComponent, {
-      data: this.editRequirement,
-      width: '50%',
-      height: '80%'
-    })
-    dialogRef.componentInstance.onEditSuccess.subscribe(() => {
-      this.limit = 15;
-      this.fetchcandidates('');
-    })
   }
 
   delete(id: any): void {
