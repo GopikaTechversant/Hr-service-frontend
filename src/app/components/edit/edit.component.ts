@@ -124,13 +124,13 @@ export class EditComponent implements OnInit {
         this.candidateResume = this.candidateDetails?.candidateResume || "";
         if (this.candidateDetails?.candidatePrimarySkills) {
           this.selectedPrimarySkills = this.candidateDetails?.candidatePrimarySkills.map((skill: any) => ({
-            id: skill.skillType,
+            id: skill.skillId,
             name: skill.skillType
           }));
         }
         if (this.candidateDetails?.candidateSecondarySkills) {
           this.selectedSecondarySkills = this.candidateDetails?.candidateSecondarySkills.map((skill: any) => ({
-            id: skill.skillType,
+            id: skill.skillId,
             name: skill.skillType
           }));
         }
