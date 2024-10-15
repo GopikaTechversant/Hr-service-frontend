@@ -52,7 +52,7 @@ export class HrCandidateDetailComponent {
       this.serviceId = this.data?.candidateDetails?.serviceId;
       this.feedback = data?.candidateDetails?.reqCandidateComment?.commentComment;
       if (data?.reviewStatus > 0) this.reviewAdded = true;
-      if (data?.offerStatus > 0) this.offerSent = true;      
+      if (data?.offerStatus > 0) this.offerSent = true;
     }
     this.dialogRef.updateSize('60%', '85%')
   }
@@ -139,7 +139,7 @@ export class HrCandidateDetailComponent {
 
     const description = (document.getElementById('description') as HTMLInputElement)?.value.trim();
     const payload = {
-      progressAssignee:  this.userId,
+      progressAssignee: this.userId,
       progressServiceId: this.serviceId?.toString() || '0',
       progressDescription: description,
       file: this.uploadedFileKey || '',
@@ -214,7 +214,9 @@ export class HrCandidateDetailComponent {
     this.loader = true;
     const feedback = document.getElementById('feedback') as HTMLInputElement;
     if (feedback) this.feedback = feedback?.value;
-    if ((this.feedback.trim() !== '' && this.filteredStatus) || data) {
+    if (this.feedback.trim() !== '' || (this.filteredStatus || data)) {
+      console.log("hiii");
+
       const payload = {
         serviceId: this.serviceId,
         stationId: 5,
@@ -236,6 +238,10 @@ export class HrCandidateDetailComponent {
           this.tostr.error('Error adding progress');
         }
       });
+    }else {
+      this.loader = false;
+      this.tostr.warning('Something Went wrong');
+
     }
   }
 

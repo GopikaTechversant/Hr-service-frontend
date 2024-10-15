@@ -252,7 +252,7 @@ export class EditComponent implements OnInit {
       candidateEmail: candidateemail !== this.candidateDetails?.candidateEmail ? candidateemail : undefined,
       candidateMobileNo: candidateMobileNo !== this.candidateDetails?.candidateMobileNo ? candidateMobileNo : undefined,
       resumeSourceId: this.sourceId,
-      candidateResume: this.uploadedFileKey,
+      candidateResume: this.candidateResume,
       candidatePrimarySkills: this.primaryskills.length ? this.primaryskills : undefined,
       candidateSecondarySkills: this.secondaryskills.length ? this.secondaryskills : undefined,
       genderName: this.genderName,

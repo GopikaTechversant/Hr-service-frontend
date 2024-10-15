@@ -195,7 +195,7 @@
                                 </div>
                             </div>
                             <ul *ngIf="selectedPrimarySkills || candidateDetails?.candidatePrimarySkills">
-                                <span  *ngFor="let skill of selectedPrimarySkills" class="p-4">
+                                <span  *ngFor="let skill of selectedPrimarySkills" class="padding-4">
                                  <li *ngIf="skill?.name">
                                     {{skill?.name | titlecase}}
                                     <i class="fa fa-trash-o delete-color c-pointer" aria-hidden="true"
