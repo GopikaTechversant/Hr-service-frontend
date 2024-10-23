@@ -16,6 +16,12 @@ import { LogoutModalComponent } from 'src/app/components/logout-modal/logout-mod
 import { StationCandidateDetailComponent } from 'src/app/components/station-candidate-detail/station-candidate-detail.component';
 import { StationSwitchComponent } from 'src/app/components/station-switch/station-switch.component';
 import { WarningBoxComponent } from 'src/app/components/warning-box/warning-box.component';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { InterviewFeebackComponent } from 'src/app/components/interview-feeback/interview-feeback.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+
+
 
 @NgModule({
   declarations: [
@@ -32,13 +38,17 @@ import { WarningBoxComponent } from 'src/app/components/warning-box/warning-box.
     StationSwitchComponent,
     WarningBoxComponent,
     StationCandidateDetailComponent,
+    InterviewFeebackComponent
   ],
   imports: [
+    MatButtonToggleModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    MatSliderModule,   
     NgxSkeletonLoaderModule,
     MaterialModule,
+    MatProgressBarModule
   ],
   exports: [
     HeaderComponent,
@@ -47,7 +57,11 @@ import { WarningBoxComponent } from 'src/app/components/warning-box/warning-box.
     MailTemplateComponent,
     LeftSidebarComponent,
     CandidateDetailsComponent,
-    StationCandidatesComponent
+    StationCandidatesComponent,
+    InterviewFeebackComponent,
+    MatSliderModule,   
+    MatButtonToggleModule,
+    MatProgressBarModule
   ]
 })
 export class SharedModule { }

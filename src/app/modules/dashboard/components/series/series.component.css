@@ -113,11 +113,10 @@
 }
 
 .title-requirement {
-    padding-left: 16px;
-    height: 46px;
+    padding-left: 10px;
+    height: 38px;
     background-color: #575F6E;
-    line-height: 46px;
-
+    line-height: 38px;
 }
 
 .requirement {
@@ -135,7 +134,7 @@
     display: flex;
     align-items: center;
     width: 100%;
-    margin-bottom: 12px;
+    margin-bottom: 5px;
 }
 
 .key-requirement,
@@ -420,18 +419,34 @@ input[type="text"] {
 
 .description-text {
     outline: none;
-    background-color: #FFFFFF;
     border-radius: 3px;
-    width: 99.6%;
-    margin-left: 5px;
-    padding-left: 10px;
-    margin-top: 9px;
-    min-height: 73px;
-    padding-top: 8px;
-    box-shadow: 0px 4px 8px 0px #0000001A;
+    width: 100%;
+    padding: 10px;
+    overflow: hidden;
+    max-height: 200px;
+    transition: max-height 0.3s ease-in-out;
+}
+
+.description-text.expanded {
+    max-height: none;
+}
+
+.view {
+    background: linear-gradient(rgba(255, 255, 255, 0), rgb(229, 231, 235));
+}
+
+.description {
+    background-color: #FFFFFF;
 }
 
 .jd-title {
     color: #4F4F4F;
     font-weight: 500;
+}
+
+.title-description {
+    padding-left: 10px;
+    height: 32px;
+    background: #F4F2F2 !important;
+    line-height: 32px;
 }

@@ -110,7 +110,7 @@
                                 class="d-flex align-center">
                                 <span [ngClass]="{'station-pill': candidateCount === '0' , 'm-t-3' : candidateCount !== '0'}">
                                     <span [ngClass]="{'text-muted': candidateCount !== '0'}">{{item?.stationName}} </span>
-                                    <div *ngIf="candidateCount === '0'" (click)="deleteStation(item?.stationId, item?.stationName)" class="circle">
+                                    <div *ngIf="candidateCount === '0'" (click)="deleteStation(item?.stationId, item?.stationName)" class="circle c-pointer">
                                         <div class="minus"></div>
                                     </div>
                                 </span>
@@ -144,42 +144,6 @@
         <div class="d-flex parent p-t-10">
             <div class="child d-flex">
                 <div class="m-t-20 m-b-10">
-                    <span class="sub-head">Base salary<span class="required">*</span></span>
-                    <div>
-                        <input type="text" class="input-box" #baseSalaryInput name="baseSalary" maxlength="20" [(ngModel)]="baseSalary">
-                    </div>
-                </div>
-            </div>
-            <div class="child d-flex">
-                <div class="m-t-20 m-b-10">
-                    <span class="sub-head">Maximum salary<span class="required">*</span></span>
-                    <div>
-                        <input type="text" class="input-box" #maxSalaryInput name="maxSalary" maxlength="20" [(ngModel)]="maxSalary">
-                    </div>
-                </div>
-            </div>
-            <div class="child d-flex">
-                <div class="m-t-20 m-b-10">
-                    <span class="sub-head">Minimum Experience<span class="required">*</span></span>
-                    <div>
-                        <input type="text" class="input-box" #minExperienceInput name="minExperience"
-                            (keydown)="experienceValidation($event)" [(ngModel)]="minExperience">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex parent p-t-10">
-            <div class="child d-flex">
-                <div class="m-t-20 m-b-10">
-                    <span class="sub-head">Maximum Experience<span class="required">*</span></span>
-                    <div>
-                        <input type="text" class="input-box" #maxExperienceInput name="maxExperience"
-                            (keydown)="experienceValidation($event)" [(ngModel)]="experience">
-                    </div>
-                </div>
-            </div>
-            <div class="child d-flex">
-                <div class="m-t-20 m-b-10">
                     <span class="sub-head">Reporting Manager<span class="required">*</span></span>
                     <div class="no-close col-md-3 s-list d-flex input-box j-space m-text p-relative">
                         <span (click)="managerListOpen = !managerListOpen" class="w-100 d-flex">
@@ -199,6 +163,25 @@
             </div>
             <div class="child d-flex">
                 <div class="m-t-20 m-b-10">
+                    <span class="sub-head">Job Location<span class="required">*</span></span>
+                    <div class="no-close col-md-3 s-list d-flex input-box j-space m-text p-relative">
+                        <span (click)="locationOpen = !locationOpen" class="w-100 d-flex">
+                            <span class="align-center p-t-5 c-pointer">
+                                {{selectedLocation.trim() !== '' ? selectedLocation : 'Select Job Location'}}</span>
+                            <span class="no-close s-list c-pointer align-center m-b-2 flex-1 sub j-end"><i
+                                    class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
+                            </span>
+                        </span>
+                        <div class=" m-b-2 drop-list no-close" *ngIf="locationOpen">
+                            <div (click)="selectLocation(item?.location)"
+                                *ngFor="let item of jobLocation" class=" p-t-5 p-b-5 p-l-8 c-pointer">
+                                {{item?.location}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="child d-flex">
+                <div class="m-t-20 m-b-10">
                     <span class="sub-head">Vacancy<span class="required">*</span></span>
                     <div>
                         <input type="text" class="input-box" maxLength="4" (keypress)="onKeypress($event)" id="vacancy"
@@ -207,11 +190,86 @@
                 </div>
             </div>
         </div>
+        <div class="d-flex parent p-t-10">
+            <div class="child d-flex">
+                <div class="m-t-20 m-b-10">
+                    <span class="sub-head">Relevant Experience<span class="required">*</span></span>
+                    <div>
+                        <input type="text" class="input-box" #relExperienceInput name="relExperience"
+                            (keydown)="experienceValidation($event)" [(ngModel)]="relExperience">
+                    </div>
+                </div>
+            </div>
+            <div class="child d-flex">
+                <div class="m-t-20 m-b-10">
+                    <span class="sub-head">Minimum Experience<span class="required">*</span></span>
+                    <div>
+                        <input type="text" class="input-box" #minExperienceInput name="minExperience"
+                            (keydown)="experienceValidation($event)" [(ngModel)]="minExperience">
+                    </div>
+                </div>
+            </div>
+            <div class="child d-flex">
+                <div class="m-t-20 m-b-10">
+                    <span class="sub-head">Maximum Experience<span class="required">*</span></span>
+                    <div>
+                        <input type="text" class="input-box" #maxExperienceInput name="maxExperience"
+                            (keydown)="experienceValidation($event)" [(ngModel)]="experience">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex parent p-t-10">
+            <div class="child d-flex">
+                <div class="m-t-20 m-b-10">
+                    <span class="sub-head">Base salary<span class="required">*</span></span>
+                    <div class="d-flex">
+                        <div class="no-close col-md-3 s-list d-flex input-type j-space m-text p-relative m-r-10">
+                            <span (click)="openBaseType = !openBaseType" class="w-100 d-flex">
+                                <span class="align-center p-t-5 c-pointer">
+                                    {{selectedBaseType.trim() !== '' ? selectedBaseType : 'Select Type'}}</span>
+                                <span class="no-close s-list c-pointer align-center m-b-2 flex-1 sub j-end"><i
+                                        class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
+                                </span>
+                            </span>
+                            <div class=" m-b-2 drop-list no-close" *ngIf="openBaseType">
+                                <div (click)="selectSalaryType(item ,'base')"
+                                    *ngFor="let item of ['per Month' ,'per Year']" class=" p-t-5 p-b-5 p-l-8 c-pointer">
+                                    {{item}}</div>
+                            </div>
+                        </div>
+                        <input (keydown)="onKeypressSalary($event)" type="text" class="input-box" #baseSalaryInput name="baseSalary" maxlength="20" [(ngModel)]="baseSalary">
+                    </div>
+                </div>
+            </div>
+            <div class="child d-flex">
+                <div class="m-t-20 m-b-10">
+                    <span class="sub-head">Maximum salary<span class="required">*</span></span>
+                    <div class="d-flex">
+                        <div class="no-close col-md-3 s-list d-flex input-type j-space m-text p-relative m-r-10">
+                            <span (click)="openMaxType = !openMaxType" class="w-100 d-flex">
+                                <span class="align-center p-t-5 c-pointer">
+                                    {{selectedMaxType.trim() !== '' ? selectedMaxType : 'Select Type'}}</span>
+                                <span class="no-close s-list c-pointer align-center m-b-2 flex-1 sub j-end"><i
+                                        class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
+                                </span>
+                            </span>
+                            <div class=" m-b-2 drop-list no-close" *ngIf="openMaxType">
+                                <div (click)="selectSalaryType(item ,'max')"
+                                    *ngFor="let item of ['per Month' ,'per Year']" class=" p-t-5 p-b-5 p-l-8 c-pointer">
+                                    {{item}}</div>
+                            </div>
+                        </div>
+                        <input (keydown)="onKeypressSalary($event)" type="text" class=" input-box" #maxSalaryInput name="maxSalary" maxlength="20" [(ngModel)]="maxSalary">
+                    </div>
+                </div>
+            </div>    
+        </div>
         <div class="m-t-20 m-b-10 child-skill">
             <span class="sub-head">Skills</span>
             <div>
                 <span class="p-relative ">
-                    <span class="d-flex input-interview-rounds-skill">
+                    <span class="d-flex input-interview-rounds-skill p-relative">
                         <input type="text" placeholder="Search Skills" class=" skill-input" name="skill search"
                             (input)="getSkillSuggestions($event)" id="skillSearch" [(ngModel)]="searchvalue">
                         <div class=" d-flex j-end p-t-5">
@@ -234,7 +292,7 @@
                             <div class="selectedSkills">
                                 <div *ngFor="let skill of selectedSkills" class=" skill-set d-flex j-space">
                                     <span>{{ skill}}</span>
-                                    <i class="fa fa-trash-o p-r-10 p-t-10" aria-hidden="true"
+                                    <i class="fa fa-trash-o p-r-10 p-t-10 c-pointer" aria-hidden="true"
                                         (click)="removeSkill(skill)"></i>
                                 </div>
                             </div>
@@ -278,7 +336,7 @@
                                         <div *ngIf="option" class="p-t-5 option-text"><b>{{option}}</b></div>
                                     </div>
                                     <div
-                                        class="no-close s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub p-l-4 m-t-9">
+                                        class="no-close s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub p-l-4 m-t-6">
                                         <i [ngClass]="showFormats ? ' fa fa-chevron-up' : ' fa fa-chevron-down'"
                                             class="s-text"></i>
                                     </div>

@@ -1,8 +1,8 @@
-<div class="d-flex head m-b-10 j-space">
-    <span class="heading p-t-12">Candidate List 
+<div class="d-flex head m-b-10 j-end">
+    <!-- <span class="heading p-t-12">Candidate List 
         <span *ngIf="candidates_list && candidates_list?.[0]['reqServiceRequest.requestName'] !== null" class="blue f-w-500">: {{candidates_list?.[0]['reqServiceRequest.requestName']}}</span>
-    </span>
-    <div class="d-flex j-space m-b-10">
+    </span> -->
+    <div class="d-flex j-end m-b-10">
         <span class="input">
             <input type="text" class="" placeholder="Search Candidates" [(ngModel)]="searchKeyword"
                 (keydown.enter)="searchCandidate(searchKeyword)">

@@ -1,0 +1,105 @@
+.main {
+    background-color: #f7f7f7;
+    border-radius: 5px;
+}
+
+.input-feedback {
+    outline: none !important;
+    border: 1px solid rgb(207, 205, 205);
+    height: 34px;
+    background-color: #FFFF;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.w-70 {
+    width: 70%;
+}
+
+.w-30 {
+    width: 30%;
+}
+
+.dropdown {
+    background: white;
+    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+    max-height: 150px;
+    overflow-y: auto;
+    font-size: 14px;
+    font-weight: 400;
+    width: 100%;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 999;
+    margin-top: 5px;
+    top: 100%;
+    left: 0;
+}
+
+.dropdown :hover {
+    background-color: #eceaea;
+}
+
+input[type="text"] {
+    border: none;
+    outline: none;
+    width: 100%;
+}
+
+.add {
+    background-color: #FFFFFF;
+    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+    width: 70px;
+    height: 34px;
+    margin-left: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.add-btn {
+    color: #005EC9;
+    ;
+    border: 1px solid #005EC9;
+    ;
+    background-color: #FFFFFF;
+    width: 55px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    font-weight: 500;
+}
+
+.input-score {
+    outline: none !important;
+    border: 1px solid rgb(207, 205, 205);
+    height: 34px;
+    background-color: #FFFF;
+    width: 125px;
+    border-radius: 5px;
+}
+
+.skill-list {
+    width: 400px;
+}
+
+.container-table {
+    height: 270px;
+    overflow-y: auto;
+}
+
+.btn {
+    width: 120px;
+    height: 35px;
+    color: #FFFFFF;
+    background-color: #005EC9;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 3px;
+    margin: 10px;
+}

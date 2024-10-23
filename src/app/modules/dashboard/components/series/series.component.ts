@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrServices } from 'src/app/services/toastr.service';
@@ -29,7 +29,7 @@ export class SeriesComponent implements OnInit {
   limit: number = 12;
   page: number = 1;
   showDropdown: boolean = false;
-  requirement_details: any = {};
+  requirement_details: any;
   editRequirement: any;
   deleteRequirementId: any;
   flows: any[] = [];
@@ -42,8 +42,19 @@ export class SeriesComponent implements OnInit {
   searchKeyword: string = '';
   formattedText: SafeHtml | undefined;
   env_url: string = '';
-  constructor(private apiService: ApiService, private toastr: ToastrService, private router: Router, private route: ActivatedRoute,
-    private dialog: MatDialog, private tostr: ToastrServices, private renderer: Renderer2, private sanitizer: DomSanitizer) {
+  isExpanded: boolean = false;
+  showViewMore: boolean = false;
+  @ViewChild('template') set templateSetter(template: ElementRef) {
+    if (template) {
+      this.template = template;
+      this.updateHeight()
+    }
+  }
+  template: ElementRef | undefined;
+  constructor(private apiService: ApiService, private toastr: ToastrService, private router: Router,
+    private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices,
+    private renderer: Renderer2, private sanitizer: DomSanitizer, private cdr: ChangeDetectorRef) {
+
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
     });
@@ -57,27 +68,37 @@ export class SeriesComponent implements OnInit {
 
   fetchDetails(): void {
     this.apiService.get(`/service-request/view?requestId=${this.requestId}`).subscribe({
-       next: (res: any) => {
-      if (res?.data) {
-        this.requirement_details = res?.data;
-        const text = this.requirement_details?.requestDescription;
-        this.formattedText = this.sanitizer.bypassSecurityTrustHtml(text);
+      next: (res: any) => {
+        if (res?.data) {
+          this.requirement_details = res?.data;
+          const text = this.requirement_details?.requestDescription;
+          this.formattedText = this.sanitizer.bypassSecurityTrustHtml(text);
+        }
+        if (res?.flows) {
+          this.flows = res?.flows;
+          this.roundNames = this.flows.map(flow => flow.flowStationName).join(', ');
+        }
+        this.initialLoader = false;
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
         this.initialLoader = false;
       }
-      if (res?.flows) {
-        this.flows = res?.flows;
-        this.roundNames = this.flows.map(flow => flow.flowStationName).join(', ');
-        this.initialLoader = false;
-      }
-    },
-    error: (error) => {
-      this.initialLoader = false;
-    }
-  })
+    });
   }
 
-  toggleTaskDetails() {
-    this.isTaskDetailsOpen = !this.isTaskDetailsOpen;
+  updateHeight(): void {
+    if (this.template) {
+      const height = this.template.nativeElement.offsetHeight;
+      if (height >= 200) {
+        this.showViewMore = true;
+      }
+    }
+
+  }
+
+  toggleView() {
+    this.isExpanded = !this.isExpanded;
   }
 
   edit(path: any, requestId?: any): void {

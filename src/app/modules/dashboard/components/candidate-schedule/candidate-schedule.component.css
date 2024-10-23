@@ -219,6 +219,10 @@ input[type="text"] {
     cursor: pointer;
 }
 
+.container-table{
+    height: fit-content;
+}
+
 .fa-search {
     color: #FFFFFF;
     padding-left: 3px;

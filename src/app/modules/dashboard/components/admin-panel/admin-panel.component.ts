@@ -8,22 +8,36 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./admin-panel.component.css']
 })
 export class AdminPanelComponent implements OnInit {
-  skillsList: any;
   initialLoader: boolean = false;
   loader: boolean = false;
-  newSkill: string = '';
+  newTechSkill: string = '';
+  newSoftSkill: string = '';
+  skillTypeId: number = 0;
+  softSkillsList: any;
+  techSkillsList: any;
 
   constructor(private apiService: ApiService, private toastr: ToastrService) { }
   ngOnInit(): void {
     this.initialLoader = true;
     this.fetchSkill();
   }
-
   fetchSkill(): void {
-    this.apiService.get(`/candidate/skills/list?search=`).subscribe(
+    this.apiService.get(`/candidate/skills/list?search=&typeId=2`).subscribe(
       (res: any) => {
         if (res?.data) {
-          this.skillsList = res?.data;
+          this.techSkillsList = res?.data;
+        }
+        this.initialLoader = false;
+      },
+      (err: any) => {
+        this.toastr.error('Error fetching skills');
+        this.initialLoader = false;
+      }
+    );
+    this.apiService.get(`/candidate/skills/list?search=&typeId=1`).subscribe(
+      (res: any) => {
+        if (res?.data) {
+          this.softSkillsList = res?.data;
         }
         this.initialLoader = false;
       },
@@ -55,11 +69,12 @@ export class AdminPanelComponent implements OnInit {
     );
   }
 
-  addSkill(skill: string): void {
-    this.apiService.post(`/candidate/add/skill?skillName=${skill}`, '').subscribe({
+  addSkill(skill: string, id: number): void {
+    this.apiService.post(`/candidate/add/skill?skillName=${skill}&typeId=${id}`, '').subscribe({
       next: (res: any) => {
         this.toastr.success('Skill Added Successfully');
-        this.newSkill = '';
+        this.newTechSkill = '';
+        this.newSoftSkill = '';
         this.fetchSkill();
       },
       error: (err) => {

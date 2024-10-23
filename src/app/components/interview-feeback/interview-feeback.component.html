@@ -1,0 +1,110 @@
+<div class="main p-10">
+  <div class="d-flex w-100">
+    <span class="f-w-500 f-s-14 p-t-10 w-30">Feedback</span>
+    <div class="d-flex p-l-10 w-70">
+      <span class="input-feedback c-pointer no-close p-relative p-t-5" (click)="openFeedbackList = !openFeedbackList">
+        <span class="no-close p-l-10 f-s-14 f-w-400">
+          {{ selectedFeedback.trim() === '' ? 'Select Feedback' : selectedFeedback }}
+        </span>
+        <span class="f-right">
+          <span>
+            <i class="p-l-8 p-r-10 fa fa-chevron-down no-close"></i>
+          </span>
+        </span>
+        <div class="dropdown c-pointer no-close" *ngIf="openFeedbackList">
+          <span class="d-flex p-0" *ngFor="let type of feedbackList"
+            (click)="selectFeedback(type?.value); openFeedbackList = !openFeedbackList">
+            <span class="p-l-20 padding-5 f-s-14 f-w-400">{{ type?.value | titlecase }}</span>
+          </span>
+        </div>
+      </span>
+    </div>
+  </div>
+
+  <div class="d-flex w-100 m-t-10">
+    <span class="f-w-500 f-s-14 p-t-10 w-30">Upload Attachment</span>
+    <div class="d-flex p-l-10 w-70">
+      <span class="c-pointer input-feedback padding-10 d-flex j-center" title="Attach File" (click)="fileInput.click()">
+        <img src="/assets/images/paperclip.svg" alt="Attach File" class="p-b-3" height="20" width="20">
+        <span class="p-t-0 p-l-4">{{ fileName || 'Upload File' }}</span>
+        <input type="file" #fileInput id="fileInput" style="display: none;" (change)="onFileSelected($event)">
+      </span>
+    </div>
+
+  </div>
+
+  <div class="d-flex w-100 m-t-10">
+    <span class="f-w-500 f-s-14 p-t-10 w-30">Add Skill and Score</span>
+    <div class="d-flex p-l-10 w-70">
+      <div class="w-70">
+        <span class="input-feedback padding-5 d-flex p-relative">
+          <input type="text" placeholder="Search skill" (input)="getSkillSuggestions(searchvalue)" id="addskill"
+            [(ngModel)]="searchvalue">
+          <div class="dropdown c-pointer no-close " *ngIf="showSkill">
+            <span class="d-flex p-0" *ngFor="let item of skillSuggestions"
+              (click)="selectSkill(item?.skillName, item?.id)">
+              <span class="p-l-20 padding-5 f-s-14 f-w-400">{{ item?.skillName}}</span>
+            </span>
+          </div>
+        </span>
+      </div>
+      <div class=" d-flex m-l-10">
+        <span class="input-score c-pointer no-close p-relative p-t-5" (click)="openCountList = !openCountList">
+          <!-- <span class="c-pointer input-feedback padding-10 d-flex m-l-10 p-relative"> -->
+          <span class="no-close p-l-10 f-s-14 f-w-400">
+            {{ selectedScore.trim() === '' ? 'Select Score' : selectedScore }}
+          </span>
+          <span class="f-right">
+            <span>
+              <i class="p-l-8 p-r-10 fa fa-chevron-down no-close"></i>
+            </span>
+          </span>
+          <div class="dropdown c-pointer no-close " *ngIf="openCountList">
+            <span class="d-flex p-0" *ngFor="let i of ['1','2','3','4','5','6','7','8','9','10']"
+              (click)="selectScore(i); openCountList = !openCountList">
+              <span class="p-l-20 padding-5 f-s-14 f-w-400">{{ i }}</span>
+            </span>
+          </div>
+        </span>
+      </div>
+      <div class="add">
+        <span class="c-pointer add-btn" (click)="addSkill()">Add</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex w-100 m-t-10">
+    <span class="f-w-500 f-s-14 p-t-10 w-30">Added Skills and Scores</span>
+    <div class="p-l-10 w-70">
+      <div class="container-table m-b-0">
+        <table class="">
+          <tr class="table-header p-b-10">
+            <td class="text-start">Skill</td>
+            <td class="text-start">Score</td>
+            <td class="text-end">Actions</td>
+          </tr>
+
+          <ng-container *ngIf="progressSkill?.length > 0">
+            <ng-container *ngFor="let item of progressSkill">
+              <tr class="c-pointer skill-list">
+                <td class="text-start w-30" [title]="(item?.skillName | titlecase) ">
+                  {{item?.skillName | titlecase}}
+                </td>
+                <td class="text-end d-flex w-30 skill-list" [title]="item?.score">
+                  <!-- <span class="w-30 p-r-10 p-t-5"><mat-progress-bar mode="determinate" min="1" max="10" step="1"
+                      [value]="item?.score"></mat-progress-bar></span> -->
+                  <span>{{item?.score}}</span>
+                </td>
+                <td class="text-end">
+                  <i class="fa fa-trash-o  red c-pointer" aria-hidden="true" (click)="removeSkill(item?.skillId)"></i>
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
+        </table>
+      </div>
+    </div>
+  </div>
+<div class="d-flex j-end">
+  <button class="btn c-pointer" (click)="submitClick()">Submit</button>
+</div>

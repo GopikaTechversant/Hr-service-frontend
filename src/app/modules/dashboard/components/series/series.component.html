@@ -35,10 +35,10 @@
                         <div class="key-requirement">Candidate Count</div>
                         <div class="value-requirement">:
                             {{requirement_details?.candidatesCount}}
-                            <span class="" *ngIf="requirement_details?.candidatesCount > 0"> <a
+                            <!-- <span class="" *ngIf="requirement_details?.candidatesCount > 0"> <a
                                     [href]="env_url + '/dashboard/candidate-schedule?requestId=' + requirement_details?.requestId">
                                     View Candidates
-                                </a></span>
+                                </a></span> -->
                         </div>
                     </div>
                     <div class="info-pair-requirement">
@@ -88,13 +88,23 @@
                         <div class="key-requirement">Reporting Manager</div>
                         <div class="value-requirement">: {{requirement_details?.reporting?.userFullName | titlecase}}</div>
                     </div>
-                </div>
-               
+                </div>      
             </div>
+          
         </div>
-        <div class="description m-t-15 m-b-29">
-            <span class="p-l-10 jd-title">Job Description</span>
-            <div [innerHTML]="formattedText" class="description-text"></div>
-        </div>
+        <div class="description m-t-0 m-b-29">
+            <div class="title-description"><span class="f-w-500 f-s-16">
+                <span class="f-w-500">Job Description</span></span>
+            </div>
+            <div *ngIf="formattedText" #template [class.expanded]="isExpanded" [innerHTML]="formattedText" class="description-text"></div>
+            <div *ngIf="showViewMore" >
+                <span class="c-pointer f-w-500 blue view d-flex j-centre" (click)="toggleView()">
+                    {{ isExpanded ? 'View Less' : 'View More...' }}
+                </span>
+            </div>
+        </div>        
     </div>  
+    <div>
+        <app-candidate-schedule></app-candidate-schedule>
+    </div>
 </div>
