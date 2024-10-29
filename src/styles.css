@@ -390,3 +390,11 @@ input[type="text"] {
 .text-muted{
   color: #4F4F4F;
 }
+
+.w-70{
+  width: 70%;
+}
+
+.w-30{
+  width: 30%;
+}

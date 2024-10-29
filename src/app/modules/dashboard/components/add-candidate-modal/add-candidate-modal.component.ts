@@ -99,7 +99,7 @@ export class AddCandidateModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  
+
     this.candidateCreatedby = localStorage.getItem('userId');
     this.currentYear = new Date().getFullYear();
     this.maxDate = new Date();
@@ -151,14 +151,14 @@ export class AddCandidateModalComponent implements OnInit {
     const allowedCharacters = /^[\.\&A-Za-z\s]+$/;
     let enteredValue = event?.target?.value;
     // Allow Ctrl + C (copy) and Ctrl + V (paste)
-    if ((event.ctrlKey || event.metaKey) && (event.key === 'c' || event.key === 'v' || event.key === 'A') ) {
+    if ((event.ctrlKey || event.metaKey) && (event.key === 'c' || event.key === 'v' || event.key === 'A')) {
       return;
     }
-  
+
     if (!event.ctrlKey && !event.metaKey && !event.altKey && event?.key?.length === 1) {
       enteredValue += event?.key;
     }
-  
+
     if (!allowedCharacters.test(enteredValue)) {
       event.preventDefault();
     }
@@ -167,12 +167,12 @@ export class AddCandidateModalComponent implements OnInit {
   namePasteValidation(event: ClipboardEvent): void {
     const pastedData = event.clipboardData?.getData('text') || '';
     const allowedCharacters = /^[\.\&A-Za-z\s]+$/;
-  
+
     if (!allowedCharacters.test(pastedData)) {
       event.preventDefault(); // Prevent paste if invalid characters are found
     }
   }
-  
+
 
   selectsource(sourceid: any, sourceName: any): void {
     this.sourceId = sourceid;
@@ -195,73 +195,31 @@ export class AddCandidateModalComponent implements OnInit {
     this.locationName = name;
   }
 
-  onKeypressSalary(event: KeyboardEvent, inputElement: HTMLInputElement): void {
-    const target = inputElement;
-    if (!target) return;
-
+  onKeypressSalary(event: KeyboardEvent): void {
     const allowedKeys = /[0-9.,]/;
-    const controlKeys = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete', 'Tab'];
+    const controlKeys = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete', 'Tab', 'c', 'v', 'x'];
     const key = event.key;
- // Allow Ctrl + C (copy) and Ctrl + V (paste)
- if ((event.ctrlKey || event.metaKey) && (event.key === 'c' || event.key === 'v')) {
-  return;
-}
 
+    // Allow control key combinations (Ctrl+C, Ctrl+V, Ctrl+X)
+    if (event.ctrlKey && controlKeys.includes(key.toLowerCase())) {
+      return;
+    }
+
+    // Prevent input of disallowed keys
     if (!allowedKeys.test(key) && !controlKeys.includes(key)) {
       event.preventDefault();
-      return;
-    }
-
-    if (controlKeys.includes(key)) return;
-
-    let value = target.value.replace(/,/g, '');
-    if (key === '.' && value.includes('.')) {
-      event.preventDefault();
-      return;
-    }
-
-    value = value.replace(/[^0-9.]/g, '');
-    const parts = value.split(".");
-    let integerPart = parts[0];
-    const decimalPart = parts[1];
-
-    integerPart = integerPart.replace(/\B(?=(\d{2})+(?!\d))/g, ",");
-    if (decimalPart !== undefined) {
-      target.value = integerPart + "." + decimalPart.slice(0, 2);
-    } else {
-      target.value = integerPart;
     }
   }
 
-  onPasteSalary(event: ClipboardEvent, inputElement: HTMLInputElement): void {
-    const clipboardData = event.clipboardData;
-    if (!clipboardData) {
+  // Validation for pasted input
+  onPasteSalary(event: ClipboardEvent): void {
+    const pastedData = event.clipboardData?.getData('text') || '';
+    const isValid = /^[0-9.,]+$/.test(pastedData);
+
+    // Prevent pasting if it contains invalid characters
+    if (!isValid) {
       event.preventDefault();
-      return;
     }
-
-    let pastedData = clipboardData.getData('Text');
-    pastedData = pastedData.replace(/,/g, ''); // Remove existing commas
-
-    const allowedCharacters: RegExp = /^[0-9]*\.?[0-9]*$/;
-    if (!allowedCharacters.test(pastedData)) {
-      event.preventDefault();
-      return;
-    }
-
-    const parts = pastedData.split(".");
-    let integerPart = parts[0];
-    const decimalPart = parts[1];
-
-    integerPart = integerPart.replace(/\B(?=(\d{2})+(?!\d))/g, ",");
-    if (decimalPart !== undefined) {
-      pastedData = integerPart + "." + decimalPart.slice(0, 2);
-    } else {
-      pastedData = integerPart;
-    }
-
-    inputElement.value = pastedData;
-    event.preventDefault();
   }
 
   onKeypress(event: any): void {
@@ -269,11 +227,11 @@ export class AddCandidateModalComponent implements OnInit {
     if (event.key === "Backspace") enteredValue = event?.target?.value.slice(0, -1);
     else enteredValue = event.target.value + event.key;
     const allowedCharacters: RegExp = /^[0-9]+$/;
-     // Allow Ctrl + C (copy) and Ctrl + V (paste)
-     if ((event.ctrlKey || event.metaKey) && (event.key === 'c' || event.key === 'v')) {
+    // Allow Ctrl + C (copy) and Ctrl + V (paste)
+    if ((event.ctrlKey || event.metaKey) && (event.key === 'c' || event.key === 'v')) {
       return;
     }
-  
+
     if (event.key !== "Backspace" && !allowedCharacters.test(enteredValue)) {
       event.preventDefault();
       return;
@@ -298,6 +256,8 @@ export class AddCandidateModalComponent implements OnInit {
       event.preventDefault();
     }
   }
+
+
 
   experienceValidation(event: any): void {
     const intermediateAllowedCharacters = /^-?(\d{0,1}\d?)?(\.\d{0,2})?\+?$/;
@@ -441,10 +401,10 @@ export class AddCandidateModalComponent implements OnInit {
     this.loader = true;
     this.checkValidation();
     if (this.validationSuccess) {
-      let candidateDetails = this.candidateForm.value;
       this.primaryskills = this.selectedPrimarySkills.map(skill => skill.id);
       this.secondaryskills = this.selectedSecondarySkills.map(skill => skill.id);
-
+      const candidateCurrentSalary = parseFloat(this.candidateForm?.value?.candidateCurrentSalary) || 0;
+      const candidateExpectedSalary = parseFloat(this.candidateForm?.value?.candidateExpectedSalary) || 0;
       const payload = {
         candidateFirstName: this.candidateForm?.value?.candidateFirstName,
         candidateLastName: this.candidateForm?.value?.candidateLastName,
@@ -457,8 +417,8 @@ export class AddCandidateModalComponent implements OnInit {
         candidatePreviousOrg: this.candidateForm?.value?.candidatePreviousOrg,
         candidatePreviousDesignation: this.candidateForm?.value?.candidatePreviousDesignation,
         candidateEducation: this.candidateForm?.value?.candidateEducation,
-        candidateCurrentSalary: this.candidateForm?.value?.candidateCurrentSalary,
-        candidateExpectedSalary: this.candidateForm?.value?.candidateExpectedSalary,
+        candidateCurrentSalary: candidateCurrentSalary,
+        candidateExpectedSalary: candidateExpectedSalary,
         candidateCreatedby: this.candidateCreatedby,
         candidatePrimarySkills: this.primaryskills,
         candidateSecondarySkills: this.secondaryskills,
@@ -516,6 +476,7 @@ export class AddCandidateModalComponent implements OnInit {
     this.primaryskills = null;
     this.secondaryskills = null;
     this.sourceId = null;
+    this.uploadedFileKey = ''
   }
 
   getSkillSuggestions(event: any): void {

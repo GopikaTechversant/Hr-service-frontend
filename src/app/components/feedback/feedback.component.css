@@ -1,50 +1,66 @@
-.comment {
-    width: 554px;
-    height: 164px;
-    top: 47px;
-    left: 9px;
-    border-radius: 2px;
-    outline: 1px solid #E6E6E6
+.modal-header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: #f8f9fa;
 }
 
-.comment-heading {
-    font-size: 18px;
+.modal-content {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.heading {
+    font-size: 16px;
     font-weight: 500;
-    line-height: 21px;
-    letter-spacing: 0em;
     text-align: left;
 }
 
-.btns {
-    width: 163px;
-    float: right;
-    margin-right: 16px;
-    margin-top: 11px;
+.input-rejection {
+    outline: none !important;
+    border: 1px solid rgb(207, 205, 205);
+    height: 34px;
+    background-color: #FFFF;
+    width: 100%;
+    border-radius: 5px;
 }
 
-.submit-btn {
-    width: 77px;
-    height: 29px;
-    color: #FFFFFF;
+.rejection {
+    background-color: #f7f7f7;
     border-radius: 5px;
-    background: #005EC9;
-    border: none;
-    color: #FFFFFF;
-    font-size: 15px;
-    font-weight: 400;
-    line-height: 18px;
-    letter-spacing: 0em;
+    padding-top: 10px;
+    height: 230px;
 }
 
-.cancel-btn {
-    width: 77px;
-    height: 28px;
-    background: #575F6E;
-    border-radius: 5px;
-    color: #FFFFFF;
-    font-size: 15px;
+.dropdown {
+    background: white;
+    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+    max-height: 150px;
+    overflow-y: auto;
+    font-size: 14px;
     font-weight: 400;
-    line-height: 18px;
-    letter-spacing: 0em;
+    width: 100%;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 999;
+    margin-top: 5px;
+    top: 100%;
+    left: 0;
+}
+
+.dropdown :hover {
+    background-color: #eceaea;
+}
+
+.btn {
+    width: 120px;
+    height: 35px;
+    color: #FFFFFF;
+    background-color: #005EC9;
     border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 3px;
+    margin: 10px;
 }

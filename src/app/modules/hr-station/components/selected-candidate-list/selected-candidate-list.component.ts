@@ -259,7 +259,7 @@ export class SelectedCandidateListComponent {
   }
 
   onSwitchStation(candidate: any): void {
-    if (candidate?.serviceStatus === 'pending' && candidate?.progressStatus === '0') {
+    if (candidate?.serviceStatus === 'pending' ) {
       const userId = localStorage.getItem('userId');
       const dialogRef = this.dialog.open(StationSwitchComponent, {
         data: {

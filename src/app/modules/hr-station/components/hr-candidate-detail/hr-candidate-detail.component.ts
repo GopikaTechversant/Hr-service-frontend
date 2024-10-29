@@ -11,6 +11,9 @@ import { environment } from "src/environments/environments";
   selector: 'app-hr-candidate-detail',
   templateUrl: './hr-candidate-detail.component.html',
   styleUrls: ['./hr-candidate-detail.component.css'],
+  host: {
+    '(document:click)': 'onBodyClick($event)'
+  },
   providers: [DatePipe],
 })
 export class HrCandidateDetailComponent {
@@ -41,6 +44,17 @@ export class HrCandidateDetailComponent {
   file: any;
   uploadedFileKey: any;
   interviewFeedback: any
+  rejectionFeedbackList: any;
+  openRejectionFeedback: boolean = false;
+  selectedRejectionFeedback: string = '';
+  statusMessages: { [key: string]: string } = {
+    done: 'Candidate Selected to Next Round',
+    rejected: 'Candidate Rejected In this Round',
+    moved: 'Candidate Moved From this Round',
+    'back-off': 'Candidate Back-off In this Round',
+    'pannel-rejection': 'Panel Rejected the candidate'
+  };
+  progressSkill: any;
   constructor(public dialogRef: MatDialogRef<HrCandidateDetailComponent>, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
     private route: ActivatedRoute, private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -51,6 +65,7 @@ export class HrCandidateDetailComponent {
       this.interviewFeedback = data?.candidateDetails?.progress
       this.serviceId = this.data?.candidateDetails?.serviceId;
       this.feedback = data?.candidateDetails?.reqCandidateComment?.commentComment;
+      this.progressSkill = this.candidateDetails?.skillScore
       if (data?.reviewStatus > 0) this.reviewAdded = true;
       if (data?.offerStatus > 0) this.offerSent = true;
     }
@@ -62,21 +77,37 @@ export class HrCandidateDetailComponent {
     this.route.params.subscribe(params => {
       this.stationId = params['id'];
     });
-    this.stationId = this.router.url.split('/')[2];
+    this.stationId = localStorage.getItem('currentStationId');
     this.today = new Date();
     this.userId = localStorage.getItem('userId');
     this.env_url = window.location.origin;
     this.fetchStatus();
+    this.fetchFeedbackList();
+
   }
+  onBodyClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.no-close')) {
+      this.filterStatus = false;
+    }
+  }
+
+  fetchFeedbackList(): void {
+    this.apiService.get(`/screening-station/rejection-list`).subscribe(res => {
+      this.rejectionFeedbackList = res?.data;
+    });
+  }
+
+  selectRejectionFeedback(status: string) {
+    this.selectedRejectionFeedback = status;
+  }
+
 
   closeDialog(): void {
     this.dialogRef.close();
   }
 
   showMail(item: string): void {
-    // this.showOffer = item === 'offer';
-    // if (item === 're-schedule') this.showReschedule = true;
-    // if (item === 'rejection') this.showRejection = true;
     this.showMailTemp = true;
     this.messageType = item;
     if (item.trim() !== '') {
@@ -92,6 +123,9 @@ export class HrCandidateDetailComponent {
 
   selectButton(type: any): void {
     this.buttonType = type;
+    console.log("hhiii");
+    
+    if (type === 'rejection') this.fetchStatus();
   }
 
   fetchStatus(): void {
@@ -134,38 +168,33 @@ export class HrCandidateDetailComponent {
     if (event?.messageType === 'rejection') this.rejectClick(event);
   }
 
-  addProgress(): void {
-    this.loader = true;
+  onSubmitInterviewData(data: any) {
+    if (data) {
+      this.loader = true;
+      const payload = {
+        progressAssignee: this.userId,
+        progressServiceId: this.serviceId?.toString() || '0',
+        progressDescription: data?.progressDescription || '',
+        progressSkill: data?.progressSkill,
+        file: data?.file || '',
+      };
 
-    const description = (document.getElementById('description') as HTMLInputElement)?.value.trim();
-    const payload = {
-      progressAssignee: this.userId,
-      progressServiceId: this.serviceId?.toString() || '0',
-      progressDescription: description,
-      file: this.uploadedFileKey || '',
-    };
-
-    if (!description) {
-      this.loader = false;
-      this.tostr.error('Invalid operation');
-      return;
-    }
-
-    if (payload) {
-      this.apiService.post(`/hr-station/add-progress`, payload).subscribe({
-        next: () => {
-          this.loader = false;
-          this.tostr.success('Progress added successfully');
-          this.closeDialog();
-        },
-        error: () => {
-          this.loader = false;
-          this.tostr.warning('Unable to Update Progress');
-        }
-      });
-    } else {
-      this.loader = false;
-      this.tostr.error('Invalid operation');
+      if (payload) {
+        this.apiService.post(`/hr-station/add-progress`, payload).subscribe({
+          next: () => {
+            this.loader = false;
+            this.tostr.success('Progress added successfully');
+            this.closeDialog();
+          },
+          error: () => {
+            this.loader = false;
+            this.tostr.warning('Unable to Update Progress');
+          }
+        });
+      } else {
+        this.loader = false;
+        this.tostr.error('Invalid operation');
+      }
     }
   }
 
@@ -238,7 +267,7 @@ export class HrCandidateDetailComponent {
           this.tostr.error('Error adding progress');
         }
       });
-    }else {
+    } else {
       this.loader = false;
       this.tostr.warning('Something Went wrong');
 

@@ -64,6 +64,14 @@ export class HeaderComponent implements OnInit {
   }
 
   navigate(station: any): void {
+    if (!station) return;
+
+    const { stationName, stationId } = station;
+
+    // Store station name and id in local storage
+    localStorage.setItem('currentStationName', stationName);
+    localStorage.setItem('currentStationId', stationId || '');
+    
     if (station?.stationName === 'Technical 1') {
       this.router.navigate([`/technical/${station?.stationId}`]);
       this.activeStation = 'Technical 1';

@@ -92,7 +92,7 @@ export class StationCandidatesComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if(this.modalClose) this.fetchList();
-    if (changes['modalClose'] && !changes['modalClose'].isFirstChange()) this.fetchList();
+    // if (changes['modalClose'] && !changes['modalClose'].isFirstChange()) this.fetchList();
   }
 
   fetchList(): void {

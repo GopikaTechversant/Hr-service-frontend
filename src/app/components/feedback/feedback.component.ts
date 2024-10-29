@@ -8,36 +8,74 @@ import { ToastrServices } from 'src/app/services/toastr.service';
   styleUrls: ['./feedback.component.css']
 })
 export class FeedbackComponent implements OnInit {
-  feedback: any;
+  rejectionFeedbackList: any;
+  openRejectionFeedback: boolean = false;
+  selectedRejectionFeedback: string = '';
+  filteredStatus: string = '';
+  filterStatus: boolean = false;
   stationId: any;
-  candidateServiceId: any;
+  userId: any;
+  status: any;
+  candidateDetails: any;
   constructor(public dialogRef: MatDialogRef<FeedbackComponent>, @Inject(MAT_DIALOG_DATA)
   public data: any,
-    private apiService: ApiService, private tostr: ToastrServices) { }
 
-  ngOnInit(): void { }
+    private apiService: ApiService, private tostr: ToastrServices) {
+    console.log(data);
+    this.candidateDetails = data?.candidateDetails;
 
-  onSubmitClick(): void {
-    const feedbackElement = document.getElementById('feedback') as HTMLInputElement;
-    if (feedbackElement) this.feedback = feedbackElement.value;
-    this.candidateServiceId = this.data?.serviceId;
-    this.stationId = this.data.stationId;
-    const payload = {
-      serviceId: this.data?.candidateId,
-      stationId: this.stationId,
-      status: this.data?.status,
-      feedBack: this.feedback,
-      userId: this.data?.userId
-    }
-    this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
-      next: (res: any) => {
-        this.tostr.success('Candidate Rejected Successfully');
-      },
-      error: (error) => {
-        this.tostr.error('Something went wrong');
-      }
+  }
+
+  ngOnInit(): void {
+    this.stationId = localStorage.getItem('currentStationId');
+    this.userId = localStorage.getItem('userId');
+    this.fetchFeedbackList();
+    this.fetchStatus();
+  }
+
+  fetchFeedbackList(): void {
+    this.apiService.get(`/screening-station/rejection-list`).subscribe(res => {
+      this.rejectionFeedbackList = res?.data;
     });
-    this.dialogRef.close(true);
+  }
+  fetchStatus(): void {
+    this.apiService.get(`/user/filter-status`).subscribe(res => {
+      this.status = res?.data.slice(4);
+    });
+  }
+  closeDialog(): void {
+    this.dialogRef.close();
+  }
+
+  selectStatusFilter(status: string) {
+    this.filteredStatus = status;
+  }
+
+  selectRejectionFeedback(status: string) {
+    this.selectedRejectionFeedback = status;
+  }
+
+  rejectClick(): void {
+    // this.loader = true;
+    if (this.filteredStatus) {
+      const payload = {
+        // serviceId: this.serviceId,
+        stationId: this.stationId,
+        userId: this.userId,
+        status: this.filteredStatus ? this.filteredStatus : "rejected",
+        feedBack: this.selectedRejectionFeedback || '',
+      };
+      this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
+        next: (res: any) => {
+          // this.loader = false;
+          this.closeDialog();
+        },
+        error: (error) => {
+          // this.loader = false;
+          this.tostr.error('Error adding progress');
+        }
+      });
+    }
   }
 
   onCancelClick(): void {

@@ -30,7 +30,7 @@ export class TechnicalDetailComponent implements OnInit {
 
   onSwitchStation(candidate: any): void {
     this.modalClose = false;
-    if (candidate?.serviceStatus !== 'done' && ((this.stationId === '3' && candidate?.currentStation === 'Technical 1') || (this.stationId === '4' && candidate?.currentStation === 'Technical 2'))) {
+    if (candidate?.serviceStatus === 'pending' && ((this.stationId === '3' && candidate?.currentStation === 'Technical 1') || (this.stationId === '4' && candidate?.currentStation === 'Technical 2'))) {
       const userId = localStorage.getItem('userId');
       const dialogRef = this.dialog.open(StationSwitchComponent, {
         data: {

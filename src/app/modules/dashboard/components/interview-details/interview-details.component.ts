@@ -14,28 +14,17 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 
 export class InterviewDetailsComponent implements OnInit {
-  showDropdown: boolean = false;
-  showRecruiters: boolean = false;
-  showcandidate: boolean = false;
   showPanel: boolean = false;
-  displayDate: any;
-  displayTime: any;
-  displaydateTime: any;
   candidate_list: any;
   users_list: any;
   recruiterId: any;
   recruiterName: string = '';
-  positionList: any;
   positionId: any;
   positionName: string = '';
   candidateId: any;
   candidateName: string = '';
-  candidateExperience: any;
   currentCompany: string = '';
   modeValue: any;
-  interviewStatusValue: any;
-  rescheduledStatusValue: any;
-  commentValue: any = '';
   selectedCandidate: any[] = [];
   location: any;
   interviewStatus: string = '';
@@ -100,9 +89,6 @@ export class InterviewDetailsComponent implements OnInit {
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
-      this.showDropdown = false;
-      this.showcandidate = false;
-      this.showRecruiters = false;
       this.showWorkMode = false;
       this.showJobLocation = false;
     }
@@ -111,18 +97,24 @@ export class InterviewDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.recruiterId = localStorage.getItem('userId');
     this.today = new Date();
-    this.fetchPosition();
   }
 
-  fetchPosition(): void {
-    this.apiService.get(`/service-request/list`).subscribe({
-      next: (res: any) => {
-        if (res?.data) this.positionList = res?.data;
-      },
-      error: (err) => {
-        this.tostr.error("Error fetching position.");
-      }
-    });
+  fetchCandidates() {
+    if (this.positionId) {
+      this.apiService.get(`/screening-station/interview-details/candidates-list?serviceRequestId=${this.positionId}&scheduleStatus=${this.scheduleStatus}`).subscribe({
+        next: (res: any) => {
+          if (res?.candidates) {
+            this.candidate_list = res?.candidates;
+            this.candidateCount = res?.candidateCount
+          }
+        },
+        error: (err) => {
+          this.tostr.error("Error fetching candidates.");
+        }
+      });
+    } else {
+      this.tostr.warning("Make sure to select the position dropdown first");
+    }
   }
 
   closeDialog(): void {
@@ -146,45 +138,6 @@ export class InterviewDetailsComponent implements OnInit {
     });
   }
 
-  fetchCandidates() {
-    if (this.positionId) {
-      this.apiService.get(`/screening-station/interview-details/candidates-list?serviceRequestId=${this.positionId}&scheduleStatus=${this.scheduleStatus}`).subscribe({
-        next: (res: any) => {
-          if (res?.candidates) {
-            this.candidate_list = res?.candidates;
-            this.candidateCount = res?.candidateCount
-          }
-        },
-        error: (err) => {
-          this.tostr.error("Error fetching candidates.");
-        }
-      });
-    } else {
-      this.tostr.warning("Make sure to select the position dropdown first");
-    }
-  }
-
-  candidateClick(): void {
-    if (this.positionName.trim() !== '') {
-      if (this.candidateCount === 0) {
-        this.showcandidate = false;
-        this.tostr.warning('Selected Requirement Has no Candidate');
-      } else this.showcandidate = !this.showcandidate;
-    } else this.tostr.warning('Please Select a Requirement First')
-  }
-
-  selectPosition(id: any, name: any): void {
-    this.showDropdown = false;
-    this.positionId = id;
-    this.positionName = name;
-    this.fetchUsers();
-    this.fetchCandidates();
-    this.fetchWorkMode();
-    this.fetchMode();
-    this.fetchLocation();
-    this.resetFormAndState('position');
-  }
-
   selectMode(mode: any): void {
     this.selectedModeName = mode;
     this.showWorkMode = false;
@@ -198,7 +151,6 @@ export class InterviewDetailsComponent implements OnInit {
       id: this.candidate?.candidateId ? this.candidate?.candidateId : this.candidateId,
       messageType: this.messageType,
     };
-
   }
 
   fetchCandidatesDetails(): void {
@@ -223,16 +175,6 @@ export class InterviewDetailsComponent implements OnInit {
     })
   }
 
-  fetchcandidatesWithExperience(search: string): void {
-    this.seachKeyword = search;
-    this.apiService.get(`/screening-station/interview-details/candidates-list?serviceRequestId=${this.positionId}&exprience=${this.seachKeyword}`).subscribe((res: any) => {
-      if (res?.candidates) {
-        this.candidatesList = [];
-        this.candidatesList = res?.candidates;
-      }
-    })
-  }
-
   fetchMode(): void {
     this.apiService.get(`/screening-station/interview-mode/list`).subscribe((res: any) => {
       if (res?.data) this.modeList = res?.data;
@@ -243,36 +185,6 @@ export class InterviewDetailsComponent implements OnInit {
     this.apiService.get(`/user/preffer-location`).subscribe((res: any) => {
       if (res?.data) this.locationList = res?.data;
     })
-  }
-
-  selectCandidate(candidateId: any, candidateFirstName: any, candidateLastName: any, candidate: any): void {
-    this.showcandidate = false;
-    this.candidateId = candidateId;
-    this.candidateFirstName = candidateFirstName;
-    this.candidateLastName = candidateLastName
-    this.candidateName = `${candidateFirstName} ${candidateLastName}`;
-    this.selectedCandidate = candidate;
-    if (this.selectedCandidate) {
-      this.fetchCandidatesDetails();
-    }
-  }
-
-  searchExperience(search: string): void {
-    this.seachKeyword = search;
-    this.fetchcandidatesWithExperience(this.seachKeyword);
-  }
-
-  candidateSelectChange(item: any): void {
-    this.candidate = item;
-    this.candidate.selected = !this.candidate.selected;
-    if (this.candidate !== null) {
-      if (this.candidate.selected) {
-        if (this.selectedCandidate.indexOf(item?.candidateId) === -1) this.selectedCandidate.push(item?.candidateId);
-      } else {
-        const index = this.selectedCandidate.indexOf(item?.candidateId);
-        if (index > -1) this.selectedCandidate.splice(index, 1);
-      }
-    }
   }
 
   onSubmitData(event: any): void {
@@ -344,8 +256,6 @@ export class InterviewDetailsComponent implements OnInit {
     this.recruiterName = '';
     this.currentCompany = '';
     this.selectedModeName = '';
-    this.showRecruiters = false;
-    this.showDropdown = false;
     this.candidateName = '';
     this.locationName = '';
     this.noticeperiodvalue = '';

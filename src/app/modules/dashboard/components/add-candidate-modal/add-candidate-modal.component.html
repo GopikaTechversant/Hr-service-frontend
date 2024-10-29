@@ -249,12 +249,12 @@
                        (keydown)="nameValidation($event)" (paste)="namePasteValidation($event)">
                 </div>
                 <div class="child d-flex m-b-10">
-                    <span class="label m-b-4">Current Salary<span class="f-s-12">(CTC)</span></span>
-                    <input type="text" class="input-box" #baseSalaryInput maxlength="20" formControlName="candidateCurrentSalary">
+                    <span class="label m-b-4">Current Salary<span class="f-s-12">(CTC per Year)</span></span>
+                    <input  (keydown)="onKeypressSalary($event)" (paste)="onPasteSalary($event)" type="text" class="input-box" #baseSalaryInput maxlength="10" formControlName="candidateCurrentSalary">
                 </div>
                 <div class="child d-flex m-b-10">
-                    <span class="label m-b-4">Expected Salary <span class="f-s-12">(ECTC)</span></span>
-                    <input type="text" class="input-box" #maxSalaryInput maxlength="20" formControlName="candidateExpectedSalary">
+                    <span class="label m-b-4">Expected Salary <span class="f-s-12">(ECTC per Year)</span></span>
+                    <input  (keydown)="onKeypressSalary($event)" (paste)="onPasteSalary($event)" type="text" class="input-box" #maxSalaryInput maxlength="10" formControlName="candidateExpectedSalary">
                 </div>
             </div>
             <div class="d-flex parent-last">

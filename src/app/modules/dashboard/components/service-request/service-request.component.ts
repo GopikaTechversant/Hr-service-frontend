@@ -80,8 +80,9 @@ export class ServiceRequestComponent implements OnInit {
   jobLocation: any;
   selectedLocation: string = '';
   locationOpen: boolean = false;
-  selectedBaseType: string = '';
-  selectedMaxType: string = '';
+  selectedSalaryType: string = '';
+  salaryTypeList: any = [{ id: 1, type: 'per Month' }, { id: 2, type: 'per Year' }]
+  selectedSalaryTypeId: any;
   constructor(private toastr: ToastrServices, private apiService: ApiService, private datePipe: DatePipe, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -118,6 +119,7 @@ export class ServiceRequestComponent implements OnInit {
       this.openDesignation = false;
       this.openReporingManager = false;
       this.showFormats = false;
+      this.openBaseType = false;
     }
   }
 
@@ -226,15 +228,9 @@ export class ServiceRequestComponent implements OnInit {
     this.selectedLocation = location;
   }
 
-  selectSalaryType(type: any, field: any): void {
-    if (field === 'base') {
-      this.openBaseType = false;
-      this.selectedBaseType = type;
-    } else if (field === 'max') {
-      this.openMaxType = false;
-      this.selectedMaxType = type;
-    }
-
+  selectSalaryType(id: any): void {
+    this.openBaseType = false;
+    this.selectedSalaryTypeId = id;
   }
 
   selectmanager(id: any, fname: any, lname: any): void {
@@ -373,9 +369,8 @@ export class ServiceRequestComponent implements OnInit {
     this.minExperience = this.requirement_details?.requestMinimumExperience || '';
     this.relExperience = this.requirement_details?.requestExperience || '',
     this.baseSalary = this.requirement_details?.requestBaseSalary.split('per')[0] || '';
-    this.selectedBaseType =  'per ' + this.requirement_details?.requestBaseSalary.split('per')[1] || '';
-    this.maxSalary = this.requirement_details?.requestMaxSalary.split('per')[0] || '';    
-    this.selectedMaxType =  'per ' + this.requirement_details?.requestMaxSalary.split('per')[1] || '';
+    this.selectedSalaryType = 'per ' + this.requirement_details?.requestSalaryType || '';
+    this.maxSalary = this.requirement_details?.requestMaxSalary.split('per')[0] || '';
     this.vacancy = this.requirement_details?.requestVacancy || '';
     this.selectedSkills = this.requirement_details?.requestSkills ? this.requirement_details?.requestSkills.split(',') : [];
     this.selectedTeam = this.requirement_details?.team?.teamName || '';
@@ -405,8 +400,9 @@ export class ServiceRequestComponent implements OnInit {
     if (this.minExperience !== this.requirement_details.requestMinimumExperience) payload.requestMinimumExperience = this.minExperience;
     if (this.relExperience !== this.requirement_details.requestExperience) payload.requestExperience = this.relExperience;
     if (this.selectedDesignation !== this.requirement_details.designationName) payload.requestDesignation = this.selectedDesignationId;
-    if (this.baseSalary !== this.requirement_details.requestBaseSalary) payload.requestBaseSalary = this.baseSalary + ' ' + this.selectedBaseType;
-    if (this.maxSalary !== this.requirement_details.requestMaxSalary) payload.requestMaxSalary = this.maxSalary + ' ' + this.selectedMaxType;
+    if (Number(this.baseSalary) !== this.requirement_details.requestBaseSalary) payload.requestBaseSalary = Number(this.baseSalary);
+    if (Number(this.maxSalary) !== this.requirement_details.requestMaxSalary) payload.requestMaxSalary = Number(this.maxSalary);
+    if (this.selectedSalaryTypeId !== this.requirement_details?.requestSalaryType) payload.requestSalaryType = this.selectedSalaryTypeId
     if (this.selectedTeam !== this.requirement_details?.team?.teamName) payload.requestTeam = this.selectedTeamName;
     if (this.reportingmanager !== this.requirement_details?.reporting?.userFullName) payload.requestManager = this.managerId;
     if (this.selectedLocation !== this.requirement_details?.requestLocation) payload.requestLocation = this.selectedLocation;
@@ -480,8 +476,8 @@ export class ServiceRequestComponent implements OnInit {
     this.selectedSkills = [];
     this.searchvalue = '';
     this.jobDescription = '';
-    this.selectedBaseType = '';
-    this.selectedMaxType = '';
+    this.selectedSalaryType = '';
+    this.selectedSalaryTypeId = null;
     this.selectedStations = [
       { stationName: "Screening", stationId: 1 },
       { stationName: "HR", stationId: 5 }
@@ -500,40 +496,30 @@ export class ServiceRequestComponent implements OnInit {
 
   onKeypressSalary(event: KeyboardEvent): void {
     const allowedKeys = /[0-9.,]/;
-    const controlKeys = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete', 'Tab'];
+    const controlKeys = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete', 'Tab', 'c', 'v', 'x'];
     const key = event.key;
+    
+    // Allow control key combinations (Ctrl+C, Ctrl+V, Ctrl+X)
+    if (event.ctrlKey && controlKeys.includes(key.toLowerCase())) {
+      return;
+    }
   
     // Prevent input of disallowed keys
     if (!allowedKeys.test(key) && !controlKeys.includes(key)) {
       event.preventDefault();
-      return;
     }
   }
-
-  onPasteSalary(event: ClipboardEvent, inputElement: HTMLInputElement): void {
-    const clipboardData = event.clipboardData;
-    if (!clipboardData) {
+  
+  // Validation for pasted input
+  onPasteSalary(event: ClipboardEvent): void {
+    const pastedData = event.clipboardData?.getData('text') || '';
+    const isValid = /^[0-9.,]+$/.test(pastedData);
+  
+    // Prevent pasting if it contains invalid characters
+    if (!isValid) {
       event.preventDefault();
-      return;
     }
-    let pastedData = clipboardData.getData('Text');
-    pastedData = pastedData.replace(/,/g, ''); // Remove existing commas
-    const allowedCharacters: RegExp = /^[0-9]*\.?[0-9]*$/;
-    if (!allowedCharacters.test(pastedData)) {
-      event.preventDefault();
-      return;
-    }
-    const parts = pastedData.split(".");
-    let integerPart = parts[0];
-    const decimalPart = parts[1];
-    integerPart = integerPart.replace(/\B(?=(\d{2})+(?!\d))/g, ",");
-    if (decimalPart !== undefined) {
-      pastedData = integerPart + "." + decimalPart.slice(0, 2);
-    } else {
-      pastedData = integerPart;
-    }
-    inputElement.value = pastedData;
-    event.preventDefault();
   }
+  
 
 }

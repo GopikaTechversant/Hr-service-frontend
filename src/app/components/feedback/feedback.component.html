@@ -1,13 +1,59 @@
-<div class="m-10 main">
-    <div class="f-s-16 p-10 head">
-        <span *ngIf="this.data?.status !== 'reject'" class="f-w-500 comment-heading">Feedback</span>
-        <span *ngIf="this.data?.status === 'reject'" class="f-w-500 comment-heading">Reason for Rejection</span>
+<div class="modal-header heading p-t-10 d-flex j-space" style="position: sticky; top: 0; z-index: 2;">
+    <!-- <div *ngIf="loader" class="loader-parent">
+        <img src="assets/gif/loader.gif">
+    </div> -->
+    <div class="padding-10">
+        <span>{{candidateDetails?.candidateFirstName}} {{candidateDetails?.candidateLastName}} </span>
+        <!-- <span class="blue">( 
+            <a [href]="env_url + '/dashboard/candidate-details/' + candidateDetails['candidate.candidateId']"> {{candidateDetails['candidate.candidateId']}}</a>)
+        </span> -->
     </div>
-    <div class="m-t-0 m-l-10">
-        <textarea name="" id="feedback" cols="35" rows="7" class="comment"></textarea>
+    <div class="modal-close margin-10 d-flex">   
+        <img src="assets/images/techversant/clear-filter.svg" class="c-pointer p-r-5"  (click)="closeDialog()"alt="" width="35">
     </div>
-    <div class="d-flex btns j-space">
-        <button (click)="onCancelClick()" class="cancel-btn c-pointer">Cancel</button>
-        <button (click)="onSubmitClick()" class="submit-btn c-pointer">Submit</button>
+</div>
+<div class="modal-content">
+    <div class="d-flex w-100 p-10 j-space">
+        <span class="f-w-500 f-s-14 p-t-10 w-30">Rejection Reason</span>
+        <div class="d-flex p-l-10 w-50">
+            <span class="input-rejection c-pointer no-close p-relative p-t-5">
+                <span class="no-close p-l-10 f-s-14 f-w-400" (click)="filterStatus = !filterStatus">{{filteredStatus.trim()
+                    === '' ? 'Select Reason for Rejection' : filteredStatus | titlecase}}</span>
+                <span class="f-right">
+                    <!-- <span *ngIf="filteredStatus && filteredStatus.trim() !== ''" (click)="clearFilter('status')" class="clear-filter">x</span> -->
+                    <span (click)="filterStatus = !filterStatus"><i
+                            class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
+                </span>
+                <div class="dropdown c-pointer no-close'" *ngIf="filterStatus">
+                    <span class="d-flex p-0" *ngFor="let type of status"
+                        (click)="selectStatusFilter(type?.status);filterStatus = !filterStatus">
+                        <span class="p-l-20 padding-5 f-s-14 f-w-400">{{type?.status | titlecase}}</span>
+                    </span>
+                </div>
+            </span>
+        </div>
+      </div>
+      <div class="d-flex w-100 p-10 j-space">
+        <span class="f-w-500 f-s-14 p-t-10 w-30">Rejection Feedback</span>
+        <div class="d-flex p-l-10 w-50">
+            <span class="input-rejection c-pointer no-close p-relative p-t-5">
+                <span class="no-close p-l-10 f-s-14 f-w-400" (click)="openRejectionFeedback = !openRejectionFeedback">{{selectedRejectionFeedback.trim()
+                    === '' ? 'Select Reason for Rejection' : selectedRejectionFeedback | titlecase}}</span>
+                <span class="f-right">
+                    <!-- <span *ngIf="filteredStatus && filteredStatus.trim() !== ''" (click)="clearFilter('status')" class="clear-filter">x</span> -->
+                    <span (click)="openRejectionFeedback = !openRejectionFeedback"><i
+                            class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
+                </span>
+                <div class="dropdown c-pointer no-close'" *ngIf="openRejectionFeedback">
+                    <span class="d-flex p-0" *ngFor="let type of rejectionFeedbackList"
+                        (click)="selectRejectionFeedback(type?.value);openRejectionFeedback = !openRejectionFeedback">
+                        <span class="p-l-20 padding-5 f-s-14 f-w-400">{{type?.value | titlecase}}</span>
+                    </span>
+                </div>
+            </span>
+        </div>
+      </div>
+    <div class="padding-10 p-r-0 d-flex j-end w-100 m-t-20">
+        <button class="btn c-pointer" (click)="rejectClick()">Submit</button>
     </div>
 </div>
