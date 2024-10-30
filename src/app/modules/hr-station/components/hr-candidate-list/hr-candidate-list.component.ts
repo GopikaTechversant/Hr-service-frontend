@@ -276,6 +276,8 @@ export class HrCandidateListComponent implements OnInit {
   }
 
   viewCandidateDetail(item: any, offerStatus: any, reviewStatus: any): void {
+    console.log(offerStatus , reviewStatus);
+    
     const dialogRef = this.dialog.open(HrCandidateDetailComponent, {
       data: { candidateDetails: item, offerStatus: offerStatus, reviewStatus: reviewStatus },
     })

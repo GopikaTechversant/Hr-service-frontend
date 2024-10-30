@@ -154,7 +154,7 @@
     <!-- ADDED Interview Feedback -->
 
     <div class="d-flex w-100">
-        <div class="w-50" *ngIf="candidateDetails?.progressStatus > 0 || candidateDetails?.serviceStatus === 'moved'">
+        <div class="w-50" *ngIf="(candidateDetails?.progressStatus > 0 || candidateDetails?.serviceStatus === 'moved') && progressSkill.length > 0">
             <span class="heading p-l-10 p-b-0">Added Skills and Scores</span>
             <div class="container-table m-b-0 m-l-10">
                 <table class="">

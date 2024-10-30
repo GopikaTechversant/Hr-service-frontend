@@ -50,7 +50,7 @@ export class StationCandidateDetailComponent implements OnInit {
   rejectionFeedbackList: any;
   openRejectionFeedback: boolean = false;
   selectedRejectionFeedback: string = '';
-  progressSkill:any;
+  progressSkill: any = [];
   statusMessages: { [key: string]: string } = {
     done: 'Candidate Selected to Next Round',
     rejected: 'Candidate Rejected In this Round',

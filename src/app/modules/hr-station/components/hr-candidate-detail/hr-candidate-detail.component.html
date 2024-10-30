@@ -71,7 +71,6 @@
                     <div class="p-6">Candidate Status</div>
                     <div class="p-6">Contact Number</div>
                     <div class="p-6">Mail</div>
-                    <div class="p-6">Date of Birth</div>
                     <div class="p-6">Skills</div>
                     <div class="p-6">Previous Organisation</div>
                     <div class="p-6">Previous Designation</div>
@@ -93,9 +92,6 @@
                     </div>
                     <div class="p-6">
                         : {{candidateDetails?.candidateEmail ? candidateDetails?.candidateEmail : 'NIL'}}
-                    </div>
-                    <div class="p-6">
-                        : {{candidateDetails?.candidateDoB ?(candidateDetails?.candidateDoB | date: 'dd/MM/YYY' ): 'NIL' }}
                     </div>
                     <div class="p-6 d-flex">
                         : <span class="p-l-3" *ngFor="let item of candidateDetails?.skills; let last = last">
@@ -202,7 +198,7 @@
     <!-- Added Interview Feedback -->
     <div >
         <div class="d-flex w-100">
-            <div class="w-50" *ngIf="interviewFeedback || data?.candidateDetails?.serviceStatus === 'moved'">
+            <div class="w-50" *ngIf="(reviewAdded || data?.candidateDetails?.serviceStatus === 'moved') && progressSkill.length > 0">
                 <span class="heading p-l-10 p-b-0">Added Skills and Scores</span>
                 <div class="container-table m-b-0 m-l-10">
                     <table class="">
@@ -222,18 +218,18 @@
                 </div>
             </div>
             <div class="w-50">
-                <div *ngIf="candidateDetails?.progressStatus > 0 || candidateDetails?.serviceStatus === 'moved'"> 
+                <div *ngIf="reviewAdded || candidateDetails?.serviceStatus === 'moved' "> 
                     <span class="heading p-l-10 p-b-0">Interview Feedback</span>      
                     <div class="d-flex p-l-10 content m-t-10">
                         <div class="sub-head f-w-500 f-s-14 d-flex">
-                            <span class="p-6">Feedback</span>
-                            <span class="p-6" *ngIf="candidateDetails['progress.progressFile']">Attached File</span>
+                            <span class="p-6"  *ngIf="data?.candidateDetails?.progress?.progressDescription">Feedback</span>
+                            <span class="p-6"  *ngIf="data?.candidateDetails?.progress?.progressFile">Attached File</span>
                         </div>
                         <div class="sub-head d-flex">
-                            <span class="p-6">: {{ candidateDetails['progress.progressDescription'] || 'Nil' }}</span>
-                            <span class="p-6" *ngIf=" candidateDetails['progress.progressFile']">:
+                            <span class="p-6">: {{ data?.candidateDetails?.progress?.progressDescription || 'Nil' }}</span>
+                            <span class="p-6" *ngIf="data?.candidateDetails?.progress?.progressFile">:
                                 <span class="p-l-5 view-attachment c-pointer" title="View Attachment"
-                                    (click)="viewResume(candidateDetails['progress.progressFile'])">View Attachment</span>
+                                    (click)="viewResume(data?.candidateDetails?.progress?.progressFile)">View Attachment</span>
                             </span>
                         </div>
                     </div>
@@ -253,12 +249,12 @@
     </div>  
     
     <div *ngIf="data?.candidateDetails?.serviceStatus === 'pending' && !hrReview && !offerSent && reviewAdded"
-    class="details p-l-10 d-flex c-pointer">
-    <label class="c-pointer f-w-500 f-s-14 p-r-10">
+    class="details p-l-10 d-flex c-pointer  m-t-10">
+    <label class="c-pointer f-w-500 f-s-14 p-r-10 p-t-10">
         <input type="radio" name="selection" value="offer" [(ngModel)]="messageType" (change)="selectButton('offer');showMail('offer')">
         Offer Letter
     </label>
-    <label class="c-pointer f-w-500 f-s-14 p-r-10">
+    <label class="c-pointer f-w-500 f-s-14 p-r-10 p-t-10">
         <input type="radio" name="selection" value="rejection" [(ngModel)]="messageType"
             (change)="selectButton('rejection-mail');showMail('rejection')">
         Rejection Letter

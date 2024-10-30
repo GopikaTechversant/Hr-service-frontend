@@ -1,5 +1,5 @@
 .heading {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     text-align: left;
 }
@@ -49,28 +49,18 @@
     background-color: #f7f7f7;
     border-radius: 5px;
     padding: 8px 8px;
-    width: 52%;
+    width: 48%;
 }
 
 .container-table {
-    max-height: 210px;
+    max-height: 120px;
     overflow-y: auto;
     width: 95%;
     margin-top: 10px;
 }
 
-/* .action-select {
-    border: 1px solid #cac7c7;
-    padding: 8px 20px;
-    border-radius: 10px;
-    background-color: #FFFFFF;
-} */
-
 .action-btn {
-    /* border: 1px solid #cac7c7; */
-    padding: 8px 20px;
-    /* border-radius: 10px; */
-    /* background-color: #FFFFFF; */
+    padding: 8px 10px;
 }
 
 .key {
@@ -267,4 +257,9 @@
 
 .loader-parent img {
     width: 100px;
+}
+
+.container-table td {
+    padding: 5px;
+    padding-left: 16px;
 }

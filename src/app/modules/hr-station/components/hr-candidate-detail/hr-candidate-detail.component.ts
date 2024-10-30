@@ -54,7 +54,7 @@ export class HrCandidateDetailComponent {
     'back-off': 'Candidate Back-off In this Round',
     'pannel-rejection': 'Panel Rejected the candidate'
   };
-  progressSkill: any;
+  progressSkill: any = [];
   constructor(public dialogRef: MatDialogRef<HrCandidateDetailComponent>, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
     private route: ActivatedRoute, private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -65,8 +65,10 @@ export class HrCandidateDetailComponent {
       this.interviewFeedback = data?.candidateDetails?.progress
       this.serviceId = this.data?.candidateDetails?.serviceId;
       this.feedback = data?.candidateDetails?.reqCandidateComment?.commentComment;
-      this.progressSkill = this.candidateDetails?.skillScore
+      this.progressSkill = data?.candidateDetails?.skillScore
       if (data?.reviewStatus > 0) this.reviewAdded = true;
+      console.log(this.reviewAdded);
+      
       if (data?.offerStatus > 0) this.offerSent = true;
     }
     this.dialogRef.updateSize('60%', '85%')
@@ -124,7 +126,7 @@ export class HrCandidateDetailComponent {
   selectButton(type: any): void {
     this.buttonType = type;
     console.log("hhiii");
-    
+
     if (type === 'rejection') this.fetchStatus();
   }
 
