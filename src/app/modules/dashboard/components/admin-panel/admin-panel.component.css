@@ -5,7 +5,7 @@
 }
 
 .sub-head {
-    background: linear-gradient(0deg, #005EC9, #005EC9), linear-gradient(0deg, #E9E9E9, #E9E9E9);
+    background:#005EC9;
     color: white;
     font-size: 10px;
     font-weight: 400;
@@ -21,7 +21,7 @@
 }
 
 .skills {
-    height: 300px;
+    height: 350px;
     overflow-y: auto;
 }
 
@@ -32,7 +32,7 @@
 
 .skill-pill {
     line-height: 28px;
-    background-color: #5a5e64;
+    background-color: #6d6e70;
     border-radius: 14px;
     color: white;
     padding: 3px 10px;

@@ -120,6 +120,7 @@ export class ServiceRequestComponent implements OnInit {
       this.openReporingManager = false;
       this.showFormats = false;
       this.openBaseType = false;
+      this.showSearchBar = false;
     }
   }
 
@@ -179,7 +180,7 @@ export class ServiceRequestComponent implements OnInit {
   experienceValidation(event: any): void {
     const intermediateAllowedCharacters = /^-?(\d{0,1}\d?)?(\.\d{0,2})?$/;
     let enteredValue = event?.target?.value + event.key;
-    if (event.key === "Backspace" || event.key === "Delete" || event.key.includes("Arrow")) return;
+    if (event.key && (event.key === "Backspace" || event.key === "Delete" || event.key.includes("Arrow"))) return;
     if (!intermediateAllowedCharacters.test(enteredValue)) event.preventDefault();
   }
 
@@ -228,9 +229,10 @@ export class ServiceRequestComponent implements OnInit {
     this.selectedLocation = location;
   }
 
-  selectSalaryType(id: any): void {
+  selectSalaryType(item: any): void {
     this.openBaseType = false;
-    this.selectedSalaryTypeId = id;
+    this.selectedSalaryType = item?.type
+    this.selectedSalaryTypeId = item?.id;
   }
 
   selectmanager(id: any, fname: any, lname: any): void {
@@ -368,7 +370,7 @@ export class ServiceRequestComponent implements OnInit {
     this.experience = this.requirement_details?.requestMaximumExperience || '';
     this.minExperience = this.requirement_details?.requestMinimumExperience || '';
     this.relExperience = this.requirement_details?.requestExperience || '',
-    this.baseSalary = this.requirement_details?.requestBaseSalary.split('per')[0] || '';
+      this.baseSalary = this.requirement_details?.requestBaseSalary.split('per')[0] || '';
     this.selectedSalaryType = 'per ' + this.requirement_details?.requestSalaryType || '';
     this.maxSalary = this.requirement_details?.requestMaxSalary.split('per')[0] || '';
     this.vacancy = this.requirement_details?.requestVacancy || '';
@@ -484,8 +486,8 @@ export class ServiceRequestComponent implements OnInit {
     ];
   }
 
-  cancel(): void {
-    this.resetFormAndState();
+  cancel(): void {    
+    if (!this.requirement_details) this.resetFormAndState();
   }
 
   clearFilter(): void {
@@ -498,28 +500,28 @@ export class ServiceRequestComponent implements OnInit {
     const allowedKeys = /[0-9.,]/;
     const controlKeys = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete', 'Tab', 'c', 'v', 'x'];
     const key = event.key;
-    
+
     // Allow control key combinations (Ctrl+C, Ctrl+V, Ctrl+X)
     if (event.ctrlKey && controlKeys.includes(key.toLowerCase())) {
       return;
     }
-  
+
     // Prevent input of disallowed keys
     if (!allowedKeys.test(key) && !controlKeys.includes(key)) {
       event.preventDefault();
     }
   }
-  
+
   // Validation for pasted input
   onPasteSalary(event: ClipboardEvent): void {
     const pastedData = event.clipboardData?.getData('text') || '';
     const isValid = /^[0-9.,]+$/.test(pastedData);
-  
+
     // Prevent pasting if it contains invalid characters
     if (!isValid) {
       event.preventDefault();
     }
   }
-  
+
 
 }
