@@ -155,7 +155,7 @@ export class CandidateListComponent {
       else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
       if (start > 2) pages.push('...');
       for (let i = start; i <= end; i++) pages.push(i);
-      if (end < this.lastPage - 1) pages.push('...');
+      if (end < this.lastPage - 1) pages.push('...'); 
       pages.push(this.lastPage);
     }
     return pages;

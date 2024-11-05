@@ -342,8 +342,6 @@ export class EditComponent implements OnInit {
     const selectedSkill = { id: suggestion?.id, name: suggestion?.skillName };
     if (skillType === 'primary') this.selectedPrimarySkills.push(selectedSkill);
     else if (skillType === 'secondary') this.selectedSecondarySkills.push(selectedSkill);
-    console.log(this.selectedPrimarySkills ,"llll", this.selectedSecondarySkills);
-
     this.showSearchBar = false;
     this.skillSuggestions = [];
   }

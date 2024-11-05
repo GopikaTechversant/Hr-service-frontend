@@ -20,13 +20,9 @@ export class FeedbackComponent implements OnInit {
   userId: any;
   status: any;
   candidateDetails: any;
-  constructor(public dialogRef: MatDialogRef<FeedbackComponent>, @Inject(MAT_DIALOG_DATA)
-  public data: any,
-  
+  constructor(public dialogRef: MatDialogRef<FeedbackComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
     private apiService: ApiService, private tostr: ToastrServices) {
     this.candidateDetails = data?.candidateDetails;
-    console.log(data);
-
   }
 
   onBodyClick(event: MouseEvent): void {

@@ -105,7 +105,6 @@ export class InterviewFeebackComponent implements OnInit {
       this.selectedSkillId = '';
       this.searchvalue = '';
       this.selectedScore = '';
-      console.log(this.progressSkill);
     } else {
       this.tostr.warning('Please select both a skill and score before adding.');
     }

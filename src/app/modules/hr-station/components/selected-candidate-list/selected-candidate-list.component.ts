@@ -1,8 +1,4 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { StationSwitchComponent } from 'src/app/components/station-switch/station-switch.component';
-import { WarningBoxComponent } from 'src/app/components/warning-box/warning-box.component';
-import { HrCandidateDetailComponent } from '../hr-candidate-detail/hr-candidate-detail.component';
-import { environment } from 'src/environments/environments';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
 import { DatePipe } from '@angular/common';
@@ -98,7 +94,7 @@ export class SelectedCandidateListComponent {
         const idsParams = this.candidateIds.map((id: string) => `ids=${id}`).join('&');
         params += `&${idsParams}`;
       }
-      const exportUrl = `${url}?${params}`;      
+      const exportUrl = `${url}?${params}`;
       this.apiService.getTemplate(exportUrl).subscribe(
         (data: Blob) => {
           if (data.type === 'application/json') {
@@ -175,17 +171,18 @@ export class SelectedCandidateListComponent {
     this.limit = 10;
     this.fetchList();
   }
+
   experienceValidation(event: any): void {
     const intermediateAllowedCharacters = /^-?(\d{0,1}\d?)?(\.\d{0,2})?$/;
     let enteredValue = event?.target?.value + event.key;
     if (event.key === "Backspace" || event.key === "Delete" || event.key.includes("Arrow")) return;
     if (!intermediateAllowedCharacters.test(enteredValue)) event.preventDefault();
   }
+
   exportData(): void {
     this.isExport = true;
     this.fetchList();
   }
-
 
   searchCandidate(searchTerm: string): void {
     this.searchKeyword = searchTerm;
@@ -234,21 +231,6 @@ export class SelectedCandidateListComponent {
     this.fetchList();
   }
 
-  fetchDetails(id: any, status: any): void {
-    this.apiService.get(`/hr-station/candidateDetail?serviceId=${id}`).subscribe((data: any) => {
-      if (data?.candidates) this.viewCandidateDetail(data?.candidates, status);
-    });
-  }
-
-  viewCandidateDetail(item: any, status: any): void {
-    const dialogRef = this.dialog.open(HrCandidateDetailComponent, {
-      data: { candidateDetails: item, offerStatus: status },
-    })
-    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-      this.fetchList();
-    })
-  }
-
   selectCandidate(id: any): void {
     this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
   }
@@ -258,27 +240,4 @@ export class SelectedCandidateListComponent {
     this.fetchList();
   }
 
-  onSwitchStation(candidate: any): void {
-    if (candidate?.serviceStatus === 'pending' ) {
-      const userId = localStorage.getItem('userId');
-      const dialogRef = this.dialog.open(StationSwitchComponent, {
-        data: {
-          userId: userId,
-          name: candidate['candidate.candidateFirstName'] + ' ' + candidate['candidate.candidateLastName'],
-          serviceId: candidate?.serviceId,
-          currentStation: 'Hr Manager',
-          currentStationId: '5',
-          requirement: candidate['serviceRequest.requestName']
-        },
-      })
-      dialogRef.afterClosed().subscribe(() => {
-        this.fetchList();
-      });
-    } else {
-      const dialogRef = this.dialog.open(WarningBoxComponent, {})
-      dialogRef.afterClosed().subscribe(() => {
-        this.fetchList();
-      });
-    }
-  }
 }

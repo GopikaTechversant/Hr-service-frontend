@@ -4,7 +4,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
 import { StationSwitchComponent } from 'src/app/components/station-switch/station-switch.component';
 import { WarningBoxComponent } from 'src/app/components/warning-box/warning-box.component';
-import { DatePipe } from '@angular/common';
 import { StationCandidateDetailComponent } from 'src/app/components/station-candidate-detail/station-candidate-detail.component';
 
 @Component({
@@ -16,9 +15,9 @@ export class TechnicalDetailComponent implements OnInit {
   loader: boolean = false;
   initialLoader: boolean = false;
   modalClose: boolean = false;
-  stationId:any;
+  stationId: any;
 
-  constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog, private datePipe: DatePipe) { }
+  constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.initialLoader = true;

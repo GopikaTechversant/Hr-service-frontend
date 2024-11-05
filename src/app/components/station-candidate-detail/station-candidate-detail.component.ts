@@ -92,8 +92,6 @@ export class StationCandidateDetailComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-
     // if(this.modalClose) this.fetchList();
     // if (changes['modalClose'] && !changes['modalClose'].isFirstChange()) this.fetchList();
   }
@@ -127,7 +125,6 @@ export class StationCandidateDetailComponent implements OnInit {
     this.selectedRejectionFeedback = status;
   }
 
-
   onFileSelected(event: any): void {
     const file: File = event?.target?.files?.[0];
     if (file) {
@@ -146,7 +143,6 @@ export class StationCandidateDetailComponent implements OnInit {
   //     this.fileName = file?.name;
   //   }
   // }
-
 
   getKeyFroms3(): void {
     this.keySubscription = this.s3Service.key.subscribe((key: string) => {
@@ -194,9 +190,10 @@ export class StationCandidateDetailComponent implements OnInit {
             this.tostr.success('Progress added successfully');
             this.closeDialog();
           },
-          error: () => {
+          error: (err) => {
             this.loader = false;
-            this.tostr.warning('Unable to Update Progress');
+            this.tostr.error(err?.error?.message ? err?.error?.message : 'Unable To Update Interview Details');
+            this.closeDialog();
           }
         });
       } else {
@@ -219,7 +216,6 @@ export class StationCandidateDetailComponent implements OnInit {
         stationId: this.stationId,
       };
     }
-
   }
 
   onSubmitData(event: any): void {
@@ -260,7 +256,7 @@ export class StationCandidateDetailComponent implements OnInit {
       error: (error) => {
         this.loader = false;
         if (error?.status === 500) this.tostr.error("Internal Server Error");
-        else this.tostr.warning("Unable to update");
+        else this.tostr.error(error?.error?.message ? error?.error?.message : 'Unable to Reject Candidate');
       }
     });
     this.showMail('');
@@ -268,7 +264,6 @@ export class StationCandidateDetailComponent implements OnInit {
 
   approveClick(data: any): void {
     this.loader = true;
-
     const baseUrlMap: { [key: string]: string } = {
       'written': '/written-station',
       'management': '/management-station',
@@ -303,9 +298,10 @@ export class StationCandidateDetailComponent implements OnInit {
         this.closeDialog();
         this.loader = false;
       },
-      error: () => {
-        this.tostr.error('Error during approval');
+      error: (error) => {
         this.loader = false;
+        if (error?.status === 500) this.tostr.error("Internal Server Error");
+        else this.tostr.error(error?.error?.message ? error?.error?.message : 'Unable to Schedule Interiew for next Round');
       },
       complete: () => {
         this.loader = false;
@@ -315,9 +311,7 @@ export class StationCandidateDetailComponent implements OnInit {
 
   rejectClick(data: any): void {
     this.loader = true;
-    const feedback = document.getElementById('feedback') as HTMLInputElement;
-    if (feedback) this.feedback = feedback?.value;
-    if (this.filteredStatus || data) {
+    if (data || (this.selectedRejectionFeedback && this.filteredStatus)) {
       const payload = {
         serviceId: this.serviceId,
         stationId: this.stationId,
@@ -332,11 +326,13 @@ export class StationCandidateDetailComponent implements OnInit {
       this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
         next: (res: any) => {
           this.loader = false;
+          this.tostr.success('Candidate Rejected From this Round')
           this.closeDialog();
         },
         error: (error) => {
           this.loader = false;
-          this.tostr.error('Error adding progress');
+          if (error?.status === 500) this.tostr.error("Internal Server Error");
+          else this.tostr.error(error?.error?.message ? error?.error?.message : 'Unable to Reject Candidate');
         }
       });
     }

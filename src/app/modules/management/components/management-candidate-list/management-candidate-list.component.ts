@@ -15,7 +15,7 @@ export class ManagementCandidateListComponent implements OnInit {
   initialLoader: boolean = false;
   modalClose: boolean = false;
 
-  constructor(private apiService: ApiService, private dialog: MatDialog, private datePipe: DatePipe) { }
+  constructor(private apiService: ApiService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.initialLoader = true;

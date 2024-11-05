@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, ElementRef, Inject, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -67,8 +67,6 @@ export class HrCandidateDetailComponent {
       this.feedback = data?.candidateDetails?.reqCandidateComment?.commentComment;
       this.progressSkill = data?.candidateDetails?.skillScore
       if (data?.reviewStatus > 0) this.reviewAdded = true;
-      console.log(this.reviewAdded);
-      
       if (data?.offerStatus > 0) this.offerSent = true;
     }
     this.dialogRef.updateSize('60%', '85%')
@@ -104,7 +102,6 @@ export class HrCandidateDetailComponent {
     this.selectedRejectionFeedback = status;
   }
 
-
   closeDialog(): void {
     this.dialogRef.close();
   }
@@ -125,8 +122,6 @@ export class HrCandidateDetailComponent {
 
   selectButton(type: any): void {
     this.buttonType = type;
-    console.log("hhiii");
-
     if (type === 'rejection') this.fetchStatus();
   }
 
@@ -188,9 +183,10 @@ export class HrCandidateDetailComponent {
             this.tostr.success('Progress added successfully');
             this.closeDialog();
           },
-          error: () => {
+          error: (err) => {
             this.loader = false;
-            this.tostr.warning('Unable to Update Progress');
+            this.tostr.error(err?.error?.message ? err?.error?.message : 'Unable to Update Progress');
+            this.closeDialog();
           }
         });
       } else {
@@ -224,9 +220,10 @@ export class HrCandidateDetailComponent {
         this.tostr.success('Offer Added Successfully');
         this.closeDialog();
       },
-      error: (error) => {
+      error: (err) => {
         this.loader = false;
-        this.tostr.error('Error adding progress');
+        this.tostr.error(err?.error?.message ? err?.error?.message : 'Unable to Send offer letter');
+        this.closeDialog();
       }
     });
   }
@@ -242,12 +239,8 @@ export class HrCandidateDetailComponent {
   }
 
   rejectClick(data: any): void {
-    this.loader = true;
-    const feedback = document.getElementById('feedback') as HTMLInputElement;
-    if (feedback) this.feedback = feedback?.value;
-    if (this.feedback.trim() !== '' || (this.filteredStatus || data)) {
-      console.log("hiii");
-
+    this.loader = true;    
+    if (data || (this.selectedRejectionFeedback && this.filteredStatus)) {
       const payload = {
         serviceId: this.serviceId,
         stationId: 5,
@@ -257,22 +250,22 @@ export class HrCandidateDetailComponent {
         rejectMailTemp: data?.mailTemp ?? '',
         rejectSubject: data?.mailSubject ?? '',
         rejectBcc: data?.mailBcc ?? '',
-        feedBack: data?.feedback ? data?.feedback : this.feedback,
+        feedBack: data?.feedback ? data?.feedback : this.selectedRejectionFeedback,
       };
       this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
         next: (res: any) => {
           this.loader = false;
           this.closeDialog();
         },
-        error: (error) => {
+        error: (err) => {
           this.loader = false;
-          this.tostr.error('Error adding progress');
+          this.tostr.error(err?.error?.message ? err?.error?.message : 'Unable to Reject Candidate');
+          this.closeDialog();
         }
       });
     } else {
       this.loader = false;
       this.tostr.warning('Something Went wrong');
-
     }
   }
 
@@ -294,9 +287,10 @@ export class HrCandidateDetailComponent {
           this.tostr.success('Approval successful');
           this.closeDialog();
         },
-        error: (error) => {
+        error: (err) => {
           this.loader = false;
-          this.tostr.error('Error during approval')
+          this.tostr.error(err?.error?.message ? err?.error?.message : 'Unable Hire Candidate');
+          this.closeDialog();
         }
       });
     } else {

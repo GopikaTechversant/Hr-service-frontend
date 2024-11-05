@@ -1,8 +1,4 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Output } from '@angular/core';
-import { Router } from '@angular/router';
-// import { ActivatedRoute, Router } from '@angular/router';
-import { environment } from 'src/environments/environments';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-technical-home',

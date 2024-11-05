@@ -5,7 +5,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { StationSwitchComponent } from 'src/app/components/station-switch/station-switch.component';
 import { WarningBoxComponent } from 'src/app/components/warning-box/warning-box.component';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ExportService } from 'src/app/services/export.service';
 
@@ -39,13 +39,10 @@ export class HrCandidateListComponent implements OnInit {
   today: Date = new Date();
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 150 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
-  // startDate: string | null = this.datePipe.transform(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
-  // endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
-
   candidateIds: any;
   status: any;
   constructor(private dialog: MatDialog, private apiService: ApiService, private datePipe: DatePipe, private router: Router,
-    private route: ActivatedRoute, private toastr: ToastrService, private exportService: ExportService) { }
+    private toastr: ToastrService, private exportService: ExportService) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
@@ -171,7 +168,6 @@ export class HrCandidateListComponent implements OnInit {
   getSelectedCandidateIds(): void {
     const selectedCandidates = this.candidateList.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
     this.candidateIds = selectedCandidates.map((candidate: { serviceId: any; }) => candidate?.serviceId);
-    // this.selectedItem = this.candidateIds;
   }
 
   generatePageNumbers() {
@@ -276,8 +272,6 @@ export class HrCandidateListComponent implements OnInit {
   }
 
   viewCandidateDetail(item: any, offerStatus: any, reviewStatus: any): void {
-    console.log(offerStatus , reviewStatus);
-    
     const dialogRef = this.dialog.open(HrCandidateDetailComponent, {
       data: { candidateDetails: item, offerStatus: offerStatus, reviewStatus: reviewStatus },
     })
