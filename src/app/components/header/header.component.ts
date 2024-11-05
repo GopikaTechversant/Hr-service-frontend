@@ -70,7 +70,7 @@ export class HeaderComponent implements OnInit {
 
     // Store station name and id in local storage
     localStorage.setItem('currentStationName', stationName);
-    localStorage.setItem('currentStationId', stationId || '');
+    localStorage.setItem('currentStationId', stationId || '0');
     
     if (station?.stationName === 'Technical 1') {
       this.router.navigate([`/technical/${station?.stationId}`]);

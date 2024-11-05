@@ -90,15 +90,22 @@ export class EditComponent implements OnInit {
       if (this.selectedStationId !== this.candidateDetails?.userWorkStation) payload.userWorkStation = this.selectedStationId;
     }
     if (Object.keys(payload).length > 0) {
-      this.apiService.put(`/user/update/?userId=${this.data}`, payload).subscribe((res: any) => {
-        this.tostr.success('User Updated');
-        this.dialogRef.close();
-        this.onEditSuccess.emit();
-      })
+      this.apiService.put(`/user/update/?userId=${this.data}`, payload).subscribe(
+        (res: any) => {
+          this.tostr.success('User Updated');
+          this.dialogRef.close();
+          this.onEditSuccess.emit();
+        },
+        (error: any) => {
+          const errorMessage = error.error?.message || 'An error occurred while updating the user.';
+          this.tostr.error(errorMessage);
+        }
+      );
     } else {
       this.dialogRef.close();
-      this.tostr.error('Updation Failed');
+      this.tostr.warning('No Change for update');
     }
+    
   }
 
   cancel(): void {

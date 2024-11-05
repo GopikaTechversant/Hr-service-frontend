@@ -5,7 +5,10 @@ import { ToastrServices } from 'src/app/services/toastr.service';
 @Component({
   selector: 'app-feedback',
   templateUrl: './feedback.component.html',
-  styleUrls: ['./feedback.component.css']
+  styleUrls: ['./feedback.component.css'],
+  host: {
+    '(document:click)': 'onBodyClick($event)'
+  }
 })
 export class FeedbackComponent implements OnInit {
   rejectionFeedbackList: any;
@@ -19,11 +22,19 @@ export class FeedbackComponent implements OnInit {
   candidateDetails: any;
   constructor(public dialogRef: MatDialogRef<FeedbackComponent>, @Inject(MAT_DIALOG_DATA)
   public data: any,
-
+  
     private apiService: ApiService, private tostr: ToastrServices) {
-    console.log(data);
     this.candidateDetails = data?.candidateDetails;
+    console.log(data);
 
+  }
+
+  onBodyClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.no-close')) {
+      this.filterStatus = false;
+      this.openRejectionFeedback = false;
+    }
   }
 
   ngOnInit(): void {
@@ -59,7 +70,7 @@ export class FeedbackComponent implements OnInit {
     // this.loader = true;
     if (this.filteredStatus) {
       const payload = {
-        // serviceId: this.serviceId,
+        serviceId: this.candidateDetails?.serviceId,
         stationId: this.stationId,
         userId: this.userId,
         status: this.filteredStatus ? this.filteredStatus : "rejected",

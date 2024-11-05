@@ -83,9 +83,9 @@
                 </div>
                 <div class="sub-head d-flex">
                     <div class="p-6">
-                       :   <span class="" [ngClass]="{'blue': data?.candidateDetails?.serviceStatus === 'pending','green': data?.candidateDetails?.serviceStatus === 'done',
-                                 'red': data?.candidateDetails?.serviceStatus === 'rejected'}">
-                        {{data?.candidateDetails?.serviceStatus | titlecase}} </span>
+                        : <span class="" [ngClass]="{'blue': data?.candidateDetails?.serviceStatus === 'pending','green': data?.candidateDetails?.serviceStatus === 'done',
+                                           'red': data?.candidateDetails?.serviceStatus === 'rejected'}">
+                            {{data?.candidateDetails?.serviceStatus | titlecase}} </span>
                     </div>
                     <div class="p-6">
                         : {{candidateDetails?.candidateMobileNo ?(candidateDetails?.candidateMobileNo): '0000000000' }}
@@ -94,7 +94,7 @@
                         : {{candidateDetails?.candidateEmail ? candidateDetails?.candidateEmail : 'NIL'}}
                     </div>
                     <div class="p-6 d-flex">
-                        : <span class="p-l-3" *ngFor="let item of candidateDetails?.skills; let last = last">
+                        :  <span class="p-l-3" *ngFor="let item of data?.candidateDetails?.skills; let last = last">
                             {{item?.skillName ? (item?.skillName | titlecase ): 'NIL'}} <span *ngIf="!last">,</span>
                         </span>
                     </div>

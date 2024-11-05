@@ -324,7 +324,7 @@ export class AddCandidateModalComponent implements OnInit {
   checkValidation(): void {
     const validations = [
       {
-        condition: !this.candidateForm?.value?.candidateEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.candidateForm?.value?.candidateEmail),
+        condition: !this.candidateForm?.value?.candidateEmail?.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.candidateForm?.value?.candidateEmail.trim()),
         message: 'Please Enter a Valid email'
       },
       {
@@ -406,9 +406,9 @@ export class AddCandidateModalComponent implements OnInit {
       const candidateCurrentSalary = parseFloat(this.candidateForm?.value?.candidateCurrentSalary) || 0;
       const candidateExpectedSalary = parseFloat(this.candidateForm?.value?.candidateExpectedSalary) || 0;
       const payload = {
-        candidateFirstName: this.candidateForm?.value?.candidateFirstName,
-        candidateLastName: this.candidateForm?.value?.candidateLastName,
-        candidateEmail: this.candidateForm?.value?.candidateEmail,
+        candidateFirstName: this.candidateForm?.value?.candidateFirstName.trim(),
+        candidateLastName: this.candidateForm?.value?.candidateLastName.trim(),
+        candidateEmail: this.candidateForm?.value?.candidateEmail.trim(),
         candidateMobileNo: this.candidateForm?.value?.candidateMobileNo,
         candidateDoB: this.candidateForm?.value?.candidateDoB,
         candidateRevlentExperience: this.candidateForm?.value?.candidateRevlentExperience,

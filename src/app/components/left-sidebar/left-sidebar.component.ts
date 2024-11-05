@@ -25,18 +25,17 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
   homePages: any;
   writtenCandidateList: any;
   userType: any;
+  stationId: any;
 
   constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.userType = localStorage.getItem('userType');  
+    this.userType = localStorage.getItem('userType');
     console.log("userType", this.userType);
     this.routerEventsSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => this.updateUrls());
     this.updateUrls();
-    
-      
   }
 
   get currentUrl(): string {
@@ -45,7 +44,39 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
 
   updateUrls(): void {
     let homeUrl = this.currentUrl.split('/')[1];
-    let stationId = this.currentUrl.split('/')[2];
+    let stationId = null;
+
+    // Assign stationId based on homeUrl
+    switch (homeUrl) {
+      case 'dashboard':
+        stationId = '1'; // Example ID for Screening
+        break;
+      case 'written':
+        stationId = '2'; // Example ID for Written
+        break;
+      case 'technical':
+        if (this.currentUrl.includes('/technical/3')) {
+          stationId = '3'; // Example ID for Technical 1
+        } else if (this.currentUrl.includes('/technical/4')) {
+          stationId = '4'; // Example ID for Technical 2
+        }
+        break;
+      case 'hr':
+        stationId = '5'; // Example ID for HR Manager
+        break;
+      case 'management':
+        stationId = '6'; // Example ID for Management
+        break;
+      case 'user':
+        stationId = '0'; // Example ID for User List
+        break;
+    }
+
+    // Store the resolved stationId
+    this.stationId = stationId;
+
+    localStorage.setItem('currentStationName', homeUrl === 'dashboard' ? 'screening' : homeUrl);
+    localStorage.setItem('currentStationId', stationId || '0');
     const snapshot = this.route.snapshot;
     this.id = snapshot.firstChild?.params['id'] || null;
     this.requestId = snapshot.queryParams['requestId'] || null;
@@ -79,12 +110,12 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
     if (homeUrl === 'dashboard' && this.currentUrl.includes(this.candidateScheduleUrl)) {
       this.dynamicMenuItems.push({ path: this.seriesUrl, label: 'Requisition Detail', icon: 'fa fa-table' });
     }
-    
+
     if (this.userType === 'admin' && this.userType === 'admin') {
       this.dynamicMenuItems.push({ path: '/dashboard/admin', label: 'Admin Panel', icon: 'fa fa-user-plus' });
     }
-    
-    if (homeUrl === 'user') {      
+
+    if (homeUrl === 'user') {
       if (this.userType === 'admin') this.dynamicMenuItems.push({ path: '/user/addUser', label: 'Add User', icon: 'fa fa-user-plus' });
       this.dynamicMenuItems.push({ path: '/user/reset', label: 'Reset Password', icon: 'fa fa-key' });
     }
