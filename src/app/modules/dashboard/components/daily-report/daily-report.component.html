@@ -73,7 +73,7 @@
                             <td *ngIf="key !== 'Date'" 
                                 [ngClass]="{'text-end': isNumberOrDate(item[key]), 'text-start': !isNumberOrDate(item[key])}" 
                                 [title]="item[key]">
-                                {{ item[key] }}
+                                {{  item[key] || '0' }}
                             </td>
                         </ng-container>
                         <!-- Add 'Date' column at the end -->

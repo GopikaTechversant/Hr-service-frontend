@@ -250,11 +250,11 @@
     
     <div *ngIf="data?.candidateDetails?.serviceStatus === 'pending' && !hrReview && !offerSent && reviewAdded"
     class="details p-l-10 d-flex c-pointer  m-t-10">
-    <label class="c-pointer f-w-500 f-s-14 p-r-10 p-t-10">
+    <label class="c-pointer f-w-500 f-s-14 p-r-10 p-t-5">
         <input type="radio" name="selection" value="offer" [(ngModel)]="messageType" (change)="selectButton('offer');showMail('offer')">
         Offer Letter
     </label>
-    <label class="c-pointer f-w-500 f-s-14 p-r-10 p-t-10">
+    <label class="c-pointer f-w-500 f-s-14 p-r-10 p-t-5">
         <input type="radio" name="selection" value="rejection" [(ngModel)]="messageType"
             (change)="selectButton('rejection-mail');showMail('rejection')">
         Rejection Letter
