@@ -65,7 +65,7 @@ export class HrCandidateDetailComponent {
       this.hrReview = data?.candidateDetails?.reqHrReview;
       this.interviewFeedback = data?.candidateDetails?.progress
       this.serviceId = this.data?.candidateDetails?.serviceId;
-      this.feedback = data?.candidateDetails?.reqCandidateComment?.commentComment;
+      this.feedback = data?.candidateDetails?.reqCandidateComments?.commentComment;
       this.progressSkill = data?.candidateDetails?.skillScore
       if (data?.reviewStatus > 0) this.reviewAdded = true;
       if (data?.offerStatus > 0) this.offerSent = true;

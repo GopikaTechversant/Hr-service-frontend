@@ -274,16 +274,16 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="feedback" class="w-50">
+        <div *ngIf="feedback" class="w-50 m-t-10">
             <span class="heading p-l-10 p-b-0">Offer Feedback</span>      
             <div class="p-10 content">
                 <div class="p-10">
-                    <span class="f-w-500">{{feedback}}</span>
+                    <span class="">{{feedback}}</span>
                 </div>         
             </div>
         </div>
     </div>
-    <div *ngIf="data?.candidateDetails?.serviceStatus === 'pending' && hrReview" class="w-50">
+    <div *ngIf="data?.candidateDetails?.serviceStatus === 'pending' && hrReview">
         <span class="heading p-l-10 p-b-0">Offer Feedback</span>      
         <div class="m-10">
             <textarea class="text-area m-l-5 padding-5" id="" id="feedback" placeholder="Add Feedback"></textarea>
