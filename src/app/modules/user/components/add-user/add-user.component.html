@@ -39,35 +39,32 @@
         <div class="d-flex parent">
             <div class="m-t-20 m-b-10 p-l-5  child">
                 <span class="sub-head">Role</span>
-                <div>
-                    <input type="text" class="input" id="role">
+                <div class="no-close col-md-3 s-list d-flex input j-space m-text p-relative"
+                    (click)="openUserList = !openUserList">
+                   <span class="p-t-5 c-pointer">{{role || 'Select User Role'}}</span>
+                    <div class=" s-list c-pointer align-center m-b-2 flex-1 d-flex j-end sub"><i
+                            class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
+                    </div>
+                    <div class="drop-list no-close p-absolute" *ngIf="openUserList">
+                        <div (click)="selectRole(i)" *ngFor="let i of ['admin', 'talent', 'panel', 'employee']"
+                            class=" p-t-5 p-b-5 p-l-10 c-pointer">
+                            <span> {{i | titlecase}}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!-- <div class="m-t-20 m-b-10 p-l-10  child">
-                    <span class="sub-head">Multiple Role</span>
-                    <div>
-                        <input type="text" class="input" autocomplete="off" id="multiplerole">
-                    </div>
-                </div> -->
+
             <div class="m-t-20 m-b-10 p-l-5  child p-relative">
                 <span class="sub-head">Work Station</span>
-                <!-- <div>
-                        <input type="text" class="input-role" formControlName="userWorkStation">
-                    </div> -->
-                <div class="no-close col-md-3 s-list d-flex input j-space m-text "
-                    (click)="idListOpen = !idListOpen">
-                    <div *ngIf="!selectedStation"
-                        class="s-list m-r-10 m-text align-center m-b-2 f-w-400 c-pointer h-min sub flex-1">
-                        Select Station
-                    </div>
-                    <div class="align-center p-t-7" *ngIf="selectedStation">{{selectedStation}}</div>
+                <div class="no-close col-md-3 s-list d-flex input j-space m-text p-relative" (click)="idListOpen = !idListOpen">
+                    <span class="p-t-5 c-pointer">{{selectedStation || 'Select Station'}}</span>
                     <div class=" s-list c-pointer align-center m-b-2 flex-1 d-flex j-end sub"><i
                             class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
                     </div>
                     <div class="drop-list no-close" *ngIf="idListOpen">
                         <div (click)="selectStation(station.stationId,station.stationName)"
                             *ngFor="let station of stationList" class=" p-t-5 p-b-5 p-l-10 c-pointer">
-                           <span> {{station?.stationName}}</span>
+                            <span> {{station?.stationName}}</span>
                         </div>
                     </div>
                 </div>

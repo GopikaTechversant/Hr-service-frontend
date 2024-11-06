@@ -235,7 +235,7 @@
                     </div>
                 </div>
                 <div>
-                    <div *ngIf="data?.candidateDetails?.serviceStatus !== 'pending'">
+                    <div *ngIf="data?.candidateDetails?.serviceStatus !== 'pending' && statusMessages[data?.candidateDetails?.serviceStatus]">
                         <span class="heading p-l-10 p-b-0 d-flex j-space">Selection Status</span>
                         <div class="sub-head d-flex p-6 content">
                             <span class="padding-5">
@@ -247,7 +247,6 @@
             </div>
         </div>
     </div>  
-    
     <div *ngIf="data?.candidateDetails?.serviceStatus === 'pending' && !hrReview && !offerSent && reviewAdded"
     class="details p-l-10 d-flex c-pointer  m-t-10">
     <label class="c-pointer f-w-500 f-s-14 p-r-10 p-t-5">
@@ -260,27 +259,32 @@
         Rejection Letter
     </label>
 </div>
-
     <div *ngIf="!hrReview && data?.candidateDetails?.serviceStatus !== 'moved' && data?.candidateDetails?.serviceStatus === 'pending' && (showMailTemp)">
         <app-mail-template [candidate]="mailTemplateData" [loader]="loader" (submitData)="onSubmitData($event)"></app-mail-template>
     </div>
-    <div *ngIf="hrReview && data?.offerStatus > 0 && offerSent">
-        <div class="head p-10">
-            <span>Offer Details</span>
-        </div>
-        <div class="p-10">
-            <div class="p-10" *ngIf="hrReview">
-                <span class="f-w-500">Offered Salary : </span> {{hrReview?.reviewedSalary}}
+    <div class="d-flex">
+        <div *ngIf="hrReview && data?.offerStatus > 0 && offerSent" class="w-50">
+            <span class="heading p-l-10 p-b-0">Offer Details</span>      
+            <div class="p-10 content">
+                <div class="p-10" *ngIf="hrReview">
+                    <span class="f-w-500">Offered Salary : </span> {{hrReview?.reviewedSalary}}
+                </div>
+                <div class="p-10" *ngIf="hrReview">
+                    <span class="f-w-500">Joining Date : </span>{{hrReview?.reviewedJoiningDate | date: 'dd/MM/YYY'}}
+                </div>
             </div>
-            <div class="p-10" *ngIf="hrReview">
-                <span class="f-w-500">Joining Date : </span>{{hrReview?.reviewedJoiningDate | date: 'dd/MM/YYY'}}
+        </div>
+        <div *ngIf="feedback" class="w-50">
+            <span class="heading p-l-10 p-b-0">Offer Feedback</span>      
+            <div class="p-10 content">
+                <div class="p-10">
+                    <span class="f-w-500">{{feedback}}</span>
+                </div>         
             </div>
         </div>
     </div>
-    <div *ngIf="data?.candidateDetails?.serviceStatus === 'pending' && hrReview">
-        <div class="head p-10">
-            <span>Feedback</span>
-        </div>
+    <div *ngIf="data?.candidateDetails?.serviceStatus === 'pending' && hrReview" class="w-50">
+        <span class="heading p-l-10 p-b-0">Offer Feedback</span>      
         <div class="m-10">
             <textarea class="text-area m-l-5 padding-5" id="" id="feedback" placeholder="Add Feedback"></textarea>
             <div class="btn-parent">

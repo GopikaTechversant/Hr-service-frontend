@@ -14,7 +14,7 @@ import { ToastrServices } from 'src/app/services/toastr.service';
 export class AddUserComponent implements OnInit {
 
   hide: boolean = true;
-  hide2 :boolean = true;
+  hide2: boolean = true;
   displayDate: any;
   passwordsMatch: boolean = true;
   stationList: any[] = [];
@@ -24,9 +24,10 @@ export class AddUserComponent implements OnInit {
   password: any;
   firstName: string = '';
   lastName: string = '';
-  role: any;
+  role: string = '';
   multipleRole: any[] = [];
   email: any;
+  openUserList: boolean = false;
   constructor(private datePipe: DatePipe, private apiService: ApiService, private tostr: ToastrServices) {
   }
 
@@ -34,6 +35,7 @@ export class AddUserComponent implements OnInit {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
       this.idListOpen = false;
+      this.openUserList = false;
     }
   }
   ngOnInit(): void {
@@ -46,8 +48,11 @@ export class AddUserComponent implements OnInit {
     })
   }
 
+  selectRole(item: any): void {
+    this.role = item;
+  }
+
   selectStation(stationid: any, stationName: any): void {
-    // this.idListOpen = false;
     this.selectedStation = stationName;
     this.selectedStationId = stationid;
   }
@@ -71,8 +76,6 @@ export class AddUserComponent implements OnInit {
     this.firstName = (document.getElementById('firstname') as HTMLInputElement)?.value;
     this.lastName = (document.getElementById('secondName') as HTMLInputElement)?.value;
     this.email = (document.getElementById('email') as HTMLInputElement)?.value;
-    this.role = (document.getElementById('role') as HTMLInputElement)?.value;
-    //  this.multipleRole = (document.getElementById('multiplerole') as HTMLInputElement)?.value.split(',');
     const payload = {
       userfirstName: this.firstName,
       userlastName: this.lastName,
@@ -81,19 +84,18 @@ export class AddUserComponent implements OnInit {
       userPassword: this.password,
       userWorkStation: this.selectedStationId,
       userRole: this.role,
-      // userMultipleRole: this.multipleRole
     }
     this.apiService.post(`/user/create`, payload).subscribe((res: any) => {
       this.tostr.success('User Created');
     },
-    (error) => {
-      if (error?.status === 500) {
-        this.tostr.error("Internal Server Error");
-      } else {
-        this.tostr.error(error?.error?.error_message ? error?.error?.error_message : "Unable to create User");
+      (error) => {
+        if (error?.status === 500) {
+          this.tostr.error("Internal Server Error");
+        } else {
+          this.tostr.error(error?.error?.error_message ? error?.error?.error_message : "Unable to create User");
+        }
       }
-    }
-  );
+    );
     // this.resetForm();
   }
 

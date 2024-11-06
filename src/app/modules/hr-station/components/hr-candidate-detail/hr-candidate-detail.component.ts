@@ -52,7 +52,8 @@ export class HrCandidateDetailComponent {
     rejected: 'Candidate Rejected In this Round',
     moved: 'Candidate Moved From this Round',
     'back-off': 'Candidate Back-off In this Round',
-    'pannel-rejection': 'Panel Rejected the candidate'
+    'pannel-rejection': 'Panel Rejected the candidate',
+    'cancelled': 'Cancelled the Interview'
   };
   progressSkill: any = [];
   constructor(public dialogRef: MatDialogRef<HrCandidateDetailComponent>, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,

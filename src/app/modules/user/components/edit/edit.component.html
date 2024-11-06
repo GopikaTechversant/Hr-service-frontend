@@ -39,15 +39,27 @@
         <div class="d-flex parent">
             <div class="m-t-20 m-b-10 p-l-10  child">
                 <span class="sub-head">Role</span>
-                <div>
-                    <input type="text" class="input" id="role" [(ngModel)]="role">
+                <div class="no-close col-md-3 s-list d-flex input-station j-space m-text p-relative" (click)="openUserList = !openUserList">
+                    <span
+                        class="no-close s-list m-r-10 m-text align-center m-b-2 f-w-400 c-pointer h-min sub flex-1 p-l-10">
+                        {{role ? role : 'Select User Role'}}
+                    </span>
+                    <span class="no-close s-list c-pointer align-center m-b-2 flex-1 d-flex j-end sub"><i
+                            class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
+                    </span>
+                    <div class=" m-b-2 drop-list no-close p-absolute" *ngIf="openUserList">
+                        <div (click)="selectRole(i)" *ngFor="let i of ['admin', 'talent', 'panel', 'employee']"
+                            class="c-pointer p-l-10 padding-5">
+                            <span class="c-pointer"> {{i |titlecase}}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="m-t-20 m-b-10 p-l-10  child p-relative">
                 <span class="sub-head">Work Station</span>
                 <div class="no-close col-md-3 s-list d-flex input-station j-space m-text p-relative " (click)="idListOpen = !idListOpen">
                     <span
-                        class="no-close s-list m-r-10 m-text align-center m-b-2 f-w-400 c-pointer h-min sub flex-1">
+                        class="no-close s-list m-r-10 m-text align-center m-b-2 f-w-400 c-pointer h-min sub flex-1 p-l-10">
                         {{selectedStation ? selectedStation : 'Select Work station'}}
                     </span>
                     <span class="no-close s-list c-pointer align-center m-b-2 flex-1 d-flex j-end sub"><i

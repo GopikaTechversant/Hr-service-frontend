@@ -8,6 +8,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
   providers: [DatePipe],
+  host: {
+    '(document:click)': 'onBodyClick($event)'
+  },
 })
 export class EditComponent implements OnInit {
   public onEditSuccess: EventEmitter<void> = new EventEmitter<void>();
@@ -21,27 +24,38 @@ export class EditComponent implements OnInit {
   password: any;
   firstName: string = '';
   lastName: string = '';
-  role: any;
+  role: string = '';
   multipleRole: any[] = [];
   email: any;
   candidateDetails: any = {};
   originalUser: any[] = [];
   dob: any;
   workStation: any;
+  openUserList: boolean = false;
   constructor(private datePipe: DatePipe, private apiService: ApiService, private tostr: ToastrServices, public dialogRef: MatDialogRef<EditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-
   }
+
   ngOnInit(): void {
     this.fetchUserDetails();
     this.fetchStations();
   }
+
+  onBodyClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.no-close')) {
+      this.idListOpen = false;
+      this.openUserList = false;
+    }
+  }
+
   fetchUserDetails(): void {
     this.apiService.get(`/user/reqUsersList/${this.data}`).subscribe((res: any) => {
       this.candidateDetails = res?.data;
       this.populateFieldvalues();
     })
   }
+
   populateFieldvalues(): void {
     this.firstName = this.candidateDetails?.userfirstName;
     this.lastName = this.candidateDetails?.userlastName;
@@ -50,16 +64,23 @@ export class EditComponent implements OnInit {
     this.role = this.candidateDetails?.userRole;
     this.workStation = this.candidateDetails?.station;
   }
+
   fetchStations(): void {
     this.apiService.get(`/user/stations`).subscribe((res: any) => {
       this.stationList = res.data;
     })
   }
+
+  selectRole(item: any): void {
+    this.role = item;
+  }
+
   selectStation(stationid: any, stationName: any): void {
     // this.idListOpen = false;
     this.selectedStation = stationName;
     this.selectedStationId = stationid;
   }
+
   matchPasswordvalidator() {
     this.password = (document.getElementById('password') as HTMLInputElement)?.value;
     const confirmPassword = (document.getElementById('conformPassword') as HTMLInputElement)?.value;
@@ -78,7 +99,6 @@ export class EditComponent implements OnInit {
     this.firstName = (document.getElementById('firstname') as HTMLInputElement)?.value;
     this.lastName = (document.getElementById('secondName') as HTMLInputElement)?.value;
     this.email = (document.getElementById('email') as HTMLInputElement)?.value;
-    this.role = (document.getElementById('role') as HTMLInputElement)?.value;
     // this.multipleRole = (document.getElementById('multiplerole') as HTMLInputElement)?.value.split(',');
     const payload: any = {};
     if (this.firstName !== this.candidateDetails?.userfirstName) payload.userfirstName = this.firstName;
@@ -89,6 +109,8 @@ export class EditComponent implements OnInit {
     if (this.selectedStationId) {
       if (this.selectedStationId !== this.candidateDetails?.userWorkStation) payload.userWorkStation = this.selectedStationId;
     }
+    console.log(payload);
+    
     if (Object.keys(payload).length > 0) {
       this.apiService.put(`/user/update/?userId=${this.data}`, payload).subscribe(
         (res: any) => {
@@ -105,7 +127,7 @@ export class EditComponent implements OnInit {
       this.dialogRef.close();
       this.tostr.warning('No Change for update');
     }
-    
+
   }
 
   cancel(): void {

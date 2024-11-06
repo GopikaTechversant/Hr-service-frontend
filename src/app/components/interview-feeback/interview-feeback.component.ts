@@ -129,7 +129,7 @@ export class InterviewFeebackComponent implements OnInit {
 
   submitClick(): void {
     const updatedSkill = this.progressSkill.map(({ skillName, ...rest }) => ({ ...rest }));
-    if (updatedSkill && this.selectedFeedback) {
+    if (updatedSkill.length > 0 && this.selectedFeedback) {
       const data = {
         file: this.uploadedFileKey,
         progressSkill: updatedSkill,
@@ -138,6 +138,7 @@ export class InterviewFeebackComponent implements OnInit {
       this.submitInterviewData.emit(data);
     } else {
       if(!this.selectedFeedback) this.tostr.warning('Please Add Feedback');
+      if(updatedSkill.length === 0 ) this.tostr.warning('Please Add Skills');
     }
   }
 }
