@@ -47,7 +47,7 @@ export class DetailedRecruitmentComponent implements OnInit {
     this.initialLoader = true;
     this.selectedRecruiterId = '';
     this.candidateList = [];
-    this.pageSize = 7;
+    this.pageSize = 10;
     this.currentPage = 1
     this.fetchCandidateList();
   }

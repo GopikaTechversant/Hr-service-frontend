@@ -42,7 +42,7 @@
                 <tr class="table-header p-b-10 f-w-500">
                     <td class="text-end p-l-16">Requisition Code</td>
                     <td class="text-start p-l-16">Requisition</td>
-                    <td class="text-end">No.of Openings</td>
+                    <td class="text-end">Openings</td>
                     <td class="text-end">Candidate Count</td>
                     <td class="text-end">Hired Count</td>
                     <td class="text-start">Team</td>
@@ -57,8 +57,8 @@
                 <ng-container *ngIf="candidates_list?.length > 0">
                     <ng-container *ngFor="let candidate of candidates_list">
                         <tr class="c-pointer" (dblclick)="navigate('/dashboard/series/',candidate?.requestId)">
-                            <td class="text-end">{{candidate?.requestCode ? candidate?.requestCode : 'N/A'}}</td>
-                            <td class="text-start p-l-16" [title]="candidate?.requestName">
+                            <td class="text-end wrap">{{candidate?.requestCode ? candidate?.requestCode : 'N/A'}}</td>
+                            <td class="text-start p-l-16 wrap" [title]="candidate?.requestName">
                                 {{candidate?.requestName ? (candidate?.requestName | titlecase) : 'N/A'}}</td>
                             <td class="text-end">{{candidate?.requestVacancy ? candidate?.requestVacancy : 'N/A'}}</td>
                             <td class="text-end" [title]="candidate?.candidatesCount">{{candidate?.candidatesCount ? candidate?.candidatesCount : '0'}}
@@ -66,7 +66,7 @@
                             <td class="text-end">{{candidate?.requestHiredCount ? candidate?.requestHiredCount : '0'}}</td>
                             <td class="text-start" [title]="candidate?.teamName">{{candidate?.teamName ? (candidate?.teamName | titlecase) : 'N/A'}}
                             </td>
-                            <td class="text-start" [title]="candidate?.requestSkills">
+                            <td class="text-start wrap" [title]="candidate?.requestSkills">
                                 {{candidate?.requestSkills ? (candidate?.requestSkills | titlecase) : 'N/A'}}</td>
                             <td class="text-start f-w-500"
                                 [ngStyle]="{'color': candidate.status === 'active' ? '#08BC66' : 'red'}">
@@ -75,7 +75,7 @@
                             <td class="text-center" (click)="onStatusChange(candidate)">
                                 <i class="fa fa-user-plus" aria-hidden="true"></i>
                             </td>
-                            <td class="text-end" [title]="candidate?.requestDate | date:'dd-MM-yyyy'">
+                            <td class="text-end wrap" [title]="candidate?.requestDate | date:'dd-MM-yyyy'">
                                 {{candidate?.requestDate ? (candidate?.requestDate | date:'dd-MM-yyyy') : 'N/A'}}
                             </td>
                         </tr>
@@ -106,7 +106,7 @@
                 </div>
             </table>
         </div>
-        <div class="page d-flex j-end p-10">
+        <div *ngIf="totalCount" class="page d-flex j-end p-10">
             <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(1)">
                 <img src="assets/images/double-arrow-left-icon.svg" alt="" height="14px" width="14px">
             </button>

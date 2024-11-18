@@ -16,8 +16,10 @@
                 <i class="fa fa-search" aria-hidden="true"></i>
             </span>
         </div>
-        <div class="input-1 c-pointer no-close p-relative p-t-6 m-l-10 m-b-10 p-l-10 m-r-10">
-            <span class="f-right d-flex">
+        <div class="input-1 c-pointer no-close p-relative p-t-3 m-l-10 m-b-10 p-l-10 m-r-10 d-flex">
+            <span class="c-pointer wrap p-b-3" (click)="requestList_open = !requestList_open">{{displayPosition.trim() === '' ?
+                'Filter by Requirement' : displayPosition}}</span>
+            <span class="d-flex j-end">
                 <span *ngIf="displayPosition && displayPosition !== ''" (click)="clearFilter('position')" class="c-pointer">
                     <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
                 </span>
@@ -26,12 +28,11 @@
                         class="m-l-5 p-r-10 s-text no-close"></i>
                 </div>
             </span>
-            <span class="c-pointer" (click)="requestList_open = !requestList_open">{{displayPosition.trim() === '' ?
-                'Filter by Requirement' : displayPosition}}</span>
+            
             <div class="no-close dropdown c-pointer no-close" *ngIf="requestList_open">
                 <div (click)='selectPosition(name?.requestName,name?.requestId); !requestList_open'
                     *ngFor="let name of requestList" class="p-10">
-                    {{name?.requestName}}
+                   <span class="wrap">{{name?.requestName}}</span> 
                 </div>
             </div>
         </div>
@@ -165,7 +166,7 @@
                 </div>
             </table>
         </div>
-        <div class="page d-flex j-end p-10">
+        <div *ngIf="totalCount" class="page d-flex j-end p-10">
             <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(1)">
                 <img src="assets/images/double-arrow-left-icon.svg" alt="" height="14px" width="14px">
             </button>

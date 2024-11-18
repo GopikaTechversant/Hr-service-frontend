@@ -23,58 +23,61 @@
             </span>
         </div>
     </div>
-    <div class="container-table m-b-0">
-        <table class="table">
-            <tr class="table-header">
-                <td class="requisition-col" [title]="selectedDataBy === 'user' ? 'Recruiter' : 'Requisition'">{{selectedDataBy === 'user' ? 'Recruiter' : 'Requisition'}}</td>
-                <td class=" text-end" title="Total Applicants">Total Applicants</td>
-                <td class=" text-end" >Screening Rejected</td>
-                <td class=" text-end" >Technical 1 Rejected</td>
-                <td class=" text-end" >Technical 2 Rejected</td>
-                <td class="text-end" title="Selected from technical round">Technical Selected</td>
-                <td class="text-end" >HR Rejected</td>
-                <td class="  text-end" title="Offer Released">Offer Released</td>
-                <td class="  text-end" title="Hired">Hired</td>
-            </tr>
-            <div *ngIf="loader && !initialLoader" class="loader-parent">
-                <img src="assets/gif/loader.gif">
-            </div>
-            <ng-container *ngIf="candidateList.length > 0">
-                <ng-container *ngFor="let item of  candidateList">
-                    <tr class="details">
-                        <td class="text-start">{{item?.userfirstName ? item?.userfirstName : item?.requestName}}</td>
-                        <td class="f-w-500 text-end highlight">{{item?.total_totalsourced ? item?.total_totalsourced : '0'}}</td>
-                        <td class="text-end">{{item?.total_screenrejected ? item?.total_screenrejected : '0'}}</td>
-                        <td class="text-end">{{item?.total_techonereject ? item?.total_techonereject : '0'}}</td>
-                        <td class="text-end">{{item?.total_techtworeject ? item?.total_techtworeject : '0'}}</td>
-                        <td class="f-w-500 text-end highlight">{{item?.total_technicalselected ? item?.total_technicalselected : '0'}}</td>
-                        <td class="text-end">{{item?.total_hrreject ? item?.total_hrreject : '0'}}</td>
-                        <td class="f-w-500 text-end highlight">{{item?.total_offerreleased ? item?.total_offerreleased : '0'}}</td>
-                        <td class="f-w-500 text-end highlight">{{item?.total_hired ? item?.total_hired : '0'}}</td>
-                    </tr>
+    <div class=" m-t-10">
+        <div class="container-table m-b-0">
+            <table class="table">
+                <tr class="table-header">
+                    <td class="" [title]="selectedDataBy === 'user' ? 'Recruiter' : 'Requisition'">{{selectedDataBy === 'user' ?
+                        'Recruiter' : 'Requisition'}}</td>
+                    <td class="text-end" title="Total Applicants">Total Applicants</td>
+                    <td class="text-end">Screening Rejected</td>
+                    <td class="text-end">Technical 1 Rejected</td>
+                    <td class="text-end">Technical 2 Rejected</td>
+                    <td class="text-end" title="Selected from technical round">Technical Selected</td>
+                    <td class="text-end">HR Rejected</td>
+                    <td class="text-end" title="Offer Released">Offer Released</td>
+                    <td class="text-end" title="Hired">Hired</td>
+                </tr>
+                <div *ngIf="loader && !initialLoader" class="loader-parent">
+                    <img src="assets/gif/loader.gif">
+                </div>
+                <ng-container *ngIf="candidateList.length > 0">
+                    <ng-container *ngFor="let item of  candidateList">
+                        <tr class="details">
+                            <td class="text-start wrap" [title]="item?.userfirstName ? item?.userfirstName : item?.requestName">{{item?.userfirstName ? item?.userfirstName : item?.requestName}}</td>
+                            <td class="f-w-500 text-end highlight">{{item?.total_totalsourced ? item?.total_totalsourced : '0'}}</td>
+                            <td class="text-end">{{item?.total_screenrejected ? item?.total_screenrejected : '0'}}</td>
+                            <td class="text-end">{{item?.total_techonereject ? item?.total_techonereject : '0'}}</td>
+                            <td class="text-end">{{item?.total_techtworeject ? item?.total_techtworeject : '0'}}</td>
+                            <td class="f-w-500 text-end highlight">{{item?.total_technicalselected ? item?.total_technicalselected : '0'}}</td>
+                            <td class="text-end">{{item?.total_hrreject ? item?.total_hrreject : '0'}}</td>
+                            <td class="f-w-500 text-end highlight">{{item?.total_offerreleased ? item?.total_offerreleased : '0'}}</td>
+                            <td class="f-w-500 text-end highlight">{{item?.total_hired ? item?.total_hired : '0'}}</td>
+                        </tr>
+                    </ng-container>
                 </ng-container>
-            </ng-container>
-        </table>
-        <div *ngIf="candidateList?.length === 0 && !loader && !initialLoader" class="no-data">No Data Found</div>
-    </div>
-    <div class="page d-flex j-end p-10">
-        <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(1)">
-            <img src="assets/images/double-arrow-left-icon.svg" alt="" height="14px" width="14px">
-        </button>
-        <button *ngIf="currentPage === 1" class="box p-r-20 m-r-10">
-            <img src="assets/images/inactive-double-arrow-left.svg" alt="" height="23px" width="23px">
-        </button>
-        <ng-container *ngFor="let page of generatePageNumbers()">
-            <button *ngIf="page === '...'" class="box dot" disabled>...</button>
-            <button *ngIf="page !== '...' && page === currentPage" class="box current-page c-pointer">{{ page
-                }}</button>
-            <button *ngIf="page !== '...' && page !== currentPage" class="box c-pointer" (click)="onPageChange(page)">
-                {{page}}</button>
-        </ng-container> <button *ngIf="currentPage < lastPage" class="box c-pointer" (click)="onPageChange(lastPage)">
-            <img src="assets/images/double-arrow-right-icon.svg" alt="" height="14px" width="14px">
-        </button>
-        <button *ngIf="currentPage === lastPage" class="box">
-            <img src="assets/images/inactive-double-arrow-right.svg" alt="" height="23px" width="23px">
-        </button>
+            </table>
+            <div *ngIf="candidateList?.length === 0 && !loader && !initialLoader" class="no-data">No Data Found</div>
+        </div>
+        <div *ngIf="totalCount" class="page d-flex j-end p-10">
+            <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(1)">
+                <img src="assets/images/double-arrow-left-icon.svg" alt="" height="14px" width="14px">
+            </button>
+            <button *ngIf="currentPage === 1" class="box p-r-20 m-r-10">
+                <img src="assets/images/inactive-double-arrow-left.svg" alt="" height="23px" width="23px">
+            </button>
+            <ng-container *ngFor="let page of generatePageNumbers()">
+                <button *ngIf="page === '...'" class="box dot" disabled>...</button>
+                <button *ngIf="page !== '...' && page === currentPage" class="box current-page c-pointer">{{ page
+                    }}</button>
+                <button *ngIf="page !== '...' && page !== currentPage" class="box c-pointer" (click)="onPageChange(page)">
+                    {{page}}</button>
+            </ng-container> <button *ngIf="currentPage < lastPage" class="box c-pointer" (click)="onPageChange(lastPage)">
+                <img src="assets/images/double-arrow-right-icon.svg" alt="" height="14px" width="14px">
+            </button>
+            <button *ngIf="currentPage === lastPage" class="box">
+                <img src="assets/images/inactive-double-arrow-right.svg" alt="" height="23px" width="23px">
+            </button>
+        </div>
     </div>
 </div>

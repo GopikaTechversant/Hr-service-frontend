@@ -34,6 +34,8 @@
             <textarea class="editable " id="editable"  [(ngModel)]="templateData.message" [readonly]="!isEditable" (input)="updateHtmlContent($event);" 
                 style="width: 100%; outline: none !important; border: none !important; min-height: 220px;padding-top: 5px;padding-left: 0px; padding-bottom: 10px;">
                         </textarea><br>
+            <span style="margin: auto;display: flex; color: rgb(61, 133, 198);">Date and Time : {{displayDate | date :'dd/MM/yyy'}} &  {{InterviewTime}}</span><br>
+            <span style="margin: auto;display: flex;color: rgb(61, 133, 198);">Meeting Link : </span><br>           
             <span style="padding: 10px; padding-left: 0px;">Best Regards,</span>
     
             <div style="margin: auto;display: flex;">
@@ -145,7 +147,7 @@
                         </div>
                         <!-- Time Input -->
                        <div class="c-pointer flex-1 m-r-10 m-l-20">
-                        <input class="date-input c-pointer" type="time" id="appt" name="appt" required [value]="displayTime" timeformat="12h"
+                        <input class="date-input c-pointer" type="time" id="appt" name="appt" required [value]="displayTime" 
                         [(ngModel)]="displayTime" (click)="openTimePicker($event)"   (change)="onTimeChange($event)" />
                     </div>    
                 </div>

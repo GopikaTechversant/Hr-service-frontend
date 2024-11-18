@@ -29,6 +29,7 @@
   overflow: auto !important;
   height: calc(100vh - 240px);
   background-color: #FFFFFF;
+  width: 100%;
 }
 
 .create-btn {
@@ -75,6 +76,16 @@
   width: 100px;
 }
 
+.wrap {
+  width: 250px !important;
+  max-width: 250px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 .data {
   position: absolute;
@@ -324,4 +335,3 @@ input[type="text"] {
 .padding-5 {
   padding: 5px;
 }
-

@@ -17,6 +17,18 @@
     padding: 5px;
 }
 
+.wrap {
+    width: 100%;
+    max-width: 100%;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    cursor: pointer;
+}
+
 .fa-search {
     color: #575F6E;
     font-size: 18px;
@@ -168,11 +180,12 @@ input[type="text"] {
 }
 
 .box {
-   height: 29px;
+    height: 29px;
     width: 32px;
     border: none;
     background-color: white;
 }
+
 .box :hover {
     background: #F0F7FF;
 }
@@ -213,7 +226,7 @@ input[type="text"] {
         height: 23px;
     }
 
-    .more{
+    .more {
         width: 90px;
     }
 }

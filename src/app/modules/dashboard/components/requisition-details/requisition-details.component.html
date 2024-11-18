@@ -66,7 +66,7 @@
                         <span class="icon"><i class="fa fa-users" aria-hidden="true"></i></span>
                     </div>
                     <div class="detail">
-                        <div><span class="d-flex name">Shortlisted Candidates</span></div>
+                        <div><span class="d-flex name">Shortlisted</span></div>
                         <div><span class="count">{{lists[1]?.count}}</span></div>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                         <span class="icon"><i class="fa fa-user-plus" aria-hidden="true"></i></span>
                     </div>
                     <div class="detail">
-                        <div><span class="d-flex name">Hired Candidates</span></div>
+                        <div><span class="d-flex name">Hired</span></div>
                         <div><span class="count">{{lists[2]?.count}}</span></div>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
                         <span class="icon"><i class="fa fa-user-times" aria-hidden="true"></i></span>
                     </div>
                     <div class="detail">
-                        <div><span class="d-flex name">Rejected Candidates</span></div>
+                        <div><span class="d-flex name">Rejected</span></div>
                         <div><span class="count">{{lists[3]?.count}}</span></div>
                     </div>
                 </div>
@@ -142,7 +142,7 @@
                 <div *ngIf="candidateList?.length === 0 || !candidateList" class="no-data"> No Data Found</div>
             </table>
         </div>
-        <div class="page d-flex j-end padding-10">
+        <div *ngIf="totalCount" class="page d-flex j-end padding-10">
             <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(1)">
                 <img src="assets/images/double-arrow-left-icon.svg" alt="" height="14px" width="14px">
             </button>

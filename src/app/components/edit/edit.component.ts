@@ -266,7 +266,7 @@ export class EditComponent implements OnInit {
     const mandatoryFieldsFilled = candidateFirstName && candidateLastName && candidateGender && candidateemail && candidateMobileNo;
     
     if (!mandatoryFieldsFilled) {
-      this.tostr.warning('Please fill all mandatory fields');
+      this.tostr.warning('Please fill in all mandatory fields.');
       this.submitted = true;
       return;
     }

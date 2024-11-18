@@ -182,7 +182,7 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
           labels: this.labels,
           datasets: [
             {
-              label: 'No. of Hired',
+              label: 'Hired',
               data: this.hiredData,
               backgroundColor: '#6E4F7B',
               borderColor: '#6E4F7B',
@@ -192,7 +192,7 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
               barThickness: 30
             },
             {
-              label: 'No. of Offered',
+              label: 'Offered',
               data: this.offeredData,
               backgroundColor: '#1782A3',
               borderColor: '#1782A3',

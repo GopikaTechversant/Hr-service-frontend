@@ -69,6 +69,7 @@ export class MailTemplateComponent implements OnInit {
   showTemplate: boolean = false;
   showTimePicker: Boolean = false;
   fileUploader : boolean = false;
+  InterviewTime: any;
   constructor(private apiService: ApiService, private tostr: ToastrService, private datePipe: DatePipe, private s3Service: S3Service) { }
   ngOnInit(): void {
     this.resetFormAndState();
@@ -185,14 +186,26 @@ export class MailTemplateComponent implements OnInit {
 
   onTimeChange(event: Event): void {
     const input = event.target as HTMLInputElement;
-    this.displayTime = input.value;
-    if (this.interviewStatus === 'scheduled') this.interviewStatus = 'Rescheduled'
+    this.displayTime = input.value; // e.g., "14:30"
+  
+    // Convert the displayTime to 12-hour format with AM/PM
+    this.InterviewTime = this.convertTo12HourFormat(this.displayTime);
+  
+    if (this.interviewStatus === 'scheduled') {
+      this.interviewStatus = 'Rescheduled';
+    }
     this.changeInterviewStatus();
   }
 
-  timeChange(event: any): void {
-    this.displayTime = event;
-
+  convertTo12HourFormat(time: string): string {
+    const [hours, minutes] = time.split(':').map(Number);
+    const period = hours >= 12 ? 'PM' : 'AM';
+    const hours12 = hours % 12 || 12; // '0' should be '12'
+    return `${this.padZero(hours12)}:${this.padZero(minutes)} ${period}`;
+  }
+  
+  padZero(value: number): string {
+    return value < 10 ? `0${value}` : `${value}`;
   }
 
   getKeyFroms3(): void {

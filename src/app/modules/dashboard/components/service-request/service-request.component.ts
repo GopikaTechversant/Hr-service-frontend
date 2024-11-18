@@ -3,7 +3,7 @@ import { ViewChild, ElementRef } from '@angular/core';
 import { ToastrServices } from 'src/app/services/toastr.service';
 import { ApiService } from 'src/app/services/api.service';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
@@ -83,7 +83,7 @@ export class ServiceRequestComponent implements OnInit {
   selectedSalaryType: string = '';
   salaryTypeList: any = [{ id: 1, type: 'per Month' }, { id: 2, type: 'per Year' }]
   selectedSalaryTypeId: any;
-  constructor(private toastr: ToastrServices, private apiService: ApiService, private datePipe: DatePipe, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
+  constructor(private toastr: ToastrServices,private router :Router, private apiService: ApiService, private datePipe: DatePipe, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
     });
@@ -161,6 +161,57 @@ export class ServiceRequestComponent implements OnInit {
       if (res?.users) this.panel_list = res?.users;
     })
   }
+
+  validateJobCode(event: KeyboardEvent): void {
+    const allowedKeys = [
+      'Backspace', 'Tab', 'Enter', 'ArrowLeft', 'ArrowRight', 'Delete',
+      '-', ' ', // Hyphen and Space
+    ];
+
+    const ctrlKeyCodes = ['c', 'v', 'a', 'x'];
+    const key = event.key;
+    const isAlphabetOrNumber = /^[a-zA-Z0-9]$/.test(key);
+    const isAllowedKey = allowedKeys.includes(key);
+    const isCtrlCombination = event.ctrlKey && ctrlKeyCodes.includes(key.toLowerCase());
+    if (!isAlphabetOrNumber && !isAllowedKey && !isCtrlCombination) {
+      event.preventDefault();
+    }
+  }
+
+  validateJobCodePaste(event: ClipboardEvent): void {
+    const clipboardData = event.clipboardData;
+    const pastedText = clipboardData?.getData('text') || '';
+    const isValidText = /^[a-zA-Z0-9\s-]*$/.test(pastedText);
+    if (!isValidText) {
+      event.preventDefault();
+    }
+  }
+
+  validateJobTitle(event: KeyboardEvent): void {
+    const allowedKeys = [
+      'Backspace', 'Tab', 'Enter', 'ArrowLeft', 'ArrowRight', 'Delete',
+      '-', '/', ' ', // Hyphen, Slash, and Space
+    ];
+
+    const ctrlKeyCodes = ['c', 'v', 'a', 'x'];
+    const key = event.key;
+    const isAlphabet = /^[a-zA-Z]$/.test(key);
+    const isAllowedKey = allowedKeys.includes(key);
+    const isCtrlCombination = event.ctrlKey && ctrlKeyCodes.includes(key.toLowerCase());
+    if (!isAlphabet && !isAllowedKey && !isCtrlCombination) {
+      event.preventDefault();
+    }
+  }
+
+  validateJobTitlePaste(event: ClipboardEvent): void {
+    const clipboardData = event.clipboardData;
+    const pastedText = clipboardData?.getData('text') || '';
+    const isValidText = /^[a-zA-Z\s\-\/]*$/.test(pastedText);
+    if (!isValidText) {
+      event.preventDefault();
+    }
+  }
+
 
   onKeypress(event: any): void {
     let enteredValue: string;
@@ -431,17 +482,17 @@ export class ServiceRequestComponent implements OnInit {
         this.handleApiCall('post', '/service-request/create', payload);
       }
     } else {
-      this.toastr.warning('Please fill all mandatory fields');
+      this.toastr.warning('Please fill in all mandatory fields.');
     }
   }
 
-  // Helper method to handle API calls
   private handleApiCall(method: 'post' | 'patch', url: string, payload: any): void {
     this.apiService[method](url, payload).subscribe(
       response => {
         const successMessage = method === 'post' ? 'Requirement created successfully' : 'Requirement updated successfully';
         this.toastr.success(successMessage);
         this.resetFormAndState();
+        this.router.navigate(['/dashboard/requirement-candidate-list']);
       },
       error => {
         const errorMessage = method === 'post' ? 'Failed to create requirement' : 'Failed to update requirement';
@@ -486,8 +537,9 @@ export class ServiceRequestComponent implements OnInit {
     ];
   }
 
-  cancel(): void {    
+  cancel(): void {
     if (!this.requirement_details) this.resetFormAndState();
+    this.router.navigate(['/dashboard/requirement-candidate-list']);
   }
 
   clearFilter(): void {
@@ -501,23 +553,19 @@ export class ServiceRequestComponent implements OnInit {
     const controlKeys = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete', 'Tab', 'c', 'v', 'x'];
     const key = event.key;
 
-    // Allow control key combinations (Ctrl+C, Ctrl+V, Ctrl+X)
     if (event.ctrlKey && controlKeys.includes(key.toLowerCase())) {
       return;
     }
 
-    // Prevent input of disallowed keys
     if (!allowedKeys.test(key) && !controlKeys.includes(key)) {
       event.preventDefault();
     }
   }
-
-  // Validation for pasted input
+  
   onPasteSalary(event: ClipboardEvent): void {
     const pastedData = event.clipboardData?.getData('text') || '';
     const isValid = /^[0-9.,]+$/.test(pastedData);
 
-    // Prevent pasting if it contains invalid characters
     if (!isValid) {
       event.preventDefault();
     }

@@ -99,7 +99,17 @@ tr:hover {
 }
 
 .container-table {
-    height: calc(100vh - 525px);
+    height: calc(100vh - 436px);
+    overflow: auto;
+}
+
+.wrap {
+    width: 200px;
+    max-width: 200px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    cursor: pointer;
 }
 
 .recruiter-drop-down {
@@ -143,23 +153,6 @@ tr:hover {
     font-size: 20px;
     color: black;
     font-weight: 500;
-}
-
-.scrollable::-webkit-scrollbar,
-.container-table::-webkit-scrollbar {
-    display: none;
-}
-
-.scrollable,
-.container-table {
-    scrollbar-width: none;
-    /* For Firefox */
-}
-
-.scrollable,
-.container-table {
-    -ms-overflow-style: none;
-    /* For Internet Explorer and Edge */
 }
 
 .j-end {

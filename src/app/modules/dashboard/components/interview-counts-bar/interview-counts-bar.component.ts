@@ -129,10 +129,10 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
 
   createBarChart(): void {
     if (this.chart) this.chart.destroy();
-
+  
     const canvasElement = document.getElementById('barChartInterview') as HTMLCanvasElement;
     if (!canvasElement) return;
-
+  
     this.chart = new Chart(canvasElement, {
       type: 'bar',
       data: {
@@ -176,23 +176,27 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
           y: {
             type: 'logarithmic',
             stacked: true,
-            // beginAtZero: false,
             grid: {
               display: false,
             },
+            min: 0.1, // Ensure zero is displayed properly
+            max: 100, // Set the upper limit based on your data
+            // beginAtZero: true,
             ticks: {
               display: true,
               font: { size: 12 },
-              // autoSkip: true,
-              maxTicksLimit: 10,
+              maxTicksLimit: 5,
+              padding: 10, // Add padding to avoid cropping
+              callback: function (value: any) {
+                return Number(value).toLocaleString(); // Format ticks
+              }
             }
           },
           x: {
             stacked: true,
             grid: {
               display: false
-            },
-            min: 0,
+            }
           }
         },
         layout: {
@@ -217,35 +221,17 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
             enabled: true
           },
           datalabels: {
-            display: (context) => {
-              // Check if the data value is zero; if so, hide the label
-              return context.dataset.data[context.dataIndex] !== 0;
-            },
-            color: '#FFFFFF',
-            padding: 4,
-            anchor: 'center',
-            align: 'center',
-            offset: -1,
-            font: {
-              size: 14,
-              weight: 400
+            display: true,
+            color: 'white',
+            formatter: function (value: number) {
+              return value;
             }
           }
         },
-        onClick: (e, elements) => {
-          if (elements.length) {
-            const index = elements[0].index;
-            const chartInstance = this.chart;
-            if (chartInstance) {
-              chartInstance.options.scales.x.min = index - 2 < 0 ? 0 : index - 2;
-              chartInstance.options.scales.x.max = index + 3 > this.labels.length ? this.labels.length : index + 3;
-              chartInstance.update();
-            }
-          }
-        }
       },
       plugins: [ChartDataLabels]
     });
   }
+  
 
 }

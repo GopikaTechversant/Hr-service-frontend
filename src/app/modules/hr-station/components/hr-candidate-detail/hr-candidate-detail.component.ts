@@ -84,8 +84,8 @@ export class HrCandidateDetailComponent {
     this.env_url = window.location.origin;
     this.fetchStatus();
     this.fetchFeedbackList();
-
   }
+  
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {

@@ -9,7 +9,9 @@
                 <div class="m-t-20 m-b-10">
                     <span class="sub-head">Job Title<span class="required">*</span></span>
                     <div>
-                        <input type="text" class="input-box" max="20" [(ngModel)]="jobTitle" id="job-title" [disabled]="candidateCount !== '0'">
+                        <input type="text" class="input-box" maxLength="70" [(ngModel)]="jobTitle" id="job-title" [disabled]="candidateCount !== '0'"  (keydown)="validateJobTitle($event)"
+                        (paste)="validateJobTitlePaste($event)"
+                      />
                     </div>
                 </div>
             </div>
@@ -17,7 +19,8 @@
                 <div class="m-t-20 m-b-10">
                     <span class="sub-head">Job Code<span class="required">*</span></span>
                     <div>
-                        <input type="text" class="input-box" max="20" [(ngModel)]="jobCode" id="jobCode" [disabled]="candidateCount !== '0'">
+                        <input type="text" class="input-box" maxlength="20" [(ngModel)]="jobCode" id="jobCode" [disabled]="candidateCount !== '0'"
+                        (keydown)="validateJobCode($event)" (paste)="validateJobCodePaste($event)"/>
                     </div>
                 </div>
             </div>
