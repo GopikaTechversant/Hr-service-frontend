@@ -88,9 +88,9 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
       if (res?.data) {
         this.sixMonthCount = res?.data;
         this.labels = this.sixMonthCount.map((item: any) => item.userfirstName ?? item.month);
-        this.hiredData = this.sixMonthCount.map((item: any) => +item.total_hired || '0');
-        this.sourcedData = this.sixMonthCount.map((item: any) => +item.total_totalsourced || '0');
-        this.offeredData = this.sixMonthCount.map((item: any) => +item.total_offerreleased || '0');
+        this.hiredData = this.sixMonthCount.map((item: any) => +item.total_hired || '');
+        this.sourcedData = this.sixMonthCount.map((item: any) => +item.total_totalsourced || '');
+        this.offeredData = this.sixMonthCount.map((item: any) => +item.total_offerreleased || '');
         this.initialLoader = false;
         this.tryCreateChart();
       } else {
@@ -129,10 +129,10 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
 
   createBarChart(): void {
     if (this.chart) this.chart.destroy();
-  
+
     const canvasElement = document.getElementById('barChartInterview') as HTMLCanvasElement;
     if (!canvasElement) return;
-  
+
     this.chart = new Chart(canvasElement, {
       type: 'bar',
       data: {
@@ -179,18 +179,25 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
             grid: {
               display: false,
             },
-            min: 0.1, // Ensure zero is displayed properly
-            max: 100, // Set the upper limit based on your data
-            // beginAtZero: true,
+            min: 0.1, // Setting a small value close to zero
+            max: 100, // Adjust this based on your data
             ticks: {
               display: true,
               font: { size: 12 },
-              maxTicksLimit: 5,
-              padding: 10, // Add padding to avoid cropping
+              maxTicksLimit: 6,
+              padding: 10,
               callback: function (value: any) {
-                return Number(value).toLocaleString(); // Format ticks
+                if (value === 0.1) return '0';
+                return Number(value).toLocaleString();
+              }
+            },
+            afterBuildTicks: function (scale) {
+              const firstTick = scale.ticks[0] as { value: number }; // Explicitly cast to get the value
+              if (firstTick.value !== 0.1) {
+                scale.ticks.unshift({ value: 0.1 }); // Adding a Tick object with the value 0.1
               }
             }
+
           },
           x: {
             stacked: true,
@@ -224,7 +231,7 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
             display: true,
             color: 'white',
             formatter: function (value: number) {
-              return value;
+              return value !== 0 ? value.toString() : ''; // Only show non-zero values
             }
           }
         },
@@ -232,6 +239,6 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
       plugins: [ChartDataLabels]
     });
   }
-  
+
 
 }

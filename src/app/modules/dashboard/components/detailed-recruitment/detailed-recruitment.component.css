@@ -104,8 +104,8 @@ tr:hover {
 }
 
 .wrap {
-    width: 200px;
-    max-width: 200px;
+    width: 180px;
+    max-width: 180px;
     word-wrap: break-word;
     overflow-wrap: break-word;
     white-space: normal;

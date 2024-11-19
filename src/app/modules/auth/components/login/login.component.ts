@@ -61,14 +61,20 @@ export class LoginComponent implements OnInit {
       this.apiService.post(`/user/login`, this.loginForm.value).subscribe(
         (response: any) => {
           if (response?.token) {
+            // Store user data in localStorage
             localStorage.setItem('userToken', response?.token);
             localStorage.setItem('userRole', response?.user?.userRole);
             localStorage.setItem('userFullName', response?.user?.userFullName);
             localStorage.setItem('userId', response?.user?.userId);
             localStorage.setItem('userType', response?.user?.userType);
-            this.router.navigate(['/dashboard']);
+  
             this.toggleSpinner = false;
-            this.tostr.success('Logged In Successfully!');
+  
+            // Navigate to dashboard
+            this.router.navigate(['/dashboard']).then(() => {
+              // Show toaster after navigation is complete
+              this.tostr.success('Logged In Successfully!');
+            });
           }
         },
         (error) => {

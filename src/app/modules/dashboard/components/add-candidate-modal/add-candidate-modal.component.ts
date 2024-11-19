@@ -347,6 +347,10 @@ export class AddCandidateModalComponent implements OnInit {
         condition: !this.sourceId,
         message: 'Please Enter an Application source'
       },
+      {
+        condition: !this.uploadedFileKey,
+        message: 'Please Upload Candidate resume'
+      },
     ];
     this.validationSuccess = true;
     validations.forEach(({ condition, message }) => {
