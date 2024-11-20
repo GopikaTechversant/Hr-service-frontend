@@ -46,10 +46,10 @@ export class HeaderComponent implements OnInit {
       this.url = `/technical/${this.stationId}`;
     });
     if (currentStation === 'dashboard') this.activeStation = 'Screening';
-    if (currentStation === 'written') this.activeStation = 'Written';
-    if (currentStation === 'technical' && this.stationId === '3') this.activeStation = 'Technical 1';
-    if (currentStation === 'technical' && this.stationId === '4') this.activeStation = 'Technical 2';
-    if (currentStation === 'hr') this.activeStation = 'Hr Manager';
+    if (currentStation === 'technical' && this.stationId === '2') this.activeStation = 'Technical 1';
+    if (currentStation === 'technical' && this.stationId === '3') this.activeStation = 'Technical 2';
+    if (currentStation === 'technical' && this.stationId === '4') this.activeStation = 'Technical 3';
+    if (currentStation === 'hr') this.activeStation = 'HR Manager';
     if (currentStation === 'management') this.activeStation = 'Management';
 
     this.currentRole = localStorage.getItem('userRole');
@@ -66,11 +66,11 @@ export class HeaderComponent implements OnInit {
   navigate(station: any): void {
     if (!station) return;
 
-    const { stationName, stationId } = station;
+    // const { stationName, stationId } = station;
 
     // Store station name and id in local storage
-    localStorage.setItem('currentStationName', stationName);
-    localStorage.setItem('currentStationId', stationId || '0');
+    localStorage.setItem('currentStationName', station.stationName);
+    localStorage.setItem('currentStationId', station.stationId || '0');
     
     if (station?.stationName === 'Technical 1') {
       this.router.navigate([`/technical/${station?.stationId}`]);
@@ -78,6 +78,9 @@ export class HeaderComponent implements OnInit {
     } else if (station?.stationName === 'Technical 2') {
       this.router.navigate([`/technical/${station?.stationId}`]);
       this.activeStation = 'Technical 2';
+    } else if (station?.stationName === 'Technical 3') {
+      this.router.navigate([`/technical/${station?.stationId}`]);
+      this.activeStation = 'Technical 3';
     } else if (station?.stationName === 'Hr Manager') this.router.navigate(['/hr']);
     else if (station?.stationName === 'Screening') this.router.navigate(['/dashboard']);
     else if (station?.stationName === 'Written') this.router.navigate(['/written']);

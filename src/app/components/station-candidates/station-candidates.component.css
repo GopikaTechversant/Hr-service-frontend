@@ -27,6 +27,17 @@
     background-color: white;
 }
 
+.wrap {
+    width: 290px !important;
+    max-width: 290px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-all;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
 .subscriber-listing {
     overflow: hidden;
     background-color: whitesmoke;
@@ -56,18 +67,6 @@
     color: #C10A0A;
     font-size: 16px;
     font-weight: 500;
-}
-
-.wrap {
-    width: 100%;
-    max-width: 100%;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: normal;
-    cursor: pointer;
 }
 
 input[type="text"] {

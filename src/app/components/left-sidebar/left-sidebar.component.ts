@@ -51,11 +51,10 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
       case 'dashboard':
         stationId = '1'; // Example ID for Screening
         break;
-      case 'written':
-        stationId = '2'; // Example ID for Written
-        break;
       case 'technical':
-        if (this.currentUrl.includes('/technical/3')) {
+        if (this.currentUrl.includes('/technical/2')) {
+          stationId = '2'; // Example ID for Technical 1
+        } else if (this.currentUrl.includes('/technical/3')) {
           stationId = '3'; // Example ID for Technical 1
         } else if (this.currentUrl.includes('/technical/4')) {
           stationId = '4'; // Example ID for Technical 2
@@ -104,7 +103,7 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
     }
 
     if (this.currentUrl.includes(this.writtenCandidateList)) {
-      this.dynamicMenuItems.push({ path: this.writtenCandidateList, label: 'Candidate List Written', icon: 'fa fa-list-ol' });
+      this.dynamicMenuItems.push({ path: this.writtenCandidateList, label: 'Candidate List Technical 1', icon: 'fa fa-list-ol' });
     }
 
     if (homeUrl === 'dashboard' && this.currentUrl.includes(this.candidateScheduleUrl)) {
@@ -125,9 +124,9 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
     }
 
     if (homeUrl !== 'dashboard') {
-      if (homeUrl === 'written') this.dynamicMenuItems.push({ path: '/written', label: 'Written List', icon: 'fa fa-tasks' });
-      if (homeUrl === 'technical' && stationId === '3') this.dynamicMenuItems.push({ path: '/technical/3', label: 'Technical 1 List', icon: 'fa fa-tasks' });
-      if (homeUrl === 'technical' && stationId === '4') this.dynamicMenuItems.push({ path: '/technical/4', label: 'Technical 2 List', icon: 'fa fa-tasks' });
+      if (homeUrl === 'technical' && stationId === '2') this.dynamicMenuItems.push({ path: '/technical/2', label: 'Technical 1 List', icon: 'fa fa-tasks' });
+      if (homeUrl === 'technical' && stationId === '3') this.dynamicMenuItems.push({ path: '/technical/3', label: 'Technical 2 List', icon: 'fa fa-tasks' });
+      if (homeUrl === 'technical' && stationId === '4') this.dynamicMenuItems.push({ path: '/technical/4', label: 'Technical 3 List', icon: 'fa fa-tasks' });
       if (homeUrl === 'hr') this.dynamicMenuItems.push({ path: '/hr', label: 'H R List', icon: 'fa fa-tasks' });
       if (homeUrl === 'management') this.dynamicMenuItems.push({ path: '/management', label: 'Management List', icon: 'fa fa-tasks' });
       if (homeUrl === 'user') this.dynamicMenuItems.push({ path: '/user', label: 'User List', icon: 'fa fa-tasks' });

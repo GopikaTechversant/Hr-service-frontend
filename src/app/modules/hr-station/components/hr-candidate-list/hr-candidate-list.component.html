@@ -120,7 +120,7 @@
                                 {{ item['candidate.candidateFirstName'] }} {{ item['candidate.candidateLastName'] }}
                             </td>
                             <td class="text-start" [title]="item['candidate.candidateEmail']">{{ item['candidate.candidateEmail'] }}</td>
-                            <td class="text-start" [title]="item['serviceRequest.requestName']">{{ item['serviceRequest.requestName'] }}</td>
+                            <td class="text-start wrap" [title]="item['serviceRequest.requestName']">{{ item['serviceRequest.requestName'] }}</td>
                             <td class="f-w-500 text-start" 
                             [ngClass]="{'orange': item?.progressStatus === '0' && item?.reviewStatus == 0 && item?.serviceStatus !== 'done', 'green': item?.progressStatus !== '0' || item?.serviceStatus === 'done',
                                 'blue' : item?.progressStatus === '0' && item?.reviewStatus != 0}">

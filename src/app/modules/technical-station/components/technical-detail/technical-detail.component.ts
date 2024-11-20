@@ -29,7 +29,7 @@ export class TechnicalDetailComponent implements OnInit {
 
   onSwitchStation(candidate: any): void {
     this.modalClose = false;
-    if (candidate?.serviceStatus === 'pending' && ((this.stationId === '3' && candidate?.currentStation === 'Technical 1') || (this.stationId === '4' && candidate?.currentStation === 'Technical 2'))) {
+    if (candidate?.serviceStatus === 'pending' && ((this.stationId === '2' && candidate?.currentStation === 'Technical 1') || (this.stationId === '3' && candidate?.currentStation === 'Technical 2') || (this.stationId === '4' && candidate?.currentStation === 'Technical 3'))) {
       const userId = localStorage.getItem('userId');
       const dialogRef = this.dialog.open(StationSwitchComponent, {
         data: {
@@ -56,7 +56,11 @@ export class TechnicalDetailComponent implements OnInit {
     const id = details.id;
     const status = details.status;
 
-    if (this.stationId === '3') {
+    if (this.stationId === '2') {
+      this.apiService.get(`/written-station/progressDetail?serviceId=${id}`).subscribe((data: any) => {
+        if (data?.candidates) this.viewCandidateDetail(data?.candidates, status);
+      });
+    } else if (this.stationId === '3') {
       this.apiService.get(`/technical-station/progressDetail?serviceId=${id}`).subscribe((data: any) => {
         if (data?.candidates) this.viewCandidateDetail(data?.candidates, status);
       });

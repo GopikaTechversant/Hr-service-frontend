@@ -26,6 +26,19 @@
     height: 34px;
     padding-top: 6px;
     margin-top: 14px;
+    border: 1px solid #EEEEEE;
+    border-radius: 5px;
+}
+
+.wrap {
+    width: 350px !important;
+    max-width: 350px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-all;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .cancel-btn {
@@ -54,14 +67,23 @@
 }
 
 .dropdown-list {
-    margin-top: 38px;
-    padding-top: 2px;
-    background-color: white;
-    margin-left: -10px;
-    width: 400px;
-    line-height: 16px;
-    height: 120px;
-    overflow-y: scroll;
+    background: white;
+    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+    max-height: 150px;
+    overflow-y: auto;
+    font-size: 14px;
+    font-weight: 400;
+    width: 100%;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 999;
+    margin-top: 5px;
+    top: 100%;
+    left: 0;
+}
+
+.dropdown-list:hover {
+    background-color: #EEEEEE;
 }
 
 .flex-column {

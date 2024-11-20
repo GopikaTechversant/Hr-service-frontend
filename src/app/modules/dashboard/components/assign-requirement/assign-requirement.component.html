@@ -15,7 +15,7 @@
                 <div class="dropdown-list p-absolute" *ngIf="showDropdown">
                     <div class="p-8 " (click)='selectRequirement(name?.requestName,name?.requestId); !showDropdown'
                         *ngFor="let name of requirementList">
-                        <span class="p-l-10 c-pointer">{{name?.requestName}}</span>
+                        <span class="p-l-10 c-pointer wrap">{{name?.requestName}}</span>
                     </div>
                 </div>
             </div>

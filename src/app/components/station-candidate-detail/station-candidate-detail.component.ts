@@ -169,8 +169,8 @@ export class StationCandidateDetailComponent implements OnInit {
       };
 
       const baseUrlMap: { [key: string]: string } = {
-        'written': '/written-station',
         'management': '/management-station',
+        'technical-2': '/written-station',
         'technical-3': '/technical-station',
         'technical-4': '/technical-station-two'
       };
@@ -265,8 +265,8 @@ export class StationCandidateDetailComponent implements OnInit {
   approveClick(data: any): void {
     this.loader = true;
     const baseUrlMap: { [key: string]: string } = {
-      'written': '/written-station',
       'management': '/management-station',
+      'technical-2': '/written-station',
       'technical-3': '/technical-station',
       'technical-4': '/technical-station-two'
     };

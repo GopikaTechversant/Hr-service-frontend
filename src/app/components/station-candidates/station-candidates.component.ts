@@ -52,7 +52,7 @@ export class StationCandidatesComponent implements OnInit {
       this.stationId = params['id'];
       this.initialLoader = true;
       this.url = `/technical/${this.stationId}`;
-      if (this.currentStation === 'written') this.stationId = '2';
+      // if (this.currentStation === 'written') this.stationId = '2';
       if (this.currentStation === 'management') this.stationId = '6'
       this.filteredStatus = sessionStorage.getItem(`status_${this.stationId}`) ? sessionStorage.getItem(`status_${this.stationId}`) : '';
       const requirementData = sessionStorage.getItem(`requirement_${this.stationId}`);
@@ -98,11 +98,10 @@ export class StationCandidatesComponent implements OnInit {
   fetchList(): void {
     if (!this.initialLoader) this.loader = true;
     this.candidateList = [];
-    if (this.currentStation === 'technical') {
+    if (this.currentStation === 'technical' && this.stationId === '2')   this.baseUrl = '/written-station/list'
+
+   else if (this.currentStation === 'technical') {
       this.baseUrl = this.stationId === '3' ? `/technical-station/list` : `/technical-station-two/list`;
-    }
-    if (this.currentStation === 'written') {
-      this.baseUrl = '/written-station/list'
     }
     if (this.currentStation === 'management') {
       this.baseUrl = '/management-station/list'

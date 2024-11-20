@@ -439,7 +439,7 @@ export class AddCandidateModalComponent implements OnInit {
           this.loader = false;
           this.tostr.success('Candidate Created successfully');
           this.resetFormAndState();
-
+          this.router.navigate(['/dashboard/candidate-pool']);
         },
         error: (error) => {
           this.loader = false;

@@ -77,14 +77,29 @@
 }
 
 .wrap {
-  width: 250px !important;
-  max-width: 250px;
+  width: 350px !important;
+  max-width: 350px;
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-all;
   white-space: normal;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.wrap-date {
+  width: 170px !important;
+  max-width: 170px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.add{
+  width: 170px !important;
+  max-width: 170px; 
 }
 
 .data {

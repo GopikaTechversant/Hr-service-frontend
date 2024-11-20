@@ -18,15 +18,14 @@
 }
 
 .wrap {
-    width: 100%;
-    max-width: 100%;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
+    width: 290px !important;
+    max-width: 290px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-all;
+    white-space: normal;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: normal;
-    cursor: pointer;
 }
 
 .fa-search {
