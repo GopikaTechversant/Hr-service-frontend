@@ -80,6 +80,7 @@ export class FeedbackComponent implements OnInit {
         error: (error) => {
           // this.loader = false;
           this.tostr.error('Error adding progress');
+          this.closeDialog();
         }
       });
     }

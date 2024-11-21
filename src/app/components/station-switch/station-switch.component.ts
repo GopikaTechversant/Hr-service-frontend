@@ -68,6 +68,7 @@ export class StationSwitchComponent implements OnInit {
         },
         error: (error) => {
           this.tostr.error('Error Moving Candidate');
+          this.closeDialog();
         }
       });
     } else this.tostr.warning('Please add a comment');
