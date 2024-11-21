@@ -544,9 +544,9 @@ export class ServiceRequestComponent implements OnInit {
     if (this.selectedTeam !== this.requirement_details?.team?.teamName) payload.requestTeam = this.selectedTeamName;
     if (this.reportingmanager !== this.requirement_details?.reporting?.userFullName) payload.requestManager = this.managerId;
     if (this.selectedLocation !== this.requirement_details?.requestLocation) payload.requestLocation = this.selectedLocation;
-    if (this.displayDate !== this.requirement_details.requestPostingDate) {
-      payload.requestPostingDate = this.displayDate;
-      payload.requestClosingDate = this.closeDate;
+    if (this.displayDate !== this.postDate) {
+      payload.requestPostingDate = this.displayDate ? this.displayDate : this.postDate;
+      payload.requestClosingDate = this.closeDate ? this.closeDate : this.closeDateObj;
     }
 
     const currentDescription = this.commentDiv.nativeElement.innerHTML;
