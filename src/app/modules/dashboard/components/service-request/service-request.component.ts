@@ -83,7 +83,9 @@ export class ServiceRequestComponent implements OnInit {
   selectedSalaryType: string = '';
   salaryTypeList: any = [{ id: 1, type: 'per Month' }, { id: 2, type: 'per Year' }]
   selectedSalaryTypeId: any;
-  constructor(private toastr: ToastrServices,private router :Router, private apiService: ApiService, private datePipe: DatePipe, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
+  validationSuccess: boolean = false;
+
+  constructor(private toastr: ToastrServices, private router: Router, private apiService: ApiService, private datePipe: DatePipe, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
     });
@@ -296,7 +298,7 @@ export class ServiceRequestComponent implements OnInit {
     this.apiService.get(`/user/stations`).subscribe((res: any) => {
       if (res?.data) {
         this.stationsLists = res?.data;
-        this.stationsList = res?.data.slice(1,-2);
+        this.stationsList = res?.data.slice(1, -2);
       }
     })
   }
@@ -304,7 +306,7 @@ export class ServiceRequestComponent implements OnInit {
   selectStation(id: any, stationName: any): void {
     const stationOrder = ["Technical 1", "Technical 2", "Technical 3"];
     const isStationAlreadySelected = this.selectedStations.some((station: { stationId: any }) => station.stationId === id);
-  
+
     if (stationOrder.includes(stationName)) {
       // Find any stations that shouldn't be added in the current order
       const invalidStations = stationOrder.slice(stationOrder.indexOf(stationName) + 1);
@@ -313,17 +315,17 @@ export class ServiceRequestComponent implements OnInit {
         return; // Prevent adding invalid station
       }
     }
-  
+
     if (!isStationAlreadySelected) {
       // Insert before HR Manager
       const hrManagerIndex = this.selectedStations.findIndex((station: { stationName: string }) => station.stationName === 'HR Manager');
       this.selectedStations.splice(hrManagerIndex, 0, { stationName, stationId: id });
-  
+
       // Remove from station list
       this.stationsList = this.stationsList.filter((station: { stationId: any }) => station.stationId !== id);
       this.idListOpen = false;
     }
-  
+
     // Remove dependent stations from the list
     if (stationName === "Technical 2") {
       this.stationsList = this.stationsList.filter(station => station.stationName !== "Technical 1");
@@ -333,13 +335,13 @@ export class ServiceRequestComponent implements OnInit {
       );
     }
   }
-  
+
 
   deleteStation(stationId: any, stationName: any): void {
     if (stationId !== 1 && stationId !== 5) {
       this.selectedStations = this.selectedStations.filter((station: { stationId: any; }) => station.stationId !== stationId);
       this.stationsList.push({ stationId: stationId, stationName: stationName });
-    }    
+    }
     if (this.selectedStations.length === 2) this.fetchStations();
   }
 
@@ -459,7 +461,72 @@ export class ServiceRequestComponent implements OnInit {
     } else this.selectedStations = [];
   }
 
+  checkValidation(): void {
+    const validations = [
+
+      {
+        condition: !this.jobTitle,
+        message: 'Please Enter the Job Title'
+      },
+      {
+        condition: !this.jobCode,
+        message: 'Please Enter the Job Code'
+      },
+      {
+        condition: !this.vacancy,
+        message: 'Please Enter the Vacancy'
+      },
+      {
+        condition: !this.skills,
+        message: 'Please Enter the Skills'
+      },
+      {
+        condition: !this.selectedStations,
+        message: 'Please Select the Stations'
+      },
+      {
+        condition: !this.experience,
+        message: 'Please Enter the Experience'
+      },
+      {
+        condition: !this.selectedDesignation,
+        message: 'Please Select the Designation'
+      },
+      {
+        condition: !this.baseSalary,
+        message: 'Please Enter the Base Salary'
+      },
+      {
+        condition: !this.maxSalary,
+        message: 'Please Enter the Maximum Salary'
+      },
+      {
+        condition: !this.selectedTeam,
+        message: 'Please Select the Team'
+      },
+      {
+        condition: !this.displayDate && !this.requirement_details?.requestPostingDate,
+        message: 'Please Select the Start Date'
+      },
+      {
+        condition: !this.closeDate && !this.requirement_details?.requestClosingDate,
+        message: 'Please Select the End Date'
+      },
+      
+
+    ];
+    this.validationSuccess = true;
+    validations.forEach(({ condition, message }) => {
+      if (condition) {
+        this.loader = false;
+        this.toastr.warning(message);
+        this.validationSuccess = false;
+      }
+    });
+  }
+
   submitClick(): void {
+    this.checkValidation();
     const payload: any = {};
     // Build the payload
     if (this.jobTitle !== this.requirement_details.requestName) payload.requestName = this.jobTitle;
@@ -488,7 +555,7 @@ export class ServiceRequestComponent implements OnInit {
     // Check mandatory fields
     const allFieldsFilled = this.jobTitle && this.jobCode && this.vacancy && this.skills && this.selectedStations && this.experience && this.selectedDesignation && this.baseSalary && this.maxSalary && this.selectedTeam;
 
-    if (allFieldsFilled) {
+    if (this.validationSuccess) {
       if (this.requestId) {
         if (this.candidateCount === '0') {
           payload.requestId = this.requestId;
@@ -499,9 +566,10 @@ export class ServiceRequestComponent implements OnInit {
       } else {
         this.handleApiCall('post', '/service-request/create', payload);
       }
-    } else {
-      this.toastr.warning('Please fill in all mandatory fields.');
     }
+    // else {
+    //   this.toastr.warning('Please fill in all mandatory fields.');
+    // }
   }
 
   private handleApiCall(method: 'post' | 'patch', url: string, payload: any): void {
@@ -579,7 +647,7 @@ export class ServiceRequestComponent implements OnInit {
       event.preventDefault();
     }
   }
-  
+
   onPasteSalary(event: ClipboardEvent): void {
     const pastedData = event.clipboardData?.getData('text') || '';
     const isValid = /^[0-9.,]+$/.test(pastedData);
