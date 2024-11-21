@@ -41,7 +41,7 @@ export class InterviewFeebackComponent implements OnInit {
   showSkill: boolean = false;
   selectedSkillId: any;
   fileUploader: boolean = false;
-
+  comment: any;
   constructor(private s3Service: S3Service, private tostr: ToastrService, private apiService: ApiService, private el: ElementRef) { }
 
   ngOnInit(): void {
@@ -129,16 +129,19 @@ export class InterviewFeebackComponent implements OnInit {
 
   submitClick(): void {
     const updatedSkill = this.progressSkill.map(({ skillName, ...rest }) => ({ ...rest }));
+    this.comment = (document.getElementById('comment') as HTMLInputElement)?.value || '';
     if (updatedSkill.length > 0 && this.selectedFeedback) {
       const data = {
         file: this.uploadedFileKey,
         progressSkill: updatedSkill,
         progressDescription: this.selectedFeedback,
+        progressComment: this.comment
       };
       this.submitInterviewData.emit(data);
     } else {
-      if(!this.selectedFeedback) this.tostr.warning('Please Add Feedback');
-      if(updatedSkill.length === 0 ) this.tostr.warning('Please Add Skills');
+      if (!this.selectedFeedback) this.tostr.warning('Please Add Feedback');
+      if (updatedSkill.length === 0) this.tostr.warning('Please Add Skills');
+      if (this.comment === '') this.tostr.warning('Please add comment');
     }
   }
 }

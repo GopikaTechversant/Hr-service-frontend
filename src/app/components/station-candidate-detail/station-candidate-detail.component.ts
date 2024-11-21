@@ -166,6 +166,7 @@ export class StationCandidateDetailComponent implements OnInit {
         progressDescription: data?.progressDescription || '',
         progressSkill: data?.progressSkill,
         file: data?.file || '',
+        progressComment: data?.progressComment || ''
       };
 
       const baseUrlMap: { [key: string]: string } = {
