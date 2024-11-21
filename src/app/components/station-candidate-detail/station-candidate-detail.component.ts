@@ -258,6 +258,7 @@ export class StationCandidateDetailComponent implements OnInit {
         this.loader = false;
         if (error?.status === 500) this.tostr.error("Internal Server Error");
         else this.tostr.error(error?.error?.message ? error?.error?.message : 'Unable to Reject Candidate');
+        this.closeDialog();
       }
     });
     this.showMail('');
@@ -303,6 +304,7 @@ export class StationCandidateDetailComponent implements OnInit {
         this.loader = false;
         if (error?.status === 500) this.tostr.error("Internal Server Error");
         else this.tostr.error(error?.error?.message ? error?.error?.message : 'Unable to Schedule Interiew for next Round');
+        this.closeDialog();
       },
       complete: () => {
         this.loader = false;
@@ -334,6 +336,7 @@ export class StationCandidateDetailComponent implements OnInit {
           this.loader = false;
           if (error?.status === 500) this.tostr.error("Internal Server Error");
           else this.tostr.error(error?.error?.message ? error?.error?.message : 'Unable to Reject Candidate');
+          this.closeDialog();
         }
       });
     }
