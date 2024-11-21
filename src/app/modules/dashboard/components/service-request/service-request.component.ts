@@ -296,33 +296,51 @@ export class ServiceRequestComponent implements OnInit {
     this.apiService.get(`/user/stations`).subscribe((res: any) => {
       if (res?.data) {
         this.stationsLists = res?.data;
-        this.stationsList = [
-          { "stationName": "Written", "stationId": 2 },
-          { "stationName": "Technical", "stationId": 6 }
-        ];
+        this.stationsList = res?.data.slice(1,-2);
       }
     })
   }
 
   selectStation(id: any, stationName: any): void {
-    if (stationName !== "Technical") {
-      if (!this.selectedStations.some((station: { stationId: any; }) => station.stationId === id)) {
-        const hrManagerIndex = this.selectedStations.findIndex((station: { stationName: string; }) => station.stationName === 'HR Manager');
-        this.selectedStations.splice(hrManagerIndex, 0, { stationName, stationId: id });
-        this.stationsList = this.stationsList.filter((station: { stationId: any; }) => station.stationId !== id);
-        this.idListOpen = false;
+    const stationOrder = ["Technical 1", "Technical 2", "Technical 3"];
+    const isStationAlreadySelected = this.selectedStations.some((station: { stationId: any }) => station.stationId === id);
+  
+    if (stationOrder.includes(stationName)) {
+      // Find any stations that shouldn't be added in the current order
+      const invalidStations = stationOrder.slice(stationOrder.indexOf(stationName) + 1);
+      if (this.selectedStations.some((station: { stationName: string }) => invalidStations.includes(station.stationName))) {
+        this.toastr.warning(`${stationName} cannot be added after ${invalidStations.join(" or ")}`);
+        return; // Prevent adding invalid station
       }
     }
-    if (stationName === "Written" || stationName === "Technical") this.stationsList = this.stationsLists.slice(2, -2)
-    else if (stationName === "Technical 2") this.stationsList = this.stationsList.filter(station => station.stationName !== "Technical 1");
+  
+    if (!isStationAlreadySelected) {
+      // Insert before HR Manager
+      const hrManagerIndex = this.selectedStations.findIndex((station: { stationName: string }) => station.stationName === 'HR Manager');
+      this.selectedStations.splice(hrManagerIndex, 0, { stationName, stationId: id });
+  
+      // Remove from station list
+      this.stationsList = this.stationsList.filter((station: { stationId: any }) => station.stationId !== id);
+      this.idListOpen = false;
+    }
+  
+    // Remove dependent stations from the list
+    if (stationName === "Technical 2") {
+      this.stationsList = this.stationsList.filter(station => station.stationName !== "Technical 1");
+    } else if (stationName === "Technical 3") {
+      this.stationsList = this.stationsList.filter(
+        station => station.stationName !== "Technical 1" && station.stationName !== "Technical 2"
+      );
+    }
   }
+  
 
   deleteStation(stationId: any, stationName: any): void {
     if (stationId !== 1 && stationId !== 5) {
       this.selectedStations = this.selectedStations.filter((station: { stationId: any; }) => station.stationId !== stationId);
       this.stationsList.push({ stationId: stationId, stationName: stationName });
-    }
-    this.fetchStations();
+    }    
+    if (this.selectedStations.length === 2) this.fetchStations();
   }
 
   getSkillSuggestions(event: any): void {
