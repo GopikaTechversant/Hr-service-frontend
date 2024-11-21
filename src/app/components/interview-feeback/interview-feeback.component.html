@@ -1,7 +1,7 @@
 <div class="main p-10">
   <div *ngIf="fileUploader" class="loader-parent">
     <img src="assets/gif/loader.gif">
-</div>
+  </div>
   <div class="d-flex w-100">
     <span class="f-w-500 f-s-14 p-t-10 w-30">Feedback</span>
     <div class="d-flex p-l-10 w-70">
@@ -108,6 +108,13 @@
       </div>
     </div>
   </div>
-<div class="d-flex j-end">
-  <button class="btn c-pointer"  (click)="submitClick()">Submit</button>
-</div>
+  <div class="d-flex w-100 m-t-10">
+    <span class="f-w-500 f-s-14 p-t-10 w-30">Comment</span>
+    <div class="d-flex p-l-10 w-70">
+      <textarea class="text-area" id="comment"></textarea>
+    </div>
+
+  </div>
+  <div class="d-flex j-end">
+    <button class="btn c-pointer" (click)="submitClick()">Submit</button>
+  </div>
