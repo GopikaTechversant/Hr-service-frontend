@@ -45,11 +45,4 @@ export class InterviewListComponent implements OnInit {
     this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
   }
 
-  dateChange(event: any, range: string): void {
-    let date = new Date(event.value);
-    if (range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
-    if (range == 'endDate') this.endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
-    this.fetchUserList();
-  }
-
 }
