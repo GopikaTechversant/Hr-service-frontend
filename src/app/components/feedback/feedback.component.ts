@@ -20,6 +20,8 @@ export class FeedbackComponent implements OnInit {
   userId: any;
   status: any;
   candidateDetails: any;
+  loader: boolean = false;
+
   constructor(public dialogRef: MatDialogRef<FeedbackComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
     private apiService: ApiService, private tostr: ToastrServices) {
     this.candidateDetails = data?.candidateDetails;
@@ -63,7 +65,7 @@ export class FeedbackComponent implements OnInit {
   }
 
   rejectClick(): void {
-    // this.loader = true;
+    this.loader = true;
     if (this.filteredStatus) {
       const payload = {
         serviceId: this.candidateDetails?.serviceId,
@@ -74,11 +76,11 @@ export class FeedbackComponent implements OnInit {
       };
       this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
         next: (res: any) => {
-          // this.loader = false;
+          this.loader = false;
           this.closeDialog();
         },
         error: (error) => {
-          // this.loader = false;
+          this.loader = false;
           this.tostr.error('Error adding progress');
           this.closeDialog();
         }

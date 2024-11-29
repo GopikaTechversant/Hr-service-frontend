@@ -1,7 +1,7 @@
 <div class="modal-header heading p-t-10 d-flex j-space" style="position: sticky; top: 0; z-index: 2;">
-    <!-- <div *ngIf="loader" class="loader-parent">
+    <div *ngIf="loader" class="loader-parent">
         <img src="assets/gif/loader.gif">
-    </div> -->
+    </div>
     <div class="padding-10">
         <span>{{candidateDetails?.candidateFirstName}} {{candidateDetails?.candidateLastName}} </span>
         <!-- <span class="blue">( 
@@ -57,6 +57,6 @@
     </div>
  
     <div class="padding-10 p-r-0 d-flex j-end w-100 m-t-10 p-b-0">
-        <button class="btn c-pointer" (click)="rejectClick()">Submit</button>
+        <button class="btn c-pointer" (click)="rejectClick()" [disabled]="loader">Submit</button>
     </div>
 </div>

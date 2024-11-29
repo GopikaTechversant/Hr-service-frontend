@@ -186,7 +186,7 @@
           </div>
           <div *ngIf="!reviewAdded && data?.candidateDetails?.serviceStatus !== 'done' && data?.candidateDetails?.serviceStatus !== 'moved'"
           class="p-l-10 p-r-0 d-flex j-end w-100 m-t-20">
-            <button class="btn c-pointer" (click)="rejectClick('')">Submit</button>
+            <button class="btn c-pointer" (click)="rejectClick('')" [disabled]="loader">Submit</button>
         </div>
     </div>
     <!-- Interview Feedback -->
@@ -288,8 +288,8 @@
         <div class="m-10">
             <textarea class="text-area m-l-5 padding-5" id="" id="feedback" placeholder="Add Feedback"></textarea>
             <div class="btn-parent">
-                <button class="c-pointer btn-reject"  (click)="rejectClick('')">Rejected</button>
-                <button class="btn c-pointer" (click)="approveClick()">Accepted</button>
+                <button class="btn c-pointer btn-reject"  (click)="rejectClick('')"  [disabled]="loader" >Rejected</button>
+                <button class="btn c-pointer" (click)="approveClick()" [disabled]="loader">Accepted</button>
             </div>
         </div>
     </div>

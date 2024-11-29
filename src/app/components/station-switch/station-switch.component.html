@@ -39,7 +39,7 @@
     <textarea class="text-area" id="comment" placeholder=""></textarea>
     <div class="btn-parent">
         <button class="c-pointer btn-reject" (click)="closeDialog()">Cancel</button>
-        <button class="btn c-pointer" (click)="submitClick()">Submit</button>
+        <button class="btn c-pointer" (click)="submitClick()" [disabled]="loader">Submit</button>
     </div>
 </div>
 

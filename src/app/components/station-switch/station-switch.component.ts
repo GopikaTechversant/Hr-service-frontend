@@ -19,6 +19,7 @@ export class StationSwitchComponent implements OnInit {
   stationId: any;
   currentStation: any;
   today: Date = new Date();
+  loader: boolean = false;
   constructor(public dialogRef: MatDialogRef<StationSwitchComponent>, @Inject(MAT_DIALOG_DATA)
   public data: any,
     private apiService: ApiService, private tostr: ToastrServices) {
@@ -52,6 +53,7 @@ export class StationSwitchComponent implements OnInit {
   }
 
   submitClick(): void {
+    this.loader = true;
     const commentElement = document.getElementById('comment') as HTMLInputElement;
     if (commentElement?.value.trim() !== '') {
       let payload = {
@@ -64,9 +66,11 @@ export class StationSwitchComponent implements OnInit {
       }
       this.apiService.post(`/user/station-switch`, payload).subscribe({
         next: (res: any) => {
+          this.loader = false;
           this.closeDialog();
         },
         error: (error) => {
+          this.loader = false;
           this.tostr.error('Error Moving Candidate');
           this.closeDialog();
         }

@@ -18,6 +18,7 @@ import { environment } from "src/environments/environments";
 })
 export class HrCandidateDetailComponent {
   @ViewChild('template', { static: false }) templateRef!: ElementRef;
+  offerfeedback = document.getElementById('offerfeedback') as HTMLInputElement;
   private keySubscription?: Subscription;
   serviceId: number = 0;
   candidateDetails: any;
@@ -240,8 +241,11 @@ export class HrCandidateDetailComponent {
   }
 
   rejectClick(data: any): void {
-    this.loader = true;    
-    if (data || (this.selectedRejectionFeedback && this.filteredStatus)) {
+    const feedbackElement = document.getElementById('feedback') as HTMLInputElement;
+    const feedback = feedbackElement?.value.trim();
+    // this.loader = true;    
+    if (data || (this.selectedRejectionFeedback && this.filteredStatus) || feedback) {
+      this.loader = true; 
       const payload = {
         serviceId: this.serviceId,
         stationId: 5,
@@ -251,7 +255,7 @@ export class HrCandidateDetailComponent {
         rejectMailTemp: data?.mailTemp ?? '',
         rejectSubject: data?.mailSubject ?? '',
         rejectBcc: data?.mailBcc ?? '',
-        feedBack: data?.feedback ? data?.feedback : this.selectedRejectionFeedback,
+        feedBack: data?.feedback ? data?.feedback : this.selectedRejectionFeedback ? this.selectedRejectionFeedback : feedback,
       };
       this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
         next: (res: any) => {

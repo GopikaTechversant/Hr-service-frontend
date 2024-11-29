@@ -48,7 +48,7 @@
                     <td class="text-start">Team</td>
                     <td class="text-start">Primary Skills</td>
                     <td class="text-start">Status</td>
-                    <td class="text-center wrap">Add Candidate</td>
+                    <td class="text-center wrap" *ngIf="filteredStatus === 'Active Requisitions'">Add Candidate</td>
                     <td class="text-end">Date</td>
                 </tr>
                 <div *ngIf="loader && !initialLoader" class="loader-parent">
@@ -72,7 +72,7 @@
                                 [ngStyle]="{'color': candidate.status === 'active' ? '#08BC66' : 'red'}">
                                 {{candidate?.status ?(candidate?.status | titlecase) : 'N/A'}}
                             </td>
-                            <td class="text-center add" (click)="onStatusChange(candidate)">
+                            <td class="text-center add" (click)="onStatusChange(candidate)" *ngIf="filteredStatus === 'Active Requisitions'">
                                 <i class="fa fa-user-plus" aria-hidden="true"></i>
                             </td>
                             <td class="text-end wrap-date" [title]="candidate?.requestDate | date:'dd-MM-yyyy'">

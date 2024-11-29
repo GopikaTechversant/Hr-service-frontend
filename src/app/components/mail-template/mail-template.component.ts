@@ -68,8 +68,9 @@ export class MailTemplateComponent implements OnInit {
   displaydateTime: any;
   showTemplate: boolean = false;
   showTimePicker: Boolean = false;
-  fileUploader : boolean = false;
+  fileUploader: boolean = false;
   InterviewTime: any;
+  isSubmitting: boolean = false;
   constructor(private apiService: ApiService, private tostr: ToastrService, private datePipe: DatePipe, private s3Service: S3Service) { }
   ngOnInit(): void {
     this.resetFormAndState();
@@ -96,7 +97,7 @@ export class MailTemplateComponent implements OnInit {
 
   openTimePicker(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
-    inputElement.click(); 
+    inputElement.click();
   }
 
   fetchPanel(): void {
@@ -187,10 +188,10 @@ export class MailTemplateComponent implements OnInit {
   onTimeChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     this.displayTime = input.value; // e.g., "14:30"
-  
+
     // Convert the displayTime to 12-hour format with AM/PM
     this.InterviewTime = this.convertTo12HourFormat(this.displayTime);
-  
+
     if (this.interviewStatus === 'scheduled') {
       this.interviewStatus = 'Rescheduled';
     }
@@ -203,7 +204,7 @@ export class MailTemplateComponent implements OnInit {
     const hours12 = hours % 12 || 12; // '0' should be '12'
     return `${this.padZero(hours12)}:${this.padZero(minutes)} ${period}`;
   }
-  
+
   padZero(value: number): string {
     return value < 10 ? `0${value}` : `${value}`;
   }
@@ -259,33 +260,34 @@ export class MailTemplateComponent implements OnInit {
     this.mailBcc = (document.getElementById('bcc') as HTMLInputElement)?.value || '';
     this.mailSubject = (document.getElementById('subject') as HTMLInputElement)?.value || '';
     this.offerSalary = (document.getElementById('salary') as HTMLInputElement)?.value || '';
-  
-    // Concatenate displayDate and displayTime if both are available
     if (this.displayDate && this.displayTime) {
-      this.displaydateTime = `${this.displayDate} ${this.displayTime}`;
+      const combinedDateTime = `${this.displayDate} ${this.displayTime}`;
+      const parsedDate = new Date(combinedDateTime);
+      // Convert to ISO 8601 format
+      this.displaydateTime = parsedDate.toISOString();
     }
-  
+
     if (this.isEditable) {
       this.tostr.warning('Please Save Changes in Mail');
       return;
     }
-  
+
     // Check for confirmation checkbox and message type
     const confirmationCheckbox = document.getElementById('confirmDetails') as HTMLInputElement;
     if (!confirmationCheckbox?.checked || !this.candidate?.messageType.trim()) {
       this.tostr.warning('Please confirm all details before submitting');
       return;
     }
-  
+
     // Email validation logic
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-  
+
     // Function to validate a list of email addresses separated by commas
     const validateEmails = (emails: string): boolean => {
       const emailArray = emails.split(',').map(email => email.trim());
       return emailArray.every(email => emailPattern.test(email));
     };
-  
+
     // Validate mailCc and mailBcc
     if (this.mailCc && !validateEmails(this.mailCc)) {
       this.tostr.warning('Invalid email address found in CC field');
@@ -295,7 +297,7 @@ export class MailTemplateComponent implements OnInit {
       this.tostr.warning('Invalid email address found in BCC field');
       return;
     }
-  
+
     // Process the template content
     if (this.templateRef) {
       const templateElement = this.templateRef.nativeElement;
@@ -312,14 +314,14 @@ export class MailTemplateComponent implements OnInit {
       }
       this.htmlString = templateElement.outerHTML.replace(textarea, '<div>');
     }
-  
+
     // Validate feedback and subject fields
     if (!this.feedback.trim() || !this.mailSubject.trim()) {
       if (!this.feedback.trim()) this.tostr.warning('Please Add a feedback');
       if (!this.mailSubject.trim()) this.tostr.warning('Please Add a Subject');
       return;
     }
-  
+
     const commonData = {
       feedback: this.feedback,
       mailCc: this.mailCc,
@@ -328,7 +330,7 @@ export class MailTemplateComponent implements OnInit {
       messageType: this.candidate?.messageType,
       mailTemp: this.htmlString,
     };
-  
+
     let data;
     if (this.candidate?.messageType === 'offer') {
       if (!this.uploadedFileKey || !this.offerSalary || !this.displayDate) {
@@ -354,7 +356,7 @@ export class MailTemplateComponent implements OnInit {
         if (!this.displaydateTime) this.tostr.warning('Please Enter an Interview Time');
         return;
       }
-  
+
       data = {
         ...commonData,
         interviewPanel: this.panelId,
@@ -366,7 +368,7 @@ export class MailTemplateComponent implements OnInit {
     // Emit the data
     this.submitData.emit(data);
   }
-  
+
   clearInputvalue(id: string) {
     const inputElement = document.getElementById(id) as HTMLInputElement;
     if (inputElement) inputElement.value = '';

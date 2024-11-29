@@ -20,7 +20,7 @@
             </div>
             <div class="d-flex j-space btn">
                 <button class="cancel-btn c-pointer" (click)="cancel()">Cancel</button>
-                <button class="save-btn c-pointer" (click)="save()">Save</button>
+                <button class="save-btn c-pointer" (click)="save()" [disabled]="loader">Save</button>
             </div>
         </div>
     </div>

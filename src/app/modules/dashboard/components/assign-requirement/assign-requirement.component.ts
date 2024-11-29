@@ -17,6 +17,7 @@ export class AssignRequirementComponent implements OnInit {
   candidates: any[] = [];
   userId: any;
   resumeSourceid: any;
+  loader: boolean = false;
   constructor(public dialogRef: MatDialogRef<AssignRequirementComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private apiService: ApiService,
     private toastr: ToastrService) { }
   ngOnInit(): void {
@@ -50,6 +51,7 @@ export class AssignRequirementComponent implements OnInit {
   }
 
   save(): void {
+    this.loader = true;
     const payload = {
       requirementId: this.selectedRequirementId,
       userId: this.userId,
@@ -58,11 +60,14 @@ export class AssignRequirementComponent implements OnInit {
     if (this.candidates && this.selectedRequirementId) {
       this.apiService.post(`/screening-station/map-candidates-v1`, payload).subscribe({
         next: (res: any) => {
+          this.loader = false;
           this.toastr.success('Assigned successfully');
           this.dialogRef.close();
         },
         error: (error) => {
+          this.loader = false;
           this.toastr.error(error?.error?.message ? error?.error?.message : 'Candidates already assigned');
+          this.dialogRef.close();
         }
       }
       )

@@ -67,7 +67,7 @@
                     <img src="assets/gif/loader.gif">
                 </div>
                 <ng-container *ngIf="userRequirement?.length > 0">
-                    <tr class="c-pointer details" *ngFor="let item of userRequirement">
+                    <tr class=" details" *ngFor="let item of userRequirement">
                         <ng-container *ngFor="let key of recruiterKeys">
                             <!-- Skip 'Date' column in the main loop -->
                             <td *ngIf="key !== 'Date'" 

@@ -29,7 +29,7 @@
     display: inline-block;
     background-color: white;
     color: #575F6E;
-    width: 103px;
+    width: 130px;
     border: 1px solid #E6E6E6;
     border-radius: 3px;
     padding-left: 6px;
@@ -45,7 +45,7 @@
     background-color: white;
     border: 1px solid #E6E6E6;
     color: #575F6E;
-    width: 106px;
+    width: 128px;
     padding-left: 2px;
     text-align: left;
     height: 27px;
@@ -145,6 +145,7 @@
     font-weight: 500;
     color: #C10A0A;
 }
+
 
 .fa-chevron-down {
     color: #525455;

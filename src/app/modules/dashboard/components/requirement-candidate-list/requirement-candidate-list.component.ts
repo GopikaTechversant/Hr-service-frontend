@@ -36,7 +36,7 @@ export class RequirementCandidateListComponent implements OnInit {
   }
   ngOnInit(): void {
     this.initialLoader = true;
-    this.filteredStatus = sessionStorage.getItem('requisition') ? sessionStorage.getItem('requisition') : '';
+    this.filteredStatus = sessionStorage.getItem('requisition') ? sessionStorage.getItem('requisition') : 'Active Requisitions';
     this.fetchcandidates('');
   }
 
