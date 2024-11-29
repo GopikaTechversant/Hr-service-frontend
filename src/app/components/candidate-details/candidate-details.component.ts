@@ -102,6 +102,10 @@ export class CandidateDetailsComponent implements OnInit {
     this.resumePath = resume;
     window.open(`${environment.s3_url}${this.resumePath}`, '_blank');
     this.viewResumeFile = environment.s3_url;
+    console.log("this.viewResumeFile",this.viewResumeFile);
+    console.log("this.resumePath",`${environment.s3_url}${this.resumePath}`);
+    
+    
   }
 
   edit(id: any): void {
