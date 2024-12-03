@@ -18,7 +18,7 @@
                 </div>
                 <ng-container *ngIf="userList?.length > 0">
                     <ng-container *ngFor="let user of userList">
-                        <tr (click)="onSelect(user)" class="candidate c-pointer"
+                        <tr (click)="onSelect(user)" class="candidate"
                             [class.selected]="selectedItem === user">
                             <td class="text-end">{{user?.userId}}</td>
                             <td class="text-start">{{user?.userfirstName | titlecase}} {{user?.userlastName | titlecase}}</td>

@@ -109,7 +109,7 @@ tr:hover {
     word-wrap: break-word;
     overflow-wrap: break-word;
     white-space: normal;
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 
 .recruiter-drop-down {
