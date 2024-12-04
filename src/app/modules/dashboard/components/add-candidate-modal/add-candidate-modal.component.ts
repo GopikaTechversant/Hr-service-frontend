@@ -547,7 +547,7 @@ export class AddCandidateModalComponent implements OnInit {
     }
 
   }
-
+  
   private resetInputFlags(): void {
     this.mailInput = false;
     this.numberInput = false;
