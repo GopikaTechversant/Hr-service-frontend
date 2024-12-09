@@ -14,13 +14,14 @@
             <span class="search d-flex j-end">
                 <i class="fa fa-search" aria-hidden="true" (click)="searchCandidate(searchKeyword)"></i>
             </span>
-            <div class="add c-pointer" (click)="openRequisition()">
+            <div class="add c-pointer" *ngIf="userType !== 'super-admin'" (click)="openRequisition()">
                 <span class="c-pointer">Add Requirement</span>
             </div>
-            <div class="add-candidate  c-pointer" (click)="navigate('/dashboard/add-candidate',false)">
+            <div class="add-candidate  c-pointer" *ngIf="userType !== 'super-admin'"
+                (click)="navigate('/dashboard/add-candidate',false)">
                 <span class="c-pointer">Add Candidate</span>
             </div>
-            <div class="export-btn c-pointer">
+            <div class="export-btn c-pointer" *ngIf="userType !== 'super-admin'">
                 <span (click)="exportData()">Export</span>
             </div>
         </div>
@@ -29,7 +30,7 @@
         <div class="container-table m-b-0">
             <table class="">
                 <tr class="table-header">
-                    <td class="text-center">Select</td>
+                    <td class="text-center" *ngIf="userType !== 'super-admin'">Select</td>
                     <td class="text-start" title="Name">Name</td>
                     <td class="text-start" title="Email">Email</td>
                     <td class="text-end" title="Mobile">Mobile</td>
@@ -41,7 +42,8 @@
                     <td class="text-start" title="Education">Education</td>
                     <td class="text-start" title="Skills">Skills</td>
                     <td class="text-start" title="Requirement">Requirement</td>
-                    <td class="text-center" class="actions" title="Actions">Actions</td>
+                    <td class="text-center" class="actions" title="Actions" *ngIf="userType !== 'super-admin'">Actions
+                    </td>
                 </tr>
                 <div *ngIf="loader && !initialLoader" class="loader-parent">
                     <img src="assets/gif/loader.gif">
@@ -49,7 +51,7 @@
                 <ng-container *ngIf="candidateList?.length > 0">
                     <tr class="c-pointer details-table" *ngFor="let item of candidateList"
                         (dblclick)="selectCandidate(item?.candidateId)">
-                        <td class="text-center">
+                        <td class="text-center" *ngIf="userType !== 'super-admin'">
                             <input type="checkbox" [(ngModel)]="item.isSelected" (change)="onCandidateSelect(item)"
                                 name="select">
                         </td>
@@ -82,13 +84,14 @@
                         <td class="text-start"> {{ getFormattedSkills(item) }} </td>
                         <td class="text-start" [title]="item?.reqServiceRequest?.requestName">
                             {{item?.reqServiceRequest?.requestName || 'Not Assigned'}}</td>
-                        <td *ngIf="!item?.candidatesAddingAgainst" class="actions text-center">
+                        <td *ngIf="!item?.candidatesAddingAgainst && userType !== 'super-admin'" class="actions text-center">
                             <i class="fa fa-pencil-square-o p-r-5 icon-color" aria-hidden="true"
                                 (click)="edit(item?.candidateId)"></i>
                             <i class="fa fa-trash-o p-l-5 delete-color" aria-hidden="true"
                                 (click)="deleteCandidate(item?.candidateId)"></i>
                         </td>
-                        <td *ngIf="item?.candidatesAddingAgainst" class="action-disabled actions text-center">
+                        <td *ngIf="item?.candidatesAddingAgainst && userType !== 'super-admin'"
+                            class="action-disabled actions text-center">
                             <i class="fa fa-pencil-square-o p-r-5 disabled-icon-color"
                                 [ngClass]="{'disabled-icon': !item?.candidatesAddingAgainst}"
                                 [attr.aria-disabled]="!item?.candidatesAddingAgainst"></i>
@@ -96,6 +99,7 @@
                                 [ngClass]="{'disabled-icon': !item?.candidatesAddingAgainst}"
                                 [attr.aria-disabled]="!item?.candidatesAddingAgainst"></i>
                         </td>
+
                     </tr>
                 </ng-container>
                 <div *ngIf="(candidateList?.length === 0 || !candidateList) && !initialLoader " class="no-data"> No Data

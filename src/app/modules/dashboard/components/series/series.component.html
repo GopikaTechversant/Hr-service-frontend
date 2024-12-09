@@ -22,7 +22,7 @@
         </div>
         <div class="requirement">
             <div class="actions d-flex p-t-8 p-r-8">
-                <span class="c-pointer f-s-20" (click)="edit('/dashboard/service-requirement',requirement_details?.requestId)">
+                <span class="c-pointer f-s-20" *ngIf="userType !== 'super-admin'" (click)="edit('/dashboard/service-requirement',requirement_details?.requestId)">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                 </span>
                 <span *ngIf="requirement_details?.candidatesCount === '0'" class="c-pointer f-s-20" (click)="delete(requirement_details?.requestId)">

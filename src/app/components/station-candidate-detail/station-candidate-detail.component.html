@@ -131,7 +131,7 @@
     </div>
 
     <!-- Initial buttons -->
-    <div *ngIf="!progessAdded && candidateDetails?.serviceStatus === 'pending' && !candidateDetails['progress.progressDescription']" class="details d-flex c-pointer">
+    <div *ngIf="!progessAdded && candidateDetails?.serviceStatus === 'pending' && !candidateDetails['progress.progressDescription'] && userType !== 'super-admin'" class="details d-flex c-pointer">
         <label class="c-pointer f-w-500 f-s-14 action-btn" [class.action-select]="buttonType === 'reschedule'">
             <input type="radio" class="deatil-btn" name="action" value="reschedule" (change)="selectButton('reschedule');showMail('re-schedule')" [checked]="buttonType === 'reschedule'" />
             Reschedule Interview
@@ -252,7 +252,7 @@
     </div>
 
     <!-- Next Round Approval or Rejection After Adding Progress -->
-    <div *ngIf="candidateDetails?.serviceStatus === 'pending' && candidateDetails['progress.progressId'] !== null"
+    <div *ngIf="candidateDetails?.serviceStatus === 'pending' && candidateDetails['progress.progressId'] !== null && userType !== 'super-admin'" 
         class="details d-flex c-pointer m-t-10">
         <label class="c-pointer f-w-500 f-s-14 action-btn m-r-10" [class.action-select]="messageType === 'approve'">
             <input type="radio" name="messageType" value="approve" [checked]="messageType === 'approve'" class="deatil-btn"

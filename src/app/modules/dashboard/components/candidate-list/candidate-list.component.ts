@@ -37,11 +37,13 @@ export class CandidateListComponent {
   userId: any;
   loader: boolean = true;
   resumeSourceIds: any;
+  userType: any;
 
   constructor(private apiService: ApiService, private router: Router, private dialog: MatDialog, private toastr: ToastrService, private exportService: ExportService) { }
 
   ngOnInit(): void {
     this.userId = localStorage.getItem('userId');
+    this.userType = localStorage.getItem('userType');    
     this.initialLoader = true;
     this.requestId = this.positionId ? this.positionId : '';
     this.fetchCandidates();

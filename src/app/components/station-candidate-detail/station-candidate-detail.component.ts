@@ -58,6 +58,7 @@ export class StationCandidateDetailComponent implements OnInit {
     'back-off': 'Candidate Back-off In this Round',
     'pannel-rejection': 'Panel Rejected the candidate'
   };
+  userType:any;
   constructor(public dialogRef: MatDialogRef<StationCandidateDetailComponent>, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
     private route: ActivatedRoute, private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -80,6 +81,7 @@ export class StationCandidateDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userType = localStorage.getItem('userType');
     this.currentStation = this.router.url.split('/')[1];
     this.route.params.subscribe(params => {
       this.stationId = params['id'];
@@ -131,7 +133,7 @@ export class StationCandidateDetailComponent implements OnInit {
       this.file = file;
       this.fileName = file?.name;
       this.loader = true;
-      if (this.fileName) this.s3Service.uploadImage(this.file, 'prod-ats-docs', this.file);
+      if (this.fileName) this.s3Service.uploadImage(this.file, 'hr-service-images', this.file);
       this.getKeyFroms3();
     }
   }

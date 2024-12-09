@@ -17,7 +17,7 @@
                     <input type="radio" id="user" name="filter" value="user" (change)="onRadioChange($event)">
                     <label for="user" class="p-l-5">Recruiter</label>
                 </span>
-                <div class="export-btn" (click)="exportData()">
+                <div class="export-btn" (click)="exportData()" *ngIf="userType !== 'super-admin'">
                     <span>Export</span>
                 </div>
             </span>

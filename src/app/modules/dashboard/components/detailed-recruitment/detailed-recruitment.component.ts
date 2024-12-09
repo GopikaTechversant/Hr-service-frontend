@@ -33,7 +33,7 @@ export class DetailedRecruitmentComponent implements OnInit {
   loader: boolean = false;
   data: any;
   selectedDataBy: string = 'position';
-
+  userType: any;
   constructor(private apiService: ApiService, private router: Router, private exportService: ExportService) { }
 
   onBodyClick(event: MouseEvent): void {
@@ -44,6 +44,7 @@ export class DetailedRecruitmentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userType = localStorage.getItem('userType')
     this.initialLoader = true;
     this.selectedRecruiterId = '';
     this.candidateList = [];

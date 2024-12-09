@@ -28,7 +28,7 @@
                     <i class="fa fa-search" aria-hidden="true" (click)="requirementSearch(searchKeyword)"></i>
                 </span>
             </span>
-            <div class="create-btn c-pointer" (click)="navigate('/dashboard/service-requirement',false)">
+            <div class="create-btn c-pointer" *ngIf="userType !== 'super-admin'" (click)="navigate('/dashboard/service-requirement',false)">
                 <span class="f-w-500">Create Requisition</span>
             </div>
         </div>
@@ -48,7 +48,7 @@
                     <td class="text-start">Team</td>
                     <td class="text-start">Primary Skills</td>
                     <td class="text-start">Status</td>
-                    <td class="text-center wrap" *ngIf="filteredStatus === 'Active Requisitions'">Add Candidate</td>
+                    <td class="text-center wrap" *ngIf="filteredStatus === 'Active Requisitions' && userType !== 'super-admin'">Add Candidate</td>
                     <td class="text-end">Date</td>
                 </tr>
                 <div *ngIf="loader && !initialLoader" class="loader-parent">
@@ -72,7 +72,7 @@
                                 [ngStyle]="{'color': candidate.status === 'active' ? '#08BC66' : 'red'}">
                                 {{candidate?.status ?(candidate?.status | titlecase) : 'N/A'}}
                             </td>
-                            <td class="text-center add" (click)="onStatusChange(candidate)" *ngIf="filteredStatus === 'Active Requisitions'">
+                            <td class="text-center add" (click)="onStatusChange(candidate)" *ngIf="filteredStatus === 'Active Requisitions' && userType !== 'super-admin'">
                                 <i class="fa fa-user-plus" aria-hidden="true"></i>
                             </td>
                             <td class="text-end wrap-date" [title]="candidate?.requestDate | date:'dd-MM-yyyy'">

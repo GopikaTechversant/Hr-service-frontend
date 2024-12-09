@@ -43,7 +43,7 @@
                 <i class="fa fa-search" aria-hidden="true"></i>
             </span>
         </div>
-        <div class="m-b-10">
+        <div class="m-b-10" *ngIf="userType !== 'super-admin'">
             <button class="export-btn c-pointer m-l-10" (click)="exportData()">Export</button>
         </div>
     </div>

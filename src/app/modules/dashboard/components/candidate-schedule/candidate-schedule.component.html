@@ -27,7 +27,7 @@
                 <td class="status-col text-start">Screening Status</td>
                 <td class="count-col text-end">Reschedule Count</td>
                 <td class="interview-status-col text-start">Candidate Status</td>
-                <td class="text-end">Remove Candidate</td>
+                <td class="text-end" *ngIf="userType !== 'super-admin'">Remove Candidate</td>
             </tr>
             <div *ngIf="loader && !initialLoader" class="loader-parent">
                 <img src="assets/gif/loader.gif">
@@ -40,12 +40,14 @@
                             {{item?.candidateFirstName | titlecase}} {{item?.candidateLastName | titlecase}}
                         </td>
                         <td class="text-start" [title]="item?.candidateEmail">{{item?.candidateEmail}}</td>
-                        <td class="text-end" [title]="item?.candidateRevlentExperience">{{item?.candidateRevlentExperience }}</td>
-                        <td class="text-end" [title]="item?.candidateTotalExperience">{{item?.candidateTotalExperience ? item?.candidateTotalExperience : '0' }}</td>
-                        <td class="text-start" [title]="item?.candidateEducation">{{item?.candidateEducation}}</td>
-                        <td class="">
-                            <span *ngIf="item?.serviceStatus && item?.serviceStatus !== 'pending'"
-                                class="name done">
+                        <td class="text-end" [title]="item?.candidateRevlentExperience">
+                            {{item?.candidateRevlentExperience ? item?.candidateRevlentExperience : 'N/A'}}</td>
+                        <td class="text-end" [title]="item?.candidateTotalExperience">{{item?.candidateTotalExperience ?
+                            item?.candidateTotalExperience : '0' }}</td>
+                        <td class="text-start" [title]="item?.candidateEducation">{{item?.candidateEducation ?
+                            item?.candidateEducation : 'N/A'}}</td>
+                        <td class="" *ngIf="userType !== 'super-admin'">
+                            <span *ngIf="item?.serviceStatus && item?.serviceStatus !== 'pending'" class="name done">
                                 {{item?.serviceStatus | titlecase}}
                             </span><select *ngIf="item?.serviceStatus === 'pending'" class="name select c-pointer"
                                 (change)="onStatusChange($event, item)">
@@ -55,21 +57,26 @@
                                 <option class="name select p-t-2 c-pointer f-w-500" value="reject">Reject</option>
                             </select>
                         </td>
+                        <td *ngIf="userType === 'super-admin'">
+                            <span class="">{{item?.serviceStatus | titlecase}}</span>
+                        </td>
                         <td class="text-end">{{item?.rescheduledCount}}</td>
                         <td class="text-start" [title]="item?.candidateInterviewStatus">
                             {{item?.candidateInterviewStatus ? (item?.candidateInterviewStatus | titlecase) : 'N/A'}}
                         </td>
-                        <td class="text-end">
-                            <i *ngIf="item?.serviceStatus !== 'done'" class="fa fa-trash-o p-l-5 red" aria-hidden="true" 
-                            (click)="deleteCandidate(item?.candidateId, item?.serviceId)" title="Remove Candidate"></i>
+                        <td class="text-end" *ngIf="userType !== 'super-admin'">
+                            <i *ngIf="item?.serviceStatus !== 'done'" class="fa fa-trash-o p-l-5 red" aria-hidden="true"
+                                (click)="deleteCandidate(item?.candidateId, item?.serviceId)"
+                                title="Remove Candidate"></i>
                             <i *ngIf="item?.serviceStatus === 'done'" class="fa fa-trash-o p-l-5 disabled-icon"></i>
                         </td>
                     </tr>
                 </ng-container>
             </ng-container>
-            <div *ngIf="(candidates_list?.length === 0 || !candidates_list) && !initialLoader" class="no-data-container d-flex justify-content-center align-items-center w-100">
+            <div *ngIf="(candidates_list?.length === 0 || !candidates_list) && !initialLoader"
+                class="no-data-container d-flex justify-content-center align-items-center w-100">
                 <span class="no-data">No Data Found</span>
-            </div>            
+            </div>
             <div *ngIf="initialLoader" class="row m-l-20 initial-loader">
                 <div *ngFor="let item of [0,1,2,3]" class="m-t-10 m-b-10">
                     <div class="gravatar-title">

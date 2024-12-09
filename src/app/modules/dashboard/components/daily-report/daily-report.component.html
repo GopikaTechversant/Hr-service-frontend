@@ -46,7 +46,7 @@
                     </div>
                 </div>
             </div>
-            <div class="export-btn c-pointer">
+            <div class="export-btn c-pointer" *ngIf="userType !== 'super-admin'">
                 <span (click)="exportData()">Export</span>
             </div>
         </div>

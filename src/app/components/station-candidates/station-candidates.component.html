@@ -93,8 +93,8 @@
                 </div>
             </div>
         </div>
-        <div class="m-b-10">
-            <button class="export-btn c-pointer m-l-10" (click)="exportData()">Export</button>
+        <div class="m-b-10" *ngIf="userType !== 'super-admin'">
+            <button class="export-btn c-pointer m-l-10" (click)="exportData()" >Export</button>
         </div>
     </div>
     <div class="main m-t-10">
@@ -106,7 +106,7 @@
                     <td class="text-start" title="Email">Email</td>
                     <td class="text-start" title="Requirement">Requirement</td>
                     <td class="text-start" title="Review Status">Review Status</td>
-                    <td class="text-center" title="Move Candidates">Move Candidates</td>
+                    <td class="text-center" title="Move Candidates" *ngIf="userType !== 'super-admin'">Move Candidates</td>
                     <td class="text-start" title="Service Status">Service Status</td>
                     <td class="text-start" title="Candidate Station">Candidate Station</td>
                     <td class="text-start more" title="More Detail">More Detail</td>
@@ -133,7 +133,7 @@
                                     {{ item?.progressStatus === '0' && item?.serviceStatus !== 'done' ? 'Pending' :
                                     'Added' }}
                                 </td>
-                                <td class="text-center">
+                                <td class="text-center" *ngIf="userType !== 'super-admin'">
                                     <i class="fa fa-arrows" aria-hidden="true" *ngIf="item"
                                         (click)="onSwitchStation(item)"></i>
                                 </td>

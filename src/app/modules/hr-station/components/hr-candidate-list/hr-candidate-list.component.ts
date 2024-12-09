@@ -41,6 +41,7 @@ export class HrCandidateListComponent implements OnInit {
   endDate: string | null = this.datePipe.transform(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   candidateIds: any;
   status: any;
+  userType:any;
   constructor(private dialog: MatDialog, private apiService: ApiService, private datePipe: DatePipe, private router: Router,
     private toastr: ToastrService, private exportService: ExportService) { }
   onBodyClick(event: MouseEvent): void {
@@ -52,6 +53,7 @@ export class HrCandidateListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userType = localStorage.getItem('userType');
     this.initialLoader = true;
     this.filteredStatus = sessionStorage.getItem('status_5') ? sessionStorage.getItem('status_5') : '';
     const requirementData = sessionStorage.getItem(`requirement_5`);

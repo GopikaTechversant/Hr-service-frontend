@@ -39,6 +39,7 @@ export class SelectedCandidateListComponent {
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   candidateIds: any;
+  userType:any;
   constructor(private dialog: MatDialog, private apiService: ApiService, private datePipe: DatePipe, private router: Router, private exportService: ExportService) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -49,6 +50,7 @@ export class SelectedCandidateListComponent {
   }
 
   ngOnInit(): void {
+    this.userType = localStorage.getItem('userType')
     this.initialLoader = true;
     this.filteredStatus = sessionStorage.getItem('status') ? sessionStorage.getItem('status') : '';
     const requirementData = sessionStorage.getItem(`requirement_select`);

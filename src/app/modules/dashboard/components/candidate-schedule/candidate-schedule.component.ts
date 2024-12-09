@@ -25,7 +25,7 @@ export class CandidateScheduleComponent implements OnInit {
   searchKeyword: string = '';
   candidateServiceId: any;
   totalCount: any;
-
+  userType:any;
   constructor(private router: Router, private route: ActivatedRoute, private apiService: ApiService, private dialog: MatDialog ,private toastr : ToastrService) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -33,6 +33,7 @@ export class CandidateScheduleComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userType = localStorage.getItem('userType')
     this.initialLoader = true;
     this.fetchcandidates();
   }

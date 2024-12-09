@@ -35,6 +35,7 @@ export class DailyReportComponent implements OnInit {
   loader: boolean = false;
   report: boolean = false;
   url: any;
+  userType:any;
   constructor(private apiService: ApiService, private datePipe: DatePipe, private exportService: ExportService) { }
 
   onBodyClick(event: MouseEvent): void {
@@ -45,6 +46,7 @@ export class DailyReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userType = localStorage.getItem('userType')
     this.initialLoader = true;
     this.fetchDetails();
     this.today = new Date();

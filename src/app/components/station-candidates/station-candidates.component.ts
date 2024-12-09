@@ -43,9 +43,11 @@ export class StationCandidatesComponent implements OnInit {
   toastr: any;
   baseUrl: any;
   lastPage: any;
+  userType:any;
   constructor(private apiService: ApiService, private datePipe: DatePipe, private route: ActivatedRoute, private router: Router, private exportService: ExportService) { }
 
   ngOnInit(): void {
+    this.userType = localStorage.getItem('userType');
     this.initialLoader = true;
     this.currentStation = this.router.url.split('/')[1];
     this.route.params.subscribe(params => {
