@@ -45,6 +45,7 @@ export class SeriesComponent implements OnInit {
   isExpanded: boolean = false;
   showViewMore: boolean = false;
   userType:any;
+  userRole:any;
   @ViewChild('template') set templateSetter(template: ElementRef) {
     if (template) {
       this.template = template;
@@ -62,7 +63,8 @@ export class SeriesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userType = localStorage.getItem('userType')
+    this.userType = localStorage.getItem('userType');
+    this.userRole = localStorage.getItem('userRole');
     this.initialLoader = true;
     this.fetchDetails();
     this.env_url = window.location.origin;

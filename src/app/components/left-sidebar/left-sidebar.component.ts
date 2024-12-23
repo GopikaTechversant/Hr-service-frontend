@@ -26,11 +26,12 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
   writtenCandidateList: any;
   userType: any;
   stationId: any;
-
+  userRole:any;
   constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.userType = localStorage.getItem('userType');
+    this.userRole = localStorage.getItem('userRole');
     console.log("userType", this.userType);
     this.routerEventsSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
@@ -114,8 +115,8 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
       this.dynamicMenuItems.push({ path: '/dashboard/admin', label: 'Admin Panel', icon: 'fa fa-user-plus' });
     }
 
-    if (homeUrl === 'user') {
-      if (this.userType === 'admin') this.dynamicMenuItems.push({ path: '/user/addUser', label: 'Add User', icon: 'fa fa-user-plus' });
+    if (homeUrl === 'user' ) {
+      if (this.userType === 'admin' || this.userRole === 'manager') this.dynamicMenuItems.push({ path: '/user/addUser', label: 'Add User', icon: 'fa fa-user-plus' });
       this.dynamicMenuItems.push({ path: '/user/reset', label: 'Reset Password', icon: 'fa fa-key' });
     }
 

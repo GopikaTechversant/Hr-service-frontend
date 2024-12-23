@@ -236,7 +236,7 @@ export class InterviewDetailsComponent implements OnInit {
     } else {
       this.loader = false;
       if (!this.noticeperiodvalue) this.tostr.warning('Please Add Notice period');
-      if (!this.locationName) this.tostr.warning('Please Add Interview location');
+      if (!this.locationName) this.tostr.warning('Please Add Job location');
       if (!this.recruiterId) this.tostr.warning('Please Select Recruiter');
       if (!this.selectedModeName) this.tostr.warning('Please Select Work Mode');
     }

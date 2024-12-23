@@ -53,9 +53,10 @@ export class StationSwitchComponent implements OnInit {
   }
 
   submitClick(): void {
-    this.loader = true;
+    // this.loader = true;
     const commentElement = document.getElementById('comment') as HTMLInputElement;
     if (commentElement?.value.trim() !== '') {
+      this.loader = true;
       let payload = {
         serviceId: this.data?.serviceId,
         stationId: this.stationId,

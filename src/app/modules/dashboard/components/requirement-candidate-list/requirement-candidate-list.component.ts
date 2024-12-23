@@ -28,6 +28,7 @@ export class RequirementCandidateListComponent implements OnInit {
   filteredStatus: any = '';
   status: any[] = ['Active Requisitions', 'Closed Requisitions'];
   userType: any;
+  userRole:any;
   constructor(private router: Router, private apiService: ApiService, private dialog: MatDialog, private toastr: ToastrService) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -36,7 +37,10 @@ export class RequirementCandidateListComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    this.userType = localStorage.getItem('userType')
+    this.userType = localStorage.getItem('userType');
+    this.userRole = localStorage.getItem('userRole');
+    console.log("this.userRole",this.userRole);
+    
     this.initialLoader = true;
     this.filteredStatus = sessionStorage.getItem('requisition') ? sessionStorage.getItem('requisition') : 'Active Requisitions';
     this.fetchcandidates('');

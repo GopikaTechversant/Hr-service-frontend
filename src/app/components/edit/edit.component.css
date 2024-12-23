@@ -204,11 +204,11 @@
     overflow-y: auto;
     font-size: 14px;
     font-weight: 400;
-    width: 254px;
+    width: 284px;
     padding: 5px;
     border-radius: 4px;
     position: absolute;
-    z-index: 999;
+    /* z-index: 999; */
     margin-top: 5px;
     top: 100%;
     left: 0;

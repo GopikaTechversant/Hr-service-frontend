@@ -238,7 +238,7 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
                 minRotation: 0, // No rotation
                 callback: (tickValue: string | number, index: number): string => {
                   if (this.labels && index < this.labels.length) {
-                    return this.labels[index].split(' ').join('\n');
+                    return this.labels[index].length > 30 ? `${this.labels[index].substring(0, 30)}...` :  this.labels[index];
                   }
                   return tickValue.toString(); // Default to tick value if out of range
                 }
