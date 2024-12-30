@@ -84,7 +84,8 @@ export class ServiceRequestComponent implements OnInit {
   salaryTypeList: any = [{ id: 1, type: 'per Month' }, { id: 2, type: 'per Year' }]
   selectedSalaryTypeId: any;
   validationSuccess: boolean = false;
-
+  designationSearchvalue: string = '';
+  designationSuggestions: any[]=[]
   constructor(private toastr: ToastrServices, private router: Router, private apiService: ApiService, private datePipe: DatePipe, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -108,7 +109,7 @@ export class ServiceRequestComponent implements OnInit {
     if (this.requestId) this.fetchDetails()
     this.fetchStations();
     this.fetchServiceTeam();
-    this.fetchDesignation();
+    // this.fetchDesignation();
     this.fetchPanel();
     this.fetchLocation();
   }
@@ -130,6 +131,7 @@ export class ServiceRequestComponent implements OnInit {
     this.apiService.get(`/service-request/view?requestId=${this.requestId}`).subscribe((res: any) => {
       if (res?.data) {
         this.requirement_details = res?.data;
+        this.designationSearchvalue = this.requirement_details?.designationName ? this.requirement_details?.designationName : '';
         this.candidateCount = this.requirement_details?.candidatesCount;
         const text = this.requirement_details?.requestDescription;
         this.formattedText = this.sanitizer.bypassSecurityTrustHtml(text);
@@ -139,17 +141,34 @@ export class ServiceRequestComponent implements OnInit {
     })
   }
 
+ 
+
   fetchLocation(): void {
     this.apiService.get(`/user/preffer-location`).subscribe((res: any) => {
       this.jobLocation = res?.data;
     })
   }
 
+  getDesignationSuggestion(event:any){
+    this.openDesignation = true;
+    this.designationSearchvalue = event?.target.value;
+    this.apiService.get(`/service-request/designation/list?search=${this.designationSearchvalue}`).subscribe((res: any) => {
+      if (res?.data) this.designationSuggestions = res?.data.filter((suggestion: any) =>
+        suggestion.designationName.toLowerCase().startsWith(this.searchvalue.toLowerCase())
+      );
+    });
+  }
 
   fetchDesignation() {
     this.apiService.get(`/service-request/designation/list`).subscribe(((res: any) => {
       if (res?.data) this.designationList = res?.data;
     }))
+  }
+
+  clearDesignationFilter():void{
+    this.designationSearchvalue = '';
+    this.openDesignation = false;
+    this.designationSuggestions = [];
   }
 
   fetchServiceTeam(): void {
@@ -270,12 +289,20 @@ export class ServiceRequestComponent implements OnInit {
     this.selectedTeam = teamName;
     this.selectedTeamName = teamId;
   }
+  selectDesignation(suggestion: any) {
+    this.designationSearchvalue = suggestion.designationName; // Set selected designation in input box
+    this.selectedDesignationId = suggestion?.designationId ;
+    console.log("this.selectedDesignationId",this.selectedDesignationId);
+    
+    this.openDesignation = false; // Close the dropdown
 
-  selectDesignation(id: any, name: any): void {
-    this.openDesignation = false;
-    this.selectedDesignation = name;
-    this.selectedDesignationId = id;
   }
+
+  // selectDesignation(id: any, name: any): void {
+  //   this.openDesignation = false;
+  //   this.selectedDesignation = name;
+  //   this.selectedDesignationId = id;
+  // }
 
   selectLocation(location: any): void {
     this.locationOpen = false;
@@ -489,7 +516,7 @@ export class ServiceRequestComponent implements OnInit {
         message: 'Please Enter the Experience'
       },
       {
-        condition: !this.selectedDesignation,
+        condition: !(this.designationSearchvalue.trim() || this.selectedDesignationId),
         message: 'Please Select the Designation'
       },
       {
@@ -508,10 +535,10 @@ export class ServiceRequestComponent implements OnInit {
         condition: !this.displayDate && !this.requirement_details?.requestPostingDate,
         message: 'Please Select the Start Date'
       },
-      {
-        condition: !this.closeDate && !this.requirement_details?.requestClosingDate,
-        message: 'Please Select the End Date'
-      },
+      // {
+      //   condition: !this.closeDate && !this.requirement_details?.requestClosingDate,
+      //   message: 'Please Select the End Date'
+      // },
       
 
     ];
@@ -528,6 +555,8 @@ export class ServiceRequestComponent implements OnInit {
   submitClick(): void {
     this.checkValidation();
     const payload: any = {};
+    console.log("this.designationSearchvalue",);
+    
     // Build the payload
     if (this.jobTitle !== this.requirement_details.requestName) payload.requestName = this.jobTitle;
     if (this.jobCode !== this.requirement_details.requestCode) payload.requestCode = this.jobCode;
@@ -537,7 +566,7 @@ export class ServiceRequestComponent implements OnInit {
     if (this.experience !== this.requirement_details.requestMaximumExperience) payload.requestMaximumExperience = this.experience;
     if (this.minExperience !== this.requirement_details.requestMinimumExperience) payload.requestMinimumExperience = this.minExperience;
     if (this.relExperience !== this.requirement_details.requestExperience) payload.requestExperience = this.relExperience;
-    if (this.selectedDesignation !== this.requirement_details.designationName) payload.requestDesignation = this.selectedDesignationId;
+    if (this.selectedDesignationId || this.designationSearchvalue.trim()) payload.requestDesignation = this.selectedDesignationId ? this.selectedDesignationId : this.designationSearchvalue;
     if (Number(this.baseSalary) !== this.requirement_details.requestBaseSalary) payload.requestBaseSalary = Number(this.baseSalary);
     if (Number(this.maxSalary) !== this.requirement_details.requestMaxSalary) payload.requestMaxSalary = Number(this.maxSalary);
     if (this.selectedSalaryTypeId !== this.requirement_details?.requestSalaryType) payload.requestSalaryType = this.selectedSalaryTypeId

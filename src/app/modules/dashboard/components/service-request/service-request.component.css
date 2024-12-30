@@ -180,11 +180,11 @@
     padding-left: 7px;
     border: 1px solid #E9E9E9;
     /* margin-top: 10px; */
-    width: 98%;
+    width: 100%;
 }
 
 .skill-input {
-    width: 99.4%;
+    width: 100%;
     outline: none;
     border: none;
     height: 32px;
@@ -227,9 +227,20 @@
 .drop-list-skill {
     position: absolute;
     overflow-y: scroll;
-    width: 98%;
+    width: 100%;
     max-height: 168px;
     position: absolute;
+    background-color: #FFFFFF;
+    z-index: 1;
+    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+}
+
+.drop-list-designation{
+    /* position: absolute; */
+    overflow-y: scroll;
+    width: 100%;
+    max-height: 168px;
+    /* position: absolute; */
     background-color: #FFFFFF;
     z-index: 1;
     box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
