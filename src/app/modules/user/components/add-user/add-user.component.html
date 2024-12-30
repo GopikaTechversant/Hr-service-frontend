@@ -46,7 +46,7 @@
                             class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
                     </div>
                     <div class="drop-list no-close p-absolute" *ngIf="openUserList">
-                        <div (click)="selectRole(i)" *ngFor="let i of ['admin', 'talent', 'panel', 'employee']"
+                        <div (click)="selectRole(i)" *ngFor="let i of ['Admin', 'Talent', 'Panel', 'Employee','Manager']"
                             class=" p-t-5 p-b-5 p-l-10 c-pointer">
                             <span> {{i | titlecase}}</span>
                         </div>
