@@ -28,7 +28,7 @@
                     <i class="fa fa-search" aria-hidden="true" (click)="requirementSearch(searchKeyword)"></i>
                 </span>
             </span>
-            <div class="create-btn c-pointer" *ngIf="userRole === 'manager' || userType === 'admin'" (click)="navigate('/dashboard/service-requirement',false)">
+            <div class="create-btn c-pointer" *ngIf="userRole === 'Manager' || userType === 'admin'" (click)="navigate('/dashboard/service-requirement',false)">
                 <span class="f-w-500">Create Requisition</span>
             </div>
         </div>

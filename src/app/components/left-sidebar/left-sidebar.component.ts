@@ -116,7 +116,7 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
     }
 
     if (homeUrl === 'user' ) {
-      if (this.userType === 'admin' || this.userRole === 'manager') this.dynamicMenuItems.push({ path: '/user/addUser', label: 'Add User', icon: 'fa fa-user-plus' });
+      if (this.userType === 'admin' || this.userRole === 'Manager') this.dynamicMenuItems.push({ path: '/user/addUser', label: 'Add User', icon: 'fa fa-user-plus' });
       this.dynamicMenuItems.push({ path: '/user/reset', label: 'Reset Password', icon: 'fa fa-key' });
     }
 
