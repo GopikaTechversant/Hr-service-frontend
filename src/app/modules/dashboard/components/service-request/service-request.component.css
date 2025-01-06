@@ -200,7 +200,7 @@
 .drop-list {
     background: #FFFFFF;
     box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
-    max-height: 100px;
+    max-height: 129px;
     overflow-y: auto;
     font-size: 15px;
     width: 100%;
@@ -236,10 +236,10 @@
 }
 
 .drop-list-designation{
-    /* position: absolute; */
+    position: absolute;
     overflow-y: scroll;
     width: 100%;
-    max-height: 168px;
+    max-height: 129px;
     /* position: absolute; */
     background-color: #FFFFFF;
     z-index: 1;
