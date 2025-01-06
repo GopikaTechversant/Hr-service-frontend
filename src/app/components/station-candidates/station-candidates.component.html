@@ -35,7 +35,7 @@
             </span>
             <div class="no-close dropdown c-pointer no-close" *ngIf="requestList_open">
                 <div (click)='selectPosition(name?.requestName,name?.requestId); !requestList_open'
-                    *ngFor="let name of requestList" class="p-10">
+                    *ngFor="let name of requestList" class="p-6">
                     <span class="wrap">{{name?.requestName}}</span>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                 <span (click)="filterStatus = !filterStatus"><i
                         class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
             </span>
-            <div class="dropdown c-pointer no-close'" *ngIf="filterStatus">
+            <div class="dropdown c-pointer no-close p-l-9'" *ngIf="filterStatus">
                 <span class="d-flex p-0" *ngFor="let type of status"
                     (click)="selectStatusFilter(type?.status);!filterStatus">
                     <span class="ps-20 p-1">{{type?.status | titlecase}}</span>
