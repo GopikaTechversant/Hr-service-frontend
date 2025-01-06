@@ -590,6 +590,7 @@ export class ServiceRequestComponent implements OnInit {
           payload.requestId = this.requestId;
           this.handleApiCall('post', '/service-request/edit', payload);
         } else {
+          payload.requestDesignation =  this.requirement_details?.requestDesignation;
           this.handleApiCall('patch', `/service-request/edit-requestion/${this.requestId}`, payload);
         }
       } else {

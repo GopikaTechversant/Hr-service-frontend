@@ -100,13 +100,13 @@
             <div class="margin-10">
                 <span class="name">Requirement Detail of : {{requestName}} - <span class="blue">{{filteredStatus}}</span></span>
             </div>
-            <div class="input c-pointer p-t-5 m-r-10 no-close p-relative">
-                <span class="no-close p-l-10" (click)="filterStatus = !filterStatus">{{filteredStatus.trim() === '' ? 'Filter by Status' : filteredStatus | titlecase}}</span>
-                <span class="f-right d-flex j-space">
+            <div class="input c-pointer p-t-5 m-r-10 no-close p-relative"  (click)="filterStatus = !filterStatus">
+                <span class="no-close p-l-10">{{filteredStatus.trim() === '' ? 'Filter by Status' : filteredStatus | titlecase}}</span>
+                <span class="f-right d-flex j-space" >
                     <span *ngIf="filteredStatus && filteredStatus !== 'Total Applicants'" (click)="clearFilter()">
                         <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
                     </span>
-                    <span  (click)="filterStatus = !filterStatus"><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
+                    <span><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
                 </span>    
                 <div class="dropdown c-pointer no-close'" *ngIf="filterStatus" >
                     <span class="d-flex p-0" *ngFor="let type of lists.slice(1)" (click)="selectStatusFilter(type?.name);filterStatus = !filterStatus">
