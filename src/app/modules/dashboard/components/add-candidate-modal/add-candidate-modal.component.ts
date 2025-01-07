@@ -120,6 +120,7 @@ export class AddCandidateModalComponent implements OnInit {
       this.requirementListOpen = false;
       this.showCandidates = false;
       this.searchKeyword = '';
+      this.showPreferredLocation = false;
     }
   }
 
@@ -297,7 +298,7 @@ export class AddCandidateModalComponent implements OnInit {
     }
     if (this.selectedFile) {
       this.loader = true;
-      this.s3Service.uploadImage(this.selectedFile, 'prod-ats-docs', this.selectedFile);
+      this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', this.selectedFile);
     } else {
       this.loader = false;
     }

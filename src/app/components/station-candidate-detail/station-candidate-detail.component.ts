@@ -58,7 +58,7 @@ export class StationCandidateDetailComponent implements OnInit {
     'back-off': 'Candidate Back-off In this Round',
     'pannel-rejection': 'Panel Rejected the candidate'
   };
-  userType:any;
+  userType: any;
   constructor(public dialogRef: MatDialogRef<StationCandidateDetailComponent>, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
     private route: ActivatedRoute, private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -133,7 +133,7 @@ export class StationCandidateDetailComponent implements OnInit {
       this.file = file;
       this.fileName = file?.name;
       this.loader = true;
-      if (this.fileName) this.s3Service.uploadImage(this.file, 'prod-ats-docs', this.file);
+      if (this.fileName) this.s3Service.uploadImage(this.file, 'hr-service-images', this.file);
       this.getKeyFroms3();
     }
   }
@@ -315,8 +315,9 @@ export class StationCandidateDetailComponent implements OnInit {
   }
 
   rejectClick(data: any): void {
-    this.loader = true;
+    // this.loader = true;
     if (data || (this.selectedRejectionFeedback && this.filteredStatus)) {
+      this.loader = true;
       const payload = {
         serviceId: this.serviceId,
         stationId: this.stationId,
@@ -331,7 +332,7 @@ export class StationCandidateDetailComponent implements OnInit {
       this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
         next: (res: any) => {
           this.loader = false;
-          this.tostr.success('Candidate Rejected From this Round')
+          this.tostr.success('Candidate Rejected From this Round');
           this.closeDialog();
         },
         error: (error) => {
@@ -341,7 +342,10 @@ export class StationCandidateDetailComponent implements OnInit {
           this.closeDialog();
         }
       });
-    }
+    }else{
+      if(!this.filteredStatus) this.tostr.warning('Please Select Reason for Rejection');
+      if(!this.selectedRejectionFeedback) this.tostr.warning('Please Add Rejection Feedback');
+     }
   }
 
   viewResume(resume: any) {

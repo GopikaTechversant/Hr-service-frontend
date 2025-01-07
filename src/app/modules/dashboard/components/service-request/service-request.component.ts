@@ -124,6 +124,8 @@ export class ServiceRequestComponent implements OnInit {
       this.showFormats = false;
       this.openBaseType = false;
       this.showSearchBar = false;
+      this.managerListOpen = false;
+      this.locationOpen = false;
     }
   }
 
@@ -292,10 +294,7 @@ export class ServiceRequestComponent implements OnInit {
   selectDesignation(suggestion: any) {
     this.designationSearchvalue = suggestion.designationName; // Set selected designation in input box
     this.selectedDesignationId = suggestion?.designationId ;
-    console.log("this.selectedDesignationId",this.selectedDesignationId);
-    
     this.openDesignation = false; // Close the dropdown
-
   }
 
   // selectDesignation(id: any, name: any): void {
@@ -555,8 +554,6 @@ export class ServiceRequestComponent implements OnInit {
   submitClick(): void {
     this.checkValidation();
     const payload: any = {};
-    console.log("this.designationSearchvalue",);
-    
     // Build the payload
     if (this.jobTitle !== this.requirement_details.requestName) payload.requestName = this.jobTitle;
     if (this.jobCode !== this.requirement_details.requestCode) payload.requestCode = this.jobCode;
