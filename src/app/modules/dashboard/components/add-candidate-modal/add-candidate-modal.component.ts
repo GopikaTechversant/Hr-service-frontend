@@ -351,12 +351,12 @@ export class AddCandidateModalComponent implements OnInit {
         condition: !this.uploadedFileKey,
         message: 'Please Upload Candidate resume'
       },
-    {
-      // Two-point validation for salary (only one decimal point allowed)
-      condition: !this.candidateForm?.value?.candidateSalary ||
-                !/^\d*\.?\d{0,1}$/.test(this.candidateForm?.value?.candidateSalary),
-      message: 'Please Enter a Valid Number'
-    },
+    // {
+    //   // Two-point validation for salary (only one decimal point allowed)
+    //   condition: !this.candidateForm?.value?.candidateSalary ||
+    //             !/^\d*\.?\d{0,1}$/.test(this.candidateForm?.value?.candidateSalary),
+    //   message: 'Please Enter a Valid Number'
+    // },
     ];
     this.validationSuccess = true;
     validations.forEach(({ condition, message }) => {

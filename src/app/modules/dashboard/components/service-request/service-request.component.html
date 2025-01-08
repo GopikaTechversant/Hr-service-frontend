@@ -355,20 +355,32 @@
                             <button class="toolbar-button" (click)="execCommand('redo')" title="Redo"><img
                                     src="/assets/images/techversant/redo.svg" alt="" height="15px" width="15px"
                                     class="p-t-3"></button>
-                            <button class="toolbar-button" (click)="execCommand('bold')" [ngClass]="{ 'selected': activeCommand === 'bold' }" title="Bold">B</button>
+                                    <button class="toolbar-button" (click)="execCommand('bold')"  title="Bold">B</button>
+                                    <!-- <button class="toolbar-button" (click)="execCommand('bold')" [ngClass]="{ 'selected': activeCommand === 'bold' }" title="Bold">B</button> -->
                             <button class="toolbar-button" (click)="execCommand('italic')" [ngClass]="{ 'selected': activeCommand === 'italic' }" title="Italic"
                                 style="font-style: italic;">I</button>
-                            <button  [ngClass]="{ 'selected': activeCommand === 'underline' }"  class="toolbar-button" (click)="execCommand('underline')" title="Underline"
+                                <!-- <button class="toolbar-button" (click)="execCommand('italic')" [ngClass]="{ 'selected': activeCommand === 'italic' }" title="Italic"
+                                style="font-style: italic;">I</button> -->
+                            <button  class="toolbar-button" (click)="execCommand('underline')" title="Underline"
                                 style=" text-decoration: underline;">U</button>
-                            <button class="toolbar-button" (click)="execCommand('insertUnorderedList')" [ngClass]="{ 'selected': activeCommand === 'insertUnorderedList' }"
+                            <button class="toolbar-button" (click)="execCommand('insertUnorderedList')" 
                                 title="Bullets"><img src="/assets/images/techversant/list.svg" class="c-pointer" alt=""
                                     height="26px" width="26px"></button>
-                            <button class="toolbar-button" (click)="execCommand('insertOrderedList')" [ngClass]="{ 'selected': activeCommand === 'insertOrderedList' }"
+                                    <!-- <button class="toolbar-button" (click)="execCommand('insertUnorderedList')" [ngClass]="{ 'selected': activeCommand === 'insertUnorderedList' }"
+                                title="Bullets"><img src="/assets/images/techversant/list.svg" class="c-pointer" alt=""
+                                    height="26px" width="26px"></button> -->
+                            <button class="toolbar-button" (click)="execCommand('insertOrderedList')" 
                                 title="Number"><img src="/assets/images/techversant/image 12.svg" alt="Numbered List"
                                     height="26px" width="26px"></button>
-                            <button class="toolbar-button" (click)="textAreaFormat('paragraph');" [ngClass]="{ 'selected': activeCommand === 'paragraph' }" title="Paragraph"><img
+                                    <!-- <button class="toolbar-button" (click)="execCommand('insertOrderedList')" [ngClass]="{ 'selected': activeCommand === 'insertOrderedList' }"
+                                    title="Number"><img src="/assets/images/techversant/image 12.svg" alt="Numbered List"
+                                        height="26px" width="26px"></button> -->
+                            <button class="toolbar-button" (click)="textAreaFormat('paragraph');"  title="Paragraph"><img
                                     src="/assets/images/techversant/align-justify.svg" height="26px"
                                     width="26px"></button>
+                                    <!-- <button class="toolbar-button" (click)="textAreaFormat('paragraph');" [ngClass]="{ 'selected': activeCommand === 'paragraph' }" title="Paragraph"><img
+                                        src="/assets/images/techversant/align-justify.svg" height="26px"
+                                        width="26px"></button> -->
                             <button class="toolbar-button-option d-flex j-space">
                                 <div class="d-flex dropdown p-relative" (click)="showFormats = !showFormats">
                                     <div class="j-space">
