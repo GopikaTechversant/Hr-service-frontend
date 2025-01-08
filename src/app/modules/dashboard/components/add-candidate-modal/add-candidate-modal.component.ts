@@ -297,7 +297,7 @@ export class AddCandidateModalComponent implements OnInit {
     }
     if (this.selectedFile) {
       this.loader = true;
-      this.s3Service.uploadImage(this.selectedFile, 'prod-ats-docs', this.selectedFile);
+      this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', this.selectedFile);
     } else {
       this.loader = false;
     }
@@ -318,7 +318,7 @@ export class AddCandidateModalComponent implements OnInit {
   }
 
   uploadFile(): void {
-    if (this.selectedFile) this.s3Service.uploadImage(this.selectedFile, 'prod-ats-docs', this.selectedFile);
+    if (this.selectedFile) this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', this.selectedFile);
   }
 
   checkValidation(): void {
@@ -351,6 +351,12 @@ export class AddCandidateModalComponent implements OnInit {
         condition: !this.uploadedFileKey,
         message: 'Please Upload Candidate resume'
       },
+    {
+      // Two-point validation for salary (only one decimal point allowed)
+      condition: !this.candidateForm?.value?.candidateSalary ||
+                !/^\d*\.?\d{0,1}$/.test(this.candidateForm?.value?.candidateSalary),
+      message: 'Please Enter a Valid Number'
+    },
     ];
     this.validationSuccess = true;
     validations.forEach(({ condition, message }) => {

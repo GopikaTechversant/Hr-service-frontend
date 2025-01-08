@@ -349,24 +349,24 @@
                     <span class="sub-head">Job Description<span class="required">*</span></span>
                     <div class="jd-parent">
                         <div class="toolbar">
-                            <button class="toolbar-button" (click)="execCommand('undo')" title="Undo"><img
+                            <button class="toolbar-button"  (click)="execCommand('undo')" title="Undo"><img
                                     src="/assets/images/techversant/undo.svg" alt="" height="15px" width="15px"
                                     class="p-t-3"></button>
                             <button class="toolbar-button" (click)="execCommand('redo')" title="Redo"><img
                                     src="/assets/images/techversant/redo.svg" alt="" height="15px" width="15px"
                                     class="p-t-3"></button>
-                            <button class="toolbar-button" (click)="execCommand('bold')" title="Bold">B</button>
-                            <button class="toolbar-button" (click)="execCommand('italic')" title="Italic"
+                            <button class="toolbar-button" (click)="execCommand('bold')" [ngClass]="{ 'selected': activeCommand === 'bold' }" title="Bold">B</button>
+                            <button class="toolbar-button" (click)="execCommand('italic')" [ngClass]="{ 'selected': activeCommand === 'italic' }" title="Italic"
                                 style="font-style: italic;">I</button>
-                            <button class="toolbar-button" (click)="execCommand('underline')" title="Underline"
+                            <button  [ngClass]="{ 'selected': activeCommand === 'underline' }"  class="toolbar-button" (click)="execCommand('underline')" title="Underline"
                                 style=" text-decoration: underline;">U</button>
-                            <button class="toolbar-button" (click)="execCommand('insertUnorderedList')"
+                            <button class="toolbar-button" (click)="execCommand('insertUnorderedList')" [ngClass]="{ 'selected': activeCommand === 'insertUnorderedList' }"
                                 title="Bullets"><img src="/assets/images/techversant/list.svg" class="c-pointer" alt=""
                                     height="26px" width="26px"></button>
-                            <button class="toolbar-button" (click)="execCommand('insertOrderedList')"
+                            <button class="toolbar-button" (click)="execCommand('insertOrderedList')" [ngClass]="{ 'selected': activeCommand === 'insertOrderedList' }"
                                 title="Number"><img src="/assets/images/techversant/image 12.svg" alt="Numbered List"
                                     height="26px" width="26px"></button>
-                            <button class="toolbar-button" (click)="textAreaFormat('paragraph');" title="Paragraph"><img
+                            <button class="toolbar-button" (click)="textAreaFormat('paragraph');" [ngClass]="{ 'selected': activeCommand === 'paragraph' }" title="Paragraph"><img
                                     src="/assets/images/techversant/align-justify.svg" height="26px"
                                     width="26px"></button>
                             <button class="toolbar-button-option d-flex j-space">

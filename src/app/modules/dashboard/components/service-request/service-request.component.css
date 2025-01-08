@@ -4,7 +4,9 @@
     text-align: left;
     padding-bottom: 10px;
 }
-
+.toolbar-button.selected {
+    background-color: rgb(184, 182, 182);
+}
 .main {
     background-color: #F7F7F7;
     margin: 10px;

@@ -149,15 +149,28 @@ export class ServiceRequestComponent implements OnInit {
     })
   }
 
-  getDesignationSuggestion(event:any){
-    this.openDesignation = true;
+  getDesignationSuggestion(event: any) {
+    // Check if the search value is not empty before proceeding
     this.designationSearchvalue = event?.target.value;
-    this.apiService.get(`/service-request/designation/list?search=${this.designationSearchvalue}`).subscribe((res: any) => {
-      if (res?.data) this.designationSuggestions = res?.data.filter((suggestion: any) =>
-        suggestion.designationName.toLowerCase().startsWith(this.searchvalue.toLowerCase())
-      );
-    });
+    
+    // Only proceed if there is a value to search
+    if (this.designationSearchvalue.trim() !== '') {
+      this.openDesignation = true;
+      
+      this.apiService.get(`/service-request/designation/list?search=${this.designationSearchvalue}`).subscribe((res: any) => {
+        if (res?.data) {
+          this.designationSuggestions = res?.data.filter((suggestion: any) =>
+            suggestion.designationName.toLowerCase().startsWith(this.designationSearchvalue.toLowerCase())
+          );
+        }
+      });
+    } else {
+      // If search value is empty, hide the dropdown or clear suggestions
+      this.openDesignation = false;
+      this.designationSuggestions = [];
+    }
   }
+  
 
   fetchDesignation() {
     this.apiService.get(`/service-request/designation/list`).subscribe(((res: any) => {
@@ -373,13 +386,23 @@ export class ServiceRequestComponent implements OnInit {
   }
 
   getSkillSuggestions(event: any): void {
+    
     this.showSearchBar = true;
     this.searchvalue = event?.target.value;
+    if (this.searchvalue.trim() !== '') {
+
     this.apiService.get(`/candidate/skills/list?search=${this.searchvalue}`).subscribe((res: any) => {
       if (res?.data) this.skillSuggestions = res?.data.filter((suggestion: any) =>
         suggestion.skillName.toLowerCase().startsWith(this.searchvalue.toLowerCase())
       );
     });
+  }
+    else {
+      // If search value is empty, hide the dropdown or clear suggestions
+      this.showSearchBar = false;
+      this.skillSuggestions = [];
+    }
+
   }
 
   selectSkill(suggestion: any): void {
@@ -399,12 +422,19 @@ export class ServiceRequestComponent implements OnInit {
     this.selectedSkills = this.selectedSkills?.filter(skill => skill !== skillToRemove);
   }
 
-  execCommand(command: string): void {
-    document.execCommand(command, false, undefined);
-    this.jobDescription = this.commentDiv.nativeElement.innerHTML;
-  }
+  activeCommand: string | null = null;
 
+  execCommand(command: string): void {
+      if (this.activeCommand === command) {
+          this.activeCommand = null; // Deselect if the same button is clicked again
+      } else {
+          this.activeCommand = command; // Set the active command
+      }
+      document.execCommand(command, false, undefined);
+      this.jobDescription = this.commentDiv.nativeElement.innerHTML;
+  }
   textAreaFormat(event: string): void {
+    
     const div = this.commentDiv.nativeElement;
     const selection = window.getSelection();
     if (!selection || selection.rangeCount === 0) {
@@ -490,7 +520,6 @@ export class ServiceRequestComponent implements OnInit {
 
   checkValidation(): void {
     const validations = [
-
       {
         condition: !this.jobTitle,
         message: 'Please Enter the Job Title'
@@ -524,8 +553,16 @@ export class ServiceRequestComponent implements OnInit {
         message: 'Please Enter the Base Salary'
       },
       {
+        condition: this.baseSalary && !/^\d*\.?\d*$/.test(this.baseSalary),
+        message: 'Please Enter a Valid Base Salary (only one decimal point allowed)'
+      },
+      {
         condition: !this.maxSalary,
         message: 'Please Enter the Maximum Salary'
+      },
+      {
+        condition: this.maxSalary && !/^\d*\.?\d*$/.test(this.maxSalary),
+        message: 'Please Enter a Valid Maximum Salary (only one decimal point allowed)'
       },
       {
         condition: !this.selectedTeam,
@@ -535,13 +572,8 @@ export class ServiceRequestComponent implements OnInit {
         condition: !this.displayDate && !this.requirement_details?.requestPostingDate,
         message: 'Please Select the Start Date'
       },
-      // {
-      //   condition: !this.closeDate && !this.requirement_details?.requestClosingDate,
-      //   message: 'Please Select the End Date'
-      // },
-      
-
     ];
+  
     this.validationSuccess = true;
     validations.forEach(({ condition, message }) => {
       if (condition) {
@@ -551,6 +583,7 @@ export class ServiceRequestComponent implements OnInit {
       }
     });
   }
+  
 
   submitClick(): void {
     this.checkValidation();
