@@ -168,7 +168,7 @@ export class EditComponent implements OnInit {
     this.fileInputClicked = true;
     this.selectedFile = event.target.files?.[0];
     this.loader = true;
-    if (this.selectedFile) this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', this.selectedFile);
+    if (this.selectedFile) this.s3Service.uploadImage(this.selectedFile, 'prod-ats-docs', this.selectedFile);
     this.getKeyFroms3();
   }
 
