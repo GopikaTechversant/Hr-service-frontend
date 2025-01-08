@@ -8,22 +8,22 @@
             <a [href]="env_url + '/dashboard/candidate-details/' + candidateDetails['candidate.candidateId']"> {{candidateDetails['candidate.candidateId']}}</a>)
         </span> -->
     </div>
-    <div class="modal-close margin-10 d-flex">   
-        <img src="assets/images/techversant/clear-filter.svg" class="c-pointer p-r-5"  (click)="closeDialog()"alt="" width="35">
+    <div class="modal-close margin-10 d-flex">
+        <img src="assets/images/techversant/clear-filter.svg" class="c-pointer p-r-5" (click)="closeDialog()" alt=""
+            width="35">
     </div>
 </div>
 <div class="modal-content">
     <div class="item-container">
         <div class="d-flex w-100 p-10 j-space">
             <span class="f-w-500 f-s-14 p-t-10 w-30">Rejection Reason</span>
-            <div class="d-flex p-l-10 w-50">
+            <div class="d-flex p-l-10 w-50" (click)="filterStatus = !filterStatus">
                 <span class="input-rejection c-pointer no-close p-relative p-t-5">
-                    <span class="no-close p-l-10 f-s-14 f-w-400" (click)="filterStatus = !filterStatus">{{filteredStatus.trim()
+                    <span class="no-close p-l-10 f-s-14 f-w-400">{{filteredStatus.trim()
                         === '' ? 'Select Reason for Rejection' : filteredStatus | titlecase}}</span>
                     <span class="f-right">
                         <!-- <span *ngIf="filteredStatus && filteredStatus.trim() !== ''" (click)="clearFilter('status')" class="clear-filter">x</span> -->
-                        <span (click)="filterStatus = !filterStatus"><i
-                                class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
+                        <span><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
                     </span>
                     <div class="dropdown c-pointer no-close'" *ngIf="filterStatus">
                         <span class="d-flex p-0" *ngFor="let type of status"
@@ -33,17 +33,16 @@
                     </div>
                 </span>
             </div>
-          </div>
-          <div class="d-flex w-100 p-10 j-space">
+        </div>
+        <div class="d-flex w-100 p-10 j-space">
             <span class="f-w-500 f-s-14 p-t-10 w-30">Rejection Feedback</span>
-            <div class="d-flex p-l-10 w-50">
+            <div class="d-flex p-l-10 w-50" (click)="openRejectionFeedback = !openRejectionFeedback">
                 <span class="input-rejection c-pointer no-close p-relative p-t-5">
-                    <span class="no-close p-l-10 f-s-14 f-w-400" (click)="openRejectionFeedback = !openRejectionFeedback">{{selectedRejectionFeedback.trim()
+                    <span class="no-close p-l-10 f-s-14 f-w-400">{{selectedRejectionFeedback.trim()
                         === '' ? 'Select Reason for Rejection' : selectedRejectionFeedback | titlecase}}</span>
                     <span class="f-right">
                         <!-- <span *ngIf="filteredStatus && filteredStatus.trim() !== ''" (click)="clearFilter('status')" class="clear-filter">x</span> -->
-                        <span (click)="openRejectionFeedback = !openRejectionFeedback"><i
-                                class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
+                        <span><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
                     </span>
                     <div class="dropdown c-pointer no-close'" *ngIf="openRejectionFeedback">
                         <span class="d-flex p-0" *ngFor="let type of rejectionFeedbackList"
@@ -53,9 +52,9 @@
                     </div>
                 </span>
             </div>
-          </div>
+        </div>
     </div>
- 
+
     <div class="padding-10 p-r-0 d-flex j-end w-100 m-t-10 p-b-0">
         <button class="btn c-pointer" (click)="rejectClick()" [disabled]="loader">Submit</button>
     </div>

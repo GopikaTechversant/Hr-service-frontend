@@ -77,6 +77,7 @@ export class StationCandidateDetailComponent implements OnInit {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
       this.filterStatus = false;
+      this.openRejectionFeedback = false;
     }
   }
 
