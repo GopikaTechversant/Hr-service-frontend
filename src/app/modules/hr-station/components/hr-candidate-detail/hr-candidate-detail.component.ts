@@ -86,7 +86,7 @@ export class HrCandidateDetailComponent {
     this.fetchStatus();
     this.fetchFeedbackList();
   }
-  
+
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
@@ -245,7 +245,7 @@ export class HrCandidateDetailComponent {
     const feedback = feedbackElement?.value.trim();
     // this.loader = true;    
     if (data || (this.selectedRejectionFeedback && this.filteredStatus) || feedback) {
-      this.loader = true; 
+      this.loader = true;
       const payload = {
         serviceId: this.serviceId,
         stationId: 5,
@@ -270,7 +270,9 @@ export class HrCandidateDetailComponent {
       });
     } else {
       this.loader = false;
-      this.tostr.warning('Something Went wrong');
+      if (!this.filteredStatus) this.tostr.warning('Please Select Reason for Rejection');
+      if (!this.selectedRejectionFeedback) this.tostr.warning('Please Add Rejection Feedback');
+      // this.tostr.warning('Something Went wrong');
     }
   }
 

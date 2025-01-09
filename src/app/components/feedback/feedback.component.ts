@@ -65,8 +65,8 @@ export class FeedbackComponent implements OnInit {
   }
 
   rejectClick(): void {
+    if (this.filteredStatus && this.selectedRejectionFeedback) {
     this.loader = true;
-    if (this.filteredStatus) {
       const payload = {
         serviceId: this.candidateDetails?.serviceId,
         stationId: this.stationId,
@@ -85,6 +85,9 @@ export class FeedbackComponent implements OnInit {
           this.closeDialog();
         }
       });
+    }else{
+     if(!this.filteredStatus) this.tostr.warning('Please Select Reason for Rejection');
+     if(!this.selectedRejectionFeedback) this.tostr.warning('Please Add Rejection Feedback');
     }
   }
 

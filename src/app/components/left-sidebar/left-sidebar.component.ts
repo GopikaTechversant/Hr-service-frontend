@@ -32,7 +32,6 @@ export class LeftSidebarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.userType = localStorage.getItem('userType');
     this.userRole = localStorage.getItem('userRole');
-    console.log("userType", this.userType);
     this.routerEventsSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => this.updateUrls());

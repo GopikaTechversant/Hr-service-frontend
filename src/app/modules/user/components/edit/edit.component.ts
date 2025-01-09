@@ -109,8 +109,6 @@ export class EditComponent implements OnInit {
     if (this.selectedStationId) {
       if (this.selectedStationId !== this.candidateDetails?.userWorkStation) payload.userWorkStation = this.selectedStationId;
     }
-    console.log(payload);
-    
     if (Object.keys(payload).length > 0) {
       this.apiService.put(`/user/update/?userId=${this.data}`, payload).subscribe(
         (res: any) => {

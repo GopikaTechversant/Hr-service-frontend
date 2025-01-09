@@ -120,6 +120,7 @@ export class AddCandidateModalComponent implements OnInit {
       this.requirementListOpen = false;
       this.showCandidates = false;
       this.searchKeyword = '';
+      this.showPreferredLocation = false;
     }
   }
 
