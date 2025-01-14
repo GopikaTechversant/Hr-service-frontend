@@ -228,8 +228,8 @@ export class StationCandidatesComponent implements OnInit {
   }
 
   selectStatusFilter(item: string): void {
-    this.filteredStatus = item;
     this.filterStatus = false;
+    this.filteredStatus = item;
     sessionStorage.setItem(`status_${this.stationId}`, this.filteredStatus);
     this.currentPage = 1;
     this.limit = 12;

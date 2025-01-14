@@ -135,7 +135,7 @@
 .no-data {
     position: absolute;
     left: 52%;
-    top: 72%;
+    /* top: 10%; */
     z-index: 9;
     color: #c10a0a;
     font-size: 16px;

@@ -51,13 +51,13 @@
                 <i class="fa fa-search" aria-hidden="true"></i>
             </span>
         </div>
-        <div class="input-1 c-pointer no-close p-relative p-t-6 m-l-10 m-b-10 p-l-10 m-r-10" (click)="filterStatus = !filterStatus">
-            <span class="no-close" >{{filteredStatus.trim() === '' ?
+        <div class="input-1 c-pointer no-close p-relative p-t-6 m-l-10 m-b-10 p-l-10 m-r-10">
+            <span class="no-close"  (click)="filterStatus = !filterStatus">{{filteredStatus.trim() === '' ?
                 'Filter by Status' : filteredStatus | titlecase}}</span>
             <span class="f-right">
                 <span *ngIf="filteredStatus && filteredStatus.trim() !== ''" (click)="clearFilter('status')"
                     class=""><img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20"></span>
-                <span><i
+                <span  (click)="filterStatus = !filterStatus"><i
                         class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
             </span>
             <div class="dropdown c-pointer no-close p-l-9'" *ngIf="filterStatus">
