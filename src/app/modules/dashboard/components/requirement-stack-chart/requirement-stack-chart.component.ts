@@ -189,7 +189,7 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
               borderWidth: 1,
               barPercentage: 0.6,
               categoryPercentage: 0.5,
-              barThickness: 30
+              barThickness: 40
             },
             {
               label: 'Offered',
@@ -199,7 +199,7 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
               borderWidth: 1,
               barPercentage: 0.6,
               categoryPercentage: 0.5,
-              barThickness: 30
+              barThickness: 40
             },
             {
               label: 'Technical Selected',
@@ -209,7 +209,7 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
               borderWidth: 1,
               barPercentage: 0.6,
               categoryPercentage: 0.5,
-              barThickness: 30
+              barThickness: 40
             },
             {
               label: 'Total Applicants',
@@ -219,7 +219,7 @@ export class RequirementStackChartComponent implements OnInit, OnChanges, AfterV
               borderWidth: 1,
               barPercentage: 0.6,
               categoryPercentage: 0.5,
-              barThickness: 30
+              barThickness: 40
             },
           ]
         },

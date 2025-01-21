@@ -25,7 +25,8 @@ export class DashboardComponent implements OnInit {
   positionId: string = '';
   initialLoader: boolean = false;
   today: Date = new Date();
-  startDate: string | null = this.datePipe.transform(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
+  // startDate: string | null = this.datePipe.transform(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
+  startDate: string | null = this.datePipe.transform(new Date(Date.now() - 31 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
 
   constructor(private apiService: ApiService, public router: Router, private tostr: ToastrService, private datePipe: DatePipe) { }

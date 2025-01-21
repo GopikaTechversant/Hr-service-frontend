@@ -3,8 +3,11 @@
         <img src="assets/gif/loader.gif">
     </div>
     <div class="p-l-10 f-s-16">
-        <span>{{candidateDetails['candidate.candidateFirstName']}} {{candidateDetails['candidate.candidateLastName']}}
-            &nbsp;- </span>
+        <!-- <span>{{candidateDetails['candidate.candidateFirstName']}} {{candidateDetails['candidate.candidateLastName']}}
+            &nbsp;- </span> -->
+            <span class="blue"> <a [href]="env_url + '/dashboard/candidate-details/' + candidateDetails['candidate.candidateId']">
+                {{candidateDetails['candidate.candidateFirstName']}} {{candidateDetails['candidate.candidateLastName']}}</a>
+                &nbsp;- </span> 
         <span class="blue">(
             <a [href]="env_url + '/dashboard/candidate-details/' + candidateDetails['candidate.candidateId']">
                 {{candidateDetails['candidate.candidateId']}}</a>)

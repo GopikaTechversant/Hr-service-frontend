@@ -37,8 +37,10 @@ export class HrCandidateListComponent implements OnInit {
   experience: string = '';
   isExport: boolean = false;
   today: Date = new Date();
-  startDate: string | null = this.datePipe.transform(new Date(Date.now() - 150 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
-  endDate: string | null = this.datePipe.transform(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
+  // startDate: string | null = this.datePipe.transform(new Date(Date.now() - 150 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
+  startDate: string | null = this.datePipe.transform(new Date(new Date().getFullYear(), new Date().getMonth() - 5, new Date().getDate()),'yyyy-MM-dd');
+  endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+  // endDate: string | null = this.datePipe.transform(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   candidateIds: any;
   status: any;
   userType:any;
