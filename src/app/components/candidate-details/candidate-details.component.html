@@ -58,7 +58,8 @@
                                 <img src="assets/images/candidate-detail/calendar.svg" class="p-r-10" alt=""> DOB
                             </span>
                             <span class="text-wrap" [title]="candidateDetails?.candidateDoB | date: 'dd-MM-yyyy'">:
-                                {{ candidateDetails?.candidateDoB | date: 'dd-MM-yyyy' }}</span>
+                                {{ candidateDetails?.candidateDoB ? (candidateDetails.candidateDoB | date: 'dd-MM-yyyy') : 'Nill' }}
+                            </span>
                         </div>
                         <div class="details">
                             <span class="sub-head">

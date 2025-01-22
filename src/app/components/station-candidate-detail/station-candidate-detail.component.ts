@@ -51,13 +51,21 @@ export class StationCandidateDetailComponent implements OnInit {
   openRejectionFeedback: boolean = false;
   selectedRejectionFeedback: string = '';
   progressSkill: any = [];
-  statusMessages: { [key: string]: string } = {
-    done: 'Candidate Selected to Next Round',
-    rejected: 'Candidate Rejected In this Round',
-    moved: 'Candidate Moved From this Round',
-    'back-off': 'Candidate Back-off In this Round',
-    'pannel-rejection': 'Panel Rejected the candidate'
+  // statusMessages: { [key: string]: string } = {
+  //   done: 'Candidate Selected to Next Round',
+  //   rejected: 'Candidate Rejected In this Round',
+  //   moved: 'Candidate Moved From this Round',
+  //   'back-off': 'Candidate Back-off In this Round',
+  //   'pannel-rejection': 'Panel Rejected the candidate'
+  // };
+  statusMessages: { [key: string]: (station?: string) => string } = {
+    done: (station?: string) => `Candidate Selected to ${station ? `${station}` : ''}`,
+    rejected: (station?: string) => `Candidate Rejected In ${station ? `${station}` : ''}`,
+    moved: (station?: string) => `Candidate Moved to ${station ? ` at ${station}` : ''}`,
+    'back-off': (station?: string) => `Candidate Back-off In ${station ? ` at ${station}` : ''}`,
+    'pannel-rejection': (station?: string) => `Panel Rejected the Candidate${station ? ` at ${station}` : ''}`
   };
+  
   userType: any;
   constructor(public dialogRef: MatDialogRef<StationCandidateDetailComponent>, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
     private route: ActivatedRoute, private router: Router,

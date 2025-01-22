@@ -5,9 +5,11 @@
     <div class="p-l-10 f-s-16">
         <!-- <span>{{candidateDetails['candidate.candidateFirstName']}} {{candidateDetails['candidate.candidateLastName']}}
             &nbsp;- </span> -->
-            <span class="blue"> <a [href]="env_url + '/dashboard/candidate-details/' + candidateDetails['candidate.candidateId']">
-                {{candidateDetails['candidate.candidateFirstName']}} {{candidateDetails['candidate.candidateLastName']}}</a>
-                &nbsp;- </span> 
+        <span class="blue"> <a
+                [href]="env_url + '/dashboard/candidate-details/' + candidateDetails['candidate.candidateId']">
+                {{candidateDetails['candidate.candidateFirstName']}}
+                {{candidateDetails['candidate.candidateLastName']}}</a>
+            &nbsp;- </span>
         <span class="blue">(
             <a [href]="env_url + '/dashboard/candidate-details/' + candidateDetails['candidate.candidateId']">
                 {{candidateDetails['candidate.candidateId']}}</a>)
@@ -226,8 +228,9 @@
                 <div *ngIf="data?.candidateDetails?.serviceStatus !== 'pending'">
                     <span class="heading p-l-10 p-b-0 d-flex j-space">Selection Status</span>
                     <div class="sub-head d-flex p-6 content">
+                      
                         <span class="padding-5">
-                            {{ statusMessages[data?.candidateDetails?.serviceStatus] }}
+                            {{statusMessages[data?.candidateDetails?.serviceStatus] (data?.candidateDetails?.currentStation)}}
                         </span>
                     </div>
                 </div>
