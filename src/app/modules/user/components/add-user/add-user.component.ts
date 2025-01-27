@@ -86,6 +86,7 @@ export class AddUserComponent implements OnInit {
       userRole: this.role,
     }
     this.apiService.post(`/user/create`, payload).subscribe((res: any) => {
+      this.resetFormAndState();
       this.tostr.success('User Created');
     },
       (error) => {
@@ -100,11 +101,23 @@ export class AddUserComponent implements OnInit {
   }
 
   cancel(): void {
+    this.resetFormAndState();
     // this.resetForm();
   }
 
   dateChange(event: any): void {
     let date = new Date(event?.value);
     this.displayDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+  }
+
+  resetFormAndState(): void {
+    (document.getElementById('firstname') as HTMLInputElement).value = '';
+    (document.getElementById('secondName') as HTMLInputElement).value = '';
+    (document.getElementById('email') as HTMLInputElement).value = '';
+    (document.getElementById('password') as HTMLInputElement).value = '';
+    (document.getElementById('conformPassword') as HTMLInputElement).value = '';
+    this.selectedStation = '';
+    this.role = '';
+    this.displayDate = '';
   }
 }

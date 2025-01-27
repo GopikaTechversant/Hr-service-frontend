@@ -12,7 +12,7 @@ export class ResetPasswordComponent implements OnInit {
   passwordForm!: FormGroup;
   hidePassword = true;
   hideConfirmPassword = true;
-
+  hideNewpassword = true;
   constructor(private fb: FormBuilder, private tostr: ToastrService, private apiService: ApiService) {
     this.passwordForm = this.fb.group({
       currentPassword: ['', Validators.required],
