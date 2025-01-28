@@ -47,6 +47,7 @@
                     <td class="text-end">Hired Count</td>
                     <td class="text-start">Team</td>
                     <td class="text-start">Primary Skills</td>
+                    <td class="text-start">Approval Status</td>
                     <td class="text-start">Status</td>
                     <td class="text-center wrap" *ngIf="filteredStatus === 'Active Requisitions' && userType !== 'super-admin'">Add Candidate</td>
                     <td class="text-end">Date</td>
@@ -68,6 +69,7 @@
                             </td>
                             <td class="text-start wrap" [title]="candidate?.requestSkills">
                                 {{candidate?.requestSkills ? (candidate?.requestSkills | titlecase) : 'N/A'}}</td>
+                            <td class="text-start f-w-500 approval-status" (click)="navigate('/dashboard/series/',candidate?.requestId)">Review</td>
                             <td class="text-start f-w-500"
                                 [ngStyle]="{'color': candidate.status === 'active' ? '#08BC66' : 'red'}">
                                 {{candidate?.status ?(candidate?.status | titlecase) : 'N/A'}}

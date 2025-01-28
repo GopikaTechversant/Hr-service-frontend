@@ -602,7 +602,7 @@ export class ServiceRequestComponent implements OnInit {
   private handleApiCall(method: 'post' | 'patch', url: string, payload: any): void {
     this.apiService[method](url, payload).subscribe(
       response => {
-        const successMessage = method === 'post' ? 'Requirement created successfully' : 'Requirement updated successfully';
+        const successMessage = method === 'post' ? 'Waiting for approval' : 'Requirement updated successfully';
         this.toastr.success(successMessage);
         this.resetFormAndState();
         this.router.navigate(['/dashboard/requirement-candidate-list']);

@@ -21,10 +21,13 @@ export class FeedbackComponent implements OnInit {
   status: any;
   candidateDetails: any;
   loader: boolean = false;
-
+  rejectStatus:string = '';
   constructor(public dialogRef: MatDialogRef<FeedbackComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
     private apiService: ApiService, private tostr: ToastrServices) {
     this.candidateDetails = data?.candidateDetails;
+    this.rejectStatus = data?.rejectStatus;
+    console.log(" this.rejectStatus", this.rejectStatus);
+    
   }
 
   onBodyClick(event: MouseEvent): void {
@@ -93,6 +96,12 @@ export class FeedbackComponent implements OnInit {
 
   onCancelClick(): void {
     this.dialogRef.close();
+  }
+
+  rejectRequisition():void{
+    // this.loader = true;
+    this.dialogRef.close();
+    this.tostr.success('Rejected');
   }
 
 }

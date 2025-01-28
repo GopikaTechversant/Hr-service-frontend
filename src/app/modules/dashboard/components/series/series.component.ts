@@ -6,6 +6,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { DeleteComponent } from 'src/app/components/delete/delete.component';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
+import { FeedbackComponent } from 'src/app/components/feedback/feedback.component';
 @Component({
   selector: 'app-series',
   templateUrl: './series.component.html',
@@ -44,8 +45,8 @@ export class SeriesComponent implements OnInit {
   env_url: string = '';
   isExpanded: boolean = false;
   showViewMore: boolean = false;
-  userType:any;
-  userRole:any;
+  userType: any;
+  userRole: any;
   @ViewChild('template') set templateSetter(template: ElementRef) {
     if (template) {
       this.template = template;
@@ -128,6 +129,19 @@ export class SeriesComponent implements OnInit {
           this.tostr.error(error?.error?.message ? error?.error?.message : 'Unable to Delete candidates');
         }
       })
+    })
+  }
+
+  approveRequisition(): void {
+    this.tostr.success('Approved');
+
+  }
+
+  rejectRequisition(): void {
+    const dialogRef = this.dialog.open(FeedbackComponent, {
+      data: {rejectStatus:'rejectRequisition'},
+      width: '650px',
+      height: '260px'
     })
   }
 

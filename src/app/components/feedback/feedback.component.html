@@ -1,4 +1,5 @@
-<div class="modal-header heading p-t-10 d-flex j-space" style="position: sticky; top: 0; z-index: 2;">
+<div class="modal-header heading p-t-10 d-flex j-space" style="position: sticky; top: 0; z-index: 2;"
+    *ngIf="!this.rejectStatus">
     <div *ngIf="loader" class="loader-parent">
         <img src="assets/gif/loader.gif">
     </div>
@@ -14,7 +15,7 @@
     </div>
 </div>
 <div class="modal-content">
-    <div class="item-container">
+    <div class="item-container" *ngIf="!this.rejectStatus">
         <div class="d-flex w-100 p-10 j-space">
             <span class="f-w-500 f-s-14 p-t-10 w-30">Rejection Reason</span>
             <div class="d-flex p-l-10 w-50" (click)="filterStatus = !filterStatus">
@@ -54,8 +55,17 @@
             </div>
         </div>
     </div>
-
-    <div class="padding-10 p-r-0 d-flex j-end w-100 m-t-10 p-b-0">
+    <!---Requisition rejection reason-->
+    <div class="w-100 m-t-10 d-flex-column p-l-14" *ngIf="this.rejectStatus">
+        <span class="p-10 sub-head p-l-0 f-w-500 f-s-16">Feedback</span>
+        <textarea class="text-area" id="feedback"></textarea>
+    </div>
+    <div class="padding-10 p-r-0 d-flex j-end w-100 m-t-10 p-b-0" *ngIf="!this.rejectStatus">
+        <!-- <button  class="btn c-pointer btn-cancel" *ngIf="this.rejectStatus" (click)="onCancelClick()">Cancel</button> -->
         <button class="btn c-pointer" (click)="rejectClick()" [disabled]="loader">Submit</button>
+    </div>
+    <div class="padding-10 p-r-0 d-flex j-end w-100 m-t-10 p-b-0" *ngIf="this.rejectStatus">
+        <button  class="btn c-pointer btn-cancel" (click)="onCancelClick()">Cancel</button>
+        <button class="btn c-pointer" (click)="rejectRequisition()" [disabled]="loader">Submit</button>
     </div>
 </div>
