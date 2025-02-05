@@ -143,7 +143,7 @@ export class HrCandidateDetailComponent {
       this.file = file;
       this.fileName = file?.name;
       this.loader = true;
-      if (this.fileName) this.s3Service.uploadImage(this.file, 'prod-ats-docs', this.file);
+      if (this.fileName) this.s3Service.uploadImage(this.file, 'hr-service-images', this.file);
       this.getKeyFroms3();
     }
   }

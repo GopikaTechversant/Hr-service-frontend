@@ -21,7 +21,7 @@ export class UserListComponent implements OnInit {
   userCount: any;
   candidateId: any;
   totalCount: any;
-  limit = 9;
+  limit = 10;
   initialLoader : boolean = false;
   userType: any;
   // headers = new HttpHeaders({
@@ -50,6 +50,10 @@ export class UserListComponent implements OnInit {
         this.totalCount = data?.userCount;
         const totalPages = Math.ceil(this.totalCount / this.limit);
         this.lastPage = totalPages;
+        console.log("lastPage",this.lastPage);
+        console.log("totalPages",totalPages);
+        console.log(" this.totalCount", this.totalCount);
+        
         if (this.currentPage > totalPages) this.currentPage = totalPages;
       }
     })

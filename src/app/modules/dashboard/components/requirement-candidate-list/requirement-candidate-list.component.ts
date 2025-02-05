@@ -100,9 +100,12 @@ export class RequirementCandidateListComponent implements OnInit {
   }
 
   onStatusChange(candidate: any): void {
-    this.router.navigate(['dashboard/add-candidate'], {
-      state: { candidate }
-    });
+    if(candidate?.status === 'active'){
+      this.router.navigate(['dashboard/add-candidate'], {
+        state: { candidate }
+      });
+    }else this.toastr.warning('Cannot add candidate: requisition inactive');
+   
   }
 
   delete(id: any): void {

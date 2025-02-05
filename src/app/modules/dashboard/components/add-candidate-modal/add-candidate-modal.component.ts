@@ -298,7 +298,7 @@ export class AddCandidateModalComponent implements OnInit {
     }
     if (this.selectedFile) {
       this.loader = true;
-      this.s3Service.uploadImage(this.selectedFile, 'prod-ats-docs', this.selectedFile);
+      this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', this.selectedFile);
     } else {
       this.loader = false;
     }
@@ -319,7 +319,7 @@ export class AddCandidateModalComponent implements OnInit {
   }
 
   uploadFile(): void {
-    if (this.selectedFile) this.s3Service.uploadImage(this.selectedFile, 'prod-ats-docs', this.selectedFile);
+    if (this.selectedFile) this.s3Service.uploadImage(this.selectedFile, 'hr-service-images', this.selectedFile);
   }
 
   checkValidation(): void {

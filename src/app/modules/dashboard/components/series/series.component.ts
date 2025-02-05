@@ -132,8 +132,17 @@ export class SeriesComponent implements OnInit {
     })
   }
 
-  approveRequisition(): void {
-    this.tostr.success('Approved');
+  approveRequisition(id:any): void {
+    console.log("id",id);
+    
+    this.apiService.post(`/service-request/activateRequest`,{requestionId: id}).subscribe({
+      next:(res:any) => {
+        this.tostr.success('Approved');
+      },
+      error:(error) => {
+        this.tostr.error('Unable to approve');
+      }
+    })
 
   }
 
