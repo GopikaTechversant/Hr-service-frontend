@@ -85,7 +85,12 @@ export class ServiceRequestComponent implements OnInit {
   selectedSalaryTypeId: any;
   validationSuccess: boolean = false;
   designationSearchvalue: string = '';
-  designationSuggestions: any[]=[]
+  designationSuggestions: any[] = [];
+  selectedAssignee: string = '';
+  selectedAssigneeId:any;
+  assigneeList:any[] =[];
+  openAssigneeList:boolean = false;
+  userId:any;
   constructor(private toastr: ToastrServices, private router: Router, private apiService: ApiService, private datePipe: DatePipe, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -109,9 +114,10 @@ export class ServiceRequestComponent implements OnInit {
     if (this.requestId) this.fetchDetails()
     this.fetchStations();
     this.fetchServiceTeam();
-    // this.fetchDesignation();
+    this.fetchRecruiters();
     this.fetchPanel();
     this.fetchLocation();
+    this.userId = localStorage.getItem('userId');
   }
 
   onBodyClick(event: MouseEvent): void {
@@ -126,6 +132,7 @@ export class ServiceRequestComponent implements OnInit {
       this.showSearchBar = false;
       this.managerListOpen = false;
       this.locationOpen = false;
+      this.openAssigneeList =  false;
     }
   }
 
@@ -143,7 +150,7 @@ export class ServiceRequestComponent implements OnInit {
     })
   }
 
- 
+
 
   fetchLocation(): void {
     this.apiService.get(`/user/preffer-location`).subscribe((res: any) => {
@@ -151,7 +158,7 @@ export class ServiceRequestComponent implements OnInit {
     })
   }
 
-  getDesignationSuggestion(event:any){
+  getDesignationSuggestion(event: any) {
     this.openDesignation = true;
     this.designationSearchvalue = event?.target.value;
     this.apiService.get(`/service-request/designation/list?search=${this.designationSearchvalue}`).subscribe((res: any) => {
@@ -167,7 +174,7 @@ export class ServiceRequestComponent implements OnInit {
     }))
   }
 
-  clearDesignationFilter():void{
+  clearDesignationFilter(): void {
     this.designationSearchvalue = '';
     this.openDesignation = false;
     this.designationSuggestions = [];
@@ -183,6 +190,15 @@ export class ServiceRequestComponent implements OnInit {
     this.apiService.get(`/user/lists?userRole=2`).subscribe((res: any) => {
       if (res?.users) this.panel_list = res?.users;
     })
+  }
+
+  fetchRecruiters(): void {
+    this.apiService.get(`/dashboard/recruiter-list`)
+      .subscribe((res: any) => {
+        this.assigneeList = res?.data;
+        console.log("assignee list",this.assigneeList);
+        
+      });
   }
 
   validateJobCode(event: KeyboardEvent): void {
@@ -293,7 +309,7 @@ export class ServiceRequestComponent implements OnInit {
   }
   selectDesignation(suggestion: any) {
     this.designationSearchvalue = suggestion.designationName; // Set selected designation in input box
-    this.selectedDesignationId = suggestion?.designationId ;
+    this.selectedDesignationId = suggestion?.designationId;
     this.openDesignation = false; // Close the dropdown
   }
 
@@ -479,6 +495,7 @@ export class ServiceRequestComponent implements OnInit {
     this.description = this.requirement_details?.requestDescription || '';
     this.postDate = this.requirement_details?.requestPostingDate || null;
     this.closeDateObj = this.requirement_details?.requestClosingDate || null;
+    // this.selectedAssigneeId = this.requirement_details?.selectedAssigneeId || null;
     if (this.flows) {
       this.selectedStations = this.flows.map((flow: any) => ({
         stationId: flow.flowStationId,
@@ -535,10 +552,14 @@ export class ServiceRequestComponent implements OnInit {
         message: 'Please Select the Start Date'
       },
       // {
+      //   condition: !this.selectedAssignee,
+      //   message: 'Please select Assignee'
+      // }
+      // {
       //   condition: !this.closeDate && !this.requirement_details?.requestClosingDate,
       //   message: 'Please Select the End Date'
       // },
-      
+
 
     ];
     this.validationSuccess = true;
@@ -570,6 +591,7 @@ export class ServiceRequestComponent implements OnInit {
     if (this.selectedTeam !== this.requirement_details?.team?.teamName) payload.requestTeam = this.selectedTeamName;
     if (this.reportingmanager !== this.requirement_details?.reporting?.userFullName) payload.requestManager = this.managerId;
     if (this.selectedLocation !== this.requirement_details?.requestLocation) payload.requestLocation = this.selectedLocation;
+    // if (this.selectedAssigneeId !== this.requirement_details?.selectedAssigneeId) payload.assigneeId = this.selectedAssigneeId ? this.selectedAssigneeId : this.userId;
     if (this.displayDate !== this.postDate) {
       payload.requestPostingDate = this.displayDate ? this.displayDate : this.postDate;
       payload.requestClosingDate = this.closeDate ? this.closeDate : this.closeDateObj;
@@ -587,7 +609,7 @@ export class ServiceRequestComponent implements OnInit {
           payload.requestId = this.requestId;
           this.handleApiCall('post', '/service-request/edit', payload);
         } else {
-          payload.requestDesignation =  this.requirement_details?.requestDesignation;
+          payload.requestDesignation = this.requirement_details?.requestDesignation;
           this.handleApiCall('patch', `/service-request/edit-requestion/${this.requestId}`, payload);
         }
       } else {
@@ -683,6 +705,11 @@ export class ServiceRequestComponent implements OnInit {
       event.preventDefault();
     }
   }
-
+  
+  selectAssignee(name: string,id:any): void {
+    this.selectedAssignee = name;
+    this.openAssigneeList =  false;
+    this.selectedAssigneeId = id;
+  }
 
 }

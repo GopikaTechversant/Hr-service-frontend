@@ -194,7 +194,7 @@
 }
 
 .child-skill {
-    width: 62.7%;
+    width: 62%;
 }
 
 .drop-list {
@@ -555,4 +555,17 @@
 
 .drop-menu {
     padding: 4px;
+}
+
+.width-48{
+    width: 48%;
+}
+
+.child-assign{
+    flex-direction: column;
+    width: 97%;
+}
+
+.w-50{
+    width: 50%;
 }
