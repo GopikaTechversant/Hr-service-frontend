@@ -213,7 +213,7 @@ export class ServiceRequestComponent implements OnInit {
   validateJobTitle(event: KeyboardEvent): void {
     const allowedKeys = [
       'Backspace', 'Tab', 'Enter', 'ArrowLeft', 'ArrowRight', 'Delete',
-      '-', '/', ' ', // Hyphen, Slash, and Space
+      '-', '/', ' ','(', ')','+' // Hyphen, Slash, and Space
     ];
 
     const ctrlKeyCodes = ['c', 'v', 'a', 'x'];
@@ -229,7 +229,7 @@ export class ServiceRequestComponent implements OnInit {
   validateJobTitlePaste(event: ClipboardEvent): void {
     const clipboardData = event.clipboardData;
     const pastedText = clipboardData?.getData('text') || '';
-    const isValidText = /^[a-zA-Z\s\-\/]*$/.test(pastedText);
+    const isValidText = /^[a-zA-Z\s\-\/\(\)\+]*$/.test(pastedText);
     if (!isValidText) {
       event.preventDefault();
     }
@@ -534,6 +534,10 @@ export class ServiceRequestComponent implements OnInit {
         condition: !this.displayDate && !this.requirement_details?.requestPostingDate,
         message: 'Please Select the Start Date'
       },
+      {
+        condition: !this.reportingmanager,
+        message: 'Please Select Reporting Manager'
+      }
       // {
       //   condition: !this.closeDate && !this.requirement_details?.requestClosingDate,
       //   message: 'Please Select the End Date'
@@ -602,13 +606,13 @@ export class ServiceRequestComponent implements OnInit {
   private handleApiCall(method: 'post' | 'patch', url: string, payload: any): void {
     this.apiService[method](url, payload).subscribe(
       response => {
-        const successMessage = method === 'post' ? 'Requirement created successfully' : 'Requirement updated successfully';
+        const successMessage = method === 'post' ? 'Requisition created successfully' : 'Requisition updated successfully';
         this.toastr.success(successMessage);
         this.resetFormAndState();
         this.router.navigate(['/dashboard/requirement-candidate-list']);
       },
       error => {
-        const errorMessage = method === 'post' ? 'Failed to create requirement' : 'Failed to update requirement';
+        const errorMessage = method === 'post' ? 'Failed to create Requisition' : 'Failed to update Requisition';
         this.toastr.error(errorMessage);
         console.error('API Error:', error);
       }

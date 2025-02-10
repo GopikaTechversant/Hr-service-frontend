@@ -24,22 +24,22 @@
     <div class="d-flex flex-1">
         <div class="w-50">
             <div class="heading  p-l-10 d-flex p-b-0 j-space">
-                <span>Requirement Details</span>
+                <span>Requisition Details</span>
             </div>
             <div class="d-flex p-l-10 content">
                 <div class="sub-head">
-                    <span class="key p-6">Requirement Name</span>
+                    <span class="key p-6">Requisition Name</span>
                     <span class="key p-6">Skills</span>
                     <span class="key p-6">Minimum Experience</span>
                     <span class="key p-6">Maximum Experience</span>
-                    <span class="key p-6">Requirement Status</span>
-                    <span class="key p-6">Requirement Vacancy</span>
+                    <span class="key p-6">Requisition Status</span>
+                    <span class="key p-6">Requisition Vacancy</span>
                 </div>
                 <div class="sub-head">
                     <span class="p-6 job-description"> :
                         <a
                             [href]="env_url + '/dashboard/series?requestId=' + candidateDetails['serviceRequest.requestId']">
-                            {{ candidateDetails['serviceRequest.requestName'] | titlecase }}
+                            {{ candidateDetails['serviceRequest.requestName'] }}
                         </a>
                     </span>
                     <span class="p-6 job-description"> : {{candidateDetails['serviceRequest.requestSkills'] |

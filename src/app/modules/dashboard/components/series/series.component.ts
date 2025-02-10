@@ -122,7 +122,8 @@ export class SeriesComponent implements OnInit {
       this.apiService.post(`/service-request/delete`, { requestId: this.deleteRequirementId }).subscribe({
         next: (res: any) => {
           this.fetchDetails();
-          this.toastr.success('Deleted succesfully')
+          this.toastr.success('Deleted succesfully');
+          this.router.navigate(['/dashboard/requirement-candidate-list']);
         },
         error: (error) => {
           this.tostr.error(error?.error?.message ? error?.error?.message : 'Unable to Delete candidates');

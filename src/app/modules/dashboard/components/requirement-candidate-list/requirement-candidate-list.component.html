@@ -59,7 +59,7 @@
                         <tr class="c-pointer" (dblclick)="navigate('/dashboard/series/',candidate?.requestId)">
                             <td class="text-end wrap-date">{{candidate?.requestCode ? candidate?.requestCode : 'N/A'}}</td>
                             <td class="text-start p-l-16 wrap" [title]="candidate?.requestName">
-                                {{candidate?.requestName ? (candidate?.requestName | titlecase) : 'N/A'}}</td>
+                                {{candidate?.requestName ? (candidate?.requestName) : 'N/A'}}</td>
                             <td class="text-end">{{candidate?.requestVacancy ? candidate?.requestVacancy : 'N/A'}}</td>
                             <td class="text-end" [title]="candidate?.candidatesCount">{{candidate?.candidatesCount ? candidate?.candidatesCount : '0'}}
                             </td>
@@ -67,10 +67,10 @@
                             <td class="text-start" [title]="candidate?.teamName">{{candidate?.teamName ? (candidate?.teamName | titlecase) : 'N/A'}}
                             </td>
                             <td class="text-start wrap" [title]="candidate?.requestSkills">
-                                {{candidate?.requestSkills ? (candidate?.requestSkills | titlecase) : 'N/A'}}</td>
+                                {{candidate?.requestSkills ? (candidate?.requestSkills) : 'N/A'}}</td>
                             <td class="text-start f-w-500"
                                 [ngStyle]="{'color': candidate.status === 'active' ? '#08BC66' : 'red'}">
-                                {{candidate?.status ?(candidate?.status | titlecase) : 'N/A'}}
+                                {{candidate?.status ?(candidate?.status) : 'N/A'}}
                             </td>
                             <td class="text-center add" (click)="onStatusChange(candidate)" *ngIf="filteredStatus === 'Active Requisitions' && userType !== 'super-admin'">
                                 <i class="fa fa-user-plus" aria-hidden="true"></i>

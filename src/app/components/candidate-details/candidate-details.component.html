@@ -208,8 +208,7 @@
                             <ng-container *ngFor="let item of CandidateHistory">
                                 <ng-container *ngFor="let data of item['interviewDetail']">
                                     <tr class="candidate" *ngIf="data?.station !== null">
-                                        <td class="text-start" *ngIf="data?.station !== null">{{item?.positionName |
-                                            titlecase}}</td>
+                                        <td class="text-start" *ngIf="data?.station !== null">{{item?.positionName}}</td>
                                         <td class="text-start">{{ data?.station | titlecase }} 
                                         </td>
                                         <td class="text-start">{{data?.interviewType === 0 ? 'Interview Scheduled' :
