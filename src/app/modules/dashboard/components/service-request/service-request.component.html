@@ -310,6 +310,55 @@
                 </div>
             </div>
         </div>
+        <div class="d-flex parent p-t-10">
+            <div class="child d-flex">
+                <div class="m-t-20 m-b-10">
+                    <span class="sub-head">Current Market Range</span>
+                    <div>
+                        <input type="text" class="input-box" maxLength="70" [(ngModel)]="marketRange" id="marketRange"/>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="child d-flex">
+                <div class="m-t-20 m-b-10">
+                    <span class="sub-head">Assign To</span>
+                    <div class="no-close col-md-3 s-list d-flex input-box j-space m-text p-relative">
+                        <span (click)="locationOpen = !locationOpen" class="w-100 d-flex">
+                            <span class="align-center p-t-5 c-pointer">
+                                {{selectedLocation.trim() !== '' ? selectedLocation : 'Select Job Location'}}</span>
+                            <span class="no-close s-list c-pointer align-center m-b-2 flex-1 sub j-end"><i
+                                    class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
+                            </span>
+                        </span>
+                        <div class=" m-b-2 drop-list no-close" *ngIf="locationOpen">
+                            <div (click)="selectLocation(item?.location)" *ngFor="let item of jobLocation"
+                                class=" p-t-5 p-b-5 p-l-8 c-pointer">
+                                {{item?.location}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="child d-flex">
+                <div class="m-t-20 m-b-10">
+                    <span class="sub-head">Priority<span class="required">*</span></span>
+                    <div class="no-close col-md-3 s-list d-flex input-box j-space m-text p-relative">
+                        <span (click)="priorityListOpen = !priorityListOpen" class="w-100 d-flex">
+                            <span class="align-center p-t-5 c-pointer">
+                                {{selectedPriority.trim() !== '' ? selectedPriority : 'Select Priority'}}</span>
+                            <span class="no-close s-list c-pointer align-center m-b-2 flex-1 sub j-end"><i
+                                    class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
+                            </span>
+                        </span>
+                        <div class=" m-b-2 drop-list no-close" *ngIf="priorityListOpen">
+                            <div (click)="selectPriority(priority?.name)"
+                                *ngFor="let priority of priorityList" class=" p-t-5 p-b-5 p-l-8 c-pointer">
+                                {{priority?.name}} {{priority?.name}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="m-t-20 m-b-10 child-skill">
             <span class="sub-head">Skills</span>
             <div>

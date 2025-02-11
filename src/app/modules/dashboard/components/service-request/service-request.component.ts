@@ -85,7 +85,11 @@ export class ServiceRequestComponent implements OnInit {
   selectedSalaryTypeId: any;
   validationSuccess: boolean = false;
   designationSearchvalue: string = '';
-  designationSuggestions: any[]=[]
+  designationSuggestions: any[]=[];
+  marketRange: string = '';
+  priorityListOpen :boolean = false;
+  priorityList: any[]=[{'name':'Urgent'},{'name':'High'},{'name':'Normal'},{'name':'Low'}];
+  selectedPriority: string = '';
   constructor(private toastr: ToastrServices, private router: Router, private apiService: ApiService, private datePipe: DatePipe, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -324,6 +328,11 @@ export class ServiceRequestComponent implements OnInit {
     this.managerListOpen = false;
     this.reportingmanager = `${fname} ${lname}`;
     this.managerId = id;
+  }
+
+  selectPriority(name:string):void{
+    this.priorityListOpen = false;
+    this.selectedPriority = name;
   }
 
   fetchStations(): void {
