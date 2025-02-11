@@ -85,11 +85,16 @@ export class ServiceRequestComponent implements OnInit {
   selectedSalaryTypeId: any;
   validationSuccess: boolean = false;
   designationSearchvalue: string = '';
-  designationSuggestions: any[]=[];
+  designationSuggestions: any[] = [];
   marketRange: string = '';
-  priorityListOpen :boolean = false;
-  priorityList: any[]=[{'name':'Urgent'},{'name':'High'},{'name':'Normal'},{'name':'Low'}];
+  priorityListOpen: boolean = false;
+  priorityList: any[] = [{ 'name': 'Urgent' }, { 'name': 'High' }, { 'name': 'Normal' }, { 'name': 'Low' }];
   selectedPriority: string = '';
+  assigneeList: any[] = [];
+  selectedAssignee: string = '';
+  selectedAssigneeId: any;
+  assigneeListOpen: boolean = false;
+  userId: any;
   constructor(private toastr: ToastrServices, private router: Router, private apiService: ApiService, private datePipe: DatePipe, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -147,7 +152,7 @@ export class ServiceRequestComponent implements OnInit {
     })
   }
 
- 
+
 
   fetchLocation(): void {
     this.apiService.get(`/user/preffer-location`).subscribe((res: any) => {
@@ -155,7 +160,7 @@ export class ServiceRequestComponent implements OnInit {
     })
   }
 
-  getDesignationSuggestion(event:any){
+  getDesignationSuggestion(event: any) {
     this.openDesignation = true;
     this.designationSearchvalue = event?.target.value;
     this.apiService.get(`/service-request/designation/list?search=${this.designationSearchvalue}`).subscribe((res: any) => {
@@ -171,7 +176,7 @@ export class ServiceRequestComponent implements OnInit {
     }))
   }
 
-  clearDesignationFilter():void{
+  clearDesignationFilter(): void {
     this.designationSearchvalue = '';
     this.openDesignation = false;
     this.designationSuggestions = [];
@@ -218,7 +223,7 @@ export class ServiceRequestComponent implements OnInit {
   validateJobTitle(event: KeyboardEvent): void {
     const allowedKeys = [
       'Backspace', 'Tab', 'Enter', 'ArrowLeft', 'ArrowRight', 'Delete',
-      '-', '/', ' ','(', ')','+','.' // Hyphen, Slash, and Space
+      '-', '/', ' ', '(', ')', '+', '.' // Hyphen, Slash, and Space
     ];
 
     const ctrlKeyCodes = ['c', 'v', 'a', 'x'];
@@ -297,14 +302,14 @@ export class ServiceRequestComponent implements OnInit {
     this.selectedTeamName = teamId;
   }
   selectDesignation(suggestion: any) {
-    console.log("suggestion",suggestion);
-    
+    console.log("suggestion", suggestion);
+
     this.designationSearchvalue = suggestion.designationName; // Set selected designation in input box
-    this.selectedDesignationId = suggestion?.designationId ;
+    this.selectedDesignationId = suggestion?.designationId;
     this.openDesignation = false; // Close the dropdown
-    console.log("this.designationSearchvalue",this.designationSearchvalue);
-    console.log("this.selectedDesignationId",this.selectedDesignationId);
-        
+    console.log("this.designationSearchvalue", this.designationSearchvalue);
+    console.log("this.selectedDesignationId", this.selectedDesignationId);
+
   }
 
   // selectDesignation(id: any, name: any): void {
@@ -330,7 +335,7 @@ export class ServiceRequestComponent implements OnInit {
     this.managerId = id;
   }
 
-  selectPriority(name:string):void{
+  selectPriority(name: string): void {
     this.priorityListOpen = false;
     this.selectedPriority = name;
   }
@@ -347,7 +352,7 @@ export class ServiceRequestComponent implements OnInit {
   selectStation(id: any, stationName: any): void {
     const stationOrder = ["Technical 1", "Technical 2", "Technical 3"];
     const isStationAlreadySelected = this.selectedStations.some((station: { stationId: any }) => station.stationId === id);
-    console.log("isStationAlreadySelected",isStationAlreadySelected);
+    console.log("isStationAlreadySelected", isStationAlreadySelected);
 
     if (stationOrder.includes(stationName)) {
       // Find any stations that shouldn't be added in the current order
@@ -390,14 +395,14 @@ export class ServiceRequestComponent implements OnInit {
     }
     if (this.selectedStations.length === 2) this.fetchStations();
   }
-  
-  
+
+
   get filteredStationsList(): any[] {
     return this.stationsList.filter(
-      station => !this.selectedStations.some((selected:any) => selected.stationId === station.stationId)
+      station => !this.selectedStations.some((selected: any) => selected.stationId === station.stationId)
     );
   }
-  
+
 
   getSkillSuggestions(event: any): void {
     this.showSearchBar = true;
@@ -421,6 +426,11 @@ export class ServiceRequestComponent implements OnInit {
     this.searchvalue = '';
   }
 
+  selectAssignee(name:string,id:any): void {
+    this.assigneeListOpen = false;
+    this.selectedAssignee = name;
+    this.selectedAssigneeId = id;
+  }
 
   removeSkill(skillToRemove: any): void {
     this.selectedSkills = this.selectedSkills?.filter(skill => skill !== skillToRemove);
@@ -570,7 +580,7 @@ export class ServiceRequestComponent implements OnInit {
       //   condition: !this.closeDate && !this.requirement_details?.requestClosingDate,
       //   message: 'Please Select the End Date'
       // },
-      
+
 
     ];
     this.validationSuccess = true;
@@ -606,8 +616,8 @@ export class ServiceRequestComponent implements OnInit {
       payload.requestPostingDate = this.displayDate ? this.displayDate : this.postDate;
       payload.requestClosingDate = this.closeDate ? this.closeDate : this.closeDateObj;
     }
-    console.log("payload",payload);
-    
+    console.log("payload", payload);
+
     const currentDescription = this.commentDiv.nativeElement.innerHTML;
     if (currentDescription !== this.requirement_details.requestDescription) payload.requestDescription = currentDescription;
 
@@ -621,8 +631,8 @@ export class ServiceRequestComponent implements OnInit {
           this.handleApiCall('post', '/service-request/edit', payload);
         } else {
           payload.requestDesignation = this.selectedDesignationId ? this.selectedDesignationId : this.requirement_details?.requestDesignation;
-          console.log("this.requirement_details?.requestDesignation",this.requirement_details?.requestDesignation);
-          
+          console.log("this.requirement_details?.requestDesignation", this.requirement_details?.requestDesignation);
+
           this.handleApiCall('patch', `/service-request/edit-requestion/${this.requestId}`, payload);
         }
       } else {
