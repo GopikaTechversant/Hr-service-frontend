@@ -10,7 +10,7 @@
                     <span class="sub-head">Job Title<span class="required">*</span></span>
                     <div>
                         <input type="text" class="input-box" maxLength="70" [(ngModel)]="jobTitle" id="job-title"
-                            [disabled]="candidateCount !== '0'" (keydown)="validateJobTitle($event)"
+                             (keydown)="validateJobTitle($event)"
                             (paste)="validateJobTitlePaste($event)" />
                     </div>
                 </div>
@@ -20,7 +20,7 @@
                     <span class="sub-head">Job Code<span class="required">*</span></span>
                     <div>
                         <input type="text" class="input-box" maxlength="16" [(ngModel)]="jobCode" id="jobCode"
-                            [disabled]="candidateCount !== '0'" (keydown)="validateJobCode($event)"
+                             (keydown)="validateJobCode($event)"
                             (paste)="validateJobCodePaste($event)" />
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                     <div class="p-relative w-100">
                         <input class="p-l-5  input-box" placeholder="DD/MM/YYYY" matInput [matDatepicker]="pickerdate"
                             (dateChange)="dateChange($event,'postdate')" (click)="pickerdate?.open()" name="postDate"
-                            [(ngModel)]="postDate" [disabled]="candidateCount !== '0'">
+                            [(ngModel)]="postDate">
                         <span> <mat-datepicker #pickerdate class=""></mat-datepicker>
                             <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
                                 (click)="pickerdate?.open()"></i>
@@ -48,7 +48,7 @@
                         <input class="p-l-5  input-box" placeholder="MM/DD/YYYY" matInput name="closeDate"
                             [matDatepicker]="pickerClosedate" (dateChange)="dateChange($event,'closeDate')"
                             (click)="pickerClosedate?.open()" [(ngModel)]="closeDateObj" [min]="today"
-                            [disabled]="candidateCount !== '0'">
+                            >
                         <span> <mat-datepicker #pickerClosedate class=""></mat-datepicker>
                             <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
                                 (click)="pickerClosedate?.open()"></i>
@@ -62,14 +62,14 @@
                     <div class="no-close col-md-3 s-list d-flex input-box j-space m-text p-relative">
                         <span (click)="teamListOpen = !teamListOpen" class="w-100 d-flex">
                             <span class="align-center m-t-6 c-pointer"
-                                [ngClass]="{'text-muted': candidateCount !== '0'}">
+                                >
                                 {{selectedTeam.trim() !== '' ? selectedTeam : 'Select Department'}}</span>
-                            <span *ngIf="candidateCount === '0'"
+                            <span
                                 class="no-close s-list c-pointer align-center m-b-2 flex-1 sub j-end"><i
                                     class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
                             </span>
                         </span>
-                        <div class=" m-b-2 drop-list no-close" *ngIf="teamListOpen && candidateCount === '0'">
+                        <div class=" m-b-2 drop-list no-close" *ngIf="teamListOpen">
                             <div (click)="selectTeam(team?.teamId,team?.teamName)" *ngFor="let team of list_team"
                                 class=" p-t-5 p-b-5 p-l-8 c-pointer">{{team?.teamName}}</div>
                         </div>
@@ -96,14 +96,14 @@
                     </div> -->
                     <span class="p-relative ">
                         <span class="d-flex input-interview-rounds-skill p-relative">
-                            <input type="text" class=" skill-input" name="skill search" *ngIf="candidateCount === '0'"
+                            <input type="text" class=" skill-input" name="skill search" *ngIf="selectedDesignation === ''"
                                 (input)="getDesignationSuggestion($event)" id="designationSearch"
                                 [(ngModel)]="designationSearchvalue">
-                            <span *ngIf="candidateCount !== '0'" class=" c-pointer skill-input"
-                                [ngClass]="{'text-muted': candidateCount !== '0'}">
+                            <span *ngIf="selectedDesignation !== ''" class=" c-pointer skill-input"
+                                >
                                 {{selectedDesignation.trim() !== '' ? selectedDesignation : ''}}
                             </span>
-                            <div class=" d-flex j-end p-t-5" *ngIf="candidateCount === '0'">
+                            <div class=" d-flex j-end p-t-5">
                                 <span *ngIf="designationSearchvalue.trim() !== ''" (click)="clearDesignationFilter()"
                                     class="c-pointer p-absolute f-right">
                                     <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
@@ -134,9 +134,9 @@
                             <!-- First station (Screening) -->
                             <ng-container *ngIf="i === 0">
                                 <span class="m-t-2"
-                                    [ngClass]="{'text-muted': candidateCount !== '0'}">{{item?.stationName}}</span>
+                                    >{{item?.stationName}}</span>
                                 <ng-container *ngIf="selectedStations.length > 1">
-                                    <i [ngClass]="{'text-muted': candidateCount !== '0'}"
+                                    <i
                                         class="fa fa-long-arrow-right f-s-18 p-l-5" aria-hidden="true"></i>
                                     <!-- <img src="assets/images/forward-arrow.png" alt="arrow"
                                         style="vertical-align: middle;" class="m-t-3 m-l-5"> -->
@@ -145,17 +145,17 @@
                             <!-- Middle stations (dynamically added) -->
                             <ng-container *ngIf="i !== 0 && i !== selectedStations.length - 1"
                                 class="d-flex align-center">
-                                <span
-                                    [ngClass]="{'station-pill': candidateCount === '0' , 'm-t-3' : candidateCount !== '0'}">
-                                    <span [ngClass]="{'text-muted': candidateCount !== '0'}">{{item?.stationName}}
+                                <span class="station-pill"
+                                    >
+                                    <span>{{item?.stationName}}
                                     </span>
-                                    <div *ngIf="candidateCount === '0'"
+                                    <div
                                         (click)="deleteStation(item?.stationId, item?.stationName)"
                                         class="circle c-pointer">
                                         <div class="minus"></div>
                                     </div>
                                 </span>
-                                <i [ngClass]="{'text-muted': candidateCount !== '0'}"
+                                <i 
                                     class="fa fa-long-arrow-right f-s-18 p-l-5" aria-hidden="true"></i>
                                 <!-- <img src="assets/images/forward-arrow.png" alt="arrow" style="vertical-align: middle;"
                                     class="m-l-5"> -->
@@ -164,24 +164,28 @@
                             <!-- Last station (HR) -->
                             <ng-container *ngIf="i === selectedStations.length - 1 && selectedStations.length > 1">
                                 <span class="m-t-2"
-                                    [ngClass]="{'text-muted': candidateCount !== '0'}">{{item?.stationName}}</span>
+                                    >{{item?.stationName}}</span>
                             </ng-container>
                             <!-- Handle case where only one station is present -->
                             <ng-container *ngIf="i === selectedStations.length - 1 && selectedStations.length === 1">
-                                <span [ngClass]="{'text-muted': candidateCount !== '0'}">{{item?.stationName}}</span>
+                                <span>{{item?.stationName}}</span>
                             </ng-container>
                         </div>
                     </div>
-                    <div *ngIf="candidateCount === '0'" class="add-btn no-close c-pointer"
+                    <div class="add-btn no-close c-pointer"
                         (click)="idListOpen = !idListOpen">
                         <span class="p-t-20">Add</span>
                     </div>
                     <div class="drop-list no-close" *ngIf="idListOpen && (selectedStations?.length < 5)">
-                        <div (click)="selectStation(station?.stationId, station?.stationName)"
-                            *ngFor="let station of stationsList" class="c-pointer drop-menu 4 no-close">
-                            {{station?.stationName}}
+                        <div
+                          (click)="selectStation(station?.stationId, station?.stationName)"
+                          *ngFor="let station of filteredStationsList"
+                          class="c-pointer drop-menu 4 no-close"
+                        >
+                          {{ station?.stationName }}
                         </div>
-                    </div>
+                      </div>
+                      
                 </div>
             </div>
         </div>
