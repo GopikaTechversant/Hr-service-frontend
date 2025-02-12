@@ -3,32 +3,37 @@
         <div class="title-left p-l-2"><span>Requisition List</span></div>
         <div class="d-flex  title-right">
             <div class="input-1 c-pointer no-close p-relative" (click)="filterStatus = !filterStatus">
-                <span class="no-close p-l-10" >{{filteredStatus.trim() === '' ?
+                <span class="no-close p-l-10">{{filteredStatus.trim() === '' ?
                     'Active Requisitions' : filteredStatus | titlecase}}</span>
                 <span class="f-right">
-                    <span *ngIf="filteredStatus !== 'Active Requisitions' && filteredStatus && filteredStatus.trim() !== ''" (click)="clearFilter('status')">
+                    <span
+                        *ngIf="filteredStatus !== 'Active Requisitions' && filteredStatus && filteredStatus.trim() !== ''"
+                        (click)="clearFilter('status')">
                         <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
                     </span>
                     <span>
-                        <i [ngClass]="filterStatus ? ' fa fa-chevron-up' : ' fa fa-chevron-down'" class="m-l-5 p-r-10 s-text no-close"></i>
+                        <i [ngClass]="filterStatus ? ' fa fa-chevron-up' : ' fa fa-chevron-down'"
+                            class="m-l-5 p-r-10 s-text no-close"></i>
                     </span>
                 </span>
                 <div class="dropdown c-pointer no-close'" *ngIf="filterStatus">
-                    <span class="d-flex p-0" *ngFor="let type of status" (click)="selectStatusFilter(type);filterStatus = !filterStatus">
+                    <span class="d-flex p-0" *ngFor="let type of status"
+                        (click)="selectStatusFilter(type);filterStatus = !filterStatus">
                         <span class="padding-5">{{type | titlecase}}</span>
                     </span>
                 </div>
             </div>
             <span class="input d-flex j-space">
-                <input type="text" class="p-10" placeholder="Search Requirement" [(ngModel)]="searchKeyword" name="search candidate"
-                    (ngModelChange)="requirementSearch($event)">
-                <span *ngIf="searchKeyword !== ''" (click)="clearFilter('search')"
-                    class="c-pointer m-l-10 p-t-5"><img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20"></span>
+                <input type="text" class="p-10" placeholder="Search Requirement" [(ngModel)]="searchKeyword"
+                    name="search candidate" (ngModelChange)="requirementSearch($event)">
+                <span *ngIf="searchKeyword !== ''" (click)="clearFilter('search')" class="c-pointer m-l-10 p-t-5"><img
+                        src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20"></span>
                 <span class="search d-flex j-end">
                     <i class="fa fa-search" aria-hidden="true" (click)="requirementSearch(searchKeyword)"></i>
                 </span>
             </span>
-            <div class="create-btn c-pointer" *ngIf="userRole === 'manager' || userType === 'admin'" (click)="navigate('/dashboard/service-requirement',false)">
+            <div class="create-btn c-pointer" *ngIf="userRole === 'manager' || userType === 'admin'"
+                (click)="navigate('/dashboard/service-requirement',false)">
                 <span class="f-w-500">Create Requisition</span>
             </div>
         </div>
@@ -48,7 +53,9 @@
                     <td class="text-start">Team</td>
                     <td class="text-start">Primary Skills</td>
                     <td class="text-start">Status</td>
-                    <td class="text-center wrap" *ngIf="filteredStatus === 'Active Requisitions' && userType !== 'super-admin'">Add Candidate</td>
+                    <td class="text-center wrap"
+                        *ngIf="filteredStatus === 'Active Requisitions' && userType !== 'super-admin'">Add Candidate
+                    </td>
                     <td class="text-end">Date</td>
                 </tr>
                 <div *ngIf="loader && !initialLoader" class="loader-parent">
@@ -57,14 +64,18 @@
                 <ng-container *ngIf="candidates_list?.length > 0">
                     <ng-container *ngFor="let candidate of candidates_list">
                         <tr class="c-pointer" (dblclick)="navigate('/dashboard/series/',candidate?.requestId)">
-                            <td class="text-end wrap-date">{{candidate?.requestCode ? candidate?.requestCode : 'N/A'}}</td>
+                            <td class="text-end wrap-date">{{candidate?.requestCode ? candidate?.requestCode : 'N/A'}}
+                            </td>
                             <td class="text-start p-l-16 wrap" [title]="candidate?.requestName">
                                 {{candidate?.requestName ? (candidate?.requestName) : 'N/A'}}</td>
                             <td class="text-end">{{candidate?.requestVacancy ? candidate?.requestVacancy : 'N/A'}}</td>
-                            <td class="text-end" [title]="candidate?.candidatesCount">{{candidate?.candidatesCount ? candidate?.candidatesCount : '0'}}
+                            <td class="text-end" [title]="candidate?.candidatesCount">{{candidate?.candidatesCount ?
+                                candidate?.candidatesCount : '0'}}
                             </td>
-                            <td class="text-end">{{candidate?.requestHiredCount ? candidate?.requestHiredCount : '0'}}</td>
-                            <td class="text-start" [title]="candidate?.teamName">{{candidate?.teamName ? (candidate?.teamName | titlecase) : 'N/A'}}
+                            <td class="text-end">{{candidate?.requestHiredCount ? candidate?.requestHiredCount : '0'}}
+                            </td>
+                            <td class="text-start" [title]="candidate?.teamName">{{candidate?.teamName ?
+                                (candidate?.teamName | titlecase) : 'N/A'}}
                             </td>
                             <td class="text-start wrap" [title]="candidate?.requestSkills">
                                 {{candidate?.requestSkills ? (candidate?.requestSkills) : 'N/A'}}</td>
@@ -72,7 +83,8 @@
                                 [ngStyle]="{'color': candidate.status === 'active' ? '#08BC66' : 'red'}">
                                 {{candidate?.status ?(candidate?.status) : 'N/A'}}
                             </td>
-                            <td class="text-center add" (click)="onStatusChange(candidate)" *ngIf="filteredStatus === 'Active Requisitions' && userType !== 'super-admin'">
+                            <td class="text-center add" (click)="onStatusChange(candidate)"
+                                *ngIf="filteredStatus === 'Active Requisitions' && userType !== 'super-admin'">
                                 <i class="fa fa-user-plus" aria-hidden="true"></i>
                             </td>
                             <td class="text-end wrap-date" [title]="candidate?.requestDate | date:'dd-MM-yyyy'">
@@ -113,14 +125,28 @@
             <button *ngIf="currentPage === 1" class="box p-r-20 m-r-10">
                 <img src="assets/images/inactive-double-arrow-left.svg" alt="" height="23px" width="23px">
             </button>
+            <!-- Previous Page -->
+            <button *ngIf="currentPage > 1" class="box c-pointer" (click)="onPageChange(currentPage - 1)">
+                <img src="assets/images/single-left-arrow.svg" height="20px" width="20px">
+            </button>
+            <button *ngIf="currentPage === 1" class="box">
+                <img src="assets/images/inactive-single-arrow-left.svg" height="23px" width="23px">
+            </button>
             <ng-container *ngFor="let page of generatePageNumbers()">
                 <button *ngIf="page === '...'" class="box dot" disabled>...</button>
                 <button *ngIf="page !== '...' && page === currentPage" class="box current-page c-pointer">{{ page
                     }}</button>
                 <button *ngIf="page !== '...' && page !== currentPage" class="box c-pointer"
                     (click)="onPageChange(page)">{{ page }}</button>
-            </ng-container> <button *ngIf="currentPage < lastPage" class="box c-pointer"
-                (click)="onPageChange(lastPage)">
+            </ng-container>
+            <!-- Next Page -->
+            <button *ngIf="currentPage < lastPage" class="box c-pointer" (click)="onPageChange(currentPage + 1)">
+                <img src="assets/images/single-right-arrow.svg" height="20px" width="20px">
+            </button>
+            <button *ngIf="currentPage === lastPage" class="box">
+                <img src="assets/images/inactive-single -arrow-right.svg" height="24px" width="24px">
+            </button>
+            <button *ngIf="currentPage < lastPage" class="box c-pointer" (click)="onPageChange(lastPage)">
                 <img src="assets/images/double-arrow-right-icon.svg" alt="" height="14px" width="14px">
             </button>
             <button *ngIf="currentPage === lastPage" class="box">

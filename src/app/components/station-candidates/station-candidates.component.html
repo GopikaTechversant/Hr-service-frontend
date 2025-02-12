@@ -52,12 +52,12 @@
             </span>
         </div>
         <div class="input-1 c-pointer no-close p-relative p-t-6 m-l-10 m-b-10 p-l-10 m-r-10">
-            <span class="no-close"  (click)="filterStatus = !filterStatus">{{filteredStatus.trim() === '' ?
+            <span class="no-close" (click)="filterStatus = !filterStatus">{{filteredStatus.trim() === '' ?
                 'Filter by Status' : filteredStatus | titlecase}}</span>
             <span class="f-right">
                 <span *ngIf="filteredStatus && filteredStatus.trim() !== ''" (click)="clearFilter('status')"
                     class=""><img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20"></span>
-                <span  (click)="filterStatus = !filterStatus"><i
+                <span (click)="filterStatus = !filterStatus"><i
                         class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
             </span>
             <div class="dropdown c-pointer no-close p-l-9'" *ngIf="filterStatus">
@@ -94,7 +94,7 @@
             </div>
         </div>
         <div class="m-b-10" *ngIf="userType !== 'super-admin'">
-            <button class="export-btn c-pointer m-l-10" (click)="exportData()" >Export</button>
+            <button class="export-btn c-pointer m-l-10" (click)="exportData()">Export</button>
         </div>
     </div>
     <div class="main m-t-10">
@@ -106,7 +106,8 @@
                     <td class="text-start" title="Email">Email</td>
                     <td class="text-start" title="Requirement">Requirement</td>
                     <td class="text-start" title="Review Status">Review Status</td>
-                    <td class="text-center" title="Move Candidates" *ngIf="userType !== 'super-admin'">Move Candidates</td>
+                    <td class="text-center" title="Move Candidates" *ngIf="userType !== 'super-admin'">Move Candidates
+                    </td>
                     <td class="text-start" title="Service Status">Service Status</td>
                     <td class="text-start" title="Candidate Station">Candidate Station</td>
                     <td class="text-start more" title="More Detail">More Detail</td>
@@ -188,6 +189,13 @@
             <button *ngIf="currentPage === 1" class="box p-r-20 m-r-10">
                 <img src="assets/images/inactive-double-arrow-left.svg" alt="" height="23px" width="23px">
             </button>
+            <!-- Previous Page -->
+            <button *ngIf="currentPage > 1" class="box c-pointer" (click)="onPageChange(currentPage - 1)">
+                <img src="assets/images/single-left-arrow.svg" height="20px" width="20px">
+            </button>
+            <button *ngIf="currentPage === 1" class="box">
+                <img src="assets/images/inactive-single-arrow-left.svg" height="23px" width="23px">
+            </button>
             <ng-container *ngFor="let page of generatePageNumbers()">
                 <button *ngIf="page === '...'" class="box dot" disabled>...</button>
                 <button *ngIf="page !== '...' && page === currentPage" class="box current-page c-pointer">{{ page
@@ -195,6 +203,13 @@
                 <button *ngIf="page !== '...' && page !== currentPage" class="box c-pointer"
                     (click)="onPageChange(page)">{{ page }}</button>
             </ng-container>
+            <!-- Next Page -->
+            <button *ngIf="currentPage < lastPage" class="box c-pointer" (click)="onPageChange(currentPage + 1)">
+                <img src="assets/images/single-right-arrow.svg" height="20px" width="20px">
+            </button>
+            <button *ngIf="currentPage === lastPage" class="box">
+                <img src="assets/images/inactive-single -arrow-right.svg" height="24px" width="24px">
+            </button>
             <button *ngIf="currentPage < lastPage" class="box c-pointer" (click)="onPageChange(lastPage)">
                 <img src="assets/images/double-arrow-right-icon.svg" alt="" height="14px" width="14px">
             </button>
