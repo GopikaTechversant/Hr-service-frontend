@@ -88,7 +88,7 @@ export class ServiceRequestComponent implements OnInit {
   designationSuggestions: any[] = [];
   marketRange: string = '';
   priorityListOpen: boolean = false;
-  priorityList: any[] = [{ 'name': 'Urgent' }, { 'name': 'High' }, { 'name': 'Normal' }, { 'name': 'Low' }];
+  priorityList: any[] = [{ name: 'Urgent' }, { name: 'High' }, { name: 'Normal' }, { name: 'Low' }];
   selectedPriority: string = '';
   assigneeList: any[] = [];
   selectedAssignee: string = '';
@@ -121,6 +121,7 @@ export class ServiceRequestComponent implements OnInit {
     // this.fetchDesignation();
     this.fetchPanel();
     this.fetchLocation();
+    this.fetchRecruiters();
   }
 
   onBodyClick(event: MouseEvent): void {
@@ -181,6 +182,7 @@ export class ServiceRequestComponent implements OnInit {
     this.openDesignation = false;
     this.designationSuggestions = [];
     this.selectedDesignation = '';
+    this.selectedDesignationId = null;
   }
 
   fetchServiceTeam(): void {
@@ -195,10 +197,19 @@ export class ServiceRequestComponent implements OnInit {
     })
   }
 
+  fetchRecruiters(): void {
+    this.apiService.get(`/dashboard/recruiter-list`)
+      .subscribe((res: any) => {
+        this.assigneeList = res?.data;
+        console.log("assignee list",this.assigneeList);
+        
+      });
+  }
+
   validateJobCode(event: KeyboardEvent): void {
     const allowedKeys = [
       'Backspace', 'Tab', 'Enter', 'ArrowLeft', 'ArrowRight', 'Delete',
-      '-', ' ', // Hyphen and Space
+      '-', ' ', 
     ];
 
     const ctrlKeyCodes = ['c', 'v', 'a', 'x'];
@@ -517,6 +528,7 @@ export class ServiceRequestComponent implements OnInit {
     this.description = this.requirement_details?.requestDescription || '';
     this.postDate = this.requirement_details?.requestPostingDate || null;
     this.closeDateObj = this.requirement_details?.requestClosingDate || null;
+    // this.selectedAssigneeId = this.requirement_details?.selectedAssigneeId || null;
     if (this.flows) {
       this.selectedStations = this.flows.map((flow: any) => ({
         stationId: flow.flowStationId,
@@ -553,7 +565,7 @@ export class ServiceRequestComponent implements OnInit {
         message: 'Please Enter the Experience'
       },
       {
-        condition: !(this.designationSearchvalue.trim() || this.selectedDesignationId),
+        condition: !(this.designationSearchvalue.trim() === '' || this.selectedDesignationId),
         message: 'Please Select the Designation'
       },
       {
@@ -575,7 +587,11 @@ export class ServiceRequestComponent implements OnInit {
       {
         condition: !this.reportingmanager,
         message: 'Please Select Reporting Manager'
-      }
+      },
+      // {
+      //   condition: !this.selectedAssigneeId,
+      //   message: 'Please Select Assignee'
+      // }
       // {
       //   condition: !this.closeDate && !this.requirement_details?.requestClosingDate,
       //   message: 'Please Select the End Date'
@@ -612,6 +628,7 @@ export class ServiceRequestComponent implements OnInit {
     if (this.selectedTeam !== this.requirement_details?.team?.teamName) payload.requestTeam = this.selectedTeamName;
     if (this.reportingmanager !== this.requirement_details?.reporting?.userFullName) payload.requestManager = this.managerId;
     if (this.selectedLocation !== this.requirement_details?.requestLocation) payload.requestLocation = this.selectedLocation;
+    // if (this.selectedAssigneeId !== this.requirement_details?.selectedAssigneeId) payload.assigneeId = this.selectedAssigneeId ? this.selectedAssigneeId : this.userId;
     if (this.displayDate !== this.postDate) {
       payload.requestPostingDate = this.displayDate ? this.displayDate : this.postDate;
       payload.requestClosingDate = this.closeDate ? this.closeDate : this.closeDateObj;

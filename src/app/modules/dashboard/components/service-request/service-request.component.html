@@ -95,7 +95,7 @@
                         </div>
                     </div> -->
                     <span class="p-relative ">
-                        <span class="d-flex input-interview-rounds-skill p-relative">
+                        <span class="d-flex input-interview-rounds-skill p-relative ">
                             <input type="text" class=" skill-input" name="skill search" *ngIf="selectedDesignation === ''"
                                 (input)="getDesignationSuggestion($event)" id="designationSearch"
                                 [(ngModel)]="designationSearchvalue">
@@ -103,8 +103,8 @@
                                 >
                                 {{selectedDesignation.trim() !== '' ? selectedDesignation : ''}}
                             </span>
-                            <div class=" d-flex j-end p-t-5">
-                                <span *ngIf="designationSearchvalue.trim() !== ''" (click)="clearDesignationFilter()"
+                            <div class=" d-flex j-end p-t-5" *ngIf="designationSearchvalue.trim() !== ''" (click)="clearDesignationFilter()">
+                                <span 
                                     class="c-pointer p-absolute f-right">
                                     <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
                                 </span>
@@ -332,9 +332,9 @@
                             </span>
                         </span>
                         <div class=" m-b-2 drop-list no-close" *ngIf="assigneeListOpen">
-                            <div (click)="selectLocation(item?.location)" *ngFor="let item of jobLocation"
+                            <div (click)="selectAssignee(assignee?.userFullName,assignee?.userId)" *ngFor="let assignee of assigneeList"
                                 class=" p-t-5 p-b-5 p-l-8 c-pointer">
-                                {{item?.location}}</div>
+                                {{assignee?.userFullName | titlecase}}</div>
                         </div>
                     </div>
                 </div>
@@ -353,7 +353,7 @@
                         <div class=" m-b-2 drop-list no-close" *ngIf="priorityListOpen">
                             <div (click)="selectPriority(priority?.name)"
                                 *ngFor="let priority of priorityList" class=" p-t-5 p-b-5 p-l-8 c-pointer">
-                                {{priority?.name}} {{priority?.name}}</div>
+                                {{priority?.name}}</div>
                         </div>
                     </div>
                 </div>
@@ -363,7 +363,7 @@
             <span class="sub-head">Skills</span>
             <div>
                 <span class="p-relative ">
-                    <span class="d-flex input-interview-rounds-skill p-relative">
+                    <span class="d-flex input-interview-rounds-skill p-relative w-97">
                         <input type="text" placeholder="Search Skills" class=" skill-input" name="skill search"
                             (input)="getSkillSuggestions($event)" id="skillSearch" [(ngModel)]="searchvalue">
                         <div class=" d-flex j-end p-t-5">

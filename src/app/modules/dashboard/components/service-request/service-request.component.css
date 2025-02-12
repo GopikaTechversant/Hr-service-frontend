@@ -187,7 +187,7 @@
     width: 100%;
     outline: none;
     border: none;
-    height: 32px;
+    height: 31px;
     padding: 5px;
     background: #FAFAFA;
 
@@ -555,4 +555,9 @@
 
 .drop-menu {
     padding: 4px;
+}
+
+.w-97{
+    width: 97.3%;
+
 }
