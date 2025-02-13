@@ -31,7 +31,7 @@ export class ApplicationListBarComponent implements OnInit {
   ngOnInit(): void {
     this.initialLoader = true;
     this.requestId = this.positionId ? this.positionId : '';
-    this.fetchApplicationList();
+    this.fetchApplicationList(this.currentPage);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -39,7 +39,7 @@ export class ApplicationListBarComponent implements OnInit {
       this.requestId = changes['positionId'].currentValue;
       this.limit = 10;
       this.currentPage = 1;
-      this.fetchApplicationList();
+      this.fetchApplicationList(this.currentPage);
     }
   }
 
@@ -47,7 +47,8 @@ export class ApplicationListBarComponent implements OnInit {
     Chart.register(ChartDataLabels);
   }
 
-  fetchApplicationList(): void {
+  fetchApplicationList(page:any): void {
+    if(page) this.currentPage = page;
     if (!this.initialLoader) this.loader = true;
     this.applicationList = [];
     this.apiService.get(`/dashboard/department-daily-application?fromDate=${this.startDate}&toDate=${this.endDate}&limit=${this.limit}&currentPage=${this.currentPage}&requestId=${this.requestId}`).subscribe((res: any) => {
@@ -63,25 +64,6 @@ export class ApplicationListBarComponent implements OnInit {
     });
   }
 
-  generatePageNumbers() {
-    let pages = [];
-    if (this.lastPage <= 5) {
-      for (let i = 1; i <= this.lastPage; i++) pages.push(i);
-    } else {
-      pages.push(1);
-      let start = Math.max(2, this.currentPage - 1);
-      let end = Math.min(this.lastPage - 1, this.currentPage + 1);
-
-      if (this.currentPage <= 3) end = 4;
-      else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
-      if (start > 2) pages.push('...');
-      for (let i = start; i <= end; i++) pages.push(i);
-      if (end < this.lastPage - 1) pages.push('...');
-      pages.push(this.lastPage);
-    }
-    return pages;
-  }
-
   dateChange(event: any, range: string): void {
     let date = new Date(event?.value);
     if (range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
@@ -89,13 +71,7 @@ export class ApplicationListBarComponent implements OnInit {
     this.positionId = '';
     this.limit = 10;
     this.currentPage = 1;
-    this.fetchApplicationList();
-  }
-
-  onPageChange(pageNumber: number): void {
-    this.currentPage = Math.max(1, pageNumber);
-    this.limit = 10;
-    this.fetchApplicationList();
+    this.fetchApplicationList(this.currentPage);
   }
 
 }

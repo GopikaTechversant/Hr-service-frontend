@@ -35,10 +35,11 @@ export class CandidateScheduleComponent implements OnInit {
   ngOnInit(): void {
     this.userType = localStorage.getItem('userType')
     this.initialLoader = true;
-    this.fetchcandidates();
+    this.fetchcandidates(this.currentPage);
   }
 
-  fetchcandidates(): void {
+  fetchcandidates(page:any): void {
+    if(page) this.currentPage = page;
     if (!this.initialLoader) this.loader = true;
     this.apiService.get(`/screening-station/list-batch/${this.requestId}?limit=${this.limit}&page=${this.currentPage}&search=${this.searchKeyword}`).subscribe((res: any) => {
       if (res?.candidates) {
@@ -65,42 +66,18 @@ export class CandidateScheduleComponent implements OnInit {
     this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
   }
 
-  onPageChange(pageNumber: number): void {
-    this.currentPage = Math.max(1, pageNumber);
-    this.fetchcandidates();
-  }
-
-  generatePageNumbers() {
-    let pages = [];
-    if (this.lastPage <= 5) {
-      for (let i = 1; i <= this.lastPage; i++) pages.push(i);
-    } else {
-      pages.push(1);
-      let start = Math.max(2, this.currentPage - 1);
-      let end = Math.min(this.lastPage - 1, this.currentPage + 1);
-
-      if (this.currentPage <= 3) end = 4;
-      else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
-      if (start > 2) pages.push('...');
-      for (let i = start; i <= end; i++) pages.push(i);
-      if (end < this.lastPage - 1) pages.push('...');
-      pages.push(this.lastPage);
-    }
-    return pages;
-  }
-
   searchCandidate(search: string): void {
     this.searchKeyword = search;
     this.currentPage = 1;
     this.pageSize = 10;
-    this.fetchcandidates();
+    this.fetchcandidates(this.currentPage);
   }
 
   clearFilter(): void {
     this.searchKeyword = '';
     this.currentPage = 1;
     this.pageSize = 10;
-    this.fetchcandidates();
+    this.fetchcandidates(this.currentPage);
   }
 
   onStatusChange(event: any, candidate: any): void {
@@ -114,7 +91,7 @@ export class CandidateScheduleComponent implements OnInit {
         height: '280px'
       })
       dialogRef.afterClosed().subscribe(() => {
-        this.fetchcandidates();
+        this.fetchcandidates(this.currentPage);
       });
     }
   }
@@ -132,11 +109,11 @@ export class CandidateScheduleComponent implements OnInit {
         .subscribe({
           next: (res: any) => {
             this.toastr.success('User removed');
-            this.fetchcandidates();
+            this.fetchcandidates(this.currentPage);
           },
           error: (error) => {
             this.toastr.error(error?.error?.message ? error?.error?.message : 'Unable to Delete candidates');
-            this.fetchcandidates();
+            this.fetchcandidates(this.currentPage);
           },
         });
     });
@@ -151,7 +128,7 @@ export class CandidateScheduleComponent implements OnInit {
       height: '260px'
     })
     dialogRef.afterClosed().subscribe(() => {
-      this.fetchcandidates();
+      this.fetchcandidates(this.currentPage);
     });
   }
 }

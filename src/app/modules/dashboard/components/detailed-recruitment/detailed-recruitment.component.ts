@@ -50,20 +50,21 @@ export class DetailedRecruitmentComponent implements OnInit {
     this.candidateList = [];
     this.pageSize = 10;
     this.currentPage = 1
-    this.fetchCandidateList();
+    this.fetchCandidateList(this.currentPage);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['startDate'] && !changes['startDate'].isFirstChange()) {
       this.startDate = changes['startDate'].currentValue;
-      this.fetchCandidateList();
+      this.fetchCandidateList(this.currentPage);
     } else if (changes['endDate'] && !changes['endDate'].isFirstChange()) {
       this.endDate = changes['endDate'].currentValue
-      this.fetchCandidateList();
+      this.fetchCandidateList(this.currentPage);
     }
   }
 
-  fetchCandidateList(): void {
+  fetchCandidateList(page:any): void {
+    if(page) this.currentPage = page;
     if (!this.initialLoader) this.loader = true;
     this.candidateList = [];
     const url = `/dashboard/recruiter-requirement-report`
@@ -101,7 +102,7 @@ export class DetailedRecruitmentComponent implements OnInit {
         }
       );
       this.report = false;
-      if (this.report === false) this.fetchCandidateList();
+      if (this.report === false) this.fetchCandidateList(this.currentPage);
       return;
     }
     this.apiService.get(`${url}?${params}`).subscribe((res: any) => {
@@ -135,26 +136,7 @@ export class DetailedRecruitmentComponent implements OnInit {
   onRadioChange(event: Event): void {
     const target = event.target as HTMLInputElement;
     this.selectedDataBy = target.value;
-    this.fetchCandidateList();
-  }
-
-  generatePageNumbers() {
-    let pages = [];
-    if (this.lastPage <= 5) {
-      for (let i = 1; i <= this.lastPage; i++) pages.push(i);
-    } else {
-      pages.push(1);
-      let start = Math.max(2, this.currentPage - 1);
-      let end = Math.min(this.lastPage - 1, this.currentPage + 1);
-
-      if (this.currentPage <= 3) end = 4;
-      else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
-      if (start > 2) pages.push('...');
-      for (let i = start; i <= end; i++) pages.push(i);
-      if (end < this.lastPage - 1) pages.push('...');
-      pages.push(this.lastPage);
-    }
-    return pages;
+    this.fetchCandidateList(this.currentPage);
   }
 
   clearFilter(): void {
@@ -162,17 +144,12 @@ export class DetailedRecruitmentComponent implements OnInit {
     this.selectedRecruiterId = "";
     this.currentPage = 1;
     this.pageSize = 10;
-    this.fetchCandidateList()
-  }
-
-  onPageChange(pageNumber: number): void {
-    this.currentPage = Math.max(1, pageNumber);
-    this.fetchCandidateList();
+    this.fetchCandidateList(this.currentPage)
   }
 
   exportData(): void {
     this.report = true;
-    this.fetchCandidateList();
+    this.fetchCandidateList(this.currentPage);
   }
 
   getSelectedCandidateIds(): void {

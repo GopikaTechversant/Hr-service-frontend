@@ -59,7 +59,7 @@ export class ReportDetailsComponent implements OnInit {
     this.reportMonth = new Date().getMonth() + 1;
     this.fetchDetails();
     this.fetchRecruiters();
-    this.fetchInterviewStatus();
+    this.fetchInterviewStatus(this.currentPage);
     this.getCurrentMonth();
   }
 
@@ -74,7 +74,8 @@ export class ReportDetailsComponent implements OnInit {
       });
   }
 
-  fetchInterviewStatus(): void {
+  fetchInterviewStatus(page:any): void {
+    if(page) this.currentPage = page;
     this.interviewDetails = [];
     this.apiService.get(`/report/over-all-interview-status?page=${this.currentPage}&limit=${this.pageSize}`).subscribe((res: any) => {
       if (res?.data) {
@@ -86,25 +87,6 @@ export class ReportDetailsComponent implements OnInit {
         if (this.currentPage > totalPages) this.currentPage = totalPages;
       }
     })
-  }
-
-  generatePageNumbers() {
-    let pages = [];
-    if (this.lastPage <= 5) {
-      for (let i = 1; i <= this.lastPage; i++) pages.push(i);
-    } else {
-      pages.push(1);
-      let start = Math.max(2, this.currentPage - 1);
-      let end = Math.min(this.lastPage - 1, this.currentPage + 1);
-
-      if (this.currentPage <= 3) end = 4;
-      else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
-      if (start > 2) pages.push('...');
-      for (let i = start; i <= end; i++) pages.push(i);
-      if (end < this.lastPage - 1) pages.push('...');
-      pages.push(this.lastPage);
-    }
-    return pages;
   }
 
   fetchDetails(): void {
@@ -156,10 +138,6 @@ export class ReportDetailsComponent implements OnInit {
     this.fetchDetails();
   }
 
-  onPageChange(pageNumber: number): void {
-    this.currentPage = Math.max(1, pageNumber);
-    this.fetchInterviewStatus();
-  }
 
   getCurrentMonth(): void {
     this.currentMonth = this.monthData.find(item => item.number == this.reportMonth);

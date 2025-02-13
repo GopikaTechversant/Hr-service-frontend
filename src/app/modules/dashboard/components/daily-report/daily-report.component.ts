@@ -48,7 +48,7 @@ export class DailyReportComponent implements OnInit {
   ngOnInit(): void {
     this.userType = localStorage.getItem('userType')
     this.initialLoader = true;
-    this.fetchDetails();
+    this.fetchDetails(this.currentPage);
     this.today = new Date();
   }
 
@@ -56,7 +56,8 @@ export class DailyReportComponent implements OnInit {
     return !isNaN(value);
   }
 
-  fetchDetails(): void {
+  fetchDetails(page:any): void {
+    if(page) this.currentPage = page;
     if (!this.initialLoader) this.loader = true
     const url = `/report/report-list`
     let params = [
@@ -91,7 +92,7 @@ export class DailyReportComponent implements OnInit {
           this.initialLoader = false;
         }
       ); this.report = false;
-      if (this.report === false) this.fetchDetails();
+      if (this.report === false) this.fetchDetails(this.currentPage);
       return;
     }
     this.userRequirement = [];
@@ -114,24 +115,6 @@ export class DailyReportComponent implements OnInit {
     });
   }
 
-  generatePageNumbers() {
-    let pages = [];
-    if (this.lastPage <= 5) {
-      for (let i = 1; i <= this.lastPage; i++) pages.push(i);
-    } else {
-      pages.push(1);
-      let start = Math.max(2, this.currentPage - 1);
-      let end = Math.min(this.lastPage - 1, this.currentPage + 1);
-      if (this.currentPage <= 3) end = 4;
-      else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
-      if (start > 2) pages.push('...');
-      for (let i = start; i <= end; i++) pages.push(i);
-      if (end < this.lastPage - 1) pages.push('...');
-      pages.push(this.lastPage);
-    }
-    return pages;
-  }
-
   downloadAsExcel(jsonData: any[], fileName: string) {
     this.exportService.downloadAsExcel(jsonData, fileName);
   }
@@ -150,7 +133,7 @@ export class DailyReportComponent implements OnInit {
     this.showRecruiters = false;
     this.currentPage = 1;
     this.pageSize = 10;
-    this.fetchDetails();
+    this.fetchDetails(this.currentPage);
   }
 
   dateChange(event: any, range: string): void {
@@ -159,7 +142,7 @@ export class DailyReportComponent implements OnInit {
     if (range == 'endDate') this.endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
     this.currentPage = 1;
     this.pageSize = 10;
-    this.fetchDetails();
+    this.fetchDetails(this.currentPage);
   }
 
   dateSearch(start: any, end: any, name: any): void {
@@ -168,18 +151,13 @@ export class DailyReportComponent implements OnInit {
     this.recruiterName = name;
     this.currentPage = 1;
     this.pageSize = 10;
-    this.fetchDetails()
-  }
-
-  onPageChange(pageNumber: number): void {
-    this.currentPage = Math.max(1, pageNumber);
-    this.fetchDetails();
+    this.fetchDetails(this.currentPage)
   }
 
   exportData(): void {
     this.loader = true;
     this.report = true;
-    this.fetchDetails();
+    this.fetchDetails(this.currentPage);
   }
 
 
@@ -190,6 +168,6 @@ export class DailyReportComponent implements OnInit {
     }
     this.currentPage = 1;
     this.pageSize = 10;
-    this.fetchDetails();
+    this.fetchDetails(this.currentPage);
   }
 }

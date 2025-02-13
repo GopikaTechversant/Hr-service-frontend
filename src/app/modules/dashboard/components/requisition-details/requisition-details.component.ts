@@ -39,7 +39,7 @@ export class RequisitionDetailsComponent implements OnInit {
     this.currentPage = 1;
     this.pageSize = 9;
     this.fetchcount();
-    this.fetchCandidates();
+    this.fetchCandidates(this.currentPage);
   }
 
   onBodyClick(event: MouseEvent): void {
@@ -68,7 +68,8 @@ export class RequisitionDetailsComponent implements OnInit {
     })
   }
 
-  fetchCandidates(): void {
+  fetchCandidates(page:any): void {
+    if(page) this.currentPage = page;
     this.apiService.get(`/dashboard/candidate-by-status?positionId=${this.requestId}&page=${this.currentPage}&limit=${this.pageSize}&status=${this.filteredStatus.split(' ')[0].toLowerCase()}`).subscribe((data: any) => {
       this.candidateList = data?.candidates;
       this.initialLoader = false;
@@ -103,7 +104,7 @@ export class RequisitionDetailsComponent implements OnInit {
     sessionStorage.setItem('requirement_status', this.filteredStatus);
     this.currentPage = 1;
     this.pageSize = 9
-    this.fetchCandidates();
+    this.fetchCandidates(this.currentPage);
   }
 
   clearFilter(): void {
@@ -111,12 +112,12 @@ export class RequisitionDetailsComponent implements OnInit {
     sessionStorage.setItem('requirement_status', this.filteredStatus);
     this.currentPage = 1;
     this.pageSize = 9
-    this.fetchCandidates();
+    this.fetchCandidates(this.currentPage);
   }
 
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);
-    this.fetchCandidates();
+    this.fetchCandidates(this.currentPage);
   }
 
   selectCandidate(id: any): void {
