@@ -88,7 +88,7 @@ export class ServiceRequestComponent implements OnInit {
   designationSuggestions: any[] = [];
   marketRange: string = '';
   priorityListOpen: boolean = false;
-  priorityList: any[] = [{ name: 'Urgent' }, { name: 'High' }, { name: 'Normal' }, { name: 'Low' }];
+  priorityList: any[] = [{ name: 'urgent' }, { name: 'high' }, { name: 'normal' }, { name: 'low' }];
   selectedPriority: string = '';
   assigneeList: any[] = [];
   selectedAssignee: string = '';
@@ -122,6 +122,7 @@ export class ServiceRequestComponent implements OnInit {
     this.fetchPanel();
     this.fetchLocation();
     this.fetchRecruiters();
+    this.userId = localStorage.getItem('userId');
   }
 
   onBodyClick(event: MouseEvent): void {
@@ -136,6 +137,7 @@ export class ServiceRequestComponent implements OnInit {
       this.showSearchBar = false;
       this.managerListOpen = false;
       this.locationOpen = false;
+      this.priorityListOpen = false;
     }
   }
 
@@ -201,15 +203,13 @@ export class ServiceRequestComponent implements OnInit {
     this.apiService.get(`/dashboard/recruiter-list`)
       .subscribe((res: any) => {
         this.assigneeList = res?.data;
-        console.log("assignee list",this.assigneeList);
-        
       });
   }
 
   validateJobCode(event: KeyboardEvent): void {
     const allowedKeys = [
       'Backspace', 'Tab', 'Enter', 'ArrowLeft', 'ArrowRight', 'Delete',
-      '-', ' ', 
+      '-', ' ',
     ];
 
     const ctrlKeyCodes = ['c', 'v', 'a', 'x'];
@@ -313,14 +313,9 @@ export class ServiceRequestComponent implements OnInit {
     this.selectedTeamName = teamId;
   }
   selectDesignation(suggestion: any) {
-    console.log("suggestion", suggestion);
-
     this.designationSearchvalue = suggestion.designationName; // Set selected designation in input box
     this.selectedDesignationId = suggestion?.designationId;
     this.openDesignation = false; // Close the dropdown
-    console.log("this.designationSearchvalue", this.designationSearchvalue);
-    console.log("this.selectedDesignationId", this.selectedDesignationId);
-
   }
 
   // selectDesignation(id: any, name: any): void {
@@ -363,8 +358,6 @@ export class ServiceRequestComponent implements OnInit {
   selectStation(id: any, stationName: any): void {
     const stationOrder = ["Technical 1", "Technical 2", "Technical 3"];
     const isStationAlreadySelected = this.selectedStations.some((station: { stationId: any }) => station.stationId === id);
-    console.log("isStationAlreadySelected", isStationAlreadySelected);
-
     if (stationOrder.includes(stationName)) {
       // Find any stations that shouldn't be added in the current order
       const invalidStations = stationOrder.slice(stationOrder.indexOf(stationName) + 1);
@@ -437,7 +430,7 @@ export class ServiceRequestComponent implements OnInit {
     this.searchvalue = '';
   }
 
-  selectAssignee(name:string,id:any): void {
+  selectAssignee(name: string, id: any): void {
     this.assigneeListOpen = false;
     this.selectedAssignee = name;
     this.selectedAssigneeId = id;
@@ -528,7 +521,10 @@ export class ServiceRequestComponent implements OnInit {
     this.description = this.requirement_details?.requestDescription || '';
     this.postDate = this.requirement_details?.requestPostingDate || null;
     this.closeDateObj = this.requirement_details?.requestClosingDate || null;
-    // this.selectedAssigneeId = this.requirement_details?.selectedAssigneeId || null;
+    // this.selectedAssignee = this.requirement_details?.requestAssignTo || '';
+    this.selectedPriority = this.requirement_details?.requestPriority || '';
+    this.marketRange = this.requirement_details?.requestMarketBudget || '';
+    this.selectedDesignationId = this.requirement_details?.requestDesignation || null;
     if (this.flows) {
       this.selectedStations = this.flows.map((flow: any) => ({
         stationId: flow.flowStationId,
@@ -565,7 +561,7 @@ export class ServiceRequestComponent implements OnInit {
         message: 'Please Enter the Experience'
       },
       {
-        condition: !(this.designationSearchvalue.trim() === '' || this.selectedDesignationId),
+        condition: (this.designationSearchvalue.trim() === '' && !this.selectedDesignationId),
         message: 'Please Select the Designation'
       },
       {
@@ -588,6 +584,14 @@ export class ServiceRequestComponent implements OnInit {
         condition: !this.reportingmanager,
         message: 'Please Select Reporting Manager'
       },
+      {
+        condition: !this.selectedPriority,
+        message: 'Please Select Priority'
+      },
+      {
+        condition: !this.selectedSalaryTypeId && !this.requirement_details?.requestSalaryType,
+        message: 'Please Select Salary Type'
+      }
       // {
       //   condition: !this.selectedAssigneeId,
       //   message: 'Please Select Assignee'
@@ -621,20 +625,26 @@ export class ServiceRequestComponent implements OnInit {
     if (this.experience !== this.requirement_details.requestMaximumExperience) payload.requestMaximumExperience = this.experience;
     if (this.minExperience !== this.requirement_details.requestMinimumExperience) payload.requestMinimumExperience = this.minExperience;
     if (this.relExperience !== this.requirement_details.requestExperience) payload.requestExperience = this.relExperience;
-    if (this.selectedDesignationId || this.designationSearchvalue.trim()) payload.requestDesignation = this.selectedDesignationId ? this.selectedDesignationId : this.designationSearchvalue;
+    // if (this.selectedDesignationId || this.designationSearchvalue.trim()) payload.requestDesignation = this.selectedDesignationId ? this.selectedDesignationId : this.designationSearchvalue;
+    if (this.selectedDesignationId !== this.requirement_details?.requestDesignation) payload.requestDesignation = this.selectedDesignationId ? this.selectedDesignationId : this.designationSearchvalue;
     if (Number(this.baseSalary) !== this.requirement_details.requestBaseSalary) payload.requestBaseSalary = Number(this.baseSalary);
     if (Number(this.maxSalary) !== this.requirement_details.requestMaxSalary) payload.requestMaxSalary = Number(this.maxSalary);
     if (this.selectedSalaryTypeId !== this.requirement_details?.requestSalaryType) payload.requestSalaryType = this.selectedSalaryTypeId
     if (this.selectedTeam !== this.requirement_details?.team?.teamName) payload.requestTeam = this.selectedTeamName;
     if (this.reportingmanager !== this.requirement_details?.reporting?.userFullName) payload.requestManager = this.managerId;
     if (this.selectedLocation !== this.requirement_details?.requestLocation) payload.requestLocation = this.selectedLocation;
-    // if (this.selectedAssigneeId !== this.requirement_details?.selectedAssigneeId) payload.assigneeId = this.selectedAssigneeId ? this.selectedAssigneeId : this.userId;
+    // if (this.selectedAssigneeId !== this.requirement_details?.requestAssignTo) payload.requestAssignTo = this.selectedAssigneeId ? this.selectedAssigneeId : this.userId;
+    if (!this.selectedAssigneeId && !this.requirement_details?.requestAssignTo) {
+      payload.requestAssignTo = this.userId; // Assign userId if no assignee is selected and no existing assignee
+    } else if (this.selectedAssigneeId !== this.requirement_details?.requestAssignTo) {
+      payload.requestAssignTo = this.selectedAssigneeId; // Assign selectedAssigneeId if it's different
+    }
+    if (this.marketRange !== this.requirement_details?.requestMarketBudget) payload.requestMarketBudget = this.marketRange ? this.marketRange : '';
+    if (this.selectedPriority !== this.requirement_details?.requestPriority) payload.requestPriority = this.selectedPriority;
     if (this.displayDate !== this.postDate) {
       payload.requestPostingDate = this.displayDate ? this.displayDate : this.postDate;
       payload.requestClosingDate = this.closeDate ? this.closeDate : this.closeDateObj;
     }
-    console.log("payload", payload);
-
     const currentDescription = this.commentDiv.nativeElement.innerHTML;
     if (currentDescription !== this.requirement_details.requestDescription) payload.requestDescription = currentDescription;
 
@@ -643,15 +653,15 @@ export class ServiceRequestComponent implements OnInit {
 
     if (this.validationSuccess) {
       if (this.requestId) {
-        if (this.candidateCount === '0') {
-          payload.requestId = this.requestId;
-          this.handleApiCall('post', '/service-request/edit', payload);
-        } else {
-          payload.requestDesignation = this.selectedDesignationId ? this.selectedDesignationId : this.requirement_details?.requestDesignation;
-          console.log("this.requirement_details?.requestDesignation", this.requirement_details?.requestDesignation);
-
-          this.handleApiCall('patch', `/service-request/edit-requestion/${this.requestId}`, payload);
-        }
+        // if (this.candidateCount === '0') {
+        //   payload.requestId = this.requestId;
+        //   this.handleApiCall('post', '/service-request/edit', payload);
+        // } 
+        // else {
+        payload.requestId = this.requestId;
+        // payload.requestDesignation = this.selectedDesignationId ? this.selectedDesignationId : this.requirement_details?.requestDesignation;
+        this.handleApiCall('patch', `/service-request/edit-requestion/${this.requestId}`, payload);
+        // }
       } else {
         this.handleApiCall('post', '/service-request/create', payload);
       }

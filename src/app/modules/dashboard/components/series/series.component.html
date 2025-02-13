@@ -59,11 +59,13 @@
                         <div class="value-requirement">: {{requirement_details?.requestMaximumExperience}}</div>
                     </div>
                     <div class="info-pair-requirement">
+                        <div class="key-requirement">Current Market Range</div>
+                        <div class="value-requirement">: {{requirement_details?.requestMarketBudget}}</div>
+                    </div>
+                    <div class="info-pair-requirement">
                         <div class="key-requirement">Base Salary</div>
                         <div class="value-requirement">: {{requirement_details?.requestBaseSalary}}</div>
                     </div>
-                </div>
-                <div class="info-container-requirement m-t-25 m-l-20">
                     <div class="info-pair-requirement">
                         <div class="key-requirement">Maximum salary</div>
                         <div class="value-requirement">: {{requirement_details?.requestMaxSalary}}</div>
@@ -72,6 +74,16 @@
                         <div class="key-requirement">Designation</div>
                         <div class="value-requirement">: {{requirement_details?.designationName}}</div>
                     </div>
+                </div>
+                <div class="info-container-requirement m-t-25 m-l-20">
+                    <!-- <div class="info-pair-requirement">
+                        <div class="key-requirement">Maximum salary</div>
+                        <div class="value-requirement">: {{requirement_details?.requestMaxSalary}}</div>
+                    </div> -->
+                    <!-- <div class="info-pair-requirement">
+                        <div class="key-requirement">Designation</div>
+                        <div class="value-requirement">: {{requirement_details?.designationName}}</div>
+                    </div> -->
                     <div class="info-pair-requirement">
                         <div class="key-requirement">Department</div>
                         <div class="value-requirement">: {{requirement_details?.team?.teamName}}</div>
@@ -87,6 +99,22 @@
                     <div class="info-pair-requirement">
                         <div class="key-requirement">Reporting Manager</div>
                         <div class="value-requirement">: {{requirement_details?.reporting?.userFullName}}</div>
+                    </div>
+                    <div class="info-pair-requirement">
+                        <div class="key-requirement">Assign To</div>
+                        <div class="value-requirement">: {{requirement_details?.requestAssignTo}}</div>
+                    </div>
+                    <div class="info-pair-requirement">
+                        <div class="key-requirement">Priority</div>
+                        <div class="value-requirement">: {{requirement_details?.requestPriority | titlecase}}</div>
+                    </div>
+                    <div class="info-pair-requirement">
+                        <div class="key-requirement">Job Posting Date</div>
+                        <div class="value-requirement">: {{requirement_details?.requestPostingDate | date :'dd/MM/yyy'}}</div>
+                    </div>
+                    <div class="info-pair-requirement">
+                        <div class="key-requirement">Job Closing Date</div>
+                        <div class="value-requirement">: {{requirement_details?.requestClosingDate | date :'dd/MM/yyy'}}</div>
                     </div>
                 </div>      
             </div>

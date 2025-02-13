@@ -6,6 +6,8 @@ import { ApiService } from 'src/app/services/api.service';
 import { DeleteComponent } from 'src/app/components/delete/delete.component';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
+import { DatePipe } from '@angular/common';
+
 @Component({
   selector: 'app-series',
   templateUrl: './series.component.html',
@@ -55,7 +57,7 @@ export class SeriesComponent implements OnInit {
   template: ElementRef | undefined;
   constructor(private apiService: ApiService, private toastr: ToastrService, private router: Router,
     private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices,
-    private renderer: Renderer2, private sanitizer: DomSanitizer, private cdr: ChangeDetectorRef) {
+    private renderer: Renderer2, private sanitizer: DomSanitizer, private cdr: ChangeDetectorRef,private datePipe: DatePipe) {
 
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
