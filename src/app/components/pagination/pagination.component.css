@@ -1,0 +1,34 @@
+.page {
+    background-color: #FFFFFF;
+}
+
+.current-page {
+    background-color: #005ec9;
+    color: #fff;
+    height: 29px;
+    width: 36px;
+}
+
+.box {
+    height: 29px;
+    width: 32px;
+    border: none;
+    background-color: white;
+}
+
+.box :hover {
+    background: #F0F7FF;
+}
+
+.dot {
+    font-size: 20px;
+    color: black;
+    font-weight: 500;
+}
+
+.current-page{
+    background-color: #005EC9;
+    color: #FFFFFF;
+    height: 26px;
+    width: 35px;
+}

@@ -13,7 +13,7 @@ import { ExportService } from 'src/app/services/export.service';
   styleUrls: ['./candidate-list.component.css']
 })
 export class CandidateListComponent {
-[x: string]: any;
+  [x: string]: any;
   @Input() positionId: any
   pageSize = 13;
   pageIndex = 1;
@@ -43,20 +43,21 @@ export class CandidateListComponent {
 
   ngOnInit(): void {
     this.userId = localStorage.getItem('userId');
-    this.userType = localStorage.getItem('userType');    
+    this.userType = localStorage.getItem('userType');
     this.initialLoader = true;
     this.requestId = this.positionId ? this.positionId : '';
-    this.fetchCandidates();
+    this.fetchCandidates(this.currentPage);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['positionId'] && !changes['positionId'].isFirstChange()) {
       this.requestId = changes['positionId'].currentValue;
-      this.fetchCandidates();
+      this.fetchCandidates(this.currentPage);
     }
   }
 
-  fetchCandidates(): void {
+  fetchCandidates(page: any): void {
+    if (page) this.currentPage = page
     if (!this.initialLoader) this.loader = true;
     const url = `/candidate/list`
     let params = [
@@ -95,7 +96,7 @@ export class CandidateListComponent {
         }
       );
       this.report = false;
-      if (this.report === false) this.fetchCandidates();
+      if (this.report === false) this.fetchCandidates(this.currentPage);
       return;
     }
     this.apiService.get(`${url}?${params}`).subscribe((res: any) => {
@@ -117,7 +118,7 @@ export class CandidateListComponent {
   exportData(): void {
     this.loader = true;
     this.report = true;
-    this.fetchCandidates();
+    this.fetchCandidates(this.currentPage);
   }
 
   downloadAsExcel(jsonData: any[], fileName: string) {
@@ -145,44 +146,26 @@ export class CandidateListComponent {
     }));
   }
 
-  generatePageNumbers() {
-    let pages = [];
-    if (this.lastPage <= 5) {
-      for (let i = 1; i <= this.lastPage; i++) pages.push(i);
-    } else {
-      pages.push(1);
-      let start = Math.max(2, this.currentPage - 1);
-      let end = Math.min(this.lastPage - 1, this.currentPage + 1);
-      if (this.currentPage <= 3) end = 4;
-      else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
-      if (start > 2) pages.push('...');
-      for (let i = start; i <= end; i++) pages.push(i);
-      if (end < this.lastPage - 1) pages.push('...'); 
-      pages.push(this.lastPage);
-    }
-    return pages;
-  }
-
   getFormattedSkills(item: any): string {
     const skills = item?.candidateSkill
-      ?.filter((skill: any) => skill?.skills?.skillName) 
+      ?.filter((skill: any) => skill?.skills?.skillName)
       ?.map((skill: any) => skill.skills.skillName);
 
     return skills?.length ? skills.join(', ') : 'N/A';
   }
-  
+
   searchCandidate(search: string): void {
     this.searchKeyword = search;
     this.currentPage = 1;
     this.pageSize = 13;
-    this.fetchCandidates();
+    this.fetchCandidates(this.currentPage);
   }
 
   clearFilter(): void {
     this.searchKeyword = '';
     this.currentPage = 1;
     this.pageSize = 13;
-    this.fetchCandidates();
+    this.fetchCandidates(this.currentPage);
   }
 
   navigate(path: any, queryParam: any): void {
@@ -206,7 +189,7 @@ export class CandidateListComponent {
         next: (res: any) => {
           this.currentPage = 1;
           this.pageSize = 13;
-          this.fetchCandidates();
+          this.fetchCandidates(this.currentPage);
         },
         error: (error) => {
           this.toastr.error(error?.error?.message ? error?.error?.message : 'Unable to Delete candidates');
@@ -215,8 +198,8 @@ export class CandidateListComponent {
     })
     dialogRef.afterClosed().subscribe(() => {
       this.currentPage = 1;
-          this.pageSize = 13;
-          this.fetchCandidates();
+      this.pageSize = 13;
+      this.fetchCandidates(this.currentPage);
     });
   }
 
@@ -229,19 +212,13 @@ export class CandidateListComponent {
     dialogRef.componentInstance.onEditSuccess.subscribe(() => {
       this.currentPage = 1;
       this.pageSize = 13;
-      this.fetchCandidates();
+      this.fetchCandidates(this.currentPage);
     })
     dialogRef.afterClosed().subscribe(() => {
       this.currentPage = 1;
-          this.pageSize = 13;
-          this.fetchCandidates();
+      this.pageSize = 13;
+      this.fetchCandidates(this.currentPage);
     });
-  }
-
-  onPageChange(pageNumber: number): void {
-    this.currentPage = Math.max(1, pageNumber);
-    this.pageSize = 13;
-    this.fetchCandidates();
   }
 
   openRequisition(): void {
@@ -254,7 +231,7 @@ export class CandidateListComponent {
       dialogRef.afterClosed().subscribe((confirmed: boolean) => {
         this.currentPage = 1;
         this.pageSize = 13;
-        this.fetchCandidates();
+        this.fetchCandidates(this.currentPage);
       })
     } else this.toastr.warning('You have not selected candidates to assign');
   }

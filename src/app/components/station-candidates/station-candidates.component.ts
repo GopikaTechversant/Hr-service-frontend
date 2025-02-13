@@ -74,7 +74,7 @@ export class StationCandidatesComponent implements OnInit {
       this.candidateList = [];
       this.limit = 12;
       this.currentPage = 1
-      this.fetchList();
+      this.fetchList(this.currentPage);
       this.fetchRequirements();
       this.fetchStatus();
     });
@@ -95,11 +95,12 @@ export class StationCandidatesComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(this.modalClose) this.fetchList();
+    if(this.modalClose) this.fetchList(this.currentPage);
     // if (changes['modalClose'] && !changes['modalClose'].isFirstChange()) this.fetchList();
   }
 
-  fetchList(): void {
+  fetchList(page:any): void {
+    if(page) this.currentPage = page;
     if (!this.initialLoader) this.loader = true;
     this.candidateList = [];
     if (this.currentStation === 'technical' && this.stationId === '2')   this.baseUrl = '/written-station/list'
@@ -148,7 +149,7 @@ export class StationCandidatesComponent implements OnInit {
         }
       );
       this.isExport = false;
-      if (this.isExport === false) this.fetchList();
+      if (this.isExport === false) this.fetchList(this.currentPage);
       return;
     }
     this.apiService.get(`${this.baseUrl}?${params}`).subscribe(
@@ -178,7 +179,7 @@ export class StationCandidatesComponent implements OnInit {
   }
 
   handleModalClose(status: boolean): void {
-    this.fetchList(); 
+    this.fetchList(this.currentPage); 
   }
 
   fetchStatus(): void {
@@ -197,14 +198,14 @@ export class StationCandidatesComponent implements OnInit {
     this.searchKeyword = keyword;
     this.currentPage = 1;
     this.limit = 12;
-    this.fetchList();
+    this.fetchList(this.currentPage);
   }
 
   searchByExperience(exp: any): void {
     this.experience = exp;
     this.currentPage = 1;
     this.limit = 12;
-    this.fetchList();
+    this.fetchList(this.currentPage);
   }
 
   downloadAsExcel(jsonData: any[], fileName: string) {
@@ -226,7 +227,7 @@ export class StationCandidatesComponent implements OnInit {
     sessionStorage.setItem(`requirement_${this.stationId}`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
     this.currentPage = 1;
     this.limit = 12;
-    this.fetchList();
+    this.fetchList(this.currentPage);
   }
 
   selectStatusFilter(item: string): void {
@@ -235,7 +236,7 @@ export class StationCandidatesComponent implements OnInit {
     sessionStorage.setItem(`status_${this.stationId}`, this.filteredStatus);
     this.currentPage = 1;
     this.limit = 12;
-    this.fetchList();
+    this.fetchList(this.currentPage);
   }
 
   dateChange(event: any, range: string): void {
@@ -244,12 +245,12 @@ export class StationCandidatesComponent implements OnInit {
     if (range == 'endDate') this.endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
     this.currentPage = 1;
     this.limit = 12;
-    this.fetchList();
+    this.fetchList(this.currentPage);
   }
 
   exportData(): void {
     this.isExport = true;
-    this.fetchList();
+    this.fetchList(this.currentPage);
   }
 
   clearFilter(item: any): void {
@@ -266,7 +267,7 @@ export class StationCandidatesComponent implements OnInit {
     if (item === 'experience') this.experience = '';
     this.currentPage = 1;
     this.limit = 12;
-    this.fetchList();
+    this.fetchList(this.currentPage);
   }
 
   experienceValidation(event: any): void {
@@ -286,28 +287,11 @@ export class StationCandidatesComponent implements OnInit {
 
   onPageChange(pageNumber: number): void {
     this.currentPage = Math.max(1, pageNumber);
-    this.fetchList();
+    this.fetchList(this.currentPage);
   }
 
   selectCandidate(id: any): void {
     this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
   }
 
-  generatePageNumbers() {
-    let pages = [];
-    if (this.lastPage <= 5) {
-      for (let i = 1; i <= this.lastPage; i++) pages.push(i);
-    } else {
-      pages.push(1);
-      let start = Math.max(2, this.currentPage - 1);
-      let end = Math.min(this.lastPage - 1, this.currentPage + 1);
-      if (this.currentPage <= 3) end = 4;
-      else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
-      if (start > 2) pages.push('...');
-      for (let i = start; i <= end; i++) pages.push(i);
-      if (end < this.lastPage - 1) pages.push('...');
-      pages.push(this.lastPage);
-    }
-    return pages;
-  }
 }

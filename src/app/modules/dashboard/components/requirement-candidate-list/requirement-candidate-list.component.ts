@@ -41,10 +41,14 @@ export class RequirementCandidateListComponent implements OnInit {
     this.userRole = localStorage.getItem('userRole');
     this.initialLoader = true;
     this.filteredStatus = sessionStorage.getItem('requisition') ? sessionStorage.getItem('requisition') : 'Active Requisitions';
-    this.fetchcandidates('');
+    this.fetchcandidates(this.currentPage,'');
   }
 
-  fetchcandidates(searchQuery: string): void {
+  fetchcandidates(page:any,searchQuery: string): void {
+    if(page) this.currentPage = page;
+    console.log("page",page);
+    console.log("searchQuery",searchQuery);
+    
     const isActive = this.filteredStatus === 'Closed Requisitions' ? 'closed' : 'active';
     if (!this.initialLoader) this.loader = true
     this.apiService.get(`/screening-station/v1/list-all?page=${this.currentPage}&limit=${this.limit}&search=${searchQuery.trim()}&isActive=${isActive}`).subscribe((res: any) => {
@@ -63,40 +67,17 @@ export class RequirementCandidateListComponent implements OnInit {
     });
   }
 
-  generatePageNumbers() {
-    let pages = [];
-    if (this.lastPage <= 5) {
-      for (let i = 1; i <= this.lastPage; i++) pages.push(i);
-    } else {
-      pages.push(1);
-      let start = Math.max(2, this.currentPage - 1);
-      let end = Math.min(this.lastPage - 1, this.currentPage + 1);
-      if (this.currentPage <= 3) end = 4;
-      else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
-      if (start > 2) pages.push('...');
-      for (let i = start; i <= end; i++) pages.push(i);
-      if (end < this.lastPage - 1) pages.push('...');
-      pages.push(this.lastPage);
-    }
-    return pages;
-  }
-
   requirementSearch(search: any): void {
     this.searchKeyword = search;
     this.currentPage = 1;
     this.limit = 15;
-    this.fetchcandidates(this.searchKeyword);
+    this.fetchcandidates(this.currentPage,this.searchKeyword);
   }
 
   navigate(path: any, requestId?: any): void {
     const queryParams = requestId ? { requestId: requestId } : undefined;
     if (queryParams) this.router.navigate([path], { queryParams: queryParams });
     else this.router.navigate([path]);
-  }
-
-  onPageChange(pageNumber: number): void {
-    this.currentPage = Math.max(1, pageNumber);
-    this.fetchcandidates('');
   }
 
   onStatusChange(candidate: any): void {
@@ -115,8 +96,7 @@ export class RequirementCandidateListComponent implements OnInit {
     dialogRef.componentInstance.onDeleteSuccess.subscribe(() => {
       this.apiService.post(`/service-request/delete`, { requestId: this.deleteRequirementId }).subscribe({
         next: (res: any) => {
-          this.generatePageNumbers();
-          this.fetchcandidates('');
+          this.fetchcandidates(this.currentPage,'');
           this.toastr.success('Deleted succesfully')
         },
         error: (error) => {
@@ -131,7 +111,7 @@ export class RequirementCandidateListComponent implements OnInit {
     sessionStorage.setItem('requisition', this.filteredStatus);
     this.currentPage = 1;
     this.limit = 15;
-    this.fetchcandidates('');
+    this.fetchcandidates(this.currentPage,'');
   }
 
   clearFilter(item: any): void {
@@ -142,7 +122,7 @@ export class RequirementCandidateListComponent implements OnInit {
     }
     this.currentPage = 1;
     this.limit = 15;
-    this.fetchcandidates('');
+    this.fetchcandidates(this.currentPage,'');
   }
 
 }

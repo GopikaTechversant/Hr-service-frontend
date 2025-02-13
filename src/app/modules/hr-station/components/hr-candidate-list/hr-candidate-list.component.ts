@@ -71,7 +71,7 @@ export class HrCandidateListComponent implements OnInit {
     }
     this.limit = 12;
     this.currentPage = 1
-    this.fetchList();
+    this.fetchList(this.currentPage);
     this.fetchRequirements();
     this.fetchStatus();
   }
@@ -90,7 +90,8 @@ export class HrCandidateListComponent implements OnInit {
     });
   }
 
-  fetchList(): void {
+  fetchList(page:any): void {
+    if(page) this.currentPage = page;
     if (!this.initialLoader) this.loader = true;
     const url = `/hr-station/list`
     let params = [
@@ -130,7 +131,7 @@ export class HrCandidateListComponent implements OnInit {
           this.initialLoader = false;
         }
       ); this.isExport = false;
-      if (this.isExport === false) this.fetchList();
+      if (this.isExport === false) this.fetchList(this.currentPage);
       return;
     }
 
@@ -174,32 +175,13 @@ export class HrCandidateListComponent implements OnInit {
     this.candidateIds = selectedCandidates.map((candidate: { serviceId: any; }) => candidate?.serviceId);
   }
 
-  generatePageNumbers() {
-    let pages = [];
-    if (this.lastPage <= 5) {
-      for (let i = 1; i <= this.lastPage; i++) pages.push(i);
-    } else {
-      pages.push(1);
-      let start = Math.max(2, this.currentPage - 1);
-      let end = Math.min(this.lastPage - 1, this.currentPage + 1);
-
-      if (this.currentPage <= 3) end = 4;
-      else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
-      if (start > 2) pages.push('...');
-      for (let i = start; i <= end; i++) pages.push(i);
-      if (end < this.lastPage - 1) pages.push('...');
-      pages.push(this.lastPage);
-    }
-    return pages;
-  }
-
   dateChange(event: any, range: string): void {
     let date = new Date(event?.value);
     if (range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
     if (range == 'endDate') this.endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
     this.currentPage = 1;
     this.limit = 12;
-    this.fetchList();
+    this.fetchList(this.currentPage);
   }
 
   experienceValidation(event: any): void {
@@ -211,7 +193,7 @@ export class HrCandidateListComponent implements OnInit {
 
   exportData(): void {
     this.isExport = true;
-    this.fetchList();
+    this.fetchList(this.currentPage);
   }
 
   searchCandidate(searchTerm: string): void {
@@ -219,19 +201,19 @@ export class HrCandidateListComponent implements OnInit {
     if (this.searchKeyword.trim() === '') {
       this.currentPage = 1;
       this.limit = 12;
-      this.fetchList();
+      this.fetchList(this.currentPage);
       return;
     }
     this.currentPage = 1;
     this.limit = 12;
-    this.fetchList();
+    this.fetchList(this.currentPage);
   }
 
   searchByExperience(experience: string): void {
     this.experience = experience;
     this.currentPage = 1;
     this.limit = 12;
-    this.fetchList();
+    this.fetchList(this.currentPage);
   }
 
   selectPosition(name: string, id: string): void {
@@ -241,7 +223,7 @@ export class HrCandidateListComponent implements OnInit {
     sessionStorage.setItem(`requirement_5`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
     this.currentPage = 1;
     this.limit = 12;
-    this.fetchList();
+    this.fetchList(this.currentPage);
   }
 
   selectStatusFilter(item: string): void {
@@ -249,7 +231,7 @@ export class HrCandidateListComponent implements OnInit {
     sessionStorage.setItem('status_5', this.filteredStatus);
     this.currentPage = 1;
     this.limit = 12;
-    this.fetchList();
+    this.fetchList(this.currentPage);
   }
 
   clearFilter(item: any): void {
@@ -266,7 +248,7 @@ export class HrCandidateListComponent implements OnInit {
     if (item === 'experience') this.experience = '';
     this.currentPage = 1;
     this.limit = 12;
-    this.fetchList();
+    this.fetchList(this.currentPage);
   }
 
   fetchDetails(id: any, offerStatus: any, reviewStatus: any): void {
@@ -280,13 +262,8 @@ export class HrCandidateListComponent implements OnInit {
       data: { candidateDetails: item, offerStatus: offerStatus, reviewStatus: reviewStatus },
     })
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-      this.fetchList();
+      this.fetchList(this.currentPage);
     })
-  }
-
-  onPageChange(pageNumber: number): void {
-    this.currentPage = Math.max(1, pageNumber);
-    this.fetchList();
   }
 
   onSwitchStation(candidate: any): void {
@@ -303,12 +280,12 @@ export class HrCandidateListComponent implements OnInit {
         },
       })
       dialogRef.afterClosed().subscribe(() => {
-        this.fetchList();
+        this.fetchList(this.currentPage);
       });
     } else {
       const dialogRef = this.dialog.open(WarningBoxComponent, {})
       dialogRef.afterClosed().subscribe(() => {
-        this.fetchList();
+        this.fetchList(this.currentPage);
       });
     }
   }

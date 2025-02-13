@@ -34,10 +34,11 @@ export class UserListComponent implements OnInit {
   ngOnInit(): void {
     this.userType = localStorage.getItem('userType');    
     this.initialLoader = true;
-    this.fetchUserList();
+    this.fetchUserList(this.currentPage);
   }
 
-  fetchUserList(): void {
+  fetchUserList(page:any): void {
+    if(page) this.currentPage = page;
     // const headers = new HttpHeaders({
     //   'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
     // });
@@ -64,10 +65,7 @@ export class UserListComponent implements OnInit {
     this.selectedItem = item;
   }
 
-  onPageChange(pageNumber: number): void {
-    this.currentPage = Math.max(1, pageNumber);
-    this.fetchUserList();
-  }
+ 
   delete(id: any): void {
     this.candidateId = id;
     // const headers = new HttpHeaders({
@@ -80,7 +78,7 @@ export class UserListComponent implements OnInit {
     })
     dialogRef.componentInstance.onDeleteSuccess.subscribe(() => {
       this.apiService.post(`/user/delete`, { userId: this.candidateId }).subscribe((res: any) => {
-        this.fetchUserList();
+        this.fetchUserList(this.currentPage);
         this.toastr.success('User Deleted succesfully')
 
       })
@@ -94,25 +92,7 @@ export class UserListComponent implements OnInit {
       height: '450px'
     })
     dialogRef.componentInstance.onEditSuccess.subscribe(() => {
-      this.fetchUserList();
+      this.fetchUserList(this.currentPage);
     })
-  }
-  generatePageNumbers() {
-    let pages = [];
-    if (this.lastPage <= 5) {
-      for (let i = 1; i <= this.lastPage; i++) pages.push(i);
-    } else {
-      pages.push(1);
-      let start = Math.max(2, this.currentPage - 1);
-      let end = Math.min(this.lastPage - 1, this.currentPage + 1);
-
-      if (this.currentPage <= 3) end = 4;
-      else if (this.currentPage >= this.lastPage - 2) start = this.lastPage - 3;
-      if (start > 2) pages.push('...');
-      for (let i = start; i <= end; i++) pages.push(i);
-      if (end < this.lastPage - 1) pages.push('...');
-      pages.push(this.lastPage);
-    }
-    return pages;
   }
 }
