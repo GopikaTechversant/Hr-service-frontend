@@ -19,10 +19,11 @@ import { MatListModule } from '@angular/material/list';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatPaginatorModule } from '@angular/material/paginator';
-
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 @NgModule({
   providers: [
-    { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
+    { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
   ],
   imports: [
     CommonModule,
