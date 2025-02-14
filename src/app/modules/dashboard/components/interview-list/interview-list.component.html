@@ -101,6 +101,10 @@
                 </div>
             </table>
         </div>
+        <app-pagination [totalCount]="totalCount" [pageSize]="limit" [lastPage]="lastPage"
+            [currentPage]="currentPage" (pageChange)="fetchUserList($event)"></app-pagination>
+        <!-- <app-pagination [totalCount]="totalCount" [pageSize]="pageSize" [lastPage]="lastPage"
+            [currentPage]="currentPage" (pageChange)="fetchCandidateList($event)"></app-pagination> -->
         <!-- <div class="page d-flex j-end p-10">
             <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(1)">
                 <img src="assets/images/double-arrow-left-icon.svg" alt="" height="14px" width="14px">

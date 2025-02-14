@@ -14,23 +14,30 @@ export class InterviewListComponent implements OnInit {
   initialLoader: any;
   userId: any;
   limit : number = 12;
-  page:number = 1;
   candidateList: any;
   today: Date = new Date();
+  currentPage: number = 1;
+  lastPage: any;
+  totalCount: any;
   constructor(private apiService: ApiService,private router: Router,private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.userId = localStorage.getItem('userId');
     this.initialLoader = true;
-    this.fetchUserList();
+    this.fetchUserList(this.currentPage);
   }
 
-  fetchUserList(): void {
-    this.apiService.get(`/screening-station/todays-interview-list?search=&page=1&limit=10&position=&experience=&status_filter=pending&ids=&fromDateData=${this.startDate}&toDateData=${this.endDate}`).subscribe((res: any) => {
+  fetchUserList(page:any): void {
+    if(page) this.currentPage = page;
+    this.apiService.get(`/screening-station/todays-interview-list?search=&page=${this.currentPage}&limit=${this.limit}&position=&experience=&status_filter=pending&ids=&fromDateData=${this.startDate}&toDateData=${this.endDate}`).subscribe((res: any) => {
       if (res?.candidates) {
         this.candidateList = res?.candidates        
         this.loader = false;
         this.initialLoader = false;
+        this.totalCount = res?.candidateCount;
+        const totalPages = Math.ceil(this.totalCount / this.limit);
+        this.lastPage = totalPages;
+        if (this.currentPage > totalPages) this.currentPage = totalPages;
       }
     },
       (error: any) => {
@@ -48,7 +55,7 @@ export class InterviewListComponent implements OnInit {
     let date = new Date(event.value);
     if (range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
     if (range == 'endDate') this.endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
-    this.fetchUserList();
+    this.fetchUserList(this.currentPage);
   }
 
 }
