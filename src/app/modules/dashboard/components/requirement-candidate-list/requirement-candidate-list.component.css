@@ -32,7 +32,7 @@
   width: 100%;
 }
 
-.create-btn {
+/* .create-btn {
   background-color: #575F6E;
   border: none;
   border-radius: 3px;
@@ -45,6 +45,22 @@
   height: 34px;
   padding-left: 12px;
   color: #FFFFFF;
+} */
+
+.create-btn {
+  background-color: #575F6E;
+  border: none;
+  border-radius: 3px;
+  width: 139px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: 0em;
+  padding: 6px;
+  height: 32px;
+  padding-left: 12px;
+  color: #FFFFFF;
+  margin-top: 2px;
 }
 
 .title-left {
@@ -97,9 +113,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.add{
+
+.add {
   width: 170px !important;
-  max-width: 170px; 
+  max-width: 170px;
 }
 
 .data {

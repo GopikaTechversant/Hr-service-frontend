@@ -36,6 +36,9 @@
                 (click)="navigate('/dashboard/service-requirement',false)">
                 <span class="f-w-500">Create Requisition</span>
             </div>
+            <div class="export-btn c-pointer" *ngIf="userType !== 'super-admin'">
+                <span (click)="exportData()">Export</span>
+            </div>
         </div>
     </div>
     <div *ngIf="(candidates_list?.length === 0 || !candidates_list) && !loader && !initialLoader " class="data">
@@ -45,6 +48,7 @@
         <div class="container-table m-b-0">
             <table class="">
                 <tr class="table-header p-b-10 f-w-500">
+                    <td class="text-center" *ngIf="userType !== 'super-admin'">Select</td>
                     <td class="text-end p-l-16">Requisition Code</td>
                     <td class="text-start p-l-16">Requisition</td>
                     <td class="text-end">Openings</td>
@@ -65,6 +69,9 @@
                 <ng-container *ngIf="candidates_list?.length > 0">
                     <ng-container *ngFor="let candidate of candidates_list">
                         <tr class="c-pointer" (dblclick)="navigate('/dashboard/series/',candidate?.requestId)">
+                            <td class="text-center" *ngIf="userType !== 'super-admin'">
+                                <input type="checkbox" [(ngModel)]="candidate.isSelected" (change)="onCandidateSelect(candidate)"
+                                    name="select">
                             <td class="text-end wrap-date">{{candidate?.requestCode ? candidate?.requestCode : 'N/A'}}
                             </td>
                             <td class="text-start p-l-16 wrap" [title]="candidate?.requestName">

@@ -29,6 +29,7 @@ export class RequirementCandidateListComponent implements OnInit {
   status: any[] = ['Active Requisitions', 'Closed Requisitions'];
   userType: any;
   userRole:any;
+  candidates: any;
   constructor(private router: Router, private apiService: ApiService, private dialog: MatDialog, private toastr: ToastrService) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -123,6 +124,26 @@ export class RequirementCandidateListComponent implements OnInit {
     this.currentPage = 1;
     this.limit = 15;
     this.fetchcandidates(this.currentPage,'');
+  }
+
+  onCandidateSelect(candidate: any): void {
+    // if (candidate.candidatesAddingAgainst !== null) this.toastr.warning('Candidate already added to requisition');
+    // else this.getSelectedCandidateIds();
+    this.getSelectedCandidateIds()
+  }
+
+  getSelectedCandidateIds(): void {
+    const selectedCandidates = this.candidates_list.flat().filter((candidate: { isSelected: any; candidatesAddingAgainst: any }) => candidate.isSelected && candidate.candidatesAddingAgainst === null);
+    this.candidates = selectedCandidates.map((candidate: { candidateId: any; resumeSourceId: any; }) => ({
+      candidatesId: candidate?.candidateId,
+      resumeSource: candidate?.resumeSourceId
+    }));
+  }
+
+  exportData(): void {
+    this.loader = true;
+    // this.report = true;
+    // this.fetchCandidates(this.currentPage);
   }
 
 }
