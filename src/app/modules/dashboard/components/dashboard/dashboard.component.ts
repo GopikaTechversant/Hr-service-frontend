@@ -31,7 +31,6 @@ export class DashboardComponent implements OnInit {
   requisitionSearchValue : string = '';
   requsitionSuggestions: any[]=[];
   searchvalue: string = "";
-  selectedRequisitionId:string = '';
   selectedRequsition:string = '';
   constructor(private apiService: ApiService, public router: Router, private tostr: ToastrService, private datePipe: DatePipe) { }
 
@@ -41,16 +40,17 @@ export class DashboardComponent implements OnInit {
     if (position) {
       let requirement = JSON.parse(position);
       if (requirement) {
-        this.selectedRequsition = requirement?.name;
+        this.displayPosition = requirement?.name;
         this.positionId = requirement?.id;
       }
     } else {
-      this.selectedRequsition = '';
-      this.selectedRequsition = '';
+      this.displayPosition = '';
+      this.positionId = '';
     }
     this.fetchcount();
-    
+    this.fetchRequirements();
   }
+  
 
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -123,31 +123,18 @@ export class DashboardComponent implements OnInit {
     this.fetchcount();
   }
 
+  // clearFilter(): void {
+  //   this.selectPosition('', '');
+  // }
   clearFilter(): void {
-    this.selectPosition('', '');
-  }
-
-  clearDesignationFilter():void{
-    this.requisitionSearchValue = '';
-    this.requestList_open = false;
+    this.displayPosition = '';
     this.positionId = '';
+    this.requisitionSearchValue = '';
     this.selectedRequsition = '';
-    this.fetchcount();
-    
-    // this.requsitionSuggestions = [];
-  }
-
-  selectDesignation(name: any,id:any) {
-    this.requisitionSearchValue = name; 
-    this.positionId = id;
-    this.requestList_open = false; 
-    this.selectedRequsition = name;
-    console.log(" this.selectedRequsition", this.selectedRequsition);
-    
-    sessionStorage.setItem(`requirement`, JSON.stringify({ name: this.selectedRequsition, id: this.positionId }));
+    this.requestList_open = false;
+    sessionStorage.removeItem('requirement'); 
     this.positionIdChange.emit(this.positionId);
-    this.fetchcount();
+    this.fetchcount(); 
   }
-
 
 }

@@ -38,7 +38,7 @@
                             {{selectedRequsition.trim() !== '' ? selectedRequsition : ''}}
                         </span> -->
                         <div class=" d-flex j-end p-t-5">
-                            <span *ngIf="requisitionSearchValue.trim() !== ''" (click)="clearDesignationFilter()"
+                            <span *ngIf="requisitionSearchValue.trim() !== ''" (click)="clearFilter()"
                                 class="c-pointer p-absolute f-right p-r-5">
                                 <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
                             </span>
@@ -48,7 +48,7 @@
                         <div class="m-t-3 drop-list-designation"
                             *ngIf="requestList_open && requsitionSuggestions.length > 0">
                             <div class="p-6 c-pointer" *ngFor="let suggestion of requsitionSuggestions"
-                                (click)="selectDesignation(suggestion?.requestName,suggestion?.requestId)">
+                                (click)="selectPosition(suggestion?.requestName,suggestion?.requestId)">
                                 <span class="c-pointer p-l-5">{{suggestion?.requestName}}</span>
                             </div>
                         </div>
