@@ -69,12 +69,16 @@ export class DashboardComponent implements OnInit {
   }
 
   fetchcount(): void {
-    this.apiService.get(`/dashboard/card-data?requestId=${this.positionId}&fromDate=${this.startDate}&todate=${this.endDate}`)
+    console.log("inside fetch ");
+    
+    this.apiService.get(`/dashboard/card-data?requestId=${this.selectedRequisitionId}&fromDate=${this.startDate}&todate=${this.endDate}`)
       .subscribe({
         next: (res: any) => {
           if (res?.data) {
             this.lists = res?.data;
             this.initialLoader = false; 
+            console.log("this.lists",this.lists);
+            
           }
         },
         error: (err: any) => {
@@ -98,8 +102,6 @@ export class DashboardComponent implements OnInit {
       if (res?.data) this.requsitionSuggestions = res?.data.filter((suggestion: any) =>
         suggestion.requestName.toLowerCase().startsWith(this.searchvalue.toLowerCase())
       );
-      console.log("res?.data",res?.data);
-      
     });
   }
 
@@ -132,11 +134,16 @@ export class DashboardComponent implements OnInit {
     this.requsitionSuggestions = [];
   }
 
-  selectDesignation(suggestion: any) {
-    // this.requisitionSearchValue = suggestion.designationName; 
-    // this.selectedRequisitionId = suggestion?.designationId ;
-    // this.requestList_open = false; 
-    // this.selectedRequsition = suggestion;
+  selectDesignation(name: any,id:any) {
+    this.requisitionSearchValue = name; 
+    this.selectedRequisitionId = id;
+    this.requestList_open = false; 
+    this.selectedRequsition = name;
+    console.log(" this.selectedRequsition", this.selectedRequsition);
+    
+    sessionStorage.setItem(`requirement`, JSON.stringify({ name: this.selectedRequsition, id: this.selectedRequisitionId }));
+    this.positionIdChange.emit(this.selectedRequisitionId);
+    this.fetchcount();
   }
 
 
