@@ -90,6 +90,7 @@ export class AddCandidateModalComponent implements OnInit {
       candidateEmail: [null, Validators.required],
       candidateMobileNo: [null, Validators.required],
       resumeSourceId: [null, Validators.required],
+      candidateNoticePeriodByDays: [null,Validators.required]
     })
   }
 
@@ -352,6 +353,10 @@ export class AddCandidateModalComponent implements OnInit {
         condition: !this.uploadedFileKey,
         message: 'Please Upload Candidate resume'
       },
+      {
+        condition: !this.candidateForm?.value?.candidateNoticePeriodByDays,
+        message: 'Please add Notice Period'
+      }
     ];
     this.validationSuccess = true;
     validations.forEach(({ condition, message }) => {
@@ -433,7 +438,8 @@ export class AddCandidateModalComponent implements OnInit {
         candidateCity: this.candidateForm?.value?.candidateCity,
         candidateDistrict: this.candidateForm?.value?.candidateDistrict,
         candidateState: this.candidateForm?.value?.candidateState,
-        candidateResume: this.uploadedFileKey
+        candidateResume: this.uploadedFileKey,
+        candidateNoticePeriodByDays: this.candidateForm?.value?.candidateNoticePeriodByDays
       }
       this.apiService.post(`/candidate/create`, payload).subscribe({
         next: (response) => {

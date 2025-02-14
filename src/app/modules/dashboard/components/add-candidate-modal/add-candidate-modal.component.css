@@ -269,7 +269,7 @@
 
 .child-2{
     flex-direction: column;
-    width: 100%;
+    width: 66.2%;
 }
 
 .padding{
@@ -334,4 +334,8 @@
     justify-content: center;
     pointer-events: all !important;
     background: #575F6E;
+}
+
+.w-99{
+    width: 99.1%;
 }

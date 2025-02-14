@@ -653,11 +653,7 @@ export class ServiceRequestComponent implements OnInit {
 
     if (this.validationSuccess) {
       if (this.requestId) {
-        // if (this.candidateCount === '0') {
-        //   payload.requestId = this.requestId;
-        //   this.handleApiCall('post', '/service-request/edit', payload);
-        // } 
-        // else {
+        payload.requestServiceId = this.requirement_details?.requestServiceId;
         payload.requestId = this.requestId;
         // payload.requestDesignation = this.selectedDesignationId ? this.selectedDesignationId : this.requirement_details?.requestDesignation;
         this.handleApiCall('patch', `/service-request/edit-requestion/${this.requestId}`, payload);
@@ -666,9 +662,6 @@ export class ServiceRequestComponent implements OnInit {
         this.handleApiCall('post', '/service-request/create', payload);
       }
     }
-    // else {
-    //   this.toastr.warning('Please fill in all mandatory fields.');
-    // }
   }
 
   private handleApiCall(method: 'post' | 'patch', url: string, payload: any): void {
