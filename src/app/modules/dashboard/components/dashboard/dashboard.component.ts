@@ -116,12 +116,14 @@ export class DashboardComponent implements OnInit {
 
   selectPosition(name: string, id: string): void {
     this.requestList_open = false;
-    this.displayPosition = name;
+    this.displayPosition = name; 
     this.positionId = id;
+    this.requisitionSearchValue = name; 
     sessionStorage.setItem(`requirement`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
     this.positionIdChange.emit(this.positionId);
-    this.fetchcount();
+    this.fetchcount(); 
   }
+  
 
   // clearFilter(): void {
   //   this.selectPosition('', '');
@@ -132,6 +134,7 @@ export class DashboardComponent implements OnInit {
     this.requisitionSearchValue = '';
     this.selectedRequsition = '';
     this.requestList_open = false;
+    this.searchvalue = '';
     sessionStorage.removeItem('requirement'); 
     this.positionIdChange.emit(this.positionId);
     this.fetchcount(); 
