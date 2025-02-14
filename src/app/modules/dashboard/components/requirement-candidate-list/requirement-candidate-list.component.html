@@ -56,6 +56,7 @@
                     <td class="text-center wrap"
                         *ngIf="filteredStatus === 'Active Requisitions' && userType !== 'super-admin'">Add Candidate
                     </td>
+                    <td>Assign To</td>
                     <td class="text-end">Date</td>
                 </tr>
                 <div *ngIf="loader && !initialLoader" class="loader-parent">
@@ -87,6 +88,7 @@
                                 *ngIf="filteredStatus === 'Active Requisitions' && userType !== 'super-admin'">
                                 <i class="fa fa-user-plus" aria-hidden="true"></i>
                             </td>
+                            <td class="text-start">{{candidate?.assignto}}</td>
                             <td class="text-end wrap-date" [title]="candidate?.requestDate | date:'dd-MM-yyyy'">
                                 {{candidate?.requestDate ? (candidate?.requestDate | date:'dd-MM-yyyy') : 'N/A'}}
                             </td>

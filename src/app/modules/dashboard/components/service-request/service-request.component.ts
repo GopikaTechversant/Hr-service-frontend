@@ -525,6 +525,7 @@ export class ServiceRequestComponent implements OnInit {
     this.selectedPriority = this.requirement_details?.requestPriority || '';
     this.marketRange = this.requirement_details?.requestMarketBudget || '';
     this.selectedDesignationId = this.requirement_details?.requestDesignation || null;
+    this.selectedAssignee = this.requirement_details?.assignTo || ''
     if (this.flows) {
       this.selectedStations = this.flows.map((flow: any) => ({
         stationId: flow.flowStationId,
