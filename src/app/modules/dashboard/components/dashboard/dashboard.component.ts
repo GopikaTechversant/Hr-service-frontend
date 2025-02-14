@@ -28,7 +28,10 @@ export class DashboardComponent implements OnInit {
   // startDate: string | null = this.datePipe.transform(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 31 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
-
+  requisitionSearchValue : string = '';
+  requsitionSuggestions: any[]=[];
+  searchvalue: string = "";
+  selectedRequsition:string = '';
   constructor(private apiService: ApiService, public router: Router, private tostr: ToastrService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
@@ -47,6 +50,7 @@ export class DashboardComponent implements OnInit {
     this.fetchcount();
     this.fetchRequirements();
   }
+  
 
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -65,12 +69,15 @@ export class DashboardComponent implements OnInit {
   }
 
   fetchcount(): void {
+    console.log("inside fetch ");
     this.apiService.get(`/dashboard/card-data?requestId=${this.positionId}&fromDate=${this.startDate}&todate=${this.endDate}`)
       .subscribe({
         next: (res: any) => {
           if (res?.data) {
             this.lists = res?.data;
             this.initialLoader = false; 
+            console.log("this.lists",this.lists);
+            
           }
         },
         error: (err: any) => {
@@ -87,6 +94,17 @@ export class DashboardComponent implements OnInit {
     })
   }
 
+  getRequsitionSuggestion(event:any){
+    this.requestList_open = true;
+    this.requisitionSearchValue = event?.target.value;
+    this.apiService.get(`/service-request/list?search=${this.requisitionSearchValue}`).subscribe((res: any) => {
+      if (res?.data) this.requsitionSuggestions = res?.data.filter((suggestion: any) =>
+        suggestion.requestName.toLowerCase().startsWith(this.searchvalue.toLowerCase())
+      );
+    });
+  }
+
+
   navigateToDetail(position: any): void {
     const foundRequest = this.requestList.find((item: { requestName: any; }) => item.requestName === position);
     if (this.positionId) {
@@ -98,16 +116,28 @@ export class DashboardComponent implements OnInit {
 
   selectPosition(name: string, id: string): void {
     this.requestList_open = false;
-    this.displayPosition = name;
+    this.displayPosition = name; 
     this.positionId = id;
+    this.requisitionSearchValue = name; 
     sessionStorage.setItem(`requirement`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
     this.positionIdChange.emit(this.positionId);
-    this.fetchcount();
+    this.fetchcount(); 
   }
+  
 
+  // clearFilter(): void {
+  //   this.selectPosition('', '');
+  // }
   clearFilter(): void {
-    this.selectPosition('', '');
+    this.displayPosition = '';
+    this.positionId = '';
+    this.requisitionSearchValue = '';
+    this.selectedRequsition = '';
+    this.requestList_open = false;
+    this.searchvalue = '';
+    sessionStorage.removeItem('requirement'); 
+    this.positionIdChange.emit(this.positionId);
+    this.fetchcount(); 
   }
-
 
 }
