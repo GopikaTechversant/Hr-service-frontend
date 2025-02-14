@@ -29,7 +29,34 @@
                 </div>
             </div>    
             <div class="d-flex m-l-10 m-b-2">
-                <div class="input p-t-6 p-l-6 no-close p-relative c-pointer"
+                <span class="">
+                    <span class="d-flex input-interview-rounds-skill p-relative">
+                        <input type="text" class=" skill-input" name="skill search"
+                            (input)="getRequsitionSuggestion($event)" id="designationSearch"
+                            [(ngModel)]="requisitionSearchValue" autocomplete="off">
+                        <span class=" c-pointer skill-input">
+                            {{selectedRequsition.trim() !== '' ? selectedRequsition : ''}}
+                        </span>
+                        <div class=" d-flex j-end p-t-5">
+                            <span *ngIf="requisitionSearchValue.trim() !== ''" (click)="clearDesignationFilter()"
+                                class="c-pointer p-absolute f-right">
+                                <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
+                            </span>
+                        </div>
+                    </span>
+                    <div class="p-relative">
+                        <div class="m-t-3 drop-list-designation"
+                            *ngIf="requestList_open && requsitionSuggestions.length > 0">
+                            <div class="p-6 c-pointer" *ngFor="let suggestion of requsitionSuggestions"
+                                (click)="selectDesignation(suggestion)">
+                                <span class="p-t-7 "><img src="assets/images/akar-icons_check.png" alt=""
+                                        class="m-t-0 p-r-4" width="15px" height="13px"></span>
+                                <span class="c-pointer">{{suggestion?.designationName}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+                <!-- <div class="input p-t-6 p-l-6 no-close p-relative c-pointer"
                     (click)="requestList_open = !requestList_open">
                     <span class="f-right d-flex">
                         <span *ngIf="displayPosition && displayPosition.trim() !== ''" (click)="clearFilter()"class="c-pointer">
@@ -51,7 +78,7 @@
                             <span class="p-l-10">{{name?.requestName}}</span>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

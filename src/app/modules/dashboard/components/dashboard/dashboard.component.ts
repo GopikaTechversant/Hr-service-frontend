@@ -28,7 +28,11 @@ export class DashboardComponent implements OnInit {
   // startDate: string | null = this.datePipe.transform(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 31 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
-
+  requisitionSearchValue : string = '';
+  requsitionSuggestions: any[]=[];
+  searchvalue: string = "";
+  selectedRequisitionId:any
+  selectedRequsition:string = '';
   constructor(private apiService: ApiService, public router: Router, private tostr: ToastrService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
@@ -87,6 +91,19 @@ export class DashboardComponent implements OnInit {
     })
   }
 
+  getRequsitionSuggestion(event:any){
+    this.requestList_open = true;
+    this.requisitionSearchValue = event?.target.value;
+    this.apiService.get(`/service-request/list?search=${this.requisitionSearchValue}`).subscribe((res: any) => {
+      if (res?.data) this.requsitionSuggestions = res?.data.filter((suggestion: any) =>
+        suggestion.requestName.toLowerCase().startsWith(this.searchvalue.toLowerCase())
+      );
+      console.log("res?.data",res?.data);
+      
+    });
+  }
+
+
   navigateToDetail(position: any): void {
     const foundRequest = this.requestList.find((item: { requestName: any; }) => item.requestName === position);
     if (this.positionId) {
@@ -107,6 +124,19 @@ export class DashboardComponent implements OnInit {
 
   clearFilter(): void {
     this.selectPosition('', '');
+  }
+
+  clearDesignationFilter():void{
+    this.requisitionSearchValue = '';
+    this.requestList_open = false;
+    this.requsitionSuggestions = [];
+  }
+
+  selectDesignation(suggestion: any) {
+    // this.requisitionSearchValue = suggestion.designationName; 
+    // this.selectedRequisitionId = suggestion?.designationId ;
+    // this.requestList_open = false; 
+    // this.selectedRequsition = suggestion;
   }
 
 
