@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit {
   requisitionSearchValue : string = '';
   requsitionSuggestions: any[]=[];
   searchvalue: string = "";
-  selectedRequisitionId:any
+  selectedRequisitionId:string = '';
   selectedRequsition:string = '';
   constructor(private apiService: ApiService, public router: Router, private tostr: ToastrService, private datePipe: DatePipe) { }
 
@@ -41,15 +41,15 @@ export class DashboardComponent implements OnInit {
     if (position) {
       let requirement = JSON.parse(position);
       if (requirement) {
-        this.displayPosition = requirement?.name;
+        this.selectedRequsition = requirement?.name;
         this.positionId = requirement?.id;
       }
     } else {
-      this.displayPosition = '';
-      this.positionId = '';
+      this.selectedRequsition = '';
+      this.selectedRequsition = '';
     }
     this.fetchcount();
-    this.fetchRequirements();
+    
   }
 
   onBodyClick(event: MouseEvent): void {
@@ -70,8 +70,7 @@ export class DashboardComponent implements OnInit {
 
   fetchcount(): void {
     console.log("inside fetch ");
-    
-    this.apiService.get(`/dashboard/card-data?requestId=${this.selectedRequisitionId}&fromDate=${this.startDate}&todate=${this.endDate}`)
+    this.apiService.get(`/dashboard/card-data?requestId=${this.positionId}&fromDate=${this.startDate}&todate=${this.endDate}`)
       .subscribe({
         next: (res: any) => {
           if (res?.data) {
@@ -131,18 +130,22 @@ export class DashboardComponent implements OnInit {
   clearDesignationFilter():void{
     this.requisitionSearchValue = '';
     this.requestList_open = false;
-    this.requsitionSuggestions = [];
+    this.positionId = '';
+    this.selectedRequsition = '';
+    this.fetchcount();
+    
+    // this.requsitionSuggestions = [];
   }
 
   selectDesignation(name: any,id:any) {
     this.requisitionSearchValue = name; 
-    this.selectedRequisitionId = id;
+    this.positionId = id;
     this.requestList_open = false; 
     this.selectedRequsition = name;
     console.log(" this.selectedRequsition", this.selectedRequsition);
     
-    sessionStorage.setItem(`requirement`, JSON.stringify({ name: this.selectedRequsition, id: this.selectedRequisitionId }));
-    this.positionIdChange.emit(this.selectedRequisitionId);
+    sessionStorage.setItem(`requirement`, JSON.stringify({ name: this.selectedRequsition, id: this.positionId }));
+    this.positionIdChange.emit(this.positionId);
     this.fetchcount();
   }
 
