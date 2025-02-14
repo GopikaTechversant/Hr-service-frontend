@@ -3,13 +3,17 @@ import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastrServices } from 'src/app/services/toastr.service';
+import { DatePipe } from '@angular/common';
+
 @Component({
   selector: 'app-report-details',
   templateUrl: './report-details.component.html',
   styleUrls: ['./report-details.component.css'],
   host: {
     '(document:click)': 'onBodyClick($event)'
-  }
+  },
+  providers: [DatePipe],
+
 })
 export class ReportDetailsComponent implements OnInit {
   chart: any;
@@ -42,7 +46,10 @@ export class ReportDetailsComponent implements OnInit {
   totalCount: any;
   loader: boolean = false;
   initialLoader: boolean = false;
-  constructor(private tostr: ToastrServices, private apiService: ApiService) { }
+  endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+  formattedEndDate: string = ''; // New variable for formatted display
+
+  constructor(private tostr: ToastrServices, private apiService: ApiService, private datePipe: DatePipe) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
@@ -57,6 +64,8 @@ export class ReportDetailsComponent implements OnInit {
     // this.reportUserId = localStorage.getItem('userId');
     this.currentYear = new Date().getFullYear();
     this.reportMonth = new Date().getMonth() + 1;
+    const options = { month: 'long', year: 'numeric' } as Intl.DateTimeFormatOptions;
+    this.formattedEndDate = new Date().toLocaleDateString('en-US', options);
     this.fetchDetails();
     this.fetchRecruiters();
     this.fetchInterviewStatus(this.currentPage);
@@ -74,8 +83,8 @@ export class ReportDetailsComponent implements OnInit {
       });
   }
 
-  fetchInterviewStatus(page:any): void {
-    if(page) this.currentPage = page;
+  fetchInterviewStatus(page: any): void {
+    if (page) this.currentPage = page;
     this.interviewDetails = [];
     this.apiService.get(`/report/over-all-interview-status?page=${this.currentPage}&limit=${this.pageSize}`).subscribe((res: any) => {
       if (res?.data) {
@@ -90,7 +99,7 @@ export class ReportDetailsComponent implements OnInit {
   }
 
   fetchDetails(): void {
-    this.apiService.get(`/report/month-report-data?month=${this.currentYear}-${this.reportMonth}&userId=${this.reportUserId}`).subscribe((res: any) => {
+    this.apiService.get(`/report/month-report-data?month=${this.endDate}&userId=${this.reportUserId}`).subscribe((res: any) => {
       if (res?.data) {
         this.userRequirement = [];
         this.totalReport = [];
@@ -112,12 +121,12 @@ export class ReportDetailsComponent implements OnInit {
     });
   }
 
-  selectMonth(monthNumber: string, month: string): void {
-    this.reportMonth = monthNumber;
-    this.selectedMonth = month;
-    this.showMonth = false;
-    this.fetchDetails();
-  }
+  // selectMonth(monthNumber: string, month: string): void {
+  //   this.reportMonth = monthNumber;
+  //   this.selectedMonth = month;
+  //   this.showMonth = false;
+  //   this.fetchDetails();
+  // }
 
   selectRecruiter(recruiter: string, recruiterId: string): void {
     this.recruiterName = recruiter;
@@ -194,5 +203,19 @@ export class ReportDetailsComponent implements OnInit {
       },
       plugins: [ChartDataLabels],
     });
+  }
+
+  dateChange(event: any, range: string): void {
+    let date = new Date(event?.value);
+    // if (range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    if (range == 'endDate') this.endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    const options = { month: 'long', year: 'numeric' } as Intl.DateTimeFormatOptions;
+
+    this.formattedEndDate = date.toLocaleDateString('en-US', options); // Format for display
+
+    this.fetchDetails();
+    // this.positionId = '';
+
+    // this.fetchApplicationList(this.currentPage);
   }
 }
