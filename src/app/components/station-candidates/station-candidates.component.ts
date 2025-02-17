@@ -60,6 +60,9 @@ export class StationCandidatesComponent implements OnInit {
       if (this.currentStation === 'management') this.stationId = '6'
       this.filteredStatus = sessionStorage.getItem(`status_${this.stationId}`) ? sessionStorage.getItem(`status_${this.stationId}`) : '';
       const requirementData = sessionStorage.getItem(`requirement_${this.stationId}`);
+        // Restore stored page for this station
+    const storedPage = sessionStorage.getItem(`page_${this.stationId}`);
+    this.currentPage = storedPage ? Number(storedPage) : 1;
       if (requirementData) {
         let requirement = JSON.parse(requirementData);
         if (requirement) {
@@ -72,8 +75,8 @@ export class StationCandidatesComponent implements OnInit {
       }
       this.searchKeyword = '';
       this.candidateList = [];
-      this.limit = 12;
-      this.currentPage = 1
+      // this.limit = 12;
+      // this.currentPage = 1
       this.fetchList(this.currentPage);
       this.fetchRequirements();
       this.fetchStatus();
@@ -176,6 +179,7 @@ export class StationCandidatesComponent implements OnInit {
         }
       }
     );
+    sessionStorage.setItem(`page_${this.stationId}`, String(this.currentPage));
   }
 
   handleModalClose(status: boolean): void {
