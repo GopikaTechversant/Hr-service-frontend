@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit {
     if (position) {
       let requirement = JSON.parse(position);
       if (requirement) {
-        this.displayPosition = requirement?.name;
+        this.requisitionSearchValue = requirement?.name;
         this.positionId = requirement?.id;
       }
     } else {

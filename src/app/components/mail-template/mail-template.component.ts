@@ -333,8 +333,8 @@ export class MailTemplateComponent implements OnInit {
 
     let data;
     if (this.candidate?.messageType === 'offer') {
-      if (!this.uploadedFileKey || !this.offerSalary || !this.displayDate) {
-        if (!this.uploadedFileKey) this.tostr.warning('Please Wait for the file to be uploaded');
+      if (!this.offerSalary || !this.displayDate) {
+        // if (!this.uploadedFileKey) this.tostr.warning('Please Wait for the file to be uploaded');
         if (!this.offerSalary) this.tostr.warning('Please Add Offer Salary');
         if (!this.displayDate) this.tostr.warning('Please Select Joining Date');
         return;

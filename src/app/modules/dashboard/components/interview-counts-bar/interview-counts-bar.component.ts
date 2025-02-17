@@ -73,6 +73,9 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
   }
 
   fetchBarchartDetails(): void {
+    console.log("this.startDate", this.startDate);
+    console.log("this.endDate", this.endDate);
+
     this.initialLoader = true;
     this.sixMonthCount = [];
     const url = '/dashboard/recruiter-chart';
@@ -109,8 +112,10 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
     if (target.value === 'Last 6 Months') {
       this.recruiterCheck = false;
       this.lastSixMonth = true;
-      this.endDate = '';
-      this.startDate = '';
+      // this.endDate = '';
+      // this.startDate = '';
+      this.previousStartDate = this.startDate;
+      this.previousEndDate = this.endDate;
       this.fetchBarchartDetails();
     } else if (target.value === 'recruiter') {
       this.startDate = this.previousStartDate;
