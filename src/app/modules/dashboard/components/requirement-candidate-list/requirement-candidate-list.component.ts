@@ -28,7 +28,7 @@ export class RequirementCandidateListComponent implements OnInit {
   filteredStatus: any = '';
   status: any[] = ['Active Requisitions', 'Closed Requisitions'];
   userType: any;
-  userRole:any;
+  userRole: any;
   constructor(private router: Router, private apiService: ApiService, private dialog: MatDialog, private toastr: ToastrService) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -41,14 +41,22 @@ export class RequirementCandidateListComponent implements OnInit {
     this.userRole = localStorage.getItem('userRole');
     this.initialLoader = true;
     this.filteredStatus = sessionStorage.getItem('requisition') ? sessionStorage.getItem('requisition') : 'Active Requisitions';
-    this.fetchcandidates(this.currentPage,'');
+    // Retrieve the last page from localStorage (if available)
+    const savedPage = localStorage.getItem('currentPage');
+    this.currentPage = savedPage ? parseInt(savedPage, 10) : 1;
+
+    this.filteredStatus = localStorage.getItem('requisition')
+      ? localStorage.getItem('requisition')
+      : 'Active Requisitions';
+    this.fetchcandidates(this.currentPage, '');
+
   }
 
-  fetchcandidates(page:any,searchQuery: string): void {
-    if(page) this.currentPage = page;
-    console.log("page",page);
-    console.log("searchQuery",searchQuery);
-    
+  fetchcandidates(page: any, searchQuery: string): void {
+    if (page) this.currentPage = page;
+    console.log("page", page);
+    console.log("searchQuery", searchQuery);
+
     const isActive = this.filteredStatus === 'Closed Requisitions' ? 'closed' : 'active';
     if (!this.initialLoader) this.loader = true
     this.apiService.get(`/screening-station/v1/list-all?page=${this.currentPage}&limit=${this.limit}&search=${searchQuery.trim()}&isActive=${isActive}`).subscribe((res: any) => {
@@ -60,6 +68,8 @@ export class RequirementCandidateListComponent implements OnInit {
         const totalPages = Math.ceil(this.totalCount / this.limit);
         this.lastPage = totalPages;
         if (this.currentPage > totalPages) this.currentPage = totalPages;
+        localStorage.setItem('currentPage', this.currentPage.toString());
+
       }
     }, (error: any) => {
       this.loader = false;
@@ -71,7 +81,7 @@ export class RequirementCandidateListComponent implements OnInit {
     this.searchKeyword = search;
     this.currentPage = 1;
     this.limit = 15;
-    this.fetchcandidates(this.currentPage,this.searchKeyword);
+    this.fetchcandidates(this.currentPage, this.searchKeyword);
   }
 
   navigate(path: any, requestId?: any): void {
@@ -96,7 +106,7 @@ export class RequirementCandidateListComponent implements OnInit {
     dialogRef.componentInstance.onDeleteSuccess.subscribe(() => {
       this.apiService.post(`/service-request/delete`, { requestId: this.deleteRequirementId }).subscribe({
         next: (res: any) => {
-          this.fetchcandidates(this.currentPage,'');
+          this.fetchcandidates(this.currentPage, '');
           this.toastr.success('Deleted succesfully')
         },
         error: (error) => {
@@ -111,7 +121,7 @@ export class RequirementCandidateListComponent implements OnInit {
     sessionStorage.setItem('requisition', this.filteredStatus);
     this.currentPage = 1;
     this.limit = 15;
-    this.fetchcandidates(this.currentPage,'');
+    this.fetchcandidates(this.currentPage, '');
   }
 
   clearFilter(item: any): void {
@@ -122,7 +132,7 @@ export class RequirementCandidateListComponent implements OnInit {
     }
     this.currentPage = 1;
     this.limit = 15;
-    this.fetchcandidates(this.currentPage,'');
+    this.fetchcandidates(this.currentPage, '');
   }
 
 }
