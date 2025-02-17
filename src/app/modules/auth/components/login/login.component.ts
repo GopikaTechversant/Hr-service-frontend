@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit {
         (error) => {
           if (error?.status === 500) this.tostr.error("Internal Server Error")
           else {
-            this.tostr.error(error?.error?.error_message ? error?.error?.error_message : "Unable to Login");
+            this.tostr.error(error?.error?.error_message ? error?.error?.error_message : "Invalid user credentials");
           }
           this.toggleSpinner = false;
           this.submitted = false;
