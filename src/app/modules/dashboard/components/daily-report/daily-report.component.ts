@@ -35,7 +35,7 @@ export class DailyReportComponent implements OnInit {
   loader: boolean = false;
   report: boolean = false;
   url: any;
-  userType:any;
+  userType: any;
   constructor(private apiService: ApiService, private datePipe: DatePipe, private exportService: ExportService) { }
 
   onBodyClick(event: MouseEvent): void {
@@ -47,6 +47,9 @@ export class DailyReportComponent implements OnInit {
 
   ngOnInit(): void {
     this.userType = localStorage.getItem('userType')
+    // Retrieve the last page from localStorage (if available)
+    const savedPage = localStorage.getItem('currentPageDailyReport');
+    this.currentPage = savedPage ? parseInt(savedPage, 10) : 1;
     this.initialLoader = true;
     this.fetchDetails(this.currentPage);
     this.today = new Date();
@@ -56,8 +59,8 @@ export class DailyReportComponent implements OnInit {
     return !isNaN(value);
   }
 
-  fetchDetails(page:any): void {
-    if(page) this.currentPage = page;
+  fetchDetails(page: any): void {
+    if (page) this.currentPage = page;
     if (!this.initialLoader) this.loader = true
     const url = `/report/report-list`
     let params = [
@@ -113,6 +116,7 @@ export class DailyReportComponent implements OnInit {
       this.loader = false;
       this.initialLoader = false;
     });
+    localStorage.setItem('currentPageDailyReport', this.currentPage.toString());
   }
 
   downloadAsExcel(jsonData: any[], fileName: string) {

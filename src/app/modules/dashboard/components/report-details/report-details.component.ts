@@ -60,6 +60,9 @@ export class ReportDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.initialLoader = true;
+     // Retrieve the last page from localStorage (if available)
+     const savedPage = localStorage.getItem('currentPageReport');
+     this.currentPage = savedPage ? parseInt(savedPage, 10) : 1;
     this.today = new Date()
     // this.reportUserId = localStorage.getItem('userId');
     this.currentYear = new Date().getFullYear();
@@ -96,6 +99,7 @@ export class ReportDetailsComponent implements OnInit {
         if (this.currentPage > totalPages) this.currentPage = totalPages;
       }
     })
+    localStorage.setItem('currentPageReport', this.currentPage.toString());
   }
 
   fetchDetails(): void {

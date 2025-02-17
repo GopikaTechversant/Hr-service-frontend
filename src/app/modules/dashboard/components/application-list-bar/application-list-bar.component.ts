@@ -30,6 +30,9 @@ export class ApplicationListBarComponent implements OnInit {
 
   ngOnInit(): void {
     this.initialLoader = true;
+     // Retrieve the last page from localStorage (if available)
+     const savedPage = localStorage.getItem('currentPageInterviewStatus');
+     this.currentPage = savedPage ? parseInt(savedPage, 10) : 1;
     this.requestId = this.positionId ? this.positionId : '';
     this.fetchApplicationList(this.currentPage);
   }
@@ -62,6 +65,7 @@ export class ApplicationListBarComponent implements OnInit {
         if (this.currentPage > totalPages) this.currentPage = totalPages;
       }
     });
+    localStorage.setItem('currentPageInterviewStatus', this.currentPage.toString());
   }
 
   dateChange(event: any, range: string): void {

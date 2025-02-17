@@ -45,11 +45,14 @@ export class DetailedRecruitmentComponent implements OnInit {
 
   ngOnInit(): void {
     this.userType = localStorage.getItem('userType')
+     // Retrieve the last page from localStorage (if available)
+     const savedPage = localStorage.getItem('currentPageDetailed');
+     this.currentPage = savedPage ? parseInt(savedPage, 10) : 1;
     this.initialLoader = true;
     this.selectedRecruiterId = '';
     this.candidateList = [];
-    this.pageSize = 10;
-    this.currentPage = 1
+    // this.pageSize = 10;
+    // this.currentPage = 1
     this.fetchCandidateList(this.currentPage);
   }
 
@@ -119,6 +122,7 @@ export class DetailedRecruitmentComponent implements OnInit {
       this.loader = false;
       this.initialLoader = false;
     })
+    localStorage.setItem('currentPageDetailed', this.currentPage.toString());
   }
 
   downloadAsExcel(jsonData: any[], fileName: string) {
