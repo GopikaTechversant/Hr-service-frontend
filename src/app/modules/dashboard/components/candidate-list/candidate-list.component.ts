@@ -46,6 +46,9 @@ export class CandidateListComponent {
     this.userType = localStorage.getItem('userType');
     this.initialLoader = true;
     this.requestId = this.positionId ? this.positionId : '';
+    // Retrieve the last page from localStorage (if available)
+    const savedPage = localStorage.getItem('currentPageCandidateList');
+    this.currentPage = savedPage ? parseInt(savedPage, 10) : 1;
     this.fetchCandidates(this.currentPage);
   }
 
@@ -113,6 +116,7 @@ export class CandidateListComponent {
       this.loader = false;
       this.initialLoader = false;
     });
+    localStorage.setItem('currentPageCandidateList', this.currentPage.toString());
   }
 
   exportData(): void {

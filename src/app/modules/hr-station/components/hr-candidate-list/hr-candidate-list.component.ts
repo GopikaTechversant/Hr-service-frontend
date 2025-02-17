@@ -38,12 +38,12 @@ export class HrCandidateListComponent implements OnInit {
   isExport: boolean = false;
   today: Date = new Date();
   // startDate: string | null = this.datePipe.transform(new Date(Date.now() - 150 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
-  startDate: string | null = this.datePipe.transform(new Date(new Date().getFullYear(), new Date().getMonth() - 5, new Date().getDate()),'yyyy-MM-dd');
+  startDate: string | null = this.datePipe.transform(new Date(new Date().getFullYear(), new Date().getMonth() - 5, new Date().getDate()), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   // endDate: string | null = this.datePipe.transform(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   candidateIds: any;
   status: any;
-  userType:any;
+  userType: any;
   constructor(private dialog: MatDialog, private apiService: ApiService, private datePipe: DatePipe, private router: Router,
     private toastr: ToastrService, private exportService: ExportService) { }
   onBodyClick(event: MouseEvent): void {
@@ -59,6 +59,9 @@ export class HrCandidateListComponent implements OnInit {
     this.initialLoader = true;
     this.filteredStatus = sessionStorage.getItem('status_5') ? sessionStorage.getItem('status_5') : '';
     const requirementData = sessionStorage.getItem(`requirement_5`);
+    // Retrieve the last page from localStorage (if available)
+    const savedPage = localStorage.getItem('currentPageHr');
+    this.currentPage = savedPage ? parseInt(savedPage, 10) : 1;
     if (requirementData) {
       let requirement = JSON.parse(requirementData);
       if (requirement) {
@@ -69,8 +72,9 @@ export class HrCandidateListComponent implements OnInit {
       this.displayPosition = '';
       this.positionId = '';
     }
-    this.limit = 12;
-    this.currentPage = 1
+    // this.limit = 12;
+    // this.currentPage = 1
+
     this.fetchList(this.currentPage);
     this.fetchRequirements();
     this.fetchStatus();
@@ -90,8 +94,8 @@ export class HrCandidateListComponent implements OnInit {
     });
   }
 
-  fetchList(page:any): void {
-    if(page) this.currentPage = page;
+  fetchList(page: any): void {
+    if (page) this.currentPage = page;
     if (!this.initialLoader) this.loader = true;
     const url = `/hr-station/list`
     let params = [
@@ -157,6 +161,7 @@ export class HrCandidateListComponent implements OnInit {
         }
       }
     );
+    localStorage.setItem('currentPageHr', this.currentPage.toString());
   }
 
   downloadAsExcel(jsonData: any[], fileName: string) {

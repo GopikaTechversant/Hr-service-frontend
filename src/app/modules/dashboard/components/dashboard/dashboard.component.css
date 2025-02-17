@@ -213,12 +213,12 @@
 }
 
 .suggestion{
-  width: 252px;
+  width: 389px;
   /* height: 34px; */
 }
 
 .skill-input{
-  width: 249px;
+  width: 387px;
 }
 
 @media (max-width: 1396px) and (min-width: 1000px) {
