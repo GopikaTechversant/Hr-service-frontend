@@ -6,10 +6,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { DeleteComponent } from 'src/app/components/delete/delete.component';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
-import { DatePipe } from '@angular/common';
 import { FeedbackComponent } from 'src/app/components/feedback/feedback.component';
-import { RejectionFeedbackComponent } from 'src/app/components/rejection-feedback/rejection-feedback.component';
-
 @Component({
   selector: 'app-series',
   templateUrl: './series.component.html',
@@ -48,8 +45,8 @@ export class SeriesComponent implements OnInit {
   env_url: string = '';
   isExpanded: boolean = false;
   showViewMore: boolean = false;
-  userType:any;
-  userRole:any;
+  userType: any;
+  userRole: any;
   @ViewChild('template') set templateSetter(template: ElementRef) {
     if (template) {
       this.template = template;
@@ -59,7 +56,7 @@ export class SeriesComponent implements OnInit {
   template: ElementRef | undefined;
   constructor(private apiService: ApiService, private toastr: ToastrService, private router: Router,
     private route: ActivatedRoute, private dialog: MatDialog, private tostr: ToastrServices,
-    private renderer: Renderer2, private sanitizer: DomSanitizer, private cdr: ChangeDetectorRef,private datePipe: DatePipe) {
+    private renderer: Renderer2, private sanitizer: DomSanitizer, private cdr: ChangeDetectorRef) {
 
     this.route.queryParams.subscribe(params => {
       this.requestId = params['requestId'];
@@ -126,8 +123,7 @@ export class SeriesComponent implements OnInit {
       this.apiService.post(`/service-request/delete`, { requestId: this.deleteRequirementId }).subscribe({
         next: (res: any) => {
           this.fetchDetails();
-          this.toastr.success('Deleted succesfully');
-          this.router.navigate(['/dashboard/requirement-candidate-list']);
+          this.toastr.success('Deleted succesfully')
         },
         error: (error) => {
           this.tostr.error(error?.error?.message ? error?.error?.message : 'Unable to Delete candidates');
@@ -136,24 +132,35 @@ export class SeriesComponent implements OnInit {
     })
   }
 
-  approveRequisition(id:any): void {
-    this.apiService.post(`/service-request/activateRequest`,{requestionId: id}).subscribe({
-      next:(res:any) => {
+  approveRequisition(id: any): void {
+    const payload = {
+      requestionId: id,
+      approve: true,
+      reason:''
+    }
+    this.apiService.post(`/service-request/activateRequest`, payload).subscribe({
+      next: (res: any) => {
         this.tostr.success('Approved');
+        this.router.navigate(['/dashboard/requirement-candidate-list']);
       },
-      error:(error) => {
+      error: (error) => {
         this.tostr.error('Unable to approve');
       }
     })
 
   }
 
-  rejectRequisition(): void {
-    const dialogRef = this.dialog.open(RejectionFeedbackComponent, {
-      data: {rejectStatus:'rejectRequisition'},
+  rejectRequisition(id: any): void {
+    const dialogRef = this.dialog.open(FeedbackComponent, {
+      data: { rejectStatus: 'rejectRequisition', rejectionRequsitionId: id },
       width: '650px',
       height: '260px'
-    })
+    });
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result === true) {
+        this.router.navigate(['/dashboard/requirement-candidate-list']);
+      }
+    });
   }
 
 }

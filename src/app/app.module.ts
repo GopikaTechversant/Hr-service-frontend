@@ -9,12 +9,11 @@ import { environment } from 'src/environments/environments';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'; 
 import { AuthGuardService } from './services/auth-guard.service';
 import { Interceptor } from './interceptor/interceptor';
-import { RejectionFeedbackComponent } from './components/rejection-feedback/rejection-feedback.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RejectionFeedbackComponent,
+   
   ],
   imports: [
     BrowserModule,

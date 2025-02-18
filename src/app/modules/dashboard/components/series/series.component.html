@@ -138,7 +138,7 @@
         </div>
         <div class="approval d-flex j-end" *ngIf="requirement_details?.candidatesCount === '0' && requirement_details?.requestStatus !== 'active'">
             <button class="btn approval" (click)="approveRequisition(requirement_details?.requestId)">Approve</button>
-            <button class="btn btn-reject" (click)="rejectRequisition()">Reject</button>
+            <button class="btn btn-reject" (click)="rejectRequisition(requirement_details?.requestId)">Reject</button>
         </div>
     </div>
     <div *ngIf="requirement_details?.candidatesCount !== '0'">
