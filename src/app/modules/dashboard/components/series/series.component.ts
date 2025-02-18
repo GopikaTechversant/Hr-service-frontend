@@ -7,6 +7,7 @@ import { DeleteComponent } from 'src/app/components/delete/delete.component';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
+import { FeedbackComponent } from 'src/app/components/feedback/feedback.component';
 
 @Component({
   selector: 'app-series',
@@ -131,6 +132,28 @@ export class SeriesComponent implements OnInit {
           this.tostr.error(error?.error?.message ? error?.error?.message : 'Unable to Delete candidates');
         }
       })
+    })
+  }
+
+  approveRequisition(id:any): void {
+    console.log("id",id);
+    
+    this.apiService.post(`/service-request/activateRequest`,{requestionId: id}).subscribe({
+      next:(res:any) => {
+        this.tostr.success('Approved');
+      },
+      error:(error) => {
+        this.tostr.error('Unable to approve');
+      }
+    })
+
+  }
+
+  rejectRequisition(): void {
+    const dialogRef = this.dialog.open(FeedbackComponent, {
+      data: {rejectStatus:'rejectRequisition'},
+      width: '650px',
+      height: '260px'
     })
   }
 
