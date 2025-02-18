@@ -83,14 +83,14 @@
                                 {{candidate?.requestSkills ? (candidate?.requestSkills) : 'N/A'}}</td>
                             <td class="text-start f-w-500"
                                 [ngStyle]="{'color': candidate.status === 'active' ? '#08BC66' : 'red'}">
-                                {{candidate?.status ?(candidate?.status) : 'N/A'}}
+                                {{candidate?.status ?(candidate?.status | titlecase) : 'N/A'}}
                             </td>
                             <td class="text-center add" (click)="onStatusChange(candidate)"
                                 *ngIf="filteredStatus === 'Active Requisitions' && userType !== 'super-admin'">
                                 <i class="fa fa-user-plus" aria-hidden="true"></i>
                             </td>
                             <td class="text-start">{{candidate?.assignto}}</td>
-                            <td class="text-start">Urgent</td>
+                            <td class="text-start">{{candidate?.requestPriority | titlecase}}</td>
                             <td class="text-end wrap-date" [title]="candidate?.requestDate | date:'dd-MM-yyyy'">
                                 {{candidate?.requestDate ? (candidate?.requestDate | date:'dd-MM-yyyy') : 'N/A'}}
                             </td>
