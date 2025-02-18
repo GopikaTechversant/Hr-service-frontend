@@ -100,7 +100,7 @@ export class RequirementCandidateListComponent implements OnInit {
       this.router.navigate(['dashboard/add-candidate'], {
         state: { candidate }
       });
-    }else this.toastr.warning('Cannot add candidate: requisition inactive');
+    }else this.toastr.warning('Unable to add candidate: Requisition Inactive');
    
   }
 
