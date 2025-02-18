@@ -8,6 +8,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import { FeedbackComponent } from 'src/app/components/feedback/feedback.component';
+import { RejectionFeedbackComponent } from 'src/app/components/rejection-feedback/rejection-feedback.component';
 
 @Component({
   selector: 'app-series',
@@ -136,8 +137,6 @@ export class SeriesComponent implements OnInit {
   }
 
   approveRequisition(id:any): void {
-    console.log("id",id);
-    
     this.apiService.post(`/service-request/activateRequest`,{requestionId: id}).subscribe({
       next:(res:any) => {
         this.tostr.success('Approved');
@@ -150,7 +149,7 @@ export class SeriesComponent implements OnInit {
   }
 
   rejectRequisition(): void {
-    const dialogRef = this.dialog.open(FeedbackComponent, {
+    const dialogRef = this.dialog.open(RejectionFeedbackComponent, {
       data: {rejectStatus:'rejectRequisition'},
       width: '650px',
       height: '260px'
