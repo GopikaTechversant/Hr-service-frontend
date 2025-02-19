@@ -185,3 +185,7 @@
 .dropdown :hover {
     background-color: #eceaea;
 }
+
+.skill-input{
+    width: 100%;
+  }

@@ -108,6 +108,32 @@
             <div class="d-flex w-100 gaps">
                 <div class="input-1">
                     <span class="p-10 sub-head p-l-0">Interview Panel</span>
+                    <span class="d-flex offer-input p-relative">
+                        <input type="text" class="skill-input p-l-9" name="skill search"
+                            (input)="getRequsitionSuggestion($event)" id="designationSearch"
+                            [(ngModel)]="panelSearchValue" autocomplete="off" placeholder="Search Interview Panel">
+                        <!-- <span class=" c-pointer skill-input">
+                            {{selectedRequsition.trim() !== '' ? selectedRequsition : ''}}
+                        </span> -->
+                        <div class=" d-flex j-end p-t-1">
+                            <span *ngIf="panelSearchValue.trim() !== ''" (click)="clearFilter()"
+                                class="c-pointer p-absolute f-right p-r-5">
+                                <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
+                            </span>
+                        </div>
+                    </span>
+                    <div class="p-relative">
+                        <div class="m-t-3 dropdown "
+                            *ngIf="showPanel && panel_list.length > 0">
+                            <div class="p-6 c-pointer" *ngFor="let suggestion of panel_list"
+                                (click)="selectPanel(suggestion?.userId,suggestion?.userfirstName,suggestion?.userlastName)">
+                                <span class="c-pointer p-l-5">{{suggestion?.userfirstName}}{{suggestion?.userlastName}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="input-1">
+                    <span class="p-10 sub-head p-l-0">Interview Panel</span>
                         <div class="offer-input c-pointer p-relative no-close" (click)="showPanel = !showPanel">
                             <span *ngIf="!panelName">Select Name</span>
                             <span *ngIf="panelName">{{panelName}}</span>
@@ -119,7 +145,7 @@
                                 </div>
                             </div>
                         </div>
-                </div>
+                </div> -->
                 <div class="input-1">
                     <span class="p-10 sub-head p-l-0">Interview Mode</span>
                     <div class="offer-input c-pointer p-relative no-close" (click)="showModeList = !showModeList">
