@@ -71,6 +71,8 @@ export class MailTemplateComponent implements OnInit {
   fileUploader: boolean = false;
   InterviewTime: any;
   isSubmitting: boolean = false;
+  emailIdList:any[]=[];
+  emailIdOpen: boolean = false;
   constructor(private apiService: ApiService, private tostr: ToastrService, private datePipe: DatePipe, private s3Service: S3Service) { }
   ngOnInit(): void {
     this.resetFormAndState();
@@ -98,6 +100,12 @@ export class MailTemplateComponent implements OnInit {
   openTimePicker(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     inputElement.click();
+  }
+
+  fetchEmailId():void{
+    this.apiService.get(`/user/lists?mailSearch=me`).subscribe((res:any) => {
+      
+    })
   }
 
   fetchPanel(): void {

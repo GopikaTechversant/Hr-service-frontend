@@ -2,24 +2,24 @@
     <div class="p-b-5 p-t-5 d-flex j-space">
         <div class="m-10 c-pointer">
             <span class="heading p-r-5">Email Details </span>
-        </div>       
+        </div>
     </div>
     <div *ngIf="fileUploader" class="loader-parent">
         <img src="assets/gif/loader.gif">
     </div>
-    <div  class="template p-l-10">
-    <div class="d-flex j-end">
-        <div *ngIf="!isEditable" class="f-right m-10 c-pointer blue" (click)="editClick()" title="Edit">
-            <span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
-            <span class="c-blue p-l-4 p-r-5">Edit</span>
+    <div class="template p-l-10">
+        <div class="d-flex j-end">
+            <div *ngIf="!isEditable" class="f-right m-10 c-pointer blue" (click)="editClick()" title="Edit">
+                <span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+                <span class="c-blue p-l-4 p-r-5">Edit</span>
+            </div>
+            <div *ngIf="isEditable" class="f-right m-10 c-pointer blue" (click)="saveClick($event)" title="Save">
+                <span><i class="fa fa-floppy-o" aria-hidden="true"></i></span>
+                <span class="c-blue p-l-5 p-r-5">Save</span>
+            </div>
         </div>
-        <div *ngIf="isEditable" class="f-right m-10 c-pointer blue" (click)="saveClick($event)" title="Save">
-            <span><i class="fa fa-floppy-o" aria-hidden="true"></i></span>
-            <span class="c-blue p-l-5 p-r-5">Save</span>
-        </div>
-    </div>   
-    <div style="margin: 10px;">
-        <div #template style="
+        <div style="margin: 10px;">
+            <div #template style="
                     background-color: #FFFFFF;   
                     width: 100%;
                     overflow-x: hidden;
@@ -30,59 +30,62 @@
                     opacity: 0px;
                     outline: none !important;
                     padding-left: 0px;">
-            <div style="padding-bottom: 10px;">Dear {{candidate?.firstName}},</div>
-            <textarea class="editable " id="editable"  [(ngModel)]="templateData.message" [readonly]="!isEditable" (input)="updateHtmlContent($event);" 
-                style="width: 100%; outline: none !important; border: none !important; min-height: 220px;padding-top: 5px;padding-left: 0px; padding-bottom: 10px;">
+                <div style="padding-bottom: 10px;">Dear {{candidate?.firstName}},</div>
+                <textarea class="editable " id="editable" [(ngModel)]="templateData.message" [readonly]="!isEditable"
+                    (input)="updateHtmlContent($event);"
+                    style="width: 100%; outline: none !important; border: none !important; min-height: 220px;padding-top: 5px;padding-left: 0px; padding-bottom: 10px;">
                         </textarea><br>
-            <span style="margin: auto;display: flex; color: rgb(61, 133, 198);">Date and Time : {{displayDate | date :'dd/MM/yyy'}} &  {{InterviewTime}}</span><br>
-            <span style="margin: auto;display: flex;color: rgb(61, 133, 198);">Meeting Link : </span><br>           
-            <span style="padding: 10px; padding-left: 0px;">Best Regards,</span>
-    
-            <div style="margin: auto;display: flex;">
-                <div style="padding: 20px;border-right: 1px solid #080808;">
-                    <img src="https://ci3.googleusercontent.com/meips/ADKq_NapjuLWTLiXF7ivrlGwr6U97hPH5agY3t8-btO72OJnNFWSzgyoEMTSXjuG5kRho7rTsAud8VBPPJMTOHx1eSgLo8IYNL4VCGcXagjR6QP0fOMCIw=s0-d-e1-ft#http://www.techversantinfotech.com/images/techversant-logo.jpg"
-                        alt="Techversant Logo" style="width: 80px; height: auto;">
-                </div>
-                <div style="padding-left: 10px;">
-                    <span style="text-align: left; color: #080808; font-weight: 500;font-size: 18px;">TEAM - HR</span>
-                    <p style="text-align: left; color: #080808; font-size: 12px;">
-                        <span style="font-weight: 500;">Techversant Infotech Pvt Ltd,</span><br>
-                        <span style="font-size: 10px;">
-                            Module No:2306, Third Floor, Yamuna, Tower II,<br>
-                            Technopark Phase III SEZ Campus,<br>
-                            Trivandrum Kerala 695 581<br>
-                            <span>p: +91-471-4014953</span><br>
-                            <span>e: <a href="mailto:hr@techversantinfotech.com"
-                                    style="color: #3498db; text-decoration: none;">hr&#64;techversantinfotech.com</a></span>
-                            <span>| w: <a href="http://www.techversantinfotech.com"
-                                    style="color: #3498db; text-decoration: none;">www.techversantinfotech.com</a></span>
-                        </span>
-                    </p>
-                    <div style="display: flex; align-items: center; margin-top: 5px;">
-                        <a href="https://www.facebook.com/Techversant" style="margin: 0 5px;">
-                            <img src="https://ci3.googleusercontent.com/meips/ADKq_Nb4TwoHV9L4Pn9DRrp6vNCyU2A1NbooQ4hoVACqAVnUM0xYoySUxn5lbqBh6hEbk93JUR_a1C_WmoROWqfsW95ChnFkCKU=s0-d-e1-ft#http://www.techversantinfotech.com/images/fb.png"
-                                alt="Facebook" style="width: 25px; height: 25px; border-radius: 50%;">
-                        </a>
-                        <a href="https://x.com/Techversant" style="margin: 0 5px;">
-                            <img src="https://ci3.googleusercontent.com/meips/ADKq_Nb9AMe7OA3Va2cj-1Z-x-wejPUozZioJ9t697dYLtRZKO2am_-U3fyx4UUWfstt0sBR_4rxngA3C7B3MfvMWwgDDzoyWII=s0-d-e1-ft#http://www.techversantinfotech.com/images/tw.png"
-                                alt="X" style="width: 25px; height: 25px; border-radius: 50%;">
-                        </a>
-                        <a href="https://www.linkedin.com/authwall?trk=bf&trkInfo=AQFeLSI3yhY-wQAAAY_Cjp-wqxPLUy4QbqlvsHGlSmqloogIAvqEgOhW71hyBR4henqWckGOEUHbAXs14kbX_O4mhXWrwclSDfsvp_jg28G3Hfz1vhm26LytxxhrWAkpFfUsMFw=&original_referer=&sessionRedirect=https%3A%2F%2Fwww.linkedin.com%2Fcompany%2F2371685%3Ftrk%3Dtyah"
-                            style="margin: 0 5px;">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png"
-                                alt="LinkedIn" style="width: 25px; height: 25px; border-radius: 50%;">
-                        </a>
+                <span style="margin: auto;display: flex; color: rgb(61, 133, 198);">Date and Time : {{displayDate | date
+                    :'dd/MM/yyy'}} & {{InterviewTime}}</span><br>
+                <span style="margin: auto;display: flex;color: rgb(61, 133, 198);">Meeting Link : </span><br>
+                <span style="padding: 10px; padding-left: 0px;">Best Regards,</span>
+
+                <div style="margin: auto;display: flex;">
+                    <div style="padding: 20px;border-right: 1px solid #080808;">
+                        <img src="https://ci3.googleusercontent.com/meips/ADKq_NapjuLWTLiXF7ivrlGwr6U97hPH5agY3t8-btO72OJnNFWSzgyoEMTSXjuG5kRho7rTsAud8VBPPJMTOHx1eSgLo8IYNL4VCGcXagjR6QP0fOMCIw=s0-d-e1-ft#http://www.techversantinfotech.com/images/techversant-logo.jpg"
+                            alt="Techversant Logo" style="width: 80px; height: auto;">
                     </div>
-    
-                    <div style="text-align: left; margin-top: 5px;">
-                        <img src="https://ci3.googleusercontent.com/mail-sig/AIorK4zlPCTzSXp520ZteOQXhKtbNPG79fhDLtmFAh5o7N4lisuGBI2oGF82UklIOEC7f5ZH2DzffQQ"
-                            alt="Great Place to Work" style="width: 150px; height: auto;">
+                    <div style="padding-left: 10px;">
+                        <span style="text-align: left; color: #080808; font-weight: 500;font-size: 18px;">TEAM -
+                            HR</span>
+                        <p style="text-align: left; color: #080808; font-size: 12px;">
+                            <span style="font-weight: 500;">Techversant Infotech Pvt Ltd,</span><br>
+                            <span style="font-size: 10px;">
+                                Module No:2306, Third Floor, Yamuna, Tower II,<br>
+                                Technopark Phase III SEZ Campus,<br>
+                                Trivandrum Kerala 695 581<br>
+                                <span>p: +91-471-4014953</span><br>
+                                <span>e: <a href="mailto:hr@techversantinfotech.com"
+                                        style="color: #3498db; text-decoration: none;">hr&#64;techversantinfotech.com</a></span>
+                                <span>| w: <a href="http://www.techversantinfotech.com"
+                                        style="color: #3498db; text-decoration: none;">www.techversantinfotech.com</a></span>
+                            </span>
+                        </p>
+                        <div style="display: flex; align-items: center; margin-top: 5px;">
+                            <a href="https://www.facebook.com/Techversant" style="margin: 0 5px;">
+                                <img src="https://ci3.googleusercontent.com/meips/ADKq_Nb4TwoHV9L4Pn9DRrp6vNCyU2A1NbooQ4hoVACqAVnUM0xYoySUxn5lbqBh6hEbk93JUR_a1C_WmoROWqfsW95ChnFkCKU=s0-d-e1-ft#http://www.techversantinfotech.com/images/fb.png"
+                                    alt="Facebook" style="width: 25px; height: 25px; border-radius: 50%;">
+                            </a>
+                            <a href="https://x.com/Techversant" style="margin: 0 5px;">
+                                <img src="https://ci3.googleusercontent.com/meips/ADKq_Nb9AMe7OA3Va2cj-1Z-x-wejPUozZioJ9t697dYLtRZKO2am_-U3fyx4UUWfstt0sBR_4rxngA3C7B3MfvMWwgDDzoyWII=s0-d-e1-ft#http://www.techversantinfotech.com/images/tw.png"
+                                    alt="X" style="width: 25px; height: 25px; border-radius: 50%;">
+                            </a>
+                            <a href="https://www.linkedin.com/authwall?trk=bf&trkInfo=AQFeLSI3yhY-wQAAAY_Cjp-wqxPLUy4QbqlvsHGlSmqloogIAvqEgOhW71hyBR4henqWckGOEUHbAXs14kbX_O4mhXWrwclSDfsvp_jg28G3Hfz1vhm26LytxxhrWAkpFfUsMFw=&original_referer=&sessionRedirect=https%3A%2F%2Fwww.linkedin.com%2Fcompany%2F2371685%3Ftrk%3Dtyah"
+                                style="margin: 0 5px;">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png"
+                                    alt="LinkedIn" style="width: 25px; height: 25px; border-radius: 50%;">
+                            </a>
+                        </div>
+
+                        <div style="text-align: left; margin-top: 5px;">
+                            <img src="https://ci3.googleusercontent.com/mail-sig/AIorK4zlPCTzSXp520ZteOQXhKtbNPG79fhDLtmFAh5o7N4lisuGBI2oGF82UklIOEC7f5ZH2DzffQQ"
+                                alt="Great Place to Work" style="width: 150px; height: auto;">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
     <div class="m-10 p-8">
         <div class="d-flex w-100 gaps" *ngIf="candidate?.messageType.trim() === 'offer'">
@@ -94,9 +97,10 @@
             </div>
             <div class="input-1">
                 <span class="p-10 sub-head p-l-0">Joining Date</span>
-                <div class="offer-input c-pointer p-relative">                    
-                    <input class="p-l-5 input-offer p-r-10" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate" id="joining"
-                        (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate" [min]="today">
+                <div class="offer-input c-pointer p-relative">
+                    <input class="p-l-5 input-offer p-r-10" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate"
+                        id="joining" (dateChange)="dateChange($event)" (click)="pickerdate?.open()"
+                        [value]="displayDate" [min]="today">
                     <span> <mat-datepicker #pickerdate class=""></mat-datepicker>
                         <i class="fa fa-calendar-o c-pointer p-absolute calendar-join" aria-hidden="true"
                             (click)="pickerdate?.open()"></i>
@@ -104,21 +108,22 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="candidate?.messageType.trim() === 'approve' || candidate?.messageType.trim() === 'screening' || candidate?.messageType.trim() === 're-schedule'">
+        <div
+            *ngIf="candidate?.messageType.trim() === 'approve' || candidate?.messageType.trim() === 'screening' || candidate?.messageType.trim() === 're-schedule'">
             <div class="d-flex w-100 gaps">
                 <div class="input-1">
                     <span class="p-10 sub-head p-l-0">Interview Panel</span>
-                        <div class="offer-input c-pointer p-relative no-close" (click)="showPanel = !showPanel">
-                            <span *ngIf="!panelName">Select Name</span>
-                            <span *ngIf="panelName">{{panelName}}</span>
-                            <span><i class="f-right margin-5 m-r-10 fa fa-chevron-down s-text no-close"></i></span>
-                            <div class="no-close dropdown c-pointer no-close" *ngIf="showPanel">
-                                <div class="padding-5 p-l-10 no-close" *ngFor="let panel of panel_list "
-                                    (click)="selectPanel(panel?.userId,panel?.userfirstName,panel?.userlastName);showPanel = !showPanel">
-                                    {{panel?.userfirstName}} {{panel?.userlastName}}
-                                </div>
+                    <div class="offer-input c-pointer p-relative no-close" (click)="showPanel = !showPanel">
+                        <span *ngIf="!panelName">Select Name</span>
+                        <span *ngIf="panelName">{{panelName}}</span>
+                        <span><i class="f-right margin-5 m-r-10 fa fa-chevron-down s-text no-close"></i></span>
+                        <div class="no-close dropdown c-pointer no-close" *ngIf="showPanel">
+                            <div class="padding-5 p-l-10 no-close" *ngFor="let panel of panel_list "
+                                (click)="selectPanel(panel?.userId,panel?.userfirstName,panel?.userlastName);showPanel = !showPanel">
+                                {{panel?.userfirstName}} {{panel?.userlastName}}
                             </div>
                         </div>
+                    </div>
                 </div>
                 <div class="input-1">
                     <span class="p-10 sub-head p-l-0">Interview Mode</span>
@@ -126,71 +131,101 @@
                         <span>{{selectedModeName ? selectedModeName : 'Select Mode'}}</span>
                         <span><i class="f-right margin-5 m-r-10 fa fa-chevron-down s-text no-close"></i></span>
                         <div class="no-close dropdown c-pointer no-close" *ngIf="showModeList">
-                            <div class="padding-5 p-l-10" *ngFor="let mode of modeList " (click)="selectMode(mode?.id,mode?.modeName)">
+                            <div class="padding-5 p-l-10" *ngFor="let mode of modeList "
+                                (click)="selectMode(mode?.id,mode?.modeName)">
                                 {{mode?.modeName}}
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
             <div class="d-flex w-100 gaps">
                 <div class="input-1 ">
                     <span class="p-10 sub-head p-l-0">Interview Date and Time</span>
                     <div class="p-relative d-flex offer-input ">
                         <div class="c-pointer flex-1">
                             <!-- Date Input -->
-                            <input class="date-input c-pointer" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerInterview"
-                                (dateChange)="dateChange($event)" (click)="pickerInterview?.open()" [value]="scheduledDate" [min]="today">
+                            <input class="date-input c-pointer" placeholder="MM/DD/YY" matInput
+                                [matDatepicker]="pickerInterview" (dateChange)="dateChange($event)"
+                                (click)="pickerInterview?.open()" [value]="scheduledDate" [min]="today">
                             <mat-datepicker #pickerInterview></mat-datepicker>
                             <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
                                 (click)="pickerInterview?.open()"></i>
                         </div>
                         <!-- Time Input -->
-                       <div class="c-pointer flex-1 m-r-10 m-l-20">
-                        <input class="date-input c-pointer" type="time" id="appt" name="appt" required [value]="displayTime" 
-                        [(ngModel)]="displayTime" (click)="openTimePicker($event)"   (change)="onTimeChange($event)" />
-                    </div>    
-                </div>
+                        <div class="c-pointer flex-1 m-r-10 m-l-20">
+                            <input class="date-input c-pointer" type="time" id="appt" name="appt" required
+                                [value]="displayTime" [(ngModel)]="displayTime" (click)="openTimePicker($event)"
+                                (change)="onTimeChange($event)" />
+                        </div>
+                    </div>
                 </div>
                 <div class="input-1">
                     <span class="p-10 sub-head p-l-0">Interview status</span>
                     <div class="offer-input">
-                        <span  type="text" id="interviewStatus" >{{interviewStatus | titlecase}}</span>
+                        <span type="text" id="interviewStatus">{{interviewStatus | titlecase}}</span>
                     </div>
                 </div>
             </div>
-        </div>      
+        </div>
         <div class=" ">
             <span class="p-10 sub-head p-l-0">Email Subject</span>
             <span class="padding-5 p-l-0"><input class="input w-97" type="text" id="subject"></span>
         </div>
-        <div class=" ">
+        <!-- <div class=" ">
             <span class="p-10 sub-head p-l-0">Email Cc</span>
             <span class="padding-5 p-l-0"><input class="input w-97" type="text" id="cc"></span>
-        </div>
-        <div class=" ">
-            <span class="p-10 sub-head p-l-0">Email Bcc</span>
-            <span class="padding-5 p-l-0"><input class="input w-97" type="text" id="bcc"></span>
-        </div>
-        <div class="w-100" *ngIf="candidate?.messageType.trim() === 'offer'">
-            <span class="p-10 sub-head p-l-0">Attachment</span>
-            <span class="c-pointer attach p-b-1 d-flex file" title="Attach File" (click)="fileInput.click()">
-                <img class="p-t-2" src="/assets/images/paperclip.svg" alt="" height="20" width="20">
-                <span class="m-b-10 padding-5" *ngIf="fileName"> {{fileName}}</span>
-                <span class="m-b-10 padding-5" *ngIf="!fileName">Upload File</span>
-                <input type="file" id="fileInput" #fileInput style="display: none;" (change)="onFileSelected($event)">
-            </span>
-        </div>
-        <div class=" ">
-            <span class="p-10 sub-head p-l-0">Feedback</span>
-            <textarea class="text-area" id="feedback"></textarea>
-        </div>
-        <div class="m-t-15 p-l-5">
-            <input type="checkbox" id="confirmDetails"><span class="p-l-10">Confirm all Details</span>
-        </div>
-        <div class="d-flex j-end">
-            <button class="btn c-pointer btn-reject" (click)="cancelClick()" [disabled]="loader">Cancel</button>
-            <button class="btn c-pointer" (click)="submitClick()" [disabled]="loader">Submit</button>
+        </div> -->
+        <div>
+            <div class="d-flex w-100 gaps">
+                <div class="input-1">
+                    <span class="p-10 sub-head p-l-0">Interview Panel</span>
+                    <!-- <span class="d-flex offer-input p-relative">
+                        <input type="text" class="skill-input p-l-9" name="skill search"
+                            (input)="getRequsitionSuggestion($event)" id="designationSearch"
+                            [(ngModel)]="panelSearchValue" autocomplete="off" placeholder="Search Interview Panel">
+                        <div class=" d-flex j-end p-t-1">
+                            <span *ngIf="panelSearchValue.trim() !== ''" (click)="clearFilter()"
+                                class="c-pointer p-absolute f-right p-r-5">
+                                <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
+                            </span>
+                        </div>
+                    </span> -->
+                    <div class="p-relative">
+                        <div class="m-t-3 dropdown " *ngIf="showPanel && panel_list.length > 0">
+                            <div class="p-6 c-pointer" *ngFor="let suggestion of panel_list"
+                                (click)="selectPanel(suggestion?.userId,suggestion?.userfirstName,suggestion?.userlastName)">
+                                <span
+                                    class="c-pointer p-l-5">{{suggestion?.userfirstName}}{{suggestion?.userlastName}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" ">
+                <span class="p-10 sub-head p-l-0">Email Bcc</span>
+                <span class="padding-5 p-l-0"><input class="input w-97" type="text" id="bcc"></span>
+            </div>
+            <div class="w-100" *ngIf="candidate?.messageType.trim() === 'offer'">
+                <span class="p-10 sub-head p-l-0">Attachment</span>
+                <span class="c-pointer attach p-b-1 d-flex file" title="Attach File" (click)="fileInput.click()">
+                    <img class="p-t-2" src="/assets/images/paperclip.svg" alt="" height="20" width="20">
+                    <span class="m-b-10 padding-5" *ngIf="fileName"> {{fileName}}</span>
+                    <span class="m-b-10 padding-5" *ngIf="!fileName">Upload File</span>
+                    <input type="file" id="fileInput" #fileInput style="display: none;"
+                        (change)="onFileSelected($event)">
+                </span>
+            </div>
+            <div class=" ">
+                <span class="p-10 sub-head p-l-0">Feedback</span>
+                <textarea class="text-area" id="feedback"></textarea>
+            </div>
+            <div class="m-t-15 p-l-5">
+                <input type="checkbox" id="confirmDetails"><span class="p-l-10">Confirm all Details</span>
+            </div>
+            <div class="d-flex j-end">
+                <button class="btn c-pointer btn-reject" (click)="cancelClick()" [disabled]="loader">Cancel</button>
+                <button class="btn c-pointer" (click)="submitClick()" [disabled]="loader">Submit</button>
+            </div>
         </div>
     </div>
-</div>
