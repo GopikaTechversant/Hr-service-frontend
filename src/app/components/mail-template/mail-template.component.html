@@ -181,31 +181,40 @@
                 <div class="w-100">
                     <span class="p-10 sub-head p-l-0">Email Cc</span>
                     <span class="d-flex offer-input p-relative">
-                        <input type="text" class="skill-input p-l-9" name="skill search"
-                            (input)="getEmailSuggestion($event)" id="designationSearch"
-                            [(ngModel)]="searchValue" autocomplete="off">
-                        <div class=" d-flex j-end p-t-1">
-                            <span *ngIf="searchValue.trim() !== ''" (click)="clearFilter()"
-                                class="c-pointer p-absolute f-right p-r-5">
-                                <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
-                            </span>
-                        </div>
+                        <input type="text" class="w-100 p-l-9" (input)="getEmailSuggestionCc($event)"
+                            [(ngModel)]="searchValueCc" autocomplete="off" id="cc">
                     </span>
                     <div class="p-relative">
-                        <div class="m-t-3 dropdown " *ngIf="emailIdOpen && emailIdList.length > 0">
-                            <div class="p-6 c-pointer" *ngFor="let id of emailIdList"
-                                (click)="selectEmailId(id?.userEmail)">
-                                <span
-                                    class="c-pointer p-l-5">{{id?.userEmail}}</span>
+                        <div class="m-t-3 dropdown" *ngIf="emailIdOpenCc && emailIdListCc.length > 0">
+                            <div class="p-6 c-pointer" *ngFor="let id of emailIdListCc"
+                                (click)="selectEmailIdCc(id?.userEmail)">
+                                <span class="c-pointer p-l-5">{{id?.userEmail}}</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class=" ">
+            <div class="d-flex w-100 gaps">
+                <div class="w-100">
+                    <span class="p-10 sub-head p-l-0">Email Bcc</span>
+                    <span class="d-flex offer-input p-relative">
+                        <input type="text" class="w-100 p-l-9" (input)="getEmailSuggestionBcc($event)"
+                            [(ngModel)]="searchValueBcc" autocomplete="off" id="bcc">
+                    </span>
+                    <div class="p-relative">
+                        <div class="m-t-3 dropdown" *ngIf="emailIdOpenBcc && emailIdListBcc.length > 0">
+                            <div class="p-6 c-pointer" *ngFor="let id of emailIdListBcc"
+                                (click)="selectEmailIdBcc(id?.userEmail)">
+                                <span class="c-pointer p-l-5">{{id?.userEmail}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class=" ">
                 <span class="p-10 sub-head p-l-0">Email Bcc</span>
                 <span class="padding-5 p-l-0"><input class="input w-97" type="text" id="bcc"></span>
-            </div>
+            </div> -->
             <div class="w-100" *ngIf="candidate?.messageType.trim() === 'offer'">
                 <span class="p-10 sub-head p-l-0">Attachment</span>
                 <span class="c-pointer attach p-b-1 d-flex file" title="Attach File" (click)="fileInput.click()">

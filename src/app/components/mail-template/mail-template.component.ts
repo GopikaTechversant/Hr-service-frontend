@@ -71,9 +71,14 @@ export class MailTemplateComponent implements OnInit {
   fileUploader: boolean = false;
   InterviewTime: any;
   isSubmitting: boolean = false;
-  emailIdList:any[]=[];
+  emailIdList: any[] = [];
   emailIdOpen: boolean = false;
-  searchValue: string = '';
+  searchValueCc: string = ''; // Separate search value for CC
+  searchValueBcc: string = ''; // Separate search value for BCC
+  emailIdListCc: any[] = []; // Separate list for CC suggestions
+  emailIdListBcc: any[] = []; // Separate list for BCC suggestions
+  emailIdOpenCc: boolean = false;
+  emailIdOpenBcc: boolean = false;
   constructor(private apiService: ApiService, private tostr: ToastrService, private datePipe: DatePipe, private s3Service: S3Service) { }
   ngOnInit(): void {
     this.resetFormAndState();
@@ -414,42 +419,63 @@ export class MailTemplateComponent implements OnInit {
     this.submitData.emit(data);
   }
 
-  selectEmailId(id:any):void{
-
-  }
-
-  getEmailSuggestion(event: any) {
-    this.emailIdOpen = true;
-    this.searchValue = event?.target.value.trim(); // Remove unwanted spaces
-  
-    this.apiService.get(`/user/lists?mailSearch=${this.searchValue}`).subscribe((res: any) => {
-      console.log("API Response:", res); // Debugging: Check the response structure
-  
-      if (res && res.users) { 
-        console.log("Users before filtering:", res.users);
-  
-        this.emailIdList = res.users.filter((suggestion: any) => {
-          console.log("Checking:", suggestion.userEmail, "against", this.searchValue);
-          return suggestion.userEmail?.toLowerCase().startsWith(this.searchValue.toLowerCase());
-        });
-  
-        console.log("Filtered emailIdList:", this.emailIdList);
+  getEmailSuggestionCc(event: any) {
+    this.emailIdOpenCc = true;
+    this.searchValueCc = event?.target.value.trim();
+    let searchParts = this.searchValueCc.split(',').map(part => part.trim());
+    let lastSearchTerm = searchParts[searchParts.length - 1];
+    if (!lastSearchTerm) {
+      this.emailIdListCc = [];
+      return;
+    }
+    this.apiService.get(`/user/lists?mailSearch=${lastSearchTerm}`).subscribe((res: any) => {
+      if (res && res.users) {
+        this.emailIdListCc = res.users.filter((suggestion: any) =>
+          suggestion.userEmail?.toLowerCase().startsWith(lastSearchTerm.toLowerCase())
+        );
       } else {
-        console.warn("API response does not contain 'users'");
-        this.emailIdList = [];
+        this.emailIdListCc = [];
       }
-    }, (error) => {
-      console.error("API Error:", error);
     });
   }
-  
+
+  getEmailSuggestionBcc(event: any) {
+    this.emailIdOpenBcc = true;
+    this.searchValueBcc = event?.target.value.trim();
+    let searchParts = this.searchValueBcc.split(',').map(part => part.trim());
+    let lastSearchTerm = searchParts[searchParts.length - 1];
+    if (!lastSearchTerm) {
+      this.emailIdListBcc = [];
+      return;
+    }
+    this.apiService.get(`/user/lists?mailSearch=${lastSearchTerm}`).subscribe((res: any) => {
+      if (res && res.users) {
+        this.emailIdListBcc = res.users.filter((suggestion: any) =>
+          suggestion.userEmail?.toLowerCase().startsWith(lastSearchTerm.toLowerCase())
+        );
+      } else {
+        this.emailIdListBcc = [];
+      }
+    });
+  }
+
+  selectEmailIdCc(email: string): void {
+    let emails = this.searchValueCc.split(',').map(e => e.trim());
+    emails[emails.length - 1] = email;
+    this.searchValueCc = emails.join(', ');
+    this.emailIdOpenCc = false;
+  }
+
+  selectEmailIdBcc(email: string): void {
+    let emails = this.searchValueBcc.split(',').map(e => e.trim());
+    emails[emails.length - 1] = email;
+    this.searchValueBcc = emails.join(', ');
+    this.emailIdOpenBcc = false;
+  }
+
 
   clearFilter(): void {
-    // this.displayPosition = '';
-    // this.positionId = '';
-    this.searchValue = '';
-    // this.selectedRequsition = '';
+    this.searchValueBcc = '';
     this.emailIdOpen = false;
-    // this.searchvalue = '';
   }
 }
