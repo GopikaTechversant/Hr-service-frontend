@@ -73,6 +73,7 @@ export class MailTemplateComponent implements OnInit {
   isSubmitting: boolean = false;
   emailIdList:any[]=[];
   emailIdOpen: boolean = false;
+  searchValue: string = '';
   constructor(private apiService: ApiService, private tostr: ToastrService, private datePipe: DatePipe, private s3Service: S3Service) { }
   ngOnInit(): void {
     this.resetFormAndState();
@@ -102,11 +103,11 @@ export class MailTemplateComponent implements OnInit {
     inputElement.click();
   }
 
-  fetchEmailId():void{
-    this.apiService.get(`/user/lists?mailSearch=me`).subscribe((res:any) => {
-      
-    })
-  }
+  // fetchEmailId():void{
+  //   this.apiService.get(`/user/lists?mailSearch=me`).subscribe((res:any) => {
+  //     this.emailIdList = res;
+  //   })
+  // }
 
   fetchPanel(): void {
     this.apiService.get(`/user/lists?userRole=3`).subscribe((res: any) => {
@@ -413,4 +414,42 @@ export class MailTemplateComponent implements OnInit {
     this.submitData.emit(data);
   }
 
+  selectEmailId(id:any):void{
+
+  }
+
+  getEmailSuggestion(event: any) {
+    this.emailIdOpen = true;
+    this.searchValue = event?.target.value.trim(); // Remove unwanted spaces
+  
+    this.apiService.get(`/user/lists?mailSearch=${this.searchValue}`).subscribe((res: any) => {
+      console.log("API Response:", res); // Debugging: Check the response structure
+  
+      if (res && res.users) { 
+        console.log("Users before filtering:", res.users);
+  
+        this.emailIdList = res.users.filter((suggestion: any) => {
+          console.log("Checking:", suggestion.userEmail, "against", this.searchValue);
+          return suggestion.userEmail?.toLowerCase().startsWith(this.searchValue.toLowerCase());
+        });
+  
+        console.log("Filtered emailIdList:", this.emailIdList);
+      } else {
+        console.warn("API response does not contain 'users'");
+        this.emailIdList = [];
+      }
+    }, (error) => {
+      console.error("API Error:", error);
+    });
+  }
+  
+
+  clearFilter(): void {
+    // this.displayPosition = '';
+    // this.positionId = '';
+    this.searchValue = '';
+    // this.selectedRequsition = '';
+    this.emailIdOpen = false;
+    // this.searchvalue = '';
+  }
 }

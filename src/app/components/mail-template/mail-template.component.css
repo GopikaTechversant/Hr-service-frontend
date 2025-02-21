@@ -185,3 +185,7 @@
 .dropdown :hover {
     background-color: #eceaea;
 }
+
+.w-100{
+    width: 100%;
+}
