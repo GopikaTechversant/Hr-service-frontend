@@ -97,10 +97,9 @@
             </div>
             <div class="input-1">
                 <span class="p-10 sub-head p-l-0">Joining Date</span>
-                <div class="offer-input c-pointer p-relative">
-                    <input class="p-l-5 input-offer p-r-10" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate"
-                        id="joining" (dateChange)="dateChange($event)" (click)="pickerdate?.open()"
-                        [value]="displayDate" [min]="today">
+                <div class="offer-input c-pointer p-relative">                    
+                    <input class="p-l-5 input-offer p-r-10" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate" id="joining"
+                        (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate">
                     <span> <mat-datepicker #pickerdate class=""></mat-datepicker>
                         <i class="fa fa-calendar-o c-pointer p-absolute calendar-join" aria-hidden="true"
                             (click)="pickerdate?.open()"></i>
@@ -145,9 +144,8 @@
                     <div class="p-relative d-flex offer-input ">
                         <div class="c-pointer flex-1">
                             <!-- Date Input -->
-                            <input class="date-input c-pointer" placeholder="MM/DD/YY" matInput
-                                [matDatepicker]="pickerInterview" (dateChange)="dateChange($event)"
-                                (click)="pickerInterview?.open()" [value]="scheduledDate" [min]="today">
+                            <input class="date-input c-pointer" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerInterview"
+                                (dateChange)="dateChange($event)" (click)="pickerInterview?.open()" [value]="scheduledDate">
                             <mat-datepicker #pickerInterview></mat-datepicker>
                             <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
                                 (click)="pickerInterview?.open()"></i>
