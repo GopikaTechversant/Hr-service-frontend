@@ -21,7 +21,7 @@ export class FeedbackComponent implements OnInit {
   status: any;
   candidateDetails: any;
   loader: boolean = false;
-
+  comment:any;
   constructor(public dialogRef: MatDialogRef<FeedbackComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
     private apiService: ApiService, private tostr: ToastrServices) {
     this.candidateDetails = data?.candidateDetails;
@@ -65,14 +65,15 @@ export class FeedbackComponent implements OnInit {
   }
 
   rejectClick(): void {
-    if (this.filteredStatus && this.selectedRejectionFeedback) {
+    this.comment = (document.getElementById('comment') as HTMLInputElement)?.value || '';
+    if (this.filteredStatus && this.comment) {
     this.loader = true;
       const payload = {
         serviceId: this.candidateDetails?.serviceId,
         stationId: this.stationId,
         userId: this.userId,
         status: this.filteredStatus ? this.filteredStatus : "rejected",
-        feedBack: this.selectedRejectionFeedback || '',
+        feedBack: this.comment || '',
       };
       this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
         next: (res: any) => {
