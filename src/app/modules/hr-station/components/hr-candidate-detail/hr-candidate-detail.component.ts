@@ -57,6 +57,7 @@ export class HrCandidateDetailComponent {
     'cancelled': 'Cancelled the Interview'
   };
   progressSkill: any = [];
+  comment:any;
   constructor(public dialogRef: MatDialogRef<HrCandidateDetailComponent>, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
     private route: ActivatedRoute, private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -280,9 +281,11 @@ export class HrCandidateDetailComponent {
 
   rejectClick(data: any): void {
     const feedbackElement = document.getElementById('feedback') as HTMLInputElement;
+    this.comment = (document.getElementById('comment') as HTMLInputElement)?.value || '';
+    console.log(" this.comment", this.comment);
     const feedback = feedbackElement?.value.trim();
     // this.loader = true;    
-    if (data || (this.selectedRejectionFeedback && this.filteredStatus) || feedback) {
+    if (data || (this.comment && this.filteredStatus) || feedback) {
       this.loader = true;
       const payload = {
         serviceId: this.serviceId,
@@ -294,6 +297,7 @@ export class HrCandidateDetailComponent {
         rejectSubject: data?.mailSubject ?? '',
         rejectBcc: data?.mailBcc ?? '',
         feedBack: data?.feedback ? data?.feedback : this.selectedRejectionFeedback ? this.selectedRejectionFeedback : feedback,
+        feedback: data?.feedback ? data?.feedback : this.comment
       };
       this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
         next: (res: any) => {
