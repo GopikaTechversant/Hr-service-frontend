@@ -51,6 +51,7 @@ export class StationCandidateDetailComponent implements OnInit {
   openRejectionFeedback: boolean = false;
   selectedRejectionFeedback: string = '';
   progressSkill: any = [];
+  comment: any;
   // statusMessages: { [key: string]: string } = {
   //   done: 'Candidate Selected to Next Round',
   //   rejected: 'Candidate Rejected In this Round',
@@ -324,8 +325,12 @@ export class StationCandidateDetailComponent implements OnInit {
   }
 
   rejectClick(data: any): void {
+    console.log("data",data);
+    
+    this.comment = (document.getElementById('comment') as HTMLInputElement)?.value || '';
+    console.log("this.comment", this.comment);
     // this.loader = true;
-    if (data || (this.selectedRejectionFeedback && this.filteredStatus)) {
+    if (data || (this.comment && this.filteredStatus)) {
       this.loader = true;
       const payload = {
         serviceId: this.serviceId,
@@ -336,7 +341,8 @@ export class StationCandidateDetailComponent implements OnInit {
         rejectMailTemp: data?.mailTemp ?? '',
         rejectSubject: data?.mailSubject ?? '',
         rejectBcc: data?.mailBcc ?? '',
-        feedBack: data?.feedback ? data?.feedback : this.selectedRejectionFeedback,
+        // feedBack: data?.feedback ? data?.feedback : this.selectedRejectionFeedback,
+        feedback: data?.feedback ? data?.feedback : this.comment
       };
       this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
         next: (res: any) => {
