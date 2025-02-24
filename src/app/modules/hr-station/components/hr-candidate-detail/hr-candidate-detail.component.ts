@@ -165,6 +165,8 @@ export class HrCandidateDetailComponent {
     if (event?.clickType === 'cancel') this.cancelClick();
     if (event?.messageType === 'offer') this.addOffer(event);
     if (event?.messageType === 'rejection') this.rejectClick(event);
+    if (event?.messageType === 're-schedule') this.rescheduleClick(event);
+
   }
 
   onSubmitInterviewData(data: any) {
@@ -238,6 +240,42 @@ export class HrCandidateDetailComponent {
     this.resumePath = resume;
     const resumeUrl = `${environment.s3_url}${this.resumePath}`;
     window.open(resumeUrl, '_blank');
+  }
+
+  rescheduleClick(data: any): void {
+    this.loader = true;
+    console.log("this.candidateDetails",this.candidateDetails);
+    
+    const payload = {
+      candidateId: this.candidateDetails?.candidateId,
+      position: this.candidateDetails['serviceRequest.serviceServiceRequst'],
+      interviewTime: data?.interviewTime,
+      interViewPanel: data?.interviewPanel,
+      interviewMode: data?.interviewMode,
+      serviceId: this.candidateDetails?.serviceId,
+      station: this.stationId,
+      interviewStatus: data?.interviewStatus,
+      comments: data?.feedback,
+      interviewCc: data?.mailCc,
+      interviewMailTemp: data?.mailTemp,
+      interviewSubject: data?.mailSubject,
+      interviewBcc: data?.mailBcc,
+    }
+
+    this.apiService.post(`/screening-station/interview-details`, payload).subscribe({
+      next: (res: any) => {
+        this.loader = false;
+        this.tostr.success('Interview Re-Scheduled Successfully');
+        this.closeDialog();
+      },
+      error: (error) => {
+        this.loader = false;
+        if (error?.status === 500) this.tostr.error("Internal Server Error");
+        else this.tostr.error(error?.error?.message ? error?.error?.message : 'Unable to Re-Schedule');
+        this.closeDialog();
+      }
+    });
+    this.showMail('');
   }
 
   rejectClick(data: any): void {

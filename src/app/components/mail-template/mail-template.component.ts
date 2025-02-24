@@ -71,6 +71,14 @@ export class MailTemplateComponent implements OnInit {
   fileUploader: boolean = false;
   InterviewTime: any;
   isSubmitting: boolean = false;
+  emailIdList: any[] = [];
+  emailIdOpen: boolean = false;
+  searchValueCc: string = ''; // Separate search value for CC
+  searchValueBcc: string = ''; // Separate search value for BCC
+  emailIdListCc: any[] = []; // Separate list for CC suggestions
+  emailIdListBcc: any[] = []; // Separate list for BCC suggestions
+  emailIdOpenCc: boolean = false;
+  emailIdOpenBcc: boolean = false;
   constructor(private apiService: ApiService, private tostr: ToastrService, private datePipe: DatePipe, private s3Service: S3Service) { }
   ngOnInit(): void {
     this.resetFormAndState();
@@ -99,6 +107,12 @@ export class MailTemplateComponent implements OnInit {
     const inputElement = event.target as HTMLInputElement;
     inputElement.click();
   }
+
+  // fetchEmailId():void{
+  //   this.apiService.get(`/user/lists?mailSearch=me`).subscribe((res:any) => {
+  //     this.emailIdList = res;
+  //   })
+  // }
 
   fetchPanel(): void {
     this.apiService.get(`/user/lists?userRole=3`).subscribe((res: any) => {
@@ -405,4 +419,63 @@ export class MailTemplateComponent implements OnInit {
     this.submitData.emit(data);
   }
 
+  getEmailSuggestionCc(event: any) {
+    this.emailIdOpenCc = true;
+    this.searchValueCc = event?.target.value.trim();
+    let searchParts = this.searchValueCc.split(',').map(part => part.trim());
+    let lastSearchTerm = searchParts[searchParts.length - 1];
+    if (!lastSearchTerm) {
+      this.emailIdListCc = [];
+      return;
+    }
+    this.apiService.get(`/user/lists?mailSearch=${lastSearchTerm}`).subscribe((res: any) => {
+      if (res && res.users) {
+        this.emailIdListCc = res.users.filter((suggestion: any) =>
+          suggestion.userEmail?.toLowerCase().startsWith(lastSearchTerm.toLowerCase())
+        );
+      } else {
+        this.emailIdListCc = [];
+      }
+    });
+  }
+
+  getEmailSuggestionBcc(event: any) {
+    this.emailIdOpenBcc = true;
+    this.searchValueBcc = event?.target.value.trim();
+    let searchParts = this.searchValueBcc.split(',').map(part => part.trim());
+    let lastSearchTerm = searchParts[searchParts.length - 1];
+    if (!lastSearchTerm) {
+      this.emailIdListBcc = [];
+      return;
+    }
+    this.apiService.get(`/user/lists?mailSearch=${lastSearchTerm}`).subscribe((res: any) => {
+      if (res && res.users) {
+        this.emailIdListBcc = res.users.filter((suggestion: any) =>
+          suggestion.userEmail?.toLowerCase().startsWith(lastSearchTerm.toLowerCase())
+        );
+      } else {
+        this.emailIdListBcc = [];
+      }
+    });
+  }
+
+  selectEmailIdCc(email: string): void {
+    let emails = this.searchValueCc.split(',').map(e => e.trim());
+    emails[emails.length - 1] = email;
+    this.searchValueCc = emails.join(', ');
+    this.emailIdOpenCc = false;
+  }
+
+  selectEmailIdBcc(email: string): void {
+    let emails = this.searchValueBcc.split(',').map(e => e.trim());
+    emails[emails.length - 1] = email;
+    this.searchValueBcc = emails.join(', ');
+    this.emailIdOpenBcc = false;
+  }
+
+
+  clearFilter(): void {
+    this.searchValueBcc = '';
+    this.emailIdOpen = false;
+  }
 }
