@@ -70,7 +70,6 @@
                 <ng-container *ngIf="candidates_list?.length > 0">
                     <ng-container *ngFor="let candidate of candidates_list">
                         <tr class="c-pointer" (dblclick)="navigate('/dashboard/series/',candidate?.requestId)">
-                            <!-- <td>kmkmkk</td> -->
                             <td class="text-center" *ngIf="userType !== 'super-admin'">
                                 <input type="checkbox" [(ngModel)]="candidate.isSelected" (change)="getSelectedCandidateIds()"
                                     name="select">
