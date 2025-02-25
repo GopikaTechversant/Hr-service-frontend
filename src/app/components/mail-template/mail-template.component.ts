@@ -47,7 +47,7 @@ export class MailTemplateComponent implements OnInit {
   showDropdown: boolean = false;
   showcandidate: boolean = false;
   panelName: any;
-  panel_list: any;
+  panel_list: any[] = [];
   interviewStatus: string = "";
   displayTime: any;
   panelId: any;
@@ -71,6 +71,9 @@ export class MailTemplateComponent implements OnInit {
   fileUploader: boolean = false;
   InterviewTime: any;
   isSubmitting: boolean = false;
+  panelSearchValue: string = '';
+  searchvalue: string = "";
+
   emailIdList: any[] = [];
   emailIdOpen: boolean = false;
   searchValueCc: string = ''; // Separate search value for CC
@@ -91,7 +94,7 @@ export class MailTemplateComponent implements OnInit {
       this.resetFormAndState();
       if (this.candidate?.messageType === 're-schedule') this.fetchCandidatesDetails();
       this.fetchMode();
-      this.fetchPanel();
+      // this.fetchPanel();
     } else this.showTemplate = false;
   }
 
@@ -116,16 +119,19 @@ export class MailTemplateComponent implements OnInit {
   //   })
   // }
 
-  fetchPanel(): void {
-    this.apiService.get(`/user/lists?userRole=3`).subscribe((res: any) => {
-      if (res?.users) this.panel_list = res?.users;
-    })
-  }
+  // fetchPanel(): void {
+  //   this.apiService.get(`/user/lists?userRole=3`).subscribe((res: any) => {
+  //     if (res?.users) this.panel_list = res?.users;
+  //   })
+  // }
 
   selectPanel(panelid: any, firstname: any, secondName: any): void {
     this.showPanel = false;
     this.panelId = panelid;
     this.panelName = `${firstname} ${secondName}`;
+    this.panelSearchValue = `${firstname} ${secondName}`;
+    console.log(" this.panelId", this.panelId);
+    
     if (this.candidate?.messageType === 're-schedule') this.changeInterviewStatus();
   }
 
@@ -421,6 +427,30 @@ export class MailTemplateComponent implements OnInit {
     this.submitData.emit(data);
   }
 
+  getRequsitionSuggestion(event: any) {
+    this.showPanel = true;
+    this.panelSearchValue = event?.target.value;
+    this.apiService.get(`/user/lists?userRole=3&search=${this.panelSearchValue}`).subscribe((res: any) => {
+      if (res?.users) this.panel_list = res?.users.filter((suggestion: any) =>
+        suggestion.userfirstName.toLowerCase().startsWith(this.searchvalue.toLowerCase())
+      );
+    });
+  }
+
+  clearFilter(): void {
+    this.panelName = '';
+    this.panelSearchValue = '';
+    this.showPanel = false;
+    this.searchvalue = '';
+    this.panelId = '';
+    // this.displayPosition = '';
+    // this.positionId = '';
+    // this.panelSearchValue = '';
+    // this.selectedRequsition = '';
+    // this.showPanel = false;
+    // this.searchvalue = '';
+  }
+
   getEmailSuggestionCc(event: any) {
     this.emailIdOpenCc = true;
     this.searchValueCc = event?.target.value.trim();
@@ -474,10 +504,5 @@ export class MailTemplateComponent implements OnInit {
     this.searchValueBcc = emails.join(', ');
     this.emailIdOpenBcc = false;
   }
-
-
-  clearFilter(): void {
-    this.searchValueBcc = '';
-    this.emailIdOpen = false;
-  }
+ 
 }
