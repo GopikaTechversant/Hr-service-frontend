@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { DeleteComponent } from 'src/app/components/delete/delete.component';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastrService } from 'ngx-toastr';
+import { ExportService } from 'src/app/services/export.service';
 @Component({
   selector: 'app-requirement-candidate-list',
   templateUrl: './requirement-candidate-list.component.html',
@@ -29,7 +30,9 @@ export class RequirementCandidateListComponent implements OnInit {
   status: any[] = ['Active Requisitions', 'Closed Requisitions'];
   userType: any;
   userRole: any;
-  constructor(private router: Router, private apiService: ApiService, private dialog: MatDialog, private toastr: ToastrService) { }
+  requisitionids: any;
+  report : boolean = false;
+  constructor(private router: Router, private apiService: ApiService, private dialog: MatDialog, private toastr: ToastrService,private exportService: ExportService) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
@@ -52,25 +55,85 @@ export class RequirementCandidateListComponent implements OnInit {
 
   }
 
+  // fetchcandidates(page: any, searchQuery: string): void {
+  //   if (page) this.currentPage = page;
+  //   console.log("page", page);
+  //   console.log("searchQuery", searchQuery);
+
+  //   const isActive = this.filteredStatus === 'Closed Requisitions' ? 'closed' : 'active';
+  //   if (!this.initialLoader) this.loader = true
+  //   this.apiService.get(`/screening-station/v1/list-all?page=${this.currentPage}&limit=${this.limit}&search=${searchQuery.trim()}&isActive=${isActive}&report=${this.report}`).subscribe((res: any) => {
+  //     if (res) {
+  //       this.initialLoader = false;
+  //       this.loader = false
+  //       this.candidates_list = res?.candidates;
+  //       this.totalCount = res?.totalCount;
+  //       const totalPages = Math.ceil(this.totalCount / this.limit);
+  //       this.lastPage = totalPages;
+  //       if (this.currentPage > totalPages) this.currentPage = totalPages;
+  //       localStorage.setItem('currentPage', this.currentPage.toString());
+
+  //     }
+  //   }, (error: any) => {
+  //     this.loader = false;
+  //     this.initialLoader = false;
+  //   });
+  // }
   fetchcandidates(page: any, searchQuery: string): void {
     if (page) this.currentPage = page;
     console.log("page", page);
     console.log("searchQuery", searchQuery);
-
     const isActive = this.filteredStatus === 'Closed Requisitions' ? 'closed' : 'active';
     if (!this.initialLoader) this.loader = true
-    this.apiService.get(`/screening-station/v1/list-all?page=${this.currentPage}&limit=${this.limit}&search=${searchQuery.trim()}&isActive=${isActive}`).subscribe((res: any) => {
-      if (res) {
-        this.initialLoader = false;
-        this.loader = false
-        this.candidates_list = res?.candidates;
-        this.totalCount = res?.totalCount;
-        const totalPages = Math.ceil(this.totalCount / this.limit);
-        this.lastPage = totalPages;
-        if (this.currentPage > totalPages) this.currentPage = totalPages;
-        localStorage.setItem('currentPage', this.currentPage.toString());
-
+    const url = `/screening-station/v1/list-all`;
+    let params = [
+    `page=${this.report ? '' : this.currentPage}`,
+      `limit=${this.report ? '' : this.limit}`,
+      `search=${searchQuery.trim()}`,
+      `isActive=${isActive}`,
+      `report=${this.report}`,
+    ].filter(param => param.split('=')[1] !== '').join('&');  // Filter out empty parameters
+    if (this.report) {
+      if (this.requisitionids) {
+        const idsParams = this.requisitionids.map((id: string) => `ids=${id}`).join('&');
+        params += `&${idsParams}`;
       }
+      const exportUrl = `${url}?${params}`;
+       this.apiService.getTemplate(exportUrl).subscribe(
+        (data: Blob) => {
+          if (data.type === 'application/json') {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              const text = event.target?.result as string;
+              const jsonResponse = JSON.parse(text);
+              this.downloadAsExcel(jsonResponse.data, 'requisition_list.xlsx');
+              this.loader = false;
+            };
+            this.loader = false;
+            reader.readAsText(data);
+          } else {
+            this.downloadBlob(data, 'requisition_list.xlsx');
+            this.loader = false;
+          }
+        },
+        (error: any) => {
+          this.loader = false;
+          this.initialLoader = false;
+        }
+      );
+      this.report = false;
+      if (this.report === false) this.fetchcandidates('','');
+      return;
+    }
+    this.apiService.get(`${url}?${params}`).subscribe((res: any) => {
+      this.initialLoader = false;
+            this.loader = false
+            this.candidates_list = res?.candidates;
+            this.totalCount = res?.totalCount;
+            const totalPages = Math.ceil(this.totalCount / this.limit);
+            this.lastPage = totalPages;
+            if (this.currentPage > totalPages) this.currentPage = totalPages;
+            localStorage.setItem('currentPage', this.currentPage.toString());
     }, (error: any) => {
       this.loader = false;
       this.initialLoader = false;
@@ -135,4 +198,28 @@ export class RequirementCandidateListComponent implements OnInit {
     this.fetchcandidates(this.currentPage, '');
   }
 
+  getSelectedCandidateIds(): void {
+    const selectedCandidates = this.candidates_list.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
+    console.log("selectedCandidates",selectedCandidates);
+    this.requisitionids = selectedCandidates.map((requisition: { requestId: any; }) => requisition?.requestId);
+    console.log(" this.candidateIds", this.requisitionids);
+  }
+
+  exportData(): void {
+    this.loader = true;
+    this.report = true;
+    this.fetchcandidates(this.currentPage, '');
+  }
+
+  downloadAsExcel(jsonData: any[], fileName: string) {
+    this.exportService.downloadAsExcel(jsonData, fileName);
+  }
+
+  downloadBlob(blob: Blob, fileName: string) {
+    this.exportService.downloadBlob(blob, fileName);
+  }
+
+  downloadAsJson(jsonResponse: any) {
+    this.exportService.downloadAsJson(jsonResponse);
+  }
 }
