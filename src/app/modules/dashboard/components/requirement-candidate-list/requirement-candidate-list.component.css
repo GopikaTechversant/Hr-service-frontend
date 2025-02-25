@@ -42,9 +42,10 @@
   line-height: 21px;
   letter-spacing: 0em;
   padding: 6px;
-  height: 34px;
+  height: 33px;
   padding-left: 12px;
   color: #FFFFFF;
+  margin-top: 1px;
 }
 
 .title-left {
@@ -349,4 +350,10 @@ input[type="text"] {
 
 .padding-5 {
   padding: 5px;
+}
+
+.export-btn{
+  height: 33px;
+
+
 }
