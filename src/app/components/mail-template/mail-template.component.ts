@@ -100,6 +100,8 @@ export class MailTemplateComponent implements OnInit {
     if (!target.closest('.no-close')) {
       this.showPanel = false;
       this.showModeList = false;
+      this.emailIdOpenCc = false;
+      this.emailIdOpenBcc = false;
     }
   }
 
