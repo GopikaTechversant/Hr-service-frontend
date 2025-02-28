@@ -1,0 +1,80 @@
+<div class="main m-t-10">
+    <div class="container-table w-100">
+        <table class="">
+            <tr class="table-header">
+                <td>Station Name</td>
+                <td class="text-start" title="Requirement">Requirement</td>
+                <td class="text-start" title="Review Status">Review Status</td>
+                <td class="text-center" title="Move Candidates" *ngIf="userType !== 'super-admin'">Move Candidates
+                </td>
+                <td class="text-start" title="Service Status">Service Status</td>
+                <td class="text-start more" title="More Detail">More Detail</td>
+                <td class="text-end" title="Date">Date</td>
+            </tr>
+            <div *ngIf="loader && !initialLoader" class="loader-parent">
+                <img src="assets/gif/loader.gif">
+            </div>
+            <ng-container *ngIf="candidateDetails?.length > 0">
+                <ng-container *ngFor="let item of candidateDetails">
+                    <tr class="candidate c-pointer"
+                        *ngIf="item?.stationNam !== null && item?.stationNam !== 'Screening'">
+                        <td>{{ item?.stationNam}}</td>
+                        <td class="text-start wrap" [title]="item['serviceRequest.requestName']">{{
+                            item['serviceRequest.requestName'] }}</td>
+                        <td class="f-w-500 text-start"
+                            [ngClass]="{'orange': item?.progressStatus === '0' && item?.serviceStatus !== 'done', 'green': item?.progressStatus !== '0' || item?.serviceStatus === 'done'}">
+                            {{ item?.progressStatus === '0' && item?.serviceStatus !== 'done' ? 'Pending' :
+                            'Added' }}
+                        </td>
+
+                        <td class="text-center" *ngIf="userType !== 'super-admin'">
+                            <i class="fa fa-arrows" aria-hidden="true" *ngIf="item" (click)="onSwitchStation(item)"></i>
+                        </td>
+                        <td *ngIf="item?.serviceStation !== 5">
+                            <span class="f-w-500 text-start" [ngClass]="{'orange': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
+                                'red': item?.serviceStatus === 'rejected'}"
+                                [title]="item?.serviceStatus | titlecase">{{ item?.serviceStatus |
+                                titlecase}}</span>
+                        </td>
+                        <td *ngIf="item?.serviceStation === 5">
+                            <span class="f-w-500 text-start" [ngClass]="{'orange': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
+                                'red': item?.serviceStatus === 'rejected'}"
+                                [title]="item?.serviceStatus | titlecase">{{ item?.serviceStatus === 'done' ? 'Offer
+                                Accepted' : item?.serviceStatus |
+                                titlecase}}</span>
+                        </td>
+                        <td (click)="fetchDetails(item, item?.progressStatus,item?.reviewStatus)"
+                            class="c-pointer text-start">
+                            <div class="d-flex more">
+                                <i class="fa fa-eye blue f-s-18 f-w-500" aria-hidden="true"></i>
+                                <span class="blue p-l-5">View detail</span>
+                            </div>
+                        </td>
+                        <td class="text-end">{{item?.serviceDate | date : 'dd/MM/YYY'}}</td>
+                    </tr>
+                </ng-container>
+            </ng-container>
+            <div *ngIf="(candidateDetails?.[0]?.length === 0 || !candidateDetails?.[0]) && !loader && !initialLoader "
+                class="data">
+                No Data Found
+            </div>
+            <div *ngIf="initialLoader" class="row m-l-20 initial-loader">
+                <div *ngFor="let item of [0,1,2,3,4,5]" class="m-t-10 m-b-10">
+                    <div class="gravatar-title">
+                        <div><ngx-skeleton-loader [theme]="{
+                            width: '900px',
+                            'border-radius': '0',
+                            height: '15px',
+                            'margin-bottom': '10px'
+                            }"></ngx-skeleton-loader>
+                        </div>
+                        <div>
+                            <ngx-skeleton-loader [theme]="{ width: '1300px', 'border-radius': '0', height: '15px' }">
+                            </ngx-skeleton-loader>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </table>
+    </div>
+</div>

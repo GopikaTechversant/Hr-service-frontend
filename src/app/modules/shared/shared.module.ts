@@ -21,7 +21,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { InterviewFeebackComponent } from 'src/app/components/interview-feeback/interview-feeback.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { PaginationComponent } from 'src/app/components/pagination/pagination.component';
-
+import { CandidateActionsComponent } from 'src/app/components/candidate-actions/candidate-actions.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +39,9 @@ import { PaginationComponent } from 'src/app/components/pagination/pagination.co
     WarningBoxComponent,
     StationCandidateDetailComponent,
     InterviewFeebackComponent,
-    PaginationComponent
+    PaginationComponent,
+    CandidateActionsComponent
+
   ],
   imports: [
     MatButtonToggleModule,
@@ -63,7 +65,9 @@ import { PaginationComponent } from 'src/app/components/pagination/pagination.co
     MatSliderModule,   
     MatButtonToggleModule,
     MatProgressBarModule,
-    PaginationComponent
+    PaginationComponent,
+    CandidateActionsComponent
+
   ]
 })
 export class SharedModule { }

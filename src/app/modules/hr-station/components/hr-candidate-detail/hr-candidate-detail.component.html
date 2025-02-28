@@ -144,15 +144,15 @@
                 (change)="selectButton('reschedule');showMail('re-schedule')" [checked]="buttonType === 'reschedule'" />
             Reschedule Interview
         </label>
-        <label class="c-pointer f-w-500 f-s-14 action-btn" [class.action-select]="buttonType === 'rejection'">
-            <input type="radio" class="deatil-btn" name="action" value="rejection"
-                (change)="selectButton('rejection');showMail('')" [checked]="buttonType === 'rejection'" />
-            Reject Candidate
-        </label>
         <label class="c-pointer f-w-500 f-s-14 action-btn" [class.action-select]="buttonType === 'add'">
             <input type="radio" class="deatil-btn" name="action" value="add" (change)="selectButton('add');showMail('')"
                 [checked]="buttonType === 'add'" />
             Interview Feedback
+        </label>
+        <label class="c-pointer f-w-500 f-s-14 action-btn" [class.action-select]="buttonType === 'rejection'">
+            <input type="radio" class="deatil-btn" name="action" value="rejection"
+                (change)="selectButton('rejection');showMail('')" [checked]="buttonType === 'rejection'" />
+            Reject Candidate
         </label>
     </div>
     <!-- Back-off Or Panel Rejection -->

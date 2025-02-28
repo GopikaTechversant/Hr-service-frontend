@@ -58,6 +58,7 @@ export class HrCandidateDetailComponent {
   };
   progressSkill: any = [];
   comment:any;
+  feedbackValue:any;
   constructor(public dialogRef: MatDialogRef<HrCandidateDetailComponent>, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
     private route: ActivatedRoute, private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -319,11 +320,15 @@ export class HrCandidateDetailComponent {
   }
 
   approveClick(): void {
-    const feedbackElement = document.getElementById('feedback') as HTMLInputElement;
-    const feedback = feedbackElement?.value.trim();
-    if (feedback) {
+    // const feedbackElement = document.getElementById('feedback') as HTMLInputElement;
+    // const feedback = feedbackElement?.value.trim();
+    let inputs = document.querySelectorAll("#feedback");
+    inputs.forEach((input: any) => {
+     this.feedbackValue = input.value;
+    });
+    if (this.feedbackValue) {
       this.loader = true;
-      this.feedback = feedback;
+      this.feedback = this.feedbackValue;
       const payload = {
         serviceSeqId: this.serviceId,
         feedBack: this.feedback,

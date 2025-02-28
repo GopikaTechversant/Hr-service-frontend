@@ -66,7 +66,7 @@ export class StationCandidateDetailComponent implements OnInit {
     'back-off': (station?: string) => `Candidate Back-off In ${station ? ` at ${station}` : ''}`,
     'pannel-rejection': (station?: string) => `Panel Rejected the Candidate${station ? ` at ${station}` : ''}`
   };
-  
+
   userType: any;
   constructor(public dialogRef: MatDialogRef<StationCandidateDetailComponent>, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
     private route: ActivatedRoute, private router: Router,
@@ -92,12 +92,23 @@ export class StationCandidateDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.userType = localStorage.getItem('userType');
-    this.currentStation = this.router.url.split('/')[1];
-    this.route.params.subscribe(params => {
-      this.stationId = params['id'];
-      this.url = `/technical/${this.stationId}`;
-    });
-    this.stationId = localStorage.getItem('currentStationId');
+    console.log("this.data?.currentStation",this.data?.currentStation);
+    console.log("this.data?.stationId",this.data?.stationId);
+    
+    if (this.data?.currentStation) this.currentStation = this.data?.currentStation?.split(' ')[0].toLowerCase();
+    else this.currentStation = this.router.url.split('/')[1];
+    console.log("this.currentStation",this.currentStation);
+    
+    if (this.data?.stationId) this.stationId = this.data?.stationId;
+    else {
+      this.route.params.subscribe(params => {
+        this.stationId = params['id'];
+        this.url = `/technical/${this.stationId}`;
+      });
+    }
+
+    if (this.data?.stationId) this.stationId = this.data?.stationId;
+    else this.stationId = localStorage.getItem('currentStationId');
     this.userId = localStorage.getItem('userId');
     this.env_url = window.location.origin;
     this.fetchFeedbackList();
@@ -189,7 +200,6 @@ export class StationCandidateDetailComponent implements OnInit {
       };
 
       const baseUrl = baseUrlMap[`${this.currentStation}-${this.stationId}`] || baseUrlMap[this.currentStation];
-
       if (!baseUrl) {
         this.tostr.error('Invalid operation');
         this.loader = false;
@@ -325,10 +335,7 @@ export class StationCandidateDetailComponent implements OnInit {
   }
 
   rejectClick(data: any): void {
-    console.log("data",data);
-    
     this.comment = (document.getElementById('comment') as HTMLInputElement)?.value || '';
-    console.log("this.comment", this.comment);
     // this.loader = true;
     if (data || (this.comment && this.filteredStatus)) {
       this.loader = true;
@@ -342,7 +349,7 @@ export class StationCandidateDetailComponent implements OnInit {
         rejectSubject: data?.mailSubject ?? '',
         rejectBcc: data?.mailBcc ?? '',
         // feedBack: data?.feedback ? data?.feedback : this.selectedRejectionFeedback,
-        feedback: data?.feedback ? data?.feedback : this.comment
+        feedBack: data?.feedback ? data?.feedback : this.comment
       };
       this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({
         next: (res: any) => {
@@ -357,10 +364,10 @@ export class StationCandidateDetailComponent implements OnInit {
           this.closeDialog();
         }
       });
-    }else{
-      if(!this.filteredStatus) this.tostr.warning('Please Select Reason for Rejection');
-      if(!this.selectedRejectionFeedback) this.tostr.warning('Please Add Rejection Feedback');
-     }
+    } else {
+      if (!this.filteredStatus) this.tostr.warning('Please Select Reason for Rejection');
+      if (!this.selectedRejectionFeedback) this.tostr.warning('Please Add Rejection Feedback');
+    }
   }
 
   viewResume(resume: any) {

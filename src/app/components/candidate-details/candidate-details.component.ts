@@ -57,7 +57,7 @@ export class CandidateDetailsComponent implements OnInit {
           this.positonIds = this.candidateDetails?.position.map((pos: any) => pos?.reqServiceRequest?.requestId);
           this.resumePath = this.candidateDetails?.candidateResume;
           if (this.resumePath) this.viewResumeFile = environment.s3_url;
-          if (this.positonIds?.length !==0) this.fetchCandidateHistory();
+          if (this.positonIds?.length !== 0) this.fetchCandidateHistory();
         }
       },
       error: (err) => {
@@ -111,8 +111,14 @@ export class CandidateDetailsComponent implements OnInit {
       height: '700px'
     })
     dialogRef.componentInstance.onEditSuccess.subscribe(() => {
-     
+
     })
+  }
+
+  handleModalClose(isClosed: boolean): void {
+    if (isClosed) {
+      this.fetchCandidateDetails();
+    }
   }
 
 

@@ -76,10 +76,10 @@ export class MailTemplateComponent implements OnInit {
 
   emailIdList: any[] = [];
   emailIdOpen: boolean = false;
-  searchValueCc: string = ''; // Separate search value for CC
-  searchValueBcc: string = ''; // Separate search value for BCC
-  emailIdListCc: any[] = []; // Separate list for CC suggestions
-  emailIdListBcc: any[] = []; // Separate list for BCC suggestions
+  searchValueCc: string = '';
+  searchValueBcc: string = '';
+  emailIdListCc: any[] = [];
+  emailIdListBcc: any[] = [];
   emailIdOpenCc: boolean = false;
   emailIdOpenBcc: boolean = false;
   constructor(private apiService: ApiService, private tostr: ToastrService, private datePipe: DatePipe, private s3Service: S3Service) { }
@@ -130,8 +130,6 @@ export class MailTemplateComponent implements OnInit {
     this.panelId = panelid;
     this.panelName = `${firstname} ${secondName}`;
     this.panelSearchValue = `${firstname} ${secondName}`;
-    console.log(" this.panelId", this.panelId);
-    
     if (this.candidate?.messageType === 're-schedule') this.changeInterviewStatus();
   }
 
@@ -272,12 +270,17 @@ export class MailTemplateComponent implements OnInit {
   }
 
   submitClick(): void {
+    // this.feedback = (document.getElementById('#feedback') as HTMLInputElement)?.value || '';
+    let inputs = document.querySelectorAll("#feedback");
+    inputs.forEach((input: any) => {
+      this.feedback = input.value;
+    });
     if (!this.messageSaved) {
       this.tostr.warning(this.isEditable ? 'Please Save Template before submitting' : 'Please Edit and Save Mail before submitting');
       return;
     }
     // Extract input values
-    this.feedback = (document.getElementById('feedback') as HTMLInputElement)?.value || '';
+    // this.feedback = (document.getElementById('feedback') as HTMLInputElement)?.value || '';
     this.mailCc = (document.getElementById('cc') as HTMLInputElement)?.value || '';
     this.mailBcc = (document.getElementById('bcc') as HTMLInputElement)?.value || '';
     this.mailSubject = (document.getElementById('subject') as HTMLInputElement)?.value || '';
@@ -336,7 +339,6 @@ export class MailTemplateComponent implements OnInit {
       }
       this.htmlString = templateElement.outerHTML.replace(textarea, '<div>');
     }
-
     // Validate feedback and subject fields
     if (!this.feedback.trim() || !this.mailSubject.trim()) {
       if (!this.feedback.trim()) this.tostr.warning('Please Add a feedback');
@@ -352,7 +354,6 @@ export class MailTemplateComponent implements OnInit {
       messageType: this.candidate?.messageType,
       mailTemp: this.htmlString,
     };
-
     let data;
     if (this.candidate?.messageType === 'offer') {
       if (!this.offerSalary || !this.displayDate) {
@@ -504,5 +505,5 @@ export class MailTemplateComponent implements OnInit {
     this.searchValueBcc = emails.join(', ');
     this.emailIdOpenBcc = false;
   }
- 
+
 }

@@ -137,6 +137,8 @@ export class InterviewFeebackComponent implements OnInit {
         progressDescription: this.selectedFeedback,
         progressComment: this.comment
       };
+      console.log("data submit",data);
+      
       this.submitInterviewData.emit(data);
     } else {
       if (!this.selectedFeedback) this.tostr.warning('Please Add Feedback');
