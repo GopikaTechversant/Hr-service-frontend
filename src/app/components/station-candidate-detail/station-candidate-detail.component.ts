@@ -92,13 +92,8 @@ export class StationCandidateDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.userType = localStorage.getItem('userType');
-    console.log("this.data?.currentStation",this.data?.currentStation);
-    console.log("this.data?.stationId",this.data?.stationId);
-    
     if (this.data?.currentStation) this.currentStation = this.data?.currentStation?.split(' ')[0].toLowerCase();
     else this.currentStation = this.router.url.split('/')[1];
-    console.log("this.currentStation",this.currentStation);
-    
     if (this.data?.stationId) this.stationId = this.data?.stationId;
     else {
       this.route.params.subscribe(params => {
@@ -131,12 +126,16 @@ export class StationCandidateDetailComponent implements OnInit {
   fetchFeedbackList(): void {
     this.apiService.get(`/screening-station/rejection-list`).subscribe(res => {
       this.rejectionFeedbackList = res?.data;
+      console.log("this.rejectionFeedbackList",this.rejectionFeedbackList);
+      
     });
   }
 
   fetchStatus(): void {
     this.apiService.get(`/user/filter-status`).subscribe(res => {
       this.status = res?.data.slice(4);
+      console.log("this.status",this.status);
+      
     });
   }
 

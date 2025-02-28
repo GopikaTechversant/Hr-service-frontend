@@ -141,8 +141,8 @@
                                 <td>
                                     <span class="f-w-500 text-start" [ngClass]="{'orange': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
                                     'red': item?.serviceStatus === 'rejected'}"
-                                        [title]="item?.serviceStatus | titlecase">{{ item?.serviceStatus |
-                                        titlecase}}</span>
+                                        [title]="item?.serviceStatus | titlecase">{{ item?.serviceStatus === 'pannel-rejection' ? 'Panel Rejection' : (item?.serviceStatus | titlecase) }}
+                                    </span>
                                 </td>
                                 <td class="text-start" [title]="item?.currentStation | titlecase">{{item?.currentStation
                                     | titlecase}}</td>

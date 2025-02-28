@@ -139,8 +139,10 @@
                                 <td class="text-start">{{item?.currentStation}}</td>
                                 <td class="f-w-500 text-start" [ngClass]="{'orange': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
                             'red': item?.serviceStatus === 'rejected'}">
-                                    {{ item?.serviceStatus === 'done' ? 'Offer Accepted' : item?.serviceStatus |
-                                    titlecase}}</td>
+                                    {{ item?.serviceStatus === 'done' ? 'Offer Accepted' :
+                                    item?.serviceStatus === 'pannel-rejection' ? 'Panel Rejection' :
+                                    (item?.serviceStatus | titlecase) }}
+                                </td>
                                 <td (click)="fetchDetails(item?.serviceId , item?.progressStatus , item?.reviewStatus)"
                                     class="c-pointer text-start">
                                     <div class="d-flex more">

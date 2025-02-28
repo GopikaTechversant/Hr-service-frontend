@@ -23,7 +23,7 @@
                     </div>
                     <span class="p-t-18 p-l-10 text-color">Candidate Latest Status : <span class="latest-status f-w-500"
                             [ngStyle]="{'color': candidateDetails.candidateInterviewStatus === 'rejected' ? 'red' : '#07C369'}">
-                            {{candidateDetails.candidateInterviewStatus | titlecase}}</span>
+                            {{ candidateDetails?.candidateInterviewStatus === 'pannel-rejection' ? 'Panel Rejection' : (candidateDetails?.candidateInterviewStatus | titlecase) }}</span>
                         <span *ngIf="candidateDetails?.currentStation"> | Current Station : <span class="latest-status blue f-w-500">
                                 {{candidateDetails?.currentStation | titlecase}}</span></span>
                     </span>
