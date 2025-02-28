@@ -32,6 +32,7 @@ export class RequirementCandidateListComponent implements OnInit {
   userRole: any;
   requisitionids: any;
   report : boolean = false;
+  idsParams:any;
   constructor(private router: Router, private apiService: ApiService, private dialog: MatDialog, private toastr: ToastrService,private exportService: ExportService) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -92,11 +93,12 @@ export class RequirementCandidateListComponent implements OnInit {
       `search=${searchQuery.trim()}`,
       `isActive=${isActive}`,
       `report=${this.report}`,
+      // `ids=${this.idsParams ? this.idsParams : ''}`
     ].filter(param => param.split('=')[1] !== '').join('&');  // Filter out empty parameters
     if (this.report) {
       if (this.requisitionids) {
-        const idsParams = this.requisitionids.map((id: string) => `ids=${id}`).join('&');
-        params += `&${idsParams}`;
+        this.idsParams = this.requisitionids.map((id: string) => `ids=${id}`).join('&');
+        params += `&${this.idsParams}`;
       }
       const exportUrl = `${url}?${params}`;
        this.apiService.getTemplate(exportUrl).subscribe(
