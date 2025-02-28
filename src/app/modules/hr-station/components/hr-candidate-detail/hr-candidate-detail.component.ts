@@ -250,7 +250,7 @@ export class HrCandidateDetailComponent {
     
     const payload = {
       candidateId: this.candidateDetails?.candidateId,
-      position: this.candidateDetails['serviceRequest.serviceServiceRequst'],
+      position: this.data?.serviceRequestId,
       interviewTime: data?.interviewTime,
       interViewPanel: data?.interviewPanel,
       interviewMode: data?.interviewMode,
