@@ -44,6 +44,7 @@ export class HrCandidateListComponent implements OnInit {
   candidateIds: any;
   status: any;
   userType: any;
+  serviceStatus:any;
   constructor(private dialog: MatDialog, private apiService: ApiService, private datePipe: DatePipe, private router: Router,
     private toastr: ToastrService, private exportService: ExportService) { }
   onBodyClick(event: MouseEvent): void {
@@ -258,13 +259,15 @@ export class HrCandidateListComponent implements OnInit {
 
   fetchDetails(id: any, offerStatus: any, reviewStatus: any): void {
     this.apiService.get(`/hr-station/candidateDetail?serviceId=${id}`).subscribe((data: any) => {
+      console.log("data?.candidates",data?.candidates?.serviceRequest);
+      this.serviceStatus = data?.candidates?.serviceRequest?.requestServiceId;
       if (data?.candidates) this.viewCandidateDetail(data?.candidates, offerStatus, reviewStatus);
     });
   }
 
   viewCandidateDetail(item: any, offerStatus: any, reviewStatus: any): void {
     const dialogRef = this.dialog.open(HrCandidateDetailComponent, {
-      data: { candidateDetails: item, offerStatus: offerStatus, reviewStatus: reviewStatus },
+      data: { candidateDetails: item, offerStatus: offerStatus, reviewStatus: reviewStatus, serviceRequestId: this.serviceStatus },
     })
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       this.fetchList(this.currentPage);

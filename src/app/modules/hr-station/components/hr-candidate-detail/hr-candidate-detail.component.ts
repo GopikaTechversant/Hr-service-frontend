@@ -57,8 +57,8 @@ export class HrCandidateDetailComponent {
     'cancelled': 'Cancelled the Interview'
   };
   progressSkill: any = [];
-  comment:any;
-  feedbackValue:any;
+  comment: any;
+  feedbackValue: any;
   constructor(public dialogRef: MatDialogRef<HrCandidateDetailComponent>, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
     private route: ActivatedRoute, private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -246,15 +246,12 @@ export class HrCandidateDetailComponent {
 
   rescheduleClick(data: any): void {
     this.loader = true;
-    console.log("this.candidateDetails",this.candidateDetails);
-    
     const payload = {
       candidateId: this.candidateDetails?.candidateId,
-      position: this.candidateDetails['serviceRequest.serviceServiceRequst'],
+      position: this.data?.serviceRequestId,
       interviewTime: data?.interviewTime,
       interViewPanel: data?.interviewPanel,
       interviewMode: data?.interviewMode,
-      serviceId: this.candidateDetails?.serviceId,
       station: this.stationId,
       interviewStatus: data?.interviewStatus,
       comments: data?.feedback,
@@ -262,6 +259,7 @@ export class HrCandidateDetailComponent {
       interviewMailTemp: data?.mailTemp,
       interviewSubject: data?.mailSubject,
       interviewBcc: data?.mailBcc,
+      serviceId: this.serviceId
     }
 
     this.apiService.post(`/screening-station/interview-details`, payload).subscribe({
@@ -324,7 +322,7 @@ export class HrCandidateDetailComponent {
     // const feedback = feedbackElement?.value.trim();
     let inputs = document.querySelectorAll("#feedback");
     inputs.forEach((input: any) => {
-     this.feedbackValue = input.value;
+      this.feedbackValue = input.value;
     });
     if (this.feedbackValue) {
       this.loader = true;
