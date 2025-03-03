@@ -169,6 +169,7 @@ export class MailTemplateComponent implements OnInit {
         if (status?.comment) this.comment = status?.comment;
         if (status?.interviewStatus) this.interviewStatus = status?.interviewStatus;
         if (status?.interviewLocation) this.Interviewlocation = status?.interviewLocation;
+        this.panelSearchValue = status?.reqUser.pannelName;
         this.scheduledDate = status?.serviceDate;
         if (this.scheduledDate) {
           this.displayDate = this.datePipe.transform(this.scheduledDate, 'MM/dd/yyyy');
