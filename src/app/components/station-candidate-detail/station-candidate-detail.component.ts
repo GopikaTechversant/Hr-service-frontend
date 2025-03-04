@@ -62,8 +62,8 @@ export class StationCandidateDetailComponent implements OnInit {
   statusMessages: { [key: string]: (station?: string) => string } = {
     done: (station?: string) => `Candidate Selected to ${station ? `${station}` : ''}`,
     rejected: (station?: string) => `Candidate Rejected In ${station ? `${station}` : ''}`,
-    moved: (station?: string) => `Candidate Moved to ${station ? ` at ${station}` : ''}`,
-    'back-off': (station?: string) => `Candidate Back-off In ${station ? ` at ${station}` : ''}`,
+    moved: (station?: string) => `Candidate Moved to ${station ? ` ${station}` : ''}`,
+    'back-off': (station?: string) => `Candidate Back-off ${station ? ` at ${station}` : ''}`,
     'pannel-rejection': (station?: string) => `Panel Rejected the Candidate${station ? ` at ${station}` : ''}`
   };
 
