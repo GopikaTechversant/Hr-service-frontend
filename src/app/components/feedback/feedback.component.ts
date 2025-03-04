@@ -30,8 +30,6 @@ export class FeedbackComponent implements OnInit {
     this.candidateDetails = data?.candidateDetails;
     this.rejectStatus = data?.rejectStatus;
     this.rejectionRequsitionId = data?.rejectionRequsitionId;
-    console.log(" this.rejectStatus", this.rejectStatus);
-
   }
 
   onBodyClick(event: MouseEvent): void {
@@ -72,7 +70,11 @@ export class FeedbackComponent implements OnInit {
   }
 
   rejectClick(): void {
-    if (this.filteredStatus && this.selectedRejectionFeedback) {
+    let inputs = document.querySelectorAll("#comment");
+    inputs.forEach((input:any) => {
+      this.comment = input.value;
+    });
+    if (this.filteredStatus && this.comment) {
       this.loader = true;
       const payload = {
         serviceId: this.candidateDetails?.serviceId,
@@ -94,7 +96,7 @@ export class FeedbackComponent implements OnInit {
       });
     } else {
       if (!this.filteredStatus) this.tostr.warning('Please Select Reason for Rejection');
-      if (!this.selectedRejectionFeedback) this.tostr.warning('Please Add Rejection Feedback');
+      if (!this.comment) this.tostr.warning('Please Add Rejection Feedback');
     }
   }
 
@@ -103,7 +105,11 @@ export class FeedbackComponent implements OnInit {
   }
 
   rejectRequisition(): void {
-    this.comment = (document.getElementById('comment') as HTMLInputElement)?.value || '';
+    let inputs = document.querySelectorAll("#comment");
+    inputs.forEach((input:any) => {
+      this.comment = input.value;
+    });
+    // this.comment = (document.getElementById('comment') as HTMLInputElement)?.value || '';
     if (this.comment) {
       this.loader = true;
       const payload = {

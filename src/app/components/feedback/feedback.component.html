@@ -59,15 +59,12 @@
         <div class="padding-10 p-r-0 d-flex j-end w-100 m-t-10 p-b-0">
             <button class="btn c-pointer" (click)="rejectClick()" [disabled]="loader">Submit</button>
         </div>
+        
     </div>
-    <!---Requisition rejection reason-->
-    <div class="w-100 m-t-10 d-flex-column p-l-14" *ngIf="this.rejectStatus">
+     <!---Requisition rejection reason-->
+     <div class="w-100 d-flex-column p-l-14" *ngIf="this.rejectStatus">
         <span class="p-10 sub-head p-l-0 f-w-500 f-s-16">Feedback</span>
-        <textarea class="text-area" id="comment"></textarea>
-    </div>
-    <div class="padding-10 p-r-0 d-flex j-end w-100 m-t-10 p-b-0" *ngIf="!this.rejectStatus">
-        <!-- <button  class="btn c-pointer btn-cancel" *ngIf="this.rejectStatus" (click)="onCancelClick()">Cancel</button> -->
-        <button class="btn c-pointer" (click)="rejectClick()" [disabled]="loader">Submit</button>
+        <textarea class="text-area-req p-l-5" id="comment"></textarea>
     </div>
     <div class="padding-10 p-r-0 d-flex j-end w-100 m-t-10 p-b-0" *ngIf="this.rejectStatus">
         <button  class="btn c-pointer btn-cancel" (click)="onCancelClick()">Cancel</button>

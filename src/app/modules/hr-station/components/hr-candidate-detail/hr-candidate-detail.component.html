@@ -152,26 +152,28 @@
         <label class="c-pointer f-w-500 f-s-14 action-btn" [class.action-select]="buttonType === 'rejection'">
             <input type="radio" class="deatil-btn" name="action" value="rejection"
                 (change)="selectButton('rejection');showMail('')" [checked]="buttonType === 'rejection'" />
-            Reject Candidate
+            Back out Candidate
         </label>
     </div>
     <!-- Back-off Or Panel Rejection -->
     <div class="margin-10"
         *ngIf="!reviewAdded && data?.candidateDetails?.serviceStatus === 'pending' && buttonType.trim() === 'rejection'">
         <div class="d-flex w-100 p-10 j-space">
-            <span class="f-w-500 f-s-14 p-t-10 w-30">Rejection Reason</span>
+            <span class="f-w-500 f-s-14 p-t-10 w-30">Reason</span>
             <div class="d-flex p-l-10 w-50">
                 <span class="input-rejection c-pointer no-close p-relative p-t-5">
-                    <span class="no-close p-l-10 f-s-14 f-w-400" (click)="filterStatus = !filterStatus">
-                        {{ filteredStatus.trim() === '' ? 'Select Reason for Rejection' :
+                    <div (click)="filterStatus = !filterStatus">
+                    <span class="no-close p-l-10 f-s-14 f-w-400">
+                        {{ filteredStatus.trim() === '' ? 'Select Reason' :
                         (filteredStatus === 'pannel-rejection' ? 'Panel Rejection' : (filteredStatus | titlecase)) }}
                     </span>
 
-                    <span class="f-right">
+                    <span class="f-right" >
                         <!-- <span *ngIf="filteredStatus && filteredStatus.trim() !== ''" (click)="clearFilter('status')" class="clear-filter">x</span> -->
-                        <span (click)="filterStatus = !filterStatus"><i
+                        <span><i
                                 class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
                     </span>
+                </div>
                     <div class="dropdown c-pointer no-close'" *ngIf="filterStatus">
                         <span class="d-flex p-0" *ngFor="let type of status"
                             (click)="selectStatusFilter(type?.status);filterStatus = !filterStatus">
@@ -184,7 +186,7 @@
             </div>
         </div>
         <div class="d-flex w-100 p-10 j-space">
-            <span class="f-w-500 f-s-14 p-t-10 w-30">Rejection Feedback</span>
+            <span class="f-w-500 f-s-14 p-t-10 w-30">Feedback</span>
             <div class="d-flex p-l-10 w-50">
                 <textarea class="text-area p-l-9" id="comment"></textarea>
             </div>
