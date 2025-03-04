@@ -18,14 +18,16 @@
     </div>
     <div *ngIf="!initialLoader">
         <div class="title-requirement"><span class="requirement-name">
-            <span class="f-w-500">{{requirement_details?.requestName}}</span></span>
+                <span class="f-w-500">{{requirement_details?.requestName}}</span></span>
         </div>
         <div class="requirement">
             <div class="actions d-flex p-t-8 p-r-8">
-                <span class="c-pointer f-s-20" *ngIf="userRole === 'manager' || userType === 'admin'" (click)="edit('/dashboard/service-requirement',requirement_details?.requestId)">
+                <span class="c-pointer f-s-20" *ngIf="userRole === 'manager' || userType === 'admin'"
+                    (click)="edit('/dashboard/service-requirement',requirement_details?.requestId)">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                 </span>
-                <span *ngIf="requirement_details?.candidatesCount === '0'" class="c-pointer f-s-20" (click)="delete(requirement_details?.requestId)">
+                <span *ngIf="requirement_details?.candidatesCount === '0'" class="c-pointer f-s-20"
+                    (click)="delete(requirement_details?.requestId)">
                     <i class="fa fa-trash-o red" aria-hidden="true"></i>
                 </span>
             </div>
@@ -49,7 +51,7 @@
                         <div class="key-requirement">Interview Rounds</div>
                         <div class="value-requirement">: {{roundNames}}</div>
                     </div>
-    
+
                     <div class="info-pair-requirement">
                         <div class="key-requirement">Minimum Experience</div>
                         <div class="value-requirement">: {{requirement_details?.requestMinimumExperience}}</div>
@@ -110,29 +112,36 @@
                     </div>
                     <div class="info-pair-requirement">
                         <div class="key-requirement">Job Posting Date</div>
-                        <div class="value-requirement">: {{requirement_details?.requestPostingDate | date :'dd/MM/yyy'}}</div>
+                        <div class="value-requirement">: {{requirement_details?.requestPostingDate | date :'dd/MM/yyy'}}
+                        </div>
                     </div>
                     <div class="info-pair-requirement">
                         <div class="key-requirement">Job Closing Date</div>
-                        <div class="value-requirement">: {{requirement_details?.requestClosingDate | date :'dd/MM/yyy'}}</div>
+                        <div class="value-requirement">: {{requirement_details?.requestClosingDate | date :'dd/MM/yyy'}}
+                        </div>
                     </div>
-                </div>      
+                </div>
             </div>
-          
+
         </div>
         <div class="description m-t-0 m-b-29">
             <div class="title-description"><span class="f-w-500 f-s-16">
-                <span class="f-w-500">Job Description</span></span>
+                    <span class="f-w-500">Job Description</span></span>
             </div>
-            <div *ngIf="formattedText" #template [class.expanded]="isExpanded" [innerHTML]="formattedText" class="description-text"></div>
-            <div *ngIf="showViewMore" >
+            <div *ngIf="formattedText" #template [class.expanded]="isExpanded" [innerHTML]="formattedText"
+                class="description-text"></div>
+            <div *ngIf="showViewMore">
                 <span class="c-pointer f-w-500 blue view d-flex j-centre" (click)="toggleView()">
                     {{ isExpanded ? 'View Less' : 'View More...' }}
                 </span>
             </div>
-        </div>        
-    </div>  
-    <div>
+        </div>
+        <div class="approval d-flex j-end" *ngIf="requirement_details?.candidatesCount === '0' && requirement_details?.requestStatus !== 'active'">
+            <button class="btn approval" (click)="approveRequisition(requirement_details?.requestId)">Approve</button>
+            <button class="btn btn-reject" (click)="rejectRequisition(requirement_details?.requestId)">Reject</button>
+        </div>
+    </div>
+    <div *ngIf="requirement_details?.candidatesCount !== '0'">
         <app-candidate-schedule></app-candidate-schedule>
     </div>
 </div>

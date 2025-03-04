@@ -21,10 +21,17 @@ export class FeedbackComponent implements OnInit {
   status: any;
   candidateDetails: any;
   loader: boolean = false;
-  comment:any;
+  rejectStatus: string = '';
+  rejectionRequsitionId: any;
+  comment: any;
+
   constructor(public dialogRef: MatDialogRef<FeedbackComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
     private apiService: ApiService, private tostr: ToastrServices) {
     this.candidateDetails = data?.candidateDetails;
+    this.rejectStatus = data?.rejectStatus;
+    this.rejectionRequsitionId = data?.rejectionRequsitionId;
+    console.log(" this.rejectStatus", this.rejectStatus);
+
   }
 
   onBodyClick(event: MouseEvent): void {
@@ -65,9 +72,8 @@ export class FeedbackComponent implements OnInit {
   }
 
   rejectClick(): void {
-    this.comment = (document.getElementById('comment') as HTMLInputElement)?.value || '';
-    if (this.filteredStatus && this.comment) {
-    this.loader = true;
+    if (this.filteredStatus && this.selectedRejectionFeedback) {
+      this.loader = true;
       const payload = {
         serviceId: this.candidateDetails?.serviceId,
         stationId: this.stationId,
@@ -86,14 +92,36 @@ export class FeedbackComponent implements OnInit {
           this.closeDialog();
         }
       });
-    }else{
-     if(!this.filteredStatus) this.tostr.warning('Please Select Reason for Rejection');
-     if(!this.selectedRejectionFeedback) this.tostr.warning('Please Add Rejection Feedback');
+    } else {
+      if (!this.filteredStatus) this.tostr.warning('Please Select Reason for Rejection');
+      if (!this.selectedRejectionFeedback) this.tostr.warning('Please Add Rejection Feedback');
     }
   }
 
   onCancelClick(): void {
     this.dialogRef.close();
+  }
+
+  rejectRequisition(): void {
+    this.comment = (document.getElementById('comment') as HTMLInputElement)?.value || '';
+    if (this.comment) {
+      this.loader = true;
+      const payload = {
+        requestionId: this.rejectionRequsitionId,
+        approve: false,
+        reason: this.comment
+      }
+      this.apiService.post(`/service-request/activateRequest`, payload).subscribe({
+        next: (res: any) => {
+          this.loader = false;
+          this.tostr.success('Rejected');
+          this.dialogRef.close(true);
+        },
+        error: (error) => {
+          this.tostr.error('Unable to Reject');
+        }
+      })
+    } else this.tostr.warning('Please add Feedback');
   }
 
 }

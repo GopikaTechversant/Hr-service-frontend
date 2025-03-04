@@ -348,12 +348,12 @@ input[type="text"] {
   margin-right: 9px;
 }
 
+
 .padding-5 {
   padding: 5px;
 }
 
-.export-btn{
-  height: 33px;
-
-
+.approval-status{
+  color: #F57C02;
+  text-decoration: underline;
 }
