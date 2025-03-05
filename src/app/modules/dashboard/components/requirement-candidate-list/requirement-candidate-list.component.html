@@ -4,7 +4,7 @@
         <div class="d-flex  title-right">
             <div class="input-1 c-pointer no-close p-relative" (click)="filterStatus = !filterStatus">
                 <span class="no-close p-l-10">{{filteredStatus.trim() === '' ?
-                    'Active Requisitions' : filteredStatus | titlecase}}</span>
+                    'All Requisitions' : filteredStatus | titlecase}}</span>
                 <span class="f-right">
                     <span
                         *ngIf="filteredStatus !== 'Active Requisitions' && filteredStatus && filteredStatus.trim() !== ''"
