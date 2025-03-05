@@ -133,6 +133,7 @@ export class MailTemplateComponent implements OnInit {
     this.panelSearchValue = `${firstname} ${secondName}`;
     if (this.candidate?.messageType === 're-schedule') this.changeInterviewStatus();
   }
+  
 
   changeInterviewStatus(): void {
     if (this.displayDate || this.displayTime || this.selectedModeName || this.panelName) {
@@ -376,13 +377,14 @@ export class MailTemplateComponent implements OnInit {
       data = commonData;
     } else {
       // Validate interview details
-      if (!this.panelId || !this.selectedModeName || !this.interviewStatus || !this.displaydateTime) {
+      if ((!this.panelId && !this.initialPanelId) || !this.selectedModeName || !this.interviewStatus || !this.displaydateTime) {
         if (!this.panelId) this.tostr.warning('Please Select an Interview Panel');
         if (!this.selectedModeName) this.tostr.warning('Please Select an Interview Mode');
         if (!this.interviewStatus) this.tostr.warning('Please Select an Interview Status');
         if (!this.displaydateTime) this.tostr.warning('Please Enter an Interview Time');
         return;
       }
+      
 
       data = {
         ...commonData,
