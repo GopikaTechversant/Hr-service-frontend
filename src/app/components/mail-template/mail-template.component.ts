@@ -388,7 +388,7 @@ export class MailTemplateComponent implements OnInit {
 
       data = {
         ...commonData,
-        interviewPanel: this.panelId,
+        interviewPanel: this.panelId ? this.panelId : this.initialPanelId,
         interviewMode: this.selectedModeName,
         interviewStatus: this.interviewStatus,
         interviewTime: this.displaydateTime,

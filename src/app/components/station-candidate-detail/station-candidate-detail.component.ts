@@ -73,6 +73,8 @@ export class StationCandidateDetailComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data) {
       this.candidateDetails = data?.candidateDetails;
+      console.log("this.candidateDetails",this.candidateDetails?.pannelName);
+      
       this.stationId = data?.stationId;
       this.serviceId = this.candidateDetails?.serviceId;
       this.progressSkill = this.candidateDetails?.skillScore
@@ -252,6 +254,7 @@ export class StationCandidateDetailComponent implements OnInit {
   }
 
   rescheduleClick(data: any): void {
+    const userId = localStorage.getItem('userId');
     this.loader = true;
     const payload = {
       candidateId: this.candidateDetails['candidate.candidateId'],
@@ -267,6 +270,7 @@ export class StationCandidateDetailComponent implements OnInit {
       interviewMailTemp: data?.mailTemp,
       interviewSubject: data?.mailSubject,
       interviewBcc: data?.mailBcc,
+      recruiterId: userId
     }
 
     this.apiService.post(`/screening-station/interview-details`, payload).subscribe({
