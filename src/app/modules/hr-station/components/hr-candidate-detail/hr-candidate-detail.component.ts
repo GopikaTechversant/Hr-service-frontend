@@ -59,6 +59,7 @@ export class HrCandidateDetailComponent {
   progressSkill: any = [];
   comment: any;
   feedbackValue: any;
+  serviceRequest: any;
   constructor(public dialogRef: MatDialogRef<HrCandidateDetailComponent>, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
     private route: ActivatedRoute, private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -70,6 +71,7 @@ export class HrCandidateDetailComponent {
       this.serviceId = this.data?.candidateDetails?.serviceId;
       this.feedback = data?.candidateDetails?.reqCandidateComments?.commentComment;
       this.progressSkill = data?.candidateDetails?.skillScore
+      this.serviceRequest = data?.candidateDetails?.serviceServiceRequst
       if (data?.reviewStatus > 0) this.reviewAdded = true;
       if (data?.offerStatus > 0) this.offerSent = true;
     }
@@ -248,7 +250,7 @@ export class HrCandidateDetailComponent {
     this.loader = true;
     const payload = {
       candidateId: this.candidateDetails?.candidateId,
-      position: this.data?.serviceRequestId,
+      position: this.serviceRequest,
       interviewTime: data?.interviewTime,
       interViewPanel: data?.interviewPanel,
       interviewMode: data?.interviewMode,
@@ -281,7 +283,6 @@ export class HrCandidateDetailComponent {
   rejectClick(data: any): void {
     const feedbackElement = document.getElementById('feedback') as HTMLInputElement;
     this.comment = (document.getElementById('comment') as HTMLInputElement)?.value || '';
-    console.log(" this.comment", this.comment);
     const feedback = feedbackElement?.value.trim();
     // this.loader = true;    
     if (data || (this.comment && this.filteredStatus) || feedback) {
