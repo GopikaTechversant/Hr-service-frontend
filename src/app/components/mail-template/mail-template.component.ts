@@ -170,7 +170,7 @@ export class MailTemplateComponent implements OnInit {
         if (status?.comment) this.comment = status?.comment;
         if (status?.interviewStatus) this.interviewStatus = status?.interviewStatus;
         if (status?.interviewLocation) this.Interviewlocation = status?.interviewLocation;
-        this.panelSearchValue = status?.reqUser.pannelName;
+        // this.panelSearchValue = status?.reqUser.pannelName;
         this.scheduledDate = status?.serviceDate;
         if(status["reqUser.pannelName"]) this.panelSearchValue = status["reqUser.pannelName"];
         if(status?.serviceAssignee) this.initialPanelId = status?.serviceAssignee;
