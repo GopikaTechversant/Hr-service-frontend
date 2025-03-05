@@ -82,6 +82,7 @@ export class MailTemplateComponent implements OnInit {
   emailIdListBcc: any[] = [];
   emailIdOpenCc: boolean = false;
   emailIdOpenBcc: boolean = false;
+  initialPanelId:any;
   constructor(private apiService: ApiService, private tostr: ToastrService, private datePipe: DatePipe, private s3Service: S3Service) { }
   ngOnInit(): void {
     this.resetFormAndState();
@@ -171,6 +172,8 @@ export class MailTemplateComponent implements OnInit {
         if (status?.interviewLocation) this.Interviewlocation = status?.interviewLocation;
         this.panelSearchValue = status?.reqUser.pannelName;
         this.scheduledDate = status?.serviceDate;
+        if(status["reqUser.pannelName"]) this.panelSearchValue = status["reqUser.pannelName"];
+        if(status?.serviceAssignee) this.initialPanelId = status?.serviceAssignee;
         if (this.scheduledDate) {
           this.displayDate = this.datePipe.transform(this.scheduledDate, 'MM/dd/yyyy');
           this.displayTime = this.datePipe.transform(this.scheduledDate, 'hh:mm');
