@@ -7,7 +7,7 @@
                     'All Requisitions' : filteredStatus | titlecase}}</span>
                 <span class="f-right">
                     <span
-                        *ngIf="filteredStatus !== 'Active Requisitions' && filteredStatus && filteredStatus.trim() !== ''"
+                        *ngIf="filteredStatus !== 'All Requisitions' && filteredStatus && filteredStatus.trim() !== ''"
                         (click)="clearFilter('status')">
                         <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
                     </span>
@@ -58,7 +58,7 @@
                     <td class="text-start">Primary Skills</td>
                     <td class="text-start">Status</td>
                     <td class="text-center wrap"
-                        *ngIf="filteredStatus === 'Active Requisitions' && userType !== 'super-admin'">Add Candidate
+                        *ngIf="(filteredStatus === 'Active Requisitions' || filteredStatus === 'All Requisitions') && userType !== 'super-admin'">Add Candidate
                     </td>
                     <td>Assign To</td>
                     <td>Priority</td>
@@ -71,8 +71,8 @@
                     <ng-container *ngFor="let candidate of candidates_list">
                         <tr class="c-pointer" (dblclick)="navigate('/dashboard/series/',candidate?.requestId)">
                             <td class="text-center" *ngIf="userType !== 'super-admin'">
-                                <input type="checkbox" [(ngModel)]="candidate.isSelected" (change)="getSelectedCandidateIds()"
-                                    name="select">
+                                <input type="checkbox" [(ngModel)]="candidate.isSelected"
+                                    (change)="getSelectedCandidateIds()" name="select">
                             </td>
                             <td class="text-end wrap-date">{{candidate?.requestCode ? candidate?.requestCode : 'N/A'}}
                             </td>
@@ -89,15 +89,16 @@
                             </td>
                             <td class="text-start wrap" [title]="candidate?.requestSkills">
                                 {{candidate?.requestSkills ? (candidate?.requestSkills) : 'N/A'}}</td>
-                            <!-- <td class="text-start wrap" [title]="candidate?.requestSkills">
-                                {{candidate?.requestSkills ? (candidate?.requestSkills | titlecase) : 'N/A'}}</td> -->
-                            <!-- <td class="text-start f-w-500 approval-status" (click)="navigate('/dashboard/series/',candidate?.requestId)">Review</td> -->
+                            <!-- <td class="text-start f-w-500"
+                                [ngStyle]="{'color': candidate.status === 'active' ? '#08BC66' : 'red'}">
+                                {{candidate?.status ?(candidate?.status | titlecase) : 'N/A'}}
+                            </td> -->
                             <td class="text-start f-w-500" *ngIf="candidate.status !== 'pending'"
                                 [ngStyle]="{'color': candidate.status === 'active' ? '#08BC66' : 'red'}">
                                 {{candidate?.status ?(candidate?.status | titlecase) : 'N/A'}}
                             </td>
                             <td class="text-start f-w-500 approval-status"
-                                *ngIf="candidate.status === 'pending' || candidate.status === 'rejected'" [ngClass]="{
+                                *ngIf="candidate.status === 'pending'" [ngClass]="{
                                     'clickable': userType === 'admin' && candidate.status === 'pending',
                                     'not-clickable': userType !== 'admin' && candidate.status === 'pending'
                                 }" [ngStyle]="candidate.status === 'pending' && userType !== 'admin' ? { 'color': '#005EC9', 'pointer-events': 'none' ,'text-decoration':'none'} : 
@@ -105,9 +106,9 @@
                                 (click)="candidate.status === 'pending' && userType === 'admin' ? navigate('/dashboard/series/', candidate?.requestId) : null">
                                 {{ candidate.status === 'rejected' ? 'Rejected' : 'Pending' }}
                             </td>
-                            <td class="text-center add"
-                                *ngIf="filteredStatus === 'Active Requisitions' && userType !== 'super-admin'">
-                                <i class="fa fa-user-plus" aria-hidden="true" (click)="onStatusChange(candidate)"></i>
+                            <td class="text-center add" (click)="onStatusChange(candidate)"
+                                *ngIf="(filteredStatus === 'Active Requisitions' || filteredStatus === 'All Requisitions') && userType !== 'super-admin'">
+                                <i class="fa fa-user-plus" aria-hidden="true"></i>
                             </td>
                             <td class="text-start">{{candidate?.assignto}}</td>
                             <td class="text-start">{{candidate?.requestPriority | titlecase}}</td>
