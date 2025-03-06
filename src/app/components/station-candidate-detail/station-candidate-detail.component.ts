@@ -73,8 +73,6 @@ export class StationCandidateDetailComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data) {
       this.candidateDetails = data?.candidateDetails;
-      console.log("this.candidateDetails",this.candidateDetails?.pannelName);
-      
       this.stationId = data?.stationId;
       this.serviceId = this.candidateDetails?.serviceId;
       this.progressSkill = this.candidateDetails?.skillScore
@@ -128,16 +126,12 @@ export class StationCandidateDetailComponent implements OnInit {
   fetchFeedbackList(): void {
     this.apiService.get(`/screening-station/rejection-list`).subscribe(res => {
       this.rejectionFeedbackList = res?.data;
-      console.log("this.rejectionFeedbackList",this.rejectionFeedbackList);
-      
     });
   }
 
   fetchStatus(): void {
     this.apiService.get(`/user/filter-status`).subscribe(res => {
       this.status = res?.data.slice(4);
-      console.log("this.status",this.status);
-      
     });
   }
 
@@ -238,6 +232,7 @@ export class StationCandidateDetailComponent implements OnInit {
         id: this.candidateDetails['candidate.candidateId'],
         messageType: this.messageType,
         stationId: this.stationId,
+        serviceid: this.serviceId
       };
     }
   }

@@ -156,7 +156,7 @@ export class MailTemplateComponent implements OnInit {
   }
 
   fetchCandidatesDetails(): void {
-    this.apiService.get(`/screening-station/interview-details/candidate-detail?candidateId=${this.candidate?.id}`).subscribe((res: any) => {
+    this.apiService.get(`/screening-station/interview-details/candidate-detail?candidateId=${this.candidate?.id}&serviceId=${this.candidate.serviceid}`).subscribe((res: any) => {
       this.candidateDetails = res?.candidate;
       this.candidateStatus = res?.candidateStatus;
       this.candidateDetails.forEach((candidate: any) => {

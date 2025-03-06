@@ -122,6 +122,7 @@ export class HrCandidateDetailComponent {
         id: this.candidateDetails?.candidateId,
         messageType: this.messageType,
         stationId: this.stationId,
+        serviceid: this.serviceId
       };
     }
   }
