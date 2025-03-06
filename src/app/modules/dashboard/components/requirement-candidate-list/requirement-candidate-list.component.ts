@@ -27,7 +27,7 @@ export class RequirementCandidateListComponent implements OnInit {
   editRequirement: any;
   filterStatus: boolean = false;
   filteredStatus: any = '';
-  status: any[] = ['Active Requisitions', 'Closed Requisitions'];
+  status: any[] = ['All Requisitions','Active Requisitions','Pending Requisitions', 'Closed Requisitions'];
   userType: any;
   userRole: any;
   requisitionids: any;
@@ -44,14 +44,14 @@ export class RequirementCandidateListComponent implements OnInit {
     this.userType = localStorage.getItem('userType');
     this.userRole = localStorage.getItem('userRole');
     this.initialLoader = true;
-    this.filteredStatus = sessionStorage.getItem('requisition') ? sessionStorage.getItem('requisition') : 'Active Requisitions';
+    // this.filteredStatus = sessionStorage.getItem('requisition') ? sessionStorage.getItem('requisition') : 'Active Requisitions';
     // Retrieve the last page from localStorage (if available)
     const savedPage = localStorage.getItem('currentPage');
     this.currentPage = savedPage ? parseInt(savedPage, 10) : 1;
 
     this.filteredStatus = localStorage.getItem('requisition')
       ? localStorage.getItem('requisition')
-      : 'Active Requisitions';
+      : 'All Requisitions';
     this.fetchcandidates(this.currentPage, '');
 
   }
@@ -84,7 +84,19 @@ export class RequirementCandidateListComponent implements OnInit {
     if (page) this.currentPage = page;
     console.log("page", page);
     console.log("searchQuery", searchQuery);
-    const isActive = this.filteredStatus === 'Closed Requisitions' ? 'closed' : 'active';
+    // const isActive = this.filteredStatus === 'Closed Requisitions' ? 'closed' : 'active';
+    const isActive = !this.filteredStatus 
+    ? '' 
+    : this.filteredStatus === 'Closed Requisitions' 
+    ? 'closed' 
+    : this.filteredStatus === 'Pending Requisitions' 
+    ? 'pending' 
+    : this.filteredStatus === 'Active Requisitions' 
+    ? 'active' 
+    : '';
+
+console.log("isActive:", isActive);
+
     if (!this.initialLoader) this.loader = true
     const url = `/screening-station/v1/list-all`;
     let params = [
@@ -200,7 +212,7 @@ export class RequirementCandidateListComponent implements OnInit {
   clearFilter(item: any): void {
     if (item === 'search') this.searchKeyword = '';
     if (item === 'status') {
-      this.filteredStatus = 'Active Requisitions';
+      this.filteredStatus = 'All Requisitions';
       sessionStorage.setItem('requisition', this.filteredStatus);
     }
     this.currentPage = 1;
