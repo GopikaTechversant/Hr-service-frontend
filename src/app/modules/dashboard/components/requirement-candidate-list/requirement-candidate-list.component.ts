@@ -27,13 +27,13 @@ export class RequirementCandidateListComponent implements OnInit {
   editRequirement: any;
   filterStatus: boolean = false;
   filteredStatus: any = '';
-  status: any[] = ['All Requisitions','Active Requisitions','Pending Requisitions', 'Closed Requisitions'];
+  status: any[] = ['All Requisitions', 'Active Requisitions', 'Pending Requisitions', 'Closed Requisitions'];
   userType: any;
   userRole: any;
   requisitionids: any;
-  report : boolean = false;
-  idsParams:any;
-  constructor(private router: Router, private apiService: ApiService, private dialog: MatDialog, private toastr: ToastrService,private exportService: ExportService) { }
+  report: boolean = false;
+  idsParams: any;
+  constructor(private router: Router, private apiService: ApiService, private dialog: MatDialog, private toastr: ToastrService, private exportService: ExportService) { }
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
@@ -44,7 +44,7 @@ export class RequirementCandidateListComponent implements OnInit {
     this.userType = localStorage.getItem('userType');
     this.userRole = localStorage.getItem('userRole');
     this.initialLoader = true;
-    // this.filteredStatus = sessionStorage.getItem('requisition') ? sessionStorage.getItem('requisition') : 'Active Requisitions';
+    // this.filteredStatus = sessionStorage.getItem('requisition') ? sessionStorage.getItem('requisition') : 'All Requisitions';
     // Retrieve the last page from localStorage (if available)
     const savedPage = localStorage.getItem('currentPage');
     this.currentPage = savedPage ? parseInt(savedPage, 10) : 1;
@@ -53,7 +53,6 @@ export class RequirementCandidateListComponent implements OnInit {
       ? localStorage.getItem('requisition')
       : 'All Requisitions';
     this.fetchcandidates(this.currentPage, '');
-
   }
 
   // fetchcandidates(page: any, searchQuery: string): void {
@@ -82,25 +81,20 @@ export class RequirementCandidateListComponent implements OnInit {
   // }
   fetchcandidates(page: any, searchQuery: string): void {
     if (page) this.currentPage = page;
-    console.log("page", page);
-    console.log("searchQuery", searchQuery);
     // const isActive = this.filteredStatus === 'Closed Requisitions' ? 'closed' : 'active';
-    const isActive = !this.filteredStatus 
-    ? '' 
-    : this.filteredStatus === 'Closed Requisitions' 
-    ? 'closed' 
-    : this.filteredStatus === 'Pending Requisitions' 
-    ? 'pending' 
-    : this.filteredStatus === 'Active Requisitions' 
-    ? 'active' 
-    : '';
-
-console.log("isActive:", isActive);
-
+    const isActive = !this.filteredStatus
+      ? ''
+      : this.filteredStatus === 'Closed Requisitions'
+        ? 'closed'
+        : this.filteredStatus === 'Pending Requisitions'
+          ? 'pending'
+          : this.filteredStatus === 'Active Requisitions'
+            ? 'active'
+            : '';
     if (!this.initialLoader) this.loader = true
     const url = `/screening-station/v1/list-all`;
     let params = [
-    `page=${this.report ? '' : this.currentPage}`,
+      `page=${this.report ? '' : this.currentPage}`,
       `limit=${this.report ? '' : this.limit}`,
       `search=${searchQuery.trim()}`,
       `isActive=${isActive}`,
@@ -113,7 +107,7 @@ console.log("isActive:", isActive);
         params += `&${this.idsParams}`;
       }
       const exportUrl = `${url}?${params}`;
-       this.apiService.getTemplate(exportUrl).subscribe(
+      this.apiService.getTemplate(exportUrl).subscribe(
         (data: Blob) => {
           if (data.type === 'application/json') {
             const reader = new FileReader();
@@ -136,18 +130,18 @@ console.log("isActive:", isActive);
         }
       );
       this.report = false;
-      if (this.report === false) this.fetchcandidates('','');
+      if (this.report === false) this.fetchcandidates('', '');
       return;
     }
     this.apiService.get(`${url}?${params}`).subscribe((res: any) => {
       this.initialLoader = false;
-            this.loader = false
-            this.candidates_list = res?.candidates;
-            this.totalCount = res?.totalCount;
-            const totalPages = Math.ceil(this.totalCount / this.limit);
-            this.lastPage = totalPages;
-            if (this.currentPage > totalPages) this.currentPage = totalPages;
-            localStorage.setItem('currentPage', this.currentPage.toString());
+      this.loader = false
+      this.candidates_list = res?.candidates;
+      this.totalCount = res?.totalCount;
+      const totalPages = Math.ceil(this.totalCount / this.limit);
+      this.lastPage = totalPages;
+      if (this.currentPage > totalPages) this.currentPage = totalPages;
+      localStorage.setItem('currentPage', this.currentPage.toString());
     }, (error: any) => {
       this.loader = false;
       this.initialLoader = false;
@@ -173,12 +167,12 @@ console.log("isActive:", isActive);
   //   });
   // }
   onStatusChange(candidate: any): void {
-    if(candidate?.status === 'active'){
+    if (candidate?.status === 'active') {
       this.router.navigate(['dashboard/add-candidate'], {
         state: { candidate }
       });
-    }else this.toastr.warning('Unable to add candidate: Requisition Inactive');
-   
+    } else this.toastr.warning('Unable to add candidate: Requisition Inactive');
+
   }
 
   delete(id: any): void {
@@ -203,7 +197,7 @@ console.log("isActive:", isActive);
 
   selectStatusFilter(item: string): void {
     this.filteredStatus = item;
-    sessionStorage.setItem('requisition', this.filteredStatus);
+    localStorage.setItem('requisition', this.filteredStatus);
     this.currentPage = 1;
     this.limit = 15;
     this.fetchcandidates(this.currentPage, '');
@@ -222,9 +216,7 @@ console.log("isActive:", isActive);
 
   getSelectedCandidateIds(): void {
     const selectedCandidates = this.candidates_list.flat().filter((candidate: { isSelected: any; }) => candidate.isSelected);
-    console.log("selectedCandidates",selectedCandidates);
     this.requisitionids = selectedCandidates.map((requisition: { requestId: any; }) => requisition?.requestId);
-    console.log(" this.candidateIds", this.requisitionids);
   }
 
   exportData(): void {
