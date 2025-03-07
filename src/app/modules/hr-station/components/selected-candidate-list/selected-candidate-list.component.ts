@@ -28,7 +28,7 @@ export class SelectedCandidateListComponent {
   totalCount: any;
   lastPage: any;
   searchKeyword: string = '';
-  requestList_open: any;
+  requestList_open: boolean = false;
   displayPosition: string = '';
   positionId: any;
   requestList: any;
