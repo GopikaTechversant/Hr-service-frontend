@@ -207,7 +207,7 @@ export class RequirementCandidateListComponent implements OnInit {
     if (item === 'search') this.searchKeyword = '';
     if (item === 'status') {
       this.filteredStatus = 'All Requisitions';
-      sessionStorage.setItem('requisition', this.filteredStatus);
+      localStorage.setItem('requisition', this.filteredStatus);
     }
     this.currentPage = 1;
     this.limit = 15;
