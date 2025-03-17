@@ -130,20 +130,37 @@ export class InterviewFeebackComponent implements OnInit {
   submitClick(): void {
     const updatedSkill = this.progressSkill.map(({ skillName, ...rest }) => ({ ...rest }));
     this.comment = (document.getElementById('comment') as HTMLInputElement)?.value || '';
-    if (updatedSkill.length > 0 && this.selectedFeedback) {
+    if (this.selectedFeedback) {
       const data = {
         file: this.uploadedFileKey,
         progressSkill: updatedSkill,
         progressDescription: this.selectedFeedback,
         progressComment: this.comment
       };
-      console.log("data submit",data);
-      
       this.submitInterviewData.emit(data);
     } else {
       if (!this.selectedFeedback) this.tostr.warning('Please Add Feedback');
-      if (updatedSkill.length === 0) this.tostr.warning('Please Add Skills');
       if (this.comment === '') this.tostr.warning('Please add comment');
     }
   }
+
+  // submitClick(): void {
+  //   const updatedSkill = this.progressSkill.map(({ skillName, ...rest }) => ({ ...rest }));
+  //   this.comment = (document.getElementById('comment') as HTMLInputElement)?.value || '';
+  //   if (updatedSkill.length > 0 && this.selectedFeedback) {
+  //     const data = {
+  //       file: this.uploadedFileKey,
+  //       progressSkill: updatedSkill,
+  //       progressDescription: this.selectedFeedback,
+  //       progressComment: this.comment
+  //     };
+  //     console.log("data submit",data);
+
+  //     this.submitInterviewData.emit(data);
+  //   } else {
+  //     if (!this.selectedFeedback) this.tostr.warning('Please Add Feedback');
+  //     if (updatedSkill.length === 0) this.tostr.warning('Please Add Skills');
+  //     if (this.comment === '') this.tostr.warning('Please add comment');
+  //   }
+  // }
 }
