@@ -23,7 +23,6 @@
       </span>
     </div>
   </div>
-
   <div class="d-flex w-100 m-t-10">
     <span class="f-w-500 f-s-14 p-t-10 w-30">Upload Attachment</span>
     <div class="d-flex p-l-10 w-70">
@@ -33,12 +32,12 @@
         <input type="file" #fileInput id="fileInput" style="display: none;" (change)="onFileSelected($event)">
       </span>
     </div>
-
   </div>
-
   <div class="d-flex w-100 m-t-10">
     <span class="f-w-500 f-s-14 p-t-10 w-30">Add Skill and Score</span>
-    <div class="d-flex p-l-10 w-70">
+    <div class="p-l-10 w-70">
+      <div class="comments p-t-6" id="score" #score contenteditable="true" [innerHTML]="description"></div>
+      <!-- <div class="d-flex p-l-10 w-70">
       <div class="w-70">
         <span class="input-feedback padding-5 d-flex p-relative">
           <input type="text" placeholder="Search skill" (input)="getSkillSuggestions(searchvalue)" id="addskill"
@@ -53,7 +52,6 @@
       </div>
       <div class=" d-flex m-l-10">
         <span class="input-score c-pointer no-close p-relative p-t-5" (click)="openCountList = !openCountList">
-          <!-- <span class="c-pointer input-feedback padding-10 d-flex m-l-10 p-relative"> -->
           <span class="no-close p-l-10 f-s-14 f-w-400">
             {{ selectedScore.trim() === '' ? 'Select Score' : selectedScore }}
           </span>
@@ -73,41 +71,40 @@
       <div class="add">
         <span class="c-pointer add-btn" (click)="addSkill()">Add</span>
       </div>
+    </div> -->
     </div>
   </div>
+  <!-- <div class="d-flex w-100 m-t-10">
+      <span class="f-w-500 f-s-14 p-t-10 w-30">Added Skills and Scores</span>
+      <div class="p-l-10 w-70">
+        <div class="container-table m-b-0">
+          <table class="">
+            <tr class="table-header p-b-10">
+              <td class="text-start w-70">Skill</td>
+              <td class="text-start">Score</td>
+              <td class="text-end">Actions</td>
+            </tr>
 
-  <div class="d-flex w-100 m-t-10">
-    <span class="f-w-500 f-s-14 p-t-10 w-30">Added Skills and Scores</span>
-    <div class="p-l-10 w-70">
-      <div class="container-table m-b-0">
-        <table class="">
-          <tr class="table-header p-b-10">
-            <td class="text-start w-70">Skill</td>
-            <td class="text-start">Score</td>
-            <td class="text-end">Actions</td>
-          </tr>
-
-          <ng-container *ngIf="progressSkill && progressSkill.length > 0">
-            <ng-container *ngFor="let item of progressSkill">
-              <tr class="c-pointer skill-list">
-                <td class="text-start w-70" [title]="(item?.skillName | titlecase) ">
-                  {{item?.skillName | titlecase}}
-                </td>
-                <td class="text-end d-flex w-30 skill-list" [title]="item?.score">
-                  <!-- <span class="w-30 p-r-10 p-t-5"><mat-progress-bar mode="determinate" min="1" max="10" step="1"
-                      [value]="item?.score"></mat-progress-bar></span> -->
-                  {{item?.score}}
-                </td>
-                <td class="text-end">
-                  <i class="fa fa-trash-o  red c-pointer" aria-hidden="true" (click)="removeSkill(item?.skillId)"></i>
-                </td>
-              </tr>
+            <ng-container *ngIf="progressSkill && progressSkill.length > 0">
+              <ng-container *ngFor="let item of progressSkill">
+                <tr class="c-pointer skill-list">
+                  <td class="text-start w-70" [title]="(item?.skillName | titlecase) ">
+                    {{item?.skillName | titlecase}}
+                  </td>
+                  <td class="text-end d-flex w-30 skill-list" [title]="item?.score">
+                   
+                    {{item?.score}}
+                  </td>
+                  <td class="text-end">
+                    <i class="fa fa-trash-o  red c-pointer" aria-hidden="true" (click)="removeSkill(item?.skillId)"></i>
+                  </td>
+                </tr>
+              </ng-container>
             </ng-container>
-          </ng-container>
-        </table>
+          </table>
+        </div>
       </div>
-    </div>
-  </div>
+    </div> -->
   <div class="d-flex w-100 m-t-10">
     <span class="f-w-500 f-s-14 p-t-10 w-30">Comment</span>
     <div class="d-flex p-l-10 w-70">

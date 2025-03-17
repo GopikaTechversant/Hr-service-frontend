@@ -127,3 +127,16 @@ input[type="text"] {
     /* background: #FAFAFA; */
     border: 1px solid #E9E9E9;
 }
+
+.comments {
+    width: 100%;
+    /* height: 193px; */
+    /* border-radius: 5px; */
+    outline: none;
+    /* background: #FAFAFA; */
+    padding-left: 7px;
+    border: 1px solid #E9E9E9;
+    height: auto;
+    min-height: 193px;
+    background-color: white;
+}
