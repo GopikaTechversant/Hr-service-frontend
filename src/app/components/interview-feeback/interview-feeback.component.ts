@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
 import { S3Service } from 'src/app/services/s3.service';
@@ -19,6 +19,7 @@ interface Skill {
 export class InterviewFeebackComponent implements OnInit {
   @Output() submitInterviewData: EventEmitter<any> = new EventEmitter<any>();
   @Input() loader: boolean = false;
+  @ViewChild('score') scoreDiv!: ElementRef<HTMLDivElement>;
   openFeedbackList: boolean = false;
   openCountList: boolean = false;
   selectedScore: string = '';
@@ -42,6 +43,8 @@ export class InterviewFeebackComponent implements OnInit {
   selectedSkillId: any;
   fileUploader: boolean = false;
   comment: any;
+  description: any;
+
   constructor(private s3Service: S3Service, private tostr: ToastrService, private apiService: ApiService, private el: ElementRef) { }
 
   ngOnInit(): void {
@@ -128,7 +131,9 @@ export class InterviewFeebackComponent implements OnInit {
   }
 
   submitClick(): void {
-    const updatedSkill = this.progressSkill.map(({ skillName, ...rest }) => ({ ...rest }));
+    const updatedSkill = this.scoreDiv.nativeElement.innerHTML;
+    console.log("currentDescription", updatedSkill);
+    // const updatedSkill = this.progressSkill.map(({ skillName, ...rest }) => ({ ...rest }));
     this.comment = (document.getElementById('comment') as HTMLInputElement)?.value || '';
     if (this.selectedFeedback) {
       const data = {
