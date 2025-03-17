@@ -49,7 +49,7 @@
     background-color: #f7f7f7;
     border-radius: 5px;
     padding: 8px 8px;
-    width: 52%;
+    width: 47.5%;
 }
 
 .container-table {
@@ -266,4 +266,18 @@
 
 .w-50{
     width: 50%;
+}
+
+.comments {
+    width: 100%;
+    /* height: 193px; */
+    /* border-radius: 5px; */
+    outline: none;
+    /* background: #FAFAFA; */
+    padding-left: 7px;
+    border: 1px solid #E9E9E9;
+    height: auto;
+    min-height: 172px;
+    background-color: white;
+    padding-top: 4px;
 }

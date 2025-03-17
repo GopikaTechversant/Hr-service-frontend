@@ -187,24 +187,11 @@
 
     <div class="d-flex w-100">
         <div class="w-50"
-            *ngIf="(candidateDetails?.progressStatus > 0 || candidateDetails?.serviceStatus === 'moved') && progressSkill.length > 0">
+            *ngIf="(candidateDetails?.progressStatus > 0 || candidateDetails?.serviceStatus === 'moved')">
             <span class="heading p-l-10 p-b-0">Added Skills and Scores</span>
             <div class="container-table m-b-0 m-l-10">
-                <table class="">
-                    <tr class="f-w-500 ">
-                        <td class="text-start w-70">Skill</td>
-                        <td class="text-start">Score</td>
-                    </tr>
-                    <ng-container>
-                        <ng-container *ngFor="let item of progressSkill">
-                            <tr class="c-pointer skill-list">
-                                <td class="text-start w-70" [title]="(item?.skillName | titlecase) ">{{item?.skillName |
-                                    titlecase}}</td>
-                                <td class="text-end d-flex w-30 skill-list" [title]="item?.score">{{item?.score}}</td>
-                            </tr>
-                        </ng-container>
-                    </ng-container>
-                </table>
+                <div class="comments" id="score" #score [innerHTML]="candidateDetails['progress.progressSkills']"></div>
+               
             </div>
         </div>
         <div class="w-50">
