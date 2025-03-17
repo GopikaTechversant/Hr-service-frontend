@@ -48,21 +48,22 @@
                             item?.candidateEducation : 'N/A'}}</td>
                         <td class="" *ngIf="userType !== 'super-admin'">
                             <span *ngIf="item?.serviceStatus && item?.serviceStatus !== 'pending'" class="name done">
-                                {{item?.serviceStatus | titlecase}}
+                                {{ item?.serviceStatus === 'pannel-rejection' ? 'Panel Rejection' : (item?.serviceStatus | titlecase) }}
                             </span><select *ngIf="item?.serviceStatus === 'pending'" class="name select c-pointer"
                                 (change)="onStatusChange($event, item)">
                                 <option class="name select c-pointer f-w-500" value="" disabled selected>
-                                    {{item?.serviceStatus | titlecase}}</option>
+                                    {{ item?.serviceStatus === 'pannel-rejection' ? 'Panel Rejection' : (item?.serviceStatus | titlecase) }}</option>
                                 <option class="name select p-t-2 c-pointer f-w-500" value="select">Select</option>
                                 <option class="name select p-t-2 c-pointer f-w-500" value="reject">Reject</option>
                             </select>
                         </td>
                         <td *ngIf="userType === 'super-admin'">
-                            <span class="">{{item?.serviceStatus | titlecase}}</span>
+                            <span class="">{{ item?.serviceStatus === 'pannel-rejection' ? 'Panel Rejection' : (item?.serviceStatus | titlecase) }}</span>
                         </td>
                         <td class="text-end">{{item?.rescheduledCount}}</td>
                         <td class="text-start" [title]="item?.candidateInterviewStatus">
-                            {{item?.candidateInterviewStatus ? (item?.candidateInterviewStatus | titlecase) : 'N/A'}}
+                            {{ item?.candidateInterviewStatus === 'pannel-rejection' ? 'Panel Rejection' : (item?.candidateInterviewStatus | titlecase) }}
+                            <!-- {{item?.candidateInterviewStatus ? (item?.candidateInterviewStatus | titlecase) : 'N/A'}} -->
                         </td>
                         <td class="text-end" *ngIf="userType !== 'super-admin'">
                             <i *ngIf="item?.serviceStatus !== 'done'" class="fa fa-trash-o p-l-5 red" aria-hidden="true"
