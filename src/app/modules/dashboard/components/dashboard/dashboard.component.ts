@@ -107,10 +107,12 @@ export class DashboardComponent implements OnInit {
 
   navigateToDetail(position: any): void {
     const foundRequest = this.requestList.find((item: { requestName: any; }) => item.requestName === position);
-    if (this.positionId) {
-      const id = this.positionId;
-      this.router.navigateByUrl(`/dashboard/requisition-detail/${id}`);
-    } else this.tostr.warning('No matching position found for navigation');
+    const id = this.positionId;
+    this.router.navigateByUrl(`/dashboard/requisition-detail/${id}`);
+    // if (this.positionId) {
+    //   const id = this.positionId;
+    //   this.router.navigateByUrl(`/dashboard/requisition-detail/${id}`);
+    // } else this.tostr.warning('No matching position found for navigation');
   }
 
 
