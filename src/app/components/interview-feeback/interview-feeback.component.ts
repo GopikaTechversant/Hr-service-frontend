@@ -135,7 +135,7 @@ export class InterviewFeebackComponent implements OnInit {
     console.log("currentDescription", updatedSkill);
     // const updatedSkill = this.progressSkill.map(({ skillName, ...rest }) => ({ ...rest }));
     this.comment = (document.getElementById('comment') as HTMLInputElement)?.value || '';
-    if (this.selectedFeedback) {
+    if (this.selectedFeedback && updatedSkill) {
       const data = {
         file: this.uploadedFileKey,
         progressSkill: updatedSkill,
@@ -146,6 +146,7 @@ export class InterviewFeebackComponent implements OnInit {
     } else {
       if (!this.selectedFeedback) this.tostr.warning('Please Add Feedback');
       if (this.comment === '') this.tostr.warning('Please add comment');
+      if (!updatedSkill) this.tostr.warning('Please Add Skills and Score');
     }
   }
 
