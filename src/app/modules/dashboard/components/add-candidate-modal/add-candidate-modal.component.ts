@@ -90,7 +90,7 @@ export class AddCandidateModalComponent implements OnInit {
       candidateEmail: [null, Validators.required],
       candidateMobileNo: [null, Validators.required],
       resumeSourceId: [null, Validators.required],
-      candidateNoticePeriodByDays: [null,Validators.required]
+      candidateNoticePeriodByDays: [null, Validators.required]
     })
   }
 
@@ -413,8 +413,10 @@ export class AddCandidateModalComponent implements OnInit {
     if (this.validationSuccess) {
       this.primaryskills = this.selectedPrimarySkills.map(skill => skill.id);
       this.secondaryskills = this.selectedSecondarySkills.map(skill => skill.id);
-      const candidateCurrentSalary = parseFloat(this.candidateForm?.value?.candidateCurrentSalary) || 0;
-      const candidateExpectedSalary = parseFloat(this.candidateForm?.value?.candidateExpectedSalary) || 0;
+      // const candidateCurrentSalary = parseFloat(this.candidateForm?.value?.candidateCurrentSalary) || 0;
+      // const candidateExpectedSalary = parseFloat(this.candidateForm?.value?.candidateExpectedSalary) || 0;
+      const candidateCurrentSalary = parseFloat(this.candidateForm?.value?.candidateCurrentSalary?.replace(/,/g, "")) || 0;
+      const candidateExpectedSalary = parseFloat(this.candidateForm?.value?.candidateExpectedSalary?.replace(/,/g, "")) || 0;
       const payload = {
         candidateFirstName: this.candidateForm?.value?.candidateFirstName.trim(),
         candidateLastName: this.candidateForm?.value?.candidateLastName.trim(),
