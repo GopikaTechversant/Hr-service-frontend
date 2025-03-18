@@ -33,8 +33,13 @@ export class RequisitionDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.initialLoader = true
     this.route.params.subscribe(params => {
-      this.requestId = params['id'];
+      this.requestId = params['id'] ?? '';
     });
+    this.route.queryParams.subscribe(params => {
+      this.startDate = params['startDate'] || this.startDate;
+      this.endDate = params['endDate'] || this.endDate;
+    });
+    
     this.filteredStatus = sessionStorage.getItem('requirement_status') ?? 'Total Applicants';
     this.currentPage = 1;
     this.pageSize = 9;
@@ -54,6 +59,7 @@ export class RequisitionDetailsComponent implements OnInit {
     if (range == 'startDate') this.startDate = this.datePipe.transform(date, 'yyyy-MM-dd');
     if (range == 'endDate') this.endDate = this.datePipe.transform(date, 'yyyy-MM-dd');
     this.fetchcount();
+    this.fetchCandidates(this.currentPage)
   }
 
 
@@ -70,7 +76,7 @@ export class RequisitionDetailsComponent implements OnInit {
 
   fetchCandidates(page:any): void {
     if(page) this.currentPage = page;
-    this.apiService.get(`/dashboard/candidate-by-status?positionId=${this.requestId}&page=${this.currentPage}&limit=${this.pageSize}&status=${this.filteredStatus.split(' ')[0].toLowerCase()}`).subscribe((data: any) => {
+    this.apiService.get(`/dashboard/candidate-by-status?positionId=${this.requestId}&page=${this.currentPage}&limit=${this.pageSize}&status=${this.filteredStatus.split(' ')[0].toLowerCase()}&fromDate=${this.startDate}&toDate=${this.endDate}`).subscribe((data: any) => {
       this.candidateList = data?.candidates;
       this.initialLoader = false;
       this.totalCount = data?.totalCount;
