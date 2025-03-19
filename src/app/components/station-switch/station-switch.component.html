@@ -16,15 +16,15 @@
         </div>
         <div class="sub-head d-flex">
             <span class="p-8"> : {{data?.requirement ? data?.requirement : 'Nil'}}</span>
-            <span class="p-8"> : {{data?.currentStation ? data?.currentStation : 'Nil'}}</span>
+            <span class="p-8"> : {{data?.currentStation === 'Hr Manager' ? 'HR' : (data?.currentStation | titlecase)}}</span>
             <span class="p-8 p-relative"> :
                 <span class="input c-pointer    p-l-2 no-close p-relative" (click)="showStations = !showStations">
-                    <span class="no-close p-l-10">{{SelectedStation.trim() === '' ? 'Select Station' : SelectedStation | titlecase}}</span>
+                    <span class="no-close p-l-10">{{SelectedStation.trim() === '' ? 'Select Station' : SelectedStation === 'HR Manager' ? 'HR' : (SelectedStation | titlecase)}}</span>
                     <span class="f-right"><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
                     <div class="dropdown c-pointer no-close'" *ngIf="showStations">
                         <span class="d-flex p-0" *ngFor="let item of stationsList"
                             (click)="selectStation(item?.stationName , item?.stationId);showStations = !showStations">
-                            <span class="p-l-10  padding-5">{{item?.stationName | titlecase}}</span>
+                            <span class="p-l-10  padding-5">{{item?.stationName === 'HR Manager' ? 'HR' : (item?.stationName | titlecase)}}</span>
                         </span>
                     </div>
                 </span>

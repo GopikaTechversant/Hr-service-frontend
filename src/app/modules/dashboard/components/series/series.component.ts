@@ -81,7 +81,9 @@ export class SeriesComponent implements OnInit {
         }
         if (res?.flows) {
           this.flows = res?.flows;
-          this.roundNames = this.flows.map(flow => flow.flowStationName).join(', ');
+          this.roundNames = this.flows
+            .map(flow => flow.flowStationName === 'HR Manager' ? 'HR' : flow.flowStationName)
+            .join(', ');
         }
         this.initialLoader = false;
         this.cdr.detectChanges();
@@ -136,7 +138,7 @@ export class SeriesComponent implements OnInit {
     const payload = {
       requestionId: id,
       approve: true,
-      reason:''
+      reason: ''
     }
     this.apiService.post(`/service-request/activateRequest`, payload).subscribe({
       next: (res: any) => {

@@ -136,7 +136,7 @@
                                     <i class="fa fa-arrows" aria-hidden="true" *ngIf="item"
                                         (click)="onSwitchStation(item)"></i>
                                 </td>
-                                <td class="text-start">{{item?.currentStation}}</td>
+                                <td class="text-start">{{item?.currentStation === 'HR Manager' ? 'HR' : item?.currentStation}}</td>
                                 <td class="f-w-500 text-start" [ngClass]="{'orange': item?.serviceStatus === 'pending','green': item?.serviceStatus === 'done',
                             'red': item?.serviceStatus === 'rejected'}">
                                     {{ item?.serviceStatus === 'done' ? 'Offer Accepted' :

@@ -145,8 +145,7 @@
                                         [title]="item?.serviceStatus | titlecase">{{ item?.serviceStatus === 'pannel-rejection' ? 'Panel Rejection' : (item?.serviceStatus | titlecase) }}
                                     </span>
                                 </td>
-                                <td class="text-start" [title]="item?.currentStation | titlecase">{{item?.currentStation
-                                    | titlecase}}</td>
+                                <td class="text-start" [title]="item?.currentStation | titlecase">{{item?.currentStation === 'HR Manager' ? 'HR' : (item?.currentStation | titlecase)}}</td>
                                 <td (click)="fetchDetails(item?.serviceId , item?.progressStatus)"
                                     class="c-pointer text-start">
                                     <div class="d-flex more">

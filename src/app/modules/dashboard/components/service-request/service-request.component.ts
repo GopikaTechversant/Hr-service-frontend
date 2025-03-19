@@ -150,6 +150,8 @@ export class ServiceRequestComponent implements OnInit {
         const text = this.requirement_details?.requestDescription;
         this.formattedText = this.sanitizer.bypassSecurityTrustHtml(text);
         this.flows = res?.flows;
+        console.log("this.flows",this.flows);
+        
         this.initializeDataValues();
       }
     })
@@ -529,7 +531,7 @@ export class ServiceRequestComponent implements OnInit {
     if (this.flows) {
       this.selectedStations = this.flows.map((flow: any) => ({
         stationId: flow.flowStationId,
-        stationName: flow.flowStationName
+        stationName: flow.flowStationName === 'HR Manager' ? 'HR' : flow.flowStationName
       }));
     } else this.selectedStations = [];
   }

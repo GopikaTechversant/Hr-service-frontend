@@ -70,8 +70,7 @@
                                     [title]="item?.serviceStatus | titlecase">{{ item?.serviceStatus |
                                     titlecase}}</span>
                             </td>
-                            <td class="text-start" [title]="item?.currentStation | titlecase">{{item?.currentStation|
-                                titlecase}}</td>
+                            <td class="text-start" [title]="item?.currentStation | titlecase">{{item?.currentStation === 'HR Manager' ? 'HR' : (item?.currentStation | titlecase)}}</td>
                             <td class="text-start" [title]="item['scheduledBy.userfirstName'] | titlecase">
                                 {{item['scheduledBy.userfirstName']| titlecase}}</td>
                             <td class="text-end">{{item?.serviceDate | date : 'dd/MM/YYY'}}</td>

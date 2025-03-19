@@ -18,7 +18,7 @@
                 <ng-container *ngFor="let item of candidateDetails">
                     <tr class="candidate c-pointer"
                         *ngIf="item?.stationNam !== null && item?.stationNam !== 'Screening'">
-                        <td>{{ item?.stationNam}}</td>
+                        <td>{{ item?.stationNam === 'HR Manager' ? 'HR' : item?.stationNam}}</td>
                         <td class="text-start wrap" [title]="item['serviceRequest.requestName']">{{
                             item['serviceRequest.requestName'] }}</td>
                         <td class="f-w-500 text-start"

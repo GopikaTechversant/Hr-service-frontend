@@ -63,6 +63,8 @@ export class EditComponent implements OnInit {
     this.email = this.candidateDetails?.userEmail;
     this.role = this.candidateDetails?.userRole;
     this.workStation = this.candidateDetails?.station;
+    console.log("this.workStation",this.workStation);
+    
   }
 
   fetchStations(): void {
@@ -77,7 +79,7 @@ export class EditComponent implements OnInit {
 
   selectStation(stationid: any, stationName: any): void {
     // this.idListOpen = false;
-    this.selectedStation = stationName;
+    this.selectedStation = stationName === 'HR Manager' ? 'HR' : stationName;
     this.selectedStationId = stationid;
   }
 
