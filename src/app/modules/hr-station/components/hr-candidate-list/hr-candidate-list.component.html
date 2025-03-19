@@ -50,7 +50,7 @@
         <div class="input-1 c-pointer no-close p-relative p-t-6 m-l-10 m-b-10 p-l-10 m-r-10"
             (click)="filterStatus = !filterStatus">
             <span class="no-close">{{filteredStatus.trim() === '' ?
-                'Filter by Status' : filteredStatus | titlecase}}</span>
+                'Filter by Status' : filteredStatus === 'pannel-rejection' ? 'Panel Rejection' : (filteredStatus |titlecase)}}</span>
             <span class="f-right">
                 <span *ngIf="filteredStatus && filteredStatus.trim() !== ''" (click)="clearFilter('status')" class="">
                     <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
@@ -60,7 +60,7 @@
             <div class="dropdown c-pointer no-close'" *ngIf="filterStatus">
                 <span class="d-flex p-0" *ngFor="let type of status"
                     (click)="selectStatusFilter(type?.status);filterStatus = !filterStatus">
-                    <span class="ps-20 p-1">{{type?.status | titlecase}}</span>
+                    <span class="ps-20 p-1">{{type?.status === 'pannel-rejection' ? 'Panel Rejection' : (type?.status| titlecase)}}</span>
                 </span>
             </div>
         </div>
