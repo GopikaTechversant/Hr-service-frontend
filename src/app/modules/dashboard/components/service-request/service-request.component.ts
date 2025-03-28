@@ -88,7 +88,7 @@ export class ServiceRequestComponent implements OnInit {
   designationSuggestions: any[] = [];
   marketRange: string = '';
   priorityListOpen: boolean = false;
-  priorityList: any[] = [{ name: 'urgent' }, { name: 'high' }, { name: 'normal' }, { name: 'low' }];
+  priorityList: any[] = [{ name: 'critical' }, { name: 'high' }, { name: 'medium' }, { name: 'low' }];
   selectedPriority: string = '';
   assigneeList: any[] = [];
   selectedAssignee: string = '';
