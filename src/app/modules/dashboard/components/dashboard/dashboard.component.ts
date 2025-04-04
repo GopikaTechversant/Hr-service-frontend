@@ -105,10 +105,10 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  navigateToDetail(position: any): void {
+  navigateToDetail(position: any,list:string): void {
     const foundRequest = this.requestList.find((item: { requestName: any; }) => item.requestName === position);
     const id = this.positionId;
-    this.router.navigateByUrl(`/dashboard/requisition-detail/${id}?startDate=${this.startDate}&endDate=${this.endDate}`);
+    this.router.navigateByUrl(`/dashboard/requisition-detail/${id}?startDate=${this.startDate}&endDate=${this.endDate}&list=${encodeURIComponent(list)}`);
     // if (this.positionId) {
     //   const id = this.positionId;
     //   this.router.navigateByUrl(`/dashboard/requisition-detail/${id}`);

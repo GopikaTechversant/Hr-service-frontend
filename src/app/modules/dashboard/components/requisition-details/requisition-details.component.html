@@ -101,7 +101,23 @@
                 <span class="name">Requirement Detail of : {{requestName}} - <span class="blue">{{filteredStatus}}</span></span>
             </div>
             <div class="input c-pointer p-t-5 m-r-10 no-close p-relative"  (click)="filterStatus = !filterStatus">
-                <span class="no-close p-l-10">{{filteredStatus.trim() === '' ? 'Filter by Status' : filteredStatus | titlecase}}</span>
+                <!-- <span class="no-close p-l-10">{{filteredStatus.trim() === '' ? 'Filter by Status' : filteredStatus | titlecase}}</span> -->
+                <span class="no-close p-l-10">
+                    {{
+                      filteredStatus.trim() === '' 
+                        ? 'Filter by Status' 
+                        : (filteredStatus.trim().toLowerCase() === 'total' 
+                            ? 'Total Applicants' 
+                            : (filteredStatus.trim().toLowerCase() === 'shorted' 
+                                ? 'Short Listed Candidates' 
+                                : (filteredStatus.trim().toLowerCase() === 'hired' 
+                                    ? 'Hired Candidates' 
+                                    : (filteredStatus.trim().toLowerCase() === 'rejected' 
+                                        ? 'Rejected Candidates' 
+                                        : (filteredStatus | titlecase)))))
+                    }}
+                  </span>
+                  
                 <span class="f-right d-flex j-space" >
                     <span *ngIf="filteredStatus && filteredStatus !== 'Total Applicants'" (click)="clearFilter()">
                         <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
@@ -141,9 +157,10 @@
                 </ng-container>
                 <div *ngIf="candidateList?.length === 0 || !candidateList" class="no-data"> No Data Found</div>
             </table>
+            <app-pagination [totalCount]="totalCount" [pageSize]="pageSize" [lastPage]="lastPage"
+            [currentPage]="currentPage" (pageChange)="fetchCandidates($event)"></app-pagination>
         </div>
-        <app-pagination [totalCount]="totalCount" [pageSize]="pageSize" [lastPage]="lastPage"
-    [currentPage]="currentPage" (pageChange)="fetchCandidates($event)"></app-pagination>
+       
         <!-- <div *ngIf="totalCount" class="page d-flex j-end padding-10">
             <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(1)">
                 <img src="assets/images/double-arrow-left-icon.svg" alt="" height="14px" width="14px">

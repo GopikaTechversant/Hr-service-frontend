@@ -84,7 +84,7 @@
         <app-skeleton-loader [loaderDatas]="[9]" [higherWidth]="1000" [lowerWidth]="800"
             [gridColumn]="9"></app-skeleton-loader>
     </div>
-    <div *ngIf="lists && !initialLoader" class="candidate w-100 d-flex" (click)="navigateToDetail(lists)">
+    <div *ngIf="lists && !initialLoader" class="candidate w-100 d-flex" >
         <div class="candidate-card c-pointer">
             <div class="d-flex">
                 <div class="icon-div">
@@ -96,7 +96,7 @@
                 </div>
             </div>
         </div>
-        <div class="candidate-card c-pointer">
+        <div class="candidate-card c-pointer" (click)="navigateToDetail(lists,'total')">
             <div class="d-flex">
                 <div class="icon-div">
                     <span class="icon"><i class="fa fa-users" aria-hidden="true"></i></span>
@@ -107,7 +107,7 @@
                 </div>
             </div>
         </div>
-        <div class="candidate-card c-pointer">
+        <div class="candidate-card c-pointer" (click)="navigateToDetail(lists,'shorted')">
             <div class="d-flex">
                 <div class="icon-div">
                     <span class="icon"><i class="fa fa-users" aria-hidden="true"></i></span>
@@ -118,7 +118,7 @@
                 </div>
             </div>
         </div>
-        <div class="candidate-card c-pointer">
+        <div class="candidate-card c-pointer" (click)="navigateToDetail(lists,'hired')">
             <div class="d-flex">
                 <div class="icon-div">
                     <span class="icon"><i class="fa fa-user-plus" aria-hidden="true"></i></span>
@@ -129,7 +129,7 @@
                 </div>
             </div>
         </div>
-        <div class="candidate-card c-pointer">
+        <div class="candidate-card c-pointer" (click)="navigateToDetail(lists,'rejected')">
             <div class="d-flex">
                 <div class="icon-div">
                     <span class="icon"><i class="fa fa-user-times" aria-hidden="true"></i></span>

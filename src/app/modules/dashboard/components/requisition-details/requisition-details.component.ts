@@ -23,11 +23,12 @@ export class RequisitionDetailsComponent implements OnInit {
   lastPage: any;
   department: any;
   filterStatus: Boolean = false;
-  filteredStatus: string = "Total Applicants";
+  filteredStatus: string = "";
   initialLoader: Boolean = false;
   today: Date = new Date();
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+  list:any;
   constructor(private apiService: ApiService, private datePipe: DatePipe, private tostr: ToastrService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -38,9 +39,11 @@ export class RequisitionDetailsComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.startDate = params['startDate'] || this.startDate;
       this.endDate = params['endDate'] || this.endDate;
+      this.filteredStatus = params['list'];
+      
     });
     
-    this.filteredStatus = sessionStorage.getItem('requirement_status') ?? 'Total Applicants';
+    // this.filteredStatus = sessionStorage.getItem('requirement_status') ?? this.filteredStatus;
     this.currentPage = 1;
     this.pageSize = 9;
     this.fetchcount();
