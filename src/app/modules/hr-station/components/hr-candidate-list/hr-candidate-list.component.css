@@ -214,6 +214,27 @@ input[type="text"] {
     border-radius: 50%;
 }
 
+.drop-list-designation{
+    position: absolute;
+    overflow-y: scroll;
+    width: 100%;
+    max-height: 129px;
+    /* position: absolute; */
+    background-color: #FFFFFF;
+    z-index: 1;
+    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+  }
+
+  .req-search{
+    min-width: 250px;
+    max-width: 300px;
+  }
+
+  .w-100{
+    width: 100% !important;
+  }
+
+
 @media (max-width: 1250px) {
     tr td {
         font-size: 12px;
