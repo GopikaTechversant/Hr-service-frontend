@@ -44,7 +44,10 @@ export class HrCandidateListComponent implements OnInit {
   candidateIds: any;
   status: any;
   userType: any;
-  serviceStatus:any;
+  serviceStatus: any;
+  requisitionSearchValue: string = '';
+  requsitionSuggestions: any[] = [];
+  searchvalue: string = "";
   constructor(private dialog: MatDialog, private apiService: ApiService, private datePipe: DatePipe, private router: Router,
     private toastr: ToastrService, private exportService: ExportService) { }
   onBodyClick(event: MouseEvent): void {
@@ -68,10 +71,12 @@ export class HrCandidateListComponent implements OnInit {
       if (requirement) {
         this.displayPosition = requirement?.name;
         this.positionId = requirement?.id;
+        this.requisitionSearchValue = requirement.name;
       }
     } else {
       this.displayPosition = '';
       this.positionId = '';
+      this.requisitionSearchValue = '';
     }
     // this.limit = 12;
     // this.currentPage = 1
@@ -225,6 +230,7 @@ export class HrCandidateListComponent implements OnInit {
   selectPosition(name: string, id: string): void {
     this.requestList_open = false;
     this.displayPosition = name;
+    this.requisitionSearchValue = name;
     this.positionId = id;
     sessionStorage.setItem(`requirement_5`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
     this.currentPage = 1;
@@ -248,6 +254,7 @@ export class HrCandidateListComponent implements OnInit {
     if (item === 'position') {
       this.displayPosition = '';
       this.positionId = '';
+      this.requisitionSearchValue = '';
       sessionStorage.setItem(`requirement_5`, JSON.stringify({ name: this.displayPosition, id: this.positionId }));
     }
     if (item === 'search') this.searchKeyword = '';
@@ -259,7 +266,7 @@ export class HrCandidateListComponent implements OnInit {
 
   fetchDetails(id: any, offerStatus: any, reviewStatus: any): void {
     this.apiService.get(`/hr-station/candidateDetail?serviceId=${id}`).subscribe((data: any) => {
-      console.log("data?.candidates",data?.candidates?.serviceRequest);
+      console.log("data?.candidates", data?.candidates?.serviceRequest);
       this.serviceStatus = data?.candidates?.serviceRequest?.requestServiceId;
       if (data?.candidates) this.viewCandidateDetail(data?.candidates, offerStatus, reviewStatus);
     });
@@ -300,6 +307,16 @@ export class HrCandidateListComponent implements OnInit {
 
   selectCandidate(id: any): void {
     this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
+  }
+
+  getRequsitionSuggestion(event: any) {
+    this.requestList_open = true;
+    this.requisitionSearchValue = event?.target.value;
+    this.apiService.get(`/service-request/list?search=${this.requisitionSearchValue}`).subscribe((res: any) => {
+      if (res?.data) this.requsitionSuggestions = res?.data.filter((suggestion: any) =>
+        suggestion.requestName.toLowerCase().startsWith(this.searchvalue.toLowerCase())
+      );
+    });
   }
 
 }
