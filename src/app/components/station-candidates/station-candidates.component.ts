@@ -46,6 +46,9 @@ export class StationCandidatesComponent implements OnInit {
   baseUrl: any;
   lastPage: any;
   userType:any;
+  requisitionSearchValue : string = '';
+  requsitionSuggestions: any[]=[];
+  searchvalue: string = "";
   constructor(private apiService: ApiService, private datePipe: DatePipe, private route: ActivatedRoute, private router: Router, private exportService: ExportService) { }
 
   ngOnInit(): void {
@@ -298,4 +301,13 @@ export class StationCandidatesComponent implements OnInit {
     this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
   }
 
+  getRequsitionSuggestion(event:any){
+    this.requestList_open = true;
+    this.requisitionSearchValue = event?.target.value;
+    this.apiService.get(`/service-request/list?search=${this.requisitionSearchValue}`).subscribe((res: any) => {
+      if (res?.data) this.requsitionSuggestions = res?.data.filter((suggestion: any) =>
+        suggestion.requestName.toLowerCase().startsWith(this.searchvalue.toLowerCase())
+      );
+    });
+  }
 }
