@@ -22,38 +22,37 @@ export class UserListComponent implements OnInit {
   candidateId: any;
   totalCount: any;
   limit = 9;
-  initialLoader : boolean = false;
+  initialLoader: boolean = false;
   userType: any;
   // headers = new HttpHeaders({
   //   'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
   // });
-  constructor(private toastr: ToastrService, private router: Router, private dialog: MatDialog,private apiService:ApiService) {
+  constructor(private toastr: ToastrService, private router: Router, private dialog: MatDialog, private apiService: ApiService) {
 
   }
 
   ngOnInit(): void {
-    this.userType = localStorage.getItem('userType');    
+    this.userType = localStorage.getItem('userType');
     this.initialLoader = true;
     this.fetchUserList(this.currentPage);
   }
 
-  fetchUserList(page:any): void {
-    if(page) this.currentPage = page;
-    // const headers = new HttpHeaders({
-    //   'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEyLCJ1c2VyVHlwZSI6ImFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20ifQ.Uva57Y4MMA0yWz-BYcRD-5Zzth132GMGJkFVQA3Tn50'
-    // });
-    this.apiService.get(`/user/lists?limit=${this.pageSize}&page=${this.currentPage}`).subscribe((data: any) => {
-      this.userList = data.users;
-      this.userCount = data.userCount;
+  fetchUserList(page: any): void {
+    if (page) this.currentPage = page;
+    const limit = this.pageSize;
+    this.apiService.get(`/user/lists?limit=${limit}&page=${this.currentPage}`).subscribe((data: any) => {
       if (data) {
         this.initialLoader = false;
-        this.userList = data?.users;
-        this.totalCount = data?.userCount;
-        const totalPages = Math.ceil(this.totalCount / this.limit);
+        this.userList = data.users;
+        this.totalCount = data.userCount;
+        const totalPages = Math.ceil(this.totalCount / limit);
         this.lastPage = totalPages;
-        if (this.currentPage > totalPages) this.currentPage = totalPages;
+        if (this.currentPage > totalPages) {
+          this.currentPage = totalPages;
+          this.fetchUserList(this.currentPage);
+        }
       }
-    })
+    });
   }
 
   navigateToDetail(id: any): void {
@@ -65,7 +64,7 @@ export class UserListComponent implements OnInit {
     this.selectedItem = item;
   }
 
- 
+
   delete(id: any): void {
     this.candidateId = id;
     // const headers = new HttpHeaders({

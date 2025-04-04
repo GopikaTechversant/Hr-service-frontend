@@ -57,14 +57,19 @@ export class StationSwitchComponent implements OnInit {
     const commentElement = document.getElementById('comment') as HTMLInputElement;
     if (commentElement?.value.trim() !== '') {
       this.loader = true;
+      console.log("this.data",this.data);
+      
       let payload = {
         serviceId: this.data?.serviceId,
         stationId: this.stationId,
-        assigneeId: this.data?.userId,
+        assigneeId: this.data?.assignee,
         date: this.today,
         currentStation: this.data?.currentStationId,
-        comment: commentElement?.value
+        comment: commentElement?.value,
+        movedBy: this.data?.userId
       }
+      console.log("payload",payload);
+      
       this.apiService.post(`/user/station-switch`, payload).subscribe({
         next: (res: any) => {
           this.loader = false;

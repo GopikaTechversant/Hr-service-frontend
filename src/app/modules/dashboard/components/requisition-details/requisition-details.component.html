@@ -1,7 +1,7 @@
 <div class="main margin-5">
     <div class="d-flex j-space">
         <div class="">
-            <div class="padding-10 head" >{{requestName}}</div>
+            <div class="padding-10 head">{{requestName}}</div>
             <span class="padding-10 f-s-16">Department - <span class="blue">{{department}}</span></span>
         </div>
         <div class="date-filters d-flex p-r-10 j-end">
@@ -21,9 +21,9 @@
                 <span class="filter p-l-10 p-r-10 p-t-10">To</span>
                 <div class="p-relative">
                     <input class="p-l-5 date-input c-pointer" placeholder="29/02/11" matInput
-                        [matDatepicker]="pickerToDate" (dateChange)="dateChange($event, 'endDate')"
-                        [ngModel]="endDate" (click)="pickerToDate.open()" [value]="endDate | date:'yyyy-MM-dd'"
-                        id="endDate" [min]="startDate" [max]="today">
+                        [matDatepicker]="pickerToDate" (dateChange)="dateChange($event, 'endDate')" [ngModel]="endDate"
+                        (click)="pickerToDate.open()" [value]="endDate | date:'yyyy-MM-dd'" id="endDate"
+                        [min]="startDate" [max]="today">
                     <mat-datepicker #pickerToDate></mat-datepicker>
                     <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"
                         (click)="pickerToDate.open()"></i>
@@ -31,11 +31,11 @@
             </div>
         </div>
     </div>
-   
+
     <div class="candidate w-100 d-flex">
-        <div *ngIf="initialLoader" >
+        <div *ngIf="initialLoader">
             <app-skeleton-loader [loaderDatas]="[9]" [higherWidth]="1000" [lowerWidth]="800"
-            [gridColumn]="9"></app-skeleton-loader>
+                [gridColumn]="9"></app-skeleton-loader>
         </div>
         <div *ngIf="lists" class="candidate w-100 d-flex">
             <div class="candidate-card">
@@ -98,40 +98,42 @@
     <div class="detail-table">
         <div class="d-flex j-space p-t-8 p-b-8">
             <div class="margin-10">
-                <span class="name">Requirement Detail of : {{requestName}} - <span class="blue">{{filteredStatus}}</span></span>
+                <span class="name">Requirement Detail of : {{requestName}} - <span
+                        class="blue">{{filteredStatus}}</span></span>
             </div>
-            <div class="input c-pointer p-t-5 m-r-10 no-close p-relative"  (click)="filterStatus = !filterStatus">
+            <div class="input c-pointer p-t-5 m-r-10 no-close p-relative" (click)="filterStatus = !filterStatus">
                 <!-- <span class="no-close p-l-10">{{filteredStatus.trim() === '' ? 'Filter by Status' : filteredStatus | titlecase}}</span> -->
                 <span class="no-close p-l-10">
                     {{
-                      filteredStatus.trim() === '' 
-                        ? 'Filter by Status' 
-                        : (filteredStatus.trim().toLowerCase() === 'total' 
-                            ? 'Total Applicants' 
-                            : (filteredStatus.trim().toLowerCase() === 'shorted' 
-                                ? 'Short Listed Candidates' 
-                                : (filteredStatus.trim().toLowerCase() === 'hired' 
-                                    ? 'Hired Candidates' 
-                                    : (filteredStatus.trim().toLowerCase() === 'rejected' 
-                                        ? 'Rejected Candidates' 
-                                        : (filteredStatus | titlecase)))))
+                    filteredStatus.trim() === ''
+                    ? 'Filter by Status'
+                    : (filteredStatus.trim().toLowerCase() === 'total'
+                    ? 'Total Applicants'
+                    : (filteredStatus.trim().toLowerCase() === 'shorted'
+                    ? 'Short Listed Candidates'
+                    : (filteredStatus.trim().toLowerCase() === 'hired'
+                    ? 'Hired Candidates'
+                    : (filteredStatus.trim().toLowerCase() === 'rejected'
+                    ? 'Rejected Candidates'
+                    : (filteredStatus | titlecase)))))
                     }}
-                  </span>
-                  
-                <span class="f-right d-flex j-space" >
+                </span>
+
+                <span class="f-right d-flex j-space">
                     <span *ngIf="filteredStatus && filteredStatus !== 'Total Applicants'" (click)="clearFilter()">
                         <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
                     </span>
                     <span><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
-                </span>    
-                <div class="dropdown c-pointer no-close'" *ngIf="filterStatus" >
-                    <span class="d-flex p-0" *ngFor="let type of lists.slice(1)" (click)="selectStatusFilter(type?.name);filterStatus = !filterStatus">
-                       <span class="p-l-10 padding-5">{{type?.name | titlecase}}</span> 
+                </span>
+                <div class="dropdown c-pointer no-close'" *ngIf="filterStatus">
+                    <span class="d-flex p-0" *ngFor="let type of lists.slice(1)"
+                        (click)="selectStatusFilter(type?.name);filterStatus = !filterStatus">
+                        <span class="p-l-10 padding-5">{{type?.name | titlecase}}</span>
                     </span>
                 </div>
             </div>
-        </div>   
-        <div class="container-table m-b-0">        
+        </div>
+        <div class="container-table m-b-0">
             <table class="table">
                 <tr class="table-header p-b-10">
                     <td class="text-start">Name</td>
@@ -143,24 +145,31 @@
                     <td class="text-start">Candidate Station</td>
                     <td class="text-start">Status</td>
                 </tr>
-                <ng-container *ngFor="let item of candidateList" >
+                <ng-container *ngFor="let item of candidateList">
                     <tr class="c-pointer details" (dblclick)="selectCandidate(item?.candidateId)">
-                        <td class="text-start" [title]="item?.candidateFirstName + '' + item?.candidateLastName">{{item?.candidateFirstName}} {{item?.candidateLastName}}</td>
+                        <td class="text-start" [title]="item?.candidateFirstName + '' + item?.candidateLastName">
+                            {{item?.candidateFirstName}} {{item?.candidateLastName}}</td>
                         <td class="text-start" [title]="item?.candidateEducation">{{item?.candidateEducation}}</td>
                         <!-- <td class="text-start" [title]="item?.candidateExperience ? item?.candidateExperience : 'Fresher'">{{item?.candidateExperience ? item?.candidateExperience + 'years': 'Fresher' }}</td> -->
-                        <td class="text-start" [title]="item?.candidatePreviousOrg ? item?.candidatePreviousOrg : 'Nil'">{{item?.candidatePreviousOrg ? item?.candidatePreviousOrg : 'Nil'}}</td>
-                        <td class="text-start" [title]="item?.candidatePreviousDesignation ? item?.candidatePreviousDesignation : 'Nil'">{{item?.candidatePreviousDesignation ? item?.candidatePreviousDesignation : 'Nil'}}</td>
-                        <td class="text-start" [title]="item?.candidateCity ? item?.candidateCity : 'Nil'"> {{item?.candidateCity ? item?.candidateCity : 'Nil'}}</td>
-                        <td class="text-start" [title]="item?.currentStation ? item?.currentStation : 'Not Updated'">{{item?.currentStation ? item?.currentStation : 'Not Updated'}}</td>
-                        <td class="text-start" [title]="item?.candidateStatus ? item?.candidateStatus : 'Nil'">{{item?.candidateStatus ? (item?.candidateStatus | titlecase) : 'Nil'}}</td>
+                        <td class="text-start"
+                            [title]="item?.candidatePreviousOrg ? item?.candidatePreviousOrg : 'Nil'">
+                            {{item?.candidatePreviousOrg ? item?.candidatePreviousOrg : 'Nil'}}</td>
+                        <td class="text-start"
+                            [title]="item?.candidatePreviousDesignation ? item?.candidatePreviousDesignation : 'Nil'">
+                            {{item?.candidatePreviousDesignation ? item?.candidatePreviousDesignation : 'Nil'}}</td>
+                        <td class="text-start" [title]="item?.candidateCity ? item?.candidateCity : 'Nil'">
+                            {{item?.candidateCity ? item?.candidateCity : 'Nil'}}</td>
+                        <td class="text-start" [title]="item?.currentStation ? item?.currentStation : 'Not Updated'">
+                            {{item?.currentStation ? item?.currentStation : 'Not Updated'}}</td>
+                        <td class="text-start" [title]="item?.candidateStatus ? item?.candidateStatus : 'Nil'">
+                            {{item?.candidateStatus ? (item?.candidateStatus | titlecase) : 'Nil'}}</td>
                     </tr>
                 </ng-container>
                 <div *ngIf="candidateList?.length === 0 || !candidateList" class="no-data"> No Data Found</div>
             </table>
-            <app-pagination [totalCount]="totalCount" [pageSize]="pageSize" [lastPage]="lastPage"
-            [currentPage]="currentPage" (pageChange)="fetchCandidates($event)"></app-pagination>
         </div>
-       
+        <app-pagination [totalCount]="totalCount" [pageSize]="pageSize" [lastPage]="lastPage"
+            [currentPage]="currentPage" (pageChange)="fetchCandidates($event)"></app-pagination>
         <!-- <div *ngIf="totalCount" class="page d-flex j-end padding-10">
             <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(1)">
                 <img src="assets/images/double-arrow-left-icon.svg" alt="" height="14px" width="14px">
@@ -180,5 +189,5 @@
                 <img src="assets/images/inactive-double-arrow-right.svg" alt="" height="23px" width="23px">
             </button>
         </div> -->
-    </div>   
+    </div>
 </div>

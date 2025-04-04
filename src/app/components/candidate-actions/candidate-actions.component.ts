@@ -37,6 +37,8 @@ export class CandidateActionsComponent implements OnInit {
   }
 
   onSwitchStation(candidate: any): void {
+    console.log(candidate,"candidate");
+    
     this.stationId = candidate?.serviceStation.toString();
     this.modalClose = false;
     if (candidate?.serviceStatus === 'pending') {
@@ -48,7 +50,8 @@ export class CandidateActionsComponent implements OnInit {
           serviceId: candidate?.serviceId,
           currentStation: candidate?.currentStation,
           currentStationId: this.stationId,
-          requirement: candidate['serviceRequest.requestName']
+          requirement: candidate['serviceRequest.requestName'],
+          assignee: candidate?.serviceAssignee
         },
       })
       dialogRef.afterClosed().subscribe(() => {

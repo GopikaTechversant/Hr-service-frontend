@@ -40,7 +40,8 @@ export class TechnicalDetailComponent implements OnInit {
           serviceId: candidate?.serviceId,
           currentStation: candidate?.currentStation,
           currentStationId: this.stationId,
-          requirement: candidate['serviceRequest.requestName']
+          requirement: candidate['serviceRequest.requestName'],
+          assignee: candidate?.serviceAssignee
         },
       })
       dialogRef.afterClosed().subscribe(() => {
