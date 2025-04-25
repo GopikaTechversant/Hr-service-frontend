@@ -70,11 +70,19 @@ export class LoginComponent implements OnInit {
   
             this.toggleSpinner = false;
   
-            // Navigate to dashboard
+            if(response?.user?.userRole != 'panel'){
+              // Navigate to dashboard
             this.router.navigate(['/dashboard']).then(() => {
               // Show toaster after navigation is complete
               this.tostr.success('Logged In Successfully!');
             });
+            }
+            else{
+              this.router.navigate([`/technical/2`]).then(() => {
+                // Show toaster after navigation is complete
+                this.tostr.success('Logged In Successfully!');
+              });
+            }
           }
         },
         (error) => {

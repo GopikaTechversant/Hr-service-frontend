@@ -28,6 +28,7 @@ export class HeaderComponent implements OnInit {
   activeStation: any;
   stationId: any;
   url: any;
+  userRole: any = localStorage.getItem('userRole');
   constructor(private apiService: ApiService, private dialog: MatDialog, private router: Router, private el: ElementRef, private route: ActivatedRoute) { }
 
   @HostListener('document:click', ['$event'])
@@ -53,6 +54,7 @@ export class HeaderComponent implements OnInit {
     if (currentStation === 'management') this.activeStation = 'Management';
 
     this.currentRole = localStorage.getItem('userRole');
+    this.userRole = (localStorage.getItem('userRole') || '').toLowerCase();
     this.currentUser = localStorage.getItem('userFullName');
     this.fetchStations();
   }

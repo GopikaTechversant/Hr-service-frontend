@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit {
   positionId: string = '';
   initialLoader: boolean = false;
   today: Date = new Date();
+  userRole:any;
   // startDate: string | null = this.datePipe.transform(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   startDate: string | null = this.datePipe.transform(new Date(Date.now() - 31 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd');
   endDate: string | null = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
@@ -37,6 +38,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.initialLoader = true;
     const position = sessionStorage.getItem(`requirement`);
+    this.userRole = localStorage.getItem('userRole');
     if (position) {
       let requirement = JSON.parse(position);
       if (requirement) {
