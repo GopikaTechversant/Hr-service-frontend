@@ -16,7 +16,9 @@ export class TechnicalDetailComponent implements OnInit {
   initialLoader: boolean = false;
   modalClose: boolean = false;
   stationId: any;
-
+  candidateId: any
+  serviceScheduledBy:any;
+  serviceAssignee: any;
   constructor(private apiService: ApiService, private route: ActivatedRoute, private dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -58,10 +60,13 @@ export class TechnicalDetailComponent implements OnInit {
   fetchDetails(details: { id: any, status: any }): void {
     const id = details.id;
     const status = details.status;
-
+    
     if (this.stationId === '2') {
       this.apiService.get(`/written-station/progressDetail?serviceId=${id}`).subscribe((data: any) => {
+      
         if (data?.candidates) this.viewCandidateDetail(data?.candidates, status);
+        console.log("data" , data?.candidates['candidate.candidateId']);
+        
       });
     } else if (this.stationId === '3') {
       this.apiService.get(`/technical-station/progressDetail?serviceId=${id}`).subscribe((data: any) => {
@@ -72,6 +77,7 @@ export class TechnicalDetailComponent implements OnInit {
         if (data?.candidates) this.viewCandidateDetail(data?.candidates, status);
       });
     }
+    localStorage.setItem('currentStationId', this.stationId);
   }
 
   viewCandidateDetail(item: any, status: any): void {

@@ -42,6 +42,7 @@ priority: string[] = ['All Priorities','Critical','High', 'Medium', 'Low'];
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
       this.filterStatus = false;
+      this.filterPriority = false;
     }
   }
   ngOnInit(): void {
@@ -232,6 +233,7 @@ priority: string[] = ['All Priorities','Critical','High', 'Medium', 'Low'];
     this.currentPage = 1;
     this.limit = 15;
     this.fetchcandidates(this.currentPage, '');
+    // this.clearPriority
   }
   clearPriority(item: any): void {
     if (item === 'search') this.searchKeyword = '';

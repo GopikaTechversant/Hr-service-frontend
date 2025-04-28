@@ -181,7 +181,8 @@
     <div class="margin-10 "
         *ngIf="!progessAdded && candidateDetails?.serviceStatus === 'pending' && buttonType.trim() === 'add' && !candidateDetails['progress.progressDescription']">
         <app-interview-feeback [loader]="loader"
-            (submitInterviewData)="onSubmitInterviewData($event)"></app-interview-feeback>
+            (submitInterviewData)="onSubmitInterviewData($event)" [serviceAssignee]="serviceAssignee"
+            [candidateId]="candidateId" [serviceScheduledBy]="serviceScheduledBy"></app-interview-feeback>
     </div>
     <!-- ADDED Interview Feedback -->
 
