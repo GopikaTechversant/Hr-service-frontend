@@ -6,6 +6,7 @@ interface Skill {
   skillId: number;
   skillName: string;
   score: string;
+  desc:any;
 }
 
 @Component({
@@ -104,9 +105,10 @@ export class InterviewFeebackComponent implements OnInit {
 
   addSkill(): void {
     if (this.selectedSkillId && this.selectedScore) {
-      this.progressSkill.push({ skillId: this.selectedSkillId, skillName: this.searchvalue, score: this.selectedScore });
+      this.progressSkill.push({ skillId: this.selectedSkillId, skillName: this.searchvalue, score: this.selectedScore , desc: this.description});
       this.selectedSkillId = '';
       this.searchvalue = '';
+      this.description = '';
       this.selectedScore = '';
     } else {
       this.tostr.warning('Please select both a skill and score before adding.');
@@ -131,11 +133,12 @@ export class InterviewFeebackComponent implements OnInit {
   }
 
   submitClick(): void {
-    const updatedSkill = this.scoreDiv.nativeElement.innerHTML;
+    // const updatedSkill = this.scoreDiv.nativeElement.innerHTML;
+    const updatedSkill = this.progressSkill;
     console.log("currentDescription", updatedSkill);
     // const updatedSkill = this.progressSkill.map(({ skillName, ...rest }) => ({ ...rest }));
     this.comment = (document.getElementById('comment') as HTMLInputElement)?.value || '';
-    if (this.selectedFeedback && updatedSkill) {
+    if (this.selectedFeedback && updatedSkill.length > 0 && this.comment.trim() !== '') {
       const data = {
         file: this.uploadedFileKey,
         progressSkill: updatedSkill,
