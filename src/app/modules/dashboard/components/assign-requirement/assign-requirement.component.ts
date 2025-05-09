@@ -18,12 +18,14 @@ export class AssignRequirementComponent implements OnInit {
   userId: any;
   resumeSourceid: any;
   loader: boolean = false;
+  requisitionData:any;
   constructor(public dialogRef: MatDialogRef<AssignRequirementComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private apiService: ApiService,
     private toastr: ToastrService) { }
   ngOnInit(): void {
     this.fetchRequirements();
     this.candidates = this.data.candidates;
     this.userId = this.data.userId;
+    // this.requisitionData = this.data.requisitionData[0].reqServiceRequestLength;
   }
 
   onBodyClick(event: MouseEvent): void {
