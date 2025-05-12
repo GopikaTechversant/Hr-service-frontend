@@ -281,3 +281,24 @@
     background-color: white;
     padding-top: 4px;
 }
+
+.skills-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.skills-table th, .skills-table td {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.skills-table th {
+    background-color: #f2f2f2;
+    font-weight: 500;
+}
+
+.skills-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}

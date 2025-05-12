@@ -149,8 +149,15 @@ export class CandidateListComponent {
   }
 
   onCandidateSelect(candidate: any): void {
-    if (candidate.candidatesAddingAgainst !== null) this.toastr.warning('Candidate already added to requisition');
-    else this.getSelectedCandidateIds();
+    if (candidate?.reqServiceRequest?.length > 0) {
+      candidate.isSelected = false;
+      this.toastr.warning('Candidate already added to requisition');
+    } else if (candidate.candidatesAddingAgainst !== null) {
+      candidate.isSelected = false;
+      this.toastr.warning('Candidate already added to requisition');
+    } else {
+      this.getSelectedCandidateIds();
+    }
   }
 
   getSelectedCandidateIds(): void {

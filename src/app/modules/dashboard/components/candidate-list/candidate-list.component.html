@@ -51,7 +51,7 @@
                 </div>
                 <ng-container *ngIf="candidateList?.length > 0">
                     <tr class="c-pointer details-table" *ngFor="let item of candidateList"
-                        (click)="selectCandidate(item)">
+                        (dblclick)="selectCandidate(item)">
                         <td class="text-center" *ngIf="userType !== 'super-admin'">
                             <input type="checkbox" [(ngModel)]="item.isSelected" (change)="onCandidateSelect(item)"
                                 name="select">
