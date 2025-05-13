@@ -6,7 +6,7 @@ interface Skill {
   skillId: number;
   skillName: string;
   score: string;
-  desc:any;
+  description:any;
 }
 
 @Component({
@@ -105,7 +105,7 @@ export class InterviewFeebackComponent implements OnInit {
 
   addSkill(): void {
     if (this.selectedSkillId && this.selectedScore) {
-      this.progressSkill.push({ skillId: this.selectedSkillId, skillName: this.searchvalue, score: this.selectedScore , desc: this.description});
+      this.progressSkill.push({ skillId: this.selectedSkillId, skillName: this.searchvalue, score: this.selectedScore , description: this.description});
       this.selectedSkillId = '';
       this.searchvalue = '';
       this.description = '';

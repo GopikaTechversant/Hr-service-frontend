@@ -1,286 +1,306 @@
-<div class="modal-header heading p-t-10 d-flex j-space" style="position: sticky; top: 0; z-index: 2;">
-    <div *ngIf="loader" class="loader-parent">
-        <img src="assets/gif/loader.gif">
+    <div class="modal-header heading p-t-10 d-flex j-space" style="position: sticky; top: 0; z-index: 2;">
+        <div *ngIf="loader" class="loader-parent">
+            <img src="assets/gif/loader.gif">
+        </div>
+        <div class="p-l-10 f-s-16">
+            <!-- <span>{{candidateDetails['candidate.candidateFirstName']}} {{candidateDetails['candidate.candidateLastName']}}
+                &nbsp;- </span> -->
+            <span class="blue"> <a
+                    [href]="env_url + '/dashboard/candidate-details/' + candidateDetails['candidate.candidateId']">
+                    {{candidateDetails['candidate.candidateFirstName']}}
+                    {{candidateDetails['candidate.candidateLastName']}}</a>
+                &nbsp;- </span>
+            <span class="blue">(
+                <a [href]="env_url + '/dashboard/candidate-details/' + candidateDetails['candidate.candidateId']">
+                    {{candidateDetails['candidate.candidateId']}}</a>)
+            </span>
+        </div>
+        <div class="modal-close margin-10 d-flex">
+            <img src="assets/images/techversant/clear-filter.svg" class="c-pointer p-r-5" (click)="closeDialog()" alt=""
+                width="35">
+        </div>
     </div>
-    <div class="p-l-10 f-s-16">
-        <!-- <span>{{candidateDetails['candidate.candidateFirstName']}} {{candidateDetails['candidate.candidateLastName']}}
-            &nbsp;- </span> -->
-        <span class="blue"> <a
-                [href]="env_url + '/dashboard/candidate-details/' + candidateDetails['candidate.candidateId']">
-                {{candidateDetails['candidate.candidateFirstName']}}
-                {{candidateDetails['candidate.candidateLastName']}}</a>
-            &nbsp;- </span>
-        <span class="blue">(
-            <a [href]="env_url + '/dashboard/candidate-details/' + candidateDetails['candidate.candidateId']">
-                {{candidateDetails['candidate.candidateId']}}</a>)
-        </span>
-    </div>
-    <div class="modal-close margin-10 d-flex">
-        <img src="assets/images/techversant/clear-filter.svg" class="c-pointer p-r-5" (click)="closeDialog()" alt=""
-            width="35">
-    </div>
-</div>
-<div class="modal-content p-t-10">
-    <div class="d-flex flex-1">
-        <div class="w-50">
-            <div class="heading  p-l-10 d-flex p-b-0 j-space">
-                <span>Requisition Details</span>
-            </div>
-            <div class="d-flex p-l-10 content">
-                <div class="sub-head">
-                    <span class="key p-6">Requisition Name</span>
-                    <span class="key p-6">Skills</span>
-                    <span class="key p-6">Minimum Experience</span>
-                    <span class="key p-6">Maximum Experience</span>
-                    <span class="key p-6">Requisition Status</span>
-                    <span class="key p-6">Requisition Vacancy</span>
+    <div class="modal-content p-t-10">
+        <div class="d-flex flex-1">
+            <div class="w-50">
+                <div class="heading  p-l-10 d-flex p-b-0 j-space">
+                    <span>Requisition Details</span>
                 </div>
-                <div class="sub-head">
-                    <span class="p-6 job-description"> :
-                        <a
-                            [href]="env_url + '/dashboard/series?requestId=' + candidateDetails['serviceRequest.requestId']">
-                            {{ candidateDetails['serviceRequest.requestName'] }}
-                        </a>
-                    </span>
-                    <span class="p-6 job-description"> : {{candidateDetails['serviceRequest.requestSkills'] |
-                        titlecase}}</span>
-                    <span class="p-6 job-description"> :
-                        {{candidateDetails['serviceRequest.requestMinimumExperience']}}</span>
-                    <span class="p-6 job-description"> :
-                        {{candidateDetails['serviceRequest.requestMaximumExperience']}}</span>
-                    <span class="p-6 job-description"> : {{candidateDetails['serviceRequest.requestStatus']}}</span>
-                    <span class="p-6 job-description"> : {{candidateDetails['serviceRequest.requestVacancy']}}</span>
+                <div class="d-flex p-l-10 content">
+                    <div class="sub-head">
+                        <span class="key p-6">Requisition Name</span>
+                        <span class="key p-6">Skills</span>
+                        <span class="key p-6">Minimum Experience</span>
+                        <span class="key p-6">Maximum Experience</span>
+                        <span class="key p-6">Requisition Status</span>
+                        <span class="key p-6">Requisition Vacancy</span>
+                    </div>
+                    <div class="sub-head">
+                        <span class="p-6 job-description"> :
+                            <a
+                                [href]="env_url + '/dashboard/series?requestId=' + candidateDetails['serviceRequest.requestId']">
+                                {{ candidateDetails['serviceRequest.requestName'] }}
+                            </a>
+                        </span>
+                        <span class="p-6 job-description"> : {{candidateDetails['serviceRequest.requestSkills'] |
+                            titlecase}}</span>
+                        <span class="p-6 job-description"> :
+                            {{candidateDetails['serviceRequest.requestMinimumExperience']}}</span>
+                        <span class="p-6 job-description"> :
+                            {{candidateDetails['serviceRequest.requestMaximumExperience']}}</span>
+                        <span class="p-6 job-description"> : {{candidateDetails['serviceRequest.requestStatus']}}</span>
+                        <span class="p-6 job-description"> : {{candidateDetails['serviceRequest.requestVacancy']}}</span>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="heading  p-l-10 p-b-0 d-flex j-space">
+                        <span>Interview Details</span>
+                    </div>
+                    <div class="d-flex p-l-10 content">
+                        <div class="sub-head f-w-500 f-s-14 d-flex">
+                            <div class="p-6 key">Scheduled Date</div>
+                            <div class="p-6 key">Scheduled time</div>
+                            <div class="p-6 key">Panel</div>
+                            <div class="p-6 key">Interview Satus</div>
+                            <div class="p-6 key">Interview Mode</div>
+                        </div>
+                        <div class="sub-head">
+                            <span class="p-6 job-description"> : {{candidateDetails?.interviewTime | date:
+                                'dd/MM/YYY'}}</span>
+                            <span class="p-6 job-description"> : {{candidateDetails?.interviewTime | date: 'hh:mm
+                                a'}}</span>
+                            <span class="p-6 job-description"> : {{candidateDetails?.pannelName | titlecase}}</span>
+                            <span class="p-6 job-description"> : {{candidateDetails?.interviewstatus}}</span>
+                            <span class="p-6 job-description"> : {{candidateDetails?.interviewMode ?
+                                candidateDetails?.interviewMode : 'Not Updated'}}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="">
+            <div class="w-50">
                 <div class="heading  p-l-10 p-b-0 d-flex j-space">
-                    <span>Interview Details</span>
+                    <span>Candidate Details</span>
+                    <span class="c-pointer m-r-10 p-r-10"><span class="f-s-14 f-w-400">Candidate Resume : </span>
+                        <i class="fa fa-file-text-o p-l-5 blue" aria-hidden="true" title="View resume"
+                            (click)="viewResume(candidateDetails['candidate.candidateResume'])"></i>
+                    </span>
                 </div>
                 <div class="d-flex p-l-10 content">
                     <div class="sub-head f-w-500 f-s-14 d-flex">
-                        <div class="p-6 key">Scheduled Date</div>
-                        <div class="p-6 key">Scheduled time</div>
-                        <div class="p-6 key">Panel</div>
-                        <div class="p-6 key">Interview Satus</div>
-                        <div class="p-6 key">Interview Mode</div>
-                    </div>
-                    <div class="sub-head">
-                        <span class="p-6 job-description"> : {{candidateDetails?.interviewTime | date:
-                            'dd/MM/YYY'}}</span>
-                        <span class="p-6 job-description"> : {{candidateDetails?.interviewTime | date: 'hh:mm
-                            a'}}</span>
-                        <span class="p-6 job-description"> : {{candidateDetails?.pannelName | titlecase}}</span>
-                        <span class="p-6 job-description"> : {{candidateDetails?.interviewstatus}}</span>
-                        <span class="p-6 job-description"> : {{candidateDetails?.interviewMode ?
-                            candidateDetails?.interviewMode : 'Not Updated'}}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="w-50">
-            <div class="heading  p-l-10 p-b-0 d-flex j-space">
-                <span>Candidate Details</span>
-                <span class="c-pointer m-r-10 p-r-10"><span class="f-s-14 f-w-400">Candidate Resume : </span>
-                    <i class="fa fa-file-text-o p-l-5 blue" aria-hidden="true" title="View resume"
-                        (click)="viewResume(candidateDetails['candidate.candidateResume'])"></i>
-                </span>
-            </div>
-            <div class="d-flex p-l-10 content">
-                <div class="sub-head f-w-500 f-s-14 d-flex">
-                    <div class="p-6">Candidate Status</div>
-                    <div class="p-6">Contact Number</div>
-                    <div class="p-6">Mail</div>
-                    <div class="p-6">Skills</div>
-                    <div class="p-6">Previous Organisation</div>
-                    <div class="p-6">Previous Designation</div>
-                    <div class="p-6">Education</div>
-                    <div class="p-6">Relevant Experience</div>
-                    <div class="p-6">Total Experience</div>
-                    <div class="p-6">City</div>
-                    <div class="p-6">District</div>
-                    <div class="p-6">State</div>
-                </div>
-                <div class="sub-head d-flex">
-                    <div class="p-6">
-                        : <span class="" [ngClass]="{'blue': candidateDetails?.serviceStatus === 'pending','green': candidateDetails?.serviceStatus === 'done',
-                                 'red': candidateDetails?.serviceStatus === 'rejected'}">
-                            {{candidateDetails?.serviceStatus | titlecase}} </span>
-                    </div>
-                    <div class="p-6">
-                        : {{candidateDetails['candidate.candidateMobileNo']
-                        ?(candidateDetails['candidate.candidateMobileNo']): '0000000000' }}
-                    </div>
-                    <div class="p-6">
-                        : {{candidateDetails['candidate.candidateEmail'] ? candidateDetails['candidate.candidateEmail']
-                        : 'NIL'}}
-                    </div>
-                    <div class="p-6 d-flex">
-                        : <span class="p-l-3" *ngFor="let item of candidateDetails?.skills; let last = last">
-                            {{item?.skillName ? (item?.skillName | titlecase ): 'NIL'}} <span *ngIf="!last">,</span>
-                        </span>
-                    </div>
-                    <div class="p-6">
-                        : {{candidateDetails['candidate.candidatePreviousOrg'] ?
-                        candidateDetails['candidate.candidatePreviousOrg'] : 'NIL'}}
-                    </div>
-                    <div class="p-6">
-                        : {{candidateDetails['candidate.candidatePreviousDesignation'] ?
-                        candidateDetails['candidate.candidatePreviousDesignation'] : 'NIL'}}
-                    </div>
-                    <div class="p-6">
-                        : {{candidateDetails['candidate.candidateEducation'] ?
-                        candidateDetails['candidate.candidateEducation']: 'NIL'}}
-                    </div>
-                    <div class="p-6">
-                        : {{candidateDetails['candidate.candidateRevlentExperience'] ?
-                        candidateDetails['candidate.candidateRevlentExperience'] : '0'}}
-                    </div>
-                    <div class="p-6">
-                        : {{candidateDetails['candidate.candidateTotalExperience'] ?
-                        candidateDetails['candidate.candidateTotalExperience'] : 'NIL'}}
-                    </div>
-                    <div class="p-6">
-                        : {{candidateDetails['candidate.candidateCity'] ? candidateDetails['candidate.candidateCity']
-                        :'City'}}
-                    </div>
-                    <div class="p-6">
-                        : {{candidateDetails['candidate.candidateDistrict'] ?
-                        candidateDetails['candidate.candidateDistrict']:'District '}}
-                    </div>
-                    <div class="p-6">
-                        : {{candidateDetails['candidate.candidateState'] ? candidateDetails['candidate.candidateState']
-                        :'State'}}
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Initial buttons -->
-    <div *ngIf="!progessAdded && candidateDetails?.serviceStatus === 'pending' && !candidateDetails['progress.progressDescription'] && userType !== 'super-admin'"
-        class="details d-flex c-pointer">
-        <label class="c-pointer f-w-500 f-s-14 action-btn" [class.action-select]="buttonType === 'reschedule'">
-            <input type="radio" class="deatil-btn" name="action" value="reschedule"
-                (change)="selectButton('reschedule');showMail('re-schedule')" [checked]="buttonType === 'reschedule'" />
-            Reschedule Interview
-        </label>
-        <label class="c-pointer f-w-500 f-s-14 action-btn" [class.action-select]="buttonType === 'add'">
-            <input type="radio" class="deatil-btn" name="action" value="add" (change)="selectButton('add');showMail('')"
-                [checked]="buttonType === 'add'" />
-            Interview Feedback
-        </label>
-        <label class="c-pointer f-w-500 f-s-14 action-btn" [class.action-select]="buttonType === 'rejection'">
-            <input type="radio" class="deatil-btn" name="action" value="rejection"
-                (change)="selectButton('rejection');showMail('')" [checked]="buttonType === 'rejection'" />
-            Back off Candidate
-        </label>
-    </div>
-
-    <!-- ADD Interview Feedback -->
-    <div class="margin-10 "
-        *ngIf="!progessAdded && candidateDetails?.serviceStatus === 'pending' && buttonType.trim() === 'add' && !candidateDetails['progress.progressDescription']">
-        <app-interview-feeback [loader]="loader"
-            (submitInterviewData)="onSubmitInterviewData($event)"></app-interview-feeback>
-    </div>
-    <!-- ADDED Interview Feedback -->
-
-    <div class="d-flex w-100">
-        <div class="w-50"
-            *ngIf="(candidateDetails?.progressStatus > 0 || candidateDetails?.serviceStatus === 'moved')">
-            <span class="heading p-l-10 p-b-0">Added Skills and Scores</span>
-            <div class="container-table m-b-0 m-l-10">
-                <div class="comments" id="score" #score [innerHTML]="candidateDetails['progress.progressSkills']"></div>
-               
-            </div>
-        </div>
-        <div class="w-50">
-            <div *ngIf="candidateDetails?.progressStatus > 0 || candidateDetails?.serviceStatus === 'moved'">
-                <span class="heading p-l-10 p-b-0">Interview Feedback</span>
-                <div class="d-flex p-l-10 content m-t-10">
-                    <div class="sub-head f-w-500 f-s-14 d-flex">
-                        <span class="p-6">Feedback</span>
-                        <span class="p-6" *ngIf="candidateDetails['progress.progressFile']">Attached File</span>
+                        <div class="p-6">Candidate Status</div>
+                        <div class="p-6">Contact Number</div>
+                        <div class="p-6">Mail</div>
+                        <div class="p-6">Skills</div>
+                        <div class="p-6">Previous Organisation</div>
+                        <div class="p-6">Previous Designation</div>
+                        <div class="p-6">Education</div>
+                        <div class="p-6">Relevant Experience</div>
+                        <div class="p-6">Total Experience</div>
+                        <div class="p-6">City</div>
+                        <div class="p-6">District</div>
+                        <div class="p-6">State</div>
                     </div>
                     <div class="sub-head d-flex">
-                        <span class="p-6">: {{ candidateDetails['progress.progressDescription'] || 'Nil' }}</span>
-                        <span class="p-6" *ngIf=" candidateDetails['progress.progressFile']">:
-                            <span class="p-l-5 view-attachment c-pointer" title="View Attachment"
-                                (click)="viewResume(candidateDetails['progress.progressFile'])">View Attachment</span>
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div *ngIf="data?.candidateDetails?.serviceStatus !== 'pending'">
-                    <span class="heading p-l-10 p-b-0 d-flex j-space">Selection Status</span>
-                    <div class="sub-head d-flex p-6 content">
+                        <div class="p-6">
+                            : <span class="" [ngClass]="{'blue': candidateDetails?.serviceStatus === 'pending','green': candidateDetails?.serviceStatus === 'done',
+                                    'red': candidateDetails?.serviceStatus === 'rejected'}">
+                                {{candidateDetails?.serviceStatus | titlecase}} </span>
+                        </div>
+                        <div class="p-6">
+                            : {{candidateDetails['candidate.candidateMobileNo']
+                            ?(candidateDetails['candidate.candidateMobileNo']): '0000000000' }}
+                        </div>
+                        <div class="p-6">
+                            : {{candidateDetails['candidate.candidateEmail'] ? candidateDetails['candidate.candidateEmail']
+                            : 'NIL'}}
+                        </div>
+                        <div class="p-6 d-flex">
+                            : <span class="p-l-3" *ngFor="let item of candidateDetails?.skills; let last = last">
+                                {{item?.skillName ? (item?.skillName | titlecase ): 'NIL'}} <span *ngIf="!last">,</span>
+                            </span>
+                        </div>
+                        <div class="p-6">
+                            : {{candidateDetails['candidate.candidatePreviousOrg'] ?
+                            candidateDetails['candidate.candidatePreviousOrg'] : 'NIL'}}
+                        </div>
+                        <div class="p-6">
+                            : {{candidateDetails['candidate.candidatePreviousDesignation'] ?
+                            candidateDetails['candidate.candidatePreviousDesignation'] : 'NIL'}}
+                        </div>
+                        <div class="p-6">
+                            : {{candidateDetails['candidate.candidateEducation'] ?
+                            candidateDetails['candidate.candidateEducation']: 'NIL'}}
+                        </div>
+                        <div class="p-6">
+                            : {{candidateDetails['candidate.candidateRevlentExperience'] ?
+                            candidateDetails['candidate.candidateRevlentExperience'] : '0'}}
+                        </div>
+                        <div class="p-6">
+                            : {{candidateDetails['candidate.candidateTotalExperience'] ?
+                            candidateDetails['candidate.candidateTotalExperience'] : 'NIL'}}
+                        </div>
+                        <div class="p-6">
+                            : {{candidateDetails['candidate.candidateCity'] ? candidateDetails['candidate.candidateCity']
+                            :'City'}}
+                        </div>
+                        <div class="p-6">
+                            : {{candidateDetails['candidate.candidateDistrict'] ?
+                            candidateDetails['candidate.candidateDistrict']:'District '}}
+                        </div>
+                        <div class="p-6">
+                            : {{candidateDetails['candidate.candidateState'] ? candidateDetails['candidate.candidateState']
+                            :'State'}}
+                        </div>
 
-                        <span class="padding-5">
-                            {{statusMessages[data?.candidateDetails?.serviceStatus]
-                            (data?.candidateDetails?.currentStation)}}
-                        </span>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Back-off Or Panel Rejection -->
-    <div class="margin-10 rejection"
-        *ngIf="!progessAdded && candidateDetails?.serviceStatus === 'pending' && !progessAdded && buttonType.trim() === 'rejection'">
-        <div class="d-flex w-100 p-10 j-space">
-            <span class="f-w-500 f-s-14 p-t-10 w-30">Reason</span>
-            <div class="d-flex p-l-10 w-50" (click)="filterStatus = !filterStatus">
-                <span class="input-rejection c-pointer no-close p-relative p-t-5">
-                    <span class="no-close p-l-10 f-s-14 f-w-400">{{filteredStatus.trim()
-                        === '' ? 'Select Reason' : filteredStatus === 'pannel-rejection' ? 'Panel Rejection' : (filteredStatus | titlecase) | titlecase}}</span>
-                    <span class="f-right">
-                        <!-- <span *ngIf="filteredStatus && filteredStatus.trim() !== ''" (click)="clearFilter('status')" class="clear-filter">x</span> -->
-                        <span><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
+        <!-- Initial buttons -->
+        <div *ngIf="!progessAdded && candidateDetails?.serviceStatus === 'pending' && !candidateDetails['progress.progressDescription'] && userType !== 'super-admin'"
+            class="details d-flex c-pointer">
+            <label class="c-pointer f-w-500 f-s-14 action-btn" [class.action-select]="buttonType === 'reschedule'">
+                <input type="radio" class="deatil-btn" name="action" value="reschedule"
+                    (change)="selectButton('reschedule');showMail('re-schedule')" [checked]="buttonType === 'reschedule'" />
+                Reschedule Interview
+            </label>
+            <label class="c-pointer f-w-500 f-s-14 action-btn" [class.action-select]="buttonType === 'add'">
+                <input type="radio" class="deatil-btn" name="action" value="add" (change)="selectButton('add');showMail('')"
+                    [checked]="buttonType === 'add'" />
+                Interview Feedback
+            </label>
+            <label class="c-pointer f-w-500 f-s-14 action-btn" [class.action-select]="buttonType === 'rejection'">
+                <input type="radio" class="deatil-btn" name="action" value="rejection"
+                    (change)="selectButton('rejection');showMail('')" [checked]="buttonType === 'rejection'" />
+                Back off Candidate
+            </label>
+        </div>
+
+        <!-- ADD Interview Feedback -->
+        <div class="margin-10 "
+            *ngIf="!progessAdded && candidateDetails?.serviceStatus === 'pending' && buttonType.trim() === 'add' && !candidateDetails['progress.progressDescription']">
+            <app-interview-feeback [loader]="loader"
+                (submitInterviewData)="onSubmitInterviewData($event)"></app-interview-feeback>
+        </div>
+        <!-- ADDED Interview Feedback -->
+
+        <div class="d-flex w-100">
+            <div class="w-50"
+                *ngIf="(candidateDetails?.progressStatus > 0 || candidateDetails?.serviceStatus === 'moved')">
+                <span class="heading p-l-10 p-b-0">Added Skills and Scores</span>
+                <div class="container-table m-b-0 m-l-10">
+                    <table class="skills-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Skill</th>
+                        <th>Score</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let skill of getFormattedSkills(); let i = index">
+                        <td>{{i + 1}}</td>
+                        <td>{{skill.name}}</td>
+                        <td>{{skill.score}}/10</td>
+                        <td>{{skill.description || 'N/A'}}</td>
+                    </tr>
+                    <tr *ngIf="!getFormattedSkills().length">
+                        <td colspan="4" class="text-center">No skills data available</td>
+                    </tr>
+                </tbody>
+            </table>
+                
+                </div>
+            </div>
+            <div class="w-50">
+                <div *ngIf="candidateDetails?.progressStatus > 0 || candidateDetails?.serviceStatus === 'moved'">
+                    <span class="heading p-l-10 p-b-0">Interview Feedback</span>
+                    <div class="d-flex p-l-10 content m-t-10">
+                        <div class="sub-head f-w-500 f-s-14 d-flex">
+                            <span class="p-6">Feedback</span>
+                            <span class="p-6" *ngIf="candidateDetails['progress.progressFile']">Attached File</span>
+                        </div>
+                        <div class="sub-head d-flex">
+                            <span class="p-6">: {{ candidateDetails['progress.progressDescription'] || 'Nil' }}</span>
+                            <span class="p-6" *ngIf=" candidateDetails['progress.progressFile']">:
+                                <span class="p-l-5 view-attachment c-pointer" title="View Attachment"
+                                    (click)="viewResume(candidateDetails['progress.progressFile'])">View Attachment</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div *ngIf="data?.candidateDetails?.serviceStatus !== 'pending'">
+                        <span class="heading p-l-10 p-b-0 d-flex j-space">Selection Status</span>
+                        <div class="sub-head d-flex p-6 content">
+
+                            <span class="padding-5">
+                                {{statusMessages[data?.candidateDetails?.serviceStatus]
+                                (data?.candidateDetails?.currentStation)}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back-off Or Panel Rejection -->
+        <div class="margin-10 rejection"
+            *ngIf="!progessAdded && candidateDetails?.serviceStatus === 'pending' && !progessAdded && buttonType.trim() === 'rejection'">
+            <div class="d-flex w-100 p-10 j-space">
+                <span class="f-w-500 f-s-14 p-t-10 w-30">Reason</span>
+                <div class="d-flex p-l-10 w-50" (click)="filterStatus = !filterStatus">
+                    <span class="input-rejection c-pointer no-close p-relative p-t-5">
+                        <span class="no-close p-l-10 f-s-14 f-w-400">{{filteredStatus.trim()
+                            === '' ? 'Select Reason' : filteredStatus === 'pannel-rejection' ? 'Panel Rejection' : (filteredStatus | titlecase) | titlecase}}</span>
+                        <span class="f-right">
+                            <!-- <span *ngIf="filteredStatus && filteredStatus.trim() !== ''" (click)="clearFilter('status')" class="clear-filter">x</span> -->
+                            <span><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
+                        </span>
+                        <div class="dropdown c-pointer no-close'" *ngIf="filterStatus">
+                            <span class="d-flex p-0" *ngFor="let type of status"
+                                (click)="selectStatusFilter(type?.status);filterStatus = !filterStatus">
+                                <span class="p-l-20 padding-5 f-s-14 f-w-400"> {{ type?.status === 'pannel-rejection' ? 'Panel Rejection' : (type?.status | titlecase) }}</span>
+                            </span>
+                        </div>
                     </span>
-                    <div class="dropdown c-pointer no-close'" *ngIf="filterStatus">
-                        <span class="d-flex p-0" *ngFor="let type of status"
-                            (click)="selectStatusFilter(type?.status);filterStatus = !filterStatus">
-                            <span class="p-l-20 padding-5 f-s-14 f-w-400"> {{ type?.status === 'pannel-rejection' ? 'Panel Rejection' : (type?.status | titlecase) }}</span>
-                        </span>
-                    </div>
-                </span>
+                </div>
+            </div>
+            <div class="d-flex w-100 p-10 j-space">
+                <span class="f-w-500 f-s-14 p-t-10 w-30">Feedback</span>
+                <div class="d-flex p-l-10 w-50">
+                    <textarea class="text-area p-l-9" id="comment"></textarea>
+                </div>
+            </div>
+            <div *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done' && candidateDetails?.serviceStatus !== 'moved'"
+                class="p-l-10 p-r-0 d-flex j-end w-100 m-t-20">
+                <button class="btn c-pointer" (click)="rejectClick('')" [disabled]="loader">Submit</button>
             </div>
         </div>
-        <div class="d-flex w-100 p-10 j-space">
-            <span class="f-w-500 f-s-14 p-t-10 w-30">Feedback</span>
-            <div class="d-flex p-l-10 w-50">
-                <textarea class="text-area p-l-9" id="comment"></textarea>
-            </div>
+
+        <!-- Next Round Approval or Rejection After Adding Progress -->
+        <div *ngIf="candidateDetails?.serviceStatus === 'pending' && candidateDetails['progress.progressId'] !== null && userType !== 'super-admin'"
+            class="details d-flex c-pointer m-t-10">
+            <label class="c-pointer f-w-500 f-s-14 action-btn m-r-10" [class.action-select]="messageType === 'approve'">
+                <input type="radio" name="messageType" value="approve" [checked]="messageType === 'approve'"
+                    class="deatil-btn" (change)="showMail('approve')" />
+                Select for Next Round
+            </label>
+            <label class="c-pointer f-w-500 f-s-14 action-btn m-l-10" [class.action-select]="messageType === 'rejection'">
+                <input type="radio" name="messageType" value="rejection" [checked]="messageType === 'rejection'"
+                    class="deatil-btn" (change)="showMail('rejection')" />
+                Reject Candidate
+            </label>
         </div>
-        <div *ngIf="!progessAdded && candidateDetails?.serviceStatus !== 'done' && candidateDetails?.serviceStatus !== 'moved'"
-            class="p-l-10 p-r-0 d-flex j-end w-100 m-t-20">
-            <button class="btn c-pointer" (click)="rejectClick('')" [disabled]="loader">Submit</button>
+
+        <!-- Reschedule Interview / send Approval mail for next round / Rejection mail -->
+        <div *ngIf="candidateDetails?.serviceStatus === 'pending' && messageType.trim() !== ''">
+            <app-mail-template [candidate]="mailTemplateData" (submitData)="onSubmitData($event)"
+                [loader]="loader"></app-mail-template>
         </div>
+
+
+
     </div>
-
-    <!-- Next Round Approval or Rejection After Adding Progress -->
-    <div *ngIf="candidateDetails?.serviceStatus === 'pending' && candidateDetails['progress.progressId'] !== null && userType !== 'super-admin'"
-        class="details d-flex c-pointer m-t-10">
-        <label class="c-pointer f-w-500 f-s-14 action-btn m-r-10" [class.action-select]="messageType === 'approve'">
-            <input type="radio" name="messageType" value="approve" [checked]="messageType === 'approve'"
-                class="deatil-btn" (change)="showMail('approve')" />
-            Select for Next Round
-        </label>
-        <label class="c-pointer f-w-500 f-s-14 action-btn m-l-10" [class.action-select]="messageType === 'rejection'">
-            <input type="radio" name="messageType" value="rejection" [checked]="messageType === 'rejection'"
-                class="deatil-btn" (change)="showMail('rejection')" />
-            Reject Candidate
-        </label>
-    </div>
-
-    <!-- Reschedule Interview / send Approval mail for next round / Rejection mail -->
-    <div *ngIf="candidateDetails?.serviceStatus === 'pending' && messageType.trim() !== ''">
-        <app-mail-template [candidate]="mailTemplateData" (submitData)="onSubmitData($event)"
-            [loader]="loader"></app-mail-template>
-    </div>
-
-
-
-</div>

@@ -27,6 +27,7 @@ export class CandidateDetailsComponent implements OnInit {
   initialLoader: boolean = false;
   loader: boolean = false;
   positonIds: any;
+  userRole: any = localStorage.getItem('userRole');
   constructor(private apiService: ApiService, private route: ActivatedRoute, private datePipe: DatePipe, private dialog: MatDialog) {
     // this.route.params.subscribe(params => {
     //   this.candidateId = params['id'];
