@@ -66,7 +66,9 @@ export class StationCandidateDetailComponent implements OnInit {
     'back-off': (station?: string) => `Candidate Back-off ${station ? ` at ${station}` : ''}`,
     'pannel-rejection': (station?: string) => `Panel Rejected the Candidate${station ? ` at ${station}` : ''}`
   };
-
+  serviceAssignee:any;
+  candidateId:any;
+  serviceScheduledBy:any;
   userType: any;
   constructor(public dialogRef: MatDialogRef<StationCandidateDetailComponent>, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
     private route: ActivatedRoute, private router: Router,
@@ -76,6 +78,9 @@ export class StationCandidateDetailComponent implements OnInit {
       this.stationId = data?.stationId;
       this.serviceId = this.candidateDetails?.serviceId;
       this.progressSkill = this.candidateDetails?.skillScore
+      this.serviceScheduledBy = this.candidateDetails?.serviceScheduledBy;
+      this.candidateId = this.candidateDetails['candidate.candidateId'];
+      this.serviceAssignee = this.candidateDetails?.serviceAssignee;
       if (data?.offerStatus > 0) this.progessAdded = true;
     }
     this.dialogRef.updateSize('60vw', '90vh');

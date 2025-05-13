@@ -20,6 +20,9 @@ interface Skill {
 export class InterviewFeebackComponent implements OnInit {
   @Output() submitInterviewData: EventEmitter<any> = new EventEmitter<any>();
   @Input() loader: boolean = false;
+  @Input() candidateId: any;
+  @Input() serviceScheduledBy:any;
+  @Input() serviceAssignee: any;
   @ViewChild('score') scoreDiv!: ElementRef<HTMLDivElement>;
   openFeedbackList: boolean = false;
   openCountList: boolean = false;
@@ -59,6 +62,33 @@ export class InterviewFeebackComponent implements OnInit {
       this.openCountList = false;
     }
   }
+
+
+  onNotifyChange(event: any): void {
+    
+    if (event?.target?.checked) {
+      
+      console.log(this.selectedFeedback , "res");
+      if (this.serviceAssignee && this.candidateId ) {
+        const payload = {
+          userId: +this.serviceAssignee, // '+' to convert to number
+          candidateId: +this.candidateId,
+        };
+  
+        this.apiService.post(`/dashboard/send-feedback-reminderMail`, payload).subscribe(
+          (res: any) => {
+            this.tostr.success('Reminder Mail Sent Successfully!');
+          },
+          (err: any) => {
+            this.tostr.error('Failed to Send Reminder Mail.');
+          }
+        );
+      } else {
+        this.tostr.warning('Missing serviceAssignee or serviceCandidate in localStorage.');
+      }
+    }
+  }
+  
 
   fetchFeedbackList(): void {
     this.apiService.get(`/screening-station/feedback-list`).subscribe(res => {
@@ -136,6 +166,25 @@ export class InterviewFeebackComponent implements OnInit {
     // const updatedSkill = this.scoreDiv.nativeElement.innerHTML;
     const updatedSkill = this.progressSkill;
     console.log("currentDescription", updatedSkill);
+    
+      
+      if (this.serviceScheduledBy && this.candidateId ) {
+        const payload = {
+          userId: +this.serviceScheduledBy, // '+' to convert to number
+          candidateId: +this.candidateId,
+        };
+  
+        this.apiService.post(`/dashboard/send-feedback-reminderMail`, payload).subscribe(
+          (res: any) => {
+            this.tostr.success('Reminder Mail Sent Successfully!');
+          },
+          (err: any) => {
+            this.tostr.error('Failed to Send Reminder Mail.');
+          }
+        );
+      }
+    
+
     // const updatedSkill = this.progressSkill.map(({ skillName, ...rest }) => ({ ...rest }));
     this.comment = (document.getElementById('comment') as HTMLInputElement)?.value || '';
     if (this.selectedFeedback && updatedSkill.length > 0 && this.comment.trim() !== '') {

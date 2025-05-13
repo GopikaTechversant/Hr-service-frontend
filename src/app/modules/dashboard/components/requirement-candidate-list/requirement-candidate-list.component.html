@@ -19,7 +19,7 @@
     </span>
     <div class="dropdown c-pointer no-close" *ngIf="filterPriority">
       <span class="d-flex p-0" *ngFor="let level of priority"
-        (click)="selectPriorityFilter(level); filterPriority = false">
+        (click)="selectPriorityFilter(level);">
         <span class="padding-5">{{ level }}</span>
       </span>
     </div>
