@@ -1,4 +1,4 @@
-<div class="main p-t-10">
+<div class="main p-t-10" *ngIf="userRole != 'panel'">
   <div class="head c-pointer" (click)="navigate('/dashboard')">
     <div class="sidebar">
       <span class="side-head"><span class="blue">RecruitWise</span></span>
@@ -11,6 +11,21 @@
     <span class="menu-text"><i [class]="item.icon" aria-hidden="true"></i></span>
     <span class="menu-text">{{ item.label }}</span>
   </div>
+
+  <div *ngFor="let item of dynamicMenuItems" class="menu d-flex c-pointer"
+       (click)="navigate(item.path)"
+       [class.active]="isActive(item.path)">
+    <span class="menu-text"><i [class]="item.icon" aria-hidden="true"></i></span>
+    <span class="menu-text">{{ item.label }}</span>
+  </div>
+</div>
+<div class="main p-t-10" *ngIf="userRole == 'panel'">
+  <div class="head c-pointer" (click)="navigate('/dashboard')">
+    <div class="sidebar">
+      <span class="side-head"><span class="blue">RecruitWise</span></span>
+    </div>
+  </div>
+  
 
   <div *ngFor="let item of dynamicMenuItems" class="menu d-flex c-pointer"
        (click)="navigate(item.path)"

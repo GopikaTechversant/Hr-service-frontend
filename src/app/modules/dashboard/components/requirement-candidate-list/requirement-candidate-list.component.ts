@@ -26,8 +26,12 @@ export class RequirementCandidateListComponent implements OnInit {
   deleteRequirementId: any;
   editRequirement: any;
   filterStatus: boolean = false;
+  date: boolean = false;
   filteredStatus: any = '';
   status: any[] = ['All Requisitions', 'Active Requisitions', 'Pending Requisitions', 'Closed Requisitions'];
+  filterPriority: boolean = false;
+filteredPriority: string = '';
+priority: string[] = ['All Priorities','Critical','High', 'Medium', 'Low'];
   userType: any;
   userRole: any;
   requisitionids: any;
@@ -38,6 +42,7 @@ export class RequirementCandidateListComponent implements OnInit {
     const target = event.target as HTMLElement;
     if (!target.closest('.no-close')) {
       this.filterStatus = false;
+      this.filterPriority = false;
     }
   }
   ngOnInit(): void {
@@ -48,7 +53,7 @@ export class RequirementCandidateListComponent implements OnInit {
     // Retrieve the last page from localStorage (if available)
     const savedPage = localStorage.getItem('currentPage');
     this.currentPage = savedPage ? parseInt(savedPage, 10) : 1;
-
+    this.filteredPriority = localStorage.getItem('priority') || '';
     this.filteredStatus = localStorage.getItem('requisition')
       ? localStorage.getItem('requisition')
       : 'All Requisitions';
@@ -91,6 +96,11 @@ export class RequirementCandidateListComponent implements OnInit {
           : this.filteredStatus === 'Active Requisitions'
             ? 'active'
             : '';
+
+    const isDate = !this.date ? '' : this.date;
+
+    const priority = !this.filteredPriority ? '' : this.filteredPriority === 'All Priorities' ? '' : this.filteredPriority.toLowerCase();
+
     if (!this.initialLoader) this.loader = true
     const url = `/screening-station/v1/list-all`;
     let params = [
@@ -98,7 +108,9 @@ export class RequirementCandidateListComponent implements OnInit {
       `limit=${this.report ? '' : this.limit}`,
       `search=${searchQuery.trim()}`,
       `isActive=${isActive}`,
+      `priority=${priority}`,
       `report=${this.report}`,
+      `date=${isDate}`,
       // `ids=${this.idsParams ? this.idsParams : ''}`
     ].filter(param => param.split('=')[1] !== '').join('&');  // Filter out empty parameters
     if (this.report) {
@@ -211,6 +223,33 @@ export class RequirementCandidateListComponent implements OnInit {
     }
     this.currentPage = 1;
     this.limit = 15;
+    this.fetchcandidates(this.currentPage, '');
+  }
+
+  
+  selectPriorityFilter(item: string): void {
+    this.filteredPriority = item;
+    localStorage.setItem('priority', item);
+    this.currentPage = 1;
+    this.limit = 15;
+    this.fetchcandidates(this.currentPage, '');
+    // this.clearPriority
+  }
+  clearPriority(item: any): void {
+    if (item === 'search') this.searchKeyword = '';
+    if (item === 'status') {
+      this.filteredPriority = 'All Priorities';
+      localStorage.setItem('priority', this.filteredPriority);
+    }
+    if (item === 'priority') {
+      this.filteredPriority = '';
+    }
+    this.currentPage = 1;
+    this.limit = 15;
+    this.fetchcandidates(this.currentPage, '');
+  }
+  sortDate(): void {
+    this.date = !this.date;
     this.fetchcandidates(this.currentPage, '');
   }
 

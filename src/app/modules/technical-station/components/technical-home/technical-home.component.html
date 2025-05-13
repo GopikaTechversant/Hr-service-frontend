@@ -12,4 +12,9 @@
             <router-outlet></router-outlet>
         </div>
     </div>
+    <div class="container-fluid mt-5" *ngIf="userRole == 'panel'">
+        <div  [class.full-width]="isSidebarHidden">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
 </div>

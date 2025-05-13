@@ -357,3 +357,8 @@ input[type="text"] {
   color: #F57C02;
   text-decoration: underline;
 }
+.sortImg{
+  height: 25px;
+  width: 25px;
+  cursor: pointer;
+}

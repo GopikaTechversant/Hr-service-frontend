@@ -2,6 +2,29 @@
     <div class="heading d-flex j-space m-b-5">
         <div class="title-left p-l-2"><span>Requisition List</span></div>
         <div class="d-flex  title-right">
+            <!-- Add this next to the status dropdown -->
+<div class="input-1 c-pointer no-close p-relative" (click)="filterPriority = !filterPriority">
+    <span class="no-close p-l-10">
+      {{ filteredPriority === '' ? 'All Priorities' : filteredPriority }}
+    </span>
+    <span class="f-right">
+      <span
+        *ngIf="filteredPriority !=='All Priorities' && filteredPriority && filteredPriority.trim() !== ''"
+        (click)="clearPriority('status')">
+        <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
+      </span>
+      <span>
+        <i [ngClass]="filterPriority ? 'fa fa-chevron-up' : 'fa fa-chevron-down'" class="m-l-5 p-r-10 s-text no-close"></i>
+      </span>
+    </span>
+    <div class="dropdown c-pointer no-close" *ngIf="filterPriority">
+      <span class="d-flex p-0" *ngFor="let level of priority"
+        (click)="selectPriorityFilter(level);">
+        <span class="padding-5">{{ level }}</span>
+      </span>
+    </div>
+  </div>
+  
             <div class="input-1 c-pointer no-close p-relative" (click)="filterStatus = !filterStatus">
                 <span class="no-close p-l-10">{{filteredStatus.trim() === '' ?
                     'All Requisitions' : filteredStatus | titlecase}}</span>
@@ -62,7 +85,7 @@
                     </td>
                     <td>Assign To</td>
                     <td>Priority</td>
-                    <td class="text-end">Date</td>
+                    <td class="text-end">Date <img src="assets/images/318146.png" alt="" class="sortImg" (click)="sortDate()"></td>
                 </tr>
                 <div *ngIf="loader && !initialLoader" class="loader-parent">
                     <img src="assets/gif/loader.gif">

@@ -140,3 +140,8 @@ input[type="text"] {
     min-height: 193px;
     background-color: white;
 }
+.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+  }

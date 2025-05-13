@@ -5,7 +5,7 @@
   </div>
   <div class="header d-flex navbar" [class.header-full]="isSidebarHidden">
     <div class="p-2 d-flex align-items-center">
-      <div (click)="toggleSidebar()" class="m-b-9 c-pointer toggle">
+      <div (click)="toggleSidebar()" class="m-b-9 c-pointer toggle" >
         <div class="hamburger">
           <span></span>
           <span></span>
@@ -44,7 +44,25 @@
         </div>
       </div>      
     </div>    
-    <div class="profile d-flex p-t-8 m-b-10">
+
+    <div  class="profile d-flex p-t-8 m-b-10">
+      <div class="d-flex align-items-center me-2 flex-wrap station-names">
+        <ng-container *ngIf="userRole == 'panel'">
+          <span class="c-pointer p-2" [ngClass]="{'active-station': activeStation === 'Technical 1'}" (click)="navigate({stationName: 'Technical 1', stationId: 2})">Technical 1</span>
+          <span class="c-pointer p-2" [ngClass]="{'active-station': activeStation === 'Technical 2'}" (click)="navigate({stationName: 'Technical 2', stationId: 3})">Technical 2</span>
+          <span class="c-pointer p-2" [ngClass]="{'active-station': activeStation === 'Technical 3'}" (click)="navigate({stationName: 'Technical 3', stationId: 4})">Technical 3</span>
+        </ng-container>
+      </div>
+      <div class="user-profile c-pointer position-relative" (click)="dropDown = !dropDown" *ngIf="userRole == 'panel'">
+        <span class="fw-bold user-name text-white"> {{ currentUser?.charAt(0) ? (currentUser?.charAt(0) | uppercase): '' }}</span>
+        <div *ngIf="dropDown" class="drop-down d-flex position-absolute">
+          <div class="profile-drop" *ngFor="let station of profileDropDown">
+            <div class="c-pointer p-2 ps-3" (click)="navigate(station)">{{station?.stationName}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="profile d-flex p-t-8 m-b-10" *ngIf="userRole !== 'panel'">
       <div class="d-flex align-items-center me-2 flex-wrap station-names">
         <span *ngFor="let station of stationsList">
           <span class="c-pointer p-2" [ngClass]="{'active-station': station?.stationName === activeStation}"
@@ -67,3 +85,63 @@
     </div>
   </div>
 </div>
+
+
+<!-- <div class="main container-fluid w-100">
+  <div class="sidebar-container" [class.sidebar-hidden]="isSidebarHidden" *ngIf="!isSidebarHidden">
+    <div class="sidebar" [class.hidden]="isSidebarHidden">
+    </div>
+  </div>
+  <div class="header d-flex navbar" [class.header-full]="isSidebarHidden">
+    <div class="p-2 d-flex align-items-center">
+      <div class="search-container p-relative ms-3">
+        <div class="search-div d-flex align-items-center">
+          <input type="text" class="input" placeholder="Search Candidate Details" [(ngModel)]="searchKeyword" name="search" (ngModelChange)="searchCandidate($event)">
+            <span *ngIf="searchKeyword && searchKeyword.trim() !== ''" (click)="clearFilter()" class="c-pointer">
+              <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
+            </span>
+          <span class="search c-pointer" (click)="searchCandidate(searchKeyword)">
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </span>
+        </div>
+        <div *ngIf="showCandidates" class="p-absolute candidate-dropdown no-close">
+          <div class="candidate-column" *ngFor="let item of candidateList"
+            (click)="selectCandidate(item.candidateId); showCandidates = !showCandidates">
+            <div *ngIf="!candidateList || candidateList?.length === 0"> No Candidate Found</div>
+            <div class="d-flex candidate">
+              <div class="m-1">
+                <span class="user-profile">{{item?.candidateFirstName.charAt(0) ? (item?.candidateFirstName.charAt(0) | uppercase) : 'U'}}</span>
+              </div>
+              <div class="ms-1 p-r-6">
+                <span class="text-wrap"
+                  [title]="item?.candidateFirstName + ' ' + item?.candidateLastName">{{item?.candidateFirstName}}
+                  {{item?.candidateLastName}}</span>
+                <span class="detail"><span class="break-word p-r-3"
+                    [title]="item?.candidateEmail">{{item?.candidateEmail}}</span> |<br>
+                  <span class="p-l-2 p-t-1">{{item?.candidateMobileNo}}</span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>      
+    </div>
+    <div  class="profile d-flex p-t-8 m-b-10">
+      <div class="d-flex align-items-center me-2 flex-wrap station-names">
+        <ng-container *ngIf="userRole?.startsWith('panel')">
+          <span class="c-pointer p-2" [ngClass]="{'active-station': activeStation === 'Technical 1'}" (click)="navigate({stationName: 'Technical 1', stationId: 2})">Technical 1</span>
+          <span class="c-pointer p-2" [ngClass]="{'active-station': activeStation === 'Technical 2'}" (click)="navigate({stationName: 'Technical 2', stationId: 3})">Technical 2</span>
+          <span class="c-pointer p-2" [ngClass]="{'active-station': activeStation === 'Technical 3'}" (click)="navigate({stationName: 'Technical 3', stationId: 4})">Technical 3</span>
+        </ng-container>
+      </div>
+      <div class="user-profile c-pointer position-relative" (click)="dropDown = !dropDown">
+        <span class="fw-bold user-name text-white"> {{ currentUser?.charAt(0) ? (currentUser?.charAt(0) | uppercase): '' }}</span>
+        <div *ngIf="dropDown" class="drop-down d-flex position-absolute">
+          <div class="profile-drop" *ngFor="let station of profileDropDown">
+            <div class="c-pointer p-2 ps-3" (click)="navigate(station)">{{station?.stationName}}</div>
+          </div>
+        </div>
+      </div>
+    </div>  
+  </div>
+</div> -->

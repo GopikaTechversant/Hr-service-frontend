@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class TechnicalHomeComponent {
   isSidebarHidden: boolean = false;
-
+  userRole: any = localStorage.getItem('userRole');
   ngOnInit(): void {
   }
 
