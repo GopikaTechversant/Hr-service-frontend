@@ -150,14 +150,15 @@ export class CandidateListComponent {
 
   onCandidateSelect(candidate: any): void {
     if (candidate?.reqServiceRequest?.length > 0) {
-      candidate.isSelected = false;
+      candidate.isSelected = true;
       this.toastr.warning('Candidate already added to requisition');
-    } else if (candidate.candidatesAddingAgainst !== null) {
-      candidate.isSelected = false;
-      this.toastr.warning('Candidate already added to requisition');
-    } else {
-      this.getSelectedCandidateIds();
     }
+    // } else if (candidate.candidatesAddingAgainst !== null) {
+    //   candidate.isSelected = false;
+    //   this.toastr.warning('Candidate already added to requisition');
+    // } else {
+      this.getSelectedCandidateIds();
+    // }
   }
 
   getSelectedCandidateIds(): void {
@@ -266,12 +267,11 @@ export class CandidateListComponent {
   }
 
   selectCandidate(item: any): void {
-    console.log("item" , item?.reqServiceRequest?.length)
-    if (item?.reqServiceRequest?.length > 0) {
-      this.toastr.warning('Candidate already added to requisition');
-      return item.reqServiceRequest[0].requestName;
-    }
-    else
+    // if (item?.reqServiceRequest?.length > 0) {
+    //   this.toastr.warning('Candidate already added to requisition');
+    //   return item.reqServiceRequest[0].requestName;
+    // }
+    // else
     this.router.navigateByUrl(`/dashboard/candidate-details/${item.candidateId}`);
   }
 }
