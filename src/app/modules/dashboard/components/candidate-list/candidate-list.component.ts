@@ -38,7 +38,7 @@ export class CandidateListComponent {
   loader: boolean = true;
   resumeSourceIds: any;
   userType: any;
-
+  serviceRequestion:any;
   constructor(private apiService: ApiService, private router: Router, private dialog: MatDialog, private toastr: ToastrService, private exportService: ExportService) { }
 
   ngOnInit(): void {
@@ -103,11 +103,22 @@ export class CandidateListComponent {
       return;
     }
     this.apiService.get(`${url}?${params}`).subscribe((res: any) => {
+      
       this.initialLoader = false;
       this.loader = false;
       this.data = res;
-      this.candidateList = [];
-      this.candidateList = res?.candidates;
+      // this.serviceRequestion = res.candidates.reqServiceRequest;
+      this.candidateList = res?.candidates?.map((candidate: any) => {
+        // Set the selectedRequestId to the first request if available
+        if (candidate?.reqServiceRequest?.length > 0) {
+          candidate.selectedRequestId = candidate.reqServiceRequest[0].requestId;
+        } else {
+          candidate.selectedRequestId = null;
+        }
+        return candidate;
+      }) || [];
+      // this.candidateList = [];
+      // this.candidateList = res?.candidates;
       this.totalCount = res?.candidateCount;
       const totalPages = Math.ceil(this.totalCount / this.pageSize);
       this.lastPage = totalPages;
@@ -138,8 +149,16 @@ export class CandidateListComponent {
   }
 
   onCandidateSelect(candidate: any): void {
-    if (candidate.candidatesAddingAgainst !== null) this.toastr.warning('Candidate already added to requisition');
-    else this.getSelectedCandidateIds();
+    if (candidate?.reqServiceRequest?.length > 0) {
+      candidate.isSelected = true;
+      this.toastr.warning('Candidate already added to requisition');
+    }
+    // } else if (candidate.candidatesAddingAgainst !== null) {
+    //   candidate.isSelected = false;
+    //   this.toastr.warning('Candidate already added to requisition');
+    // } else {
+      this.getSelectedCandidateIds();
+    // }
   }
 
   getSelectedCandidateIds(): void {
@@ -156,6 +175,13 @@ export class CandidateListComponent {
       ?.map((skill: any) => skill.skills.skillName);
 
     return skills?.length ? skills.join(', ') : 'N/A';
+  }
+  getSelectedRequestName(item: any): string {
+
+    if (item?.reqServiceRequest?.length > 0) {
+      return item.reqServiceRequest[0].requestName;
+    }
+    return 'Not Assigned';
   }
 
   searchCandidate(search: string): void {
@@ -230,7 +256,7 @@ export class CandidateListComponent {
       const dialogRef = this.dialog.open(AssignRequirementComponent, {
         height: '265px',
         width: '477px',
-        data: { candidates: this.candidates, userId: this.userId }
+        data: { candidates: this.candidates, userId: this.userId , }
       });
       dialogRef.afterClosed().subscribe((confirmed: boolean) => {
         this.currentPage = 1;
@@ -240,7 +266,12 @@ export class CandidateListComponent {
     } else this.toastr.warning('You have not selected candidates to assign');
   }
 
-  selectCandidate(id: any): void {
-    this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
+  selectCandidate(item: any): void {
+    // if (item?.reqServiceRequest?.length > 0) {
+    //   this.toastr.warning('Candidate already added to requisition');
+    //   return item.reqServiceRequest[0].requestName;
+    // }
+    // else
+    this.router.navigateByUrl(`/dashboard/candidate-details/${item.candidateId}`);
   }
 }
