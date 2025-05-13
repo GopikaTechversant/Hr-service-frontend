@@ -87,7 +87,7 @@
                                 {{ candidateDetails?.candidateTotalExperience ?
                                 candidateDetails?.candidateTotalExperience : 'Nil' }}</span>
                         </div>
-                        <div class="details">
+                        <div class="details" *ngIf="this.userRole !== 'panel' && this.userRole !== 'manager'">
                             <span class="sub-head">
                                 <img src="assets/images/candidate-detail/money.svg" class="p-r-6" alt=""> Current Salary
                             </span>
@@ -95,7 +95,7 @@
                                 {{ candidateDetails?.candidateCurrentSalary ? candidateDetails?.candidateCurrentSalary :
                                 'Nil' }}</span>
                         </div>
-                        <div class="details">
+                        <div class="details" *ngIf="this.userRole !== 'panel' && this.userRole !== 'manager'">
                             <span class="sub-head">
                                 <img src="assets/images/candidate-detail/money.svg" class="p-r-6" alt=""> Expected
                                 Salary

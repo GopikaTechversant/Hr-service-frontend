@@ -180,6 +180,54 @@ export class StationCandidateDetailComponent implements OnInit {
     });
   }
 
+  getFormattedSkills(): any[] {
+    // Check if we have skillScore data first
+    if (this.candidateDetails?.skillScore?.length) {
+      console.log("skill",this.candidateDetails)
+        return this.candidateDetails.skillScore.map((skill: any) => ({
+         
+            name: skill.skillName || 'N/A',
+            description: skill.description || 'N/A',
+            score: skill.score || 'N/A'
+        }));
+    }
+    
+    // Fallback to skills array if skillScore is empty
+    if (this.candidateDetails?.skills?.length) {
+      console.log("skill",this.candidateDetails)
+        return this.candidateDetails.skills.map((skill: any) => ({
+            name: skill.skillName || 'N/A',
+            description: 'N/A', // Default since skills array might not have descriptions
+            score: 'N/A'       // Default since skills array might not have scores
+        }));
+    }
+    
+    // If no skills data at all
+    return [];
+}
+
+parseProgressSkills(): any[] {
+    if (!this.candidateDetails?.['progress.progressSkills']) return [];
+    
+    try {
+        // Try to parse as JSON if it's stored that way
+        return JSON.parse(this.candidateDetails['progress.progressSkills']);
+    } catch (e) {
+        // Fallback to text parsing if not JSON
+        const skillLines = this.candidateDetails['progress.progressSkills'].split('\n')
+            .filter((line: string) => line.trim() !== '');
+        
+        return skillLines.map((line: string) => {
+            const match = line.match(/(.+?)\s*\((\d+)\/10\)/);
+            return {
+                name: match ? match[1].trim() : line.trim(),
+                score: match ? match[2] : 'N/A',
+                description: '' // Default empty description
+            };
+        });
+    }
+}
+
   onSubmitInterviewData(data: any) {
     if (data) {
       this.loader = true;

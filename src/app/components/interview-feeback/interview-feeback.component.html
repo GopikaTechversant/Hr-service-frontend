@@ -12,11 +12,11 @@
   </label> -->
   </div>
   <div class="d-flex w-100">
-    <span class="f-w-500 f-s-14 p-t-10 w-30">Feedback</span>
+    <span class="f-w-500 f-s-14 p-t-10 w-30">Interview Status</span>
     <div class="d-flex p-l-10 w-70">
       <span class="input-feedback c-pointer no-close p-relative p-t-5" (click)="openFeedbackList = !openFeedbackList">
         <span class="no-close p-l-10 f-s-14 f-w-400">
-          {{ selectedFeedback.trim() === '' ? 'Select Feedback' : selectedFeedback }}
+          {{ selectedFeedback.trim() === '' ? 'Select Status' : selectedFeedback }}
         </span>
         <span class="f-right">
           <span>
@@ -45,9 +45,9 @@
   <div class="d-flex w-100 m-t-10">
     <span class="f-w-500 f-s-14 p-t-10 w-30">Add Skill and Score</span>
     <div class="p-l-10 w-70">
-      <div class="comments p-t-6" id="score" #score contenteditable="true" [innerHTML]="description"></div>
-      <!-- <div class="d-flex p-l-10 w-70">
-      <div class="w-70">
+      <!-- <div class="comments p-t-6" id="score" #score contenteditable="true" [innerHTML]="description"></div> -->
+      <div class="d-flex  w-100">
+      <div class="w-50">
         <span class="input-feedback padding-5 d-flex p-relative">
           <input type="text" placeholder="Search skill" (input)="getSkillSuggestions(searchvalue)" id="addskill"
             [(ngModel)]="searchvalue">
@@ -77,20 +77,31 @@
           </div>
         </span>
       </div>
-      <div class="add">
-        <span class="c-pointer add-btn" (click)="addSkill()">Add</span>
+      <div class="w-40 m-l-10">
+        <div class="input-feedback padding-5 d-flex p-relative">
+          <input type="text" placeholder="Description" id="description" [(ngModel)]="description">
+        </div>
       </div>
-    </div> -->
+      <div class="add">
+        <span 
+        class="c-pointer add-btn" 
+        [ngClass]="{ 'disabled': !selectedSkillId || !selectedScore || !description?.trim() }"
+        (click)="(selectedSkillId && selectedScore && description?.trim()) && addSkill()">
+        Add
+      </span>
+      </div>
+    </div>
     </div>
   </div>
-  <!-- <div class="d-flex w-100 m-t-10">
+  <div class="d-flex w-100 m-t-10">
       <span class="f-w-500 f-s-14 p-t-10 w-30">Added Skills and Scores</span>
       <div class="p-l-10 w-70">
         <div class="container-table m-b-0">
           <table class="">
             <tr class="table-header p-b-10">
-              <td class="text-start w-70">Skill</td>
-              <td class="text-start">Score</td>
+              <td class="text-start w-30">Skill</td>
+              <td class="text-start w-30">Score</td>
+              <td class="text-start w-60">Description</td>
               <td class="text-end">Actions</td>
             </tr>
 
@@ -100,10 +111,11 @@
                   <td class="text-start w-70" [title]="(item?.skillName | titlecase) ">
                     {{item?.skillName | titlecase}}
                   </td>
-                  <td class="text-end d-flex w-30 skill-list" [title]="item?.score">
+                  <td class="text-center  w-30 skill-list" [title]="item?.score">
                    
                     {{item?.score}}
                   </td>
+                  <td class="text-end d-flex w-30 skill-list">{{item?.description}}</td>
                   <td class="text-end">
                     <i class="fa fa-trash-o  red c-pointer" aria-hidden="true" (click)="removeSkill(item?.skillId)"></i>
                   </td>
@@ -113,9 +125,15 @@
           </table>
         </div>
       </div>
+    </div>
+    <!-- <div class="d-flex w-100 m-t-10">
+      <span class="f-w-500 f-s-14 p-t-10 w-30">Description</span>
+      <div class="d-flex p-l-10 w-70">
+        <textarea class="text-area" id="description"></textarea>
+      </div>
     </div> -->
   <div class="d-flex w-100 m-t-10">
-    <span class="f-w-500 f-s-14 p-t-10 w-30">Comment</span>
+    <span class="f-w-500 f-s-14 p-t-10 w-30">Feedback</span>
     <div class="d-flex p-l-10 w-70">
       <textarea class="text-area" id="comment"></textarea>
     </div>
