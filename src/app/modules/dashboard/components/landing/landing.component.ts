@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingComponent implements OnInit {
   isSidebarHidden: boolean = false;
-
+  userRole: any = localStorage.getItem('userRole');
   ngOnInit(): void {
   }
 
