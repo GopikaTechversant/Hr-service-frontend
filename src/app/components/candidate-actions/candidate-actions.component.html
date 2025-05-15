@@ -21,12 +21,16 @@
                         <td>{{ item?.stationNam === 'HR Manager' ? 'HR' : item?.stationNam}}</td>
                         <td class="text-start wrap" [title]="item['serviceRequest.requestName']">{{
                             item['serviceRequest.requestName'] }}</td>
-                        <td class="f-w-500 text-start"
+                        <td class="f-w-500 text-start" *ngIf="item?.serviceStation == 5"
+                            [ngClass]="{'orange': item?.progressStatus === '0' && item?.serviceStatus !== 'done', 'green': item?.progressStatus !== '0' || item?.serviceStatus === 'done'}">
+                            {{ item?.progressStatus === '0' && item?.serviceStatus !== 'done' ? 'Pending' :
+                            'Offer Released' }}
+                        </td>    
+                        <td class="f-w-500 text-start" *ngIf="item?.serviceStation != 5"
                             [ngClass]="{'orange': item?.progressStatus === '0' && item?.serviceStatus !== 'done', 'green': item?.progressStatus !== '0' || item?.serviceStatus === 'done'}">
                             {{ item?.progressStatus === '0' && item?.serviceStatus !== 'done' ? 'Pending' :
                             'Added' }}
                         </td>
-
                         <td class="text-center" *ngIf="userType !== 'super-admin'">
                             <i class="fa fa-arrows" aria-hidden="true" *ngIf="item" (click)="onSwitchStation(item)"></i>
                         </td>

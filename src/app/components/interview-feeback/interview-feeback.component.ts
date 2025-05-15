@@ -48,7 +48,7 @@ export class InterviewFeebackComponent implements OnInit {
   fileUploader: boolean = false;
   comment: any;
   description: any;
-
+  sendMail: boolean = false;
   constructor(private s3Service: S3Service, private tostr: ToastrService, private apiService: ApiService, private el: ElementRef) { }
 
   ngOnInit(): void {
@@ -67,25 +67,7 @@ export class InterviewFeebackComponent implements OnInit {
   onNotifyChange(event: any): void {
     
     if (event?.target?.checked) {
-      
-      console.log(this.selectedFeedback , "res");
-      if (this.serviceAssignee && this.candidateId ) {
-        const payload = {
-          userId: +this.serviceAssignee, // '+' to convert to number
-          candidateId: +this.candidateId,
-        };
-  
-        this.apiService.post(`/dashboard/send-feedback-reminderMail`, payload).subscribe(
-          (res: any) => {
-            this.tostr.success('Reminder Mail Sent Successfully!');
-          },
-          (err: any) => {
-            this.tostr.error('Failed to Send Reminder Mail.');
-          }
-        );
-      } else {
-        this.tostr.warning('Missing serviceAssignee or serviceCandidate in localStorage.');
-      }
+      this.sendMail = true;
     }
   }
   
