@@ -68,6 +68,23 @@ export class InterviewFeebackComponent implements OnInit {
     
     if (event?.target?.checked) {
       this.sendMail = true;
+      if (this.serviceAssignee && this.candidateId ) {
+        const payload = {
+          userId: +this.serviceAssignee,
+          candidateId: +this.candidateId,
+        };
+  
+        this.apiService.post(`/dashboard/send-feedback-reminderMail`, payload).subscribe(
+          (res: any) => {
+            this.tostr.success('Reminder Mail Sent Successfully!');
+          },
+          (err: any) => {
+            this.tostr.error('Failed to Send Reminder Mail.');
+          }
+        );
+      } else {
+        this.tostr.warning('Missing serviceAssignee or serviceCandidate in localStorage.');
+      }
     }
   }
   
@@ -147,24 +164,24 @@ export class InterviewFeebackComponent implements OnInit {
   submitClick(): void {
     // const updatedSkill = this.scoreDiv.nativeElement.innerHTML;
     const updatedSkill = this.progressSkill;
-    console.log("currentDescription", updatedSkill);
+    // console.log("currentDescription", updatedSkill);
     
       
-      if (this.serviceScheduledBy && this.candidateId ) {
-        const payload = {
-          userId: +this.serviceScheduledBy, // '+' to convert to number
-          candidateId: +this.candidateId,
-        };
+      // if (this.serviceScheduledBy && this.candidateId ) {
+      //   const payload = {
+      //     userId: +this.serviceScheduledBy, 
+      //     candidateId: +this.candidateId,
+      //   };
   
-        this.apiService.post(`/dashboard/send-feedback-reminderMail`, payload).subscribe(
-          (res: any) => {
-            this.tostr.success('Reminder Mail Sent Successfully!');
-          },
-          (err: any) => {
-            this.tostr.error('Failed to Send Reminder Mail.');
-          }
-        );
-      }
+      //   this.apiService.post(`/dashboard/send-feedback-reminderMail`, payload).subscribe(
+      //     (res: any) => {
+      //       this.tostr.success('Reminder Mail Sent Successfully!');
+      //     },
+      //     (err: any) => {
+      //       this.tostr.error('Failed to Send Reminder Mail.');
+      //     }
+      //   );
+      // }
     
 
     // const updatedSkill = this.progressSkill.map(({ skillName, ...rest }) => ({ ...rest }));
