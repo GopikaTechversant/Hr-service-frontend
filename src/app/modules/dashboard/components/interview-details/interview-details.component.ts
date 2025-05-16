@@ -3,6 +3,7 @@ import { ToastrServices } from 'src/app/services/toastr.service';
 import { DatePipe } from '@angular/common';
 import { ApiService } from 'src/app/services/api.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ControlContainer } from '@angular/forms';
 @Component({
   selector: 'app-interview-details',
   templateUrl: './interview-details.component.html',
@@ -65,15 +66,17 @@ export class InterviewDetailsComponent implements OnInit {
     if (data) this.data = data
     this.dialogRef.updateSize('60vw', '90vh');
     this.candidate = data?.candidate;
-    this.positionName = this.candidate['reqServiceRequest.requestName'] ?? '';
+    this.positionName = this.candidate['serviceSequence.serviceRequest.requestName'] ?? this.candidate['reqServiceRequest.requestName'] ?? '';
     this.positionId = this.candidate?.candidatesAddingAgainst ?? '';
     this.scheduleStatus = true;
+  
     this.serviceId = '';
     this.candidateId = this.candidate?.candidateId ?? '';
     this.currentCompany = this.candidate?.candidatePreviousOrg ?? '';
     this.candidateRevlentExperience = this.candidate?.candidateRevlentExperience ?? '';
     this.candidateTotalExperience = this.candidate?.candidateTotalExperience ?? '';
     this.candidateName = (this.candidate?.candidateFirstName ?? '') + ' ' + (this.candidate?.candidateLastName ?? '');
+    this.noticeperiodvalue = this.candidate?.candidateNoticePeriodByDays ?? '';
     this.fetchUsers();
     // this.fetchCandidates();
     this.fetchWorkMode();
@@ -206,7 +209,7 @@ export class InterviewDetailsComponent implements OnInit {
         interviewTime: data?.interviewTime,
         interViewPanel: data?.interviewPanel,
         interviewMode: data?.interviewMode,
-        serviceId: this.serviceId ?? '',
+        serviceId: this.candidate?.serviceId ?? '',
         station: this.candidateDetails?.candidateStation ?? '1',
         interviewStatus: data?.interviewStatus,
         comments: data?.feedback,
