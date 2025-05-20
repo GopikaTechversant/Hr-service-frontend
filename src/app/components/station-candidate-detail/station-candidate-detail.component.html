@@ -67,8 +67,7 @@
                         <div class="sub-head">
                             <span class="p-6 job-description"> : {{candidateDetails?.interviewTime | date:
                                 'dd/MM/YYY'}}</span>
-                            <span class="p-6 job-description"> : {{candidateDetails?.interviewTime | date: 'hh:mm
-                                a'}}</span>
+                            <span class="p-6 job-description"> : {{candidateDetails?.interviewTime | date: 'hh:mm a'}}</span>
                             <span class="p-6 job-description"> : {{candidateDetails?.pannelName | titlecase}}</span>
                             <span class="p-6 job-description"> : {{candidateDetails?.interviewstatus}}</span>
                             <span class="p-6 job-description"> : {{candidateDetails?.interviewMode ?
@@ -224,7 +223,8 @@
                             <span class="p-6" *ngIf="candidateDetails['progress.progressFile']">Attached File</span>
                         </div>
                         <div class="sub-head d-flex">
-                            <span class="p-6">: {{ candidateDetails['progress.progressDescription'] || 'Nil' }}</span>
+                            <!-- <span class="p-6">: {{ candidateDetails['progress.progressDescription'] || 'Nil' }}</span> -->
+         <span class="p-6"> {{ candidateDetails['reqCandidateComment.commentComment'] }}</span>
                             <span class="p-6" *ngIf=" candidateDetails['progress.progressFile']">:
                                 <span class="p-l-5 view-attachment c-pointer" title="View Attachment"
                                     (click)="viewResume(candidateDetails['progress.progressFile'])">View Attachment</span>

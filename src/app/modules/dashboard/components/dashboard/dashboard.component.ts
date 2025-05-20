@@ -71,14 +71,14 @@ export class DashboardComponent implements OnInit {
   }
 
   fetchcount(): void {
-    console.log("inside fetch ");
+    // console.log("inside fetch ");
     this.apiService.get(`/dashboard/card-data?requestId=${this.positionId}&fromDate=${this.startDate}&todate=${this.endDate}`)
       .subscribe({
         next: (res: any) => {
           if (res?.data) {
             this.lists = res?.data;
             this.initialLoader = false; 
-            console.log("this.lists",this.lists);
+            // console.log("this.lists",this.lists);
             
           }
         },

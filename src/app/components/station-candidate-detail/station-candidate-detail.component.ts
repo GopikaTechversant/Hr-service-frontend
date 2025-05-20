@@ -183,9 +183,7 @@ export class StationCandidateDetailComponent implements OnInit {
   getFormattedSkills(): any[] {
     // Check if we have skillScore data first
     if (this.candidateDetails?.skillScore?.length) {
-      console.log("skill",this.candidateDetails)
         return this.candidateDetails.skillScore.map((skill: any) => ({
-         
             name: skill.skillName || 'N/A',
             description: skill.description || 'N/A',
             score: skill.score || 'N/A'
@@ -193,14 +191,13 @@ export class StationCandidateDetailComponent implements OnInit {
     }
     
     // Fallback to skills array if skillScore is empty
-    if (this.candidateDetails?.skills?.length) {
-      console.log("skill",this.candidateDetails)
-        return this.candidateDetails.skills.map((skill: any) => ({
-            name: skill.skillName || 'N/A',
-            description: 'N/A', // Default since skills array might not have descriptions
-            score: 'N/A'       // Default since skills array might not have scores
-        }));
-    }
+    // if (this.candidateDetails?.skills?.length) {
+    //     return this.candidateDetails.skills.map((skill: any) => ({
+    //         name: skill.skillName || 'N/A',
+    //         description: 'N/A',
+    //         score: 'N/A'       
+    //     }));
+    // }
     
     // If no skills data at all
     return [];

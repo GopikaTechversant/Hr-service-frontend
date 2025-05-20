@@ -37,7 +37,7 @@ export class CandidateActionsComponent implements OnInit {
   }
 
   onSwitchStation(candidate: any): void {
-    console.log(candidate,"candidate");
+    // console.log(candidate,"candidate");
     
     this.stationId = candidate?.serviceStation.toString();
     this.modalClose = false;
@@ -71,23 +71,23 @@ export class CandidateActionsComponent implements OnInit {
     const id = details?.serviceId;
     const status = statusProgress;
     this.stationId = details?.serviceStation.toString();
-    console.log("this.stationId", this.stationId);
+    // console.log("this.stationId", this.stationId);
 
-    console.log("details", details);
+    // console.log("details", details);
     if (this.stationId === '2') {
       this.apiService.get(`/written-station/progressDetail?serviceId=${id}`).subscribe((data: any) => {
-        console.log("data", data);
+        // console.log("data", data);
 
         if (data?.candidates) this.viewCandidateDetail(data?.candidates, status, '');
       });
     } else if (this.stationId === '3') {
       this.apiService.get(`/technical-station/progressDetail?serviceId=${id}`).subscribe((data: any) => {
-        console.log("data", data);
+        // console.log("data", data);
         if (data?.candidates) this.viewCandidateDetail(data?.candidates, status, '');
       });
     } else if (this.stationId === '4') {
       this.apiService.get(`/technical-station-two/progressDetail?serviceId=${id}`).subscribe((data: any) => {
-        console.log("data", data);
+        // console.log("data", data);
         if (data?.candidates) this.viewCandidateDetail(data?.candidates, status, '');
       });
     } else if (this.stationId === '5') {

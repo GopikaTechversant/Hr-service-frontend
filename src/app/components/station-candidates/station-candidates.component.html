@@ -171,9 +171,9 @@
                                     </span>
                                 </td>
                                 <td class="text-start" [title]="item?.currentStation | titlecase">{{item?.currentStation === 'HR Manager' ? 'HR' : (item?.currentStation | titlecase)}}</td>
-                                <td (click)="fetchDetails(item?.serviceId , item?.progressStatus)"
+                                <td
                                     class="c-pointer text-start">
-                                    <div class="d-flex more">
+                                    <div class="d-flex more" (click)="fetchDetails(item?.serviceId , item?.progressStatus)" >
                                         <i class="fa fa-eye blue f-s-18 f-w-500" aria-hidden="true"></i>
                                         <span class="blue p-l-5">View detail</span>
                                     </div>

@@ -150,7 +150,7 @@ export class ServiceRequestComponent implements OnInit {
         const text = this.requirement_details?.requestDescription;
         this.formattedText = this.sanitizer.bypassSecurityTrustHtml(text);
         this.flows = res?.flows;
-        console.log("this.flows",this.flows);
+        // console.log("this.flows",this.flows);
         
         this.initializeDataValues();
       }

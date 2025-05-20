@@ -63,7 +63,7 @@ export class EditComponent implements OnInit {
     this.email = this.candidateDetails?.userEmail;
     this.role = this.candidateDetails?.userRole;
     this.workStation = this.candidateDetails?.station;
-    console.log("this.workStation",this.workStation);
+    // console.log("this.workStation",this.workStation);
     
   }
 

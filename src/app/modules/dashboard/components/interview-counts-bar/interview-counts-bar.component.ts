@@ -73,8 +73,8 @@ export class InterviewCountsBarComponent implements OnInit, OnChanges, AfterView
   }
 
   fetchBarchartDetails(): void {
-    console.log("this.startDate", this.startDate);
-    console.log("this.endDate", this.endDate);
+    // console.log("this.startDate", this.startDate);
+    // console.log("this.endDate", this.endDate);
 
     this.initialLoader = true;
     this.sixMonthCount = [];

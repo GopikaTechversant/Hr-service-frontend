@@ -31,7 +31,7 @@ export class TechnicalDetailComponent implements OnInit {
 
   onSwitchStation(candidate: any): void {
     this.modalClose = false;
-    console.log("this.stationId:", this.stationId, typeof this.stationId);
+    // console.log("this.stationId:", this.stationId, typeof this.stationId);
 
     if (candidate?.serviceStatus === 'pending' && ((this.stationId === '2' && candidate?.currentStation === 'Technical 1') || (this.stationId === '3' && candidate?.currentStation === 'Technical 2') || (this.stationId === '4' && candidate?.currentStation === 'Technical 3'))) {
       const userId = localStorage.getItem('userId');
@@ -65,7 +65,7 @@ export class TechnicalDetailComponent implements OnInit {
       this.apiService.get(`/written-station/progressDetail?serviceId=${id}`).subscribe((data: any) => {
       
         if (data?.candidates) this.viewCandidateDetail(data?.candidates, status);
-        console.log("data" , data?.candidates['candidate.candidateId']);
+        // console.log("data" , data?.candidates['candidate.candidateId']);
         
       });
     } else if (this.stationId === '3') {
@@ -81,7 +81,7 @@ export class TechnicalDetailComponent implements OnInit {
   }
 
   viewCandidateDetail(item: any, status: any): void {
-    console.log("item",item);
+    // console.log("item",item);
     
     this.modalClose = false;
     const dialogRef = this.dialog.open(StationCandidateDetailComponent, {
