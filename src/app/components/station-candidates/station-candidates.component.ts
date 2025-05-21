@@ -301,8 +301,12 @@ export class StationCandidatesComponent implements OnInit {
     this.fetchList(this.currentPage);
   }
 
-  selectCandidate(id: any): void {
-    this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
+  selectCandidate(item: any): void {
+    console.log(item['serviceRequest.requestServiceId'] , "123" , item['candidate.candidateId']);
+    // this.userId = item['candidate.candidateId'];
+    // this.requestId = item['serviceRequest.requestServiceId'];
+    // this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
+    this.router.navigateByUrl(`/dashboard/candidate-details/${item['candidate.candidateId']}?requestId=${item['serviceRequest.requestServiceId']}`)
   }
 
   getRequsitionSuggestion(event:any){

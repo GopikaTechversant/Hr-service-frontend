@@ -54,8 +54,7 @@
                     <div class="sub-head">
                         <span class="p-6 job-description"> : {{data?.candidateDetails?.interviewTime | date:
                             'dd/MM/YYY'}}</span>
-                        <span class="p-6 job-description"> : {{data?.candidateDetails?.interviewTime | date: 'hh:mm
-                            a'}}</span>
+                        <span class="p-6 job-description"> : {{data?.candidateDetails?.interviewTime | date: 'hh:mm a'}}</span>
                         <span class="p-6 job-description"> : {{data?.candidateDetails?.pannelName | titlecase}}</span>
                         <span class="p-6 job-description"> : {{data?.candidateDetails?.interviewstatus}}</span>
                         <span class="p-6 job-description"> : {{data?.candidateDetails?.interviewMode ?
@@ -233,9 +232,8 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    <div
-                        *ngIf="data?.candidateDetails?.serviceStatus !== 'pending' && statusMessages[data?.candidateDetails?.serviceStatus]">
+                <!-- <div>
+                    <div *ngIf="data?.candidateDetails?.serviceStatus !== 'pending' && statusMessages[data?.candidateDetails?.serviceStatus]">
                         <span class="heading p-l-10 p-b-0 d-flex j-space">Selection Status</span>
                         <div class="sub-head d-flex p-6 content">
                             <span class="padding-5">
@@ -243,7 +241,7 @@
                             </span>
                         </div>
                     </div>
-                </div>
+                </div> --> <!--NOt required currently-->
             </div>
         </div>
     </div>

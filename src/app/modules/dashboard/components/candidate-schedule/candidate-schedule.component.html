@@ -34,7 +34,7 @@
             </div>
             <ng-container *ngIf="candidates_list?.length > 0">
                 <ng-container *ngFor="let item of candidates_list">
-                    <tr class="c-pointer details" (dblclick)="selectCandidate(item?.candidateId)">
+                    <tr class="c-pointer details" (dblclick)="selectCandidate(item)"> <!--only candidateId is removed and sending item only-->
                         <td class="text-start"
                             [title]="(item?.candidateFirstName | titlecase) + (item?.candidateLastName | titlecase)">
                             {{item?.candidateFirstName | titlecase}} {{item?.candidateLastName | titlecase}}

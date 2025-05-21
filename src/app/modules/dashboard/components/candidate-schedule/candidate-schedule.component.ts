@@ -62,8 +62,10 @@ export class CandidateScheduleComponent implements OnInit {
     });
   }
 
-  selectCandidate(id: any): void {
-    this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
+  selectCandidate(item: any): void {
+    // console.log( "123" , item.candidateId , item['serviceSequence.serviceRequest.requestId'] );
+    // this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
+    this.router.navigateByUrl(`/dashboard/candidate-details/${item.candidateId}?requestId=${item['serviceSequence.serviceRequest.requestId']}`);
   }
 
   searchCandidate(search: string): void {
