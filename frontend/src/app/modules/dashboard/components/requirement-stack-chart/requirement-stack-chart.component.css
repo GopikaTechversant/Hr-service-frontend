@@ -1,0 +1,78 @@
+
+.barchart {
+    height: 100% !important;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 8px 0px #0000001A;
+}
+
+.head {
+    padding: 10px;
+    justify-content: space-between;
+}
+
+.text {
+    display: flex;
+    flex: 2;
+}
+
+.heading {
+    color: #000000;
+    font-weight: 500;
+    line-height: 26.07px;
+    font-size: 18px;
+}
+
+.input {
+    border: 1px solid #E9E9E9;
+    outline: none;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    width: 250px;
+    height: 34px;
+}
+
+.dropdown {
+    background: white;
+    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+    max-height: 150px;
+    overflow-y: auto;
+    font-size: 14px;
+    font-weight: 400;
+    width: 98%;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 999;
+    margin-top: 5px;
+    top: 100%;
+    left: 0;
+}
+
+.dropdown :hover {
+    background-color: #eceaea;
+}
+
+.chart-container {
+    padding-top: 15px;
+    width: 100%;
+    overflow-x: auto;
+}
+
+.chart-inner-container {
+    width: 100%;
+    overflow-x: auto;
+    /* Enable horizontal scrolling */
+}
+
+.canvas-container {
+    position: relative;
+}
+
+.no-data {
+    /* position: absolute; */
+    padding-left: 52%;
+    padding-top: 9%;
+    z-index: 9;
+    color: #c10a0a;
+    font-size: 16px;
+    font-weight: 500;
+}

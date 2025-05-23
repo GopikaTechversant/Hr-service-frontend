@@ -1,0 +1,27 @@
+<div class="main" *ngIf="requirementList">
+    <div>
+        <p class="name">Assign Requirement</p>
+        <div class="d-flex j-space content">
+            <div class="d-flex dropdown p-relative no-close" (click)="showDropdown = !showDropdown">
+                <div class="j-space">
+                    <div class="c-pointer" *ngIf="!selectedRequirement">
+                        <span>Choose Requirement</span>
+                    </div>
+                    <div *ngIf="selectedRequirement">{{selectedRequirement}}</div>
+                </div>
+                <div class="no-close s-list c-pointer m-b-2 flex-1 d-flex j-end align-end sub p-r-17 m-t-5">
+                    <i class="no-close s-list fa fa-chevron-down s-text"></i>
+                </div>
+                <div class="dropdown-list req-name" *ngIf="showDropdown" >
+                    <span class="p-8 p-l-10 " *ngFor="let name of requirementList" >
+                        <span class="c-pointer wrap" (click)='selectRequirement(name?.requestName,name?.requestId); !showDropdown'>{{name?.requestName}}</span>
+                    </span>
+                </div>
+            </div>
+            <div class="d-flex j-space btn">
+                <button class="cancel-btn c-pointer" (click)="cancel()">Cancel</button>
+                <button class="save-btn c-pointer" (click)="save()" [disabled]="loader">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

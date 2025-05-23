@@ -1,0 +1,162 @@
+<div class="main" *ngIf="userRole != 'panel'">
+    <div class="m-t-5 m-b-8 d-flex justify-between">
+        <div class="flex-start m-t-10"><span class="head">Dashboard</span></div>
+        <div class="d-flex j-end">
+            <div class="date-filters d-flex p-r-10 ">
+                <div class="d-flex align-items-center">
+                    <span class="filter p-r-10 p-t-10">From</span>
+                    <div class="p-relative">
+                        <input class="p-l-5 date-input c-pointer" placeholder="dd-MM-yyyy" matInput
+                            [matDatepicker]="pickerFromDate" [value]="startDate | date : 'dd/MM/yyyy'" id="startDate"
+                            [max]="today" (dateChange)="dateChange($event, 'startDate')" [ngModel]="startDate"
+                            (click)="pickerFromDate.open()">
+                        <mat-datepicker #pickerFromDate></mat-datepicker>
+                        <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"
+                            (click)="pickerFromDate.open()"></i>
+                    </div>
+                </div>
+                <div class="p-l-10 d-flex align-items-center">
+                    <span class="filter p-l-10 p-r-10 p-t-10">To</span>
+                    <div class="p-relative">
+                        <input class="p-l-5 date-input c-pointer" placeholder="dd-MM-yyyy" matInput
+                            [matDatepicker]="pickerToDate" (dateChange)="dateChange($event, 'endDate')"
+                            [ngModel]="endDate" (click)="pickerToDate.open()" [value]="endDate | date : 'dd/MM/yyyy'"
+                            id="endDate" [min]="startDate" [max]="today">
+                        <mat-datepicker #pickerToDate></mat-datepicker>
+                        <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"
+                            (click)="pickerToDate.open()"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex m-l-10 m-b-2 suggestion">
+                <span class="">
+                    <span class="d-flex input-interview-rounds-skill p-relative">
+                        <input type="text" class="skill-input p-l-9" name="skill search"
+                            (input)="getRequsitionSuggestion($event)" id="designationSearch"
+                            [(ngModel)]="requisitionSearchValue" autocomplete="off" placeholder="Search Requisition">
+                        <!-- <span class=" c-pointer skill-input">
+                            {{selectedRequsition.trim() !== '' ? selectedRequsition : ''}}
+                        </span> -->
+                        <div class=" d-flex j-end p-t-5">
+                            <span *ngIf="requisitionSearchValue.trim() !== ''" (click)="clearFilter()"
+                                class="c-pointer p-absolute f-right p-r-5">
+                                <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
+                            </span>
+                        </div>
+                    </span>
+                    <div class="p-relative">
+                        <div class="m-t-3 drop-list-designation"
+                            *ngIf="requestList_open && requsitionSuggestions.length > 0">
+                            <div class="p-6 c-pointer" *ngFor="let suggestion of requsitionSuggestions"
+                                (click)="selectPosition(suggestion?.requestName,suggestion?.requestId)">
+                                <span class="c-pointer p-l-5">{{suggestion?.requestName}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+                <!-- <div class="input p-t-6 p-l-6 no-close p-relative c-pointer"
+                    (click)="requestList_open = !requestList_open">
+                    <span class="f-right d-flex">
+                        <span *ngIf="displayPosition && displayPosition.trim() !== ''" (click)="clearFilter()"class="c-pointer">
+                            <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
+                        </span>
+                        <div class="c-pointer">
+                            <i [ngClass]="requestList_open ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"
+                                class="m-l-5 p-r-10 s-text no-close"></i>
+                        </div>
+                    </span>
+                    <span class="c-pointer text-wrap"
+                        [title]="displayPosition.trim() === '' ? 'Select Requisition' : displayPosition">
+                        {{displayPosition.trim() === '' ? 'Select Requisition' : displayPosition}}
+                    </span>
+                    <div class="no-close dropdown c-pointer" *ngIf="requestList_open">
+                        <div class="p-8"
+                            (click)='selectPosition(name?.requestName,name?.requestId);requestList_open = !requestList_open'
+                            *ngFor="let name of requestList">
+                            <span class="p-l-10">{{name?.requestName}}</span>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <div *ngIf="initialLoader">
+        <app-skeleton-loader [loaderDatas]="[9]" [higherWidth]="1000" [lowerWidth]="800"
+            [gridColumn]="9"></app-skeleton-loader>
+    </div>
+    <div *ngIf="lists && !initialLoader" class="candidate w-100 d-flex" >
+        <div class="candidate-card c-pointer">
+            <div class="d-flex">
+                <div class="icon-div">
+                    <span class="icon"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
+                </div>
+                <div class="detail">
+                    <span class="name">Total Openings</span>
+                    <span class="count">{{lists[0]?.vacancy}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="candidate-card c-pointer" (click)="navigateToDetail(lists,'total')">
+            <div class="d-flex">
+                <div class="icon-div">
+                    <span class="icon"><i class="fa fa-users" aria-hidden="true"></i></span>
+                </div>
+                <div class="detail">
+                    <div><span class="d-flex name">Total Applicants</span></div>
+                    <div><span class="count">{{lists[0]?.totalApplicant}}</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="candidate-card c-pointer" (click)="navigateToDetail(lists,'shorted')">
+            <div class="d-flex">
+                <div class="icon-div">
+                    <span class="icon"><i class="fa fa-users" aria-hidden="true"></i></span>
+                </div>
+                <div class="detail">
+                    <div><span class="d-flex name">Shortlisted</span></div>
+                    <div><span class="count">{{lists[1]?.count}}</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="candidate-card c-pointer" (click)="navigateToDetail(lists,'hired')">
+            <div class="d-flex">
+                <div class="icon-div">
+                    <span class="icon"><i class="fa fa-user-plus" aria-hidden="true"></i></span>
+                </div>
+                <div class="detail">
+                    <div><span class="d-flex name">Hired</span></div>
+                    <div><span class="count">{{lists[2]?.count}}</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="candidate-card c-pointer" (click)="navigateToDetail(lists,'rejected')">
+            <div class="d-flex">
+                <div class="icon-div">
+                    <span class="icon"><i class="fa fa-user-times" aria-hidden="true"></i></span>
+                </div>
+                <div class="detail">
+                    <div><span class="d-flex name">Rejected</span></div>
+                    <div><span class="count">{{lists[3]?.count}}</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex w-100 m-t-10 m-b-10 gaps">
+        <div class="w-60 p-t-10">
+            <app-requirement-stack-chart [startDate]="startDate" [endDate]="endDate"></app-requirement-stack-chart>
+        </div>
+        <div class="w-40 p-t-10 m-l-5">
+            <app-application-list-pie [positionId]="positionId" [startDate]="startDate"
+                [endDate]="endDate"></app-application-list-pie>
+        </div>
+    </div>
+    <div class="d-flex w-100 m-t-10 m-b-10">
+        <div class="w-60 p-t-10">
+            <app-detailed-recruitment [startDate]="startDate" [endDate]="endDate"></app-detailed-recruitment>
+        </div>
+        <div class="w-40 p-t-10 m-l-5">
+            <app-interview-counts-bar [positionId]="positionId" [startDate]="startDate"
+                [endDate]="endDate"></app-interview-counts-bar>
+        </div>
+    </div>
+</div>

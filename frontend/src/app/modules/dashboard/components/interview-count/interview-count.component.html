@@ -1,0 +1,78 @@
+<div class="main d-flex">
+    <div class="d-flex head w-100">
+        <div class="heading-container">
+            <span class="heading p-l-10">Interview Counts</span>
+        </div>
+        <div class="date-filters d-flex">
+            <div class="d-flex date-filter">
+                <span class="filter p-r-10 p-t-10">From</span>
+                <div class="p-relative">
+                    <input class="p-l-5 input c-pointer" placeholder="29/02/11" matInput
+                        [matDatepicker]="pickerFromDate" [value]="startDate | date:'yyyy-MM-dd'" id="startDate"
+                        [max]="today" (dateChange)="dateChange($event, 'startDate')" [ngModel]="startDate"
+                        (click)="pickerFromDate.open()">
+                    <mat-datepicker #pickerFromDate></mat-datepicker>
+                    <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"
+                        (click)="pickerFromDate.open()"></i>
+                </div>
+            </div>
+            <div class="d-flex date-filter p-r-10">
+                <span class="filter p-l-10 p-r-10 p-t-10">To</span>
+                <div class="p-relative">
+                    <input class="p-l-5 input c-pointer" placeholder="29/02/11" matInput [matDatepicker]="pickerToDate"
+                        (dateChange)="dateChange($event, 'endDate')" [ngModel]="endDate" (click)="pickerToDate.open()"
+                        [value]="endDate | date:'yyyy-MM-dd'" id="endDate" [min]="startDate" [max]="today">
+                    <mat-datepicker #pickerToDate></mat-datepicker>
+                    <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"
+                        (click)="pickerToDate.open()"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-table m-b-0 w-100">
+        <table class="table">
+            <tr class="table-header f-w-500 p-b-10">
+                <td>Date</td>
+                <td>Recruiter Name</td>
+                <td>Scheduled</td>
+                <td>Conducted</td>
+                <td>Rejected</td>
+            </tr>
+            <!-- <div class="loader-parent">
+                    <img src="assets/gif/loader.gif">
+                </div> -->
+            <ng-container *ngIf="countArray.length > 0">
+                <ng-container *ngFor="let item of countArray">
+                    <tr class="c-pointer">
+                        <td>{{item?.date | date :'dd/MM/YYY'}}</td>
+                        <td>{{item?.userFullName}}</td>
+                        <td>{{item?.interviewScheduled}}</td>
+                        <td>{{item?.interviewConducted}}</td>
+                        <td>{{item?.interviewRejectedcted}}</td>
+                    </tr>
+                </ng-container>
+            </ng-container>
+            <div *ngIf="countArray?.length === 0" class="no-data d-flex w-100">No Data Found</div>
+        </table>
+    </div>
+    <div *ngIf="totalCount" class="page d-flex j-end p-10 m-10">
+        <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(1)">
+            <img src="assets/images/double-arrow-left-icon.svg" alt="" height="14px" width="14px">
+        </button>
+        <button *ngIf="currentPage === 1" class="box p-r-20 m-r-10">
+            <img src="assets/images/inactive-double-arrow-left.svg" alt="" height="23px" width="23px">
+        </button>
+        <ng-container *ngFor="let page of generatePageNumbers()">
+            <button *ngIf="page === '...'" class="box dot" disabled>...</button>
+            <button *ngIf="page !== '...' && page === currentPage" class="box current-page c-pointer">{{ page
+                }}</button>
+            <button *ngIf="page !== '...' && page !== currentPage" class="box c-pointer" (click)="onPageChange(page)">
+                {{page}}</button>
+        </ng-container> <button *ngIf="currentPage < lastPage" class="box c-pointer" (click)="onPageChange(lastPage)">
+            <img src="assets/images/double-arrow-right-icon.svg" alt="" height="14px" width="14px">
+        </button>
+        <button *ngIf="currentPage === lastPage" class="box">
+            <img src="assets/images/inactive-double-arrow-right.svg" alt="" height="23px" width="23px">
+        </button>
+    </div>
+</div>

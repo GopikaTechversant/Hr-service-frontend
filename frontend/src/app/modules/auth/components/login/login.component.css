@@ -1,0 +1,241 @@
+.main {
+  overflow: hidden;
+  height: 100vh;
+}
+
+.img-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-container img {
+  height: 100vh;
+  width: 100%;
+  object-fit: cover;
+}
+
+.login-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #E9E9E9;
+}
+
+.welcome {
+  font-size: 27px;
+  font-weight: 500;
+  line-height: 40.29px;
+  text-align: left;
+  line-height: 70.29px;
+}
+
+.loginContainer {
+  padding: 20px;
+  box-shadow: 0px 4px 8px 3px #0000001F;
+  background: #FFFFFF;
+  text-align: center;
+  width: 57%;
+  border-radius: 3px;
+  border: none;
+  opacity: 0.9;
+  height: auto;
+}
+
+.input {
+  background: #FAFAFA;
+}
+
+.form-field {
+  flex-direction: column;
+}
+
+.email {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.eyeIcon {
+  position: absolute;
+  z-index: 4;
+  right: 14px;
+  top: 28px;
+  bottom: 0px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.c-black {
+  color: #4F4F4F;
+}
+
+
+.login-btn {
+  width: 99%;
+  height: 40px;
+  background: #005EC9;
+  border-radius: 3px;
+  border: none;
+  font-size: 20px;
+  font-weight: 400;
+  color: #FFFFFF;
+  box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+.content {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: 0em;
+  color: #ABABAB;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+.info img {
+  height: 84px;
+  width: 347px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.forgot-password {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: #0034C4;
+}
+
+.requiredField {
+  min-height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px;
+}
+
+.error {
+  color: red;
+}
+
+.spinner {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  z-index: 5;
+  top: 40%;
+  left: 48%;
+}
+
+.spinner img {
+  width: 100%;
+}
+
+.sign_in_btn_wrapper {
+  transform: scale(1.5, 1.5);
+  float: left;
+  margin-left: 20vmin;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 1450px) {
+  .loginContainer {
+    width: 67%;
+  }
+
+  .info img {
+    height: 70px;
+    width: 250px;
+  }
+
+  .welcome {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 45.29px;
+  }
+
+}
+
+@media screen and (max-width: 1024px) {
+  .loginContainer {
+    width: 75%;
+  }
+
+  .welcome {
+    font-size: 18px;
+    line-height: 40px;
+  }
+
+}
+
+@media screen and (max-width: 768px) {
+  .loginContainer {
+    width: 85%;
+  }
+
+  .welcome {
+    font-size: 16px;
+    line-height: 35px;
+  }
+
+
+}
+
+@media screen and (max-width: 480px) {
+  .loginContainer {
+    width: 95%;
+  }
+
+  .welcome {
+    font-size: 14px;
+    line-height: 30px;
+  }
+
+}
+
+.google-content {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 14px;
+}
+
+#google-signin-button {
+  width: 100%;
+  max-width: 400px;
+  /* Set a maximum width for the button */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+  #google-signin-button {
+    max-width: 90%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #google-signin-button {
+    max-width: 80%;
+  }
+}

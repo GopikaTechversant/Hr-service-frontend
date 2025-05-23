@@ -1,0 +1,347 @@
+<div class="main">
+    <div class="first-box">
+        <span class="heading  m-t-12">Add Candidates</span>
+        <div *ngIf="loader" class="loader-parent">
+            <img src="assets/gif/loader.gif">
+        </div>
+        <form [formGroup]="candidateForm" (ngSubmit)="submitClick(); $event.preventDefault()"
+            enctype="multipart/form-data">
+            <div class="d-flex parent p-t-10">
+                <div class="child d-flex m-b-10 position-relative">
+                    <span class="label m-b-4">First Name<span class="required">*</span></span>
+                    <input type="text" class="input-box" formControlName="candidateFirstName" placeholder="First Name"
+                        maxlength="20" (keydown)="nameValidation($event);"
+                        (input)="searchCandidate(candidateForm.get('candidateFirstName')?.value , 'firstName')">
+                    <div
+                        *ngIf="candidateForm.get('candidateFirstName')?.hasError('required') && candidateForm.get('candidateFirstName')?.touched">
+                        <mat-error>Please Enter First Name</mat-error>
+                    </div>
+                    <div *ngIf="showCandidates && firstNameInput" class="p-absolute candidate-dropdown no-close">
+                        <div class="candidate-column" *ngFor="let item of candidateList"
+                            (click)="selectCandidate(item.candidateId);showCandidates = !showCandidates">
+                            <div class="d-flex candidate">
+                                <div class="m-1">
+                                    <span class="user-profile">{{item?.candidateFirstName.charAt(0) ?
+                                        (item?.candidateFirstName.charAt(0) |
+                                        uppercase) : 'U'}}</span>
+                                </div>
+                                <div class="ms-1">
+                                    <span class="text-wrap"
+                                        [title]="item?.candidateFirstName + ' ' + item?.candidateLastName">{{item?.candidateFirstName}}
+                                        {{item?.candidateLastName}}</span>
+                                    <span class="detail"><span class="break-word p-r-3"
+                                            [title]="item?.candidateEmail">{{item?.candidateEmail}}</span> |
+                                        <span class="p-l-2 p-t-1">{{item?.candidateMobileNo}}</span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                <div class="child d-flex m-b-10 position-relative">
+                    <span class="label m-b-4">Last Name<span class="required">*</span></span>
+                    <input type="text" class="input-box" formControlName="candidateLastName" placeholder="Last Name"
+                        maxlength="20"(keydown)="nameValidation($event)" (paste)="namePasteValidation($event)"
+                        (input)="searchCandidate(candidateForm.get('candidateLastName')?.value, 'lastName')">
+                    <div
+                        *ngIf="candidateForm.get('candidateLastName')?.hasError('required') && candidateForm.get('candidateLastName')?.touched">
+                        <mat-error>Please Enter Last Name</mat-error>
+                    </div>
+                    <div *ngIf="showCandidates && lastNameInput" class="p-absolute candidate-dropdown no-close">
+                        <div class="candidate-column" *ngFor="let item of candidateList"
+                            (click)="selectCandidate(item.candidateId);showCandidates = !showCandidates">
+                            <div class="d-flex candidate">
+                                <div class="m-1">
+                                    <span class="user-profile">{{item?.candidateFirstName.charAt(0) ?
+                                        (item?.candidateFirstName.charAt(0) |
+                                        uppercase) : 'U'}}</span>
+                                </div>
+                                <div class="ms-1">
+                                    <span class="text-wrap"
+                                        [title]="item?.candidateFirstName + ' ' + item?.candidateLastName">{{item?.candidateFirstName}}
+                                        {{item?.candidateLastName}}</span>
+                                    <span class="detail"><span class="break-word p-r-3"
+                                            [title]="item?.candidateEmail">{{item?.candidateEmail}}</span> |
+                                        <span class="p-l-2 p-t-1">{{item?.candidateMobileNo}}</span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="child d-flex m-b-10">
+                    <span class="label m-b-4">DOB</span>
+                    <div class="p-relative w-100">
+                        <input class="p-l-5  input-box" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate"
+                            (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate"
+                            formControlName="candidateDoB" [max]="maxDate">
+                        <span> <mat-datepicker #pickerdate class=""></mat-datepicker>
+                            <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
+                                (click)="pickerdate?.open()"></i>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="d-flex  parent">
+                <div class="child d-flex m-b-10">
+                    <span class="label m-b-4">Gender<span class="required">*</span></span>
+                    <span class="d-flex gender input-box c-pointer">
+                        <span class="padding">
+                            <input type="radio" id="Male" name="candidateGender" value="Male"
+                                formControlName="candidateGender">
+                            <label for="Male" class="p-t-5 p-l-5 ">Male</label>
+                        </span>
+                        <span class="padding">
+                            <input type="radio" id="Female" name="candidateGender" value="Female"
+                                formControlName="candidateGender">
+                            <label for="Female" class="p-t-5 p-l-5">Female</label>
+                        </span>
+                        <span class="padding">
+                            <input type="radio" id="Others" name="candidateGender" value="Others"
+                                formControlName="candidateGender">
+                            <label for="Others" class="p-t-5 p-l-5">Others</label>
+                        </span>
+                    </span>
+                    <div
+                        *ngIf="candidateForm.get('candidateGender')?.hasError('required') && candidateForm.get('candidateGender')?.touched">
+                        <mat-error>Gender Required</mat-error>
+                    </div>
+                </div>
+                <div class="child d-flex m-b-10 position-relative">
+                    <span class="label m-b-4">Mobile Number<span class="required">*</span></span>
+                    <input type="text" class="input-box" formControlName="candidateMobileNo" maxlength="10"
+                        title="Enter a 10 digit Mobile number" (keypress)="onKeypress($event)" (paste)="onPaste($event)"
+                        (input)="searchCandidate(candidateForm.get('candidateMobileNo')?.value, 'number')">
+                    <div
+                        *ngIf="candidateForm.get('candidateMobileNo')?.hasError('required') && candidateForm.get('candidateMobileNo')?.touched">
+                        <mat-error>Mobile Number is mandatory</mat-error>
+                    </div>
+                    <div *ngIf="showCandidates && numberInput" class="p-absolute candidate-dropdown no-close">
+                        <div class="candidate-column" *ngFor="let item of candidateList"
+                            (click)="selectCandidate(item.candidateId);showCandidates = !showCandidates">
+                            <div class="d-flex candidate">
+                                <div class="m-1">
+                                    <span class="user-profile">{{item?.candidateFirstName.charAt(0) ?
+                                        (item?.candidateFirstName.charAt(0) |
+                                        uppercase) : 'U'}}</span>
+                                </div>
+                                <div class="ms-1">
+                                    <span class="text-wrap"
+                                        [title]="item?.candidateFirstName + ' ' + item?.candidateLastName">{{item?.candidateFirstName}}
+                                        {{item?.candidateLastName}}</span>
+                                    <span class="detail"><span class="break-word p-r-3"
+                                            [title]="item?.candidateEmail">{{item?.candidateEmail}}</span> |
+                                        <span class="p-l-2 p-t-1">{{item?.candidateMobileNo}}</span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="child d-flex m-b-10 position-relative">
+                    <span class="label m-b-4">Email<span class="required">*</span></span>
+                    <input type="text" class="input-box" formControlName="candidateEmail" maxlength="56"
+                        (input)="searchCandidate(candidateForm.get('candidateEmail')?.value, 'mail');">
+                    <div
+                        *ngIf="candidateForm.get('candidateEmail')?.hasError('required') && candidateForm.get('candidateEmail')?.touched">
+                        <mat-error>Email ID is Mandatory</mat-error>
+                    </div>
+                    <div *ngIf="showCandidates && mailInput" class="p-absolute candidate-dropdown no-close">
+                        <div class="candidate-column" *ngFor="let item of candidateList"
+                            (click)="selectCandidate(item.candidateId);showCandidates = !showCandidates">
+                            <div class="d-flex candidate">
+                                <div class="m-1">
+                                    <span class="user-profile">{{item?.candidateFirstName.charAt(0) ?
+                                        (item?.candidateFirstName.charAt(0) |
+                                        uppercase) : 'U'}}</span>
+                                </div>
+                                <div class="ms-1">
+                                    <span class="text-wrap"
+                                        [title]="item?.candidateFirstName + ' ' + item?.candidateLastName">{{item?.candidateFirstName}}
+                                        {{item?.candidateLastName}}</span>
+                                    <span class="detail"><span class="break-word p-r-3"
+                                            [title]="item?.candidateEmail">{{item?.candidateEmail}}</span> |
+                                        <span class="p-l-2 p-t-1">{{item?.candidateMobileNo}}</span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+               
+            </div>
+            <div class="d-flex parent">
+                <div class="child d-flex m-b-10">
+                    <span class="label m-b-4">Application Source<span class="required">*</span></span>
+                    <div class="input-box p-t-5 p-l-5 c-pointer p-relative no-close" (click)="showSource = !showSource">
+                        <div class="p-t-1">
+                            <span *ngIf="!sourceName">Select source</span>
+                            <span *ngIf="sourceName">{{sourceName}}</span>
+                            <span><i class="f-right p-r-10 p-t-3 fa fa-chevron-down s-text"></i></span>
+                            <div class="no-close dropdown c-pointer" *ngIf="showSource">
+                                <p *ngFor="let source of sourceList"
+                                    (click)="selectsource(source?.sourceId, source?.sourceName)">
+                                    {{source?.sourceName}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="child d-flex m-b-10">
+                    <span class="label m-b-4">Relevant Experience</span>
+                    <input type="text" class="input-box" formControlName="candidateRevlentExperience" maxlength="256">
+                </div>
+                <div class="child d-flex m-b-10">
+                    <span class="label m-b-4">Total Experience <span class="f-s-12">(in years)</span></span>
+                    <input type="text" class="input-box" formControlName="candidateTotalExperience"
+                        (keydown)="experienceValidation($event)">
+                </div>
+            </div>
+            <div class="d-flex parent">
+
+                <div class="child d-flex m-b-10">
+                    <span class="label m-b-4">Previous Organization</span>
+                    <input type="text" class="input-box" formControlName="candidatePreviousOrg" maxlength="40"
+                        (keydown)="nameValidation($event)" (paste)="namePasteValidation($event)">
+                </div>
+                <div class="child d-flex m-b-10">
+                    <span class="label m-b-4">Previous Designation</span>
+                    <input type="text" class="input-box" formControlName="candidatePreviousDesignation" maxlength="40"
+                       (keydown)="nameValidation($event)" (paste)="namePasteValidation($event)">
+                </div>
+                <div class="child d-flex m-b-10">
+                    <span class="label m-b-4">Education</span>
+                    <input type="text" class="input-box" formControlName="candidateEducation" maxlength="40"
+                       (keydown)="nameValidation($event)" (paste)="namePasteValidation($event)">
+                </div>
+            </div>
+            <div class="d-flex parent">
+                <div class="child d-flex m-b-10">
+                    <span class="label m-b-4">Preferred Job Location</span>
+                    <div class="input-box p-t-5 p-l-5 c-pointer p-relative no-close"
+                        (click)="showPreferredLocation = !showPreferredLocation">
+                        <div class="p-t-1">
+                            <span *ngIf="!locationName">Select Location</span>
+                            <span *ngIf="locationName">{{locationName}}</span>
+                            <span><i class="f-right p-r-10 p-t-3 fa fa-chevron-down s-text"></i></span>
+                            <div class="no-close dropdown c-pointer" *ngIf="showPreferredLocation">
+                                <p *ngFor="let item of preferredLocation" (click)="selectPreferredLocation(item?.location)">
+                                    {{item?.location}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="child d-flex m-b-10">
+                    <span class="label m-b-4">City</span>
+                    <input type="text" class="input-box" formControlName="candidateCity" maxlength="20"
+                       (keydown)="nameValidation($event)" (paste)="namePasteValidation($event)">
+                </div>
+                <div class="child d-flex m-b-10">
+                    <span class="label m-b-4">State</span>
+                    <input type="text" class="input-box" formControlName="candidateState" maxlength="20"
+                       (keydown)="nameValidation($event)" (paste)="namePasteValidation($event)">
+                </div>
+            </div>
+            <div class="d-flex parent">
+                <div class="child d-flex m-b-10">
+                    <span class="label m-b-4">District</span>
+                    <input type="text" class="input-box" formControlName="candidateDistrict" maxlength="20"
+                       (keydown)="nameValidation($event)" (paste)="namePasteValidation($event)">
+                </div>
+                <div class="child d-flex m-b-10">
+                    <span class="label m-b-4">Current Salary<span class="f-s-12">(CTC per Month)</span></span>
+                    <input  (keydown)="onKeypressSalary($event)" (paste)="onPasteSalary($event)" type="text" class="input-box" #baseSalaryInput maxlength="10" formControlName="candidateCurrentSalary">
+                </div>
+                <div class="child d-flex m-b-10">
+                    <span class="label m-b-4">Expected Salary <span class="f-s-12">(ECTC per Month)</span></span>
+                    <input  (keydown)="onKeypressSalary($event)" (paste)="onPasteSalary($event)" type="text" class="input-box" #maxSalaryInput maxlength="10" formControlName="candidateExpectedSalary">
+                </div>
+            </div>
+            <div class="d-flex parent-last">
+                <div class="child d-flex m-b-10">
+                    <span class="label m-b-4">Notice Period<span class="required">*</span></span>
+                    <input type="text" class="input-box" #noticePeriod maxlength="15" formControlName="candidateNoticePeriodByDays">
+                </div>
+                <div class="child-2 d-flex m-b-10 p-relative">
+                    <span class="label m-b-4">Upload Resume <span class="required">*</span></span>
+                    <div class="input-box d-flex">
+                        <div class="upload-resume-btn c-pointer"
+                            (click)="triggerFileInput();$event.stopPropagation();$event.preventDefault();">
+                            <span class="upload">Upload</span>
+                        </div>
+                        <div *ngIf="uploadedFileKey" class="file-name">
+                            {{uploadedFileKey}}
+                        </div>
+                        <input type="file" name="file" #fileInput class="input-box" style="display:none"
+                            (change)="onFileSelected($event)">
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="skills">
+        <div class="skill-head">
+            <span class="flex-1 no-close">Skill Sets</span>
+            <span class="flex-1 no-close">Selected Skill Set</span>
+        </div>
+        <div class="d-flex parent p-10">
+            <div class="child d-flex m-b-10">
+                <div class="d-flex skill-drop-down m-t-5 no-close w-100">
+                    <div class="input-box p-t-5 p-l-5 c-pointer no-close p-relative"
+                        (click)="showDropdown = !showDropdown">
+                        <div class="padding-skill">
+                            <span class="no-close'">{{selectedSkillType || 'Skill Type'}}</span>
+                            <span><i class="f-right p-r-10 p-t-1 fa fa-chevron-down no-close'"></i></span>
+                            <div class="dropdown c-pointer no-close'" *ngIf="showDropdown">
+                                <p *ngFor="let type of skillTypes" (click)="selectSkillType(type);">{{type}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <div class="searchbar m-t-10 c-pointer p-t-10 no-close '" *ngIf="selectedSkillType">
+                        <input type="search" class="input-search p-l-6" placeholder="Type to search skills..."
+                            (input)="getSkillSuggestions($event)" id="addskill" [(ngModel)]="searchvalue">
+                        <div class="drop-list" *ngIf="searchvalue.trim() !== ''">
+                            <div *ngFor="let suggestion of skillSuggestions" (click)="selectSkill(suggestion)"
+                                class="p-t-8 p-b-5">
+                                <span class="p-7 "><img src="/assets/images/candidate-detail/checkMark.svg" alt=""
+                                        class="m-t-0 p-r-4" width="15px" height="13px"></span>
+                                <span class="c-pointer p-b-3">{{suggestion?.skillName}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="child-skill d-flex m-b-10">
+                <div *ngIf="selectedPrimarySkills.length > 0">
+                    <span class="p-l-20">Selected Primary Skills</span>
+                    <div *ngFor="let skill of selectedPrimarySkills" class="m-l-18 m-t-6">
+                        <span class=""><img src="/assets/images/candidate-detail/checkMark.svg" alt=""
+                                class="m-t-0 p-r-4" width="15px" height="13px"></span>
+                        <span class="p-l-3">{{ skill?.name}}</span>
+                        <i class="fa fa-trash-o  delete-color c-pointer" aria-hidden="true"
+                            (click)="removeSkill(skill, 'primary')"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="child-skill d-flex m-b-10">
+                <div *ngIf="selectedSecondarySkills.length > 0">
+                    <span class="p-l-20">Selected Secondary Skills</span>
+                    <div *ngFor="let skill of selectedSecondarySkills" class="m-l-18 m-t-6">
+                        <span class=""><img src="/assets/images/candidate-detail/checkMark.svg" alt=""
+                                class="m-t-0 p-r-4" width="15px" height="13px"></span>
+                        <span class="p-l-3">{{ skill?.name | titlecase}}</span>
+                        <i class="fa fa-trash-o  delete-color c-pointer" aria-hidden="true"
+                            (click)="removeSkill(skill, 'secondary')"></i>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+    <div class="d-flex j-end p-t-10 button">
+        <button class="cancel-btn c-pointer" (click)="cancel()">Cancel</button>
+        <button class="add-btn c-pointer m-r-0" (click)="submitClick()">Add Candidate</button>
+    </div>
+</div>

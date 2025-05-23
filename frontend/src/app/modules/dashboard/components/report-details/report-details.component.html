@@ -1,0 +1,165 @@
+<div class="main">
+    <div>
+        <span class="head">Report</span>
+    </div>
+    <div class="source m-12 m-l-0">
+        <div class="source-heading d-flex j-space">
+            <div class="d-flex flex-start heading-calss">
+                <span>Sourcing Overview - <span>{{formattedEndDate}} </span></span>
+            </div>
+            <div class="d-flex j-end p-r-20 global-filter">
+                <div class="d-flex filter-month">
+                    <span class="filter p-r-10 p-t-10">Filter Date</span>
+                    <div class="p-relative m-t-5">
+                        <input class="p-l-5 input c-pointer" placeholder="29/02/11" matInput
+                            [matDatepicker]="pickerReportDate" (dateChange)="dateChange($event, 'endDate')"
+                            [ngModel]="endDate" (click)="pickerReportDate.open()" [value]="endDate | date:'yyyy-MM-dd'"
+                            id="endDate" [max]="today">
+                        <mat-datepicker #pickerReportDate></mat-datepicker>
+                        <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"
+                            (click)="pickerReportDate.open()"></i>
+                    </div>
+                    <!-- <span class="c-pointer input-filter p-relative no-close m-t-5" (click)="showMonth = !showMonth">
+                            <div class="input d-flex j-space p-l-3 p-b-0 no-close f-s-14">
+                                {{selectedMonth ? selectedMonth : 'Select Month'}}
+                                <span class="f-right">
+                                    <span *ngIf="selectedMonth && selectedMonth !== ''" (click)="clearFilter('month')">
+                                        <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
+                                    </span>
+                                    <span (click)="showMonth = !showMonth"><i [ngClass]="showMonth ? ' fa fa-chevron-up' : ' fa fa-chevron-down'" (click)="showMonth = !showMonth"
+                                            class="p-l-5 p-r-5"></i></span>
+                                </span>
+                                <div *ngIf="showMonth" class="p-absolute dropdown no-close">
+                                    <div class="month-column" *ngFor="let item of monthData"
+                                        (click)="selectMonth(item?.number, item?.month);showMonth = !showMonth">
+                                        {{item?.month}}
+                                    </div>
+                                </div>
+                            </div>
+                        </span> -->
+                </div>
+                <div class="d-flex">
+                    <span class="filter p-r-10 p-t-10">Filter Recruiter</span>
+                    <span class="c-pointer input-filter m-t-5 p-relative no-close c-pointer"
+                        (click)="showRecruiters = !showRecruiters">
+                        <div class="input d-flex j-space p-l-3 p-b-0 no-close f-s-14">
+                            {{recruiterName ? recruiterName : 'Select Recruiter'}}
+                            <span class="f-right">
+                                <span *ngIf="recruiterName && recruiterName !== ''" (click)="clearFilter('recruiter')">
+                                    <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
+                                </span>
+                                <span (click)="showRecruiters = !showRecruiters">
+                                    <i (click)="showRecruiters = !showRecruiters"
+                                        [ngClass]="showRecruiters ? ' fa fa-chevron-up' : ' fa fa-chevron-down'"
+                                        class="p-l-5 p-r-5"></i>
+                                </span>
+                            </span>
+                            <div *ngIf="showRecruiters" class="p-absolute dropdown no-close">
+                                <div class="month-column" *ngFor="let item of recruiters"
+                                    (click)="selectRecruiter(item?.userFullName , item?.userId);showRecruiters = !showRecruiters">
+                                    {{item?.userFullName}}
+                                </div>
+                            </div>
+                        </div>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="source-card d-flex">
+            <div class="d-flex-column line">
+                <span class="name">Total Resumes sourced & screened</span>
+                <div class="d-flex p-l-10"><i class="fa fa-file-text-o card-icon" aria-hidden="true"></i>
+                    <span class="count">{{userRequirement?.sourcedScreened ? userRequirement?.sourcedScreened :
+                        '0'}}</span>
+                </div>
+            </div>
+            <div class="d-flex-column line">
+                <span class="name">Candidates contacted by recruiter</span>
+                <div class="d-flex p-l-10"><i class="fa fa-user card-icon" aria-hidden="true"></i>
+                    <span class="count">{{userRequirement?.candidateContacted ? userRequirement?.candidateContacted
+                        :'0'}}</span>
+                </div>
+            </div>
+            <div class="d-flex-column line">
+                <span class="name">Interviews scheduled</span>
+                <div class="d-flex p-l-10"><i class="fa fa-calendar-o card-icon" aria-hidden="true"></i>
+                    <span class="count">{{userRequirement?.interviewScheduled ? userRequirement?.interviewScheduled
+                        :'0'}}</span>
+                </div>
+            </div>
+            <div class="d-flex-column line">
+                <span class="name">Offer Released</span>
+                <div class="d-flex p-l-10"><i class="fa fa-tags card-icon" aria-hidden="true"></i>
+                    <span class="count">{{userRequirement?.offerReleased ? userRequirement?.offerReleased : '0'}}</span>
+                </div>
+            </div>
+            <div class="d-flex-column ">
+                <span class="name">Offer Accepted</span>
+                <div class="d-flex p-l-10"><i class="fa fa-user card-icon" aria-hidden="true"></i>
+                    <span class="count">{{userRequirement?.offerAccepeted ? userRequirement?.offerAccepeted
+                        :'0'}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex w-100">
+        <div class="w-50 m-b-10 m-t-20">
+            <app-application-list-bar></app-application-list-bar>
+        </div>
+        <div class="w-50">
+            <div class="count-table m-r-15 m-l-10 m-t-20">
+                <div class="m-7 p-t-19">
+                    <span class="f-w-500 p-b-20 f-s-18">Overall Interview Status</span>
+                </div>
+                <div class="container-table m-b-0 m-t-20">
+                    <table class="table">
+                        <tr class="table-header f-w-500 p-b-10">
+                            <td class="text-start">Requisition</td>
+                            <td class="text-end">Total Scheduled count</td>
+                            <td class="text-end">Total Reschedule Count</td>
+                        </tr>
+                        <!-- <div class="loader-parent">
+                            <img src="assets/gif/loader.gif">
+                        </div> -->
+                        <div *ngIf="initialLoader" class="row m-l-20 initial-loader">
+                            <div *ngFor="let item of [0,1,2,3,4,5]" class="col-md-6 m-t-10 m-b-10">
+                                <div class="gravatar-title">
+                                    <div>
+                                        <ngx-skeleton-loader [theme]="{
+                                        width: '900px',
+                                        'border-radius': '0',
+                                        height: '15px',
+                                        'margin-bottom': '10px'
+                                        }"></ngx-skeleton-loader>
+                                    </div>
+                                    <div>
+                                        <ngx-skeleton-loader
+                                            [theme]="{ width: '1300px', 'border-radius': '0', height: '15px' }">
+                                        </ngx-skeleton-loader>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="interviewDetails?.length > 0">
+                            <ng-container *ngFor="let item of interviewDetails">
+                                <tr class="details">
+                                    <td class="text-start">{{item?.technology}}</td>
+                                    <td class="text-end">{{item?.interviewStatusCount}}</td>
+                                    <td class="text-end">{{item?.rescheduleStatusCount}}</td>
+                                </tr>
+                            </ng-container>
+                        </ng-container>
+                    </table>
+                    <div *ngIf="interviewDetails?.length === 0 || !interviewDetails" class="data">
+                        No Data Found
+                    </div>
+                </div>
+                <app-pagination [totalCount]="totalCount" [pageSize]="pageSize" [lastPage]="lastPage"
+                    [currentPage]="currentPage" (pageChange)="fetchInterviewStatus($event)"></app-pagination>
+            </div>
+        </div>
+    </div>
+    <div>
+        <app-daily-report [requitersList]="recruiters"></app-daily-report>
+    </div>
+</div>

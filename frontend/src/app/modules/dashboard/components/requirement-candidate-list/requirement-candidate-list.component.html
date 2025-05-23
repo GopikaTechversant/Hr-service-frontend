@@ -1,0 +1,172 @@
+<div class="">
+    <div class="heading d-flex j-space m-b-5">
+        <div class="title-left p-l-2"><span>Requisition List</span></div>
+        <div class="d-flex  title-right">
+            <!-- Add this next to the status dropdown -->
+<div class="input-1 c-pointer no-close p-relative" (click)="filterPriority = !filterPriority">
+    <span class="no-close p-l-10">
+      {{ filteredPriority === '' ? 'All Priorities' : filteredPriority }}
+    </span>
+    <span class="f-right">
+      <span
+        *ngIf="filteredPriority !=='All Priorities' && filteredPriority && filteredPriority.trim() !== ''"
+        (click)="clearPriority('status')">
+        <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
+      </span>
+      <span>
+        <i [ngClass]="filterPriority ? 'fa fa-chevron-up' : 'fa fa-chevron-down'" class="m-l-5 p-r-10 s-text no-close"></i>
+      </span>
+    </span>
+    <div class="dropdown c-pointer no-close" *ngIf="filterPriority">
+      <span class="d-flex p-0" *ngFor="let level of priority"
+        (click)="selectPriorityFilter(level);">
+        <span class="padding-5">{{ level }}</span>
+      </span>
+    </div>
+  </div>
+  
+            <div class="input-1 c-pointer no-close p-relative" (click)="filterStatus = !filterStatus">
+                <span class="no-close p-l-10">{{filteredStatus.trim() === '' ?
+                    'All Requisitions' : filteredStatus | titlecase}}</span>
+                <span class="f-right">
+                    <span
+                        *ngIf="filteredStatus !== 'All Requisitions' && filteredStatus && filteredStatus.trim() !== ''"
+                        (click)="clearFilter('status')">
+                        <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
+                    </span>
+                    <span>
+                        <i [ngClass]="filterStatus ? ' fa fa-chevron-up' : ' fa fa-chevron-down'"
+                            class="m-l-5 p-r-10 s-text no-close"></i>
+                    </span>
+                </span>
+                <div class="dropdown c-pointer no-close'" *ngIf="filterStatus">
+                    <span class="d-flex p-0" *ngFor="let type of status"
+                        (click)="selectStatusFilter(type);filterStatus = !filterStatus">
+                        <span class="padding-5">{{type | titlecase}}</span>
+                    </span>
+                </div>
+            </div>
+            <span class="input d-flex j-space">
+                <input type="text" class="p-10" placeholder="Search Requirement" [(ngModel)]="searchKeyword"
+                    name="search candidate" (ngModelChange)="requirementSearch($event)">
+                <span *ngIf="searchKeyword !== ''" (click)="clearFilter('search')" class="c-pointer m-l-10 p-t-5"><img
+                        src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20"></span>
+                <span class="search d-flex j-end">
+                    <i class="fa fa-search" aria-hidden="true" (click)="requirementSearch(searchKeyword)"></i>
+                </span>
+            </span>
+            <div class="create-btn c-pointer" *ngIf="userRole === 'manager' || userType === 'admin'"
+                (click)="navigate('/dashboard/service-requirement',false)">
+                <span class="f-w-500">Create Requisition</span>
+            </div>
+            <div class="export-btn c-pointer m-t-1" *ngIf="userType !== 'super-admin'">
+                <span (click)="exportData()">Export</span>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="(candidates_list?.length === 0 || !candidates_list) && !loader && !initialLoader " class="data">
+        No Data Found
+    </div>
+    <div class="main">
+        <div class="container-table m-b-0">
+            <table class="">
+                <tr class="table-header p-b-10 f-w-500">
+                    <td class="text-center" *ngIf="userType !== 'super-admin'">Select</td>
+                    <td class="text-end p-l-16">Requisition Code</td>
+                    <td class="text-start p-l-16">Requisition</td>
+                    <td class="text-end">Openings</td>
+                    <td class="text-end">Candidate Count</td>
+                    <td class="text-end">Hired Count</td>
+                    <td class="text-start">Team</td>
+                    <td class="text-start">Primary Skills</td>
+                    <td class="text-start">Status</td>
+                    <td class="text-center wrap"
+                        *ngIf="(filteredStatus === 'Active Requisitions' || filteredStatus === 'All Requisitions') && userType !== 'super-admin'">Add Candidate
+                    </td>
+                    <td>Assign To</td>
+                    <td>Priority</td>
+                    <td class="text-end">Date <img src="assets/images/318146.png" alt="" class="sortImg" (click)="sortDate()"></td>
+                </tr>
+                <div *ngIf="loader && !initialLoader" class="loader-parent">
+                    <img src="assets/gif/loader.gif">
+                </div>
+                <ng-container *ngIf="candidates_list?.length > 0">
+                    <ng-container *ngFor="let candidate of candidates_list">
+                        <tr class="c-pointer" (dblclick)="navigate('/dashboard/series/',candidate?.requestId)">
+                            <td class="text-center" *ngIf="userType !== 'super-admin'">
+                                <input type="checkbox" [(ngModel)]="candidate.isSelected"
+                                    (change)="getSelectedCandidateIds()" name="select">
+                            </td>
+                            <td class="text-end wrap-date">{{candidate?.requestCode ? candidate?.requestCode : 'N/A'}}
+                            </td>
+                            <td class="text-start p-l-16 wrap" [title]="candidate?.requestName">
+                                {{candidate?.requestName ? (candidate?.requestName) : 'N/A'}}</td>
+                            <td class="text-end">{{candidate?.requestVacancy ? candidate?.requestVacancy : 'N/A'}}</td>
+                            <td class="text-end" [title]="candidate?.candidatesCount">{{candidate?.candidatesCount ?
+                                candidate?.candidatesCount : '0'}}
+                            </td>
+                            <td class="text-end">{{candidate?.requestHiredCount ? candidate?.requestHiredCount : '0'}}
+                            </td>
+                            <td class="text-start" [title]="candidate?.teamName">{{candidate?.teamName ?
+                                (candidate?.teamName | titlecase) : 'N/A'}}
+                            </td>
+                            <td class="text-start wrap" [title]="candidate?.requestSkills">
+                                {{candidate?.requestSkills ? (candidate?.requestSkills) : 'N/A'}}</td>
+                            <!-- <td class="text-start f-w-500"
+                                [ngStyle]="{'color': candidate.status === 'active' ? '#08BC66' : 'red'}">
+                                {{candidate?.status ?(candidate?.status | titlecase) : 'N/A'}}
+                            </td> -->
+                            <td class="text-start f-w-500" *ngIf="candidate.status !== 'pending'"
+                                [ngStyle]="{'color': candidate.status === 'active' ? '#08BC66' : 'red'}">
+                                {{candidate?.status ?(candidate?.status | titlecase) : 'N/A'}}
+                            </td>
+                            <td class="text-start f-w-500 approval-status"
+                                *ngIf="candidate.status === 'pending'" [ngClass]="{
+                                    'clickable': userType === 'admin' && candidate.status === 'pending',
+                                    'not-clickable': userType !== 'admin' && candidate.status === 'pending'
+                                }" [ngStyle]="candidate.status === 'pending' && userType !== 'admin' ? { 'color': '#005EC9', 'pointer-events': 'none' ,'text-decoration':'none'} : 
+                                            candidate.status === 'rejected' ? { 'color': 'red' } : {}"
+                                (click)="candidate.status === 'pending' && userType === 'admin' ? navigate('/dashboard/series/', candidate?.requestId) : null">
+                                {{ candidate.status === 'rejected' ? 'Rejected' : 'Pending' }}
+                            </td>
+                            <td class="text-center add" (click)="onStatusChange(candidate)"
+                                *ngIf="(filteredStatus === 'Active Requisitions' || filteredStatus === 'All Requisitions') && userType !== 'super-admin'">
+                                <i class="fa fa-user-plus" aria-hidden="true"></i>
+                            </td>
+                            <td class="text-start">{{candidate?.assignto}}</td>
+                            <td class="text-start">{{candidate?.requestPriority | titlecase}}</td>
+                            <td class="text-end wrap-date" [title]="candidate?.requestDate | date:'dd-MM-yyyy'">
+                                {{candidate?.requestDate ? (candidate?.requestDate | date:'dd-MM-yyyy') : 'N/A'}}
+                            </td>
+                        </tr>
+                    </ng-container>
+                </ng-container>
+                <div *ngIf="(candidates_list?.length === 0 || !candidates_list) && !loader && !initialLoader "
+                    class="data">
+                    No Data Found
+                </div>
+                <div *ngIf="initialLoader" class="row m-l-20 initial-loader">
+                    <div *ngFor="let item of [0,1,2,3,4,5]" class="col-md-6 m-t-10 m-b-10">
+                        <div class="gravatar-title">
+                            <div>
+                                <ngx-skeleton-loader [theme]="{
+                                width: '900px',
+                                'border-radius': '0',
+                                height: '15px',
+                                'margin-bottom': '10px'
+                                }"></ngx-skeleton-loader>
+                            </div>
+                            <div>
+                                <ngx-skeleton-loader
+                                    [theme]="{ width: '1300px', 'border-radius': '0', height: '15px' }">
+                                </ngx-skeleton-loader>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </table>
+        </div>
+        <app-pagination [totalCount]="totalCount" [pageSize]="limit" [lastPage]="lastPage" [currentPage]="currentPage"
+            (pageChange)="fetchcandidates($event,searchKeyword)"></app-pagination>
+    </div>
+</div>

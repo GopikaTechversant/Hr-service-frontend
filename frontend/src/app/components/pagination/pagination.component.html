@@ -1,0 +1,35 @@
+<div *ngIf="totalCount" class="page d-flex j-end p-10">
+    <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(1)">
+        <img src="assets/images/double-arrow-left-icon.svg" alt="" height="14px" width="14px">
+    </button>
+    <button *ngIf="currentPage === 1" class="box p-r-20">
+        <img src="assets/images/inactive-double-arrow-left.svg" alt="" height="23px" width="23px">
+    </button>
+    <!-- Previous Page -->
+    <button *ngIf="currentPage > 1" class="box c-pointer" (click)="onPageChange(currentPage - 1)">
+        <img src="assets/images/single-left-arrow.svg" height="20px" width="20px">
+    </button>
+    <button *ngIf="currentPage === 1" class="box">
+        <img src="assets/images/inactive-single-arrow-left.svg" height="23px" width="23px">
+    </button>
+    <ng-container *ngFor="let page of generatePageNumbers()">
+        <button *ngIf="page === '...'" class="box dot" disabled>...</button>
+        <button *ngIf="page !== '...' && page === currentPage" class="box current-page c-pointer">{{ page
+            }}</button>
+        <button *ngIf="page !== '...' && page !== currentPage" class="box c-pointer"
+            (click)="onPageChange(page)">{{ page }}</button>
+    </ng-container>
+    <!-- Next Page -->
+    <button *ngIf="currentPage < lastPage" class="box c-pointer" (click)="onPageChange(currentPage + 1)">
+        <img src="assets/images/single-right-arrow.svg" height="20px" width="20px">
+    </button>
+    <button *ngIf="currentPage === lastPage" class="box">
+        <img src="assets/images/inactive-single-arrow-right.svg" height="24px" width="24px">
+    </button>
+    <button *ngIf="currentPage < lastPage" class="box c-pointer" (click)="onPageChange(lastPage)">
+        <img src="assets/images/double-arrow-right-icon.svg" alt="" height="14px" width="14px">
+    </button>
+    <button *ngIf="currentPage === lastPage" class="box">
+        <img src="assets/images/inactive-double-arrow-right.svg" alt="" height="23px" width="23px">
+    </button>
+</div>

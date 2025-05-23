@@ -1,0 +1,75 @@
+<div class="main">
+    <div class="d-flex head">
+        <div>
+            <span class="heading">Application Received</span>
+        </div>
+        <div class="date-filters">
+            <div class="d-flex">
+                <span class="filter p-t-10 p-r-5">From</span>
+                <div class="p-relative">
+                    <input class="p-l-5 input c-pointer" placeholder="29/02/11" matInput
+                        [matDatepicker]="pickerFromDate" [value]="startDate | date:'yyyy-MM-dd'" id="startDate"
+                        [max]="today" (dateChange)="dateChange($event, 'startDate')" [ngModel]="startDate"
+                        (click)="pickerFromDate.open()">
+                    <mat-datepicker #pickerFromDate></mat-datepicker>
+                    <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"
+                        (click)="pickerFromDate.open()"></i>
+                </div>
+            </div>
+            <div class="d-flex">
+                <span class="filter p-l-10 p-t-10 p-r-5">To</span>
+                <div class="p-relative">
+                    <input class="p-l-5 input c-pointer" placeholder="29/02/11" matInput [matDatepicker]="pickerToDate"
+                        (dateChange)="dateChange($event, 'endDate')" [ngModel]="endDate" (click)="pickerToDate.open()"
+                        [value]="endDate | date:'yyyy-MM-dd'" id="endDate" [min]="startDate" [max]="today">
+                    <mat-datepicker #pickerToDate></mat-datepicker>
+                    <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"
+                        (click)="pickerToDate.open()"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-table m-b-0 w-100">
+        <table class="table">
+            <tr class="table-header p-b-10">
+                <td class="text-start">Requirement</td>
+                <td class="text-end">No of applicants</td>
+                <td class="text-end">Date</td>
+            </tr>
+            <div *ngIf="loader && !initialLoader" class="loader-parent">
+                <img src="assets/gif/loader.gif">
+            </div>
+            <ng-container *ngIf="applicationList.length > 0">
+                <ng-container *ngFor="let item of applicationList">
+                    <tr class="details">
+                        <td class="text-start">{{item?.requestName}}</td>
+                        <td  class="text-end">{{item?.totalEntries}}</td>
+                        <td class="text-end">{{item?.createdAt | date: 'dd-MM-YYY' }}</td>
+                    </tr>
+                </ng-container>
+            </ng-container>
+            <div *ngIf="initialLoader" class="row m-l-20 initial-loader">
+                <div *ngFor="let item of [0,1,2,3,4,5]" class="col-md-6 m-t-10 m-b-10">
+                    <div class="gravatar-title">
+                        <div>
+                            <ngx-skeleton-loader [theme]="{
+                            width: '900px',
+                            'border-radius': '0',
+                            height: '15px',
+                            'margin-bottom': '10px'
+                            }"></ngx-skeleton-loader>
+                        </div>
+                        <div>
+                            <ngx-skeleton-loader
+                                [theme]="{ width: '1300px', 'border-radius': '0', height: '15px' }">
+                            </ngx-skeleton-loader>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="applicationList?.length === 0 && !initialLoader && !loader" class="no-data d-flex w-100">No Data Found</div>
+        </table>
+    </div>
+    <app-pagination [totalCount]="totalCount" [pageSize]="limit" [lastPage]="lastPage"
+    [currentPage]="currentPage" (pageChange)="fetchApplicationList($event)"></app-pagination>
+</div>

@@ -1,0 +1,400 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: default;
+  font-family: 'Roboto', sans-serif;
+}
+
+textarea {
+  font-family: inherit;
+}
+
+.mat-typography {
+  letter-spacing: 0.2px !important;
+}
+
+.mat-tab-header {
+  border-bottom: 1px solid #639ab5;
+  padding-bottom: 0px !important;
+  margin-bottom: 0px !important;
+}
+
+.mat-tab-label {
+  opacity: unset !important;
+  padding: 10px !important;
+  padding-left: 0px !important;
+  margin-right: 20px !important;
+  min-width: 0px !important;
+  padding-right: 0px !important;
+  color: #24495b !important;
+  height: 45px !important;
+}
+
+.mat-tab-label-active {
+  position: relative;
+  z-index: 5;
+  top: 1px;
+  border-bottom: 3px solid #24495b;
+}
+
+.mat-input-element {
+  background: #fff !important;
+}
+
+.mat-tab-label-active .mat-tab-label-content {
+  font-weight: 500 !important;
+  color: #24495b !important;
+}
+
+.mat-tab-label-active .tab-name {
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #24495b !important;
+}
+
+.mat-tab-label .tab-name:hover {
+  color: #24495b !important;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: #eee;
+}
+
+.mat-dialog-container {
+  padding: 15px !important;
+  border-radius: 2px !important;
+}
+
+.mat-tab-body-wrapper {
+  height: 100%;
+}
+
+.mat-tab-body {
+  height: 100%;
+}
+
+a:hover {
+  text-decoration: none !important;
+}
+
+.highlighted-text {
+  color: #fff;
+  background-color: #427194;
+  padding: 2px 0px;
+}
+
+.mentioned-user {
+  background: #1a1dcb;
+  color: #fff;
+  padding: 3px;
+  border-radius: 10px;
+  margin-right: 5px;
+}
+
+.inserted-anchor {
+  color: #007bff !important;
+}
+
+.inserted-anchor-span {
+  cursor: pointer;
+  padding: 3px;
+  margin-right: 5px;
+  margin-left: 5px;
+  background-color: var(--ds-surface-raised, white);
+  box-shadow: var(--ds-shadow-raised, 0 1px 1px rgba(9, 30, 66, 0.25), 0 0 1px 1px rgba(9, 30, 66, 0.13));
+}
+
+.mat-dialog-container {
+  padding: 0px !important;
+}
+
+.image-dialog-container .mat-dialog-container {
+  overflow: hidden !important;
+}
+
+.scrollable::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollable,
+body {
+  scrollbar-width: none;
+}
+
+.scrollable,
+body {
+  -ms-overflow-style: none;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.flex-1 {
+  display: flex;
+  flex: 1;
+}
+
+.j-start {
+  justify-content: flex-start;
+  /* Align items to the start */
+}
+
+.j-end {
+  justify-content: flex-end;
+  /* Align items to the end */
+}
+
+.j-centre {
+  justify-content: center;
+}
+
+.d-flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* common colors */
+
+.blue {
+  color: #005EC9;
+}
+
+.red {
+  color: #C10A0A;
+}
+
+.green {
+  color: green;
+}
+
+.orange {
+  color: #F57C02;
+}
+
+.text-input {
+  height: 40px;
+  border: 1px solid #EEEEEE;
+  padding: 4px 8px !important;
+  border-radius: 3px;
+  opacity: 0px;
+  outline: none !important;
+}
+
+.export-btn {
+  border: none !important;
+  outline: none !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 81px;
+  border-radius: 3px;
+  background-color: #4F4F4F;
+  color: white;
+  margin-left: 10px;
+  margin-top: 2px;
+  font-weight: 500;
+  margin-right: 11px;
+}
+
+.fa-times-circle-o {
+  color: #4F4F4F;
+
+}
+
+.text-wrap {
+  max-width: 90px !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mat-calendar-table-header {
+  background-color: #FFFFFF;
+}
+
+th {
+  background-color: #FFFFFF;
+}
+
+.mat-calendar-table {
+  padding: 5px;
+  background: #FFFFFF;
+  border: none !important;
+}
+
+.mat-calendar-body,
+tr {
+  border: none !important;
+}
+
+.mat-calendar-table-header {
+  background: #FFFFFF !important;
+}
+
+.mat-calendar-body-label,
+.mat-calendar-table,
+.mat-calendar-body-cell-container {
+  padding: 5px;
+  background: #FFFFFF;
+  border: none !important;
+}
+
+.container-table .table-header {
+  position: sticky;
+  top: 0;
+  background: #F4F2F2 !important;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: 0em;
+  color: black;
+}
+
+.container-table {
+  overflow: auto !important;
+  height: calc(100vh - 280px);
+  background-color: #FFFFFF;
+}
+
+.container-table tr {
+  border: 1px solid #EDEDED !important;
+}
+
+.container-table td {
+  padding: 10px;
+  padding-left: 16px;
+}
+
+.container-table tr:hover {
+  background-color: #f6f6f6;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.details-table {
+  font-size: 13px;
+}
+
+.padding-5 {
+  padding: 5px;
+}
+
+.margin-5 {
+  margin: 5px;
+}
+
+.padding-10 {
+  padding: 10px;
+}
+
+.margin-10 {
+  margin: 10px;
+}
+
+.clear-filter {
+  background-color: #fff;
+  padding-bottom: 5px;
+  padding-top: 0px;
+  padding-left: 4px;
+  padding-right: 4px;
+  border: 1px solid #3c40434d;
+  border-radius: 50%;
+  width: 20px;
+  height: 22px;
+  line-height: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.modal-header .modal-close button {
+  outline: none !important;
+  border: 1px solid #e0dbdb;
+  border-radius: 50% !important;
+  background-color: white !important;
+  height: 50px !important;
+  width: 50px !important;
+}
+
+.mat-icon {
+  -webkit-user-select: none;
+  user-select: none;
+  background-repeat: no-repeat;
+  display: inline-block;
+  fill: currentColor;
+  height: 19px !important;
+  width: 24px !important;
+  overflow: hidden;
+}
+
+a {
+  border: none !important;
+  outline: none !important;
+  color: #0034C4;
+}
+
+button {
+  outline: none !important;
+}
+
+.scrollable::-webkit-scrollbar,
+.mat-dialog-container::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollable,
+.mat-dialog-container {
+  scrollbar-width: none;
+}
+
+.scrollable,
+.mat-dialog-container {
+  -ms-overflow-style: none;
+}
+
+.btn {
+  outline: none !important;
+  border: none !important;
+}
+
+input[type="radio"] {
+  outline: none !important;
+}
+
+input[type="text"] {
+  border: none;
+  outline: none;
+}
+
+.f-left {
+  float: left;
+}
+
+.text-muted{
+  color: #4F4F4F;
+}
+
+.w-70{
+  width: 70%;
+}
+
+.w-30{
+  width: 30%;
+}

@@ -1,0 +1,145 @@
+.main {
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 8px 0px #0000001A;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.head {
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.heading {
+    color: #000000;
+    font-weight: 500;
+    line-height: 26.07px;
+    font-size: 18px;
+}
+
+.date-filters {
+    display: flex;
+    align-items: center;
+}
+
+.filter {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18.96px;
+    color: #4F4F4F;
+    padding-bottom: 7px;
+}
+
+.input {
+    border: 1px solid #E9E9E9;
+    outline: none;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    width: 108px;
+    height: 33px;
+}
+
+.chart-container {
+    margin-top: 5px;
+    padding-bottom: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.scrollable {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.scrollable canvas {
+    width: 1500px;
+    /* Adjust width as needed to accommodate all data */
+    max-width: none;
+    height: auto;
+}
+
+.no-data {
+    /* position: absolute; */
+    padding-left: 50%;
+    padding-top: 25%;
+    z-index: 9;
+    color: #c10a0a;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.filter-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.d-flex {
+    display: flex;
+    align-items: center;
+}
+
+.date-filters {
+    display: flex;
+    align-items: center;
+}
+
+
+.container-table {
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    height: calc(100vh - 429px);
+}
+
+.box {
+    height: 26px;
+    width: 26px;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+.box :hover {
+    background: #F0F7FF;
+    cursor: pointer;
+}
+
+.page {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
+.loader-parent {
+    /* position: absolute; */
+    padding-left: 130%;
+    z-index: 9;
+    top: 50%;
+}
+
+.loader-parent img {
+    width: 100px;
+}
+.current-page {
+    background-color: #005EC9;
+    color: #FFFFFF;
+    height: 26px;
+    width: 36px;
+    cursor: pointer;
+}
+
+.dot {
+    font-size: 20px;
+    color: black;
+    font-weight: 500;
+}

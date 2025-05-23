@@ -1,0 +1,143 @@
+.main {
+    margin: 15px 20px 10px 10px;
+    background: #FFFFFF;
+    /* border: 1px solid #D9D9D9 */
+    padding-left: 20px;
+}
+
+
+.scroller-box {
+    width: 100%;
+}
+
+.header {
+    color: #000000;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 35.55px;
+}
+
+.parent {
+    column-gap: 18px;
+    display: flex;
+    flex-direction: row;
+}
+
+.child {
+    flex-direction: column;
+    flex: 1;
+}
+
+.input {
+    width: 96%;
+    height: 34px;
+    border-radius: 5px;
+    outline: none;
+    background: #FAFAFA;
+    padding-left: 5px;
+    border: 1px solid #E9E9E9;
+    margin-top: 10px;
+}
+
+.sub-head {
+    color: #000000;
+    font-weight: 400;
+    /* font-size: 16px; */
+    line-height: 21.33px;
+    padding-bottom: 10px;
+}
+
+.fa-chevron-down {
+    color: #575F6E;
+}
+
+.btn-cancel {
+    background-color: #575F6E;
+    width: 149px;
+    height: 38px;
+    border-radius: 3px;
+    outline: none;
+    border: none;
+    color: #FFFFFF;
+    font-weight: 400;
+    font-size: 17px;
+}
+
+.btn-submit {
+    background-color: #005EC9;
+    width: 149px;
+    height: 38px;
+    border-radius: 3px;
+    outline: none;
+    border: none;
+    color: #FFFFFF;
+    font-weight: 400;
+    font-size: 17px;
+}
+
+.add-btn {
+    margin-left: 3px;
+    width: 53px;
+    background: linear-gradient(0deg, #005EC9, #005EC9),
+        linear-gradient(0deg, #E9E9E9, #E9E9E9);
+    border-radius: 3px;
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.drop-list {
+    background: #FFFFFF;
+    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+    max-height: 100px;
+    overflow-y: scroll;
+    font-size: 15px;
+    margin-left: 0px;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    margin-top: 35px;
+}
+
+.drop-list :hover {
+    background-color: rgb(240, 235, 235);
+}
+
+.input-station{
+    height: 38px;
+    border-radius: 5px;
+    outline: none;
+    background: #FAFAFA;
+    padding-left: 10px;
+    border: 1px solid #E9E9E9;
+    margin-top: 10px;
+    width: 47%;
+    padding-top: 2px;
+
+}
+
+.eyeIcon {
+    position: absolute;
+    /* z-index: 4; */
+    right: 35px;
+    top: 16px;
+    bottom: 0px;
+    cursor: pointer;
+    color: gray;
+  }
+
+  .calendar-icon{
+    color: gray;
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    top: 20px;
+    right: 33px;
+    cursor: pointer;
+
+  }
+
+  .mismatch-error{
+    color: red;
+  }

@@ -1,0 +1,63 @@
+<section class="d-flex main">
+    <div class="spinner" *ngIf="toggleSpinner">
+        <img src="assets/gif/loader.gif" alt="spinner">
+    </div>
+    <div class="w-50 img-container">
+        <img src="/assets/images/login/login_img.svg" alt="login-img"  loading="lazy">
+    </div>
+    <div class="login-section w-50">
+        <span class="welcome">Welcome To RecruitWise</span>
+        <div class="loginContainer">
+            <form [formGroup]="loginForm" (ngSubmit)="submitClick()">
+                <div class="info m-b-5"><img src="/assets/images/login/company.png" alt=""></div>
+                <div class="form-field d-flex j-start m-b-14">
+                    <span class="email m-b-5">Email Address</span>
+                    <input type="email" class="input text-input" placeholder="Enter a valid email"
+                        formControlName="userName">
+                </div>
+                <div class="requiredField f-s-14">
+                    <span class="error" *ngIf="userName?.errors?.['required'] && (userName?.touched || submitted)">
+                        Inavlid User Name
+                    </span>
+                </div>
+                <div class="form-field d-flex j-start m-b-14 p-relative">
+                    <span class="email m-b-5">Password</span>
+                    <input [type]="hide ? 'password' : 'text'" class="input text-input" placeholder="Password"
+                        formControlName="userPassword">
+                    <span class="eyeIcon c-black p-absolute" mat-icon-button matSuffix (click)="hide = !hide"
+                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon class="m-icon">{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+                    </span>
+                </div>
+                <div class="requiredField f-s-14">
+                    <span class="error"
+                        *ngIf="userPassword?.errors?.['required'] && (userPassword?.touched || submitted)">
+                        Inavlid Password
+                    </span>
+                    <span *ngIf="loginForm.errors?.['invalidCredentials']" class="error">
+                        Incorrect username or password
+                    </span>
+                </div>
+                <div class="form-field d-flex j-start m-t-14">
+                    <!-- <div class="d-flex">
+                        <input type="checkbox" formControlName="rememberMe">
+                        <span class="email p-l-5">Remember Me?</span>
+                    </div> -->
+                    <button class="login-btn m-t-14 c-pointer" type="submit">Login</button>
+                </div>
+
+                <!-- <div class="m-t-12 form-field d-flex j-start m-b-14 p-relative c-pointer google-content">
+                    <div id="google-signin-button">
+                    </div>
+                </div> -->
+
+                <span *ngIf="gmailLogin" class="error">
+                    No User Found
+                </span>
+                <div class="m-t-12 c-pointer">
+                    <a class="forgot-password" [href]="env_url + '/forgot-password'">Forgot Password?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

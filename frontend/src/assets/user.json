@@ -1,0 +1,20 @@
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJGdWxsTmFtZSI6ImFkbWluIGFkbWluIiwidXNlckVtYWlsIjoiYWRtaW5AaHJzZXJ2aWNlLmNvbSIsInVzZXJET0IiOiIxOTg3LTAxLTA0VDE4OjMwOjAwLjAwMFoiLCJ1c2VyVHlwZSI6ImFkbWluIiwiaWF0IjoxNzI3MjUyMTc1fQ.ZBxdJguKl22JkJ-EaVh18JbD3oI6A2M1k5FlPtOZ9Ew",
+    "user": {
+      "userFullName": "admin admin",
+      "userId": 1,
+      "userfirstName": "admin",
+      "userlastName": "admin",
+      "userEmail": "admin@hrservice.com",
+      "userDOB": "1987-01-04T18:30:00.000Z",
+      "userPassword": "$2a$10$/3VSB./u.2DV3UBkMRbkVewiaoRWHpxl1fkUF3R01h3FEzjuGy2ci",
+      "userWorkStation": 1,
+      "userRole": "talent",
+      "userType": "admin",
+      "userOtp": null,
+      "useOtpExpire": null,
+      "userStatus": "active",
+      "createdAt": "2024-07-22T11:26:57.712Z",
+      "updatedAt": "2024-07-22T11:26:57.712Z"
+    }
+  }

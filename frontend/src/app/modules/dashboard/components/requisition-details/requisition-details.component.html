@@ -1,0 +1,193 @@
+<div class="main margin-5">
+    <div class="d-flex j-space">
+        <div class="">
+            <div class="padding-10 head">{{requestName}}</div>
+            <span class="padding-10 f-s-16">Department - <span class="blue">{{department}}</span></span>
+        </div>
+        <div class="date-filters d-flex p-r-10 j-end">
+            <div class="d-flex align-items-center">
+                <span class="filter p-r-10 p-t-10">From</span>
+                <div class="p-relative">
+                    <input class="p-l-5 date-input c-pointer" placeholder="29/02/11" matInput
+                        [matDatepicker]="pickerFromDate" [value]="startDate | date:'yyyy-MM-dd'" id="startDate"
+                        [max]="today" (dateChange)="dateChange($event, 'startDate')" [ngModel]="startDate"
+                        (click)="pickerFromDate.open()">
+                    <mat-datepicker #pickerFromDate></mat-datepicker>
+                    <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"
+                        (click)="pickerFromDate.open()"></i>
+                </div>
+            </div>
+            <div class="p-l-10 d-flex align-items-center">
+                <span class="filter p-l-10 p-r-10 p-t-10">To</span>
+                <div class="p-relative">
+                    <input class="p-l-5 date-input c-pointer" placeholder="29/02/11" matInput
+                        [matDatepicker]="pickerToDate" (dateChange)="dateChange($event, 'endDate')" [ngModel]="endDate"
+                        (click)="pickerToDate.open()" [value]="endDate | date:'yyyy-MM-dd'" id="endDate"
+                        [min]="startDate" [max]="today">
+                    <mat-datepicker #pickerToDate></mat-datepicker>
+                    <i class="fa fa-calendar-o c-pointer p-absolute filter-icon" aria-hidden="true"
+                        (click)="pickerToDate.open()"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="candidate w-100 d-flex">
+        <div *ngIf="initialLoader">
+            <app-skeleton-loader [loaderDatas]="[9]" [higherWidth]="1000" [lowerWidth]="800"
+                [gridColumn]="9"></app-skeleton-loader>
+        </div>
+        <div *ngIf="lists" class="candidate w-100 d-flex">
+            <div class="candidate-card">
+                <div class="d-flex">
+                    <div class="icon-div">
+                        <span class="icon"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="detail">
+                        <span class="name">Total Openings</span>
+                        <span class="count">{{lists[0]?.vacancy}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="candidate-card ">
+                <div class="d-flex">
+                    <div class="icon-div">
+                        <span class="icon"><i class="fa fa-users" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="detail">
+                        <div><span class="d-flex name">Total Applicants</span></div>
+                        <div><span class="count">{{lists[0]?.totalApplicant}}</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="candidate-card ">
+                <div class="d-flex">
+                    <div class="icon-div">
+                        <span class="icon"><i class="fa fa-users" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="detail">
+                        <div><span class="d-flex name">Shortlisted</span></div>
+                        <div><span class="count">{{lists[1]?.count}}</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="candidate-card">
+                <div class="d-flex">
+                    <div class="icon-div">
+                        <span class="icon"><i class="fa fa-user-plus" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="detail">
+                        <div><span class="d-flex name">Hired</span></div>
+                        <div><span class="count">{{lists[2]?.count}}</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="candidate-card ">
+                <div class="d-flex">
+                    <div class="icon-div">
+                        <span class="icon"><i class="fa fa-user-times" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="detail">
+                        <div><span class="d-flex name">Rejected</span></div>
+                        <div><span class="count">{{lists[3]?.count}}</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="detail-table">
+        <div class="d-flex j-space p-t-8 p-b-8">
+            <div class="margin-10">
+                <span class="name">Requirement Detail of : {{requestName}} - <span
+                        class="blue">{{filteredStatus}}</span></span>
+            </div>
+            <div class="input c-pointer p-t-5 m-r-10 no-close p-relative" (click)="filterStatus = !filterStatus">
+                <!-- <span class="no-close p-l-10">{{filteredStatus.trim() === '' ? 'Filter by Status' : filteredStatus | titlecase}}</span> -->
+                <span class="no-close p-l-10">
+                    {{
+                    filteredStatus.trim() === ''
+                    ? 'Filter by Status'
+                    : (filteredStatus.trim().toLowerCase() === 'total'
+                    ? 'Total Applicants'
+                    : (filteredStatus.trim().toLowerCase() === 'shorted'
+                    ? 'Short Listed Candidates'
+                    : (filteredStatus.trim().toLowerCase() === 'hired'
+                    ? 'Hired Candidates'
+                    : (filteredStatus.trim().toLowerCase() === 'rejected'
+                    ? 'Rejected Candidates'
+                    : (filteredStatus | titlecase)))))
+                    }}
+                </span>
+
+                <span class="f-right d-flex j-space">
+                    <span *ngIf="filteredStatus && filteredStatus !== 'Total Applicants'" (click)="clearFilter()">
+                        <img src="assets/images/techversant/clear-filter.svg" alt="" width="20" height="20">
+                    </span>
+                    <span><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
+                </span>
+                <div class="dropdown c-pointer no-close'" *ngIf="filterStatus">
+                    <span class="d-flex p-0" *ngFor="let type of lists.slice(1)"
+                        (click)="selectStatusFilter(type?.name);filterStatus = !filterStatus">
+                        <span class="p-l-10 padding-5">{{type?.name | titlecase}}</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="container-table m-b-0">
+            <table class="table">
+                <tr class="table-header p-b-10">
+                    <td class="text-start">Name</td>
+                    <td class="text-start">Education</td>
+                    <!-- <td>Experience</td> -->
+                    <td class="text-start">Previos Organization</td>
+                    <td class="text-start">Previous Designation</td>
+                    <td class="text-start">Location</td>
+                    <td class="text-start">Candidate Station</td>
+                    <td class="text-start">Status</td>
+                </tr>
+                <ng-container *ngFor="let item of candidateList">
+                    <tr class="c-pointer details" (dblclick)="selectCandidate(item?.candidateId)">
+                        <td class="text-start" [title]="item?.candidateFirstName + '' + item?.candidateLastName">
+                            {{item?.candidateFirstName}} {{item?.candidateLastName}}</td>
+                        <td class="text-start" [title]="item?.candidateEducation">{{item?.candidateEducation}}</td>
+                        <!-- <td class="text-start" [title]="item?.candidateExperience ? item?.candidateExperience : 'Fresher'">{{item?.candidateExperience ? item?.candidateExperience + 'years': 'Fresher' }}</td> -->
+                        <td class="text-start"
+                            [title]="item?.candidatePreviousOrg ? item?.candidatePreviousOrg : 'Nil'">
+                            {{item?.candidatePreviousOrg ? item?.candidatePreviousOrg : 'Nil'}}</td>
+                        <td class="text-start"
+                            [title]="item?.candidatePreviousDesignation ? item?.candidatePreviousDesignation : 'Nil'">
+                            {{item?.candidatePreviousDesignation ? item?.candidatePreviousDesignation : 'Nil'}}</td>
+                        <td class="text-start" [title]="item?.candidateCity ? item?.candidateCity : 'Nil'">
+                            {{item?.candidateCity ? item?.candidateCity : 'Nil'}}</td>
+                        <td class="text-start" [title]="item?.currentStation ? item?.currentStation : 'Not Updated'">
+                            {{item?.currentStation ? item?.currentStation : 'Not Updated'}}</td>
+                        <td class="text-start" [title]="item?.candidateStatus ? item?.candidateStatus : 'Nil'">
+                            {{item?.candidateStatus ? (item?.candidateStatus | titlecase) : 'Nil'}}</td>
+                    </tr>
+                </ng-container>
+                <div *ngIf="candidateList?.length === 0 || !candidateList" class="no-data"> No Data Found</div>
+            </table>
+        </div>
+        <app-pagination [totalCount]="totalCount" [pageSize]="pageSize" [lastPage]="lastPage"
+            [currentPage]="currentPage" (pageChange)="fetchCandidates($event)"></app-pagination>
+        <!-- <div *ngIf="totalCount" class="page d-flex j-end padding-10">
+            <button *ngIf="currentPage !== 1" class="box c-pointer" (click)="onPageChange(1)">
+                <img src="assets/images/double-arrow-left-icon.svg" alt="" height="14px" width="14px">
+            </button>
+            <button *ngIf="currentPage === 1" class="box p-r-20 m-r-10">
+                <img src="assets/images/inactive-double-arrow-left.svg" alt="" height="23px" width="23px">
+            </button>
+            <ng-container *ngFor="let page of generatePageNumbers()">
+                <button *ngIf="page === '...'" class="box dot" disabled>...</button>
+                <button *ngIf="page !== '...' && page === currentPage" class="box current-page c-pointer">{{ page }}</button>
+                <button *ngIf="page !== '...' && page !== currentPage" class="box c-pointer" (click)="onPageChange(page)">
+                {{page}}</button>
+            </ng-container> <button *ngIf="currentPage < lastPage" class="box c-pointer" (click)="onPageChange(lastPage)">
+                <img src="assets/images/double-arrow-right-icon.svg" alt="" height="14px" width="14px">
+            </button>
+            <button *ngIf="currentPage === lastPage" class="box">
+                <img src="assets/images/inactive-double-arrow-right.svg" alt="" height="23px" width="23px">
+            </button>
+        </div> -->
+    </div>
+</div>

@@ -1,0 +1,143 @@
+.main {
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 8px 0px #0000001A;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.head {
+    padding: 10px;
+    justify-content: space-between;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.heading-container {
+    flex: 1;
+}
+
+.heading {
+    color: #000000;
+    font-weight: 500;
+    line-height: 26.07px;
+    font-size: 22px;
+}
+
+.date-filters {
+    display: flex;
+    align-items: center;
+}
+
+.date-filter {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.filter {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18.96px;
+    color: #4F4F4F;
+}
+
+.input {
+    border: 1px solid #E9E9E9;
+    outline: none;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    width: 100px;
+    height: 30px;
+}
+
+.filter-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.container-table {
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    min-height: calc(100vh - 420px);
+    max-height: calc(100vh - 420px);
+}
+
+.table-header {
+    position: sticky;
+    top: 0;
+    background: #F4F2F2 !important;
+    padding: 10px;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+tr:nth-child(odd) {
+    background: #F0F7FF;
+}
+
+tr:nth-child(even) {
+    background: #FFFFFF;
+}
+
+td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #E9E9E9;
+}
+
+tr {
+    text-align: center;
+}
+
+.no-data {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    color: #525455;
+    width: 100%;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.box {
+   height: 29px;
+    width: 32px;
+    border: none;
+    background-color: white;
+}
+.page {
+    width: 97%;
+    float: right;
+}
+
+.current-page {
+    background-color: #005EC9;
+    color: #FFFFFF;
+    height: 29px;
+    width: 36px;
+}
+
+.dot {
+    font-size: 20px;
+    color: black;
+    font-weight: 500;
+}
+
+.d-flex {
+    display: flex;
+    align-items: center;
+}

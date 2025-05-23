@@ -1,0 +1,71 @@
+.skill-portion {
+    background-color: #fff;
+    box-shadow: 0 4px 7px #0000001F;
+    border-radius: 0 0 5px 5px;
+}
+
+.sub-head {
+    background:#005EC9;
+    color: white;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 16px;
+    padding-left: 5px;
+    height: 34px;
+    border-radius: 5px 5px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 7px #0000001F;
+    text-align: left;
+}
+
+.skills {
+    height: 350px;
+    overflow-y: auto;
+}
+
+.gap {
+    gap: 10px;
+    padding: 10px;
+}
+
+.skill-pill {
+    line-height: 28px;
+    background-color: #6d6e70;
+    border-radius: 14px;
+    color: white;
+    padding: 3px 10px;
+}
+
+.skill-input {
+    width: 85%;
+    height: 34px;
+    border-radius: 5px;
+    outline: none;
+    background: #FAFAFA;
+    padding-left: 6px;
+    border: 1px solid #E9E9E9;
+    margin: 4px 0 8px 8px;
+}
+
+.add-btn {
+    margin-left: 10px;
+    width: 81px;
+    background: linear-gradient(0deg, #005EC9, #005EC9), linear-gradient(0deg, #E9E9E9, #E9E9E9);
+    border-radius: 3px;
+    border: none;
+    color: white;
+    font-weight: 400;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    margin-right: 7px;
+}
+
+.initial-loader {
+    position: absolute;
+    top: 31%;
+    left: 17%;
+    width: 16%;
+}

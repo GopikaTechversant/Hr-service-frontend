@@ -1,0 +1,45 @@
+<div class="modal-header heading p-10 d-flex j-space p-r-0">
+    <div class="">
+        <span> {{data?.name | titlecase}} </span>
+        <span class="blue">  </span>
+    </div>
+    <div class="modal-close margin-10 d-flex">   
+        <img src="assets/images/techversant/clear-filter.svg" class="c-pointer p-r-5"  (click)="closeDialog()"alt="" width="35">
+    </div>
+</div>
+<div class="modal-content">
+    <div class="d-flex p-10">
+        <div class="sub-head f-w-500 f-s-14 d-flex">
+            <span class="p-8">Requirement</span>
+            <span class="p-8">Current Station</span>
+            <span class="p-8">Move Candidate to</span>
+        </div>
+        <div class="sub-head d-flex">
+            <span class="p-8"> : {{data?.requirement ? data?.requirement : 'Nil'}}</span>
+            <span class="p-8"> : {{data?.currentStation === 'Hr Manager' ? 'HR' : (data?.currentStation | titlecase)}}</span>
+            <span class="p-8 p-relative"> :
+                <span class="input c-pointer    p-l-2 no-close p-relative" (click)="showStations = !showStations">
+                    <span class="no-close p-l-10">{{SelectedStation.trim() === '' ? 'Select Station' : SelectedStation === 'HR Manager' ? 'HR' : (SelectedStation | titlecase)}}</span>
+                    <span class="f-right"><i class="p-l-8 p-r-10 fa fa-chevron-down no-close'"></i></span>
+                    <div class="dropdown c-pointer no-close'" *ngIf="showStations">
+                        <span class="d-flex p-0" *ngFor="let item of stationsList"
+                            (click)="selectStation(item?.stationName , item?.stationId);showStations = !showStations">
+                            <span class="p-l-10  padding-5">{{item?.stationName === 'HR Manager' ? 'HR' : (item?.stationName | titlecase)}}</span>
+                        </span>
+                    </div>
+                </span>
+            </span>
+        </div>
+    </div>
+</div>
+<div class="heading p-10">
+    <span>Comments</span>
+</div>
+<div class="m-10">
+    <textarea class="text-area" id="comment" placeholder=""></textarea>
+    <div class="btn-parent">
+        <button class="c-pointer btn-reject" (click)="closeDialog()">Cancel</button>
+        <button class="btn c-pointer" (click)="submitClick()" [disabled]="loader">Submit</button>
+    </div>
+</div>
+

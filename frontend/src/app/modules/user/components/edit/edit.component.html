@@ -1,0 +1,85 @@
+<div class="main">
+    <div class="d-flex p-t-20 align-center p-l-5 title">
+        <span class="header">Edit User</span>
+    </div>
+    <div class="scroller-box">
+        <div class="d-flex parent">
+            <div class="m-t-20 m-b-10 p-l-10  child">
+                <span class="sub-head">First Name</span>
+                <div>
+                    <input type="text" class="input" id="firstname" [(ngModel)]="firstName">
+                </div>
+            </div>
+            <div class="m-t-20 m-b-10 p-l-10  child">
+                <span class="sub-head">Last Name</span>
+                <div>
+                    <input type="text" class="input" autocomplete="off" id="secondName" [(ngModel)]="lastName">
+                </div>
+            </div>
+        </div>
+        <div class="d-flex parent">
+            <div class="m-t-20 m-b-10 p-l-10  child">
+                <span class="sub-head">DOB</span>
+                <div class="p-relative w-100">
+                    <input class="p-l-5  input" placeholder="MM/DD/YY" matInput [matDatepicker]="pickerdate"
+                        (dateChange)="dateChange($event)" (click)="pickerdate?.open()" [value]="displayDate">
+                    <span> <mat-datepicker #pickerdate class=""></mat-datepicker>
+                        <i class="fa fa-calendar-o c-pointer p-absolute calendar-icon" aria-hidden="true"
+                            (click)="pickerdate ?.open()"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="m-t-20 m-b-10 p-l-10  child">
+                <span class="sub-head">Email</span>
+                <div>
+                    <input type="text" class="input" autocomplete="off" id="email" [(ngModel)]="email">
+                </div>
+            </div>
+        </div>
+        <div class="d-flex parent">
+            <div class="m-t-20 m-b-10 p-l-10  child">
+                <span class="sub-head">Role</span>
+                <div class="no-close col-md-3 s-list d-flex input-station j-space m-text p-relative" (click)="openUserList = !openUserList">
+                    <span
+                        class="no-close s-list m-r-10 m-text align-center m-b-2 f-w-400 c-pointer h-min sub flex-1 p-l-10">
+                        {{role ? role : 'Select User Role'}}
+                    </span>
+                    <span class="no-close s-list c-pointer align-center m-b-2 flex-1 d-flex j-end sub"><i
+                            class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
+                    </span>
+                    <div class=" m-b-2 drop-list no-close p-absolute" *ngIf="openUserList">
+                        <div (click)="selectRole(i)" *ngFor="let i of ['admin', 'talent', 'panel', 'employee','manager']"
+                            class="c-pointer p-l-10 padding-5">
+                            <span class="c-pointer"> {{i |titlecase}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-t-20 m-b-10 p-l-10  child p-relative">
+                <span class="sub-head">Work Station</span>
+                <div class="no-close col-md-3 s-list d-flex input-station j-space m-text p-relative " (click)="idListOpen = !idListOpen">
+                    <span
+                        class="no-close s-list m-r-10 m-text align-center m-b-2 f-w-400 c-pointer h-min sub flex-1 p-l-10">
+                        {{selectedStation ? selectedStation : 'Select Work station'}}
+                    </span>
+                    <span class="no-close s-list c-pointer align-center m-b-2 flex-1 d-flex j-end sub"><i
+                            class="no-close s-list fa fa-chevron-down s-text p-r-10"></i>
+                    </span>
+                    <div class=" m-b-2 drop-list no-close p-absolute" *ngIf="idListOpen">
+                        <div (click)="selectStation(station?.stationId,station?.stationName)" *ngFor="let station of stationList" class="c-pointer p-l-10 padding-5">
+                            <span  class="c-pointer"> {{station?.stationName === 'HR Manager' ? 'HR' : (station?.stationName | titlecase)}}</span>      
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-20">
+            <div class="d-flex j-end p-t-10 m-t-10">
+                <div class="mat-ripple m-r-10 button c-pointer d-flex align-center c-pointer"><button class="btn-cancel"
+                        (click)="cancel()">Cancel</button></div>
+                <div class="mat-ripple c-pointer d-flex align-center c-pointer"><button class="btn-submit"
+                        (click)="submitClick()">Update</button></div>
+            </div>
+        </div>
+    </div>
+</div>

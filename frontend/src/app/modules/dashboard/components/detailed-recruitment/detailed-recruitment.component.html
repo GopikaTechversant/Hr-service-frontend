@@ -1,0 +1,73 @@
+<div class="main">
+    <div class="d-flex head j-space p-b-10">
+        <div>
+            <span class="heading">Detailed Recruitment Report</span><span class="p-l-5 recruiter-name"
+                *ngIf="selectedRecruitername.trim() === ''"></span>
+            <span class="p-l-5 recruiter-name" *ngIf="selectedRecruitername.trim() !== ''">
+                {{selectedRecruitername}}</span>
+        </div>
+        <div>
+            <span class="c-pointer d-flex">
+                <span class="p-8">
+                    <input type="radio" id="position" name="filter" value="position" [checked]="true"
+                        (change)="onRadioChange($event)">
+                    <label for="position" class="p-l-5">Requirement</label>
+                </span>
+                <span class="p-8">
+                    <input type="radio" id="user" name="filter" value="user" (change)="onRadioChange($event)">
+                    <label for="user" class="p-l-5">Recruiter</label>
+                </span>
+                <div class="export-btn" (click)="exportData()" *ngIf="userType !== 'super-admin'">
+                    <span>Export</span>
+                </div>
+            </span>
+        </div>
+    </div>
+    <div class=" m-t-10">
+        <div class="container-table m-b-0">
+            <table class="table">
+                <tr class="table-header">
+                    <td class="" [title]="selectedDataBy === 'user' ? 'Recruiter' : 'Requisition'">{{selectedDataBy ===
+                        'user' ?
+                        'Recruiter' : 'Requisition'}}</td>
+                    <td class="text-end" title="Total Applicants">Total Applicants</td>
+                    <td class="text-end">Screening Rejected</td>
+                    <td class="text-end">Technical 1 Rejected</td>
+                    <td class="text-end">Technical 2 Rejected</td>
+                    <td class="text-end">Technical 3 Rejected</td>
+                    <td class="text-end" title="Selected from technical round">Technical Selected</td>
+                    <td class="text-end">HR Rejected</td>
+                    <td class="text-end" title="Offer Released">Offer Released</td>
+                    <td class="text-end" title="Hired">Hired</td>
+                </tr>
+                <div *ngIf="loader && !initialLoader" class="loader-parent">
+                    <img src="assets/gif/loader.gif">
+                </div>
+                <ng-container *ngIf="candidateList.length > 0">
+                    <ng-container *ngFor="let item of  candidateList">
+                        <tr class="details">
+                            <td class="text-start wrap"
+                                [title]="item?.userfirstName ? item?.userfirstName : item?.requestName">
+                                {{item?.userfirstName ? item?.userfirstName : item?.requestName}}</td>
+                            <td class="f-w-500 text-end highlight">{{item?.total_totalsourced ? item?.total_totalsourced
+                                : '0'}}</td>
+                            <td class="text-end">{{item?.total_screenrejected ? item?.total_screenrejected : '0'}}</td>
+                            <td class="text-end">{{item?.total_techonereject ? item?.total_techonereject : '0'}}</td>
+                            <td class="text-end">{{item?.total_techtworeject ? item?.total_techtworeject : '0'}}</td>
+                            <td class="text-end">{{item?.total_techtworeject ? item?.total_techthreereject : '0'}}</td>
+                            <td class="f-w-500 text-end highlight">{{item?.total_technicalselected ?
+                                item?.total_technicalselected : '0'}}</td>
+                            <td class="text-end">{{item?.total_hrreject ? item?.total_hrreject : '0'}}</td>
+                            <td class="f-w-500 text-end highlight">{{item?.total_offerreleased ?
+                                item?.total_offerreleased : '0'}}</td>
+                            <td class="f-w-500 text-end highlight">{{item?.total_hired ? item?.total_hired : '0'}}</td>
+                        </tr>
+                    </ng-container>
+                </ng-container>
+            </table>
+            <div *ngIf="candidateList?.length === 0 && !loader && !initialLoader" class="no-data">No Data Found</div>
+        </div>
+        <app-pagination [totalCount]="totalCount" [pageSize]="pageSize" [lastPage]="lastPage"
+            [currentPage]="currentPage" (pageChange)="fetchCandidateList($event)"></app-pagination>
+    </div>
+</div>

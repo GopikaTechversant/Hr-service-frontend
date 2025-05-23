@@ -1,0 +1,128 @@
+.main {
+    height: 264px;
+    background-color: #F3F3F3;
+
+}
+
+.content {
+    flex-direction: column;
+    height: 171px;
+}
+
+.name {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 17px;
+    letter-spacing: 0em;
+    text-align: center;
+    padding-top: 24px;
+}
+
+.dropdown {
+    width: 400px;
+    background-color: white;
+    margin-left: 33px;
+    padding-left: 10px;
+    height: 34px;
+    padding-top: 6px;
+    margin-top: 14px;
+    border: 1px solid #EEEEEE;
+    border-radius: 5px;
+}
+
+.wrap {
+    width: 350px !important;
+    max-width: 350px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-all;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cancel-btn {
+    width: 183px;
+    height: 39px;
+    border-radius: 3px;
+    background: #575F6E;
+    border: none;
+    color: white;
+    font-size: 15px;
+}
+
+.save-btn {
+    width: 183px;
+    height: 39px;
+    border-radius: 3px;
+    background: #005EC9;
+    border: none;
+    color: white;
+    font-size: 15px;
+}
+
+.btn {
+    width: 420px;
+    margin-left: 24px;
+}
+
+.dropdown-list {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+    max-height: 150px;
+    overflow-y: auto;
+    font-size: 14px;
+    font-weight: 400;
+    width: 100%;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 999;
+    margin-top: 5px;
+    top: 100%;
+    left: 0;
+}
+
+.req-name :hover {
+   color: blue;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.title1 {
+    color: #575F6E;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 21px;
+    letter-spacing: 0em;
+
+
+}
+
+.create-series {
+    width: 342px;
+    height: 100px;
+    margin-top: 14px;
+}
+
+.para2 {
+    color: #575F6E;
+}
+
+.ok-btn {
+    width: 64px;
+    height: 26px;
+    color: white;
+    border: none;
+    background: #848E9F;
+
+}
+
+.create-series {
+    width: 342px;
+    height: 100px;
+    margin-top: 14px;
+}

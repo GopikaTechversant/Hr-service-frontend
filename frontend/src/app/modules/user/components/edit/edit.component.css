@@ -1,0 +1,146 @@
+.main {
+    background: #FFFFFF;
+}
+
+.scroller-box {
+    width: 97%;
+    padding-left: 17px;
+}
+
+.header {
+    color: #000000;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 8.55px;
+    padding-left: 12px;
+    height: 25px;
+
+}
+
+.parent {
+    column-gap: 18px;
+    display: flex;
+    flex-direction: row;
+}
+
+.child {
+    flex-direction: column;
+    flex: 1;
+}
+
+.input {
+    width: 91%;
+    height: 34px;
+    border-radius: 5px;
+    outline: none;
+    background: #FAFAFA;
+    padding-left: 5px;
+    border: 1px solid #E9E9E9;
+    margin-top: 10px;
+}
+
+.sub-head {
+    color: #000000;
+    font-weight: 400;
+    line-height: 21.33px;
+    padding-bottom: 10px;
+}
+
+.fa-chevron-down {
+    color: #575F6E;
+}
+
+.btn-cancel {
+    background-color: #575F6E;
+    width: 150px;
+    height: 40px;
+    border-radius: 3px;
+    outline: none;
+    border: none;
+    color: #FFFFFF;
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.btn-submit {
+    background-color: #005EC9;
+    width: 150px;
+    height: 40px;
+    border-radius: 3px;
+    outline: none;
+    border: none;
+    color: #FFFFFF;
+    font-weight: 400;
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+.add-btn {
+    margin-left: 3px;
+    width: 53px;
+    background: linear-gradient(0deg, #005EC9, #005EC9),
+        linear-gradient(0deg, #E9E9E9, #E9E9E9);
+    border-radius: 3px;
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.drop-list {
+    background: #FFFFFF;
+    box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+    max-height: 100px;
+    overflow-y: scroll;
+    font-size: 15px;
+    margin-left: 0px;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    margin-top: 35px;
+}
+
+.drop-list :hover {
+    background-color: rgb(240, 235, 235);
+}
+
+.input-station {
+    height: 34px;
+    border-radius: 5px;
+    outline: none;
+    background: #FAFAFA;
+    /* padding-left: 10px; */
+    border: 1px solid #E9E9E9;
+    margin-top: 10px;
+    width: 91%;
+    padding-top: 2px;
+}
+
+.eyeIcon {
+    position: absolute;
+    z-index: 4;
+    right: 39px;
+    top: 16px;
+    bottom: 0px;
+    cursor: pointer;
+    color: gray;
+}
+
+.calendar-icon {
+    color: gray;
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    cursor: pointer;
+
+}
+
+.mismatch-error {
+    color: red;
+}
+
+.title {
+    background-color: #D9D9D9;
+}
