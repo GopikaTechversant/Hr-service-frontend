@@ -52,13 +52,15 @@ export class StationCandidateDetailComponent implements OnInit {
   selectedRejectionFeedback: string = '';
   progressSkill: any = [];
   comment: any;
-  // statusMessages: { [key: string]: string } = {
-  //   done: 'Candidate Selected to Next Round',
-  //   rejected: 'Candidate Rejected In this Round',
-  //   moved: 'Candidate Moved From this Round',
-  //   'back-off': 'Candidate Back-off In this Round',
-  //   'pannel-rejection': 'Panel Rejected the candidate'
-  // };
+  serviceAssignee: any;
+  candidateId: any;
+  serviceScheduledBy: any;
+  userType: any;
+
+  // Cache properties for formatted skills
+  private _formattedSkills: any[] | null = null;
+  private _lastSkillScoreLength: number = -1;
+
   statusMessages: { [key: string]: (station?: string) => string } = {
     done: (station?: string) => `Candidate Selected to ${station ? `${station}` : ''}`,
     rejected: (station?: string) => `Candidate Rejected In ${station ? `${station}` : ''}`,
@@ -66,13 +68,16 @@ export class StationCandidateDetailComponent implements OnInit {
     'back-off': (station?: string) => `Candidate Back-off ${station ? ` at ${station}` : ''}`,
     'pannel-rejection': (station?: string) => `Panel Rejected the Candidate${station ? ` at ${station}` : ''}`
   };
-  serviceAssignee:any;
-  candidateId:any;
-  serviceScheduledBy:any;
-  userType: any;
-  constructor(public dialogRef: MatDialogRef<StationCandidateDetailComponent>, private apiService: ApiService, private tostr: ToastrServices, private s3Service: S3Service,
-    private route: ActivatedRoute, private router: Router,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
+
+  constructor(
+    public dialogRef: MatDialogRef<StationCandidateDetailComponent>,
+    private apiService: ApiService,
+    private tostr: ToastrServices,
+    private s3Service: S3Service,
+    private route: ActivatedRoute,
+    private router: Router,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
     if (data) {
       this.candidateDetails = data?.candidateDetails;
       this.stationId = data?.stationId;
@@ -85,6 +90,19 @@ export class StationCandidateDetailComponent implements OnInit {
     }
     this.dialogRef.updateSize('60vw', '90vh');
     this.templateData = { message: '' };
+  }
+
+  // Getter with memoization for formatted skills
+  get formattedSkills(): any {
+    const currentLength = this.candidateDetails?.skillScore?.length || 0;
+    
+    if (this._formattedSkills === null || this._lastSkillScoreLength !== currentLength) {
+      // console.log("Calculating formatted skills", this.candidateDetails?.skillScore);
+      this._formattedSkills = this.candidateDetails?.skillScore || [];
+      this._lastSkillScoreLength = currentLength;
+    }
+    
+    return this._formattedSkills;
   }
 
   onBodyClick(event: MouseEvent): void {
@@ -112,11 +130,15 @@ export class StationCandidateDetailComponent implements OnInit {
     this.userId = localStorage.getItem('userId');
     this.env_url = window.location.origin;
     this.fetchFeedbackList();
+
+    // Initialize the formatted skills cache
+    this.clearFormattedSkillsCache();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // if(this.modalClose) this.fetchList();
-    // if (changes['modalClose'] && !changes['modalClose'].isFirstChange()) this.fetchList();
+    if (changes['candidateDetails']) {
+      this.clearFormattedSkillsCache();
+    }
   }
 
   closeDialog(): void {
@@ -159,14 +181,6 @@ export class StationCandidateDetailComponent implements OnInit {
     }
   }
 
-  // onFileSelected(event: any): void {
-  //   const file: File = event.target.files[0];
-  //   if (file) {
-  //     this.file = file;
-  //     this.fileName = file?.name;
-  //   }
-  // }
-
   getKeyFroms3(): void {
     this.keySubscription = this.s3Service.key.subscribe((key: string) => {
       this.uploadedFileKey = key;
@@ -180,50 +194,38 @@ export class StationCandidateDetailComponent implements OnInit {
     });
   }
 
+  // Keep the original method for backward compatibility (now optimized)
   getFormattedSkills(): any[] {
-    // Check if we have skillScore data first
-    if (this.candidateDetails?.skillScore?.length) {
-        return this.candidateDetails.skillScore.map((skill: any) => ({
-            name: skill.skillName || 'N/A',
-            description: skill.description || 'N/A',
-            score: skill.score || 'N/A'
-        }));
-    }
-    
-    // Fallback to skills array if skillScore is empty
-    // if (this.candidateDetails?.skills?.length) {
-    //     return this.candidateDetails.skills.map((skill: any) => ({
-    //         name: skill.skillName || 'N/A',
-    //         description: 'N/A',
-    //         score: 'N/A'       
-    //     }));
-    // }
-    
-    // If no skills data at all
-    return [];
-}
+    return this.formattedSkills;
+  }
 
-parseProgressSkills(): any[] {
+  // Clear cache when data changes
+  private clearFormattedSkillsCache(): void {
+    this._formattedSkills = null;
+    this._lastSkillScoreLength = -1;
+  }
+
+  parseProgressSkills(): any[] {
     if (!this.candidateDetails?.['progress.progressSkills']) return [];
     
     try {
-        // Try to parse as JSON if it's stored that way
-        return JSON.parse(this.candidateDetails['progress.progressSkills']);
+      // Try to parse as JSON if it's stored that way
+      return JSON.parse(this.candidateDetails['progress.progressSkills']);
     } catch (e) {
-        // Fallback to text parsing if not JSON
-        const skillLines = this.candidateDetails['progress.progressSkills'].split('\n')
-            .filter((line: string) => line.trim() !== '');
-        
-        return skillLines.map((line: string) => {
-            const match = line.match(/(.+?)\s*\((\d+)\/10\)/);
-            return {
-                name: match ? match[1].trim() : line.trim(),
-                score: match ? match[2] : 'N/A',
-                description: '' // Default empty description
-            };
-        });
+      // Fallback to text parsing if not JSON
+      const skillLines = this.candidateDetails['progress.progressSkills'].split('\n')
+        .filter((line: string) => line.trim() !== '');
+      
+      return skillLines.map((line: string) => {
+        const match = line.match(/(.+?)\s*\((\d+)\/10\)/);
+        return {
+          name: match ? match[1].trim() : line.trim(),
+          score: match ? match[2] : 'N/A',
+          description: '' // Default empty description
+        };
+      });
     }
-}
+  }
 
   onSubmitInterviewData(data: any) {
     if (data) {
@@ -384,7 +386,7 @@ parseProgressSkills(): any[] {
 
   rejectClick(data: any): void {
     this.comment = (document.getElementById('comment') as HTMLInputElement)?.value || '';
-    // this.loader = true;
+    
     if (data || (this.comment && this.filteredStatus)) {
       this.loader = true;
       const payload = {
@@ -396,7 +398,6 @@ parseProgressSkills(): any[] {
         rejectMailTemp: data?.mailTemp ?? '',
         rejectSubject: data?.mailSubject ?? '',
         rejectBcc: data?.mailBcc ?? '',
-        // feedBack: data?.feedback ? data?.feedback : this.selectedRejectionFeedback,
         feedBack: data?.feedback ? data?.feedback : this.comment
       };
       this.apiService.post(`/screening-station/reject/candidate`, payload).subscribe({

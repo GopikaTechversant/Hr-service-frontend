@@ -208,7 +208,7 @@
                 *ngIf="(reviewAdded || data?.candidateDetails?.serviceStatus === 'moved')">
                 <span class="heading p-l-10 p-b-0">Added Skills and Scores</span>
                 <div class="container-table m-b-0 m-l-10">
-                    <div class="comments" id="score" #score [innerHTML]="data?.candidateDetails?.progress.progressSkills"></div>
+                    <div class="comments" id="score" #score [innerHTML]="data?.candidateDetails?.progress?.progressSkills"></div>
                 </div>
             </div>
             <div class="w-50">

@@ -187,6 +187,7 @@ export class InterviewFeebackComponent implements OnInit {
     // const updatedSkill = this.progressSkill.map(({ skillName, ...rest }) => ({ ...rest }));
     this.comment = (document.getElementById('comment') as HTMLInputElement)?.value || '';
     if (this.selectedFeedback && updatedSkill.length > 0 && this.comment.trim() !== '') {
+      debugger
       const data = {
         file: this.uploadedFileKey,
         progressSkill: updatedSkill,

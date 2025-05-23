@@ -49,7 +49,7 @@
                 </div>
                 <ng-container *ngIf="candidateList?.length > 0">
                     <ng-container *ngFor="let item of candidateList">
-                        <tr class="candidate c-pointer" (dblclick)="selectCandidate(item['candidate.candidateId'])">
+                        <tr class="candidate c-pointer" (dblclick)="selectCandidate(item['candidate.candidateId'], item['serviceRequest.requestId'])">
                             <td class="text-end">{{ item['candidate.candidateId'] }}</td>
                             <td class="text-start"
                                 [title]="item['candidate.candidateFirstName'] +' '+ item['candidate.candidateLastName']">

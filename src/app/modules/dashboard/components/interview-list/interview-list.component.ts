@@ -40,8 +40,8 @@ export class InterviewListComponent implements OnInit {
     );
   }
 
-  selectCandidate(id: any): void {
-    this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
+  selectCandidate(id: any , requestId:any): void {
+    this.router.navigateByUrl(`/dashboard/candidate-details/${id}?requestId=${requestId}`);
   }
 
   dateChange(event: any, range: string): void {

@@ -266,7 +266,7 @@ export class HrCandidateListComponent implements OnInit {
 
   fetchDetails(id: any, offerStatus: any, reviewStatus: any): void {
     this.apiService.get(`/hr-station/candidateDetail?serviceId=${id}`).subscribe((data: any) => {
-      console.log("data?.candidates", data?.candidates?.serviceRequest);
+      // console.log("data?.candidates", data?.candidates?.serviceRequest);
       this.serviceStatus = data?.candidates?.serviceRequest?.requestServiceId;
       if (data?.candidates) this.viewCandidateDetail(data?.candidates, offerStatus, reviewStatus);
     });
@@ -305,8 +305,9 @@ export class HrCandidateListComponent implements OnInit {
     }
   }
 
-  selectCandidate(id: any): void {
-    this.router.navigateByUrl(`/dashboard/candidate-details/${id}`);
+  selectCandidate(id: any , serviceId:any): void {
+    
+    this.router.navigateByUrl(`/dashboard/candidate-details/${id}?requestId=${serviceId}`);
   }
 
   getRequsitionSuggestion(event: any) {
